@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc103d0646c60f45960ac0e103a91934333dbd7311ecdf00ffbb2ad25948daa8",
+  "name": "PoolInitializer",
+  "kind": "abstract",
+  "lines": 22,
+  "source": "abstract contract PoolInitializer is IPoolInitializer, PeripheryImmutableState {\n    /// @inheritdoc IPoolInitializer\n    function createAndInitializePoolIfNecessary(address token0, address token1, uint24 fee, uint160 sqrtPriceX96)\n        external\n        payable\n        override\n        returns (address pool)\n    {\n        require(token0 < token1);\n        pool = IUniswapV3Factory(factory).getPool(token0, token1, fee);\n\n        if (pool == address(0)) {\n            pool = IUniswapV3Factory(factory).createPool(token0, token1, fee);\n            IUniswapV3Pool(pool).initialize(sqrtPriceX96);\n        } else {\n            (uint160 sqrtPriceX96Existing,,,,,,) = IUniswapV3Pool(pool).slot0();\n            if (sqrtPriceX96Existing == 0) {\n                IUniswapV3Pool(pool).initialize(sqrtPriceX96);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 17,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "PoolInitializer",
+        "similarity": 0.732,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-v3-contracts",
+        "path": "src/periphery/base/PoolInitializer.sol",
+        "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+        "commitTimestamp": "2024-10-01T05:16:57Z",
+        "url": "https://github.com/ronin-chain/katana-v3-contracts/blob/03c80179e04f40d96f06c451ea494bb18f2a58fc/src/periphery/base/PoolInitializer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 17,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 18,
+            "newStart": 6,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        override"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "        returns (address pool)"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        AuthorizationLib.checkPair(governance, token0, token1);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 10, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 9,
+                "text": "        require(token0 < token1);"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        pool = IKatanaV3Factory(factory).getPool(token0, token1, fee);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        pool = IUniswapV3Factory(factory).getPool(token0, token1, fee);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 12,
+                "text": "        if (pool == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "            pool = IKatanaV3Factory(factory).createPool(token0, token1, fee);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "            IKatanaV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "            pool = IUniswapV3Factory(factory).createPool(token0, token1, fee);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "            IUniswapV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "            (uint160 sqrtPriceX96Existing,,,,,,,) = IKatanaV3Pool(pool).slot0();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "            (uint160 sqrtPriceX96Existing,,,,,,) = IUniswapV3Pool(pool).slot0();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 17,
+                "text": "            if (sqrtPriceX96Existing == 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "                IKatanaV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "                IUniswapV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 19,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 20,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 21, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

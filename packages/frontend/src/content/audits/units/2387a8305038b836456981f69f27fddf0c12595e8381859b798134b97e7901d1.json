@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2387a8305038b836456981f69f27fddf0c12595e8381859b798134b97e7901d1",
+  "name": "OwnableMerkleTree",
+  "kind": "contract",
+  "lines": 11,
+  "source": "contract OwnableMerkleTree is Ownable, MerkleTreeWithHistory {\n    constructor(uint32 _treeLevels, IHasher _hasher) public MerkleTreeWithHistory(_treeLevels, _hasher) {}\n\n    function insert(bytes32 _leaf) external onlyOwner returns (uint32 index) {\n        return _insert(_leaf);\n    }\n\n    function bulkInsert(bytes32[] calldata _leaves) external onlyOwner {\n        _bulkInsert(_leaves);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 7,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "OwnableMerkleTree",
+        "similarity": 0.556,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/utils/OwnableMerkleTree.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/utils/OwnableMerkleTree.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 7,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract OwnableMerkleTree is Ownable, MerkleTreeWithHistory {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    constructor(uint32 _treeLevels, IHasher _hasher) public MerkleTreeWithHistory(_treeLevels, _hasher) {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    function insert(bytes32 leaf) external onlyOwner returns (uint32 index) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        return _insert(leaf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function insert(bytes32 _leaf) external onlyOwner returns (uint32 index) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "        return _insert(_leaf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    function bulkInsert(bytes32[] calldata leaves) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        _bulkInsert(leaves);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function bulkInsert(bytes32[] calldata _leaves) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        _bulkInsert(_leaves);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

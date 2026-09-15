@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c38410c313f55bd3d66b54e8a9042d1e66cacb0311a8b88957aad91d9874f893",
+  "name": "Commands",
+  "kind": "library",
+  "lines": 40,
+  "source": "library Commands {\n    // Masks to extract certain bits of commands\n    bytes1 internal constant FLAG_ALLOW_REVERT = 0x80;\n    bytes1 internal constant COMMAND_TYPE_MASK = 0x3f;\n\n    // Command Types. Maximum supported command at this moment is 0x3f.\n    // The commands are executed in nested if blocks to minimise gas consumption\n\n    // Command Types where value<=0x07, executed in the first nested-if block\n    uint256 constant V3_SWAP_EXACT_IN = 0x00;\n    uint256 constant V3_SWAP_EXACT_OUT = 0x01;\n    uint256 constant PERMIT2_TRANSFER_FROM = 0x02;\n    uint256 constant PERMIT2_PERMIT_BATCH = 0x03;\n    uint256 constant SWEEP = 0x04;\n    uint256 constant TRANSFER = 0x05;\n    uint256 constant PAY_PORTION = 0x06;\n    // COMMAND_PLACEHOLDER = 0x07;\n\n    // Command Types where 0x08<=value<=0x0f, executed in the second nested-if block\n    uint256 constant V2_SWAP_EXACT_IN = 0x08;\n    uint256 constant V2_SWAP_EXACT_OUT = 0x09;\n    uint256 constant PERMIT2_PERMIT = 0x0a;\n    uint256 constant WRAP_ETH = 0x0b;\n    uint256 constant UNWRAP_WETH = 0x0c;\n    uint256 constant PERMIT2_TRANSFER_FROM_BATCH = 0x0d;\n    uint256 constant BALANCE_CHECK_ERC20 = 0x0e;\n    // COMMAND_PLACEHOLDER = 0x0f;\n\n    // Command Types where 0x10<=value<=0x20, executed in the third nested-if block\n    uint256 constant V4_SWAP = 0x10;\n    uint256 constant V3_POSITION_MANAGER_PERMIT = 0x11;\n    uint256 constant V3_POSITION_MANAGER_CALL = 0x12;\n    uint256 constant V4_INITIALIZE_POOL = 0x13;\n    uint256 constant V4_POSITION_MANAGER_CALL = 0x14;\n    // COMMAND_PLACEHOLDER = 0x15 -> 0x20\n\n    // Command Types where 0x21<=value<=0x3f\n    uint256 constant EXECUTE_SUB_PLAN = 0x21;\n    // COMMAND_PLACEHOLDER for 0x22 to 0x3f\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Commands",
+        "similarity": 0.837,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-operation-contracts",
+        "path": "src/aggregate-router/libraries/Commands.sol",
+        "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+        "commitTimestamp": "2024-10-08T04:43:53Z",
+        "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/libraries/Commands.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 1,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 5,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 8,
+            "newStart": 4,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    bytes1 internal constant COMMAND_TYPE_MASK = 0x3f;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    // Command Types. Maximum supported command at this moment is 0x3f."
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    // The commands are executed in nested if blocks to minimise gas consumption",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // Command Types where value<0x08, executed in the first nested-if block",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    // Command Types where value<=0x07, executed in the first nested-if block",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "    uint256 constant V3_SWAP_EXACT_IN = 0x00;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "    uint256 constant V3_SWAP_EXACT_OUT = 0x01;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "    uint256 constant PERMIT2_TRANSFER_FROM = 0x02;"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 10,
+            "newStart": 16,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "    uint256 constant PAY_PORTION = 0x06;"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "    // COMMAND_PLACEHOLDER = 0x07;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    // The commands are executed in nested if blocks to minimise gas consumption",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    // The following constant defines one of the boundaries where the if blocks split commands",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    uint256 constant FIRST_IF_BOUNDARY = 0x08;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 21, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "    // Command Types where 0x08<=value<=0x0f, executed in the second nested-if block"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 20,
+                "text": "    uint256 constant V2_SWAP_EXACT_IN = 0x08;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 21,
+                "text": "    uint256 constant V2_SWAP_EXACT_OUT = 0x09;"
+              }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 5,
+            "newStart": 26,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 26,
+                "text": "    uint256 constant BALANCE_CHECK_ERC20 = 0x0e;"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 27,
+                "text": "    // COMMAND_PLACEHOLDER = 0x0f;"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    // COMMAND_PLACEHOLDER for 0x10 to 0x3f (all unused)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    // Command Types where 0x10<=value<=0x20, executed in the third nested-if block",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    uint256 constant V4_SWAP = 0x10;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    uint256 constant V3_POSITION_MANAGER_PERMIT = 0x11;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    uint256 constant V3_POSITION_MANAGER_CALL = 0x12;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    uint256 constant V4_INITIALIZE_POOL = 0x13;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    uint256 constant V4_POSITION_MANAGER_CALL = 0x14;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    // COMMAND_PLACEHOLDER = 0x15 -> 0x20",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 36, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    // Command Types where 0x21<=value<=0x3f",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    uint256 constant EXECUTE_SUB_PLAN = 0x21;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    // COMMAND_PLACEHOLDER for 0x22 to 0x3f",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 40, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

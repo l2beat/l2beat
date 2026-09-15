@@ -1,0 +1,1201 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "078f15949388fcc3712ad7c6c2a73a0aebf1fa50cc86802120e4a2070a339342",
+  "name": "DisputeGameFactory",
+  "kind": "contract",
+  "lines": 275,
+  "source": "contract DisputeGameFactory is ProxyAdminOwnedBase, ReinitializableBase, OwnableUpgradeable, ISemver {\n    /// @dev Allows for the creation of clone proxies with immutable arguments.\n    using LibClone for address;\n\n    /// @notice Emitted when a new dispute game is created\n    /// @param disputeProxy The address of the dispute game proxy\n    /// @param gameType The type of the dispute game proxy's implementation\n    /// @param rootClaim The root claim of the dispute game\n    event DisputeGameCreated(address indexed disputeProxy, GameType indexed gameType, Claim indexed rootClaim);\n\n    /// @notice Emitted when a new game implementation added to the factory\n    /// @param impl The implementation contract for the given `GameType`.\n    /// @param gameType The type of the DisputeGame.\n    event ImplementationSet(address indexed impl, GameType indexed gameType);\n\n    /// @notice Emitted when a game type's implementation args are set\n    /// @param gameType The type of the DisputeGame.\n    /// @param args The constructor args for the game type.\n    event ImplementationArgsSet(GameType indexed gameType, bytes args);\n\n    /// @notice Emitted when a game type's initialization bond is updated\n    /// @param gameType The type of the DisputeGame.\n    /// @param newBond The new bond (in wei) for initializing the game type.\n    event InitBondUpdated(GameType indexed gameType, uint256 indexed newBond);\n\n    /// @notice Information about a dispute game found in a `findLatestGames` search.\n    struct GameSearchResult {\n        uint256 index;\n        GameId metadata;\n        Timestamp timestamp;\n        Claim rootClaim;\n        bytes extraData;\n    }\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.3.0\n    string public constant version = \"1.3.0\";\n\n    /// @notice `gameImpls` is a mapping that maps `GameType`s to their respective\n    ///         `IDisputeGame` implementations.\n    mapping(GameType => IDisputeGame) public gameImpls;\n\n    /// @notice Returns the required bonds for initializing a dispute game of the given type.\n    mapping(GameType => uint256) public initBonds;\n\n    /// @notice Mapping of a hash of `gameType || rootClaim || extraData` to the deployed `IDisputeGame` clone (where\n    //          `||` denotes concatenation).\n    mapping(Hash => GameId) internal _disputeGames;\n\n    /// @notice An append-only array of disputeGames that have been created. Used by offchain game solvers to\n    ///         efficiently track dispute games.\n    GameId[] internal _disputeGameList;\n\n    /// @notice Maps each Game Type to an associated configuration to use with it, but because we need to pass them\n    ///         to a clone with immutable args so they have to be stored as arbitrary bytes unfortunately\n    mapping(GameType => bytes) public gameArgs;\n\n    /// @notice Constructs a new DisputeGameFactory contract.\n    constructor() OwnableUpgradeable() ReinitializableBase(1) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializes the contract.\n    /// @param _owner The owner of the contract.\n    function initialize(address _owner) external reinitializer(initVersion()) {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        __Ownable_init();\n        _transferOwnership(_owner);\n    }\n\n    /// @notice The total number of dispute games created by this factory.\n    /// @return gameCount_ The total number of dispute games created by this factory.\n    function gameCount() external view returns (uint256 gameCount_) {\n        gameCount_ = _disputeGameList.length;\n    }\n\n    /// @notice `games` queries an internal mapping that maps the hash of\n    ///         `gameType ++ rootClaim ++ extraData` to the deployed `DisputeGame` clone.\n    /// @dev `++` equates to concatenation.\n    /// @param _gameType The type of the DisputeGame - used to decide the proxy implementation\n    /// @param _rootClaim The root claim of the DisputeGame.\n    /// @param _extraData Any extra data that should be provided to the created dispute game.\n    /// @return proxy_ The clone of the `DisputeGame` created with the given parameters.\n    ///         Returns `address(0)` if nonexistent.\n    /// @return timestamp_ The timestamp of the creation of the dispute game.\n    function games(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)\n        external\n        view\n        returns (IDisputeGame proxy_, Timestamp timestamp_)\n    {\n        Hash uuid = getGameUUID(_gameType, _rootClaim, _extraData);\n        (, Timestamp timestamp, address proxy) = _disputeGames[uuid].unpack();\n        (proxy_, timestamp_) = (IDisputeGame(proxy), timestamp);\n    }\n\n    /// @notice `gameAtIndex` returns the dispute game contract address and its creation timestamp\n    ///          at the given index. Each created dispute game increments the underlying index.\n    ///          Reverts if the provided index does not correspond to an existing dispute game.\n    /// @param _index The index of the dispute game.\n    /// @return gameType_ The type of the DisputeGame - used to decide the proxy implementation.\n    /// @return timestamp_ The timestamp of the creation of the dispute game.\n    /// @return proxy_ The clone of the `DisputeGame` created with the given parameters.\n    function gameAtIndex(uint256 _index)\n        external\n        view\n        returns (GameType gameType_, Timestamp timestamp_, IDisputeGame proxy_)\n    {\n        (GameType gameType, Timestamp timestamp, address proxy) = _disputeGameList[_index].unpack();\n        (gameType_, timestamp_, proxy_) = (gameType, timestamp, IDisputeGame(proxy));\n    }\n\n    /// @notice Creates a new DisputeGame proxy contract.\n    /// @param _gameType The type of the DisputeGame - used to decide the proxy implementation.\n    /// @param _rootClaim The root claim of the DisputeGame.\n    /// @param _extraData Any extra data that should be provided to the created dispute game.\n    /// @return proxy_ The address of the created DisputeGame proxy.\n    function create(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)\n        external\n        payable\n        returns (IDisputeGame proxy_)\n    {\n        // Grab the implementation contract for the given `GameType`.\n        IDisputeGame impl = gameImpls[_gameType];\n\n        // If there is no implementation to clone for the given `GameType`, revert.\n        if (address(impl) == address(0)) {\n            revert NoImplementation(_gameType);\n        }\n\n        // If the required initialization bond is not met, revert.\n        if (msg.value != initBonds[_gameType]) {\n            revert IncorrectBondAmount();\n        }\n\n        // Get the hash of the parent block.\n        bytes32 parentHash = blockhash(block.number - 1);\n\n        // Clone the implementation contract and initialize it with the given parameters.\n        //\n        // CWIA Calldata Layout:\n        // ┌──────────────────────┬─────────────────────────────────────┐\n        // │        Bytes         │            Description              │\n        // ├──────────────────────┼─────────────────────────────────────┤\n        // │ [0, 20)              │ Game creator address                │\n        // │ [20, 52)             │ Root claim                          │\n        // │ [52, 84)             │ Parent block hash at creation time  │\n        // │ [84, 84 + n)         │ Extra data (opaque)                 │\n        // │ [84 + n, 84 + n + m) │ Implementation args (opaque)        │\n        // └──────────────────────┴─────────────────────────────────────┘\n        proxy_ = IDisputeGame(\n            address(impl).clone(abi.encodePacked(msg.sender, _rootClaim, parentHash, _extraData, gameArgs[_gameType]))\n        );\n        proxy_.initialize{value: msg.value}();\n\n        // Compute the unique identifier for the dispute game.\n        Hash uuid = getGameUUID(_gameType, _rootClaim, _extraData);\n\n        // If a dispute game with the same UUID already exists, revert.\n        if (GameId.unwrap(_disputeGames[uuid]) != bytes32(0)) {\n            revert GameAlreadyExists(uuid);\n        }\n\n        // Pack the game ID.\n        GameId id = LibGameId.pack(_gameType, Timestamp.wrap(uint64(block.timestamp)), address(proxy_));\n\n        // Store the dispute game id in the mapping & emit the `DisputeGameCreated` event.\n        _disputeGames[uuid] = id;\n        _disputeGameList.push(id);\n        emit DisputeGameCreated(address(proxy_), _gameType, _rootClaim);\n    }\n\n    /// @notice Returns a unique identifier for the given dispute game parameters.\n    /// @dev Hashes the concatenation of `gameType . rootClaim . extraData`\n    ///      without expanding memory.\n    /// @param _gameType The type of the DisputeGame.\n    /// @param _rootClaim The root claim of the DisputeGame.\n    /// @param _extraData Any extra data that should be provided to the created dispute game.\n    /// @return uuid_ The unique identifier for the given dispute game parameters.\n    function getGameUUID(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)\n        public\n        pure\n        returns (Hash uuid_)\n    {\n        uuid_ = Hash.wrap(keccak256(abi.encode(_gameType, _rootClaim, _extraData)));\n    }\n\n    /// @notice Finds the `_n` most recent `GameId`'s of type `_gameType` starting at `_start`. If there are less than\n    ///         `_n` games of type `_gameType` starting at `_start`, then the returned array will be shorter than `_n`.\n    /// @param _gameType The type of game to find.\n    /// @param _start The index to start the reverse search from.\n    /// @param _n The number of games to find.\n    function findLatestGames(GameType _gameType, uint256 _start, uint256 _n)\n        external\n        view\n        returns (GameSearchResult[] memory games_)\n    {\n        // If the `_start` index is greater than or equal to the game array length or `_n == 0`, return an empty array.\n        if (_start >= _disputeGameList.length || _n == 0) {\n            return games_;\n        }\n\n        // Allocate enough memory for the full array, but start the array's length at `0`. We may not use all of the\n        // memory allocated, but we don't know ahead of time the final size of the array.\n        assembly {\n            games_ := mload(0x40)\n            mstore(0x40, add(games_, add(0x20, shl(0x05, _n))))\n        }\n\n        // Perform a reverse linear search for the `_n` most recent games of type `_gameType`.\n        for (uint256 i = _start; i >= 0 && i <= _start;) {\n            GameId id = _disputeGameList[i];\n            (GameType gameType, Timestamp timestamp, address proxy) = id.unpack();\n\n            if (gameType.raw() == _gameType.raw()) {\n                // Increase the size of the `games_` array by 1.\n                // SAFETY: We can safely lazily allocate memory here because we pre-allocated enough memory for the max\n                //         possible size of the array.\n                assembly {\n                    mstore(games_, add(mload(games_), 0x01))\n                }\n\n                bytes memory extraData = IDisputeGame(proxy).extraData();\n                Claim rootClaim = IDisputeGame(proxy).rootClaim();\n                games_[games_.length - 1] = GameSearchResult({\n                    index: i,\n                    metadata: id,\n                    timestamp: timestamp,\n                    rootClaim: rootClaim,\n                    extraData: extraData\n                });\n                if (games_.length >= _n) {\n                    break;\n                }\n            }\n\n            unchecked {\n                i--;\n            }\n        }\n    }\n\n    /// @notice Sets the implementation contract for a specific `GameType`.\n    /// @dev May only be called by the `owner`.\n    /// @param _gameType The type of the DisputeGame.\n    /// @param _impl The implementation contract for the given `GameType`.\n    function setImplementation(GameType _gameType, IDisputeGame _impl) external onlyOwner {\n        gameImpls[_gameType] = _impl;\n        emit ImplementationSet(address(_impl), _gameType);\n    }\n\n    /// @notice Sets the implementation contract for a specific `GameType`.\n    /// @dev May only be called by the `owner`.\n    /// @param _gameType The type of the DisputeGame.\n    /// @param _impl The implementation contract for the given `GameType`.\n    /// @param _args The constructor args to be passed for each implementation\n    function setImplementation(GameType _gameType, IDisputeGame _impl, bytes calldata _args) external onlyOwner {\n        gameImpls[_gameType] = _impl;\n        gameArgs[_gameType] = _args;\n\n        emit ImplementationSet(address(_impl), _gameType);\n        emit ImplementationArgsSet(_gameType, _args);\n    }\n\n    /// @notice Sets the bond (in wei) for initializing a game type.\n    /// @dev May only be called by the `owner`.\n    /// @param _gameType The type of the DisputeGame.\n    /// @param _initBond The bond (in wei) for initializing a game type.\n    function setInitBond(GameType _gameType, uint256 _initBond) external onlyOwner {\n        initBonds[_gameType] = _initBond;\n        emit InitBondUpdated(_gameType, _initBond);\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 248,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "DisputeGameFactory",
+        "similarity": 0.864,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 27,
+        "removed": 6,
+        "ignoredAdded": 88,
+        "ignoredRemoved": 19,
+        "unchanged": 248,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 15,
+            "newStart": 1,
+            "newLines": 46,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract DisputeGameFactory is OwnableUpgradeable, IDisputeGameFactory, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract DisputeGameFactory is ProxyAdminOwnedBase, ReinitializableBase, OwnableUpgradeable, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @dev Allows for the creation of clone proxies with immutable arguments."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using LibClone for address;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Emitted when a new dispute game is created",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @param disputeProxy The address of the dispute game proxy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @param gameType The type of the dispute game proxy's implementation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @param rootClaim The root claim of the dispute game",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    event DisputeGameCreated(address indexed disputeProxy, GameType indexed gameType, Claim indexed rootClaim);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 10, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @notice Emitted when a new game implementation added to the factory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param impl The implementation contract for the given `GameType`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @param gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    event ImplementationSet(address indexed impl, GameType indexed gameType);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 15, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @notice Emitted when a game type's implementation args are set",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param args The constructor args for the game type.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    event ImplementationArgsSet(GameType indexed gameType, bytes args);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Emitted when a game type's initialization bond is updated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param newBond The new bond (in wei) for initializing the game type.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    event InitBondUpdated(GameType indexed gameType, uint256 indexed newBond);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Information about a dispute game found in a `findLatestGames` search.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    struct GameSearchResult {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        uint256 index;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        GameId metadata;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        Timestamp timestamp;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        Claim rootClaim;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        bytes extraData;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 33, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 35,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @custom:semver 1.0.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    string public constant version = \"1.0.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @custom:semver 1.3.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    string public constant version = \"1.3.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 38, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @notice `gameImpls` is a mapping that maps `GameType`s to their respective",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    ///         `IDisputeGame` implementations.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 41,
+                "text": "    mapping(GameType => IDisputeGame) public gameImpls;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @notice Returns the required bonds for initializing a dispute game of the given type.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 44,
+                "text": "    mapping(GameType => uint256) public initBonds;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 45, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 46,
+                "text": "    /// @notice Mapping of a hash of `gameType || rootClaim || extraData` to the deployed `IDisputeGame` clone (where"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 24,
+            "newStart": 51,
+            "newLines": 41,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 51,
+                "text": "    ///         efficiently track dispute games."
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 52,
+                "text": "    GameId[] internal _disputeGameList;"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 53, "text": "" },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @notice Maps each Game Type to an associated configuration to use with it, but because we need to pass them",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    ///         to a clone with immutable args so they have to be stored as arbitrary bytes unfortunately",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    mapping(GameType => bytes) public gameArgs;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 57, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 58,
+                "text": "    /// @notice Constructs a new DisputeGameFactory contract."
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    constructor() OwnableUpgradeable() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        initialize(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    constructor() OwnableUpgradeable() ReinitializableBase(1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 61, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 62, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 63,
+                "text": "    /// @notice Initializes the contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 64,
+                "text": "    /// @param _owner The owner of the contract."
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    function initialize(address _owner) public initializer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    function initialize(address _owner) external reinitializer(initVersion()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        // Initialization transactions must come from the ProxyAdmin or its owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        _assertOnlyProxyAdminOrProxyAdminOwner();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        // Now perform initialization logic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 70,
+                "text": "        __Ownable_init();"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 71,
+                "text": "        _transferOwnership(_owner);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @notice The total number of dispute games created by this factory.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @return gameCount_ The total number of dispute games created by this factory.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 76,
+                "text": "    function gameCount() external view returns (uint256 gameCount_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 77,
+                "text": "        gameCount_ = _disputeGameList.length;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 78, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 79, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    /// @notice `games` queries an internal mapping that maps the hash of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    ///         `gameType ++ rootClaim ++ extraData` to the deployed `DisputeGame` clone.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @dev `++` equates to concatenation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @param _gameType The type of the DisputeGame - used to decide the proxy implementation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @param _rootClaim The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// @param _extraData Any extra data that should be provided to the created dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @return proxy_ The clone of the `DisputeGame` created with the given parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    ///         Returns `address(0)` if nonexistent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /// @return timestamp_ The timestamp of the creation of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 89,
+                "text": "    function games(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 90,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 91,
+                "text": "        view"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 7,
+            "newStart": 96,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 96,
+                "text": "        (proxy_, timestamp_) = (IDisputeGame(proxy), timestamp);"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice `gameAtIndex` returns the dispute game contract address and its creation timestamp",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    ///          at the given index. Each created dispute game increments the underlying index.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    ///          Reverts if the provided index does not correspond to an existing dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /// @param _index The index of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    /// @return gameType_ The type of the DisputeGame - used to decide the proxy implementation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// @return timestamp_ The timestamp of the creation of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @return proxy_ The clone of the `DisputeGame` created with the given parameters.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 106,
+                "text": "    function gameAtIndex(uint256 _index)"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 107,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 108,
+                "text": "        view"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 7,
+            "newStart": 112,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 112,
+                "text": "        (gameType_, timestamp_, proxy_) = (gameType, timestamp, IDisputeGame(proxy));"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 113, "text": "    }" },
+              { "type": " ", "oldLine": 60, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    /// @notice Creates a new DisputeGame proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "    /// @param _gameType The type of the DisputeGame - used to decide the proxy implementation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    /// @param _rootClaim The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    /// @param _extraData Any extra data that should be provided to the created dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    /// @return proxy_ The address of the created DisputeGame proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 120,
+                "text": "    function create(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 121,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 122,
+                "text": "        payable"
+              }
+            ]
+          },
+          {
+            "oldStart": 83,
+            "oldLines": 15,
+            "newStart": 141,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 141,
+                "text": "        // Clone the implementation contract and initialize it with the given parameters."
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 142,
+                "text": "        //"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 143,
+                "text": "        // CWIA Calldata Layout:"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        // ┌──────────────┬────────────────────────────────────┐",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        // │    Bytes     │            Description             │",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        // ├──────────────┼────────────────────────────────────┤",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        // │ [0, 20)      │ Game creator address               │",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        // │ [20, 52)     │ Root claim                         │",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        // │ [52, 84)     │ Parent block hash at creation time │",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        // │ [84, 84 + n) │ Extra data (opaque)                │",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        // └──────────────┴────────────────────────────────────┘",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        proxy_ = IDisputeGame(address(impl).clone(abi.encodePacked(msg.sender, _rootClaim, parentHash, _extraData)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        // ┌──────────────────────┬─────────────────────────────────────┐",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        // │        Bytes         │            Description              │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "        // ├──────────────────────┼─────────────────────────────────────┤",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "        // │ [0, 20)              │ Game creator address                │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "        // │ [20, 52)             │ Root claim                          │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "        // │ [52, 84)             │ Parent block hash at creation time  │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "        // │ [84, 84 + n)         │ Extra data (opaque)                 │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        // │ [84 + n, 84 + n + m) │ Implementation args (opaque)        │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "        // └──────────────────────┴─────────────────────────────────────┘",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "        proxy_ = IDisputeGame(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "            address(impl).clone(abi.encodePacked(msg.sender, _rootClaim, parentHash, _extraData, gameArgs[_gameType]))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 156,
+                "text": "        proxy_.initialize{value: msg.value}();"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 157, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 158,
+                "text": "        // Compute the unique identifier for the dispute game."
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 172,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 172,
+                "text": "        emit DisputeGameCreated(address(proxy_), _gameType, _rootClaim);"
+              },
+              { "type": " ", "oldLine": 112, "newLine": 173, "text": "    }" },
+              { "type": " ", "oldLine": 113, "newLine": 174, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "    /// @notice Returns a unique identifier for the given dispute game parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "    /// @dev Hashes the concatenation of `gameType . rootClaim . extraData`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "    ///      without expanding memory.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "    /// @param _gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "    /// @param _rootClaim The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "    /// @param _extraData Any extra data that should be provided to the created dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "    /// @return uuid_ The unique identifier for the given dispute game parameters.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 182,
+                "text": "    function getGameUUID(GameType _gameType, Claim _rootClaim, bytes calldata _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 183,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 184,
+                "text": "        pure"
+              }
+            ]
+          },
+          {
+            "oldStart": 120,
+            "oldLines": 7,
+            "newStart": 187,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 187,
+                "text": "        uuid_ = Hash.wrap(keccak256(abi.encode(_gameType, _rootClaim, _extraData)));"
+              },
+              { "type": " ", "oldLine": 121, "newLine": 188, "text": "    }" },
+              { "type": " ", "oldLine": 122, "newLine": 189, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "    /// @notice Finds the `_n` most recent `GameId`'s of type `_gameType` starting at `_start`. If there are less than",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "    ///         `_n` games of type `_gameType` starting at `_start`, then the returned array will be shorter than `_n`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "    /// @param _gameType The type of game to find.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    /// @param _start The index to start the reverse search from.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "    /// @param _n The number of games to find.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 195,
+                "text": "    function findLatestGames(GameType _gameType, uint256 _start, uint256 _n)"
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 196,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 197,
+                "text": "        view"
+              }
+            ]
+          },
+          {
+            "oldStart": 171,
+            "oldLines": 13,
+            "newStart": 242,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 242,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 172, "newLine": 243, "text": "    }" },
+              { "type": " ", "oldLine": 173, "newLine": 244, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "    /// @notice Sets the implementation contract for a specific `GameType`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "    /// @dev May only be called by the `owner`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "    /// @param _gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "    /// @param _impl The implementation contract for the given `GameType`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 249,
+                "text": "    function setImplementation(GameType _gameType, IDisputeGame _impl) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 250,
+                "text": "        gameImpls[_gameType] = _impl;"
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 251,
+                "text": "        emit ImplementationSet(address(_impl), _gameType);"
+              },
+              { "type": " ", "oldLine": 178, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 179, "newLine": 253, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "    /// @inheritdoc IDisputeGameFactory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "    /// @notice Sets the implementation contract for a specific `GameType`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "    /// @dev May only be called by the `owner`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "    /// @param _gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "    /// @param _impl The implementation contract for the given `GameType`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "    /// @param _args The constructor args to be passed for each implementation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "    function setImplementation(GameType _gameType, IDisputeGame _impl, bytes calldata _args) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "        gameImpls[_gameType] = _impl;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "        gameArgs[_gameType] = _args;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 262, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "        emit ImplementationSet(address(_impl), _gameType);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "        emit ImplementationArgsSet(_gameType, _args);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 266, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "    /// @notice Sets the bond (in wei) for initializing a game type.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "    /// @dev May only be called by the `owner`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "    /// @param _gameType The type of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "    /// @param _initBond The bond (in wei) for initializing a game type.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 271,
+                "text": "    function setInitBond(GameType _gameType, uint256 _initBond) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 272,
+                "text": "        initBonds[_gameType] = _initBond;"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 273,
+                "text": "        emit InitBondUpdated(_gameType, _initBond);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "28672c0279d225bda6e5edd01a89b5d8e890dd48800256f5b07f2b6989349d6e",
+  "name": "Module",
+  "kind": "contract",
+  "lines": 15,
+  "source": "contract Module is MasterCopy {\n    ModuleManager public manager;\n\n    modifier authorized() {\n        require(msg.sender == address(manager), \"Method can only be called from manager\");\n        _;\n    }\n\n    function setManager() internal {\n        // manager can only be 0 at initalization of contract.\n        // Check ensures that setup function can only be called once.\n        require(address(manager) == address(0), \"Manager has already been set\");\n        manager = ModuleManager(msg.sender);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Module",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/Module.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/Module.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

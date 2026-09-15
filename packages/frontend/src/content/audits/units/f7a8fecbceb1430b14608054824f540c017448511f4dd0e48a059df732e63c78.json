@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f7a8fecbceb1430b14608054824f540c017448511f4dd0e48a059df732e63c78",
+  "name": "IVerifier",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IVerifier {\n    function verifyProof(bytes calldata proof, uint256[4] calldata input) external view returns (bool);\n\n    function verifyProof(bytes calldata proof, uint256[7] calldata input) external view returns (bool);\n\n    function verifyProof(bytes calldata proof, uint256[12] calldata input) external view returns (bool);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 7,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IVerifier",
+        "similarity": 1,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/interfaces/IVerifier.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/interfaces/IVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "da607e07e828260ac0e226ee01dcd0e14ddeeacd08784bcf4d8b65354e8d0470",
+  "name": "BitMath",
+  "kind": "library",
+  "lines": 43,
+  "source": "library BitMath {\n    /// @notice Returns the index of the most significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @param x the value for which to compute the most significant bit, must be greater than 0\n    /// @return r the index of the most significant bit\n    function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        assembly (\"memory-safe\") {\n            r := shl(7, lt(0xffffffffffffffffffffffffffffffff, x))\n            r := or(r, shl(6, lt(0xffffffffffffffff, shr(r, x))))\n            r := or(r, shl(5, lt(0xffffffff, shr(r, x))))\n            r := or(r, shl(4, lt(0xffff, shr(r, x))))\n            r := or(r, shl(3, lt(0xff, shr(r, x))))\n            // forgefmt: disable-next-item\n            r := or(r, byte(and(0x1f, shr(shr(r, x), 0x8421084210842108cc6318c6db6d54be)),\n                0x0706060506020500060203020504000106050205030304010505030400000000))\n        }\n    }\n\n    /// @notice Returns the index of the least significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @param x the value for which to compute the least significant bit, must be greater than 0\n    /// @return r the index of the least significant bit\n    function leastSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        assembly (\"memory-safe\") {\n            // Isolate the least significant bit.\n            x := and(x, sub(0, x))\n            // For the upper 3 bits of the result, use a De Bruijn-like lookup.\n            // Credit to adhusson: https://blog.adhusson.com/cheap-find-first-set-evm/\n            // forgefmt: disable-next-item\n            r := shl(5, shr(252, shl(shl(2, shr(250, mul(x,\n                0xb6db6db6ddddddddd34d34d349249249210842108c6318c639ce739cffffffff))),\n                0x8040405543005266443200005020610674053026020000107506200176117077)))\n            // For the lower 5 bits of the result, use a De Bruijn lookup.\n            // forgefmt: disable-next-item\n            r := or(r, byte(and(div(0xd76453e0, shr(r, x)), 0x1f),\n                0x001f0d1e100c1d070f090b19131c1706010e11080a1a141802121b1503160405))\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 28,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "BitMath",
+        "similarity": 0.194,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/BitMath.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/BitMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 15,
+        "removed": 68,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 4,
+        "unchanged": 28,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 93,
+            "newStart": 1,
+            "newLines": 43,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library BitMath {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Returns the index of the most significant bit of the number,"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    ///     where the least significant bit is at index 0 and the most significant bit is at index 255"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @dev The function satisfies the property:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    ///     x >= 2**mostSignificantBit(x) and x < 2**(mostSignificantBit(x)+1)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 4,
+                "text": "    /// @param x the value for which to compute the most significant bit, must be greater than 0"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 5,
+                "text": "    /// @return r the index of the most significant bit"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 6,
+                "text": "    function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 7,
+                "text": "        require(x > 0);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        if (x >= 0x100000000000000000000000000000000) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "            x >>= 128;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "            r += 128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            r := shl(7, lt(0xffffffffffffffffffffffffffffffff, x))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "            r := or(r, shl(6, lt(0xffffffffffffffff, shr(r, x))))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            r := or(r, shl(5, lt(0xffffffff, shr(r, x))))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "            r := or(r, shl(4, lt(0xffff, shr(r, x))))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "            r := or(r, shl(3, lt(0xff, shr(r, x))))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "            // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "            r := or(r, byte(and(0x1f, shr(shr(r, x), 0x8421084210842108cc6318c6db6d54be)),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "                0x0706060506020500060203020504000106050205030304010505030400000000))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 18,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        if (x >= 0x10000000000000000) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "            x >>= 64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "            r += 64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        if (x >= 0x100000000) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            x >>= 32;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "            r += 32;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        if (x >= 0x10000) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "            x >>= 16;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            r += 16;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        if (x >= 0x100) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "            x >>= 8;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "            r += 8;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        if (x >= 0x10) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            x >>= 4;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "            r += 4;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        if (x >= 0x4) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "            x >>= 2;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            r += 2;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        if (x >= 0x2) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            r += 1;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 19, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 21,
+                "text": "    /// @notice Returns the index of the least significant bit of the number,"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 22,
+                "text": "    ///     where the least significant bit is at index 0 and the most significant bit is at index 255"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @dev The function satisfies the property:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///     (x & 2**leastSignificantBit(x)) != 0 and (x & (2**(leastSignificantBit(x)) - 1)) == 0)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 23,
+                "text": "    /// @param x the value for which to compute the least significant bit, must be greater than 0"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 24,
+                "text": "    /// @return r the index of the least significant bit"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 25,
+                "text": "    function leastSignificantBit(uint256 x) internal pure returns (uint8 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 26,
+                "text": "        require(x > 0);"
+              },
+              { "type": " ", "oldLine": 52, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        r = 255;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        if (x & type(uint128).max > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            r -= 128;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            x >>= 128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "            // Isolate the least significant bit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "            x := and(x, sub(0, x))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            // For the upper 3 bits of the result, use a De Bruijn-like lookup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "            // Credit to adhusson: https://blog.adhusson.com/cheap-find-first-set-evm/",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "            r := shl(5, shr(252, shl(shl(2, shr(250, mul(x,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "                0xb6db6db6ddddddddd34d34d349249249210842108c6318c639ce739cffffffff))),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "                0x8040405543005266443200005020610674053026020000107506200176117077)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "            // For the lower 5 bits of the result, use a De Bruijn lookup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "            // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            r := or(r, byte(and(div(0xd76453e0, shr(r, x)), 0x1f),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "                0x001f0d1e100c1d070f090b19131c1706010e11080a1a141802121b1503160405))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 41,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        if (x & type(uint64).max > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            r -= 64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "            x >>= 64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        if (x & type(uint32).max > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            r -= 32;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "            x >>= 32;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        if (x & type(uint16).max > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            r -= 16;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "            x >>= 16;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        if (x & type(uint8).max > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "            r -= 8;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            x >>= 8;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        if (x & 0xf > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "            r -= 4;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            x >>= 4;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        if (x & 0x3 > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "            r -= 2;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            x >>= 2;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        if (x & 0x1 > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            r -= 1;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 92, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 93, "newLine": 43, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

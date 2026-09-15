@@ -1,0 +1,1029 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bd8afabfcd564834de46b54e62ad8df30b122b698e12cc50abd3469e1a0e38ec",
+  "name": "SuperchainConfig",
+  "kind": "contract",
+  "lines": 161,
+  "source": "contract SuperchainConfig is ProxyAdminOwnedBase, Initializable, ReinitializableBase, ISemver {\n    /// @notice Thrown when a caller is not the guardian but tries to call a guardian-only function\n    error SuperchainConfig_OnlyGuardian();\n\n    /// @notice Thrown when attempting to pause an identifier that is already paused\n    error SuperchainConfig_AlreadyPaused(address identifier);\n\n    /// @notice Thrown when attempting to extend a pause that is not already paused.\n    error SuperchainConfig_NotAlreadyPaused(address identifier);\n\n    /// @notice Enum representing different types of updates.\n    /// @custom:value GUARDIAN            Represents an update to the guardian.\n    enum UpdateType {\n        GUARDIAN\n    }\n\n    /// @notice The duration after which a pause expires. This value is set to exactly 3 months in\n    ///         seconds. Any duration longer than this value is incompatible with Stage 1.\n    uint256 internal constant PAUSE_EXPIRY = 7_884_000;\n\n    /// @notice The address of the guardian, which can pause withdrawals from the System.\n    ///         It can only be modified by an upgrade.\n    address public guardian;\n\n    /// @notice Mapping of pause identifiers to their pause timestamps\n    mapping(address => uint256) public pauseTimestamps;\n\n    /// @notice Emitted when the pause is triggered.\n    /// @param identifier A string helping to identify provenance of the pause transaction.\n    event Paused(address identifier);\n\n    /// @notice Emitted when the pause is lifted.\n    event Unpaused(address identifier);\n\n    /// @notice Emitted when configuration is updated.\n    /// @param updateType Type of update.\n    /// @param data       Encoded update data.\n    event ConfigUpdate(UpdateType indexed updateType, bytes data);\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.4.0\n    string public constant version = \"2.4.0\";\n\n    /// @notice Constructs the SuperchainConfig contract.\n    constructor() ReinitializableBase(2) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializer.\n    /// @param _guardian    Address of the guardian, can pause the OptimismPortal.\n    function initialize(address _guardian) external reinitializer(initVersion()) {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        _setGuardian(_guardian);\n    }\n\n    /// @notice Returns the duration after which a pause expires.\n    /// @return The duration after which a pause expires.\n    function pauseExpiry() external pure returns (uint256) {\n        return PAUSE_EXPIRY;\n    }\n\n    /// @notice Pauses the system for a specific superchain cluster identifier.\n    /// @param _identifier The address identifier for the pause.\n    function pause(address _identifier) external {\n        // Only the Guardian can pause the system.\n        _assertOnlyGuardian();\n\n        // Cannot pause if the identifier is already paused to prevent re-pausing without either\n        // unpausing, extending, or resetting the pause timestamp.\n        if (pauseTimestamps[_identifier] != 0) {\n            revert SuperchainConfig_AlreadyPaused(_identifier);\n        }\n\n        // Set the pause timestamp.\n        pauseTimestamps[_identifier] = block.timestamp;\n        emit Paused(_identifier);\n    }\n\n    /// @notice Unpauses the system for a specific identifier.\n    /// @param _identifier The address identifier to unpause.\n    function unpause(address _identifier) external {\n        // Only the Guardian can unpause the system.\n        _assertOnlyGuardian();\n\n        // Unpause the system.\n        pauseTimestamps[_identifier] = 0;\n        emit Unpaused(_identifier);\n    }\n\n    /// @notice Extends the pause for a specific identifier by resetting the pause timestamp.\n    /// @param _identifier The address identifier to extend.\n    function extend(address _identifier) external {\n        // Only the Guardian can extend the pause.\n        _assertOnlyGuardian();\n\n        // Cannot extend the pause if not already paused.\n        if (pauseTimestamps[_identifier] == 0) {\n            revert SuperchainConfig_NotAlreadyPaused(_identifier);\n        }\n\n        // Reset the pause timestamp.\n        pauseTimestamps[_identifier] = block.timestamp;\n        emit Paused(_identifier);\n    }\n\n    /// @notice Checks if the system can be paused for a specific identifier.\n    /// @param _identifier The address identifier to check.\n    /// @return True if the system can be paused for this identifier.\n    function pausable(address _identifier) external view returns (bool) {\n        return pauseTimestamps[_identifier] == 0;\n    }\n\n    /// @custom:legacy\n    /// @notice Checks if the global superchain system is paused. NOTE that this is a legacy\n    ///         function that provides support for systems that still rely on the older interface.\n    ///         Contracts should use paused(address) instead when possible.\n    /// @return True if the global superchain system is paused.\n    function paused() external view returns (bool) {\n        return paused(address(0));\n    }\n\n    /// @notice Checks if the system is currently paused for a specific identifier.\n    /// @param _identifier The address identifier to check.\n    /// @return True if the system is paused for this identifier and not expired.\n    function paused(address _identifier) public view returns (bool) {\n        uint256 timestamp = pauseTimestamps[_identifier];\n        if (timestamp == 0) {\n            return false;\n        }\n        return block.timestamp < timestamp + PAUSE_EXPIRY;\n    }\n\n    /// @notice Gets the expiration timestamp for a specific pause identifier.\n    /// @param _identifier The address identifier to check.\n    /// @return The timestamp when the pause expires, or 0 if not paused.\n    function expiration(address _identifier) external view returns (uint256) {\n        uint256 timestamp = pauseTimestamps[_identifier];\n        if (timestamp == 0) {\n            return 0;\n        }\n        return timestamp + PAUSE_EXPIRY;\n    }\n\n    /// @notice Sets the guardian address. This is only callable during initialization, so an upgrade\n    ///         will be required to change the guardian.\n    /// @param _guardian The new guardian address.\n    function _setGuardian(address _guardian) internal {\n        guardian = _guardian;\n        emit ConfigUpdate(UpdateType.GUARDIAN, abi.encode(_guardian));\n    }\n\n    /// @notice Asserts that the caller is the guardian.\n    function _assertOnlyGuardian() internal view {\n        if (msg.sender != guardian) {\n            revert SuperchainConfig_OnlyGuardian();\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 112,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "SuperchainConfig",
+        "similarity": 0.305,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 49,
+        "removed": 25,
+        "ignoredAdded": 64,
+        "ignoredRemoved": 11,
+        "unchanged": 112,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 36,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract SuperchainConfig is Initializable_0, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SuperchainConfig is ProxyAdminOwnedBase, Initializable, ReinitializableBase, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Thrown when a caller is not the guardian but tries to call a guardian-only function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    error SuperchainConfig_OnlyGuardian();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Thrown when attempting to pause an identifier that is already paused",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    error SuperchainConfig_AlreadyPaused(address identifier);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Thrown when attempting to extend a pause that is not already paused.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    error SuperchainConfig_NotAlreadyPaused(address identifier);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 10, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 11,
+                "text": "    /// @notice Enum representing different types of updates."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 12,
+                "text": "    /// @custom:value GUARDIAN            Represents an update to the guardian."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 13,
+                "text": "    enum UpdateType {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 14,
+                "text": "        GUARDIAN"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 15, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 16, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Whether or not the Superchain is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 public constant PAUSED_SLOT = bytes32(uint256(keccak256(\"superchainConfig.paused\")) - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @notice The duration after which a pause expires. This value is set to exactly 3 months in",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    ///         seconds. Any duration longer than this value is incompatible with Stage 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    uint256 internal constant PAUSE_EXPIRY = 7_884_000;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 21,
+                "text": "    /// @notice The address of the guardian, which can pause withdrawals from the System."
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 22,
+                "text": "    ///         It can only be modified by an upgrade."
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    bytes32 public constant GUARDIAN_SLOT = bytes32(uint256(keccak256(\"superchainConfig.guardian\")) - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    address public guardian;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 24, "text": "" },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @notice Mapping of pause identifiers to their pause timestamps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    mapping(address => uint256) public pauseTimestamps;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 27, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 28,
+                "text": "    /// @notice Emitted when the pause is triggered."
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 29,
+                "text": "    /// @param identifier A string helping to identify provenance of the pause transaction."
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    event Paused(string identifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    event Paused(address identifier);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 32,
+                "text": "    /// @notice Emitted when the pause is lifted."
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    event Unpaused();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    event Unpaused(address identifier);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 35,
+                "text": "    /// @notice Emitted when configuration is updated."
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 36,
+                "text": "    /// @param updateType Type of update."
+              }
+            ]
+          },
+          {
+            "oldStart": 25,
+            "oldLines": 60,
+            "newStart": 38,
+            "newLines": 124,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 38,
+                "text": "    event ConfigUpdate(UpdateType indexed updateType, bytes data);"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 40,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @custom:semver 1.1.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    string public constant version = \"1.1.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @custom:semver 2.4.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    string public constant version = \"2.4.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 43, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 44,
+                "text": "    /// @notice Constructs the SuperchainConfig contract."
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        initialize({_guardian: address(0), _paused: false});",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    constructor() ReinitializableBase(2) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 47, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 49,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 50,
+                "text": "    /// @param _guardian    Address of the guardian, can pause the OptimismPortal."
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @param _paused      Initial paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    function initialize(address _guardian, bool _paused) public initializer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function initialize(address _guardian) external reinitializer(initVersion()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        // Initialization transactions must come from the ProxyAdmin or its owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        _assertOnlyProxyAdminOrProxyAdminOwner();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 54, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        // Now perform initialization logic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 56,
+                "text": "        _setGuardian(_guardian);"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        if (_paused) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            _pause(\"Initializer paused\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 44, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 58, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @notice Getter for the guardian address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function guardian() public view returns (address guardian_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        guardian_ = Storage.getAddress(GUARDIAN_SLOT);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /// @notice Returns the duration after which a pause expires.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /// @return The duration after which a pause expires.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function pauseExpiry() external pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        return PAUSE_EXPIRY;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 63, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @notice Getter for the current paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    function paused() public view returns (bool paused_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        paused_ = Storage.getBool(PAUSED_SLOT);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @notice Pauses the system for a specific superchain cluster identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /// @param _identifier The address identifier for the pause.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    function pause(address _identifier) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        // Only the Guardian can pause the system.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        _assertOnlyGuardian();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 70, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        // Cannot pause if the identifier is already paused to prevent re-pausing without either",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        // unpausing, extending, or resetting the pause timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        if (pauseTimestamps[_identifier] != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "            revert SuperchainConfig_AlreadyPaused(_identifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 76, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        // Set the pause timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        pauseTimestamps[_identifier] = block.timestamp;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        emit Paused(_identifier);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 54, "newLine": 80, "text": "    }" },
+              { "type": " ", "oldLine": 55, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @notice Pauses withdrawals.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @param _identifier (Optional) A string to identify provenance of the pause transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    function pause(string memory _identifier) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        require(msg.sender == guardian(), \"SuperchainConfig: only guardian can pause\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        _pause(_identifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @notice Unpauses the system for a specific identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @param _identifier The address identifier to unpause.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    function unpause(address _identifier) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        // Only the Guardian can unpause the system.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        _assertOnlyGuardian();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 87, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        // Unpause the system.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        pauseTimestamps[_identifier] = 0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        emit Unpaused(_identifier);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 91, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 92, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    /// @notice Pauses withdrawals.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// @param _identifier (Optional) A string to identify provenance of the pause transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    function _pause(string memory _identifier) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        Storage.setBool(PAUSED_SLOT, true);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    /// @notice Extends the pause for a specific identifier by resetting the pause timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    /// @param _identifier The address identifier to extend.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    function extend(address _identifier) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        // Only the Guardian can extend the pause.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        _assertOnlyGuardian();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 98, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        // Cannot extend the pause if not already paused.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        if (pauseTimestamps[_identifier] == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            revert SuperchainConfig_NotAlreadyPaused(_identifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 103, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        // Reset the pause timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        pauseTimestamps[_identifier] = block.timestamp;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 106,
+                "text": "        emit Paused(_identifier);"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 107, "text": "    }" },
+              { "type": " ", "oldLine": 69, "newLine": 108, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    /// @notice Unpauses withdrawals.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    function unpause() external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        require(msg.sender == guardian(), \"SuperchainConfig: only guardian can unpause\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "        Storage.setBool(PAUSED_SLOT, false);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        emit Unpaused();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @notice Checks if the system can be paused for a specific identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param _identifier The address identifier to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @return True if the system can be paused for this identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    function pausable(address _identifier) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        return pauseTimestamps[_identifier] == 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 75, "newLine": 114, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 115, "text": "" },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    /// @notice Checks if the global superchain system is paused. NOTE that this is a legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    ///         function that provides support for systems that still rely on the older interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    ///         Contracts should use paused(address) instead when possible.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    /// @return True if the global superchain system is paused.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    function paused() external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        return paused(address(0));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 123, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 124, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    /// @notice Checks if the system is currently paused for a specific identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "    /// @param _identifier The address identifier to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "    /// @return True if the system is paused for this identifier and not expired.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    function paused(address _identifier) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        uint256 timestamp = pauseTimestamps[_identifier];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "        if (timestamp == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        return block.timestamp < timestamp + PAUSE_EXPIRY;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 134, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 135, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "    /// @notice Gets the expiration timestamp for a specific pause identifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    /// @param _identifier The address identifier to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @return The timestamp when the pause expires, or 0 if not paused.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    function expiration(address _identifier) external view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        uint256 timestamp = pauseTimestamps[_identifier];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "        if (timestamp == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "            return 0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        return timestamp + PAUSE_EXPIRY;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 145, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 146, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 147,
+                "text": "    /// @notice Sets the guardian address. This is only callable during initialization, so an upgrade"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 148,
+                "text": "    ///         will be required to change the guardian."
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 149,
+                "text": "    /// @param _guardian The new guardian address."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 150,
+                "text": "    function _setGuardian(address _guardian) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        Storage.setAddress(GUARDIAN_SLOT, _guardian);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        guardian = _guardian;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 152,
+                "text": "        emit ConfigUpdate(UpdateType.GUARDIAN, abi.encode(_guardian));"
+              },
+              { "type": " ", "oldLine": 83, "newLine": 153, "text": "    }" },
+              { "type": "+", "newLine": 154, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "    /// @notice Asserts that the caller is the guardian.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    function _assertOnlyGuardian() internal view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "        if (msg.sender != guardian) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "            revert SuperchainConfig_OnlyGuardian();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 160, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 84, "newLine": 161, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,950 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c2dacbd0f3685db82b0316bbc9c934c783bbc523b9fd462e371146a2181b4e67",
+  "name": "SafeTransferLib",
+  "kind": "library",
+  "lines": 103,
+  "source": "library SafeTransferLib {\n    /*//////////////////////////////////////////////////////////////\n                             ETH OPERATIONS\n    //////////////////////////////////////////////////////////////*/\n\n    function safeTransferETH(address to, uint256 amount) internal {\n        bool success;\n\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Transfer the ETH and store if it succeeded or not.\n            success := call(gas(), to, amount, 0, 0, 0, 0)\n        }\n\n        require(success, \"ETH_TRANSFER_FAILED\");\n    }\n\n    /*//////////////////////////////////////////////////////////////\n                            ERC20 OPERATIONS\n    //////////////////////////////////////////////////////////////*/\n\n    function safeTransferFrom(ERC20 token, address from, address to, uint256 amount) internal {\n        bool success;\n\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Get a pointer to some free memory.\n            let freeMemoryPointer := mload(0x40)\n\n            // Write the abi-encoded calldata into memory, beginning with the function selector.\n            mstore(freeMemoryPointer, 0x23b872dd00000000000000000000000000000000000000000000000000000000)\n            mstore(add(freeMemoryPointer, 4), and(from, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"from\" argument.\n            mstore(add(freeMemoryPointer, 36), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.\n            mstore(add(freeMemoryPointer, 68), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.\n\n            // We use 100 because the length of our calldata totals up like so: 4 + 32 * 3.\n            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.\n            success := call(gas(), token, 0, freeMemoryPointer, 100, 0, 32)\n\n            // Set success to whether the call reverted, if not we check it either\n            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.\n            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {\n                success := iszero(or(iszero(extcodesize(token)), returndatasize()))\n            }\n        }\n\n        require(success, \"TRANSFER_FROM_FAILED\");\n    }\n\n    function safeTransfer(ERC20 token, address to, uint256 amount) internal {\n        bool success;\n\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Get a pointer to some free memory.\n            let freeMemoryPointer := mload(0x40)\n\n            // Write the abi-encoded calldata into memory, beginning with the function selector.\n            mstore(freeMemoryPointer, 0xa9059cbb00000000000000000000000000000000000000000000000000000000)\n            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.\n            mstore(add(freeMemoryPointer, 36), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.\n\n            // We use 68 because the length of our calldata totals up like so: 4 + 32 * 2.\n            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.\n            success := call(gas(), token, 0, freeMemoryPointer, 68, 0, 32)\n\n            // Set success to whether the call reverted, if not we check it either\n            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.\n            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {\n                success := iszero(or(iszero(extcodesize(token)), returndatasize()))\n            }\n        }\n\n        require(success, \"TRANSFER_FAILED\");\n    }\n\n    function safeApprove(ERC20 token, address to, uint256 amount) internal {\n        bool success;\n\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Get a pointer to some free memory.\n            let freeMemoryPointer := mload(0x40)\n\n            // Write the abi-encoded calldata into memory, beginning with the function selector.\n            mstore(freeMemoryPointer, 0x095ea7b300000000000000000000000000000000000000000000000000000000)\n            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.\n            mstore(add(freeMemoryPointer, 36), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.\n\n            // We use 68 because the length of our calldata totals up like so: 4 + 32 * 2.\n            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.\n            success := call(gas(), token, 0, freeMemoryPointer, 68, 0, 32)\n\n            // Set success to whether the call reverted, if not we check it either\n            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.\n            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {\n                success := iszero(or(iszero(extcodesize(token)), returndatasize()))\n            }\n        }\n\n        require(success, \"APPROVE_FAILED\");\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 82,
+      "match": {
+        "origin": "library",
+        "collection": "solmate",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "SafeTransferLib",
+        "similarity": 0.492,
+        "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
+        "repository": "Rari-Capital/solmate",
+        "path": "src/utils/SafeTransferLib.sol",
+        "commit": "134f10afd9c996cee217aec6274839f56c742eac",
+        "commitTimestamp": "2021-11-24T03:52:42Z",
+        "url": "https://github.com/Rari-Capital/solmate/blob/134f10afd9c996cee217aec6274839f56c742eac/src/utils/SafeTransferLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Finding remediation review",
+        "coverage": "Review limited to the remediation for finding G.1.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 21,
+        "removed": 32,
+        "ignoredAdded": 35,
+        "ignoredRemoved": 45,
+        "unchanged": 82,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 124,
+            "newStart": 1,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeTransferLib {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /*///////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "                            ETH OPERATIONS",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "                             ETH OPERATIONS",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    //////////////////////////////////////////////////////////////*/"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    function safeTransferETH(address to, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        bool callStatus;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        bool success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "            // Transfer the ETH and store if it succeeded or not."
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "            callStatus := call(gas(), to, amount, 0, 0, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            success := call(gas(), to, amount, 0, 0, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        require(callStatus, \"ETH_TRANSFER_FAILED\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        require(success, \"ETH_TRANSFER_FAILED\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /*///////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "                           ERC20 OPERATIONS",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "                            ERC20 OPERATIONS",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "    //////////////////////////////////////////////////////////////*/"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "    function safeTransferFrom(ERC20 token, address from, address to, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        bool callStatus;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        bool success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 24, "text": "" },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            // We'll use 4 + 32 * 3 bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "            let callDataLength := 100",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "            // Get a pointer to some free memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 28,
+                "text": "            let freeMemoryPointer := mload(0x40)"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "            // Write the abi-encoded calldata to memory piece by piece:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            mstore(freeMemoryPointer, shl(224, 0x23b872dd)) // Properly shift and append the function selector for transfer(address,uint256)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(from, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \"from\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "            mstore(add(freeMemoryPointer, 36), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "            mstore(add(freeMemoryPointer, 68), amount) // Finally append the \"amount\" argument. No mask as it's a full 32 byte value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "            // Write the abi-encoded calldata into memory, beginning with the function selector.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            mstore(freeMemoryPointer, 0x23b872dd00000000000000000000000000000000000000000000000000000000)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(from, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"from\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            mstore(add(freeMemoryPointer, 36), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "            mstore(add(freeMemoryPointer, 68), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            // Call the token and store if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            callStatus := call(gas(), token, 0, freeMemoryPointer, callDataLength, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "            // We use 100 because the length of our calldata totals up like so: 4 + 32 * 3.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "            success := call(gas(), token, 0, freeMemoryPointer, 100, 0, 32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 39, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "            // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "                success := iszero(or(iszero(extcodesize(token)), returndatasize()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 45,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        require(didLastOptionalReturnCallSucceed(callStatus), \"TRANSFER_FROM_FAILED\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        require(success, \"TRANSFER_FROM_FAILED\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 48, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 49, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 50,
+                "text": "    function safeTransfer(ERC20 token, address to, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        bool callStatus;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        bool success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 46, "newLine": 52, "text": "" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 54,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            // We'll use 4 + 32 * 2 bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "            let callDataLength := 68",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 50, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 55,
+                "text": "            // Get a pointer to some free memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 56,
+                "text": "            let freeMemoryPointer := mload(0x40)"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            // Write the abi-encoded calldata to memory piece by piece:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            mstore(freeMemoryPointer, shl(224, 0xa9059cbb)) // Properly shift and append the function selector for approve(address,uint256)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            mstore(add(freeMemoryPointer, 36), amount) // Finally append the \"amount\" argument. No mask as it's a full 32 byte value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            // Write the abi-encoded calldata into memory, beginning with the function selector.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            mstore(freeMemoryPointer, 0xa9059cbb00000000000000000000000000000000000000000000000000000000)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "            mstore(add(freeMemoryPointer, 36), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 58, "newLine": 62, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "            // Call the token and store if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            callStatus := call(gas(), token, 0, freeMemoryPointer, callDataLength, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "            // We use 68 because the length of our calldata totals up like so: 4 + 32 * 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "            success := call(gas(), token, 0, freeMemoryPointer, 68, 0, 32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "            // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "                success := iszero(or(iszero(extcodesize(token)), returndatasize()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 72,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        require(didLastOptionalReturnCallSucceed(callStatus), \"TRANSFER_FAILED\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        require(success, \"TRANSFER_FAILED\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 64, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 65, "newLine": 76, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 77,
+                "text": "    function safeApprove(ERC20 token, address to, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        bool callStatus;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        bool success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 68, "newLine": 79, "text": "" },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 81,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            // We'll use 4 + 32 * 2 bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            let callDataLength := 68",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 82,
+                "text": "            // Get a pointer to some free memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 83,
+                "text": "            let freeMemoryPointer := mload(0x40)"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 84, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "            // Write the abi-encoded calldata to memory piece by piece:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            mstore(freeMemoryPointer, shl(224, 0x095ea7b3)) // Properly shift and append the function selector for approve(address,uint256)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "            mstore(add(freeMemoryPointer, 36), amount) // Finally append the \"amount\" argument. No mask as it's a full 32 byte value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "            // Write the abi-encoded calldata into memory, beginning with the function selector.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "            mstore(freeMemoryPointer, 0x095ea7b300000000000000000000000000000000000000000000000000000000)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Append and mask the \"to\" argument.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            mstore(add(freeMemoryPointer, 36), amount) // Append the \"amount\" argument. Masking not required as it's a full 32 byte type.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 80, "newLine": 89, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            // Call the token and store if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            callStatus := call(gas(), token, 0, freeMemoryPointer, callDataLength, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "            // We use 68 because the length of our calldata totals up like so: 4 + 32 * 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "            // We use 0 and 32 to copy up to 32 bytes of return data into the scratch space.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            success := call(gas(), token, 0, freeMemoryPointer, 68, 0, 32)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 84, "newLine": 93, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        require(didLastOptionalReturnCallSucceed(callStatus), \"APPROVE_FAILED\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 86, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 87, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /*///////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "                         INTERNAL HELPER LOGIC",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    //////////////////////////////////////////////////////////////*/",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    function didLastOptionalReturnCallSucceed(bool callStatus) private pure returns (bool success) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "            // Get how many bytes the call returned.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "            let returnDataSize := returndatasize()",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 96, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "            // If the call reverted:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            if iszero(callStatus) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "                // Copy the revert message into memory.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "                returndatacopy(0, 0, returnDataSize)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 101, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "                // Revert with the same message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "                revert(0, returnDataSize)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "            // returned exactly 1 (can't just be non-zero data), or had no return data and token has code.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            if and(iszero(and(eq(mload(0), 1), gt(returndatasize(), 31))), success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                success := iszero(or(iszero(extcodesize(token)), returndatasize()))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 98,
+                "text": "            }"
+              },
+              { "type": "-", "oldLine": 105, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "            switch returnDataSize",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "            case 32 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "                // Copy the return data into memory.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "                returndatacopy(0, 0, returnDataSize)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 110, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "                // Set success to whether it returned true.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "                success := iszero(iszero(mload(0)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "            case 0 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "                // There was no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "                success := 1",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "            default {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "                // It returned some malformed input.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "                success := 0",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 99,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 100, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        require(success, \"APPROVE_FAILED\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 123, "newLine": 102, "text": "    }" },
+              { "type": " ", "oldLine": 124, "newLine": 103, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

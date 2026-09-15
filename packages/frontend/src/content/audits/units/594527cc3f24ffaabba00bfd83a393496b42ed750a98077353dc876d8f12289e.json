@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "594527cc3f24ffaabba00bfd83a393496b42ed750a98077353dc876d8f12289e",
+  "name": "TickMath",
+  "kind": "library",
+  "lines": 242,
+  "source": "library TickMath {\n    /// @dev The minimum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**-128\n    int24 internal constant MIN_TICK = -887272;\n    /// @dev The maximum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**128\n    int24 internal constant MAX_TICK = -MIN_TICK;\n\n    /// @dev The minimum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MIN_TICK)\n    uint160 internal constant MIN_SQRT_RATIO = 4295128739;\n    /// @dev The maximum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MAX_TICK)\n    uint160 internal constant MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342;\n\n    /// @notice Calculates sqrt(1.0001^tick) * 2^96\n    /// @dev Throws if |tick| > max tick\n    /// @param tick The input tick for the above formula\n    /// @return sqrtPriceX96 A Fixed point Q64.96 number representing the sqrt of the ratio of the two assets (token1/token0)\n    /// at the given tick\n    function getSqrtRatioAtTick(int24 tick) internal pure returns (uint160 sqrtPriceX96) {\n        uint256 absTick = tick < 0 ? uint256(-int256(tick)) : uint256(int256(tick));\n        require(absTick <= uint256(int256(MAX_TICK)), \"T\");\n\n        uint256 ratio = absTick & 0x1 != 0 ? 0xfffcb933bd6fad37aa2d162d1a594001 : 0x100000000000000000000000000000000;\n        if (absTick & 0x2 != 0) {\n            ratio = (ratio * 0xfff97272373d413259a46990580e213a) >> 128;\n        }\n        if (absTick & 0x4 != 0) {\n            ratio = (ratio * 0xfff2e50f5f656932ef12357cf3c7fdcc) >> 128;\n        }\n        if (absTick & 0x8 != 0) {\n            ratio = (ratio * 0xffe5caca7e10e4e61c3624eaa0941cd0) >> 128;\n        }\n        if (absTick & 0x10 != 0) {\n            ratio = (ratio * 0xffcb9843d60f6159c9db58835c926644) >> 128;\n        }\n        if (absTick & 0x20 != 0) {\n            ratio = (ratio * 0xff973b41fa98c081472e6896dfb254c0) >> 128;\n        }\n        if (absTick & 0x40 != 0) {\n            ratio = (ratio * 0xff2ea16466c96a3843ec78b326b52861) >> 128;\n        }\n        if (absTick & 0x80 != 0) {\n            ratio = (ratio * 0xfe5dee046a99a2a811c461f1969c3053) >> 128;\n        }\n        if (absTick & 0x100 != 0) {\n            ratio = (ratio * 0xfcbe86c7900a88aedcffc83b479aa3a4) >> 128;\n        }\n        if (absTick & 0x200 != 0) {\n            ratio = (ratio * 0xf987a7253ac413176f2b074cf7815e54) >> 128;\n        }\n        if (absTick & 0x400 != 0) {\n            ratio = (ratio * 0xf3392b0822b70005940c7a398e4b70f3) >> 128;\n        }\n        if (absTick & 0x800 != 0) {\n            ratio = (ratio * 0xe7159475a2c29b7443b29c7fa6e889d9) >> 128;\n        }\n        if (absTick & 0x1000 != 0) {\n            ratio = (ratio * 0xd097f3bdfd2022b8845ad8f792aa5825) >> 128;\n        }\n        if (absTick & 0x2000 != 0) {\n            ratio = (ratio * 0xa9f746462d870fdf8a65dc1f90e061e5) >> 128;\n        }\n        if (absTick & 0x4000 != 0) {\n            ratio = (ratio * 0x70d869a156d2a1b890bb3df62baf32f7) >> 128;\n        }\n        if (absTick & 0x8000 != 0) {\n            ratio = (ratio * 0x31be135f97d08fd981231505542fcfa6) >> 128;\n        }\n        if (absTick & 0x10000 != 0) {\n            ratio = (ratio * 0x9aa508b5b7a84e1c677de54f3e99bc9) >> 128;\n        }\n        if (absTick & 0x20000 != 0) {\n            ratio = (ratio * 0x5d6af8dedb81196699c329225ee604) >> 128;\n        }\n        if (absTick & 0x40000 != 0) {\n            ratio = (ratio * 0x2216e584f5fa1ea926041bedfe98) >> 128;\n        }\n        if (absTick & 0x80000 != 0) {\n            ratio = (ratio * 0x48a170391f7dc42444e8fa2) >> 128;\n        }\n\n        if (tick > 0) {\n            ratio = type(uint256).max / ratio;\n        }\n\n        // this divides by 1<<32 rounding up to go from a Q128.128 to a Q128.96.\n        // we then downcast because we know the result always fits within 160 bits due to our tick input constraint\n        // we round up in the division so getTickAtSqrtRatio of the output price is always consistent\n        sqrtPriceX96 = uint160((ratio >> 32) + (ratio % (1 << 32) == 0 ? 0 : 1));\n    }\n\n    /// @notice Calculates the greatest tick value such that getRatioAtTick(tick) <= ratio\n    /// @dev Throws in case sqrtPriceX96 < MIN_SQRT_RATIO, as MIN_SQRT_RATIO is the lowest value getRatioAtTick may\n    /// ever return.\n    /// @param sqrtPriceX96 The sqrt ratio for which to compute the tick as a Q64.96\n    /// @return tick The greatest tick for which the ratio is less than or equal to the input ratio\n    function getTickAtSqrtRatio(uint160 sqrtPriceX96) internal pure returns (int24 tick) {\n        // second inequality must be < because the price can never reach the price at the max tick\n        require(sqrtPriceX96 >= MIN_SQRT_RATIO && sqrtPriceX96 < MAX_SQRT_RATIO, \"R\");\n        uint256 ratio = uint256(sqrtPriceX96) << 32;\n\n        uint256 r = ratio;\n        uint256 msb = 0;\n\n        assembly {\n            let f := shl(7, gt(r, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(6, gt(r, 0xFFFFFFFFFFFFFFFF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(5, gt(r, 0xFFFFFFFF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(4, gt(r, 0xFFFF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(3, gt(r, 0xFF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(2, gt(r, 0xF))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := shl(1, gt(r, 0x3))\n            msb := or(msb, f)\n            r := shr(f, r)\n        }\n        assembly {\n            let f := gt(r, 0x1)\n            msb := or(msb, f)\n        }\n\n        if (msb >= 128) {\n            r = ratio >> (msb - 127);\n        } else {\n            r = ratio << (127 - msb);\n        }\n\n        int256 log_2 = (int256(msb) - 128) << 64;\n\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(63, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(62, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(61, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(60, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(59, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(58, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(57, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(56, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(55, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(54, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(53, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(52, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(51, f))\n            r := shr(f, r)\n        }\n        assembly {\n            r := shr(127, mul(r, r))\n            let f := shr(128, r)\n            log_2 := or(log_2, shl(50, f))\n        }\n\n        int256 log_sqrt10001 = log_2 * 255738958999603826347141; // 128.128 number\n\n        int24 tickLow = int24((log_sqrt10001 - 3402992956809132418596140100660247210) >> 128);\n        int24 tickHi = int24((log_sqrt10001 + 291339464771989622907027621153398088495) >> 128);\n\n        tick = tickLow == tickHi ? tickLow : getSqrtRatioAtTick(tickHi) <= sqrtPriceX96 ? tickHi : tickLow;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 241,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "TickMath",
+        "similarity": 0.995,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/TickMath.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/libraries/TickMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 241,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 16,
+            "oldLines": 7,
+            "newStart": 16,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    /// at the given tick"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    function getSqrtRatioAtTick(int24 tick) internal pure returns (uint160 sqrtPriceX96) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        uint256 absTick = tick < 0 ? uint256(-int256(tick)) : uint256(int256(tick));"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        require(absTick <= uint256(MAX_TICK), \"T\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        require(absTick <= uint256(int256(MAX_TICK)), \"T\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        uint256 ratio = absTick & 0x1 != 0 ? 0xfffcb933bd6fad37aa2d162d1a594001 : 0x100000000000000000000000000000000;"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        if (absTick & 0x2 != 0) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

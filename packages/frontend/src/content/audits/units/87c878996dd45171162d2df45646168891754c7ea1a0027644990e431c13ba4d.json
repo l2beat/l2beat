@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "87c878996dd45171162d2df45646168891754c7ea1a0027644990e431c13ba4d",
+  "name": "Burn",
+  "kind": "library",
+  "lines": 17,
+  "source": "library Burn {\n    /// @notice Burns a given amount of ETH.\n    /// @param _amount Amount of ETH to burn.\n    function eth(uint256 _amount) internal {\n        new Burner{value: _amount}();\n    }\n\n    /// @notice Burns a given amount of gas.\n    /// @param _amount Amount of gas to burn.\n    function gas(uint256 _amount) internal view {\n        uint256 i = 0;\n        uint256 initialGas = gasleft();\n        while (initialGas - gasleft() < _amount) {\n            ++i;\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Burn",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

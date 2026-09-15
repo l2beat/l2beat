@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ee5fddf11b9aafbb3d70825e12e22078e16f28d341efefc8f4ec050d8eb17021",
+  "name": "Core",
+  "kind": "abstract",
+  "lines": 4,
+  "source": "abstract contract Core {\n    /// @notice Locked token balance for each account\n    mapping(address => uint256) public lockedBalance;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 2,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Core",
+        "similarity": 0.087,
+        "reportId": "safe/omniscia-zodiac-roles-v2-2023-05",
+        "repository": "gnosis/zodiac-modifier-roles",
+        "path": "packages/evm/contracts/Core.sol",
+        "commit": "23b782f781bbda750995934f6fdc01f242faadba",
+        "commitTimestamp": "2023-05-08T09:34:14Z",
+        "url": "https://github.com/gnosis/zodiac-modifier-roles/blob/23b782f781bbda750995934f6fdc01f242faadba/packages/evm/contracts/Core.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Post-audit review",
+        "coverage": "Review of all finding alleviations in the revised commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 2,
+        "removed": 19,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 8,
+        "unchanged": 2,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 28,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Core is Modifier {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    mapping(bytes32 => Role) internal roles;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    mapping(bytes32 => Allowance) public allowances;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 4, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    function _store(Role storage role, bytes32 key, ConditionFlat[] memory conditions, ExecutionOptions options)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        virtual;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    function _load(Role storage role, bytes32 key)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        returns (Condition memory, Consumption[] memory);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 14, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    function _accruedAllowance(Allowance memory allowance, uint256 timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        returns (uint128 balance, uint64 refillTimestamp);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function _key(address targetAddress, bytes4 selector) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        /*",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "         * Unoptimized version:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "         * bytes32(abi.encodePacked(targetAddress, selector))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "         */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        return bytes32(bytes20(targetAddress)) | (bytes32(selector) >> 160);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 27, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract Core {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Locked token balance for each account",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    mapping(address => uint256) public lockedBalance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 4, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

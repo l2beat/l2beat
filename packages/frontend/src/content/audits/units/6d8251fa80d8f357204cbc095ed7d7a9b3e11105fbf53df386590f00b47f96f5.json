@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6d8251fa80d8f357204cbc095ed7d7a9b3e11105fbf53df386590f00b47f96f5",
+  "name": "MIPS64State",
+  "kind": "library",
+  "lines": 24,
+  "source": "library MIPS64State {\n    struct CpuScalars {\n        uint64 pc;\n        uint64 nextPC;\n        uint64 lo;\n        uint64 hi;\n    }\n\n    struct Features {\n        bool supportWorkingSysGetRandom;\n    }\n\n    function assertExitedIsValid(uint32 _exited) internal pure {\n        if (_exited > 1) {\n            revert InvalidExitedValue();\n        }\n    }\n\n    function featuresForVersion(uint256 _version) internal pure returns (Features memory features_) {\n        if (_version >= 8) {\n            features_.supportWorkingSysGetRandom = true;\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7857e1b4c2b7fdc81c0a2267774df6bcfd492f64e2df807b193a44f7065ab818",
+  "name": "IUniswapV3PoolEvents",
+  "kind": "interface",
+  "lines": 115,
+  "source": "interface IUniswapV3PoolEvents {\n    /// @notice Emitted exactly once by a pool when #initialize is first called on the pool\n    /// @dev Mint/Burn/Swap cannot be emitted by the pool before Initialize\n    /// @param sqrtPriceX96 The initial sqrt price of the pool, as a Q64.96\n    /// @param tick The initial tick of the pool, i.e. log base 1.0001 of the starting price of the pool\n    event Initialize(uint160 sqrtPriceX96, int24 tick);\n\n    /// @notice Emitted when liquidity is minted for a given position\n    /// @param sender The address that minted the liquidity\n    /// @param owner The owner of the position and recipient of any minted liquidity\n    /// @param tickLower The lower tick of the position\n    /// @param tickUpper The upper tick of the position\n    /// @param amount The amount of liquidity minted to the position range\n    /// @param amount0 How much token0 was required for the minted liquidity\n    /// @param amount1 How much token1 was required for the minted liquidity\n    event Mint(\n        address sender,\n        address indexed owner,\n        int24 indexed tickLower,\n        int24 indexed tickUpper,\n        uint128 amount,\n        uint256 amount0,\n        uint256 amount1\n    );\n\n    /// @notice Emitted when fees are collected by the owner of a position\n    /// @dev Collect events may be emitted with zero amount0 and amount1 when the caller chooses not to collect fees\n    /// @param owner The owner of the position for which fees are collected\n    /// @param tickLower The lower tick of the position\n    /// @param tickUpper The upper tick of the position\n    /// @param amount0 The amount of token0 fees collected\n    /// @param amount1 The amount of token1 fees collected\n    event Collect(\n        address indexed owner,\n        address recipient,\n        int24 indexed tickLower,\n        int24 indexed tickUpper,\n        uint128 amount0,\n        uint128 amount1\n    );\n\n    /// @notice Emitted when a position's liquidity is removed\n    /// @dev Does not withdraw any fees earned by the liquidity position, which must be withdrawn via #collect\n    /// @param owner The owner of the position for which liquidity is removed\n    /// @param tickLower The lower tick of the position\n    /// @param tickUpper The upper tick of the position\n    /// @param amount The amount of liquidity to remove\n    /// @param amount0 The amount of token0 withdrawn\n    /// @param amount1 The amount of token1 withdrawn\n    event Burn(\n        address indexed owner,\n        int24 indexed tickLower,\n        int24 indexed tickUpper,\n        uint128 amount,\n        uint256 amount0,\n        uint256 amount1\n    );\n\n    /// @notice Emitted by the pool for any swaps between token0 and token1\n    /// @param sender The address that initiated the swap call, and that received the callback\n    /// @param recipient The address that received the output of the swap\n    /// @param amount0 The delta of the token0 balance of the pool\n    /// @param amount1 The delta of the token1 balance of the pool\n    /// @param sqrtPriceX96 The sqrt(price) of the pool after the swap, as a Q64.96\n    /// @param liquidity The liquidity of the pool after the swap\n    /// @param tick The log base 1.0001 of price of the pool after the swap\n    event Swap(\n        address indexed sender,\n        address indexed recipient,\n        int256 amount0,\n        int256 amount1,\n        uint160 sqrtPriceX96,\n        uint128 liquidity,\n        int24 tick\n    );\n\n    /// @notice Emitted by the pool for any flashes of token0/token1\n    /// @param sender The address that initiated the swap call, and that received the callback\n    /// @param recipient The address that received the tokens from flash\n    /// @param amount0 The amount of token0 that was flashed\n    /// @param amount1 The amount of token1 that was flashed\n    /// @param paid0 The amount of token0 paid for the flash, which can exceed the amount0 plus the fee\n    /// @param paid1 The amount of token1 paid for the flash, which can exceed the amount1 plus the fee\n    event Flash(\n        address indexed sender,\n        address indexed recipient,\n        uint256 amount0,\n        uint256 amount1,\n        uint256 paid0,\n        uint256 paid1\n    );\n\n    /// @notice Emitted by the pool for increases to the number of observations that can be stored\n    /// @dev observationCardinalityNext is not the observation cardinality until an observation is written at the index\n    /// just before a mint/swap/burn.\n    /// @param observationCardinalityNextOld The previous value of the next observation cardinality\n    /// @param observationCardinalityNextNew The updated value of the next observation cardinality\n    event IncreaseObservationCardinalityNext(\n        uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew\n    );\n\n    /// @notice Emitted when the protocol fee is changed by the pool\n    /// @param feeProtocol0Old The previous value of the token0 protocol fee\n    /// @param feeProtocol1Old The previous value of the token1 protocol fee\n    /// @param feeProtocol0New The updated value of the token0 protocol fee\n    /// @param feeProtocol1New The updated value of the token1 protocol fee\n    event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New);\n\n    /// @notice Emitted when the collected protocol fees are withdrawn by the factory owner\n    /// @param sender The address that collects the protocol fees\n    /// @param recipient The address that receives the collected protocol fees\n    /// @param amount0 The amount of token0 protocol fees that is withdrawn\n    /// @param amount0 The amount of token1 protocol fees that is withdrawn\n    event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 114,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "IUniswapV3PoolEvents",
+        "similarity": 0.99,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+        "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+        "commitTimestamp": "2021-03-16T19:28:04Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/7445e61f17a7c1233bcabcdc920f0473793f6d78/contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "client-reported fix for Minor findings; auditor status left as Info (not marked verified)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 114,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 62,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "    /// @param amount0 The delta of the token0 balance of the pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    /// @param amount1 The delta of the token1 balance of the pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    /// @param sqrtPriceX96 The sqrt(price) of the pool after the swap, as a Q64.96"
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @param liquidity The liquidity of the pool after the swap",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 66,
+                "text": "    /// @param tick The log base 1.0001 of price of the pool after the swap"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 67,
+                "text": "    event Swap("
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 68,
+                "text": "        address indexed sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 6,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 70,
+                "text": "        int256 amount0,"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 71,
+                "text": "        int256 amount1,"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 72,
+                "text": "        uint160 sqrtPriceX96,"
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        uint128 liquidity,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "        int24 tick"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "    );" },
+              { "type": " ", "oldLine": 74, "newLine": 76, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 114,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IUniswapV3PoolEvents",
+        "similarity": 0.99,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+        "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+        "commitTimestamp": "2021-03-16T19:28:04Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/7445e61f17a7c1233bcabcdc920f0473793f6d78/contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "client-reported fix for Minor findings; auditor status left as Info (not marked verified)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 114,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 62,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "    /// @param amount0 The delta of the token0 balance of the pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    /// @param amount1 The delta of the token1 balance of the pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    /// @param sqrtPriceX96 The sqrt(price) of the pool after the swap, as a Q64.96"
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @param liquidity The liquidity of the pool after the swap",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 66,
+                "text": "    /// @param tick The log base 1.0001 of price of the pool after the swap"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 67,
+                "text": "    event Swap("
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 68,
+                "text": "        address indexed sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 6,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 70,
+                "text": "        int256 amount0,"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 71,
+                "text": "        int256 amount1,"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 72,
+                "text": "        uint160 sqrtPriceX96,"
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        uint128 liquidity,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "        int24 tick"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "    );" },
+              { "type": " ", "oldLine": 74, "newLine": 76, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

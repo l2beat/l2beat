@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "00a54b5f56d8637838f633fd4ad4fdae999b664d3f7c9973ac5f23e81510d3bc",
+  "name": "PeripheryPaymentsExtended",
+  "kind": "abstract",
+  "lines": 21,
+  "source": "abstract contract PeripheryPaymentsExtended is IPeripheryPaymentsExtended, PeripheryPayments {\n    /// @inheritdoc IPeripheryPaymentsExtended\n    function unwrapWETH9(uint256 amountMinimum) external payable override {\n        unwrapWETH9(amountMinimum, msg.sender);\n    }\n\n    /// @inheritdoc IPeripheryPaymentsExtended\n    function wrapETH(uint256 value) external payable override {\n        IWETH9(WETH9).deposit{value: value}();\n    }\n\n    /// @inheritdoc IPeripheryPaymentsExtended\n    function sweepToken(address token, uint256 amountMinimum) external payable override {\n        sweepToken(token, amountMinimum, msg.sender);\n    }\n\n    /// @inheritdoc IPeripheryPaymentsExtended\n    function pull(address token, uint256 value) external payable override {\n        TransferHelper.safeTransferFrom(token, msg.sender, address(this), value);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

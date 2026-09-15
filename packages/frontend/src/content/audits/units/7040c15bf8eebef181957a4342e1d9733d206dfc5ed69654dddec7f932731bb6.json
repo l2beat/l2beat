@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7040c15bf8eebef181957a4342e1d9733d206dfc5ed69654dddec7f932731bb6",
+  "name": "SelfAuthorized",
+  "kind": "abstract",
+  "lines": 11,
+  "source": "abstract contract SelfAuthorized {\n    function requireSelfCall() private view {\n        require(msg.sender == address(this), \"GS031\");\n    }\n\n    modifier authorized() {\n        // Modifiers are copied around during compilation. This is a function call as it minimized the bytecode size\n        requireSelfCall();\n        _;\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 11,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "SelfAuthorized",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

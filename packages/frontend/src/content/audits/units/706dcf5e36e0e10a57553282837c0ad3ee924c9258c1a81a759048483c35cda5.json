@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "706dcf5e36e0e10a57553282837c0ad3ee924c9258c1a81a759048483c35cda5",
+  "name": "RiscZeroSetVerifier",
+  "kind": "contract",
+  "lines": 105,
+  "source": "contract RiscZeroSetVerifier is IRiscZeroSetVerifier {\n    using ReceiptClaimLib for ReceiptClaim;\n\n    /// Semantic version of the RISC Zero Set Verifier.\n    string public constant VERSION = \"0.9.0\";\n\n    /// Domain-separating tag value prepended to a digest before being hashed to form leaf node.\n    ///\n    /// NOTE: It is explicitly not 32 bytes to avoid any chance of collision with a node value.\n    bytes8 internal constant LEAF_TAG = bytes8(\"LEAF_TAG\");\n\n    IRiscZeroVerifier public immutable VERIFIER;\n\n    /// @notice A short key attached to the seal to select the correct verifier implementation.\n    /// @dev The selector is taken from the hash of the verifier parameters including the set builder\n    ///      guest image ID. If two receipts have different selectors (i.e. different verifier\n    ///      parameters), then it can generally be assumed that they need distinct verifier\n    ///      implementations. This is used as part of the RISC Zero versioning mechanism.\n    ///\n    ///      A selector is not intended to be collision resistant, in that it is possible to find\n    ///      two preimages that result in the same selector. This is acceptable since it's purpose\n    ///      to a route a request among a set of trusted verifiers, and to make errors of sending a\n    ///      receipt to a mismatching verifiers easier to debug. It is analogous to the ABI\n    ///      function selectors.\n    bytes4 public immutable SELECTOR;\n\n    bytes32 private immutable IMAGE_ID;\n    string private imageUrl;\n\n    mapping(bytes32 => bool) private merkleRoots;\n\n    constructor(IRiscZeroVerifier verifier, bytes32 imageId, string memory _imageUrl) {\n        if (address(verifier) == address(0)) {\n            revert VerifierAddressZero();\n        }\n        VERIFIER = verifier;\n        IMAGE_ID = imageId;\n        imageUrl = _imageUrl;\n\n        SELECTOR = RiscZeroSetVerifierLib.selector(imageId);\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verify(bytes calldata seal, bytes32 imageId, bytes32 journalDigest) public view {\n        _verifyIntegrity(seal, ReceiptClaimLib.ok(imageId, journalDigest).digest());\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verifyIntegrity(Receipt calldata receipt) public view {\n        _verifyIntegrity(receipt.seal, receipt.claimDigest);\n    }\n\n    /// @notice internal implementation of verifyIntegrity, factored to avoid copying calldata bytes to memory.\n    function _verifyIntegrity(bytes calldata seal, bytes32 claimDigest) internal view {\n        Seal memory setVerifierSeal;\n\n        // Check that the seal has a matching selector. Mismatch generally  indicates that the\n        // prover and this verifier are using different parameters, and so the verification\n        // will not succeed.\n        if (SELECTOR != bytes4(seal[:4])) {\n            revert SelectorMismatch({received: bytes4(seal[:4]), expected: SELECTOR});\n        }\n\n        // Check if the seal is not empty and decode it, otherwise use an empty array\n        // TODO(victor): Can we verify the Merkle inclusion without abi decoding into memory?\n        if (seal.length > 4) {\n            setVerifierSeal = abi.decode(seal[4:], (Seal));\n        }\n\n        // Hash the claim digest, prepending a leaf tag as a domain separator.\n        bytes32 leaf = keccak256(abi.encodePacked(LEAF_TAG, claimDigest));\n\n        // Compute the root and verify it against the stored Merkle roots if a\n        // root seal was not provided, or validate the root seal.\n        // NOTE: If an invalid root seal was provided, the verify will fail\n        // even if the root was already verified earlier and stored in state.\n        bytes32 root = MerkleProof.processProof(setVerifierSeal.path, leaf);\n        if (setVerifierSeal.rootSeal.length > 0) {\n            VERIFIER.verify(setVerifierSeal.rootSeal, IMAGE_ID, sha256(_encodeJournal(root)));\n        } else if (!merkleRoots[root]) {\n            revert VerificationFailed();\n        }\n    }\n\n    function _encodeJournal(bytes32 root) internal view returns (bytes memory) {\n        // The journal is the encoding of the guest state for a finalized Merkle mountain range.\n        // See GuestState in the risc0-aggregation crate for more information.\n        return abi.encodePacked(IMAGE_ID, uint256(1 << 255), root);\n    }\n\n    function submitMerkleRoot(bytes32 root, bytes calldata seal) external {\n        VERIFIER.verify(seal, IMAGE_ID, sha256(_encodeJournal(root)));\n        merkleRoots[root] = true;\n\n        emit VerifiedRoot(root, seal);\n    }\n\n    function containsRoot(bytes32 root) external view returns (bool) {\n        return merkleRoots[root];\n    }\n\n    function imageInfo() external view returns (bytes32, string memory) {\n        return (IMAGE_ID, imageUrl);\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 90,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "RiscZeroSetVerifier",
+        "similarity": 0.784,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 15,
+        "removed": 7,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 6,
+        "unchanged": 90,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 17,
+            "newStart": 1,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract RiscZeroSetVerifier is IRiscZeroSetVerifier {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using ReceiptClaimLib for ReceiptClaim;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// Semantic version of the the RISC Zero Set Verifier.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    string public constant VERSION = \"0.1.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// Semantic version of the RISC Zero Set Verifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    string public constant VERSION = \"0.9.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// Domain-separating tag value prepended to a digest before being hashed to form leaf node.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "    ///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// NOTE: It is explicitly not 32 bytes to avoid any chance of collision with a node value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    bytes8 internal constant LEAF_TAG = bytes8(\"LEAF_TAG\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 11, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 12,
+                "text": "    IRiscZeroVerifier public immutable VERIFIER;"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 14,
+                "text": "    /// @notice A short key attached to the seal to select the correct verifier implementation."
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @dev The selector is taken from the hash of the verifier parameters including the Groth16",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    ///      verification key and the control IDs that commit to the RISC Zero circuits. If two",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///      receipts have different selectors (i.e. different verifier parameters), then it can",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ///      generally be assumed that they need distinct verifier implementations. This is used as",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    ///      part of the RISC Zero versioning mechanism.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @dev The selector is taken from the hash of the verifier parameters including the set builder",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    ///      guest image ID. If two receipts have different selectors (i.e. different verifier",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    ///      parameters), then it can generally be assumed that they need distinct verifier",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    ///      implementations. This is used as part of the RISC Zero versioning mechanism.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 19, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 20,
+                "text": "    ///      A selector is not intended to be collision resistant, in that it is possible to find"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "    ///      two preimages that result in the same selector. This is acceptable since it's purpose"
+              }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 6,
+            "newStart": 30,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 30,
+                "text": "    mapping(bytes32 => bool) private merkleRoots;"
+              },
+              { "type": " ", "oldLine": 27, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 32,
+                "text": "    constructor(IRiscZeroVerifier verifier, bytes32 imageId, string memory _imageUrl) {"
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        if (address(verifier) == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "            revert VerifierAddressZero();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 36,
+                "text": "        VERIFIER = verifier;"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 37,
+                "text": "        IMAGE_ID = imageId;"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 38,
+                "text": "        imageUrl = _imageUrl;"
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 52,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 45, "newLine": 52, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 53,
+                "text": "    /// @notice internal implementation of verifyIntegrity, factored to avoid copying calldata bytes to memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 54,
+                "text": "    function _verifyIntegrity(bytes calldata seal, bytes32 claimDigest) internal view {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        Seal_0 memory setVerifierSeal;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        Seal memory setVerifierSeal;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 56, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 57,
+                "text": "        // Check that the seal has a matching selector. Mismatch generally  indicates that the"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 58,
+                "text": "        // prover and this verifier are using different parameters, and so the verification"
+              }
+            ]
+          },
+          {
+            "oldStart": 57,
+            "oldLines": 26,
+            "newStart": 64,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 64,
+                "text": "        // Check if the seal is not empty and decode it, otherwise use an empty array"
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 65,
+                "text": "        // TODO(victor): Can we verify the Merkle inclusion without abi decoding into memory?"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 66,
+                "text": "        if (seal.length > 4) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            setVerifierSeal = abi.decode(seal[4:], (Seal_0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "            setVerifierSeal = abi.decode(seal[4:], (Seal));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 68,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 69, "text": "" },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        // Hash the claim digest, prepending a leaf tag as a domain separator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        bytes32 leaf = keccak256(abi.encodePacked(LEAF_TAG, claimDigest));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 72, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 73,
+                "text": "        // Compute the root and verify it against the stored Merkle roots if a"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 74,
+                "text": "        // root seal was not provided, or validate the root seal."
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 75,
+                "text": "        // NOTE: If an invalid root seal was provided, the verify will fail"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 76,
+                "text": "        // even if the root was already verified earlier and stored in state."
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        bytes32 root = MerkleProof.processProof(setVerifierSeal.path, claimDigest);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        bytes32 root = MerkleProof.processProof(setVerifierSeal.path, leaf);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 78,
+                "text": "        if (setVerifierSeal.rootSeal.length > 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            VERIFIER.verify(setVerifierSeal.rootSeal, IMAGE_ID, sha256(abi.encode(IMAGE_ID, root)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "            VERIFIER.verify(setVerifierSeal.rootSeal, IMAGE_ID, sha256(_encodeJournal(root)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 80,
+                "text": "        } else if (!merkleRoots[root]) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 81,
+                "text": "            revert VerificationFailed();"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 82,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 74, "newLine": 84, "text": "" },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function _encodeJournal(bytes32 root) internal view returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        // The journal is the encoding of the guest state for a finalized Merkle mountain range.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        // See GuestState in the risc0-aggregation crate for more information.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        return abi.encodePacked(IMAGE_ID, uint256(1 << 255), root);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 89, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 90, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 91,
+                "text": "    function submitMerkleRoot(bytes32 root, bytes calldata seal) external {"
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        VERIFIER.verify(seal, IMAGE_ID, sha256(abi.encode(IMAGE_ID, root)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        VERIFIER.verify(seal, IMAGE_ID, sha256(_encodeJournal(root)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 93,
+                "text": "        merkleRoots[root] = true;"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 94, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        emit VerifiedRoot(root);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        emit VerifiedRoot(root, seal);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 96, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 97, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 98,
+                "text": "    function containsRoot(bytes32 root) external view returns (bool) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

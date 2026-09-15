@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d652b8178d398b2061406687eafc37ba270cd563e1dcf23d426ea699d5721576",
+  "name": "BalanceDeltaLibrary",
+  "kind": "library",
+  "lines": 16,
+  "source": "library BalanceDeltaLibrary {\n    /// @notice A BalanceDelta of 0\n    BalanceDelta public constant ZERO_DELTA = BalanceDelta.wrap(0);\n\n    function amount0(BalanceDelta balanceDelta) internal pure returns (int128 _amount0) {\n        assembly (\"memory-safe\") {\n            _amount0 := sar(128, balanceDelta)\n        }\n    }\n\n    function amount1(BalanceDelta balanceDelta) internal pure returns (int128 _amount1) {\n        assembly (\"memory-safe\") {\n            _amount1 := signextend(15, balanceDelta)\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

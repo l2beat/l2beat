@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "901c0914e2cd443867393899731b8738dfaf0b357b7773fe62b9feca7b72c730",
+  "name": "KailuaGame",
+  "kind": "contract",
+  "lines": 218,
+  "source": "contract KailuaGame is KailuaTournament {\n    /// @notice Semantic version.\n    /// @custom:semver 1.2.0\n    string public constant version = \"1.2.0\";\n\n    // ------------------------------\n    // Immutable configuration\n    // ------------------------------\n\n    /// @notice The duration after which the proposal is accepted\n    Duration public immutable MAX_CLOCK_DURATION;\n\n    /// @notice The timestamp of the genesis l2 block\n    uint256 public immutable GENESIS_TIME_STAMP;\n\n    /// @notice The time between l2 blocks\n    uint256 public immutable L2_BLOCK_TIME;\n\n    constructor(\n        KailuaTreasury _kailuaTreasury,\n        uint256 _genesisTimeStamp,\n        uint256 _l2BlockTime,\n        Duration _maxClockDuration\n    )\n        KailuaTournament(\n            IKailuaTreasury(address(_kailuaTreasury)),\n            _kailuaTreasury.KAILUA_VERIFIER(),\n            _kailuaTreasury.PROPOSAL_OUTPUT_COUNT(),\n            _kailuaTreasury.OUTPUT_BLOCK_SPAN(),\n            _kailuaTreasury.GAME_TYPE(),\n            _kailuaTreasury.OPTIMISM_PORTAL()\n        )\n    {\n        GENESIS_TIME_STAMP = _genesisTimeStamp;\n        L2_BLOCK_TIME = _l2BlockTime;\n        MAX_CLOCK_DURATION = _maxClockDuration;\n    }\n\n    // ------------------------------\n    // IInitializable implementation\n    // ------------------------------\n\n    function initialize() external payable override {\n        super.initializeInternal();\n\n        // Revert if the calldata size is not the expected length.\n        //\n        // This is to prevent adding extra or omitting bytes from to `extraData` that result in a different game UUID\n        // in the factory, but are not used by the game, which would allow for multiple dispute games for the same\n        // output proposal to be created.\n        //\n        // Expected length: 0x72\n        // - 0x04 selector                      0x00 0x04\n        // - 0x14 creator address               0x04 0x18\n        // - 0x20 root claim                    0x18 0x38\n        // - 0x20 l1 head                       0x38 0x58\n        // - 0x18 extraData:                    0x58 0x70\n        //      + 0x08 l2BlockNumber            0x58 0x60\n        //      + 0x08 parentGameIndex          0x60 0x68\n        //      + 0x08 duplicationCounter       0x68 0x70\n        // - 0x02 CWIA bytes                    0x70 0x72\n        if (msg.data.length != 0x72) {\n            revert BadExtraData();\n        }\n\n        // Only allow monotonic duplication counter\n        uint256 duplicationCounter_ = duplicationCounter();\n        if (duplicationCounter_ > 0) {\n            bytes memory extra = abi.encodePacked(msg.data[0x58:0x68], uint64(duplicationCounter_ - 1));\n            (IDisputeGame previousDuplicate,) = DISPUTE_GAME_FACTORY.games(GAME_TYPE, rootClaim(), extra);\n            if (address(previousDuplicate) == address(0x0)) {\n                revert InvalidDuplicationCounter();\n            }\n        }\n\n        // Do not initialize a game that does not cover the required number of l2 blocks\n        KailuaTournament parentGame_ = parentGame();\n        if (l2BlockNumber() != parentGame_.l2BlockNumber() + PROPOSAL_OUTPUT_COUNT * OUTPUT_BLOCK_SPAN) {\n            revert BlockNumberMismatch(parentGame_.l2BlockNumber(), l2BlockNumber());\n        }\n\n        // Store the intermediate output blob hashes\n        for (uint256 i = 0; i < PROPOSAL_BLOBS; i++) {\n            bytes32 hash = blobhash(i);\n            if (hash == 0x0) {\n                revert BlobHashMissing(i, PROPOSAL_BLOBS);\n            }\n            proposalBlobHashes.push(Hash.wrap(hash));\n        }\n\n        // Verify that parent game is known by the treasury\n        if (KAILUA_TREASURY.proposerOf(address(parentGame_)) == address(0x0)) {\n            revert InvalidParent();\n        }\n\n        // If a proof was submitted, do not allow bad proposals to be created\n        if (!parentGame_.isViableSignature(signature())) {\n            revert ProvenFaulty();\n        }\n\n        // Register this new game in the parent game's contract\n        parentGame_.appendChild();\n\n        // Do not permit proposals if l2 block time is ahead of the l1 block time\n        if (block.timestamp < minCreationTime().raw()) {\n            revert ProposalGapRemaining(block.timestamp, minCreationTime().raw());\n        }\n    }\n\n    // ------------------------------\n    // IDisputeGame implementation\n    // ------------------------------\n\n    function extraData() external pure returns (bytes memory extraData_) {\n        // The extra data starts at the second word within the cwia calldata and\n        // is 24 bytes long.\n        extraData_ = _getArgBytes(0x54, 0x18);\n    }\n\n    function resolve() external returns (GameStatus status_) {\n        // INVARIANT: Resolution cannot occur unless the game is currently in progress.\n        if (status != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // INVARIANT: Optimistic resolution cannot occur unless parent game is resolved.\n        KailuaTournament parentGame_ = parentGame();\n        if (parentGame_.status() != GameStatus.DEFENDER_WINS) {\n            revert OutOfOrderResolution();\n        }\n\n        // INVARIANT: Cannot resolve unless proven valid or the clock has expired\n        if (parentGame_.validChildSignature() != 0) {\n            if (signature() != parentGame_.validChildSignature()) {\n                revert ProvenFaulty();\n            }\n        } else if (getChallengerDuration(block.timestamp).raw() > 0) {\n            revert ClockNotExpired();\n        }\n\n        // INVARIANT: Can only resolve the last remaining child\n        if (parentGame_.pruneChildren(parentGame_.childCount() * 2) != this) {\n            revert NotProven();\n        }\n\n        // Mark resolution timestamp\n        resolvedAt = Timestamp.wrap(uint64(block.timestamp));\n\n        // Update the status and emit the resolved event, note that we're performing a storage update here.\n        emit Resolved(status = status_ = GameStatus.DEFENDER_WINS);\n\n        // Update lastResolved\n        KAILUA_TREASURY.updateLastResolved();\n    }\n\n    // ------------------------------\n    // Immutable instance data\n    // ------------------------------\n\n    /// @notice The index of the parent game in the `DisputeGameFactory`.\n    function parentGameIndex() public pure returns (uint64 parentGameIndex_) {\n        parentGameIndex_ = _getArgUint64(0x5C);\n    }\n\n    /// @notice The number of duplicate proposals preceeding this one.\n    function duplicationCounter() public pure returns (uint64 duplicationCounter_) {\n        duplicationCounter_ = _getArgUint64(0x64);\n    }\n\n    /// @inheritdoc KailuaTournament\n    function parentGame() public view override returns (KailuaTournament parentGame_) {\n        (,, IDisputeGame parentDisputeGame) = DISPUTE_GAME_FACTORY.gameAtIndex(parentGameIndex());\n\n        // Interpret parent game as another instance of this game type\n        parentGame_ = KailuaTournament(address(parentDisputeGame));\n    }\n\n    // ------------------------------\n    // Fault proving\n    // ------------------------------\n\n    /// @inheritdoc KailuaTournament\n    function verifyIntermediateOutput(\n        uint64 outputNumber,\n        uint256 outputFe,\n        bytes calldata blobCommitment,\n        bytes calldata kzgProof\n    ) external view override returns (bool success) {\n        uint256 blobIndex = KailuaKZGLib.blobIndex(outputNumber);\n        uint32 blobPosition = KailuaKZGLib.fieldElementIndex(outputNumber);\n        bytes32 proposalBlobHash = KailuaKZGLib.versionedKZGHash(blobCommitment);\n        // Note: Only known blobs can be used to validate an intermediate output\n        if (proposalBlobHash != proposalBlobHashes[blobIndex].raw()) {\n            success = false;\n        } else {\n            success =\n                KailuaKZGLib.verifyKZGBlobProof(proposalBlobHash, blobPosition, outputFe, blobCommitment, kzgProof);\n        }\n    }\n\n    /// @inheritdoc KailuaTournament\n    function getChallengerDuration(uint256 asOfTimestamp) public view override returns (Duration duration_) {\n        // INVARIANT: The game must be in progress to query the remaining time to respond to a given claim.\n        if (status != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // Compute the duration elapsed of the potential challenger's clock.\n        uint64 elapsed = uint64(asOfTimestamp - createdAt.raw());\n        uint64 maximum = MAX_CLOCK_DURATION.raw();\n        duration_ = elapsed >= maximum ? Duration.wrap(0) : Duration.wrap(maximum - elapsed);\n    }\n\n    /// @inheritdoc KailuaTournament\n    function minCreationTime() public view override returns (Timestamp minCreationTime_) {\n        minCreationTime_ = Timestamp.wrap(uint64(GENESIS_TIME_STAMP + l2BlockNumber() * L2_BLOCK_TIME));\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 218,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "KailuaGame",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaGame.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaGame.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 218,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 40,
+            "oldLines": 7,
+            "newStart": 40,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    // IInitializable implementation"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    // ------------------------------"
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @inheritdoc IInitializable",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 43,
+                "text": "    function initialize() external payable override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 44,
+                "text": "        super.initializeInternal();"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 45, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 112,
+            "oldLines": 14,
+            "newStart": 111,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 111,
+                "text": "    // IDisputeGame implementation"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 112,
+                "text": "    // ------------------------------"
+              },
+              { "type": " ", "oldLine": 114, "newLine": 113, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    /// @inheritdoc IDisputeGame",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 114,
+                "text": "    function extraData() external pure returns (bytes memory extraData_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 115,
+                "text": "        // The extra data starts at the second word within the cwia calldata and"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 116,
+                "text": "        // is 24 bytes long."
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 117,
+                "text": "        extraData_ = _getArgBytes(0x54, 0x18);"
+              },
+              { "type": " ", "oldLine": 120, "newLine": 118, "text": "    }" },
+              { "type": " ", "oldLine": 121, "newLine": 119, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /// @inheritdoc IDisputeGame",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 120,
+                "text": "    function resolve() external returns (GameStatus status_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 121,
+                "text": "        // INVARIANT: Resolution cannot occur unless the game is currently in progress."
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 122,
+                "text": "        if (status != GameStatus.IN_PROGRESS) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

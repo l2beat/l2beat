@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77e802321fe7d6edc36835fa045b3f034eed8eb1f8544668e7d28b10f305a7b9",
+  "name": "LibClock",
+  "kind": "library",
+  "lines": 41,
+  "source": "library LibClock {\n    /// @notice Packs a `Duration` and `Timestamp` into a `Clock` type.\n    /// @param _duration The `Duration` to pack into the `Clock` type.\n    /// @param _timestamp The `Timestamp` to pack into the `Clock` type.\n    /// @return clock_ The `Clock` containing the `_duration` and `_timestamp`.\n    function wrap(Duration _duration, Timestamp _timestamp) internal pure returns (Clock clock_) {\n        assembly {\n            clock_ := or(shl(0x40, _duration), _timestamp)\n        }\n    }\n\n    /// @notice Pull the `Duration` out of a `Clock` type.\n    /// @param _clock The `Clock` type to pull the `Duration` out of.\n    /// @return duration_ The `Duration` pulled out of `_clock`.\n    function duration(Clock _clock) internal pure returns (Duration duration_) {\n        // Shift the high-order 64 bits into the low-order 64 bits, leaving only the `duration`.\n        assembly {\n            duration_ := shr(0x40, _clock)\n        }\n    }\n\n    /// @notice Pull the `Timestamp` out of a `Clock` type.\n    /// @param _clock The `Clock` type to pull the `Timestamp` out of.\n    /// @return timestamp_ The `Timestamp` pulled out of `_clock`.\n    function timestamp(Clock _clock) internal pure returns (Timestamp timestamp_) {\n        // Clean the high-order 192 bits by shifting the clock left and then right again, leaving\n        // only the `timestamp`.\n        assembly {\n            timestamp_ := shr(0xC0, shl(0xC0, _clock))\n        }\n    }\n\n    /// @notice Get the value of a `Clock` type in the form of the underlying uint128.\n    /// @param _clock The `Clock` type to get the value of.\n    /// @return clock_ The value of the `Clock` type as a uint128 type.\n    function raw(Clock _clock) internal pure returns (uint128 clock_) {\n        assembly {\n            clock_ := _clock\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 41,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibClock",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

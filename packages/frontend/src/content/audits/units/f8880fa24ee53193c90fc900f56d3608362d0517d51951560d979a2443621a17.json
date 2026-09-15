@@ -1,0 +1,1593 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f8880fa24ee53193c90fc900f56d3608362d0517d51951560d979a2443621a17",
+  "name": "UniswapV3Pool",
+  "kind": "contract",
+  "lines": 823,
+  "source": "contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {\n    using LowGasSafeMath for uint256;\n    using LowGasSafeMath for int256;\n    using SafeCast for uint256;\n    using SafeCast for int256;\n    using Tick for mapping(int24 => Tick.Info);\n    using TickBitmap for mapping(int16 => uint256);\n    using Position for mapping(bytes32 => Position.Info);\n    using Position for Position.Info;\n    using Oracle for Oracle.Observation[65535];\n\n    /// @inheritdoc IUniswapV3PoolImmutables\n    address public immutable override factory;\n    /// @inheritdoc IUniswapV3PoolImmutables\n    address public immutable override token0;\n    /// @inheritdoc IUniswapV3PoolImmutables\n    address public immutable override token1;\n    /// @inheritdoc IUniswapV3PoolImmutables\n    uint24 public immutable override fee;\n\n    /// @inheritdoc IUniswapV3PoolImmutables\n    int24 public immutable override tickSpacing;\n\n    /// @inheritdoc IUniswapV3PoolImmutables\n    uint128 public immutable override maxLiquidityPerTick;\n\n    struct Slot0 {\n        // the current price\n        uint160 sqrtPriceX96;\n        // the current tick\n        int24 tick;\n        // the most-recently updated index of the observations array\n        uint16 observationIndex;\n        // the current maximum number of observations that are being stored\n        uint16 observationCardinality;\n        // the next maximum number of observations to store, triggered in observations.write\n        uint16 observationCardinalityNext;\n        // the current protocol fee as a percentage of the swap fee taken on withdrawal\n        // represented as an integer denominator (1/x)%\n        uint8 feeProtocol;\n        // whether the pool is locked\n        bool unlocked;\n    }\n    /// @inheritdoc IUniswapV3PoolState\n\n    Slot0 public override slot0;\n\n    /// @inheritdoc IUniswapV3PoolState\n    uint256 public override feeGrowthGlobal0X128;\n    /// @inheritdoc IUniswapV3PoolState\n    uint256 public override feeGrowthGlobal1X128;\n\n    // accumulated protocol fees in token0/token1 units\n    struct ProtocolFees {\n        uint128 token0;\n        uint128 token1;\n    }\n    /// @inheritdoc IUniswapV3PoolState\n\n    ProtocolFees public override protocolFees;\n\n    /// @inheritdoc IUniswapV3PoolState\n    uint128 public override liquidity;\n\n    /// @inheritdoc IUniswapV3PoolState\n    mapping(int24 => Tick.Info) public override ticks;\n    /// @inheritdoc IUniswapV3PoolState\n    mapping(int16 => uint256) public override tickBitmap;\n    /// @inheritdoc IUniswapV3PoolState\n    mapping(bytes32 => Position.Info) public override positions;\n    /// @inheritdoc IUniswapV3PoolState\n    Oracle.Observation[65535] public override observations;\n\n    /// @dev Mutually exclusive reentrancy protection into the pool to/from a method. This method also prevents entrance\n    /// to a function before the pool is initialized. The reentrancy guard is required throughout the contract because\n    /// we use balance checks to determine the payment status of interactions such as mint, swap and flash.\n    modifier lock() {\n        require(slot0.unlocked, \"LOK\");\n        slot0.unlocked = false;\n        _;\n        slot0.unlocked = true;\n    }\n\n    /// @dev Prevents calling a function from anyone except the address returned by IUniswapV3Factory#owner()\n    modifier onlyFactoryOwner() {\n        require(msg.sender == IUniswapV3Factory(factory).owner());\n        _;\n    }\n\n    constructor() {\n        int24 _tickSpacing;\n        (factory, token0, token1, fee, _tickSpacing) = IUniswapV3PoolDeployer(msg.sender).parameters();\n        tickSpacing = _tickSpacing;\n\n        maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);\n    }\n\n    /// @dev Common checks for valid tick inputs.\n    function checkTicks(int24 tickLower, int24 tickUpper) private pure {\n        require(tickLower < tickUpper, \"TLU\");\n        require(tickLower >= TickMath.MIN_TICK, \"TLM\");\n        require(tickUpper <= TickMath.MAX_TICK, \"TUM\");\n    }\n\n    /// @dev Returns the block timestamp truncated to 32 bits, i.e. mod 2**32. This method is overridden in tests.\n    function _blockTimestamp() internal view virtual returns (uint32) {\n        return uint32(block.timestamp); // truncation is desired\n    }\n\n    /// @dev Get the pool's balance of token0\n    /// @dev This function is gas optimized to avoid a redundant extcodesize check in addition to the returndatasize\n    /// check\n    function balance0() private view returns (uint256) {\n        (bool success, bytes memory data) =\n            token0.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector, address(this)));\n        require(success && data.length >= 32);\n        return abi.decode(data, (uint256));\n    }\n\n    /// @dev Get the pool's balance of token1\n    /// @dev This function is gas optimized to avoid a redundant extcodesize check in addition to the returndatasize\n    /// check\n    function balance1() private view returns (uint256) {\n        (bool success, bytes memory data) =\n            token1.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector, address(this)));\n        require(success && data.length >= 32);\n        return abi.decode(data, (uint256));\n    }\n\n    /// @inheritdoc IUniswapV3PoolDerivedState\n    function snapshotCumulativesInside(int24 tickLower, int24 tickUpper)\n        external\n        view\n        override\n        noDelegateCall\n        returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)\n    {\n        checkTicks(tickLower, tickUpper);\n\n        int56 tickCumulativeLower;\n        int56 tickCumulativeUpper;\n        uint160 secondsPerLiquidityOutsideLowerX128;\n        uint160 secondsPerLiquidityOutsideUpperX128;\n        uint32 secondsOutsideLower;\n        uint32 secondsOutsideUpper;\n\n        {\n            Tick.Info storage lower = ticks[tickLower];\n            Tick.Info storage upper = ticks[tickUpper];\n            bool initializedLower;\n            (tickCumulativeLower, secondsPerLiquidityOutsideLowerX128, secondsOutsideLower, initializedLower) = (\n                lower.tickCumulativeOutside,\n                lower.secondsPerLiquidityOutsideX128,\n                lower.secondsOutside,\n                lower.initialized\n            );\n            require(initializedLower);\n\n            bool initializedUpper;\n            (tickCumulativeUpper, secondsPerLiquidityOutsideUpperX128, secondsOutsideUpper, initializedUpper) = (\n                upper.tickCumulativeOutside,\n                upper.secondsPerLiquidityOutsideX128,\n                upper.secondsOutside,\n                upper.initialized\n            );\n            require(initializedUpper);\n        }\n\n        Slot0 memory _slot0 = slot0;\n\n        if (_slot0.tick < tickLower) {\n            return (\n                tickCumulativeLower - tickCumulativeUpper,\n                secondsPerLiquidityOutsideLowerX128 - secondsPerLiquidityOutsideUpperX128,\n                secondsOutsideLower - secondsOutsideUpper\n            );\n        } else if (_slot0.tick < tickUpper) {\n            uint32 time = _blockTimestamp();\n            (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) = observations.observeSingle(\n                time, 0, _slot0.tick, _slot0.observationIndex, liquidity, _slot0.observationCardinality\n            );\n            return (\n                tickCumulative - tickCumulativeLower - tickCumulativeUpper,\n                secondsPerLiquidityCumulativeX128 - secondsPerLiquidityOutsideLowerX128\n                    - secondsPerLiquidityOutsideUpperX128,\n                time - secondsOutsideLower - secondsOutsideUpper\n            );\n        } else {\n            return (\n                tickCumulativeUpper - tickCumulativeLower,\n                secondsPerLiquidityOutsideUpperX128 - secondsPerLiquidityOutsideLowerX128,\n                secondsOutsideUpper - secondsOutsideLower\n            );\n        }\n    }\n\n    /// @inheritdoc IUniswapV3PoolDerivedState\n    function observe(uint32[] calldata secondsAgos)\n        external\n        view\n        override\n        noDelegateCall\n        returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s)\n    {\n        return observations.observe(\n            _blockTimestamp(), secondsAgos, slot0.tick, slot0.observationIndex, liquidity, slot0.observationCardinality\n        );\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    function increaseObservationCardinalityNext(uint16 observationCardinalityNext)\n        external\n        override\n        lock\n        noDelegateCall\n    {\n        uint16 observationCardinalityNextOld = slot0.observationCardinalityNext; // for the event\n        uint16 observationCardinalityNextNew =\n            observations.grow(observationCardinalityNextOld, observationCardinalityNext);\n        slot0.observationCardinalityNext = observationCardinalityNextNew;\n        if (observationCardinalityNextOld != observationCardinalityNextNew) {\n            emit IncreaseObservationCardinalityNext(observationCardinalityNextOld, observationCardinalityNextNew);\n        }\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    /// @dev not locked because it initializes unlocked\n    function initialize(uint160 sqrtPriceX96) external override {\n        require(slot0.sqrtPriceX96 == 0, \"AI\");\n\n        int24 tick = TickMath.getTickAtSqrtRatio(sqrtPriceX96);\n\n        (uint16 cardinality, uint16 cardinalityNext) = observations.initialize(_blockTimestamp());\n\n        slot0 = Slot0({\n            sqrtPriceX96: sqrtPriceX96,\n            tick: tick,\n            observationIndex: 0,\n            observationCardinality: cardinality,\n            observationCardinalityNext: cardinalityNext,\n            feeProtocol: 0,\n            unlocked: true\n        });\n\n        emit Initialize(sqrtPriceX96, tick);\n    }\n\n    struct ModifyPositionParams {\n        // the address that owns the position\n        address owner;\n        // the lower and upper tick of the position\n        int24 tickLower;\n        int24 tickUpper;\n        // any change in liquidity\n        int128 liquidityDelta;\n    }\n\n    /// @dev Effect some changes to a position\n    /// @param params the position details and the change to the position's liquidity to effect\n    /// @return position a storage pointer referencing the position with the given owner and tick range\n    /// @return amount0 the amount of token0 owed to the pool, negative if the pool should pay the recipient\n    /// @return amount1 the amount of token1 owed to the pool, negative if the pool should pay the recipient\n    function _modifyPosition(ModifyPositionParams memory params)\n        private\n        noDelegateCall\n        returns (Position.Info storage position, int256 amount0, int256 amount1)\n    {\n        checkTicks(params.tickLower, params.tickUpper);\n\n        Slot0 memory _slot0 = slot0; // SLOAD for gas optimization\n\n        position = _updatePosition(params.owner, params.tickLower, params.tickUpper, params.liquidityDelta, _slot0.tick);\n\n        if (params.liquidityDelta != 0) {\n            if (_slot0.tick < params.tickLower) {\n                // current tick is below the passed range; liquidity can only become in range by crossing from left to\n                // right, when we'll need _more_ token0 (it's becoming more valuable) so user must provide it\n                amount0 = SqrtPriceMath.getAmount0Delta(\n                    TickMath.getSqrtRatioAtTick(params.tickLower),\n                    TickMath.getSqrtRatioAtTick(params.tickUpper),\n                    params.liquidityDelta\n                );\n            } else if (_slot0.tick < params.tickUpper) {\n                // current tick is inside the passed range\n                uint128 liquidityBefore = liquidity; // SLOAD for gas optimization\n\n                // write an oracle entry\n                (slot0.observationIndex, slot0.observationCardinality) = observations.write(\n                    _slot0.observationIndex,\n                    _blockTimestamp(),\n                    _slot0.tick,\n                    liquidityBefore,\n                    _slot0.observationCardinality,\n                    _slot0.observationCardinalityNext\n                );\n\n                amount0 = SqrtPriceMath.getAmount0Delta(\n                    _slot0.sqrtPriceX96, TickMath.getSqrtRatioAtTick(params.tickUpper), params.liquidityDelta\n                );\n                amount1 = SqrtPriceMath.getAmount1Delta(\n                    TickMath.getSqrtRatioAtTick(params.tickLower), _slot0.sqrtPriceX96, params.liquidityDelta\n                );\n\n                liquidity = LiquidityMath.addDelta(liquidityBefore, params.liquidityDelta);\n            } else {\n                // current tick is above the passed range; liquidity can only become in range by crossing from right to\n                // left, when we'll need _more_ token1 (it's becoming more valuable) so user must provide it\n                amount1 = SqrtPriceMath.getAmount1Delta(\n                    TickMath.getSqrtRatioAtTick(params.tickLower),\n                    TickMath.getSqrtRatioAtTick(params.tickUpper),\n                    params.liquidityDelta\n                );\n            }\n        }\n    }\n\n    /// @dev Gets and updates a position with the given liquidity delta\n    /// @param owner the owner of the position\n    /// @param tickLower the lower tick of the position's tick range\n    /// @param tickUpper the upper tick of the position's tick range\n    /// @param tick the current tick, passed to avoid sloads\n    function _updatePosition(address owner, int24 tickLower, int24 tickUpper, int128 liquidityDelta, int24 tick)\n        private\n        returns (Position.Info storage position)\n    {\n        position = positions.get(owner, tickLower, tickUpper);\n\n        uint256 _feeGrowthGlobal0X128 = feeGrowthGlobal0X128; // SLOAD for gas optimization\n        uint256 _feeGrowthGlobal1X128 = feeGrowthGlobal1X128; // SLOAD for gas optimization\n\n        // if we need to update the ticks, do it\n        bool flippedLower;\n        bool flippedUpper;\n        if (liquidityDelta != 0) {\n            uint32 time = _blockTimestamp();\n            (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) = observations.observeSingle(\n                time, 0, slot0.tick, slot0.observationIndex, liquidity, slot0.observationCardinality\n            );\n\n            flippedLower = ticks.update(\n                tickLower,\n                tick,\n                liquidityDelta,\n                _feeGrowthGlobal0X128,\n                _feeGrowthGlobal1X128,\n                secondsPerLiquidityCumulativeX128,\n                tickCumulative,\n                time,\n                false,\n                maxLiquidityPerTick\n            );\n            flippedUpper = ticks.update(\n                tickUpper,\n                tick,\n                liquidityDelta,\n                _feeGrowthGlobal0X128,\n                _feeGrowthGlobal1X128,\n                secondsPerLiquidityCumulativeX128,\n                tickCumulative,\n                time,\n                true,\n                maxLiquidityPerTick\n            );\n\n            if (flippedLower) {\n                tickBitmap.flipTick(tickLower, tickSpacing);\n            }\n            if (flippedUpper) {\n                tickBitmap.flipTick(tickUpper, tickSpacing);\n            }\n        }\n\n        (uint256 feeGrowthInside0X128, uint256 feeGrowthInside1X128) =\n            ticks.getFeeGrowthInside(tickLower, tickUpper, tick, _feeGrowthGlobal0X128, _feeGrowthGlobal1X128);\n\n        position.update(liquidityDelta, feeGrowthInside0X128, feeGrowthInside1X128);\n\n        // clear any tick data that is no longer needed\n        if (liquidityDelta < 0) {\n            if (flippedLower) {\n                ticks.clear(tickLower);\n            }\n            if (flippedUpper) {\n                ticks.clear(tickUpper);\n            }\n        }\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    /// @dev noDelegateCall is applied indirectly via _modifyPosition\n    function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes calldata data)\n        external\n        override\n        lock\n        returns (uint256 amount0, uint256 amount1)\n    {\n        require(amount > 0);\n        (, int256 amount0Int, int256 amount1Int) = _modifyPosition(\n            ModifyPositionParams({\n                owner: recipient,\n                tickLower: tickLower,\n                tickUpper: tickUpper,\n                liquidityDelta: int256(amount).toInt128()\n            })\n        );\n\n        amount0 = uint256(amount0Int);\n        amount1 = uint256(amount1Int);\n\n        uint256 balance0Before;\n        uint256 balance1Before;\n        if (amount0 > 0) {\n            balance0Before = balance0();\n        }\n        if (amount1 > 0) {\n            balance1Before = balance1();\n        }\n        IUniswapV3MintCallback(msg.sender).uniswapV3MintCallback(amount0, amount1, data);\n        if (amount0 > 0) {\n            require(balance0Before.add(amount0) <= balance0(), \"M0\");\n        }\n        if (amount1 > 0) {\n            require(balance1Before.add(amount1) <= balance1(), \"M1\");\n        }\n\n        emit Mint(msg.sender, recipient, tickLower, tickUpper, amount, amount0, amount1);\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    function collect(\n        address recipient,\n        int24 tickLower,\n        int24 tickUpper,\n        uint128 amount0Requested,\n        uint128 amount1Requested\n    ) external override lock returns (uint128 amount0, uint128 amount1) {\n        // we don't need to checkTicks here, because invalid positions will never have non-zero tokensOwed{0,1}\n        Position.Info storage position = positions.get(msg.sender, tickLower, tickUpper);\n\n        amount0 = amount0Requested > position.tokensOwed0 ? position.tokensOwed0 : amount0Requested;\n        amount1 = amount1Requested > position.tokensOwed1 ? position.tokensOwed1 : amount1Requested;\n\n        if (amount0 > 0) {\n            position.tokensOwed0 -= amount0;\n            TransferHelper.safeTransfer(token0, recipient, amount0);\n        }\n        if (amount1 > 0) {\n            position.tokensOwed1 -= amount1;\n            TransferHelper.safeTransfer(token1, recipient, amount1);\n        }\n\n        emit Collect(msg.sender, recipient, tickLower, tickUpper, amount0, amount1);\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    /// @dev noDelegateCall is applied indirectly via _modifyPosition\n    function burn(int24 tickLower, int24 tickUpper, uint128 amount)\n        external\n        override\n        lock\n        returns (uint256 amount0, uint256 amount1)\n    {\n        (Position.Info storage position, int256 amount0Int, int256 amount1Int) = _modifyPosition(\n            ModifyPositionParams({\n                owner: msg.sender,\n                tickLower: tickLower,\n                tickUpper: tickUpper,\n                liquidityDelta: -int256(amount).toInt128()\n            })\n        );\n\n        amount0 = uint256(-amount0Int);\n        amount1 = uint256(-amount1Int);\n\n        if (amount0 > 0 || amount1 > 0) {\n            (position.tokensOwed0, position.tokensOwed1) =\n                (position.tokensOwed0 + uint128(amount0), position.tokensOwed1 + uint128(amount1));\n        }\n\n        emit Burn(msg.sender, tickLower, tickUpper, amount, amount0, amount1);\n    }\n\n    struct SwapCache {\n        // the protocol fee for the input token\n        uint8 feeProtocol;\n        // liquidity at the beginning of the swap\n        uint128 liquidityStart;\n        // the timestamp of the current block\n        uint32 blockTimestamp;\n        // the current value of the tick accumulator, computed only if we cross an initialized tick\n        int56 tickCumulative;\n        // the current value of seconds per liquidity accumulator, computed only if we cross an initialized tick\n        uint160 secondsPerLiquidityCumulativeX128;\n        // whether we've computed and cached the above two accumulators\n        bool computedLatestObservation;\n    }\n\n    // the top level state of the swap, the results of which are recorded in storage at the end\n    struct SwapState {\n        // the amount remaining to be swapped in/out of the input/output asset\n        int256 amountSpecifiedRemaining;\n        // the amount already swapped out/in of the output/input asset\n        int256 amountCalculated;\n        // current sqrt(price)\n        uint160 sqrtPriceX96;\n        // the tick associated with the current price\n        int24 tick;\n        // the global fee growth of the input token\n        uint256 feeGrowthGlobalX128;\n        // amount of input token paid as protocol fee\n        uint128 protocolFee;\n        // the current liquidity in range\n        uint128 liquidity;\n    }\n\n    struct StepComputations {\n        // the price at the beginning of the step\n        uint160 sqrtPriceStartX96;\n        // the next tick to swap to from the current tick in the swap direction\n        int24 tickNext;\n        // whether tickNext is initialized or not\n        bool initialized;\n        // sqrt(price) for the next tick (1/0)\n        uint160 sqrtPriceNextX96;\n        // how much is being swapped in in this step\n        uint256 amountIn;\n        // how much is being swapped out\n        uint256 amountOut;\n        // how much fee is being paid in\n        uint256 feeAmount;\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    function swap(\n        address recipient,\n        bool zeroForOne,\n        int256 amountSpecified,\n        uint160 sqrtPriceLimitX96,\n        bytes calldata data\n    ) external override noDelegateCall returns (int256 amount0, int256 amount1) {\n        require(amountSpecified != 0, \"AS\");\n\n        Slot0 memory slot0Start = slot0;\n\n        require(slot0Start.unlocked, \"LOK\");\n        require(\n            zeroForOne\n                ? sqrtPriceLimitX96 < slot0Start.sqrtPriceX96 && sqrtPriceLimitX96 > TickMath.MIN_SQRT_RATIO\n                : sqrtPriceLimitX96 > slot0Start.sqrtPriceX96 && sqrtPriceLimitX96 < TickMath.MAX_SQRT_RATIO,\n            \"SPL\"\n        );\n\n        slot0.unlocked = false;\n\n        SwapCache memory cache = SwapCache({\n            liquidityStart: liquidity,\n            blockTimestamp: _blockTimestamp(),\n            feeProtocol: zeroForOne ? (slot0Start.feeProtocol % 16) : (slot0Start.feeProtocol >> 4),\n            secondsPerLiquidityCumulativeX128: 0,\n            tickCumulative: 0,\n            computedLatestObservation: false\n        });\n\n        bool exactInput = amountSpecified > 0;\n\n        SwapState memory state = SwapState({\n            amountSpecifiedRemaining: amountSpecified,\n            amountCalculated: 0,\n            sqrtPriceX96: slot0Start.sqrtPriceX96,\n            tick: slot0Start.tick,\n            feeGrowthGlobalX128: zeroForOne ? feeGrowthGlobal0X128 : feeGrowthGlobal1X128,\n            protocolFee: 0,\n            liquidity: cache.liquidityStart\n        });\n\n        // continue swapping as long as we haven't used the entire input/output and haven't reached the price limit\n        while (state.amountSpecifiedRemaining != 0 && state.sqrtPriceX96 != sqrtPriceLimitX96) {\n            StepComputations memory step;\n\n            step.sqrtPriceStartX96 = state.sqrtPriceX96;\n\n            (step.tickNext, step.initialized) =\n                tickBitmap.nextInitializedTickWithinOneWord(state.tick, tickSpacing, zeroForOne);\n\n            // ensure that we do not overshoot the min/max tick, as the tick bitmap is not aware of these bounds\n            if (step.tickNext < TickMath.MIN_TICK) {\n                step.tickNext = TickMath.MIN_TICK;\n            } else if (step.tickNext > TickMath.MAX_TICK) {\n                step.tickNext = TickMath.MAX_TICK;\n            }\n\n            // get the price for the next tick\n            step.sqrtPriceNextX96 = TickMath.getSqrtRatioAtTick(step.tickNext);\n\n            // compute values to swap to the target tick, price limit, or point where input/output amount is exhausted\n            (state.sqrtPriceX96, step.amountIn, step.amountOut, step.feeAmount) = SwapMath.computeSwapStep(\n                state.sqrtPriceX96,\n                (zeroForOne ? step.sqrtPriceNextX96 < sqrtPriceLimitX96 : step.sqrtPriceNextX96 > sqrtPriceLimitX96)\n                    ? sqrtPriceLimitX96\n                    : step.sqrtPriceNextX96,\n                state.liquidity,\n                state.amountSpecifiedRemaining,\n                fee\n            );\n\n            if (exactInput) {\n                state.amountSpecifiedRemaining -= (step.amountIn + step.feeAmount).toInt256();\n                state.amountCalculated = state.amountCalculated.sub(step.amountOut.toInt256());\n            } else {\n                state.amountSpecifiedRemaining += step.amountOut.toInt256();\n                state.amountCalculated = state.amountCalculated.add((step.amountIn + step.feeAmount).toInt256());\n            }\n\n            // if the protocol fee is on, calculate how much is owed, decrement feeAmount, and increment protocolFee\n            if (cache.feeProtocol > 0) {\n                uint256 delta = step.feeAmount / cache.feeProtocol;\n                step.feeAmount -= delta;\n                state.protocolFee += uint128(delta);\n            }\n\n            // update global fee tracker\n            if (state.liquidity > 0) {\n                state.feeGrowthGlobalX128 += FullMath.mulDiv(step.feeAmount, FixedPoint128.Q128, state.liquidity);\n            }\n\n            // shift tick if we reached the next price\n            if (state.sqrtPriceX96 == step.sqrtPriceNextX96) {\n                // if the tick is initialized, run the tick transition\n                if (step.initialized) {\n                    // check for the placeholder value, which we replace with the actual value the first time the swap\n                    // crosses an initialized tick\n                    if (!cache.computedLatestObservation) {\n                        (cache.tickCumulative, cache.secondsPerLiquidityCumulativeX128) = observations.observeSingle(\n                            cache.blockTimestamp,\n                            0,\n                            slot0Start.tick,\n                            slot0Start.observationIndex,\n                            cache.liquidityStart,\n                            slot0Start.observationCardinality\n                        );\n                        cache.computedLatestObservation = true;\n                    }\n                    int128 liquidityNet = ticks.cross(\n                        step.tickNext,\n                        (zeroForOne ? state.feeGrowthGlobalX128 : feeGrowthGlobal0X128),\n                        (zeroForOne ? feeGrowthGlobal1X128 : state.feeGrowthGlobalX128),\n                        cache.secondsPerLiquidityCumulativeX128,\n                        cache.tickCumulative,\n                        cache.blockTimestamp\n                    );\n                    // if we're moving leftward, we interpret liquidityNet as the opposite sign\n                    // safe because liquidityNet cannot be type(int128).min\n                    if (zeroForOne) {\n                        liquidityNet = -liquidityNet;\n                    }\n\n                    state.liquidity = LiquidityMath.addDelta(state.liquidity, liquidityNet);\n                }\n\n                state.tick = zeroForOne ? step.tickNext - 1 : step.tickNext;\n            } else if (state.sqrtPriceX96 != step.sqrtPriceStartX96) {\n                // recompute unless we're on a lower tick boundary (i.e. already transitioned ticks), and haven't moved\n                state.tick = TickMath.getTickAtSqrtRatio(state.sqrtPriceX96);\n            }\n        }\n\n        // update tick and write an oracle entry if the tick change\n        if (state.tick != slot0Start.tick) {\n            (uint16 observationIndex, uint16 observationCardinality) = observations.write(\n                slot0Start.observationIndex,\n                cache.blockTimestamp,\n                slot0Start.tick,\n                cache.liquidityStart,\n                slot0Start.observationCardinality,\n                slot0Start.observationCardinalityNext\n            );\n            (slot0.sqrtPriceX96, slot0.tick, slot0.observationIndex, slot0.observationCardinality) =\n                (state.sqrtPriceX96, state.tick, observationIndex, observationCardinality);\n        } else {\n            // otherwise just update the price\n            slot0.sqrtPriceX96 = state.sqrtPriceX96;\n        }\n\n        // update liquidity if it changed\n        if (cache.liquidityStart != state.liquidity) {\n            liquidity = state.liquidity;\n        }\n\n        // update fee growth global and, if necessary, protocol fees\n        // overflow is acceptable, protocol has to withdraw before it hits type(uint128).max fees\n        if (zeroForOne) {\n            feeGrowthGlobal0X128 = state.feeGrowthGlobalX128;\n            if (state.protocolFee > 0) {\n                protocolFees.token0 += state.protocolFee;\n            }\n        } else {\n            feeGrowthGlobal1X128 = state.feeGrowthGlobalX128;\n            if (state.protocolFee > 0) {\n                protocolFees.token1 += state.protocolFee;\n            }\n        }\n\n        (amount0, amount1) = zeroForOne == exactInput\n            ? (amountSpecified - state.amountSpecifiedRemaining, state.amountCalculated)\n            : (state.amountCalculated, amountSpecified - state.amountSpecifiedRemaining);\n\n        // do the transfers and collect payment\n        if (zeroForOne) {\n            if (amount1 < 0) {\n                TransferHelper.safeTransfer(token1, recipient, uint256(-amount1));\n            }\n\n            uint256 balance0Before = balance0();\n            IUniswapV3SwapCallback(msg.sender).uniswapV3SwapCallback(amount0, amount1, data);\n            require(balance0Before.add(uint256(amount0)) <= balance0(), \"IIA\");\n        } else {\n            if (amount0 < 0) {\n                TransferHelper.safeTransfer(token0, recipient, uint256(-amount0));\n            }\n\n            uint256 balance1Before = balance1();\n            IUniswapV3SwapCallback(msg.sender).uniswapV3SwapCallback(amount0, amount1, data);\n            require(balance1Before.add(uint256(amount1)) <= balance1(), \"IIA\");\n        }\n\n        emit Swap(msg.sender, recipient, amount0, amount1, state.sqrtPriceX96, state.liquidity, state.tick);\n        slot0.unlocked = true;\n    }\n\n    /// @inheritdoc IUniswapV3PoolActions\n    function flash(address recipient, uint256 amount0, uint256 amount1, bytes calldata data)\n        external\n        override\n        lock\n        noDelegateCall\n    {\n        uint128 _liquidity = liquidity;\n        require(_liquidity > 0, \"L\");\n\n        uint256 fee0 = FullMath.mulDivRoundingUp(amount0, fee, 1e6);\n        uint256 fee1 = FullMath.mulDivRoundingUp(amount1, fee, 1e6);\n        uint256 balance0Before = balance0();\n        uint256 balance1Before = balance1();\n\n        if (amount0 > 0) {\n            TransferHelper.safeTransfer(token0, recipient, amount0);\n        }\n        if (amount1 > 0) {\n            TransferHelper.safeTransfer(token1, recipient, amount1);\n        }\n\n        IUniswapV3FlashCallback(msg.sender).uniswapV3FlashCallback(fee0, fee1, data);\n\n        uint256 balance0After = balance0();\n        uint256 balance1After = balance1();\n\n        require(balance0Before.add(fee0) <= balance0After, \"F0\");\n        require(balance1Before.add(fee1) <= balance1After, \"F1\");\n\n        // sub is safe because we know balanceAfter is gt balanceBefore by at least fee\n        uint256 paid0 = balance0After - balance0Before;\n        uint256 paid1 = balance1After - balance1Before;\n\n        if (paid0 > 0) {\n            uint8 feeProtocol0 = slot0.feeProtocol % 16;\n            uint256 fees0 = feeProtocol0 == 0 ? 0 : paid0 / feeProtocol0;\n            if (uint128(fees0) > 0) {\n                protocolFees.token0 += uint128(fees0);\n            }\n            feeGrowthGlobal0X128 += FullMath.mulDiv(paid0 - fees0, FixedPoint128.Q128, _liquidity);\n        }\n        if (paid1 > 0) {\n            uint8 feeProtocol1 = slot0.feeProtocol >> 4;\n            uint256 fees1 = feeProtocol1 == 0 ? 0 : paid1 / feeProtocol1;\n            if (uint128(fees1) > 0) {\n                protocolFees.token1 += uint128(fees1);\n            }\n            feeGrowthGlobal1X128 += FullMath.mulDiv(paid1 - fees1, FixedPoint128.Q128, _liquidity);\n        }\n\n        emit Flash(msg.sender, recipient, amount0, amount1, paid0, paid1);\n    }\n\n    /// @inheritdoc IUniswapV3PoolOwnerActions\n    function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1) external override lock onlyFactoryOwner {\n        require(\n            (feeProtocol0 == 0 || (feeProtocol0 >= 4 && feeProtocol0 <= 10))\n                && (feeProtocol1 == 0 || (feeProtocol1 >= 4 && feeProtocol1 <= 10))\n        );\n        uint8 feeProtocolOld = slot0.feeProtocol;\n        slot0.feeProtocol = feeProtocol0 + (feeProtocol1 << 4);\n        emit SetFeeProtocol(feeProtocolOld % 16, feeProtocolOld >> 4, feeProtocol0, feeProtocol1);\n    }\n\n    /// @inheritdoc IUniswapV3PoolOwnerActions\n    function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested)\n        external\n        override\n        lock\n        onlyFactoryOwner\n        returns (uint128 amount0, uint128 amount1)\n    {\n        amount0 = amount0Requested > protocolFees.token0 ? protocolFees.token0 : amount0Requested;\n        amount1 = amount1Requested > protocolFees.token1 ? protocolFees.token1 : amount1Requested;\n\n        if (amount0 > 0) {\n            if (amount0 == protocolFees.token0) {\n                amount0--;\n            } // ensure that the slot is not cleared, for gas savings\n            protocolFees.token0 -= amount0;\n            TransferHelper.safeTransfer(token0, recipient, amount0);\n        }\n        if (amount1 > 0) {\n            if (amount1 == protocolFees.token1) {\n                amount1--;\n            } // ensure that the slot is not cleared, for gas savings\n            protocolFees.token1 -= amount1;\n            TransferHelper.safeTransfer(token1, recipient, amount1);\n        }\n\n        emit CollectProtocol(msg.sender, recipient, amount0, amount1);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 711,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "UniswapV3Pool",
+        "similarity": 0.882,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/UniswapV3Pool.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/UniswapV3Pool.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
+        "majorFindings": 1,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 112,
+        "removed": 21,
+        "ignoredAdded": 15,
+        "ignoredRemoved": 4,
+        "unchanged": 711,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    using SafeCast for int256;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    using Tick for mapping(int24 => Tick.Info);"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    using TickBitmap for mapping(int16 => uint256);"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    using SecondsOutside for mapping(int24 => uint256);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 8,
+                "text": "    using Position for mapping(bytes32 => Position.Info);"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 9,
+                "text": "    using Position for Position.Info;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "    using Oracle for Oracle.Observation[65535];"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 8,
+            "newStart": 67,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 67,
+                "text": "    /// @inheritdoc IUniswapV3PoolState"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 68,
+                "text": "    mapping(int16 => uint256) public override tickBitmap;"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 69,
+                "text": "    /// @inheritdoc IUniswapV3PoolState"
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    mapping(int24 => uint256) public override secondsOutside;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    /// @inheritdoc IUniswapV3PoolState",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 70,
+                "text": "    mapping(bytes32 => Position.Info) public override positions;"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 71,
+                "text": "    /// @inheritdoc IUniswapV3PoolState"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 72,
+                "text": "    Oracle.Observation[65535] public override observations;"
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 20,
+            "newStart": 108,
+            "newLines": 90,
+            "lines": [
+              { "type": " ", "oldLine": 111, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 112, "newLine": 109, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 110,
+                "text": "    /// @dev Get the pool's balance of token0"
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @dev This function is gas optimized to avoid a redundant extcodesize check in addition to the returndatasize",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    /// check",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 113,
+                "text": "    function balance0() private view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "        return IERC20Minimal(token0).balanceOf(address(this));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        (bool success, bytes memory data) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            token0.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        require(success && data.length >= 32);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        return abi.decode(data, (uint256));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 116, "newLine": 118, "text": "    }" },
+              { "type": " ", "oldLine": 117, "newLine": 119, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 120,
+                "text": "    /// @dev Get the pool's balance of token1"
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    /// @dev This function is gas optimized to avoid a redundant extcodesize check in addition to the returndatasize",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    /// check",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 123,
+                "text": "    function balance1() private view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        return IERC20Minimal(token1).balanceOf(address(this));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        (bool success, bytes memory data) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            token1.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        require(success && data.length >= 32);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        return abi.decode(data, (uint256));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 121, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 122, "newLine": 129, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 130,
+                "text": "    /// @inheritdoc IUniswapV3PoolDerivedState"
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    function secondsInside(int24 tickLower, int24 tickUpper) external view override noDelegateCall returns (uint32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    function snapshotCumulativesInside(int24 tickLower, int24 tickUpper)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "        noDelegateCall",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "        returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 138,
+                "text": "        checkTicks(tickLower, tickUpper);"
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        require(ticks[tickLower].liquidityGross > 0 && ticks[tickUpper].liquidityGross > 0, \"X\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        return secondsOutside.secondsInside(tickLower, tickUpper, slot0.tick, tickSpacing, _blockTimestamp());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 139, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        int56 tickCumulativeLower;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "        int56 tickCumulativeUpper;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        uint160 secondsPerLiquidityOutsideLowerX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        uint160 secondsPerLiquidityOutsideUpperX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        uint32 secondsOutsideLower;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        uint32 secondsOutsideUpper;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 146, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "            Tick.Info storage lower = ticks[tickLower];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "            Tick.Info storage upper = ticks[tickUpper];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "            bool initializedLower;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "            (tickCumulativeLower, secondsPerLiquidityOutsideLowerX128, secondsOutsideLower, initializedLower) = (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "                lower.tickCumulativeOutside,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "                lower.secondsPerLiquidityOutsideX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "                lower.secondsOutside,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                lower.initialized",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "            require(initializedLower);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 158, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "            bool initializedUpper;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "            (tickCumulativeUpper, secondsPerLiquidityOutsideUpperX128, secondsOutsideUpper, initializedUpper) = (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "                upper.tickCumulativeOutside,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "                upper.secondsPerLiquidityOutsideX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "                upper.secondsOutside,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "                upper.initialized",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "            require(initializedUpper);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 168, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "        Slot0 memory _slot0 = slot0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 170, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "        if (_slot0.tick < tickLower) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "            return (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "                tickCumulativeLower - tickCumulativeUpper,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "                secondsPerLiquidityOutsideLowerX128 - secondsPerLiquidityOutsideUpperX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "                secondsOutsideLower - secondsOutsideUpper",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "        } else if (_slot0.tick < tickUpper) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "            uint32 time = _blockTimestamp();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "            (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) = observations.observeSingle(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "                time, 0, _slot0.tick, _slot0.observationIndex, liquidity, _slot0.observationCardinality",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "            return (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "                tickCumulative - tickCumulativeLower - tickCumulativeUpper,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "                secondsPerLiquidityCumulativeX128 - secondsPerLiquidityOutsideLowerX128",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "                    - secondsPerLiquidityOutsideUpperX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "                time - secondsOutsideLower - secondsOutsideUpper",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "            return (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "                tickCumulativeUpper - tickCumulativeLower,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "                secondsPerLiquidityOutsideUpperX128 - secondsPerLiquidityOutsideLowerX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "                secondsOutsideUpper - secondsOutsideLower",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 128, "newLine": 195, "text": "    }" },
+              { "type": " ", "oldLine": 129, "newLine": 196, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 197,
+                "text": "    /// @inheritdoc IUniswapV3PoolDerivedState"
+              }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 200,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 200,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 201,
+                "text": "        override"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 202,
+                "text": "        noDelegateCall"
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        returns (int56[] memory tickCumulatives, uint160[] memory liquidityCumulatives)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 137, "newLine": 204, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 205,
+                "text": "        return observations.observe("
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 206,
+                "text": "            _blockTimestamp(), secondsAgos, slot0.tick, slot0.observationIndex, liquidity, slot0.observationCardinality"
+              }
+            ]
+          },
+          {
+            "oldStart": 265,
+            "oldLines": 7,
+            "newStart": 332,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 332,
+                "text": "        bool flippedLower;"
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 333,
+                "text": "        bool flippedUpper;"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 334,
+                "text": "        if (liquidityDelta != 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "            uint32 blockTimestamp = _blockTimestamp();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "            uint32 time = _blockTimestamp();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "            (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) = observations.observeSingle(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "                time, 0, slot0.tick, slot0.observationIndex, liquidity, slot0.observationCardinality",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "            );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 269, "newLine": 339, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 340,
+                "text": "            flippedLower = ticks.update("
+              },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 341,
+                "text": "                tickLower,"
+              }
+            ]
+          },
+          {
+            "oldStart": 273,
+            "oldLines": 20,
+            "newStart": 343,
+            "newLines": 30,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 343,
+                "text": "                liquidityDelta,"
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 344,
+                "text": "                _feeGrowthGlobal0X128,"
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 345,
+                "text": "                _feeGrowthGlobal1X128,"
+              },
+              {
+                "type": "+",
+                "newLine": 346,
+                "text": "                secondsPerLiquidityCumulativeX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "                tickCumulative,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "                time,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 349,
+                "text": "                false,"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 350,
+                "text": "                maxLiquidityPerTick"
+              },
+              {
+                "type": " ",
+                "oldLine": 278,
+                "newLine": 351,
+                "text": "            );"
+              },
+              {
+                "type": " ",
+                "oldLine": 279,
+                "newLine": 352,
+                "text": "            flippedUpper = ticks.update("
+              },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "                tickUpper, tick, liquidityDelta, _feeGrowthGlobal0X128, _feeGrowthGlobal1X128, true, maxLiquidityPerTick",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "                tickUpper,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 354,
+                "text": "                tick,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "                liquidityDelta,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "                _feeGrowthGlobal0X128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "                _feeGrowthGlobal1X128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "                secondsPerLiquidityCumulativeX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "                tickCumulative,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "                time,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "                true,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "                maxLiquidityPerTick",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 363,
+                "text": "            );"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 364, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 365,
+                "text": "            if (flippedLower) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 366,
+                "text": "                tickBitmap.flipTick(tickLower, tickSpacing);"
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "                secondsOutside.initialize(tickLower, tick, tickSpacing, blockTimestamp);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 367,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 368,
+                "text": "            if (flippedUpper) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 369,
+                "text": "                tickBitmap.flipTick(tickUpper, tickSpacing);"
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "                secondsOutside.initialize(tickUpper, tick, tickSpacing, blockTimestamp);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 290,
+                "newLine": 370,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 371,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 292, "newLine": 372, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 299,
+            "oldLines": 11,
+            "newStart": 379,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 379,
+                "text": "        if (liquidityDelta < 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 380,
+                "text": "            if (flippedLower) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 381,
+                "text": "                ticks.clear(tickLower);"
+              },
+              {
+                "type": "-",
+                "oldLine": 302,
+                "text": "                secondsOutside.clear(tickLower, tickSpacing);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 382,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 383,
+                "text": "            if (flippedUpper) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 384,
+                "text": "                ticks.clear(tickUpper);"
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "                secondsOutside.clear(tickUpper, tickSpacing);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 307,
+                "newLine": 385,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 308,
+                "newLine": 386,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 309, "newLine": 387, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 409,
+            "oldLines": 6,
+            "newStart": 487,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 409,
+                "newLine": 487,
+                "text": "        uint128 liquidityStart;"
+              },
+              {
+                "type": " ",
+                "oldLine": 410,
+                "newLine": 488,
+                "text": "        // the timestamp of the current block"
+              },
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 489,
+                "text": "        uint32 blockTimestamp;"
+              },
+              {
+                "type": "+",
+                "newLine": 490,
+                "text": "        // the current value of the tick accumulator, computed only if we cross an initialized tick",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 491,
+                "text": "        int56 tickCumulative;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 492,
+                "text": "        // the current value of seconds per liquidity accumulator, computed only if we cross an initialized tick",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 493,
+                "text": "        uint160 secondsPerLiquidityCumulativeX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 494,
+                "text": "        // whether we've computed and cached the above two accumulators",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 495,
+                "text": "        bool computedLatestObservation;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 412, "newLine": 496, "text": "    }" },
+              { "type": " ", "oldLine": 413, "newLine": 497, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 498,
+                "text": "    // the top level state of the swap, the results of which are recorded in storage at the end"
+              }
+            ]
+          },
+          {
+            "oldStart": 471,
+            "oldLines": 7,
+            "newStart": 555,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 471,
+                "newLine": 555,
+                "text": "        SwapCache memory cache = SwapCache({"
+              },
+              {
+                "type": " ",
+                "oldLine": 472,
+                "newLine": 556,
+                "text": "            liquidityStart: liquidity,"
+              },
+              {
+                "type": " ",
+                "oldLine": 473,
+                "newLine": 557,
+                "text": "            blockTimestamp: _blockTimestamp(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 474,
+                "text": "            feeProtocol: zeroForOne ? (slot0Start.feeProtocol % 16) : (slot0Start.feeProtocol >> 4)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 558,
+                "text": "            feeProtocol: zeroForOne ? (slot0Start.feeProtocol % 16) : (slot0Start.feeProtocol >> 4),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 559,
+                "text": "            secondsPerLiquidityCumulativeX128: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 560,
+                "text": "            tickCumulative: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 561,
+                "text": "            computedLatestObservation: false",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 475,
+                "newLine": 562,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 476, "newLine": 563, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 477,
+                "newLine": 564,
+                "text": "        bool exactInput = amountSpecified > 0;"
+              }
+            ]
+          },
+          {
+            "oldStart": 540,
+            "oldLines": 10,
+            "newStart": 627,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 540,
+                "newLine": 627,
+                "text": "            if (state.sqrtPriceX96 == step.sqrtPriceNextX96) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 541,
+                "newLine": 628,
+                "text": "                // if the tick is initialized, run the tick transition"
+              },
+              {
+                "type": " ",
+                "oldLine": 542,
+                "newLine": 629,
+                "text": "                if (step.initialized) {"
+              },
+              {
+                "type": "+",
+                "newLine": 630,
+                "text": "                    // check for the placeholder value, which we replace with the actual value the first time the swap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 631,
+                "text": "                    // crosses an initialized tick",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 632,
+                "text": "                    if (!cache.computedLatestObservation) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 633,
+                "text": "                        (cache.tickCumulative, cache.secondsPerLiquidityCumulativeX128) = observations.observeSingle(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 634,
+                "text": "                            cache.blockTimestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 635,
+                "text": "                            0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 636,
+                "text": "                            slot0Start.tick,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 637,
+                "text": "                            slot0Start.observationIndex,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 638,
+                "text": "                            cache.liquidityStart,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 639,
+                "text": "                            slot0Start.observationCardinality",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 640,
+                "text": "                        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 641,
+                "text": "                        cache.computedLatestObservation = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 642,
+                "text": "                    }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 543,
+                "newLine": 643,
+                "text": "                    int128 liquidityNet = ticks.cross("
+              },
+              {
+                "type": " ",
+                "oldLine": 544,
+                "newLine": 644,
+                "text": "                        step.tickNext,"
+              },
+              {
+                "type": " ",
+                "oldLine": 545,
+                "newLine": 645,
+                "text": "                        (zeroForOne ? state.feeGrowthGlobalX128 : feeGrowthGlobal0X128),"
+              },
+              {
+                "type": "-",
+                "oldLine": 546,
+                "text": "                        (zeroForOne ? feeGrowthGlobal1X128 : state.feeGrowthGlobalX128)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 646,
+                "text": "                        (zeroForOne ? feeGrowthGlobal1X128 : state.feeGrowthGlobalX128),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 647,
+                "text": "                        cache.secondsPerLiquidityCumulativeX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 648,
+                "text": "                        cache.tickCumulative,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 649,
+                "text": "                        cache.blockTimestamp",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 547,
+                "newLine": 650,
+                "text": "                    );"
+              },
+              {
+                "type": " ",
+                "oldLine": 548,
+                "newLine": 651,
+                "text": "                    // if we're moving leftward, we interpret liquidityNet as the opposite sign"
+              },
+              {
+                "type": " ",
+                "oldLine": 549,
+                "newLine": 652,
+                "text": "                    // safe because liquidityNet cannot be type(int128).min"
+              }
+            ]
+          },
+          {
+            "oldStart": 551,
+            "oldLines": 8,
+            "newStart": 654,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 551,
+                "newLine": 654,
+                "text": "                        liquidityNet = -liquidityNet;"
+              },
+              {
+                "type": " ",
+                "oldLine": 552,
+                "newLine": 655,
+                "text": "                    }"
+              },
+              { "type": " ", "oldLine": 553, "newLine": 656, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 554,
+                "text": "                    secondsOutside.cross(step.tickNext, tickSpacing, cache.blockTimestamp);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 555, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 556,
+                "newLine": 657,
+                "text": "                    state.liquidity = LiquidityMath.addDelta(state.liquidity, liquidityNet);"
+              },
+              {
+                "type": " ",
+                "oldLine": 557,
+                "newLine": 658,
+                "text": "                }"
+              },
+              { "type": " ", "oldLine": 558, "newLine": 659, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 563,
+            "oldLines": 13,
+            "newStart": 664,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 563,
+                "newLine": 664,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 564,
+                "newLine": 665,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 565, "newLine": 666, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 566,
+                "text": "        // update price",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 567,
+                "text": "        slot0.sqrtPriceX96 = state.sqrtPriceX96;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 568, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 569,
+                "newLine": 667,
+                "text": "        // update tick and write an oracle entry if the tick change"
+              },
+              {
+                "type": " ",
+                "oldLine": 570,
+                "newLine": 668,
+                "text": "        if (state.tick != slot0Start.tick) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 571,
+                "text": "            slot0.tick = state.tick;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 572,
+                "text": "            (slot0.observationIndex, slot0.observationCardinality) = observations.write(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 669,
+                "text": "            (uint16 observationIndex, uint16 observationCardinality) = observations.write(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 573,
+                "newLine": 670,
+                "text": "                slot0Start.observationIndex,"
+              },
+              {
+                "type": " ",
+                "oldLine": 574,
+                "newLine": 671,
+                "text": "                cache.blockTimestamp,"
+              },
+              {
+                "type": " ",
+                "oldLine": 575,
+                "newLine": 672,
+                "text": "                slot0Start.tick,"
+              }
+            ]
+          },
+          {
+            "oldStart": 577,
+            "oldLines": 6,
+            "newStart": 674,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 577,
+                "newLine": 674,
+                "text": "                slot0Start.observationCardinality,"
+              },
+              {
+                "type": " ",
+                "oldLine": 578,
+                "newLine": 675,
+                "text": "                slot0Start.observationCardinalityNext"
+              },
+              {
+                "type": " ",
+                "oldLine": 579,
+                "newLine": 676,
+                "text": "            );"
+              },
+              {
+                "type": "+",
+                "newLine": 677,
+                "text": "            (slot0.sqrtPriceX96, slot0.tick, slot0.observationIndex, slot0.observationCardinality) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 678,
+                "text": "                (state.sqrtPriceX96, state.tick, observationIndex, observationCardinality);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 679,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 680,
+                "text": "            // otherwise just update the price",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 681,
+                "text": "            slot0.sqrtPriceX96 = state.sqrtPriceX96;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 580,
+                "newLine": 682,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 581, "newLine": 683, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 582,
+                "newLine": 684,
+                "text": "        // update liquidity if it changed"
+              }
+            ]
+          },
+          {
+            "oldStart": 621,
+            "oldLines": 7,
+            "newStart": 723,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 621,
+                "newLine": 723,
+                "text": "            require(balance1Before.add(uint256(amount1)) <= balance1(), \"IIA\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 622,
+                "newLine": 724,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 623, "newLine": 725, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 624,
+                "text": "        emit Swap(msg.sender, recipient, amount0, amount1, state.sqrtPriceX96, state.tick);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 726,
+                "text": "        emit Swap(msg.sender, recipient, amount0, amount1, state.sqrtPriceX96, state.liquidity, state.tick);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 625,
+                "newLine": 727,
+                "text": "        slot0.unlocked = true;"
+              },
+              { "type": " ", "oldLine": 626, "newLine": 728, "text": "    }" },
+              { "type": " ", "oldLine": 627, "newLine": 729, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

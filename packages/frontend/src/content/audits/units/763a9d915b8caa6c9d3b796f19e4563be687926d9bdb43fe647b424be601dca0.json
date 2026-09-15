@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "763a9d915b8caa6c9d3b796f19e4563be687926d9bdb43fe647b424be601dca0",
+  "name": "IOptimismPortal2",
+  "kind": "interface",
+  "lines": 76,
+  "source": "interface IOptimismPortal2 is IProxyAdminOwnedBase {\n    error ContentLengthMismatch();\n    error EmptyItem();\n    error InvalidDataRemainder();\n    error InvalidHeader();\n    error ReinitializableBase_ZeroInitVersion();\n    error OptimismPortal_AlreadyFinalized();\n    error OptimismPortal_BadTarget();\n    error OptimismPortal_CallPaused();\n    error OptimismPortal_CalldataTooLarge();\n    error OptimismPortal_GasEstimation();\n    error OptimismPortal_GasLimitTooLow();\n    error OptimismPortal_ImproperDisputeGame();\n    error OptimismPortal_InvalidDisputeGame();\n    error OptimismPortal_InvalidMerkleProof();\n    error OptimismPortal_InvalidOutputRootProof();\n    error OptimismPortal_InvalidProofTimestamp();\n    error OptimismPortal_InvalidRootClaim();\n    error OptimismPortal_NoReentrancy();\n    error OptimismPortal_ProofNotOldEnough();\n    error OptimismPortal_Unproven();\n    error OptimismPortal_InvalidLockboxState();\n    error OutOfGas();\n    error UnexpectedList();\n    error UnexpectedString();\n\n    event Initialized(uint8 version);\n    event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData);\n    event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success);\n    event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to);\n    event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter);\n\n    receive() external payable;\n\n    function anchorStateRegistry() external view returns (IAnchorStateRegistry);\n    function ethLockbox() external view returns (IETHLockbox);\n    function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) external view;\n    function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes memory _data)\n        external\n        payable;\n    function disputeGameBlacklist(IDisputeGame _disputeGame) external view returns (bool);\n    function disputeGameFactory() external view returns (IDisputeGameFactory);\n    function disputeGameFinalityDelaySeconds() external view returns (uint256);\n    function donateETH() external payable;\n    function superchainConfig() external view returns (ISuperchainConfig);\n    function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) external;\n    function finalizeWithdrawalTransactionExternalProof(Types.WithdrawalTransaction memory _tx, address _proofSubmitter)\n        external;\n    function finalizedWithdrawals(bytes32) external view returns (bool);\n    function guardian() external view returns (address);\n    function initialize(ISystemConfig _systemConfig, IAnchorStateRegistry _anchorStateRegistry) external;\n    function initVersion() external view returns (uint8);\n    function l2Sender() external view returns (address);\n    function minimumGasLimit(uint64 _byteCount) external pure returns (uint64);\n    function numProofSubmitters(bytes32 _withdrawalHash) external view returns (uint256);\n    function params() external view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum); // nosemgrep\n    function paused() external view returns (bool);\n    function proofMaturityDelaySeconds() external view returns (uint256);\n    function proofSubmitters(bytes32, uint256) external view returns (address);\n    function proveWithdrawalTransaction(\n        Types.WithdrawalTransaction memory _tx,\n        uint256 _disputeGameIndex,\n        Types.OutputRootProof memory _outputRootProof,\n        bytes[] memory _withdrawalProof\n    ) external;\n    function provenWithdrawals(bytes32, address)\n        external\n        view\n        returns (IDisputeGame disputeGameProxy, uint64 timestamp);\n    function respectedGameType() external view returns (GameType);\n    function respectedGameTypeUpdatedAt() external view returns (uint64);\n    function systemConfig() external view returns (ISystemConfig);\n    function version() external pure returns (string memory);\n\n    function __constructor__(uint256 _proofMaturityDelaySeconds) external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 76,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IOptimismPortal2",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

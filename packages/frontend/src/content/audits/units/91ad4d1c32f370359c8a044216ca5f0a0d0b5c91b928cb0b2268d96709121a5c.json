@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "91ad4d1c32f370359c8a044216ca5f0a0d0b5c91b928cb0b2268d96709121a5c",
+  "name": "IPoolInitializer",
+  "kind": "interface",
+  "lines": 13,
+  "source": "interface IPoolInitializer {\n    /// @notice Creates a new pool if it does not exist, then initializes if not initialized\n    /// @dev This method can be bundled with others via IMulticall for the first action (e.g. mint) performed against a pool\n    /// @param token0 The contract address of token0 of the pool\n    /// @param token1 The contract address of token1 of the pool\n    /// @param fee The fee amount of the v3 pool for the specified token pair\n    /// @param sqrtPriceX96 The initial square root price of the pool as a Q64.96 value\n    /// @return pool Returns the pool address based on the pair of tokens and fee, will return the newly created pool address if necessary\n    function createAndInitializePoolIfNecessary(address token0, address token1, uint24 fee, uint160 sqrtPriceX96)\n        external\n        payable\n        returns (address pool);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

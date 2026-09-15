@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e1a332c71cfe5f0e4af266811f199b7a2b9eb7df35fcbb138ebaf87e2765f6d7",
+  "name": "CrossDomainMessengerLegacySpacer0",
+  "kind": "contract",
+  "lines": 6,
+  "source": "contract CrossDomainMessengerLegacySpacer0 {\n    /// @custom:legacy\n    /// @custom:spacer libAddressManager\n    /// @notice Spacer for backwards compatibility.\n    address private spacer_0_0_20;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 6,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer0",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

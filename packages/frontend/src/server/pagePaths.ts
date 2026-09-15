@@ -1,5 +1,6 @@
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
+import { auditCoverageSource } from '~/server/features/audits/AuditCoverageSource'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
@@ -56,8 +57,8 @@ export async function getPagePaths(): Promise<PagePath[]> {
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
   }
-  for (const entry of getCollection('audits')) {
-    paths.push(`/audits/projects/${entry.data.slug}`)
+  for (const project of auditCoverageSource.listProjects()) {
+    paths.push(`/audits/projects/${project.slug}`)
   }
   paths.push(...(await getDynamicPagePaths()))
   return paths

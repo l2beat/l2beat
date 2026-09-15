@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fdc5d9aa62385f260ae64692b68eb1d1ead52c81ec72fff7b93f04663246edc0",
+  "name": "IUniswapV3Factory",
+  "kind": "interface",
+  "lines": 61,
+  "source": "interface IUniswapV3Factory {\n    /// @notice Emitted when the owner of the factory is changed\n    /// @param oldOwner The owner before the owner was changed\n    /// @param newOwner The owner after the owner was changed\n    event OwnerChanged(address indexed oldOwner, address indexed newOwner);\n\n    /// @notice Emitted when a pool is created\n    /// @param token0 The first token of the pool by address sort order\n    /// @param token1 The second token of the pool by address sort order\n    /// @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip\n    /// @param tickSpacing The minimum number of ticks between initialized ticks\n    /// @param pool The address of the created pool\n    event PoolCreated(\n        address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool\n    );\n\n    /// @notice Emitted when a new fee amount is enabled for pool creation via the factory\n    /// @param fee The enabled fee, denominated in hundredths of a bip\n    /// @param tickSpacing The minimum number of ticks between initialized ticks for pools created with the given fee\n    event FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing);\n\n    /// @notice Returns the current owner of the factory\n    /// @dev Can be changed by the current owner via setOwner\n    /// @return The address of the factory owner\n    function owner() external view returns (address);\n\n    /// @notice Returns the tick spacing for a given fee amount, if enabled, or 0 if not enabled\n    /// @dev A fee amount can never be removed, so this value should be hard coded or cached in the calling context\n    /// @param fee The enabled fee, denominated in hundredths of a bip. Returns 0 in case of unenabled fee\n    /// @return The tick spacing\n    function feeAmountTickSpacing(uint24 fee) external view returns (int24);\n\n    /// @notice Returns the pool address for a given pair of tokens and a fee, or address 0 if it does not exist\n    /// @dev tokenA and tokenB may be passed in either token0/token1 or token1/token0 order\n    /// @param tokenA The contract address of either token0 or token1\n    /// @param tokenB The contract address of the other token\n    /// @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip\n    /// @return pool The pool address\n    function getPool(address tokenA, address tokenB, uint24 fee) external view returns (address pool);\n\n    /// @notice Creates a pool for the given two tokens and fee\n    /// @param tokenA One of the two tokens in the desired pool\n    /// @param tokenB The other of the two tokens in the desired pool\n    /// @param fee The desired fee for the pool\n    /// @dev tokenA and tokenB may be passed in either order: token0/token1 or token1/token0. tickSpacing is retrieved\n    /// from the fee. The call will revert if the pool already exists, the fee is invalid, or the token arguments\n    /// are invalid.\n    /// @return pool The address of the newly created pool\n    function createPool(address tokenA, address tokenB, uint24 fee) external returns (address pool);\n\n    /// @notice Updates the owner of the factory\n    /// @dev Must be called by the current owner\n    /// @param _owner The new owner of the factory\n    function setOwner(address _owner) external;\n\n    /// @notice Enables a fee amount with the given tickSpacing\n    /// @dev Fee amounts may never be removed once enabled\n    /// @param fee The fee amount to enable, denominated in hundredths of a bip (i.e. 1e-6)\n    /// @param tickSpacing The spacing between ticks to be enforced for all pools created with the given fee amount\n    function enableFeeAmount(uint24 fee, int24 tickSpacing) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 61,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3Factory",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IUniswapV3Factory.sol",
+        "commit": "c3e2b3c938f50892b413422901cdac99a27c43a2",
+        "commitTimestamp": "2021-03-22T16:17:48Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/c3e2b3c938f50892b413422901cdac99a27c43a2/contracts/interfaces/IUniswapV3Factory.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 61,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    function owner() external view returns (address);"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    /// @notice Returns the tick spacing for a given fee amount, if enabled, or 0 if not enabled"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @dev A fee amount can never bee removed, so this value should be hard coded or cached in the calling context",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @dev A fee amount can never be removed, so this value should be hard coded or cached in the calling context",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    /// @param fee The enabled fee, denominated in hundredths of a bip. Returns 0 in case of unenabled fee"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    /// @return The tick spacing"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    function feeAmountTickSpacing(uint24 fee) external view returns (int24);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 61,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3Factory",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IUniswapV3Factory.sol",
+        "commit": "c3e2b3c938f50892b413422901cdac99a27c43a2",
+        "commitTimestamp": "2021-03-22T16:17:48Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/c3e2b3c938f50892b413422901cdac99a27c43a2/contracts/interfaces/IUniswapV3Factory.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 61,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    function owner() external view returns (address);"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    /// @notice Returns the tick spacing for a given fee amount, if enabled, or 0 if not enabled"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @dev A fee amount can never bee removed, so this value should be hard coded or cached in the calling context",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @dev A fee amount can never be removed, so this value should be hard coded or cached in the calling context",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    /// @param fee The enabled fee, denominated in hundredths of a bip. Returns 0 in case of unenabled fee"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    /// @return The tick spacing"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    function feeAmountTickSpacing(uint24 fee) external view returns (int24);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

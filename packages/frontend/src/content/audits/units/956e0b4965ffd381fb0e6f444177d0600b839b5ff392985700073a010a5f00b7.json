@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "956e0b4965ffd381fb0e6f444177d0600b839b5ff392985700073a010a5f00b7",
+  "name": "Constants",
+  "kind": "library",
+  "lines": 23,
+  "source": "library Constants {\n    /// @dev Used for identifying cases when a v2 pair has already received input tokens\n    uint256 internal constant ALREADY_PAID = 0;\n\n    /// @dev Used as a flag for identifying the transfer of ETH instead of a token\n    address internal constant ETH = address(0);\n\n    /// @dev The length of the bytes encoded address\n    uint256 internal constant ADDR_SIZE = 20;\n\n    /// @dev The length of the bytes encoded fee\n    uint256 internal constant V3_FEE_SIZE = 3;\n\n    /// @dev The offset of a single token address (20) and pool fee (3)\n    uint256 internal constant NEXT_V3_POOL_OFFSET = ADDR_SIZE + V3_FEE_SIZE;\n\n    /// @dev The offset of an encoded pool key\n    /// Token (20) + Fee (3) + Token (20) = 43\n    uint256 internal constant V3_POP_OFFSET = NEXT_V3_POOL_OFFSET + ADDR_SIZE;\n\n    /// @dev The minimum length of an encoding that contains 2 or more pools\n    uint256 internal constant MULTIPLE_V3_POOLS_MIN_LENGTH = V3_POP_OFFSET + NEXT_V3_POOL_OFFSET;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 16,
+      "match": {
+        "origin": "other",
+        "collection": "privacy-pools",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 0.286,
+        "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/contracts/lib/Constants.sol",
+        "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+        "commitTimestamp": "2025-03-14T12:57:01Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final commit",
+        "coverage": "Final audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 7,
+        "removed": 3,
+        "ignoredAdded": 13,
+        "ignoredRemoved": 0,
+        "unchanged": 16,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 23,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Constants {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint256 constant SNARK_SCALAR_FIELD =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "        21_888_242_871_839_275_222_246_405_745_257_275_088_548_364_400_416_034_343_698_204_186_575_808_495_617;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @dev Used for identifying cases when a v2 pair has already received input tokens",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    uint256 internal constant ALREADY_PAID = 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    address constant NATIVE_ASSET = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @dev Used as a flag for identifying the transfer of ETH instead of a token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    address internal constant ETH = address(0);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @dev The length of the bytes encoded address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    uint256 internal constant ADDR_SIZE = 20;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 10, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @dev The length of the bytes encoded fee",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    uint256 internal constant V3_FEE_SIZE = 3;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @dev The offset of a single token address (20) and pool fee (3)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    uint256 internal constant NEXT_V3_POOL_OFFSET = ADDR_SIZE + V3_FEE_SIZE;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @dev The offset of an encoded pool key",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// Token (20) + Fee (3) + Token (20) = 43",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    uint256 internal constant V3_POP_OFFSET = NEXT_V3_POOL_OFFSET + ADDR_SIZE;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @dev The minimum length of an encoding that contains 2 or more pools",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    uint256 internal constant MULTIPLE_V3_POOLS_MIN_LENGTH = V3_POP_OFFSET + NEXT_V3_POOL_OFFSET;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 23, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

@@ -1,0 +1,791 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "26a91ce2706a2dad1670517c6be54935f885ef621a098a577d19e6d0cb6c3583",
+  "name": "TornadoProxy",
+  "kind": "contract",
+  "lines": 125,
+  "source": "contract TornadoProxy {\n    using SafeERC20 for IERC20;\n\n    event EncryptedNote(address indexed sender, bytes encryptedNote);\n    event InstanceStateUpdated(ITornadoInstance indexed instance, InstanceState state);\n    event TornadoTreesUpdated(ITornadoTrees addr);\n\n    enum InstanceState {\n        DISABLED,\n        ENABLED,\n        MINEABLE\n    }\n\n    struct Instance {\n        bool isERC20;\n        IERC20 token;\n        InstanceState state;\n    }\n\n    struct Tornado {\n        ITornadoInstance addr;\n        Instance instance;\n    }\n\n    ITornadoTrees public tornadoTrees;\n    address public immutable governance;\n    mapping(ITornadoInstance => Instance) public instances;\n\n    modifier onlyGovernance() {\n        require(msg.sender == governance, \"Not authorized\");\n        _;\n    }\n\n    constructor(address _tornadoTrees, address _governance, Tornado[] memory _instances) public {\n        tornadoTrees = ITornadoTrees(_tornadoTrees);\n        governance = _governance;\n\n        for (uint256 i = 0; i < _instances.length; i++) {\n            _updateInstance(_instances[i]);\n        }\n    }\n\n    function deposit(ITornadoInstance _tornado, bytes32 _commitment, bytes calldata _encryptedNote) external payable {\n        Instance memory instance = instances[_tornado];\n        require(instance.state != InstanceState.DISABLED, \"The instance is not supported\");\n\n        if (instance.isERC20) {\n            instance.token.safeTransferFrom(msg.sender, address(this), _tornado.denomination());\n        }\n        _tornado.deposit{value: msg.value}(_commitment);\n\n        if (instance.state == InstanceState.MINEABLE) {\n            tornadoTrees.registerDeposit(address(_tornado), _commitment);\n        }\n        emit EncryptedNote(msg.sender, _encryptedNote);\n    }\n\n    function withdraw(\n        ITornadoInstance _tornado,\n        bytes calldata _proof,\n        bytes32 _root,\n        bytes32 _nullifierHash,\n        address payable _recipient,\n        address payable _relayer,\n        uint256 _fee,\n        uint256 _refund\n    ) external payable {\n        Instance memory instance = instances[_tornado];\n        require(instance.state != InstanceState.DISABLED, \"The instance is not supported\");\n\n        _tornado.withdraw{value: msg.value}(_proof, _root, _nullifierHash, _recipient, _relayer, _fee, _refund);\n        if (instance.state == InstanceState.MINEABLE) {\n            tornadoTrees.registerWithdrawal(address(_tornado), _nullifierHash);\n        }\n    }\n\n    function backupNotes(bytes[] calldata _encryptedNotes) external {\n        for (uint256 i = 0; i < _encryptedNotes.length; i++) {\n            emit EncryptedNote(msg.sender, _encryptedNotes[i]);\n        }\n    }\n\n    function updateInstance(Tornado calldata _tornado) external onlyGovernance {\n        _updateInstance(_tornado);\n    }\n\n    function setTornadoTreesContract(ITornadoTrees _tornadoTrees) external onlyGovernance {\n        tornadoTrees = _tornadoTrees;\n        emit TornadoTreesUpdated(_tornadoTrees);\n    }\n\n    /// @dev Method to claim junk and accidentally sent tokens\n    function rescueTokens(IERC20 _token, address payable _to, uint256 _amount) external onlyGovernance {\n        require(_to != address(0), \"TORN: can not send to zero address\");\n\n        if (_token == IERC20(0)) {\n            // for Ether\n            uint256 totalBalance = address(this).balance;\n            uint256 balance = Math.min(totalBalance, _amount);\n            _to.transfer(balance);\n        } else {\n            // any other erc20\n            uint256 totalBalance = _token.balanceOf(address(this));\n            uint256 balance = Math.min(totalBalance, _amount);\n            require(balance > 0, \"TORN: trying to send 0 balance\");\n            _token.safeTransfer(_to, balance);\n        }\n    }\n\n    function _updateInstance(Tornado memory _tornado) internal {\n        instances[_tornado.addr] = _tornado.instance;\n        if (_tornado.instance.isERC20) {\n            IERC20 token = IERC20(_tornado.addr.token());\n            require(token == _tornado.instance.token, \"Incorrect token\");\n            uint256 allowance = token.allowance(address(this), address(_tornado.addr));\n\n            if (_tornado.instance.state != InstanceState.DISABLED && allowance == 0) {\n                token.safeApprove(address(_tornado.addr), uint256(-1));\n            } else if (_tornado.instance.state == InstanceState.DISABLED && allowance != 0) {\n                token.safeApprove(address(_tornado.addr), 0);\n            }\n        }\n        emit InstanceStateUpdated(_tornado.addr, _tornado.instance.state);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "TornadoProxy",
+        "similarity": 0.2,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/TornadoProxy.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/TornadoProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 74,
+        "removed": 24,
+        "ignoredAdded": 30,
+        "ignoredRemoved": 2,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 47,
+            "newStart": 1,
+            "newLines": 125,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract TornadoProxy is EnsResolve {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    ITornadoTrees public immutable tornadoTrees;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    address public immutable governance;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract TornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeERC20 for IERC20;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    mapping(ITornado => bool) public instances;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    event EncryptedNote(address indexed sender, bytes encryptedNote);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    event InstanceStateUpdated(ITornadoInstance indexed instance, InstanceState state);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    event TornadoTreesUpdated(ITornadoTrees addr);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "" },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    enum InstanceState {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        DISABLED,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        ENABLED,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        MINEABLE",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    struct Instance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        bool isERC20;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        IERC20 token;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        InstanceState state;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 18, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 19, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    struct Tornado {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        ITornadoInstance addr;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        Instance instance;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 23, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    ITornadoTrees public tornadoTrees;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    address public immutable governance;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    mapping(ITornadoInstance => Instance) public instances;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 28, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 29,
+                "text": "    modifier onlyGovernance() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 30,
+                "text": "        require(msg.sender == governance, \"Not authorized\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 31,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 32, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 33, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    constructor(bytes32 _tornadoTrees, bytes32 _governance, ITornado[] memory _instances) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        tornadoTrees = ITornadoTrees(resolve(_tornadoTrees));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        governance = resolve(_governance);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    constructor(address _tornadoTrees, address _governance, Tornado[] memory _instances) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        tornadoTrees = ITornadoTrees(_tornadoTrees);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        governance = _governance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 37, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 38,
+                "text": "        for (uint256 i = 0; i < _instances.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "            instances[_instances[i]] = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            _updateInstance(_instances[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 40,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function deposit(ITornado tornado, bytes32 commitment) external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        require(instances[tornado], \"The instance is not supported\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function deposit(ITornadoInstance _tornado, bytes32 _commitment, bytes calldata _encryptedNote) external payable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        Instance memory instance = instances[_tornado];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        require(instance.state != InstanceState.DISABLED, \"The instance is not supported\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        tornado.deposit{value: msg.value}(commitment);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        tornadoTrees.registerNewDeposit(address(tornado), commitment);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 26, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        if (instance.isERC20) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "            instance.token.safeTransferFrom(msg.sender, address(this), _tornado.denomination());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        _tornado.deposit{value: msg.value}(_commitment);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function updateInstances(ITornado instance, bool update) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        instances[instance] = update;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        if (instance.state == InstanceState.MINEABLE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            tornadoTrees.registerDeposit(address(_tornado), _commitment);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        emit EncryptedNote(msg.sender, _encryptedNote);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 56, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 57, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 58,
+                "text": "    function withdraw("
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        ITornado tornado,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        bytes calldata proof,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        bytes32 root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        bytes32 nullifierHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        address payable recipient,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        address payable relayer,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        uint256 fee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        uint256 refund",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        ITornadoInstance _tornado,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        bytes calldata _proof,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        bytes32 _root,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        bytes32 _nullifierHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        address payable _recipient,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        address payable _relayer,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        uint256 _fee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        uint256 _refund",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 67,
+                "text": "    ) external payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        require(instances[tornado], \"The instance is not supported\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        Instance memory instance = instances[_tornado];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        require(instance.state != InstanceState.DISABLED, \"The instance is not supported\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 70, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        tornado.withdraw{value: msg.value}(proof, root, nullifierHash, recipient, relayer, fee, refund);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        tornadoTrees.registerNewWithdrawal(address(tornado), nullifierHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        _tornado.withdraw{value: msg.value}(_proof, _root, _nullifierHash, _recipient, _relayer, _fee, _refund);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        if (instance.state == InstanceState.MINEABLE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            tornadoTrees.registerWithdrawal(address(_tornado), _nullifierHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 46, "newLine": 75, "text": "    }" },
+              { "type": "+", "newLine": 76, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "    function backupNotes(bytes[] calldata _encryptedNotes) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        for (uint256 i = 0; i < _encryptedNotes.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "            emit EncryptedNote(msg.sender, _encryptedNotes[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    function updateInstance(Tornado calldata _tornado) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        _updateInstance(_tornado);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 85, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 86, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    function setTornadoTreesContract(ITornadoTrees _tornadoTrees) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        tornadoTrees = _tornadoTrees;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        emit TornadoTreesUpdated(_tornadoTrees);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 90, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 91, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @dev Method to claim junk and accidentally sent tokens",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function rescueTokens(IERC20 _token, address payable _to, uint256 _amount) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        require(_to != address(0), \"TORN: can not send to zero address\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        if (_token == IERC20(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "            // for Ether",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            uint256 totalBalance = address(this).balance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            uint256 balance = Math.min(totalBalance, _amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            _to.transfer(balance);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "            // any other erc20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "            uint256 totalBalance = _token.balanceOf(address(this));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "            uint256 balance = Math.min(totalBalance, _amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            require(balance > 0, \"TORN: trying to send 0 balance\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "            _token.safeTransfer(_to, balance);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 108, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 109, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    function _updateInstance(Tornado memory _tornado) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "        instances[_tornado.addr] = _tornado.instance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        if (_tornado.instance.isERC20) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            IERC20 token = IERC20(_tornado.addr.token());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            require(token == _tornado.instance.token, \"Incorrect token\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            uint256 allowance = token.allowance(address(this), address(_tornado.addr));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 116, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            if (_tornado.instance.state != InstanceState.DISABLED && allowance == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "                token.safeApprove(address(_tornado.addr), uint256(-1));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            } else if (_tornado.instance.state == InstanceState.DISABLED && allowance != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "                token.safeApprove(address(_tornado.addr), 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        emit InstanceStateUpdated(_tornado.addr, _tornado.instance.state);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 124, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 47, "newLine": 125, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

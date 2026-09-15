@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "87ac4c03162b1f7dfd23320b8c56b43c0acf643c80e99da436002f95f5a39bb3",
+  "name": "IBigStepper",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IBigStepper {\n    /// @notice Performs the state transition from a given prestate and returns the hash of the post state witness.\n    /// @param _stateData The raw opaque prestate data.\n    /// @param _proof Opaque proof data, can be used to prove things about the prestate in relation to the state of the\n    ///               interface's implementation.\n    /// @param _localContext The local key context for the preimage oracle. Optional, can be set as a constant if the\n    ///                      implementation only requires one set of local keys.\n    /// @return postState_ The hash of the post state witness after the state transition.\n    function step(bytes calldata _stateData, bytes calldata _proof, bytes32 _localContext)\n        external\n        returns (bytes32 postState_);\n\n    /// @notice Returns the preimage oracle used by the state machine.\n    function oracle() external view returns (IPreimageOracle oracle_);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

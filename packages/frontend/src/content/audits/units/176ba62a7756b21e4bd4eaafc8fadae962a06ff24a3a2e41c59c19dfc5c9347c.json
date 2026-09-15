@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "176ba62a7756b21e4bd4eaafc8fadae962a06ff24a3a2e41c59c19dfc5c9347c",
+  "name": "Delegation",
+  "kind": "abstract",
+  "lines": 47,
+  "source": "abstract contract Delegation is Core {\n    /// @notice Delegatee records\n    mapping(address => address) public delegatedTo;\n\n    event Delegated(address indexed account, address indexed to);\n    event Undelegated(address indexed account, address indexed from);\n\n    function delegate(address to) external {\n        address previous = delegatedTo[msg.sender];\n        require(\n            to != msg.sender && to != address(this) && to != address(0) && to != previous,\n            \"Governance: invalid delegatee\"\n        );\n        if (previous != address(0)) {\n            emit Undelegated(msg.sender, previous);\n        }\n        delegatedTo[msg.sender] = to;\n        emit Delegated(msg.sender, to);\n    }\n\n    function undelegate() external {\n        address previous = delegatedTo[msg.sender];\n        require(previous != address(0), \"Governance: tokens are already undelegated\");\n\n        delegatedTo[msg.sender] = address(0);\n        emit Undelegated(msg.sender, previous);\n    }\n\n    function proposeByDelegate(address from, address target, string memory description) external returns (uint256) {\n        require(delegatedTo[from] == msg.sender, \"Governance: not authorized\");\n        return _propose(from, target, description);\n    }\n\n    function _propose(address proposer, address target, string memory description) internal virtual returns (uint256);\n\n    function castDelegatedVote(address[] memory from, uint256 proposalId, bool support) external virtual {\n        for (uint256 i = 0; i < from.length; i++) {\n            require(delegatedTo[from[i]] == msg.sender, \"Governance: not authorized\");\n            _castVote(from[i], proposalId, support);\n        }\n        if (lockedBalance[msg.sender] > 0) {\n            _castVote(msg.sender, proposalId, support);\n        }\n    }\n\n    function _castVote(address voter, uint256 proposalId, bool support) internal virtual;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

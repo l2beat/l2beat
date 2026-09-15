@@ -18,9 +18,13 @@
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cli": "tsx src/cli.ts",
+    "test": "mocha"
   },
   "dependencies": {
+    "@l2beat/config": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.6",
     "diff": "^7.0.0"

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0bda457fdaf672aa637b1eb29ffca95e47f546ff90ef66a1dd187d1c99a719e1",
+  "name": "IERC721Permit_v4",
+  "kind": "interface",
+  "lines": 33,
+  "source": "interface IERC721Permit_v4 {\n    error SignatureDeadlineExpired();\n    error NoSelfPermit();\n    error Unauthorized();\n\n    /// @notice Approve of a specific token ID for spending by spender via signature\n    /// @param spender The account that is being approved\n    /// @param tokenId The ID of the token that is being approved for spending\n    /// @param deadline The deadline timestamp by which the call must be mined for the approve to work\n    /// @param nonce a unique value, for an owner, to prevent replay attacks; an unordered nonce where the top 248 bits correspond to a word and the bottom 8 bits calculate the bit position of the word\n    /// @param signature Concatenated data from a valid secp256k1 signature from the holder, i.e. abi.encodePacked(r, s, v)\n    /// @dev payable so it can be multicalled with NATIVE related actions\n    function permit(address spender, uint256 tokenId, uint256 deadline, uint256 nonce, bytes calldata signature)\n        external\n        payable;\n\n    /// @notice Set an operator with full permission to an owner's tokens via signature\n    /// @param owner The address that is setting the operator\n    /// @param operator The address that will be set as an operator for the owner\n    /// @param approved The permission to set on the operator\n    /// @param deadline The deadline timestamp by which the call must be mined for the approve to work\n    /// @param nonce a unique value, for an owner, to prevent replay attacks; an unordered nonce where the top 248 bits correspond to a word and the bottom 8 bits calculate the bit position of the word\n    /// @param signature Concatenated data from a valid secp256k1 signature from the holder, i.e. abi.encodePacked(r, s, v)\n    /// @dev payable so it can be multicalled with NATIVE related actions\n    function permitForAll(\n        address owner,\n        address operator,\n        bool approved,\n        uint256 deadline,\n        uint256 nonce,\n        bytes calldata signature\n    ) external payable;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

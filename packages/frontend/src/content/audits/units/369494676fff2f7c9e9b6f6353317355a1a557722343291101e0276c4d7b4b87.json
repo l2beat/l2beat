@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "369494676fff2f7c9e9b6f6353317355a1a557722343291101e0276c4d7b4b87",
+  "name": "ENS",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ENS {\n    function resolver(bytes32 node) external view returns (Resolver);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

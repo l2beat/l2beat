@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a25ddb2cd0553f70dc9a4581cae8bdc9f7327fcb008f323eec24b8b135f8cd7e",
+  "name": "IResourceManager",
+  "kind": "interface",
+  "lines": 28,
+  "source": "interface IResourceManager {\n    /// @notice Thrown when an unauthorized address attempts to call a restricted function\n    error Unauthorized();\n\n    /// @notice The resource token required by parent IReleaser\n    function RESOURCE() external view returns (ERC20);\n\n    /// @notice The recipient of the `RESOURCE` tokens\n    function RESOURCE_RECIPIENT() external view returns (address);\n\n    /// @notice The minimum threshold of `RESOURCE` tokens required to perform a release\n    function threshold() external view returns (uint256);\n\n    /// @notice The address authorized to set the `threshold` value\n    function thresholdSetter() external view returns (address);\n\n    /// @notice Set the address authorized to set the `threshold` value\n    /// @dev only callable by `owner`\n    function setThresholdSetter(address newThresholdSetter) external;\n\n    /// @notice Set the minimum threshold of `RESOURCE` tokens required to perform a release\n    /// @dev only callable by `thresholdSetter`\n    /// the `thresholdSetter` should take explicit care when updating the threshold\n    /// * lowering the threshold may create instantaneous value leakage\n    /// * front-running a release with an increased threshold may cause economic loss\n    /// to the releaser/searcher\n    function setThreshold(uint256 newThreshold) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

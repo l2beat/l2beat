@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd8f9cf0447d61a9a3d15037574cd905c04a5623cac58cb580fe2dbfb390383c",
+  "name": "IFeeManager",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IFeeManager {\n    function instanceFeeWithUpdate(ITornadoInstance _instance) external returns (uint160);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

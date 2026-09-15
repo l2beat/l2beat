@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "643e2645f4b10648c434aec3f652dcf7e39fd63b4fa244a80ccc79e35b8a3fa4",
+  "name": "IUniversalRouter",
+  "kind": "interface",
+  "lines": 22,
+  "source": "interface IUniversalRouter {\n    /// @notice Thrown when a required command has failed\n    error ExecutionFailed(uint256 commandIndex, bytes message);\n\n    /// @notice Thrown when attempting to send ETH directly to the contract\n    error ETHNotAccepted();\n\n    /// @notice Thrown when executing commands with an expired deadline\n    error TransactionDeadlinePassed();\n\n    /// @notice Thrown when attempting to execute commands and an incorrect number of inputs are provided\n    error LengthMismatch();\n\n    // @notice Thrown when an address that isn't WETH tries to send ETH to the router without calldata\n    error InvalidEthSender();\n\n    /// @notice Executes encoded commands along with provided inputs. Reverts if deadline has expired.\n    /// @param commands A set of concatenated commands, each 1 byte in length\n    /// @param inputs An array of byte strings containing abi encoded inputs for each command\n    /// @param deadline The deadline by which the transaction must be executed\n    function execute(bytes calldata commands, bytes[] calldata inputs, uint256 deadline) external payable;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8d330617c17b3682a2f4ede22b59cdab4be0f3d3b26623a32439200d77f9720d",
+  "name": "FallbackManager",
+  "kind": "contract",
+  "lines": 43,
+  "source": "contract FallbackManager is SelfAuthorized {\n    event ChangedFallbackHandler(address handler);\n\n    // keccak256(\"fallback_manager.handler.address\")\n    bytes32 internal constant FALLBACK_HANDLER_STORAGE_SLOT =\n        0x6c9a6c4a39284e37ed1cf53d337577d14212a4870fb976a4366c693b939918d5;\n\n    function internalSetFallbackHandler(address handler) internal {\n        bytes32 slot = FALLBACK_HANDLER_STORAGE_SLOT;\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            sstore(slot, handler)\n        }\n    }\n\n    /// @dev Allows to add a contract to handle fallback calls.\n    ///      Only fallback calls without value and with data will be forwarded.\n    ///      This can only be done via a Safe transaction.\n    /// @param handler contract to handle fallbacks calls.\n    function setFallbackHandler(address handler) public authorized {\n        internalSetFallbackHandler(handler);\n        emit ChangedFallbackHandler(handler);\n    }\n\n    // solhint-disable-next-line payable-fallback,no-complex-fallback\n    fallback() external {\n        bytes32 slot = FALLBACK_HANDLER_STORAGE_SLOT;\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            let handler := sload(slot)\n            if iszero(handler) { return(0, 0) }\n            calldatacopy(0, 0, calldatasize())\n            // The msg.sender address is shifted to the left by 12 bytes to remove the padding\n            // Then the address without padding is stored right after the calldata\n            mstore(calldatasize(), shl(96, caller()))\n            // Add 20 bytes for the address appended add the end\n            let success := call(gas(), handler, 0, 0, add(calldatasize(), 20), 0, 0)\n            returndatacopy(0, 0, returndatasize())\n            if iszero(success) { revert(0, returndatasize()) }\n            return(0, returndatasize())\n        }\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "FallbackManager",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/FallbackManager.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/base/FallbackManager.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "827d4d19b493dbb6": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "FallbackManager",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/FallbackManager.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/base/FallbackManager.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0b3f1ea6c746201ac9d82ab641e1f2767e13b39dd48ff0869789ef5664aa265d",
+  "name": "KailuaKZGLib",
+  "kind": "library",
+  "lines": 90,
+  "source": "library KailuaKZGLib {\n    /// @notice The KZG commitment version\n    bytes32 internal constant KZG_COMMITMENT_VERSION =\n        bytes32(0x0100000000000000000000000000000000000000000000000000000000000000);\n\n    /// @notice The modular exponentiation precompile\n    address internal constant MOD_EXP = address(0x05);\n\n    /// @notice The point evaluation precompile\n    address internal constant KZG = address(0x0a);\n\n    /// @notice The expected result from the point evaluation precompile\n    bytes32 internal constant KZG_RESULT = keccak256(abi.encodePacked(FIELD_ELEMENTS_PER_BLOB, BLS_MODULUS));\n\n    /// @notice Scalar field modulus of BLS12-381\n    uint256 internal constant BLS_MODULUS =\n        52435875175126190479447740508185965837690552500527637822603658699938581184513;\n\n    /// @notice The base root of unity for indexing blob field elements\n    uint256 internal constant ROOT_OF_UNITY =\n        39033254847818212395286706435128746857159659164139250548781411570340225835782;\n\n    /// @notice The po2 for the number of field elements in a single blob\n    uint256 internal constant FIELD_ELEMENTS_PER_BLOB_PO2 = 12;\n\n    /// @notice The number of field elements in a single blob\n    uint256 internal constant FIELD_ELEMENTS_PER_BLOB = uint64(1 << FIELD_ELEMENTS_PER_BLOB_PO2);\n\n    /// @notice The index of the blob containing the FE at the provided offset\n    function blobIndex(uint256 outputOffset) internal pure returns (uint256 index) {\n        index = outputOffset / FIELD_ELEMENTS_PER_BLOB;\n    }\n\n    /// @notice The index of the FE at the provided offset in the blob that contains it\n    function fieldElementIndex(uint256 outputOffset) internal pure returns (uint32 position) {\n        position = uint32(outputOffset % FIELD_ELEMENTS_PER_BLOB);\n    }\n\n    /// @notice The versioned KZG hash of the provided blob commitment\n    function versionedKZGHash(bytes calldata blobCommitment) internal pure returns (bytes32 hash) {\n        require(blobCommitment.length == 48);\n        hash = ((sha256(blobCommitment) << 8) >> 8) | KZG_COMMITMENT_VERSION;\n    }\n\n    /// @notice The mapped FE corresponding to the input hash\n    function hashToFe(bytes32 hash) internal pure returns (uint256 fe) {\n        fe = uint256(hash) % BLS_MODULUS;\n    }\n\n    /// @notice Returns true iff the proof shows that the FE is part of the blob at the provided position\n    function verifyKZGBlobProof(\n        bytes32 versionedBlobHash,\n        uint32 index,\n        uint256 value,\n        bytes calldata blobCommitment,\n        bytes calldata proof\n    ) internal view returns (bool success) {\n        uint256 rootOfUnity = modExp(reverseBits(index));\n        // Byte range\tName\t        Description\n        // [0:32]\t    versioned_hash\tReference to a blob in the execution layer.\n        // [32:64]\t    x\t            x-coordinate at which the blob is being evaluated.\n        // [64:96]\t    y\t            y-coordinate at which the blob is being evaluated.\n        // [96:144]\t    commitment\t    Commitment to the blob being evaluated.\n        // [144:192]\tproof\t        Proof associated with the commitment.\n        bytes memory kzgCallData = abi.encodePacked(versionedBlobHash, rootOfUnity, value, blobCommitment, proof);\n        // The precompile will reject non-canonical field elements (i.e. value must be less than BLS_MODULUS).\n        (bool _success, bytes memory kzgResult) = KZG.staticcall(kzgCallData);\n        // Validate the precompile response\n        require(keccak256(kzgResult) == KZG_RESULT);\n        // Return the result\n        success = _success;\n    }\n\n    /// @notice Calls the modular exponentiation precompile with a fixed base and modulus\n    function modExp(uint256 exponent) internal view returns (uint256 result) {\n        bytes memory modExpData =\n            abi.encodePacked(uint256(32), uint256(32), uint256(32), ROOT_OF_UNITY, exponent, BLS_MODULUS);\n        (bool success, bytes memory mexpResult) = MOD_EXP.staticcall(modExpData);\n        require(success);\n        result = uint256(bytes32(mexpResult));\n    }\n\n    /// @notice Reverses the bits of the input index\n    function reverseBits(uint32 index) internal pure returns (uint256 result) {\n        for (uint256 i = 0; i < FIELD_ELEMENTS_PER_BLOB_PO2; i++) {\n            result <<= 1;\n            result |= ((1 << i) & index) >> i;\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 90,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "KailuaKZGLib",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaLib.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

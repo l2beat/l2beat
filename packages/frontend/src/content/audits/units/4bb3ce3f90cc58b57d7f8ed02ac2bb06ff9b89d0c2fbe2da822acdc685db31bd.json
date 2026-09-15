@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4bb3ce3f90cc58b57d7f8ed02ac2bb06ff9b89d0c2fbe2da822acdc685db31bd",
+  "name": "ISystemConfig",
+  "kind": "interface",
+  "lines": 89,
+  "source": "interface ISystemConfig is IProxyAdminOwnedBase {\n    enum UpdateType {\n        BATCHER,\n        FEE_SCALARS,\n        GAS_LIMIT,\n        UNSAFE_BLOCK_SIGNER,\n        EIP_1559_PARAMS,\n        OPERATOR_FEE_PARAMS\n    }\n\n    struct Addresses {\n        address l1CrossDomainMessenger;\n        address l1ERC721Bridge;\n        address l1StandardBridge;\n        address optimismPortal;\n        address optimismMintableERC20Factory;\n    }\n\n    error ReinitializableBase_ZeroInitVersion();\n\n    event ConfigUpdate(uint256 indexed version, UpdateType indexed updateType, bytes data);\n    event Initialized(uint8 version);\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function BATCH_INBOX_SLOT() external view returns (bytes32);\n    function L1_CROSS_DOMAIN_MESSENGER_SLOT() external view returns (bytes32);\n    function L1_ERC_721_BRIDGE_SLOT() external view returns (bytes32);\n    function L1_STANDARD_BRIDGE_SLOT() external view returns (bytes32);\n    function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() external view returns (bytes32);\n    function OPTIMISM_PORTAL_SLOT() external view returns (bytes32);\n    function START_BLOCK_SLOT() external view returns (bytes32);\n    function UNSAFE_BLOCK_SIGNER_SLOT() external view returns (bytes32);\n    function VERSION() external view returns (uint256);\n    function basefeeScalar() external view returns (uint32);\n    function batchInbox() external view returns (address addr_);\n    function batcherHash() external view returns (bytes32);\n    function blobbasefeeScalar() external view returns (uint32);\n    function disputeGameFactory() external view returns (address addr_);\n    function gasLimit() external view returns (uint64);\n    function eip1559Denominator() external view returns (uint32);\n    function eip1559Elasticity() external view returns (uint32);\n    function getAddresses() external view returns (Addresses memory);\n    function initialize(\n        address _owner,\n        uint32 _basefeeScalar,\n        uint32 _blobbasefeeScalar,\n        bytes32 _batcherHash,\n        uint64 _gasLimit,\n        address _unsafeBlockSigner,\n        IResourceMetering.ResourceConfig memory _config,\n        address _batchInbox,\n        Addresses memory _addresses,\n        uint256 _l2ChainId,\n        ISuperchainConfig _superchainConfig\n    ) external;\n    function initVersion() external view returns (uint8);\n    function l1CrossDomainMessenger() external view returns (address addr_);\n    function l1ERC721Bridge() external view returns (address addr_);\n    function l1StandardBridge() external view returns (address addr_);\n    function l2ChainId() external view returns (uint256);\n    function maximumGasLimit() external pure returns (uint64);\n    function minimumGasLimit() external view returns (uint64);\n    function operatorFeeConstant() external view returns (uint64);\n    function operatorFeeScalar() external view returns (uint32);\n    function optimismMintableERC20Factory() external view returns (address addr_);\n    function optimismPortal() external view returns (address addr_);\n    function overhead() external view returns (uint256);\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function resourceConfig() external view returns (IResourceMetering.ResourceConfig memory);\n    function scalar() external view returns (uint256);\n    function setBatcherHash(bytes32 _batcherHash) external;\n    function setGasConfig(uint256 _overhead, uint256 _scalar) external;\n    function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) external;\n    function setGasLimit(uint64 _gasLimit) external;\n    function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant) external;\n    function setUnsafeBlockSigner(address _unsafeBlockSigner) external;\n    function setEIP1559Params(uint32 _denominator, uint32 _elasticity) external;\n    function startBlock() external view returns (uint256 startBlock_);\n    function transferOwnership(address newOwner) external; // nosemgrep\n    function unsafeBlockSigner() external view returns (address addr_);\n    function upgrade(uint256 _l2ChainId, ISuperchainConfig _superchainConfig) external;\n    function version() external pure returns (string memory);\n    function paused() external view returns (bool);\n    function superchainConfig() external view returns (ISuperchainConfig);\n    function guardian() external view returns (address);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 89,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ISystemConfig",
+        "similarity": 0.977,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "2c50c87bab8a37aeb363664b22ace82b898c2d8b",
+        "commitTimestamp": "2026-01-14T10:59:08Z",
+        "url": "https://github.com/celo-org/optimism/blob/2c50c87bab8a37aeb363664b22ace82b898c2d8b/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v4.1.0 line (Celo CGT changes vs op-deployer/v0.4.7)",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 89,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 10,
+            "newStart": 17,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    error ReinitializableBase_ZeroInitVersion();"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    error SystemConfig_InvalidFeatureState();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 21,
+                "text": "    event ConfigUpdate(uint256 indexed version, UpdateType indexed updateType, bytes data);"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    event FeatureSet(bytes32 indexed feature, bool indexed enabled);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 22,
+                "text": "    event Initialized(uint8 version);"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 23,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 24, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 86,
+            "oldLines": 8,
+            "newStart": 84,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 84,
+                "text": "    function paused() external view returns (bool);"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 85,
+                "text": "    function superchainConfig() external view returns (ISuperchainConfig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 86,
+                "text": "    function guardian() external view returns (address);"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    function setFeature(bytes32 _feature, bool _enabled) external;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    function isFeatureEnabled(bytes32) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 91, "newLine": 87, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 88,
+                "text": "    function __constructor__() external;"
+              },
+              { "type": " ", "oldLine": 93, "newLine": 89, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

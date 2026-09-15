@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1c0eb3bf6a7b5255d181b725c51c2ec003dc3182c220a12d809db5b1ea85e092",
+  "name": "LibHash",
+  "kind": "library",
+  "lines": 10,
+  "source": "library LibHash {\n    /// @notice Get the value of a `Hash` type in the form of the underlying bytes32.\n    /// @param _hash The `Hash` type to get the value of.\n    /// @return hash_ The value of the `Hash` type as a bytes32 type.\n    function raw(Hash _hash) internal pure returns (bytes32 hash_) {\n        assembly {\n            hash_ := _hash\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibHash",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

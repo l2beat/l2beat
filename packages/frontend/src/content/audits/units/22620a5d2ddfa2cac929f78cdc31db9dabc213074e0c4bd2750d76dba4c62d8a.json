@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "22620a5d2ddfa2cac929f78cdc31db9dabc213074e0c4bd2750d76dba4c62d8a",
+  "name": "SwapRouter02",
+  "kind": "contract",
+  "lines": 6,
+  "source": "contract SwapRouter02 is ISwapRouter02, V2SwapRouter, V3SwapRouter, ApproveAndCall, MulticallExtended, SelfPermit {\n    constructor(address _factoryV2, address factoryV3, address _positionManager, address _WETH9)\n        ImmutableState(_factoryV2, _positionManager)\n        PeripheryImmutableState(factoryV3, _WETH9)\n    {}\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

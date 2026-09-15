@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8c822de5777499a914a34381038ee80422ea50a625042f5d0a8bddff24a70ce2",
+  "name": "LocalPreimageKey",
+  "kind": "library",
+  "lines": 16,
+  "source": "library LocalPreimageKey {\n    /// @notice The identifier for the L1 head hash.\n    uint256 internal constant L1_HEAD_HASH = 0x01;\n\n    /// @notice The identifier for the starting output root.\n    uint256 internal constant STARTING_OUTPUT_ROOT = 0x02;\n\n    /// @notice The identifier for the disputed output root.\n    uint256 internal constant DISPUTED_OUTPUT_ROOT = 0x03;\n\n    /// @notice The identifier for the disputed L2 block number.\n    uint256 internal constant DISPUTED_L2_BLOCK_NUMBER = 0x04;\n\n    /// @notice The identifier for the chain ID.\n    uint256 internal constant CHAIN_ID = 0x05;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LocalPreimageKey",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

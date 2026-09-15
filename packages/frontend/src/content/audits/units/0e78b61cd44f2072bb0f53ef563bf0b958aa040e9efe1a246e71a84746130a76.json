@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0e78b61cd44f2072bb0f53ef563bf0b958aa040e9efe1a246e71a84746130a76",
+  "name": "IImmutableState",
+  "kind": "interface",
+  "lines": 4,
+  "source": "interface IImmutableState {\n    /// @notice The Uniswap v4 PoolManager contract\n    function poolManager() external view returns (IPoolManager);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

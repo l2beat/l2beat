@@ -1,0 +1,2190 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b5b3b5723467bb5d5a2e1bf9e045f9002d50d249554fbff6195f291a7dffba31",
+  "name": "PlonkVerifier",
+  "kind": "contract",
+  "lines": 1241,
+  "source": "contract PlonkVerifier {\n    uint256 private constant R_MOD = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\n    uint256 private constant R_MOD_MINUS_ONE =\n        21888242871839275222246405745257275088548364400416034343698204186575808495616;\n    uint256 private constant P_MOD = 21888242871839275222246405745257275088696311157297823662689037894645226208583;\n\n    uint256 private constant G2_SRS_0_X_0 =\n        11559732032986387107991004021392285783925812861821192530917403151452391805634;\n    uint256 private constant G2_SRS_0_X_1 =\n        10857046999023057135944570762232829481370756359578518086990519993285655852781;\n    uint256 private constant G2_SRS_0_Y_0 = 4082367875863433681332203403145435568316851327593401208105741076214120093531;\n    uint256 private constant G2_SRS_0_Y_1 = 8495653923123431417604973247489272438418190587263600148770280649306958101930;\n\n    uint256 private constant G2_SRS_1_X_0 =\n        15805639136721018565402881920352193254830339253282065586954346329754995870280;\n    uint256 private constant G2_SRS_1_X_1 =\n        19089565590083334368588890253123139704298730990782503769911324779715431555531;\n    uint256 private constant G2_SRS_1_Y_0 = 9779648407879205346559610309258181044130619080926897934572699915909528404984;\n    uint256 private constant G2_SRS_1_Y_1 = 6779728121489434657638426458390319301070371227460768374343986326751507916979;\n\n    uint256 private constant G1_SRS_X = 14312776538779914388377568895031746459131577658076416373430523308756343304251;\n    uint256 private constant G1_SRS_Y = 11763105256161367503191792604679297387056316997144156930871823008787082098465;\n\n    // ----------------------- vk ---------------------\n    uint256 private constant VK_NB_PUBLIC_INPUTS = 2;\n    uint256 private constant VK_DOMAIN_SIZE = 16777216;\n    uint256 private constant VK_INV_DOMAIN_SIZE =\n        21888241567198334088790460357988866238279339518792980768180410072331574733841;\n    uint256 private constant VK_OMEGA = 5709868443893258075976348696661355716898495876243883251619397131511003808859;\n    uint256 private constant VK_QL_COM_X = 2714773032566361735398260413518107570706289019141573602093747023461681138141;\n    uint256 private constant VK_QL_COM_Y = 10207220609888567477852282724812707756861966294950666667119692155077205992894;\n    uint256 private constant VK_QR_COM_X = 17919274808167168584263187859012763816365260341587621260815379357637476029962;\n    uint256 private constant VK_QR_COM_Y = 14558165337321799812085033100515533981610351056305142204990949940017867076397;\n    uint256 private constant VK_QM_COM_X = 1814703450159964740292891910795980721108620081843240976053374083376051887455;\n    uint256 private constant VK_QM_COM_Y = 11252528960397523304289223453506717847025678682133692300385063157160041127070;\n    uint256 private constant VK_QO_COM_X = 20843277058771674275997213106654908867381045039357421108797602213552545033079;\n    uint256 private constant VK_QO_COM_Y = 9646775541123942436366130063934415659078920798926708026864638413383214238671;\n    uint256 private constant VK_QK_COM_X = 5484717465597821820411103650564499774744032473047103693751158150047197753654;\n    uint256 private constant VK_QK_COM_Y = 5561799343038529497262757012400750786503050088440144551259537360162821571059;\n\n    uint256 private constant VK_S1_COM_X = 16111562061301112215931665617877464360548491176332584512747295033804502769274;\n    uint256 private constant VK_S1_COM_Y = 15035232142063390140879951391784254536324051421746307325879221184372296043705;\n\n    uint256 private constant VK_S2_COM_X = 899944321381010541211546037826620464002745326050515852312919625047231523882;\n    uint256 private constant VK_S2_COM_Y = 61717668739330555376092528203839789132705738484346798874082062974863965392;\n\n    uint256 private constant VK_S3_COM_X = 9316901462569250008665217603385561854185385862824092362271612343176126127375;\n    uint256 private constant VK_S3_COM_Y = 13799900238612879579721466063922041459340434537392216736920805107993374657577;\n\n    uint256 private constant VK_COSET_SHIFT = 5;\n\n    uint256 private constant VK_QCP_0_X = 21578473557091588309361521643625606794648013014197133181947992670819103775934;\n    uint256 private constant VK_QCP_0_Y = 18236588362476326695195531997097392315059481348147701548685746610417604595065;\n\n    uint256 private constant VK_INDEX_COMMIT_API_0 = 10900304;\n    uint256 private constant VK_NB_CUSTOM_GATES = 1;\n\n    // ------------------------------------------------\n\n    // size of the proof without call custom gate\n    uint256 private constant FIXED_PROOF_SIZE = 0x300;\n\n    // offset proof\n\n    uint256 private constant PROOF_L_COM_X = 0x0;\n    uint256 private constant PROOF_L_COM_Y = 0x20;\n    uint256 private constant PROOF_R_COM_X = 0x40;\n    uint256 private constant PROOF_R_COM_Y = 0x60;\n    uint256 private constant PROOF_O_COM_X = 0x80;\n    uint256 private constant PROOF_O_COM_Y = 0xa0;\n\n    // h = h_0 + x^{n+2}h_1 + x^{2(n+2)}h_2\n    uint256 private constant PROOF_H_0_COM_X = 0xc0;\n    uint256 private constant PROOF_H_0_COM_Y = 0xe0;\n    uint256 private constant PROOF_H_1_COM_X = 0x100;\n    uint256 private constant PROOF_H_1_COM_Y = 0x120;\n    uint256 private constant PROOF_H_2_COM_X = 0x140;\n    uint256 private constant PROOF_H_2_COM_Y = 0x160;\n\n    // \"evaluations of wire polynomials at zeta\n    uint256 private constant PROOF_L_AT_ZETA = 0x180;\n    uint256 private constant PROOF_R_AT_ZETA = 0x1a0;\n    uint256 private constant PROOF_O_AT_ZETA = 0x1c0;\n\n    // S1(zeta),S2(zeta)\n    uint256 private constant PROOF_S1_AT_ZETA = 0x1e0; // Sσ1(zeta)\n    uint256 private constant PROOF_S2_AT_ZETA = 0x200; // Sσ2(zeta)\n\n    // [Z]\n    uint256 private constant PROOF_GRAND_PRODUCT_COMMITMENT_X = 0x220;\n    uint256 private constant PROOF_GRAND_PRODUCT_COMMITMENT_Y = 0x240;\n\n    uint256 private constant PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA = 0x260; // z(w*zeta)\n\n    // Folded proof for the opening of linearised poly, l, r, o, s_1, s_2, qcp\n    uint256 private constant PROOF_BATCH_OPENING_AT_ZETA_X = 0x280;\n    uint256 private constant PROOF_BATCH_OPENING_AT_ZETA_Y = 0x2a0;\n\n    uint256 private constant PROOF_OPENING_AT_ZETA_OMEGA_X = 0x2c0;\n    uint256 private constant PROOF_OPENING_AT_ZETA_OMEGA_Y = 0x2e0;\n\n    uint256 private constant PROOF_OPENING_QCP_AT_ZETA = 0x300;\n    uint256 private constant PROOF_BSB_COMMITMENTS = 0x320;\n\n    // -------- offset state\n\n    // challenges to check the claimed quotient\n\n    uint256 private constant STATE_ALPHA = 0x0;\n    uint256 private constant STATE_BETA = 0x20;\n    uint256 private constant STATE_GAMMA = 0x40;\n    uint256 private constant STATE_ZETA = 0x60;\n    uint256 private constant STATE_ALPHA_SQUARE_LAGRANGE_0 = 0x80;\n    uint256 private constant STATE_FOLDED_H_X = 0xa0;\n    uint256 private constant STATE_FOLDED_H_Y = 0xc0;\n    uint256 private constant STATE_LINEARISED_POLYNOMIAL_X = 0xe0;\n    uint256 private constant STATE_LINEARISED_POLYNOMIAL_Y = 0x100;\n    uint256 private constant STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA = 0x120;\n    uint256 private constant STATE_FOLDED_CLAIMED_VALUES = 0x140; // Folded proof for the opening of H, linearised poly, l, r, o, s_1, s_2, qcp\n    uint256 private constant STATE_FOLDED_DIGESTS_X = 0x160; // linearised poly, l, r, o, s_1, s_2, qcp\n    uint256 private constant STATE_FOLDED_DIGESTS_Y = 0x180;\n    uint256 private constant STATE_PI = 0x1a0;\n    uint256 private constant STATE_ZETA_POWER_N_MINUS_ONE = 0x1c0;\n    uint256 private constant STATE_GAMMA_KZG = 0x1e0;\n    uint256 private constant STATE_SUCCESS = 0x200;\n    uint256 private constant STATE_CHECK_VAR = 0x220; // /!\\ this slot is used for debugging only\n    uint256 private constant STATE_LAST_MEM = 0x240;\n\n    // -------- utils (for Fiat Shamir)\n    uint256 private constant FS_ALPHA = 0x616C706861; // \"alpha\"\n    uint256 private constant FS_BETA = 0x62657461; // \"beta\"\n    uint256 private constant FS_GAMMA = 0x67616d6d61; // \"gamma\"\n    uint256 private constant FS_ZETA = 0x7a657461; // \"zeta\"\n    uint256 private constant FS_GAMMA_KZG = 0x67616d6d61; // \"gamma\"\n\n    // -------- errors\n    uint256 private constant ERROR_STRING_ID = 0x08c379a000000000000000000000000000000000000000000000000000000000; // selector for function Error(string)\n\n    // -------- utils (for hash_fr)\n    uint256 private constant HASH_FR_BB = 340282366920938463463374607431768211456; // 2**128\n    uint256 private constant HASH_FR_ZERO_UINT256 = 0;\n    uint8 private constant HASH_FR_LEN_IN_BYTES = 48;\n    uint8 private constant HASH_FR_SIZE_DOMAIN = 11;\n    uint8 private constant HASH_FR_ONE = 1;\n    uint8 private constant HASH_FR_TWO = 2;\n\n    // -------- precompiles\n    uint8 private constant SHA2 = 0x2;\n    uint8 private constant MOD_EXP = 0x5;\n    uint8 private constant EC_ADD = 0x6;\n    uint8 private constant EC_MUL = 0x7;\n    uint8 private constant EC_PAIR = 0x8;\n\n    /// Verify a Plonk proof.\n    /// Reverts if the proof or the public inputs are malformed.\n    /// @param proof serialised plonk proof (using gnark's MarshalSolidity)\n    /// @param public_inputs (must be reduced)\n    /// @return success true if the proof passes false otherwise\n    function Verify(bytes calldata proof, uint256[] calldata public_inputs) public view returns (bool success) {\n        assembly {\n            let mem := mload(0x40)\n            let freeMem := add(mem, STATE_LAST_MEM)\n\n            // sanity checks\n            check_number_of_public_inputs(public_inputs.length)\n            check_inputs_size(public_inputs.length, public_inputs.offset)\n            check_proof_size(proof.length)\n            check_proof_openings_size(proof.offset)\n\n            // compute the challenges\n            let prev_challenge_non_reduced\n            prev_challenge_non_reduced := derive_gamma(proof.offset, public_inputs.length, public_inputs.offset)\n            prev_challenge_non_reduced := derive_beta(prev_challenge_non_reduced)\n            prev_challenge_non_reduced := derive_alpha(proof.offset, prev_challenge_non_reduced)\n            derive_zeta(proof.offset, prev_challenge_non_reduced)\n\n            // evaluation of Z=Xⁿ-1 at ζ, we save this value\n            let zeta := mload(add(mem, STATE_ZETA))\n            let zeta_power_n_minus_one := addmod(pow(zeta, VK_DOMAIN_SIZE, freeMem), sub(R_MOD, 1), R_MOD)\n            mstore(add(mem, STATE_ZETA_POWER_N_MINUS_ONE), zeta_power_n_minus_one)\n\n            // public inputs contribution\n            let l_pi := sum_pi_wo_api_commit(public_inputs.offset, public_inputs.length, freeMem)\n            let l_pi_commit := sum_pi_commit(proof.offset, public_inputs.length, freeMem)\n            l_pi := addmod(l_pi_commit, l_pi, R_MOD)\n            mstore(add(mem, STATE_PI), l_pi)\n\n            compute_alpha_square_lagrange_0()\n            compute_opening_linearised_polynomial(proof.offset)\n            fold_h(proof.offset)\n            compute_commitment_linearised_polynomial(proof.offset)\n            compute_gamma_kzg(proof.offset)\n            fold_state(proof.offset)\n            batch_verify_multi_points(proof.offset)\n\n            success := mload(add(mem, STATE_SUCCESS))\n\n            // Beginning errors -------------------------------------------------\n\n            function error_nb_public_inputs() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x1d)\n                mstore(add(ptError, 0x44), \"wrong number of public inputs\")\n                revert(ptError, 0x64)\n            }\n\n            /// Called when an exponentiation mod r fails\n            function error_mod_exp() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0xc)\n                mstore(add(ptError, 0x44), \"error mod exp\")\n                revert(ptError, 0x64)\n            }\n\n            /// Called when an operation on Bn254 fails\n            /// @dev for instance when calling EcMul on a point not on Bn254.\n            function error_ec_op() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x12)\n                mstore(add(ptError, 0x44), \"error ec operation\")\n                revert(ptError, 0x64)\n            }\n\n            /// Called when one of the public inputs is not reduced.\n            function error_inputs_size() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x18)\n                mstore(add(ptError, 0x44), \"inputs are bigger than r\")\n                revert(ptError, 0x64)\n            }\n\n            /// Called when the size proof is not as expected\n            /// @dev to avoid overflow attack for instance\n            function error_proof_size() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x10)\n                mstore(add(ptError, 0x44), \"wrong proof size\")\n                revert(ptError, 0x64)\n            }\n\n            /// Called when one the openings is bigger than r\n            /// The openings are the claimed evalutions of a polynomial\n            /// in a Kzg proof.\n            function error_proof_openings_size() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x16)\n                mstore(add(ptError, 0x44), \"openings bigger than r\")\n                revert(ptError, 0x64)\n            }\n\n            function error_pairing() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0xd)\n                mstore(add(ptError, 0x44), \"error pairing\")\n                revert(ptError, 0x64)\n            }\n\n            function error_verify() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0xc)\n                mstore(add(ptError, 0x44), \"error verify\")\n                revert(ptError, 0x64)\n            }\n\n            function error_random_generation() {\n                let ptError := mload(0x40)\n                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)\n                mstore(add(ptError, 0x4), 0x20)\n                mstore(add(ptError, 0x24), 0x14)\n                mstore(add(ptError, 0x44), \"error random gen kzg\")\n                revert(ptError, 0x64)\n            }\n            // end errors -------------------------------------------------\n\n            // Beginning checks -------------------------------------------------\n\n            /// @param s actual number of public inputs\n            function check_number_of_public_inputs(s) {\n                if iszero(eq(s, VK_NB_PUBLIC_INPUTS)) { error_nb_public_inputs() }\n            }\n\n            /// Checks that the public inputs are < R_MOD.\n            /// @param s number of public inputs\n            /// @param p pointer to the public inputs array\n            function check_inputs_size(s, p) {\n                for { let i } lt(i, s) { i := add(i, 1) } {\n                    if gt(calldataload(p), R_MOD_MINUS_ONE) { error_inputs_size() }\n                    p := add(p, 0x20)\n                }\n            }\n\n            /// Checks if the proof is of the correct size\n            /// @param actual_proof_size size of the proof (not the expected size)\n            function check_proof_size(actual_proof_size) {\n                let expected_proof_size := add(FIXED_PROOF_SIZE, mul(VK_NB_CUSTOM_GATES, 0x60))\n                if iszero(eq(actual_proof_size, expected_proof_size)) { error_proof_size() }\n            }\n\n            /// Checks if the multiple openings of the polynomials are < R_MOD.\n            /// @param aproof pointer to the beginning of the proof\n            /// @dev the 'a' prepending proof is to have a local name\n            function check_proof_openings_size(aproof) {\n                // PROOF_L_AT_ZETA\n                let p := add(aproof, PROOF_L_AT_ZETA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_R_AT_ZETA\n                p := add(aproof, PROOF_R_AT_ZETA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_O_AT_ZETA\n                p := add(aproof, PROOF_O_AT_ZETA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_S1_AT_ZETA\n                p := add(aproof, PROOF_S1_AT_ZETA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_S2_AT_ZETA\n                p := add(aproof, PROOF_S2_AT_ZETA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA\n                p := add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA)\n                if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n\n                // PROOF_OPENING_QCP_AT_ZETA\n\n                p := add(aproof, PROOF_OPENING_QCP_AT_ZETA)\n                for { let i := 0 } lt(i, VK_NB_CUSTOM_GATES) { i := add(i, 1) } {\n                    if gt(calldataload(p), R_MOD_MINUS_ONE) { error_proof_openings_size() }\n                    p := add(p, 0x20)\n                }\n            }\n            // end checks -------------------------------------------------\n\n            // Beginning challenges -------------------------------------------------\n\n            /// Derive gamma as Sha256(<transcript>)\n            /// @param aproof pointer to the proof\n            /// @param nb_pi number of public inputs\n            /// @param pi pointer to the array of public inputs\n            /// @return the challenge gamma, not reduced\n            /// @notice The transcript is the concatenation (in this order) of:\n            /// * the word \"gamma\" in ascii, equal to [0x67,0x61,0x6d, 0x6d, 0x61] and encoded as a uint256.\n            /// * the commitments to the permutation polynomials S1, S2, S3, where we concatenate the coordinates of those points\n            /// * the commitments of Ql, Qr, Qm, Qo, Qk\n            /// * the public inputs\n            /// * the commitments of the wires related to the custom gates (commitments_wires_commit_api)\n            /// * commitments to L, R, O (proof_<l,r,o>_com_<x,y>)\n            /// The data described above is written starting at mPtr. \"gamma\" lies on 5 bytes,\n            /// and is encoded as a uint256 number n. In basis b = 256, the number looks like this\n            /// [0 0 0 .. 0x67 0x61 0x6d, 0x6d, 0x61]. The first non zero entry is at position 27=0x1b\n            /// Gamma reduced (the actual challenge) is stored at add(state, state_gamma)\n            function derive_gamma(aproof, nb_pi, pi) -> gamma_not_reduced {\n                let state := mload(0x40)\n                let mPtr := add(state, STATE_LAST_MEM)\n\n                mstore(mPtr, FS_GAMMA) // \"gamma\"\n\n                mstore(add(mPtr, 0x20), VK_S1_COM_X)\n                mstore(add(mPtr, 0x40), VK_S1_COM_Y)\n                mstore(add(mPtr, 0x60), VK_S2_COM_X)\n                mstore(add(mPtr, 0x80), VK_S2_COM_Y)\n                mstore(add(mPtr, 0xa0), VK_S3_COM_X)\n                mstore(add(mPtr, 0xc0), VK_S3_COM_Y)\n                mstore(add(mPtr, 0xe0), VK_QL_COM_X)\n                mstore(add(mPtr, 0x100), VK_QL_COM_Y)\n                mstore(add(mPtr, 0x120), VK_QR_COM_X)\n                mstore(add(mPtr, 0x140), VK_QR_COM_Y)\n                mstore(add(mPtr, 0x160), VK_QM_COM_X)\n                mstore(add(mPtr, 0x180), VK_QM_COM_Y)\n                mstore(add(mPtr, 0x1a0), VK_QO_COM_X)\n                mstore(add(mPtr, 0x1c0), VK_QO_COM_Y)\n                mstore(add(mPtr, 0x1e0), VK_QK_COM_X)\n                mstore(add(mPtr, 0x200), VK_QK_COM_Y)\n\n                mstore(add(mPtr, 0x220), VK_QCP_0_X)\n                mstore(add(mPtr, 0x240), VK_QCP_0_Y)\n\n                // public inputs\n                let _mPtr := add(mPtr, 0x260)\n                let size_pi_in_bytes := mul(nb_pi, 0x20)\n                calldatacopy(_mPtr, pi, size_pi_in_bytes)\n                _mPtr := add(_mPtr, size_pi_in_bytes)\n\n                // commitments to l, r, o\n                let size_commitments_lro_in_bytes := 0xc0\n                calldatacopy(_mPtr, aproof, size_commitments_lro_in_bytes)\n                _mPtr := add(_mPtr, size_commitments_lro_in_bytes)\n\n                // total size is :\n                // sizegamma(=0x5) + 11*64(=0x2c0)\n                // + nb_public_inputs*0x20\n                // + nb_custom gates*0x40\n                let size := add(0x2c5, size_pi_in_bytes)\n\n                size := add(size, mul(VK_NB_CUSTOM_GATES, 0x40))\n                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1b), size, mPtr, 0x20) //0x1b -> 000..\"gamma\"\n                if iszero(l_success) { error_verify() }\n                gamma_not_reduced := mload(mPtr)\n                mstore(add(state, STATE_GAMMA), mod(gamma_not_reduced, R_MOD))\n            }\n\n            /// derive beta as Sha256<transcript>\n            /// @param gamma_not_reduced the previous challenge (gamma) not reduced\n            /// @return beta_not_reduced the next challenge, beta, not reduced\n            /// @notice the transcript consists of the previous challenge only.\n            /// The reduced version of beta is stored at add(state, state_beta)\n            function derive_beta(gamma_not_reduced) -> beta_not_reduced {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n\n                // beta\n                mstore(mPtr, FS_BETA) // \"beta\"\n                mstore(add(mPtr, 0x20), gamma_not_reduced)\n                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1c), 0x24, mPtr, 0x20) //0x1b -> 000..\"gamma\"\n                if iszero(l_success) { error_verify() }\n                beta_not_reduced := mload(mPtr)\n                mstore(add(state, STATE_BETA), mod(beta_not_reduced, R_MOD))\n            }\n\n            /// derive alpha as sha256<transcript>\n            /// @param aproof pointer to the proof object\n            /// @param beta_not_reduced the previous challenge (beta) not reduced\n            /// @return alpha_not_reduced the next challenge, alpha, not reduced\n            /// @notice the transcript consists of the previous challenge (beta)\n            /// not reduced, the commitments to the wires associated to the QCP_i,\n            /// and the commitment to the grand product polynomial\n            function derive_alpha(aproof, beta_not_reduced) -> alpha_not_reduced {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n                let full_size := 0x65 // size(\"alpha\") + 0x20 (previous challenge)\n\n                // alpha\n                mstore(mPtr, FS_ALPHA) // \"alpha\"\n                let _mPtr := add(mPtr, 0x20)\n                mstore(_mPtr, beta_not_reduced)\n                _mPtr := add(_mPtr, 0x20)\n\n                // Bsb22Commitments\n                let proof_bsb_commitments := add(aproof, PROOF_BSB_COMMITMENTS)\n                let size_bsb_commitments := mul(0x40, VK_NB_CUSTOM_GATES)\n                calldatacopy(_mPtr, proof_bsb_commitments, size_bsb_commitments)\n                _mPtr := add(_mPtr, size_bsb_commitments)\n                full_size := add(full_size, size_bsb_commitments)\n\n                // [Z], the commitment to the grand product polynomial\n                calldatacopy(_mPtr, add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_X), 0x40)\n                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1b), full_size, mPtr, 0x20)\n                if iszero(l_success) { error_verify() }\n\n                alpha_not_reduced := mload(mPtr)\n                mstore(add(state, STATE_ALPHA), mod(alpha_not_reduced, R_MOD))\n            }\n\n            /// derive zeta as sha256<transcript>\n            /// @param aproof pointer to the proof object\n            /// @param alpha_not_reduced the previous challenge (alpha) not reduced\n            /// The transcript consists of the previous challenge and the commitment to\n            /// the quotient polynomial h.\n            function derive_zeta(aproof, alpha_not_reduced) {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n\n                // zeta\n                mstore(mPtr, FS_ZETA) // \"zeta\"\n                mstore(add(mPtr, 0x20), alpha_not_reduced)\n                calldatacopy(add(mPtr, 0x40), add(aproof, PROOF_H_0_COM_X), 0xc0)\n                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1c), 0xe4, mPtr, 0x20)\n                if iszero(l_success) { error_verify() }\n                let zeta_not_reduced := mload(mPtr)\n                mstore(add(state, STATE_ZETA), mod(zeta_not_reduced, R_MOD))\n            }\n            // END challenges -------------------------------------------------\n\n            // BEGINNING compute_pi -------------------------------------------------\n\n            /// sum_pi_wo_api_commit computes the public inputs contributions,\n            /// except for the public inputs coming from the custom gate\n            /// @param ins pointer to the public inputs\n            /// @param n number of public inputs\n            /// @param mPtr free memory\n            /// @return pi_wo_commit public inputs contribution (except the public inputs coming from the custom gate)\n            function sum_pi_wo_api_commit(ins, n, mPtr) -> pi_wo_commit {\n                let state := mload(0x40)\n                let z := mload(add(state, STATE_ZETA))\n                let zpnmo := mload(add(state, STATE_ZETA_POWER_N_MINUS_ONE))\n\n                let li := mPtr\n                batch_compute_lagranges_at_z(z, zpnmo, n, li)\n\n                let tmp := 0\n                for { let i := 0 } lt(i, n) { i := add(i, 1) } {\n                    tmp := mulmod(mload(li), calldataload(ins), R_MOD)\n                    pi_wo_commit := addmod(pi_wo_commit, tmp, R_MOD)\n                    li := add(li, 0x20)\n                    ins := add(ins, 0x20)\n                }\n            }\n\n            /// batch_compute_lagranges_at_z computes [L_0(z), .., L_{n-1}(z)]\n            /// @param z point at which the Lagranges are evaluated\n            /// @param zpnmo ζⁿ-1\n            /// @param n_pub number of public inputs (number of Lagranges to compute)\n            /// @param mPtr pointer to which the results are stored\n            function batch_compute_lagranges_at_z(z, zpnmo, n_pub, mPtr) {\n                let zn := mulmod(zpnmo, VK_INV_DOMAIN_SIZE, R_MOD) // 1/n * (ζⁿ - 1)\n\n                let _w := 1\n                let _mPtr := mPtr\n                for { let i := 0 } lt(i, n_pub) { i := add(i, 1) } {\n                    mstore(_mPtr, addmod(z, sub(R_MOD, _w), R_MOD))\n                    _w := mulmod(_w, VK_OMEGA, R_MOD)\n                    _mPtr := add(_mPtr, 0x20)\n                }\n                batch_invert(mPtr, n_pub, _mPtr)\n                _mPtr := mPtr\n                _w := 1\n                for { let i := 0 } lt(i, n_pub) { i := add(i, 1) } {\n                    mstore(_mPtr, mulmod(mulmod(mload(_mPtr), zn, R_MOD), _w, R_MOD))\n                    _mPtr := add(_mPtr, 0x20)\n                    _w := mulmod(_w, VK_OMEGA, R_MOD)\n                }\n            }\n\n            /// @notice Montgomery trick for batch inversion mod R_MOD\n            /// @param ins pointer to the data to batch invert\n            /// @param number of elements to batch invert\n            /// @param mPtr free memory\n            function batch_invert(ins, nb_ins, mPtr) {\n                mstore(mPtr, 1)\n                let offset := 0\n                for { let i := 0 } lt(i, nb_ins) { i := add(i, 1) } {\n                    let prev := mload(add(mPtr, offset))\n                    let cur := mload(add(ins, offset))\n                    cur := mulmod(prev, cur, R_MOD)\n                    offset := add(offset, 0x20)\n                    mstore(add(mPtr, offset), cur)\n                }\n                ins := add(ins, sub(offset, 0x20))\n                mPtr := add(mPtr, offset)\n                let inv := pow(mload(mPtr), sub(R_MOD, 2), add(mPtr, 0x20))\n                for { let i := 0 } lt(i, nb_ins) { i := add(i, 1) } {\n                    mPtr := sub(mPtr, 0x20)\n                    let tmp := mload(ins)\n                    let cur := mulmod(inv, mload(mPtr), R_MOD)\n                    mstore(ins, cur)\n                    inv := mulmod(inv, tmp, R_MOD)\n                    ins := sub(ins, 0x20)\n                }\n            }\n\n            /// Public inputs (the ones coming from the custom gate) contribution\n            /// @param aproof pointer to the proof\n            /// @param nb_public_inputs number of public inputs\n            /// @param mPtr pointer to free memory\n            /// @return pi_commit custom gate public inputs contribution\n            function sum_pi_commit(aproof, nb_public_inputs, mPtr) -> pi_commit {\n                let state := mload(0x40)\n                let z := mload(add(state, STATE_ZETA))\n                let zpnmo := mload(add(state, STATE_ZETA_POWER_N_MINUS_ONE))\n\n                let p := add(aproof, PROOF_BSB_COMMITMENTS)\n\n                let h_fr, ith_lagrange\n\n                h_fr := hash_fr(calldataload(p), calldataload(add(p, 0x20)), mPtr)\n                ith_lagrange := compute_ith_lagrange_at_z(z, zpnmo, add(nb_public_inputs, VK_INDEX_COMMIT_API_0), mPtr)\n                pi_commit := addmod(pi_commit, mulmod(h_fr, ith_lagrange, R_MOD), R_MOD)\n            }\n\n            /// Computes L_i(zeta) =  ωⁱ/n * (ζⁿ-1)/(ζ-ωⁱ) where:\n            /// @param z zeta\n            /// @param zpmno ζⁿ-1\n            /// @param i i-th lagrange\n            /// @param mPtr free memory\n            /// @return res = ωⁱ/n * (ζⁿ-1)/(ζ-ωⁱ)\n            function compute_ith_lagrange_at_z(z, zpnmo, i, mPtr) -> res {\n                let w := pow(VK_OMEGA, i, mPtr) // w**i\n                i := addmod(z, sub(R_MOD, w), R_MOD) // z-w**i\n                w := mulmod(w, VK_INV_DOMAIN_SIZE, R_MOD) // w**i/n\n                i := pow(i, sub(R_MOD, 2), mPtr) // (z-w**i)**-1\n                w := mulmod(w, i, R_MOD) // w**i/n*(z-w)**-1\n                res := mulmod(w, zpnmo, R_MOD)\n            }\n\n            /// @dev https://tools.ietf.org/html/draft-irtf-cfrg-hash-to-curve-06#section-5.2\n            /// @param x x coordinate of a point on Bn254(𝔽_p)\n            /// @param y y coordinate of a point on Bn254(𝔽_p)\n            /// @param mPtr free memory\n            /// @return res an element mod R_MOD\n            function hash_fr(x, y, mPtr) -> res {\n                // [0x00, .. , 0x00 || x, y, || 0, 48, 0, dst, HASH_FR_SIZE_DOMAIN]\n                // <-  64 bytes  ->  <-64b -> <-       1 bytes each     ->\n\n                // [0x00, .., 0x00] 64 bytes of zero\n                mstore(mPtr, HASH_FR_ZERO_UINT256)\n                mstore(add(mPtr, 0x20), HASH_FR_ZERO_UINT256)\n\n                // msg =  x || y , both on 32 bytes\n                mstore(add(mPtr, 0x40), x)\n                mstore(add(mPtr, 0x60), y)\n\n                // 0 || 48 || 0 all on 1 byte\n                mstore8(add(mPtr, 0x80), 0)\n                mstore8(add(mPtr, 0x81), HASH_FR_LEN_IN_BYTES)\n                mstore8(add(mPtr, 0x82), 0)\n\n                // \"BSB22-Plonk\" = [42, 53, 42, 32, 32, 2d, 50, 6c, 6f, 6e, 6b,]\n                mstore8(add(mPtr, 0x83), 0x42)\n                mstore8(add(mPtr, 0x84), 0x53)\n                mstore8(add(mPtr, 0x85), 0x42)\n                mstore8(add(mPtr, 0x86), 0x32)\n                mstore8(add(mPtr, 0x87), 0x32)\n                mstore8(add(mPtr, 0x88), 0x2d)\n                mstore8(add(mPtr, 0x89), 0x50)\n                mstore8(add(mPtr, 0x8a), 0x6c)\n                mstore8(add(mPtr, 0x8b), 0x6f)\n                mstore8(add(mPtr, 0x8c), 0x6e)\n                mstore8(add(mPtr, 0x8d), 0x6b)\n\n                // size domain\n                mstore8(add(mPtr, 0x8e), HASH_FR_SIZE_DOMAIN)\n\n                let l_success := staticcall(gas(), SHA2, mPtr, 0x8f, mPtr, 0x20)\n                if iszero(l_success) { error_verify() }\n\n                let b0 := mload(mPtr)\n\n                // [b0         || one || dst || HASH_FR_SIZE_DOMAIN]\n                // <-64bytes ->  <-    1 byte each      ->\n                mstore8(add(mPtr, 0x20), HASH_FR_ONE) // 1\n\n                mstore8(add(mPtr, 0x21), 0x42) // dst\n                mstore8(add(mPtr, 0x22), 0x53)\n                mstore8(add(mPtr, 0x23), 0x42)\n                mstore8(add(mPtr, 0x24), 0x32)\n                mstore8(add(mPtr, 0x25), 0x32)\n                mstore8(add(mPtr, 0x26), 0x2d)\n                mstore8(add(mPtr, 0x27), 0x50)\n                mstore8(add(mPtr, 0x28), 0x6c)\n                mstore8(add(mPtr, 0x29), 0x6f)\n                mstore8(add(mPtr, 0x2a), 0x6e)\n                mstore8(add(mPtr, 0x2b), 0x6b)\n\n                mstore8(add(mPtr, 0x2c), HASH_FR_SIZE_DOMAIN) // size domain\n                l_success := staticcall(gas(), SHA2, mPtr, 0x2d, mPtr, 0x20)\n                if iszero(l_success) { error_verify() }\n\n                // b1 is located at mPtr. We store b2 at add(mPtr, 0x20)\n\n                // [b0^b1      || two || dst || HASH_FR_SIZE_DOMAIN]\n                // <-64bytes ->  <-    1 byte each      ->\n                mstore(add(mPtr, 0x20), xor(mload(mPtr), b0))\n                mstore8(add(mPtr, 0x40), HASH_FR_TWO)\n\n                mstore8(add(mPtr, 0x41), 0x42) // dst\n                mstore8(add(mPtr, 0x42), 0x53)\n                mstore8(add(mPtr, 0x43), 0x42)\n                mstore8(add(mPtr, 0x44), 0x32)\n                mstore8(add(mPtr, 0x45), 0x32)\n                mstore8(add(mPtr, 0x46), 0x2d)\n                mstore8(add(mPtr, 0x47), 0x50)\n                mstore8(add(mPtr, 0x48), 0x6c)\n                mstore8(add(mPtr, 0x49), 0x6f)\n                mstore8(add(mPtr, 0x4a), 0x6e)\n                mstore8(add(mPtr, 0x4b), 0x6b)\n\n                mstore8(add(mPtr, 0x4c), HASH_FR_SIZE_DOMAIN) // size domain\n\n                let offset := add(mPtr, 0x20)\n                l_success := staticcall(gas(), SHA2, offset, 0x2d, offset, 0x20)\n                if iszero(l_success) { error_verify() }\n\n                // at this point we have mPtr = [ b1 || b2] where b1 is on 32byes and b2 in 16bytes.\n                // we interpret it as a big integer mod r in big endian (similar to regular decimal notation)\n                // the result is then 2**(8*16)*mPtr[:32] + mPtr[32:48]\n                res := mulmod(mload(mPtr), HASH_FR_BB, R_MOD) // <- res = 2**128 * mPtr[:32]\n                let b1 := shr(128, mload(add(mPtr, 0x20))) // b1 <- [0, 0, .., 0 ||  b2[:16] ]\n                res := addmod(res, b1, R_MOD)\n            }\n\n            // END compute_pi -------------------------------------------------\n\n            /// @notice compute α² * 1/n * (ζ{n}-1)/(ζ - 1) where\n            /// *  α = challenge derived in derive_gamma_beta_alpha_zeta\n            /// * n = vk_domain_size\n            /// * ω = vk_omega (generator of the multiplicative cyclic group of order n in (ℤ/rℤ)*)\n            /// * ζ = zeta (challenge derived with Fiat Shamir)\n            function compute_alpha_square_lagrange_0() {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n\n                let res := mload(add(state, STATE_ZETA_POWER_N_MINUS_ONE))\n                let den := addmod(mload(add(state, STATE_ZETA)), sub(R_MOD, 1), R_MOD)\n                den := pow(den, sub(R_MOD, 2), mPtr)\n                den := mulmod(den, VK_INV_DOMAIN_SIZE, R_MOD)\n                res := mulmod(den, res, R_MOD)\n\n                let l_alpha := mload(add(state, STATE_ALPHA))\n                res := mulmod(res, l_alpha, R_MOD)\n                res := mulmod(res, l_alpha, R_MOD)\n                mstore(add(state, STATE_ALPHA_SQUARE_LAGRANGE_0), res)\n            }\n\n            /// @notice follows alg. p.13 of https://eprint.iacr.org/2019/953.pdf\n            /// with t₁ = t₂ = 1, and the proofs are ([digest] + [quotient] +purported evaluation):\n            /// * [state_folded_state_digests], [proof_batch_opening_at_zeta_x], state_folded_evals\n            /// * [proof_grand_product_commitment], [proof_opening_at_zeta_omega_x], [proof_grand_product_at_zeta_omega]\n            /// @param aproof pointer to the proof\n            function batch_verify_multi_points(aproof) {\n                let state := mload(0x40)\n                let mPtr := add(state, STATE_LAST_MEM)\n\n                // derive a random number. As there is no random generator, we\n                // do an FS like challenge derivation, depending on both digests and\n                // ζ to ensure that the prover cannot control the random number.\n                // Note: adding the other point ζω is not needed, as ω is known beforehand.\n                mstore(mPtr, mload(add(state, STATE_FOLDED_DIGESTS_X)))\n                mstore(add(mPtr, 0x20), mload(add(state, STATE_FOLDED_DIGESTS_Y)))\n                mstore(add(mPtr, 0x40), calldataload(add(aproof, PROOF_BATCH_OPENING_AT_ZETA_X)))\n                mstore(add(mPtr, 0x60), calldataload(add(aproof, PROOF_BATCH_OPENING_AT_ZETA_Y)))\n                mstore(add(mPtr, 0x80), calldataload(add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_X)))\n                mstore(add(mPtr, 0xa0), calldataload(add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_Y)))\n                mstore(add(mPtr, 0xc0), calldataload(add(aproof, PROOF_OPENING_AT_ZETA_OMEGA_X)))\n                mstore(add(mPtr, 0xe0), calldataload(add(aproof, PROOF_OPENING_AT_ZETA_OMEGA_Y)))\n                mstore(add(mPtr, 0x100), mload(add(state, STATE_ZETA)))\n                mstore(add(mPtr, 0x120), mload(add(state, STATE_GAMMA_KZG)))\n                let random := staticcall(gas(), SHA2, mPtr, 0x140, mPtr, 0x20)\n                if iszero(random) { error_random_generation() }\n                random := mod(mload(mPtr), R_MOD) // use the same variable as we are one variable away from getting stack-too-deep error...\n\n                let folded_quotients := mPtr\n                mPtr := add(folded_quotients, 0x40)\n                mstore(folded_quotients, calldataload(add(aproof, PROOF_BATCH_OPENING_AT_ZETA_X)))\n                mstore(add(folded_quotients, 0x20), calldataload(add(aproof, PROOF_BATCH_OPENING_AT_ZETA_Y)))\n                point_acc_mul_calldata(folded_quotients, add(aproof, PROOF_OPENING_AT_ZETA_OMEGA_X), random, mPtr)\n\n                let folded_digests := add(state, STATE_FOLDED_DIGESTS_X)\n                point_acc_mul_calldata(folded_digests, add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_X), random, mPtr)\n\n                let folded_evals := add(state, STATE_FOLDED_CLAIMED_VALUES)\n                fr_acc_mul_calldata(folded_evals, add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA), random)\n\n                let folded_evals_commit := mPtr\n                mPtr := add(folded_evals_commit, 0x40)\n                mstore(folded_evals_commit, G1_SRS_X)\n                mstore(add(folded_evals_commit, 0x20), G1_SRS_Y)\n                mstore(add(folded_evals_commit, 0x40), mload(folded_evals))\n                let check_staticcall := staticcall(gas(), 7, folded_evals_commit, 0x60, folded_evals_commit, 0x40)\n                if iszero(check_staticcall) { error_verify() }\n\n                let folded_evals_commit_y := add(folded_evals_commit, 0x20)\n                mstore(folded_evals_commit_y, sub(P_MOD, mload(folded_evals_commit_y)))\n                point_add(folded_digests, folded_digests, folded_evals_commit, mPtr)\n\n                let folded_points_quotients := mPtr\n                mPtr := add(mPtr, 0x40)\n                point_mul_calldata(\n                    folded_points_quotients,\n                    add(aproof, PROOF_BATCH_OPENING_AT_ZETA_X),\n                    mload(add(state, STATE_ZETA)),\n                    mPtr\n                )\n                let zeta_omega := mulmod(mload(add(state, STATE_ZETA)), VK_OMEGA, R_MOD)\n                random := mulmod(random, zeta_omega, R_MOD)\n                point_acc_mul_calldata(\n                    folded_points_quotients, add(aproof, PROOF_OPENING_AT_ZETA_OMEGA_X), random, mPtr\n                )\n\n                point_add(folded_digests, folded_digests, folded_points_quotients, mPtr)\n\n                let folded_quotients_y := add(folded_quotients, 0x20)\n                mstore(folded_quotients_y, sub(P_MOD, mload(folded_quotients_y)))\n\n                mstore(mPtr, mload(folded_digests))\n\n                mstore(add(mPtr, 0x20), mload(add(folded_digests, 0x20)))\n                mstore(add(mPtr, 0x40), G2_SRS_0_X_0) // the 4 lines are the canonical G2 point on BN254\n                mstore(add(mPtr, 0x60), G2_SRS_0_X_1)\n                mstore(add(mPtr, 0x80), G2_SRS_0_Y_0)\n                mstore(add(mPtr, 0xa0), G2_SRS_0_Y_1)\n                mstore(add(mPtr, 0xc0), mload(folded_quotients))\n                mstore(add(mPtr, 0xe0), mload(add(folded_quotients, 0x20)))\n                mstore(add(mPtr, 0x100), G2_SRS_1_X_0)\n                mstore(add(mPtr, 0x120), G2_SRS_1_X_1)\n                mstore(add(mPtr, 0x140), G2_SRS_1_Y_0)\n                mstore(add(mPtr, 0x160), G2_SRS_1_Y_1)\n                check_pairing_kzg(mPtr)\n            }\n\n            /// @notice check_pairing_kzg checks the result of the final pairing product of the batched\n            /// kzg verification. The purpose of this function is to avoid exhausting the stack\n            /// in the function batch_verify_multi_points.\n            /// @param mPtr pointer storing the tuple of pairs\n            function check_pairing_kzg(mPtr) {\n                let state := mload(0x40)\n\n                let l_success := staticcall(gas(), 8, mPtr, 0x180, 0x00, 0x20)\n                if iszero(l_success) { error_pairing() }\n                let res_pairing := mload(0x00)\n                mstore(add(state, STATE_SUCCESS), res_pairing)\n            }\n\n            /// @notice Fold the opening proofs at ζ:\n            /// * at state+state_folded_digest we store: [Linearised_polynomial]+γ[L] + γ²[R] + γ³[O] + γ⁴[S₁] +γ⁵[S₂] + ∑ᵢγ⁵⁺ⁱ[Pi_{i}]\n            /// * at state+state_folded_claimed_values we store: Linearised_polynomial(ζ)+γL(ζ) + γ²R(ζ)+ γ³O(ζ) + γ⁴S₁(ζ) +γ⁵S₂(ζ) + ∑ᵢγ⁵⁺ⁱPi_{i}(ζ)\n            /// @param aproof pointer to the proof\n            /// acc_gamma stores the γⁱ\n            function fold_state(aproof) {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n                let mPtr20 := add(mPtr, 0x20)\n                let mPtr40 := add(mPtr, 0x40)\n\n                let l_gamma_kzg := mload(add(state, STATE_GAMMA_KZG))\n                let acc_gamma := l_gamma_kzg\n                let state_folded_digests := add(state, STATE_FOLDED_DIGESTS_X)\n\n                mstore(state_folded_digests, mload(add(state, STATE_LINEARISED_POLYNOMIAL_X)))\n                mstore(add(state, STATE_FOLDED_DIGESTS_Y), mload(add(state, STATE_LINEARISED_POLYNOMIAL_Y)))\n                mstore(\n                    add(state, STATE_FOLDED_CLAIMED_VALUES), mload(add(state, STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA))\n                )\n\n                point_acc_mul_calldata(state_folded_digests, add(aproof, PROOF_L_COM_X), acc_gamma, mPtr)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_L_AT_ZETA), acc_gamma)\n\n                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)\n                point_acc_mul_calldata(state_folded_digests, add(aproof, PROOF_R_COM_X), acc_gamma, mPtr)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_R_AT_ZETA), acc_gamma)\n\n                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)\n                point_acc_mul_calldata(state_folded_digests, add(aproof, PROOF_O_COM_X), acc_gamma, mPtr)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_O_AT_ZETA), acc_gamma)\n\n                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)\n                mstore(mPtr, VK_S1_COM_X)\n                mstore(mPtr20, VK_S1_COM_Y)\n                point_acc_mul(state_folded_digests, mPtr, acc_gamma, mPtr40)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_S1_AT_ZETA), acc_gamma)\n\n                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)\n                mstore(mPtr, VK_S2_COM_X)\n                mstore(mPtr20, VK_S2_COM_Y)\n                point_acc_mul(state_folded_digests, mPtr, acc_gamma, mPtr40)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_S2_AT_ZETA), acc_gamma)\n                let poqaz := add(aproof, PROOF_OPENING_QCP_AT_ZETA)\n\n                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)\n                mstore(mPtr, VK_QCP_0_X)\n                mstore(mPtr20, VK_QCP_0_Y)\n                point_acc_mul(state_folded_digests, mPtr, acc_gamma, mPtr40)\n                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), poqaz, acc_gamma)\n                poqaz := add(poqaz, 0x20)\n            }\n\n            /// @notice generate the challenge (using Fiat Shamir) to fold the opening proofs\n            /// at ζ.\n            /// The process for deriving γ is the same as in derive_gamma but this time the inputs are\n            /// in this order (the [] means it's a commitment):\n            /// * ζ\n            /// * [Linearised polynomial]\n            /// * [L], [R], [O]\n            /// * [S₁] [S₂]\n            /// * [Pi_{i}] (wires associated to custom gates)\n            /// Then there are the purported evaluations of the previous committed polynomials:\n            /// * Linearised_polynomial(ζ)\n            /// * L(ζ), R(ζ), O(ζ), S₁(ζ), S₂(ζ)\n            /// * Pi_{i}(ζ)\n            /// * Z(ζω)\n            /// @param aproof pointer to the proof\n            function compute_gamma_kzg(aproof) {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n                mstore(mPtr, FS_GAMMA_KZG) // \"gamma\"\n                mstore(add(mPtr, 0x20), mload(add(state, STATE_ZETA)))\n                mstore(add(mPtr, 0x40), mload(add(state, STATE_LINEARISED_POLYNOMIAL_X)))\n                mstore(add(mPtr, 0x60), mload(add(state, STATE_LINEARISED_POLYNOMIAL_Y)))\n                calldatacopy(add(mPtr, 0x80), add(aproof, PROOF_L_COM_X), 0xc0)\n                mstore(add(mPtr, 0x140), VK_S1_COM_X)\n                mstore(add(mPtr, 0x160), VK_S1_COM_Y)\n                mstore(add(mPtr, 0x180), VK_S2_COM_X)\n                mstore(add(mPtr, 0x1a0), VK_S2_COM_Y)\n\n                let offset := 0x1c0\n\n                mstore(add(mPtr, offset), VK_QCP_0_X)\n                mstore(add(mPtr, add(offset, 0x20)), VK_QCP_0_Y)\n                offset := add(offset, 0x40)\n                mstore(add(mPtr, offset), mload(add(state, STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA)))\n                mstore(add(mPtr, add(offset, 0x20)), calldataload(add(aproof, PROOF_L_AT_ZETA)))\n                mstore(add(mPtr, add(offset, 0x40)), calldataload(add(aproof, PROOF_R_AT_ZETA)))\n                mstore(add(mPtr, add(offset, 0x60)), calldataload(add(aproof, PROOF_O_AT_ZETA)))\n                mstore(add(mPtr, add(offset, 0x80)), calldataload(add(aproof, PROOF_S1_AT_ZETA)))\n                mstore(add(mPtr, add(offset, 0xa0)), calldataload(add(aproof, PROOF_S2_AT_ZETA)))\n\n                let _mPtr := add(mPtr, add(offset, 0xc0))\n\n                let _poqaz := add(aproof, PROOF_OPENING_QCP_AT_ZETA)\n                calldatacopy(_mPtr, _poqaz, mul(VK_NB_CUSTOM_GATES, 0x20))\n                _mPtr := add(_mPtr, mul(VK_NB_CUSTOM_GATES, 0x20))\n\n                mstore(_mPtr, calldataload(add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA)))\n\n                let start_input := 0x1b // 00..\"gamma\"\n                let size_input := add(0x14, mul(VK_NB_CUSTOM_GATES, 3)) // number of 32bytes elmts = 0x14 (zeta+3*6 for the digests+openings) + 3*VK_NB_CUSTOM_GATES (for the commitments of the selectors) + 1 (opening of Z at ζω)\n                size_input := add(0x5, mul(size_input, 0x20)) // size in bytes: 15*32 bytes + 5 bytes for gamma\n                let check_staticcall :=\n                    staticcall(gas(), SHA2, add(mPtr, start_input), size_input, add(state, STATE_GAMMA_KZG), 0x20)\n                if iszero(check_staticcall) { error_verify() }\n                mstore(add(state, STATE_GAMMA_KZG), mod(mload(add(state, STATE_GAMMA_KZG)), R_MOD))\n            }\n\n            function compute_commitment_linearised_polynomial_ec(aproof, s1, s2) {\n                let state := mload(0x40)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n\n                mstore(mPtr, VK_QL_COM_X)\n                mstore(add(mPtr, 0x20), VK_QL_COM_Y)\n                point_mul(\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    mPtr,\n                    calldataload(add(aproof, PROOF_L_AT_ZETA)),\n                    add(mPtr, 0x40)\n                )\n\n                mstore(mPtr, VK_QR_COM_X)\n                mstore(add(mPtr, 0x20), VK_QR_COM_Y)\n                point_acc_mul(\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    mPtr,\n                    calldataload(add(aproof, PROOF_R_AT_ZETA)),\n                    add(mPtr, 0x40)\n                )\n\n                let rl :=\n                    mulmod(calldataload(add(aproof, PROOF_L_AT_ZETA)), calldataload(add(aproof, PROOF_R_AT_ZETA)), R_MOD)\n                mstore(mPtr, VK_QM_COM_X)\n                mstore(add(mPtr, 0x20), VK_QM_COM_Y)\n                point_acc_mul(add(state, STATE_LINEARISED_POLYNOMIAL_X), mPtr, rl, add(mPtr, 0x40))\n\n                mstore(mPtr, VK_QO_COM_X)\n                mstore(add(mPtr, 0x20), VK_QO_COM_Y)\n                point_acc_mul(\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    mPtr,\n                    calldataload(add(aproof, PROOF_O_AT_ZETA)),\n                    add(mPtr, 0x40)\n                )\n\n                mstore(mPtr, VK_QK_COM_X)\n                mstore(add(mPtr, 0x20), VK_QK_COM_Y)\n                point_add(\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    mPtr,\n                    add(mPtr, 0x40)\n                )\n\n                let qcp_opening_at_zeta := add(aproof, PROOF_OPENING_QCP_AT_ZETA)\n                let bsb_commitments := add(aproof, PROOF_BSB_COMMITMENTS)\n                for { let i := 0 } lt(i, VK_NB_CUSTOM_GATES) { i := add(i, 1) } {\n                    mstore(mPtr, calldataload(bsb_commitments))\n                    mstore(add(mPtr, 0x20), calldataload(add(bsb_commitments, 0x20)))\n                    point_acc_mul(\n                        add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                        mPtr,\n                        calldataload(qcp_opening_at_zeta),\n                        add(mPtr, 0x40)\n                    )\n                    qcp_opening_at_zeta := add(qcp_opening_at_zeta, 0x20)\n                    bsb_commitments := add(bsb_commitments, 0x40)\n                }\n\n                mstore(mPtr, VK_S3_COM_X)\n                mstore(add(mPtr, 0x20), VK_S3_COM_Y)\n                point_acc_mul(add(state, STATE_LINEARISED_POLYNOMIAL_X), mPtr, s1, add(mPtr, 0x40))\n\n                mstore(mPtr, calldataload(add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_X)))\n                mstore(add(mPtr, 0x20), calldataload(add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_Y)))\n                point_acc_mul(add(state, STATE_LINEARISED_POLYNOMIAL_X), mPtr, s2, add(mPtr, 0x40))\n\n                point_add(\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    add(state, STATE_LINEARISED_POLYNOMIAL_X),\n                    add(state, STATE_FOLDED_H_X),\n                    mPtr\n                )\n            }\n\n            /// @notice Compute the commitment to the linearized polynomial equal to\n            ///\tL(ζ)[Qₗ]+r(ζ)[Qᵣ]+R(ζ)L(ζ)[Qₘ]+O(ζ)[Qₒ]+[Qₖ]+Σᵢqc'ᵢ(ζ)[BsbCommitmentᵢ] +\n            ///\tα*( Z(μζ)(L(ζ)+β*S₁(ζ)+γ)*(R(ζ)+β*S₂(ζ)+γ)[S₃]-[Z](L(ζ)+β*id_{1}(ζ)+γ)*(R(ζ)+β*id_{2}(ζ)+γ)*(O(ζ)+β*id_{3}(ζ)+γ) ) +\n            ///\tα²*L₁(ζ)[Z] - Z_{H}(ζ)*(([H₀] + ζᵐ⁺²*[H₁] + ζ²⁽ᵐ⁺²⁾*[H₂])\n            /// where\n            /// * id_1 = id, id_2 = vk_coset_shift*id, id_3 = vk_coset_shift^{2}*id\n            /// * the [] means that it's a commitment (i.e. a point on Bn254(F_p))\n            /// * Z_{H}(ζ) = ζ^n-1\n            /// @param aproof pointer to the proof\n            function compute_commitment_linearised_polynomial(aproof) {\n                let state := mload(0x40)\n                let l_beta := mload(add(state, STATE_BETA))\n                let l_gamma := mload(add(state, STATE_GAMMA))\n                let l_zeta := mload(add(state, STATE_ZETA))\n                let l_alpha := mload(add(state, STATE_ALPHA))\n\n                let u := mulmod(calldataload(add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA)), l_beta, R_MOD)\n                let v := mulmod(l_beta, calldataload(add(aproof, PROOF_S1_AT_ZETA)), R_MOD)\n                v := addmod(v, calldataload(add(aproof, PROOF_L_AT_ZETA)), R_MOD)\n                v := addmod(v, l_gamma, R_MOD)\n\n                let w := mulmod(l_beta, calldataload(add(aproof, PROOF_S2_AT_ZETA)), R_MOD)\n                w := addmod(w, calldataload(add(aproof, PROOF_R_AT_ZETA)), R_MOD)\n                w := addmod(w, l_gamma, R_MOD)\n\n                let s1 := mulmod(u, v, R_MOD)\n                s1 := mulmod(s1, w, R_MOD)\n                s1 := mulmod(s1, l_alpha, R_MOD)\n\n                let coset_square := mulmod(VK_COSET_SHIFT, VK_COSET_SHIFT, R_MOD)\n                let betazeta := mulmod(l_beta, l_zeta, R_MOD)\n                u := addmod(betazeta, calldataload(add(aproof, PROOF_L_AT_ZETA)), R_MOD)\n                u := addmod(u, l_gamma, R_MOD)\n\n                v := mulmod(betazeta, VK_COSET_SHIFT, R_MOD)\n                v := addmod(v, calldataload(add(aproof, PROOF_R_AT_ZETA)), R_MOD)\n                v := addmod(v, l_gamma, R_MOD)\n\n                w := mulmod(betazeta, coset_square, R_MOD)\n                w := addmod(w, calldataload(add(aproof, PROOF_O_AT_ZETA)), R_MOD)\n                w := addmod(w, l_gamma, R_MOD)\n\n                let s2 := mulmod(u, v, R_MOD)\n                s2 := mulmod(s2, w, R_MOD)\n                s2 := sub(R_MOD, s2)\n                s2 := mulmod(s2, l_alpha, R_MOD)\n                s2 := addmod(s2, mload(add(state, STATE_ALPHA_SQUARE_LAGRANGE_0)), R_MOD)\n\n                // at this stage:\n                // * s₁ = α*Z(μζ)(l(ζ)+β*s₁(ζ)+γ)*(r(ζ)+β*s₂(ζ)+γ)*β\n                // * s₂ = -α*(l(ζ)+β*ζ+γ)*(r(ζ)+β*u*ζ+γ)*(o(ζ)+β*u²*ζ+γ) + α²*L₁(ζ)\n\n                compute_commitment_linearised_polynomial_ec(aproof, s1, s2)\n            }\n\n            /// @notice compute -z_h(ζ)*([H₁] + ζⁿ⁺²[H₂] + ζ²⁽ⁿ⁺²⁾[H₃]) and store the result at\n            /// state + state_folded_h\n            /// @param aproof pointer to the proof\n            function fold_h(aproof) {\n                let state := mload(0x40)\n                let n_plus_two := add(VK_DOMAIN_SIZE, 2)\n                let mPtr := add(mload(0x40), STATE_LAST_MEM)\n                let zeta_power_n_plus_two := pow(mload(add(state, STATE_ZETA)), n_plus_two, mPtr)\n                point_mul_calldata(\n                    add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_2_COM_X), zeta_power_n_plus_two, mPtr\n                )\n                point_add_calldata(\n                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_1_COM_X), mPtr\n                )\n                point_mul(add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), zeta_power_n_plus_two, mPtr)\n                point_add_calldata(\n                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_0_COM_X), mPtr\n                )\n                point_mul(\n                    add(state, STATE_FOLDED_H_X),\n                    add(state, STATE_FOLDED_H_X),\n                    mload(add(state, STATE_ZETA_POWER_N_MINUS_ONE)),\n                    mPtr\n                )\n                let folded_h_y := mload(add(state, STATE_FOLDED_H_Y))\n                folded_h_y := sub(P_MOD, folded_h_y)\n                mstore(add(state, STATE_FOLDED_H_Y), folded_h_y)\n            }\n\n            /// @notice check that the opening of the linearised polynomial at zeta is equal to\n            /// - [ PI(ζ) - α²*L₁(ζ) + α(l(ζ)+β*s1(ζ)+γ)(r(ζ)+β*s2(ζ)+γ)(o(ζ)+γ)*z(ωζ) ]\n            /// @param aproof pointer to the proof\n            function compute_opening_linearised_polynomial(aproof) {\n                let state := mload(0x40)\n\n                // (l(ζ)+β*s1(ζ)+γ)\n                let s1\n                s1 := mulmod(calldataload(add(aproof, PROOF_S1_AT_ZETA)), mload(add(state, STATE_BETA)), R_MOD)\n                s1 := addmod(s1, mload(add(state, STATE_GAMMA)), R_MOD)\n                s1 := addmod(s1, calldataload(add(aproof, PROOF_L_AT_ZETA)), R_MOD)\n\n                // (r(ζ)+β*s2(ζ)+γ)\n                let s2\n                s2 := mulmod(calldataload(add(aproof, PROOF_S2_AT_ZETA)), mload(add(state, STATE_BETA)), R_MOD)\n                s2 := addmod(s2, mload(add(state, STATE_GAMMA)), R_MOD)\n                s2 := addmod(s2, calldataload(add(aproof, PROOF_R_AT_ZETA)), R_MOD)\n\n                // (o(ζ)+γ)\n                let o\n                o := addmod(calldataload(add(aproof, PROOF_O_AT_ZETA)), mload(add(state, STATE_GAMMA)), R_MOD)\n\n                //  α*Z(μζ)*(l(ζ)+β*s1(ζ)+γ)*(r(ζ)+β*s2(ζ)+γ)*(o(ζ)+γ)\n                s1 := mulmod(s1, s2, R_MOD)\n                s1 := mulmod(s1, o, R_MOD)\n                s1 := mulmod(s1, mload(add(state, STATE_ALPHA)), R_MOD)\n                s1 := mulmod(s1, calldataload(add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA)), R_MOD)\n\n                // PI(ζ) - α²*L₁(ζ) + α(l(ζ)+β*s1(ζ)+γ)(r(ζ)+β*s2(ζ)+γ)(o(ζ)+γ)*z(ωζ)\n                s1 := addmod(s1, mload(add(state, STATE_PI)), R_MOD)\n                s2 := mload(add(state, STATE_ALPHA_SQUARE_LAGRANGE_0))\n                s2 := sub(R_MOD, s2)\n                s1 := addmod(s1, s2, R_MOD)\n                s1 := sub(R_MOD, s1)\n\n                mstore(add(state, STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA), s1)\n            }\n\n            // BEGINNING utils math functions -------------------------------------------------\n\n            /// @param dst pointer storing the result\n            /// @param p pointer to the first point\n            /// @param q pointer to the second point\n            /// @param mPtr pointer to free memory\n            function point_add(dst, p, q, mPtr) {\n                mstore(mPtr, mload(p))\n                mstore(add(mPtr, 0x20), mload(add(p, 0x20)))\n                mstore(add(mPtr, 0x40), mload(q))\n                mstore(add(mPtr, 0x60), mload(add(q, 0x20)))\n                let l_success := staticcall(gas(), EC_ADD, mPtr, 0x80, dst, 0x40)\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @param dst pointer storing the result\n            /// @param p pointer to the first point (calldata)\n            /// @param q pointer to the second point (calladata)\n            /// @param mPtr pointer to free memory\n            function point_add_calldata(dst, p, q, mPtr) {\n                mstore(mPtr, mload(p))\n                mstore(add(mPtr, 0x20), mload(add(p, 0x20)))\n                mstore(add(mPtr, 0x40), calldataload(q))\n                mstore(add(mPtr, 0x60), calldataload(add(q, 0x20)))\n                let l_success := staticcall(gas(), EC_ADD, mPtr, 0x80, dst, 0x40)\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @parma dst pointer storing the result\n            /// @param src pointer to a point on Bn254(𝔽_p)\n            /// @param s scalar\n            /// @param mPtr free memory\n            function point_mul(dst, src, s, mPtr) {\n                mstore(mPtr, mload(src))\n                mstore(add(mPtr, 0x20), mload(add(src, 0x20)))\n                mstore(add(mPtr, 0x40), s)\n                let l_success := staticcall(gas(), EC_MUL, mPtr, 0x60, dst, 0x40)\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @parma dst pointer storing the result\n            /// @param src pointer to a point on Bn254(𝔽_p) on calldata\n            /// @param s scalar\n            /// @param mPtr free memory\n            function point_mul_calldata(dst, src, s, mPtr) {\n                mstore(mPtr, calldataload(src))\n                mstore(add(mPtr, 0x20), calldataload(add(src, 0x20)))\n                mstore(add(mPtr, 0x40), s)\n                let l_success := staticcall(gas(), EC_MUL, mPtr, 0x60, dst, 0x40)\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @notice dst <- dst + [s]src (Elliptic curve)\n            /// @param dst pointer accumulator point storing the result\n            /// @param src pointer to the point to multiply and add\n            /// @param s scalar\n            /// @param mPtr free memory\n            function point_acc_mul(dst, src, s, mPtr) {\n                mstore(mPtr, mload(src))\n                mstore(add(mPtr, 0x20), mload(add(src, 0x20)))\n                mstore(add(mPtr, 0x40), s)\n                let l_success := staticcall(gas(), 7, mPtr, 0x60, mPtr, 0x40)\n                mstore(add(mPtr, 0x40), mload(dst))\n                mstore(add(mPtr, 0x60), mload(add(dst, 0x20)))\n                l_success := and(l_success, staticcall(gas(), EC_ADD, mPtr, 0x80, dst, 0x40))\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @notice dst <- dst + [s]src (Elliptic curve)\n            /// @param dst pointer accumulator point storing the result\n            /// @param src pointer to the point to multiply and add (on calldata)\n            /// @param s scalar\n            /// @mPtr free memory\n            function point_acc_mul_calldata(dst, src, s, mPtr) {\n                mstore(mPtr, calldataload(src))\n                mstore(add(mPtr, 0x20), calldataload(add(src, 0x20)))\n                mstore(add(mPtr, 0x40), s)\n                let l_success := staticcall(gas(), 7, mPtr, 0x60, mPtr, 0x40)\n                mstore(add(mPtr, 0x40), mload(dst))\n                mstore(add(mPtr, 0x60), mload(add(dst, 0x20)))\n                l_success := and(l_success, staticcall(gas(), EC_ADD, mPtr, 0x80, dst, 0x40))\n                if iszero(l_success) { error_ec_op() }\n            }\n\n            /// @notice dst <- dst + src*s (Fr) dst,src are addresses, s is a value\n            /// @param dst pointer storing the result\n            /// @param src pointer to the scalar to multiply and add (on calldata)\n            /// @param s scalar\n            function fr_acc_mul_calldata(dst, src, s) {\n                let tmp := mulmod(calldataload(src), s, R_MOD)\n                mstore(dst, addmod(mload(dst), tmp, R_MOD))\n            }\n\n            /// @param x element to exponentiate\n            /// @param e exponent\n            /// @param mPtr free memory\n            /// @return res x ** e mod r\n            function pow(x, e, mPtr) -> res {\n                mstore(mPtr, 0x20)\n                mstore(add(mPtr, 0x20), 0x20)\n                mstore(add(mPtr, 0x40), 0x20)\n                mstore(add(mPtr, 0x60), x)\n                mstore(add(mPtr, 0x80), e)\n                mstore(add(mPtr, 0xa0), R_MOD)\n                let check_staticcall := staticcall(gas(), MOD_EXP, mPtr, 0xc0, mPtr, 0x20)\n                if eq(check_staticcall, 0) { error_mod_exp() }\n                res := mload(mPtr)\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "differs",
+      "coveredLines": 1178,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "PlonkVerifier",
+        "similarity": 0.929,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/v1.0.7-testnet/PlonkVerifier.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/v1.0.7-testnet/PlonkVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 63,
+        "removed": 53,
+        "ignoredAdded": 13,
+        "ignoredRemoved": 14,
+        "unchanged": 1178,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 23,
+            "oldLines": 40,
+            "newStart": 23,
+            "newLines": 43,
+            "lines": [
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    // ----------------------- vk ---------------------"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    uint256 private constant VK_NB_PUBLIC_INPUTS = 2;"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    uint256 private constant VK_DOMAIN_SIZE = 67108864;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    uint256 private constant VK_DOMAIN_SIZE = 16777216;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    uint256 private constant VK_INV_DOMAIN_SIZE ="
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        21888242545679039938882419398440172875981108180010270949818755658014750055173;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    uint256 private constant VK_OMEGA = 7419588552507395652481651088034484897579724952953562618697845598160172257810;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    uint256 private constant VK_QL_COM_X = 2510865836342267429164163502598759509233852557614588061522341500382391532005;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    uint256 private constant VK_QL_COM_Y = 15126192188192629774065132265780112999140142830433564320449141735872321728630;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    uint256 private constant VK_QR_COM_X = 9333652959929076130675473782051903816259917465603863191457122028934650097457;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    uint256 private constant VK_QR_COM_Y = 2313370322493955964357872255577010408876655837557938852207734814532131060361;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    uint256 private constant VK_QM_COM_X = 9695457198608976564938847790280162275205746283048408216283499672902690859636;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    uint256 private constant VK_QM_COM_Y = 2863222446359988991116462236914508045597262668919200556923697932352945902094;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    uint256 private constant VK_QO_COM_X = 17143802559384719837929824985685699892440981030866765423035114092186969346839;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    uint256 private constant VK_QO_COM_Y = 7035954688092870566772269661940626992719825409924783939927782818192065440004;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    uint256 private constant VK_QK_COM_X = 21445645220242675557007054864075083862767574532736843083792911169558332021092;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    uint256 private constant VK_QK_COM_Y = 15253869392669919290219800592812754879649859828328995608623647268881615845194;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        21888241567198334088790460357988866238279339518792980768180410072331574733841;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    uint256 private constant VK_OMEGA = 5709868443893258075976348696661355716898495876243883251619397131511003808859;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    uint256 private constant VK_QL_COM_X = 2714773032566361735398260413518107570706289019141573602093747023461681138141;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    uint256 private constant VK_QL_COM_Y = 10207220609888567477852282724812707756861966294950666667119692155077205992894;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    uint256 private constant VK_QR_COM_X = 17919274808167168584263187859012763816365260341587621260815379357637476029962;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    uint256 private constant VK_QR_COM_Y = 14558165337321799812085033100515533981610351056305142204990949940017867076397;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    uint256 private constant VK_QM_COM_X = 1814703450159964740292891910795980721108620081843240976053374083376051887455;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    uint256 private constant VK_QM_COM_Y = 11252528960397523304289223453506717847025678682133692300385063157160041127070;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    uint256 private constant VK_QO_COM_X = 20843277058771674275997213106654908867381045039357421108797602213552545033079;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    uint256 private constant VK_QO_COM_Y = 9646775541123942436366130063934415659078920798926708026864638413383214238671;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    uint256 private constant VK_QK_COM_X = 5484717465597821820411103650564499774744032473047103693751158150047197753654;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    uint256 private constant VK_QK_COM_Y = 5561799343038529497262757012400750786503050088440144551259537360162821571059;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    uint256 private constant VK_S1_COM_X = 21060316691690652216900052151773860810138987313309957676007513966927821347831;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    uint256 private constant VK_S1_COM_Y = 19256351951337671769199565809385521104102167502963443186067549090409440417696;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    uint256 private constant VK_S1_COM_X = 16111562061301112215931665617877464360548491176332584512747295033804502769274;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    uint256 private constant VK_S1_COM_Y = 15035232142063390140879951391784254536324051421746307325879221184372296043705;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    uint256 private constant VK_S2_COM_X = 12407785672743756788481704158638509568132154189030236015878537159964718545787;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    uint256 private constant VK_S2_COM_Y = 11224677738210739259642063251131968487382105453016414942600495075901339030055;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    uint256 private constant VK_S2_COM_X = 899944321381010541211546037826620464002745326050515852312919625047231523882;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    uint256 private constant VK_S2_COM_Y = 61717668739330555376092528203839789132705738484346798874082062974863965392;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    uint256 private constant VK_S3_COM_X = 21872545519839958987912275906732152426354809332288401338845764466421833288920;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    uint256 private constant VK_S3_COM_Y = 12847692498097562704188864683633196071506587648307456692644131497300644533735;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    uint256 private constant VK_S3_COM_X = 9316901462569250008665217603385561854185385862824092362271612343176126127375;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    uint256 private constant VK_S3_COM_Y = 13799900238612879579721466063922041459340434537392216736920805107993374657577;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "    uint256 private constant VK_COSET_SHIFT = 5;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    uint256 private constant VK_QCP_0_X = 3924710379213476882172010215773914137297360196327858615369966568647879502209;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    uint256 private constant VK_QCP_0_Y = 7151069519516975683787976500213788273069269794747379876269151195768245484982;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    uint256 private constant VK_QCP_0_X = 21578473557091588309361521643625606794648013014197133181947992670819103775934;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    uint256 private constant VK_QCP_0_Y = 18236588362476326695195531997097392315059481348147701548685746610417604595065;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    uint256 private constant VK_INDEX_COMMIT_API_0 = 32440226;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    uint256 private constant VK_INDEX_COMMIT_API_0 = 10900304;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "    uint256 private constant VK_NB_CUSTOM_GATES = 1;"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    // ------------------------------------------------"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "" },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    // size of the proof without call custom gate",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    uint256 private constant FIXED_PROOF_SIZE = 0x300;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 62, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 63,
+                "text": "    // offset proof"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 64, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 65,
+                "text": "    uint256 private constant PROOF_L_COM_X = 0x0;"
+              }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 14,
+            "newStart": 70,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 70,
+                "text": "    uint256 private constant PROOF_O_COM_Y = 0xa0;"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 71, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 72,
+                "text": "    // h = h_0 + x^{n+2}h_1 + x^{2(n+2)}h_2"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    uint256 private constant PROOF_H_0_X = 0xc0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    uint256 private constant PROOF_H_0_Y = 0xe0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    uint256 private constant PROOF_H_1_X = 0x100;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    uint256 private constant PROOF_H_1_Y = 0x120;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    uint256 private constant PROOF_H_2_X = 0x140;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    uint256 private constant PROOF_H_2_Y = 0x160;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    uint256 private constant PROOF_H_0_COM_X = 0xc0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    uint256 private constant PROOF_H_0_COM_Y = 0xe0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    uint256 private constant PROOF_H_1_COM_X = 0x100;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    uint256 private constant PROOF_H_1_COM_Y = 0x120;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "    uint256 private constant PROOF_H_2_COM_X = 0x140;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    uint256 private constant PROOF_H_2_COM_Y = 0x160;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 76, "newLine": 79, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    // wire values at zeta",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    // \"evaluations of wire polynomials at zeta",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    uint256 private constant PROOF_L_AT_ZETA = 0x180;"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 82,
+                "text": "    uint256 private constant PROOF_R_AT_ZETA = 0x1a0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 83,
+                "text": "    uint256 private constant PROOF_O_AT_ZETA = 0x1c0;"
+              }
+            ]
+          },
+          {
+            "oldStart": 99,
+            "oldLines": 9,
+            "newStart": 102,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 102,
+                "text": "    uint256 private constant PROOF_OPENING_QCP_AT_ZETA = 0x300;"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 103,
+                "text": "    uint256 private constant PROOF_BSB_COMMITMENTS = 0x320;"
+              },
+              { "type": " ", "oldLine": 101, "newLine": 104, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    // -> next part of proof is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    // [ openings_selector_commits || commitments_wires_commit_api]",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 104, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 105,
+                "text": "    // -------- offset state"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 106, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 107,
+                "text": "    // challenges to check the claimed quotient"
+              }
+            ]
+          },
+          {
+            "oldStart": 117,
+            "oldLines": 7,
+            "newStart": 117,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 117,
+                "text": "    uint256 private constant STATE_LINEARISED_POLYNOMIAL_Y = 0x100;"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    uint256 private constant STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA = 0x120;"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "    uint256 private constant STATE_FOLDED_CLAIMED_VALUES = 0x140; // Folded proof for the opening of H, linearised poly, l, r, o, s_1, s_2, qcp"
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    uint256 private constant STATE_FOLDED_DIGESTS_X = 0x160; // folded digests of H, linearised poly, l, r, o, s_1, s_2, qcp",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    uint256 private constant STATE_FOLDED_DIGESTS_X = 0x160; // linearised poly, l, r, o, s_1, s_2, qcp",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 121,
+                "text": "    uint256 private constant STATE_FOLDED_DIGESTS_Y = 0x180;"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 122,
+                "text": "    uint256 private constant STATE_PI = 0x1a0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 123,
+                "text": "    uint256 private constant STATE_ZETA_POWER_N_MINUS_ONE = 0x1c0;"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 6,
+            "newStart": 145,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 145,
+                "text": "    uint8 private constant HASH_FR_TWO = 2;"
+              },
+              { "type": " ", "oldLine": 146, "newLine": 146, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 147,
+                "text": "    // -------- precompiles"
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "    uint8 private constant SHA2 = 0x2;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 149,
+                "text": "    uint8 private constant MOD_EXP = 0x5;"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 150,
+                "text": "    uint8 private constant EC_ADD = 0x6;"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 151,
+                "text": "    uint8 private constant EC_MUL = 0x7;"
+              }
+            ]
+          },
+          {
+            "oldStart": 185,
+            "oldLines": 7,
+            "newStart": 186,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 186,
+                "text": "            mstore(add(mem, STATE_PI), l_pi)"
+              },
+              { "type": " ", "oldLine": 186, "newLine": 187, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 188,
+                "text": "            compute_alpha_square_lagrange_0()"
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "            verify_opening_linearised_polynomial(proof.offset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "            compute_opening_linearised_polynomial(proof.offset)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 190,
+                "text": "            fold_h(proof.offset)"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 191,
+                "text": "            compute_commitment_linearised_polynomial(proof.offset)"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 192,
+                "text": "            compute_gamma_kzg(proof.offset)"
+              }
+            ]
+          },
+          {
+            "oldStart": 205,
+            "oldLines": 6,
+            "newStart": 206,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 206,
+                "text": "                revert(ptError, 0x64)"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 207,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 207, "newLine": 208, "text": "" },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "            /// Called when an exponentiation mod r fails",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "            function error_mod_exp() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "                let ptError := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "                mstore(ptError, ERROR_STRING_ID) // selector for function Error(string)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "                mstore(add(ptError, 0x4), 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "                mstore(add(ptError, 0x24), 0xc)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "                mstore(add(ptError, 0x44), \"error mod exp\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "                revert(ptError, 0x64)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 218, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 219,
+                "text": "            /// Called when an operation on Bn254 fails"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 220,
+                "text": "            /// @dev for instance when calling EcMul on a point not on Bn254."
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 221,
+                "text": "            function error_ec_op() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 297,
+            "oldLines": 7,
+            "newStart": 308,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 297,
+                "newLine": 308,
+                "text": "            /// Checks if the proof is of the correct size"
+              },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 309,
+                "text": "            /// @param actual_proof_size size of the proof (not the expected size)"
+              },
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 310,
+                "text": "            function check_proof_size(actual_proof_size) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "                let expected_proof_size := add(0x300, mul(VK_NB_CUSTOM_GATES, 0x60))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "                let expected_proof_size := add(FIXED_PROOF_SIZE, mul(VK_NB_CUSTOM_GATES, 0x60))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 312,
+                "text": "                if iszero(eq(actual_proof_size, expected_proof_size)) { error_proof_size() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 313,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 303, "newLine": 314, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 361,
+            "oldLines": 9,
+            "newStart": 372,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 361,
+                "newLine": 372,
+                "text": "                let state := mload(0x40)"
+              },
+              {
+                "type": " ",
+                "oldLine": 362,
+                "newLine": 373,
+                "text": "                let mPtr := add(state, STATE_LAST_MEM)"
+              },
+              { "type": " ", "oldLine": 363, "newLine": 374, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 364,
+                "text": "                // gamma",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 365,
+                "text": "                // gamma in ascii is [0x67,0x61,0x6d, 0x6d, 0x61]",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 366,
+                "text": "                // (same for alpha, beta, zeta)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 375,
+                "text": "                mstore(mPtr, FS_GAMMA) // \"gamma\""
+              },
+              { "type": " ", "oldLine": 368, "newLine": 376, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 377,
+                "text": "                mstore(add(mPtr, 0x20), VK_S1_COM_X)"
+              }
+            ]
+          },
+          {
+            "oldStart": 404,
+            "oldLines": 7,
+            "newStart": 412,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 412,
+                "text": "                let size := add(0x2c5, size_pi_in_bytes)"
+              },
+              { "type": " ", "oldLine": 405, "newLine": 413, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 406,
+                "newLine": 414,
+                "text": "                size := add(size, mul(VK_NB_CUSTOM_GATES, 0x40))"
+              },
+              {
+                "type": "-",
+                "oldLine": 407,
+                "text": "                let l_success := staticcall(gas(), 0x2, add(mPtr, 0x1b), size, mPtr, 0x20) //0x1b -> 000..\"gamma\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1b), size, mPtr, 0x20) //0x1b -> 000..\"gamma\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 408,
+                "newLine": 416,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 409,
+                "newLine": 417,
+                "text": "                gamma_not_reduced := mload(mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 410,
+                "newLine": 418,
+                "text": "                mstore(add(state, STATE_GAMMA), mod(gamma_not_reduced, R_MOD))"
+              }
+            ]
+          },
+          {
+            "oldStart": 422,
+            "oldLines": 7,
+            "newStart": 430,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 422,
+                "newLine": 430,
+                "text": "                // beta"
+              },
+              {
+                "type": " ",
+                "oldLine": 423,
+                "newLine": 431,
+                "text": "                mstore(mPtr, FS_BETA) // \"beta\""
+              },
+              {
+                "type": " ",
+                "oldLine": 424,
+                "newLine": 432,
+                "text": "                mstore(add(mPtr, 0x20), gamma_not_reduced)"
+              },
+              {
+                "type": "-",
+                "oldLine": 425,
+                "text": "                let l_success := staticcall(gas(), 0x2, add(mPtr, 0x1c), 0x24, mPtr, 0x20) //0x1b -> 000..\"gamma\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 433,
+                "text": "                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1c), 0x24, mPtr, 0x20) //0x1b -> 000..\"gamma\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 426,
+                "newLine": 434,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 427,
+                "newLine": 435,
+                "text": "                beta_not_reduced := mload(mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 428,
+                "newLine": 436,
+                "text": "                mstore(add(state, STATE_BETA), mod(beta_not_reduced, R_MOD))"
+              }
+            ]
+          },
+          {
+            "oldStart": 455,
+            "oldLines": 7,
+            "newStart": 463,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 455, "newLine": 463, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 456,
+                "newLine": 464,
+                "text": "                // [Z], the commitment to the grand product polynomial"
+              },
+              {
+                "type": " ",
+                "oldLine": 457,
+                "newLine": 465,
+                "text": "                calldatacopy(_mPtr, add(aproof, PROOF_GRAND_PRODUCT_COMMITMENT_X), 0x40)"
+              },
+              {
+                "type": "-",
+                "oldLine": 458,
+                "text": "                let l_success := staticcall(gas(), 0x2, add(mPtr, 0x1b), full_size, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 466,
+                "text": "                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1b), full_size, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 459,
+                "newLine": 467,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              { "type": " ", "oldLine": 460, "newLine": 468, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 461,
+                "newLine": 469,
+                "text": "                alpha_not_reduced := mload(mPtr)"
+              }
+            ]
+          },
+          {
+            "oldStart": 474,
+            "oldLines": 8,
+            "newStart": 482,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 474,
+                "newLine": 482,
+                "text": "                // zeta"
+              },
+              {
+                "type": " ",
+                "oldLine": 475,
+                "newLine": 483,
+                "text": "                mstore(mPtr, FS_ZETA) // \"zeta\""
+              },
+              {
+                "type": " ",
+                "oldLine": 476,
+                "newLine": 484,
+                "text": "                mstore(add(mPtr, 0x20), alpha_not_reduced)"
+              },
+              {
+                "type": "-",
+                "oldLine": 477,
+                "text": "                calldatacopy(add(mPtr, 0x40), add(aproof, PROOF_H_0_X), 0xc0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 478,
+                "text": "                let l_success := staticcall(gas(), 0x2, add(mPtr, 0x1c), 0xe4, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 485,
+                "text": "                calldatacopy(add(mPtr, 0x40), add(aproof, PROOF_H_0_COM_X), 0xc0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 486,
+                "text": "                let l_success := staticcall(gas(), SHA2, add(mPtr, 0x1c), 0xe4, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 479,
+                "newLine": 487,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 480,
+                "newLine": 488,
+                "text": "                let zeta_not_reduced := mload(mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 481,
+                "newLine": 489,
+                "text": "                mstore(add(state, STATE_ZETA), mod(zeta_not_reduced, R_MOD))"
+              }
+            ]
+          },
+          {
+            "oldStart": 510,
+            "oldLines": 22,
+            "newStart": 518,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 510,
+                "newLine": 518,
+                "text": "            /// batch_compute_lagranges_at_z computes [L_0(z), .., L_{n-1}(z)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 511,
+                "newLine": 519,
+                "text": "            /// @param z point at which the Lagranges are evaluated"
+              },
+              {
+                "type": " ",
+                "oldLine": 512,
+                "newLine": 520,
+                "text": "            /// @param zpnmo ζⁿ-1"
+              },
+              {
+                "type": "-",
+                "oldLine": 513,
+                "text": "            /// @param n number of public inputs (number of Lagranges to compute)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 521,
+                "text": "            /// @param n_pub number of public inputs (number of Lagranges to compute)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 514,
+                "newLine": 522,
+                "text": "            /// @param mPtr pointer to which the results are stored"
+              },
+              {
+                "type": "-",
+                "oldLine": 515,
+                "text": "            function batch_compute_lagranges_at_z(z, zpnmo, n, mPtr) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 523,
+                "text": "            function batch_compute_lagranges_at_z(z, zpnmo, n_pub, mPtr) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 516,
+                "newLine": 524,
+                "text": "                let zn := mulmod(zpnmo, VK_INV_DOMAIN_SIZE, R_MOD) // 1/n * (ζⁿ - 1)"
+              },
+              { "type": " ", "oldLine": 517, "newLine": 525, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 518,
+                "newLine": 526,
+                "text": "                let _w := 1"
+              },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 527,
+                "text": "                let _mPtr := mPtr"
+              },
+              {
+                "type": "-",
+                "oldLine": 520,
+                "text": "                for { let i := 0 } lt(i, n) { i := add(i, 1) } {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 528,
+                "text": "                for { let i := 0 } lt(i, n_pub) { i := add(i, 1) } {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 521,
+                "newLine": 529,
+                "text": "                    mstore(_mPtr, addmod(z, sub(R_MOD, _w), R_MOD))"
+              },
+              {
+                "type": " ",
+                "oldLine": 522,
+                "newLine": 530,
+                "text": "                    _w := mulmod(_w, VK_OMEGA, R_MOD)"
+              },
+              {
+                "type": " ",
+                "oldLine": 523,
+                "newLine": 531,
+                "text": "                    _mPtr := add(_mPtr, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 524,
+                "newLine": 532,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 525,
+                "text": "                batch_invert(mPtr, n, _mPtr)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 533,
+                "text": "                batch_invert(mPtr, n_pub, _mPtr)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 526,
+                "newLine": 534,
+                "text": "                _mPtr := mPtr"
+              },
+              {
+                "type": " ",
+                "oldLine": 527,
+                "newLine": 535,
+                "text": "                _w := 1"
+              },
+              {
+                "type": "-",
+                "oldLine": 528,
+                "text": "                for { let i := 0 } lt(i, n) { i := add(i, 1) } {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "                for { let i := 0 } lt(i, n_pub) { i := add(i, 1) } {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 529,
+                "newLine": 537,
+                "text": "                    mstore(_mPtr, mulmod(mulmod(mload(_mPtr), zn, R_MOD), _w, R_MOD))"
+              },
+              {
+                "type": " ",
+                "oldLine": 530,
+                "newLine": 538,
+                "text": "                    _mPtr := add(_mPtr, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 531,
+                "newLine": 539,
+                "text": "                    _w := mulmod(_w, VK_OMEGA, R_MOD)"
+              }
+            ]
+          },
+          {
+            "oldStart": 576,
+            "oldLines": 7,
+            "newStart": 584,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 576,
+                "newLine": 584,
+                "text": "                h_fr := hash_fr(calldataload(p), calldataload(add(p, 0x20)), mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 577,
+                "newLine": 585,
+                "text": "                ith_lagrange := compute_ith_lagrange_at_z(z, zpnmo, add(nb_public_inputs, VK_INDEX_COMMIT_API_0), mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 578,
+                "newLine": 586,
+                "text": "                pi_commit := addmod(pi_commit, mulmod(h_fr, ith_lagrange, R_MOD), R_MOD)"
+              },
+              {
+                "type": "-",
+                "oldLine": 579,
+                "text": "                p := add(p, 0x40)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 580,
+                "newLine": 587,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 581, "newLine": 588, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 582,
+                "newLine": 589,
+                "text": "            /// Computes L_i(zeta) =  ωⁱ/n * (ζⁿ-1)/(ζ-ωⁱ) where:"
+              }
+            ]
+          },
+          {
+            "oldStart": 632,
+            "oldLines": 7,
+            "newStart": 639,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 632,
+                "newLine": 639,
+                "text": "                // size domain"
+              },
+              {
+                "type": " ",
+                "oldLine": 633,
+                "newLine": 640,
+                "text": "                mstore8(add(mPtr, 0x8e), HASH_FR_SIZE_DOMAIN)"
+              },
+              { "type": " ", "oldLine": 634, "newLine": 641, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 635,
+                "text": "                let l_success := staticcall(gas(), 0x2, mPtr, 0x8f, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 642,
+                "text": "                let l_success := staticcall(gas(), SHA2, mPtr, 0x8f, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 636,
+                "newLine": 643,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              { "type": " ", "oldLine": 637, "newLine": 644, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 638,
+                "newLine": 645,
+                "text": "                let b0 := mload(mPtr)"
+              }
+            ]
+          },
+          {
+            "oldStart": 654,
+            "oldLines": 7,
+            "newStart": 661,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 654,
+                "newLine": 661,
+                "text": "                mstore8(add(mPtr, 0x2b), 0x6b)"
+              },
+              { "type": " ", "oldLine": 655, "newLine": 662, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 656,
+                "newLine": 663,
+                "text": "                mstore8(add(mPtr, 0x2c), HASH_FR_SIZE_DOMAIN) // size domain"
+              },
+              {
+                "type": "-",
+                "oldLine": 657,
+                "text": "                l_success := staticcall(gas(), 0x2, mPtr, 0x2d, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 664,
+                "text": "                l_success := staticcall(gas(), SHA2, mPtr, 0x2d, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 658,
+                "newLine": 665,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              { "type": " ", "oldLine": 659, "newLine": 666, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 660,
+                "newLine": 667,
+                "text": "                // b1 is located at mPtr. We store b2 at add(mPtr, 0x20)"
+              }
+            ]
+          },
+          {
+            "oldStart": 679,
+            "oldLines": 12,
+            "newStart": 686,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 679,
+                "newLine": 686,
+                "text": "                mstore8(add(mPtr, 0x4c), HASH_FR_SIZE_DOMAIN) // size domain"
+              },
+              { "type": " ", "oldLine": 680, "newLine": 687, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 681,
+                "newLine": 688,
+                "text": "                let offset := add(mPtr, 0x20)"
+              },
+              {
+                "type": "-",
+                "oldLine": 682,
+                "text": "                l_success := staticcall(gas(), 0x2, offset, 0x2d, offset, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 689,
+                "text": "                l_success := staticcall(gas(), SHA2, offset, 0x2d, offset, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 683,
+                "newLine": 690,
+                "text": "                if iszero(l_success) { error_verify() }"
+              },
+              { "type": " ", "oldLine": 684, "newLine": 691, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 685,
+                "newLine": 692,
+                "text": "                // at this point we have mPtr = [ b1 || b2] where b1 is on 32byes and b2 in 16bytes."
+              },
+              {
+                "type": " ",
+                "oldLine": 686,
+                "newLine": 693,
+                "text": "                // we interpret it as a big integer mod r in big endian (similar to regular decimal notation)"
+              },
+              {
+                "type": "-",
+                "oldLine": 687,
+                "text": "                // the result is then 2**(8*16)*mPtr[32:] + mPtr[32:48]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 694,
+                "text": "                // the result is then 2**(8*16)*mPtr[:32] + mPtr[32:48]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 688,
+                "newLine": 695,
+                "text": "                res := mulmod(mload(mPtr), HASH_FR_BB, R_MOD) // <- res = 2**128 * mPtr[:32]"
+              },
+              {
+                "type": " ",
+                "oldLine": 689,
+                "newLine": 696,
+                "text": "                let b1 := shr(128, mload(add(mPtr, 0x20))) // b1 <- [0, 0, .., 0 ||  b2[:16] ]"
+              },
+              {
+                "type": " ",
+                "oldLine": 690,
+                "newLine": 697,
+                "text": "                res := addmod(res, b1, R_MOD)"
+              }
+            ]
+          },
+          {
+            "oldStart": 724,
+            "oldLines": 7,
+            "newStart": 731,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 724, "newLine": 731, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 725,
+                "newLine": 732,
+                "text": "                // derive a random number. As there is no random generator, we"
+              },
+              {
+                "type": " ",
+                "oldLine": 726,
+                "newLine": 733,
+                "text": "                // do an FS like challenge derivation, depending on both digests and"
+              },
+              {
+                "type": "-",
+                "oldLine": 727,
+                "text": "                // ζ to ensure that the prover cannot control the random numger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 734,
+                "text": "                // ζ to ensure that the prover cannot control the random number.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 728,
+                "newLine": 735,
+                "text": "                // Note: adding the other point ζω is not needed, as ω is known beforehand."
+              },
+              {
+                "type": " ",
+                "oldLine": 729,
+                "newLine": 736,
+                "text": "                mstore(mPtr, mload(add(state, STATE_FOLDED_DIGESTS_X)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 730,
+                "newLine": 737,
+                "text": "                mstore(add(mPtr, 0x20), mload(add(state, STATE_FOLDED_DIGESTS_Y)))"
+              }
+            ]
+          },
+          {
+            "oldStart": 736,
+            "oldLines": 7,
+            "newStart": 743,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 736,
+                "newLine": 743,
+                "text": "                mstore(add(mPtr, 0xe0), calldataload(add(aproof, PROOF_OPENING_AT_ZETA_OMEGA_Y)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 737,
+                "newLine": 744,
+                "text": "                mstore(add(mPtr, 0x100), mload(add(state, STATE_ZETA)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 738,
+                "newLine": 745,
+                "text": "                mstore(add(mPtr, 0x120), mload(add(state, STATE_GAMMA_KZG)))"
+              },
+              {
+                "type": "-",
+                "oldLine": 739,
+                "text": "                let random := staticcall(gas(), 0x2, mPtr, 0x140, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 746,
+                "text": "                let random := staticcall(gas(), SHA2, mPtr, 0x140, mPtr, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 740,
+                "newLine": 747,
+                "text": "                if iszero(random) { error_random_generation() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 741,
+                "newLine": 748,
+                "text": "                random := mod(mload(mPtr), R_MOD) // use the same variable as we are one variable away from getting stack-too-deep error..."
+              },
+              { "type": " ", "oldLine": 742, "newLine": 749, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 784,
+            "oldLines": 6,
+            "newStart": 791,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 784,
+                "newLine": 791,
+                "text": "                mstore(folded_quotients_y, sub(P_MOD, mload(folded_quotients_y)))"
+              },
+              { "type": " ", "oldLine": 785, "newLine": 792, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 786,
+                "newLine": 793,
+                "text": "                mstore(mPtr, mload(folded_digests))"
+              },
+              { "type": "+", "newLine": 794, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 787,
+                "newLine": 795,
+                "text": "                mstore(add(mPtr, 0x20), mload(add(folded_digests, 0x20)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 788,
+                "newLine": 796,
+                "text": "                mstore(add(mPtr, 0x40), G2_SRS_0_X_0) // the 4 lines are the canonical G2 point on BN254"
+              },
+              {
+                "type": " ",
+                "oldLine": 789,
+                "newLine": 797,
+                "text": "                mstore(add(mPtr, 0x60), G2_SRS_0_X_1)"
+              }
+            ]
+          },
+          {
+            "oldStart": 813,
+            "oldLines": 7,
+            "newStart": 821,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 813, "newLine": 821, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 814,
+                "newLine": 822,
+                "text": "            /// @notice Fold the opening proofs at ζ:"
+              },
+              {
+                "type": " ",
+                "oldLine": 815,
+                "newLine": 823,
+                "text": "            /// * at state+state_folded_digest we store: [Linearised_polynomial]+γ[L] + γ²[R] + γ³[O] + γ⁴[S₁] +γ⁵[S₂] + ∑ᵢγ⁵⁺ⁱ[Pi_{i}]"
+              },
+              {
+                "type": "-",
+                "oldLine": 816,
+                "text": "            /// * at state+state_folded_claimed_values we store: H(ζ) + γLinearised_polynomial(ζ)+γ²L(ζ) + γ³R(ζ)+ γ⁴O(ζ) + γ⁵S₁(ζ) +γ⁶S₂(ζ) + ∑ᵢγ⁶⁺ⁱPi_{i}(ζ)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 824,
+                "text": "            /// * at state+state_folded_claimed_values we store: Linearised_polynomial(ζ)+γL(ζ) + γ²R(ζ)+ γ³O(ζ) + γ⁴S₁(ζ) +γ⁵S₂(ζ) + ∑ᵢγ⁵⁺ⁱPi_{i}(ζ)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 817,
+                "newLine": 825,
+                "text": "            /// @param aproof pointer to the proof"
+              },
+              {
+                "type": " ",
+                "oldLine": 818,
+                "newLine": 826,
+                "text": "            /// acc_gamma stores the γⁱ"
+              },
+              {
+                "type": " ",
+                "oldLine": 819,
+                "newLine": 827,
+                "text": "            function fold_state(aproof) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 826,
+            "oldLines": 13,
+            "newStart": 834,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 826,
+                "newLine": 834,
+                "text": "                let acc_gamma := l_gamma_kzg"
+              },
+              {
+                "type": " ",
+                "oldLine": 827,
+                "newLine": 835,
+                "text": "                let state_folded_digests := add(state, STATE_FOLDED_DIGESTS_X)"
+              },
+              { "type": " ", "oldLine": 828, "newLine": 836, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 829,
+                "text": "                mstore(add(state, STATE_FOLDED_DIGESTS_X), mload(add(state, STATE_LINEARISED_POLYNOMIAL_X)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 837,
+                "text": "                mstore(state_folded_digests, mload(add(state, STATE_LINEARISED_POLYNOMIAL_X)))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 830,
+                "newLine": 838,
+                "text": "                mstore(add(state, STATE_FOLDED_DIGESTS_Y), mload(add(state, STATE_LINEARISED_POLYNOMIAL_Y)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 831,
+                "newLine": 839,
+                "text": "                mstore("
+              },
+              {
+                "type": " ",
+                "oldLine": 832,
+                "newLine": 840,
+                "text": "                    add(state, STATE_FOLDED_CLAIMED_VALUES), mload(add(state, STATE_OPENING_LINEARISED_POLYNOMIAL_ZETA))"
+              },
+              {
+                "type": " ",
+                "oldLine": 833,
+                "newLine": 841,
+                "text": "                )"
+              },
+              { "type": " ", "oldLine": 834, "newLine": 842, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 835,
+                "text": "                point_acc_mul_calldata(add(state, STATE_FOLDED_DIGESTS_X), add(aproof, PROOF_L_COM_X), acc_gamma, mPtr)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 843,
+                "text": "                point_acc_mul_calldata(state_folded_digests, add(aproof, PROOF_L_COM_X), acc_gamma, mPtr)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 836,
+                "newLine": 844,
+                "text": "                fr_acc_mul_calldata(add(state, STATE_FOLDED_CLAIMED_VALUES), add(aproof, PROOF_L_AT_ZETA), acc_gamma)"
+              },
+              { "type": " ", "oldLine": 837, "newLine": 845, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 838,
+                "newLine": 846,
+                "text": "                acc_gamma := mulmod(acc_gamma, l_gamma_kzg, R_MOD)"
+              }
+            ]
+          },
+          {
+            "oldStart": 913,
+            "oldLines": 10,
+            "newStart": 921,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 913,
+                "newLine": 921,
+                "text": "                mstore(_mPtr, calldataload(add(aproof, PROOF_GRAND_PRODUCT_AT_ZETA_OMEGA)))"
+              },
+              { "type": " ", "oldLine": 914, "newLine": 922, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 915,
+                "newLine": 923,
+                "text": "                let start_input := 0x1b // 00..\"gamma\""
+              },
+              {
+                "type": "-",
+                "oldLine": 916,
+                "text": "                let size_input := add(0x14, mul(VK_NB_CUSTOM_GATES, 3)) // number of 32bytes elmts = 0x17 (zeta+3*6 for the digests+openings) + 3*VK_NB_CUSTOM_GATES (for the commitments of the selectors) + 1 (opening of Z at ζω)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 924,
+                "text": "                let size_input := add(0x14, mul(VK_NB_CUSTOM_GATES, 3)) // number of 32bytes elmts = 0x14 (zeta+3*6 for the digests+openings) + 3*VK_NB_CUSTOM_GATES (for the commitments of the selectors) + 1 (opening of Z at ζω)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 917,
+                "newLine": 925,
+                "text": "                size_input := add(0x5, mul(size_input, 0x20)) // size in bytes: 15*32 bytes + 5 bytes for gamma"
+              },
+              {
+                "type": " ",
+                "oldLine": 918,
+                "newLine": 926,
+                "text": "                let check_staticcall :="
+              },
+              {
+                "type": "-",
+                "oldLine": 919,
+                "text": "                    staticcall(gas(), 0x2, add(mPtr, start_input), size_input, add(state, STATE_GAMMA_KZG), 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 927,
+                "text": "                    staticcall(gas(), SHA2, add(mPtr, start_input), size_input, add(state, STATE_GAMMA_KZG), 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 920,
+                "newLine": 928,
+                "text": "                if iszero(check_staticcall) { error_verify() }"
+              },
+              {
+                "type": " ",
+                "oldLine": 921,
+                "newLine": 929,
+                "text": "                mstore(add(state, STATE_GAMMA_KZG), mod(mload(add(state, STATE_GAMMA_KZG)), R_MOD))"
+              },
+              {
+                "type": " ",
+                "oldLine": 922,
+                "newLine": 930,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 1053,
+            "oldLines": 7,
+            "newStart": 1061,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1053,
+                "newLine": 1061,
+                "text": "                compute_commitment_linearised_polynomial_ec(aproof, s1, s2)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1054,
+                "newLine": 1062,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 1055, "newLine": 1063, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 1056,
+                "text": "            /// @notice compute -z_h(ζ)*([H₁] + ζᵐ⁺²[H₂] + ζ²⁽ᵐ⁺²⁾[H₃]) and store the result at",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1064,
+                "text": "            /// @notice compute -z_h(ζ)*([H₁] + ζⁿ⁺²[H₂] + ζ²⁽ⁿ⁺²⁾[H₃]) and store the result at",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 1057,
+                "newLine": 1065,
+                "text": "            /// state + state_folded_h"
+              },
+              {
+                "type": " ",
+                "oldLine": 1058,
+                "newLine": 1066,
+                "text": "            /// @param aproof pointer to the proof"
+              },
+              {
+                "type": " ",
+                "oldLine": 1059,
+                "newLine": 1067,
+                "text": "            function fold_h(aproof) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 1061,
+            "oldLines": 13,
+            "newStart": 1069,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1061,
+                "newLine": 1069,
+                "text": "                let n_plus_two := add(VK_DOMAIN_SIZE, 2)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1062,
+                "newLine": 1070,
+                "text": "                let mPtr := add(mload(0x40), STATE_LAST_MEM)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1063,
+                "newLine": 1071,
+                "text": "                let zeta_power_n_plus_two := pow(mload(add(state, STATE_ZETA)), n_plus_two, mPtr)"
+              },
+              {
+                "type": "-",
+                "oldLine": 1064,
+                "text": "                point_mul_calldata(add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_2_X), zeta_power_n_plus_two, mPtr)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1072,
+                "text": "                point_mul_calldata(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1073,
+                "text": "                    add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_2_COM_X), zeta_power_n_plus_two, mPtr",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1074,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1065,
+                "newLine": 1075,
+                "text": "                point_add_calldata("
+              },
+              {
+                "type": "-",
+                "oldLine": 1066,
+                "text": "                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_1_X), mPtr",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1076,
+                "text": "                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_1_COM_X), mPtr",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1067,
+                "newLine": 1077,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 1068,
+                "newLine": 1078,
+                "text": "                point_mul(add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), zeta_power_n_plus_two, mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1069,
+                "newLine": 1079,
+                "text": "                point_add_calldata("
+              },
+              {
+                "type": "-",
+                "oldLine": 1070,
+                "text": "                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_0_X), mPtr",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1080,
+                "text": "                    add(state, STATE_FOLDED_H_X), add(state, STATE_FOLDED_H_X), add(aproof, PROOF_H_0_COM_X), mPtr",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1071,
+                "newLine": 1081,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 1072,
+                "newLine": 1082,
+                "text": "                point_mul("
+              },
+              {
+                "type": " ",
+                "oldLine": 1073,
+                "newLine": 1083,
+                "text": "                    add(state, STATE_FOLDED_H_X),"
+              }
+            ]
+          },
+          {
+            "oldStart": 1083,
+            "oldLines": 7,
+            "newStart": 1093,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1083,
+                "newLine": 1093,
+                "text": "            /// @notice check that the opening of the linearised polynomial at zeta is equal to"
+              },
+              {
+                "type": " ",
+                "oldLine": 1084,
+                "newLine": 1094,
+                "text": "            /// - [ PI(ζ) - α²*L₁(ζ) + α(l(ζ)+β*s1(ζ)+γ)(r(ζ)+β*s2(ζ)+γ)(o(ζ)+γ)*z(ωζ) ]"
+              },
+              {
+                "type": " ",
+                "oldLine": 1085,
+                "newLine": 1095,
+                "text": "            /// @param aproof pointer to the proof"
+              },
+              {
+                "type": "-",
+                "oldLine": 1086,
+                "text": "            function verify_opening_linearised_polynomial(aproof) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1096,
+                "text": "            function compute_opening_linearised_polynomial(aproof) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1087,
+                "newLine": 1097,
+                "text": "                let state := mload(0x40)"
+              },
+              { "type": " ", "oldLine": 1088, "newLine": 1098, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 1089,
+                "newLine": 1099,
+                "text": "                // (l(ζ)+β*s1(ζ)+γ)"
+              }
+            ]
+          },
+          {
+            "oldStart": 1192,
+            "oldLines": 7,
+            "newStart": 1202,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1192,
+                "newLine": 1202,
+                "text": "            /// @param s scalar"
+              },
+              {
+                "type": " ",
+                "oldLine": 1193,
+                "newLine": 1203,
+                "text": "            /// @mPtr free memory"
+              },
+              {
+                "type": " ",
+                "oldLine": 1194,
+                "newLine": 1204,
+                "text": "            function point_acc_mul_calldata(dst, src, s, mPtr) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 1195,
+                "text": "                let state := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1196,
+                "newLine": 1205,
+                "text": "                mstore(mPtr, calldataload(src))"
+              },
+              {
+                "type": " ",
+                "oldLine": 1197,
+                "newLine": 1206,
+                "text": "                mstore(add(mPtr, 0x20), calldataload(add(src, 0x20)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 1198,
+                "newLine": 1207,
+                "text": "                mstore(add(mPtr, 0x40), s)"
+              }
+            ]
+          },
+          {
+            "oldStart": 1224,
+            "oldLines": 7,
+            "newStart": 1233,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1224,
+                "newLine": 1233,
+                "text": "                mstore(add(mPtr, 0x80), e)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1225,
+                "newLine": 1234,
+                "text": "                mstore(add(mPtr, 0xa0), R_MOD)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1226,
+                "newLine": 1235,
+                "text": "                let check_staticcall := staticcall(gas(), MOD_EXP, mPtr, 0xc0, mPtr, 0x20)"
+              },
+              {
+                "type": "-",
+                "oldLine": 1227,
+                "text": "                if eq(check_staticcall, 0) {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1236,
+                "text": "                if eq(check_staticcall, 0) { error_mod_exp() }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1228,
+                "newLine": 1237,
+                "text": "                res := mload(mPtr)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1229,
+                "newLine": 1238,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 1230,
+                "newLine": 1239,
+                "text": "        }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

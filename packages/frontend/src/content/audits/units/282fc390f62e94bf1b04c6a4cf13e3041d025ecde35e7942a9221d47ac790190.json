@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "282fc390f62e94bf1b04c6a4cf13e3041d025ecde35e7942a9221d47ac790190",
+  "name": "ExchangeReleaser",
+  "kind": "abstract",
+  "lines": 36,
+  "source": "abstract contract ExchangeReleaser is IReleaser, ResourceManager, Nonce {\n    using SafeTransferLib for ERC20;\n\n    /// @notice Maximum number of different assets that can be released in a single call\n    uint256 public constant MAX_RELEASE_LENGTH = 20;\n\n    /// @inheritdoc IReleaser\n    ITokenJar public immutable TOKEN_JAR;\n\n    /// @notice Creates a new ExchangeReleaser instance\n    /// @param _resource The address of the resource token that must be transferred\n    /// @param _threshold The minimum amount of resource tokens that must be transferred\n    /// @param _tokenJar The address of the TokenJar contract holding the assets\n    /// @param _recipient The address that will receive the resource tokens\n    constructor(address _resource, uint256 _threshold, address _tokenJar, address _recipient)\n        ResourceManager(_resource, _threshold, msg.sender, _recipient)\n    {\n        TOKEN_JAR = ITokenJar(payable(_tokenJar));\n    }\n\n    /// @inheritdoc IReleaser\n    function release(uint256 _nonce, Currency[] calldata assets, address recipient) external handleNonce(_nonce) {\n        require(assets.length <= MAX_RELEASE_LENGTH, TooManyAssets());\n        RESOURCE.safeTransferFrom(msg.sender, RESOURCE_RECIPIENT, threshold);\n        TOKEN_JAR.release(assets, recipient);\n        emit Released(_nonce, recipient, assets);\n\n        _afterRelease(assets, recipient);\n    }\n\n    /// @notice Internal function to handle any post transfer actions\n    /// e.g. bridge calls or notifications\n    function _afterRelease(Currency[] calldata assets, address recipient) internal virtual {\n        // by default do nothing after release\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "48dae3b883bc1bce1f2b84c06206a07156a36247e6962765585efd9bedb34d12",
+  "name": "EOA",
+  "kind": "library",
+  "lines": 20,
+  "source": "library EOA {\n    /// @notice Returns true if sender address is an EOA.\n    /// @return isEOA_ True if the sender address is an EOA.\n    function isSenderEOA() internal view returns (bool isEOA_) {\n        if (msg.sender == tx.origin) {\n            isEOA_ = true;\n        } else if (address(msg.sender).code.length == 23) {\n            // If the sender is not the origin, check for 7702 delegated EOAs.\n            assembly {\n                let ptr := mload(0x40)\n                mstore(0x40, add(ptr, 0x20))\n                extcodecopy(caller(), ptr, 0, 0x20)\n                isEOA_ := eq(shr(232, mload(ptr)), 0xEF0100)\n            }\n        } else {\n            // If more or less than 23 bytes of code, not a 7702 delegated EOA.\n            isEOA_ = false;\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

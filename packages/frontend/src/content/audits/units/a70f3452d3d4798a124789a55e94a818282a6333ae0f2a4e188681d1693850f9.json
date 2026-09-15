@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a70f3452d3d4798a124789a55e94a818282a6333ae0f2a4e188681d1693850f9",
+  "name": "ERC20Burnable",
+  "kind": "abstract",
+  "lines": 31,
+  "source": "abstract contract ERC20Burnable is Context, ERC20 {\n    using SafeMath for uint256;\n\n    /**\n     * @dev Destroys `amount` tokens from the caller.\n     *\n     * See {ERC20-_burn}.\n     */\n    function burn(uint256 amount) public virtual {\n        _burn(_msgSender(), amount);\n    }\n\n    /**\n     * @dev Destroys `amount` tokens from `account`, deducting from the caller's\n     * allowance.\n     *\n     * See {ERC20-_burn} and {ERC20-allowance}.\n     *\n     * Requirements:\n     *\n     * - the caller must have allowance for ``accounts``'s tokens of at least\n     * `amount`.\n     */\n    function burnFrom(address account, uint256 amount) public virtual {\n        uint256 decreasedAllowance =\n            allowance(account, _msgSender()).sub(amount, \"ERC20: burn amount exceeds allowance\");\n\n        _approve(account, _msgSender(), decreasedAllowance);\n        _burn(account, amount);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 27,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ERC20Burnable",
+        "similarity": 0.762,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 27,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract ERC20Burnable is Context, ERC20 {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "     * @dev Destroys `amount` tokens from the caller."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 6, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 22,
+                "text": "     * `amount`."
+              },
+              { "type": " ", "oldLine": 21, "newLine": 23, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 24,
+                "text": "    function burnFrom(address account, uint256 amount) public virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        _spendAllowance(account, _msgSender(), amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        uint256 decreasedAllowance =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "            allowance(account, _msgSender()).sub(amount, \"ERC20: burn amount exceeds allowance\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 27, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        _approve(account, _msgSender(), decreasedAllowance);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "        _burn(account, amount);"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 31, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

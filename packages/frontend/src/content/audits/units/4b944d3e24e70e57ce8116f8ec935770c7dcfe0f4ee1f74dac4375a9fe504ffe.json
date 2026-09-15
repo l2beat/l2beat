@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4b944d3e24e70e57ce8116f8ec935770c7dcfe0f4ee1f74dac4375a9fe504ffe",
+  "name": "IL2ERC721Bridge",
+  "kind": "interface",
+  "lines": 14,
+  "source": "interface IL2ERC721Bridge is IERC721Bridge {\n    function finalizeBridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _tokenId,\n        bytes memory _extraData\n    ) external;\n    function initialize(address payable _l1ERC721Bridge) external;\n    function version() external view returns (string memory);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

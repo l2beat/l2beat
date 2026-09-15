@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "35024b8419c6e49aec2f6ea23146ac4031376d2e6469a443059b4ce85007569d",
+  "name": "UniInterface",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface UniInterface {\n    function getPriorVotes(address account, uint256 blockNumber) external view returns (uint96);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

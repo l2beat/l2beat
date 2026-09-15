@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a94c2a2210cf566a291cc38ab44a4fd00778ecc73e224923f42e43bd2c569718",
+  "name": "IExtsload",
+  "kind": "interface",
+  "lines": 17,
+  "source": "interface IExtsload {\n    /// @notice Called by external contracts to access granular pool state\n    /// @param slot Key of slot to sload\n    /// @return value The value of the slot as bytes32\n    function extsload(bytes32 slot) external view returns (bytes32 value);\n\n    /// @notice Called by external contracts to access granular pool state\n    /// @param startSlot Key of slot to start sloading from\n    /// @param nSlots Number of slots to load into return value\n    /// @return values List of loaded values.\n    function extsload(bytes32 startSlot, uint256 nSlots) external view returns (bytes32[] memory values);\n\n    /// @notice Called by external contracts to access sparse pool state\n    /// @param slots List of slots to SLOAD from.\n    /// @return values List of loaded values.\n    function extsload(bytes32[] calldata slots) external view returns (bytes32[] memory values);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

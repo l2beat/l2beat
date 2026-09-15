@@ -2,89 +2,95 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import type {
   AuditSummaryJson,
-  DeployedJson,
   ManifestJson,
   ManifestSource,
-  ZkSourceEntry,
+  RegistryJson,
 } from './types.js'
 
-const ZK_DIR = path.join('deployed-contracts', '_zk')
+const LIBS_DIR = '_libs'
 
-/** A directory with audit-summary.json and audited-sources/: a project or a libs/<vendor>. */
-export interface AuditedSourcesDir {
+/** One evidence collection: a project directory or `_libs/<vendor>`. */
+export interface Collection {
+  /** Directory name, e.g. `tornado-cash` or `openzeppelin`. */
+  id: string
+  /** Display name from the summary's `project` field. */
+  name: string
+  kind: 'project' | 'library'
+  /** Absolute directory. */
   dir: string
+  /** Directory relative to the dataset root, e.g. `_libs/openzeppelin`. */
+  relativeDir: string
   summary: AuditSummaryJson
   manifest: ManifestJson
 }
 
-export interface ProjectDir extends AuditedSourcesDir {
-  deployed: DeployedJson
+export interface Dataset {
+  root: string
+  collections: Collection[]
+  registry: RegistryJson
 }
 
-export function hasAuditSummary(dir: string): boolean {
-  return existsSync(path.join(dir, 'audit-summary.json'))
+export function readDataset(root: string): Dataset {
+  const collections: Collection[] = []
+  for (const name of readdirSync(root).sort()) {
+    const dir = path.join(root, name)
+    if (!statSync(dir).isDirectory() || name.startsWith('.')) continue
+    if (name === LIBS_DIR) {
+      for (const vendor of readdirSync(dir).sort()) {
+        const vendorDir = path.join(dir, vendor)
+        if (!statSync(vendorDir).isDirectory()) continue
+        const collection = readCollection(
+          vendorDir,
+          `${LIBS_DIR}/${vendor}`,
+          vendor,
+          'library',
+        )
+        if (collection) collections.push(collection)
+      }
+      continue
+    }
+    const collection = readCollection(dir, name, name, 'project')
+    if (collection) collections.push(collection)
+  }
+  return { root, collections, registry: readRegistry(root) }
 }
 
-export function readAuditedSourcesDir(dir: string): AuditedSourcesDir {
-  const summary = readJson<AuditSummaryJson>(
-    path.join(dir, 'audit-summary.json'),
-  )
+function readCollection(
+  dir: string,
+  relativeDir: string,
+  id: string,
+  kind: Collection['kind'],
+): Collection | undefined {
+  const summaryPath = path.join(dir, 'audit-summary.json')
+  if (!existsSync(summaryPath)) return undefined
+  const summary = readJson<AuditSummaryJson>(summaryPath)
   const manifestPath = path.join(dir, 'audited-sources', 'manifest.json')
   const manifest = existsSync(manifestPath)
     ? readJson<ManifestJson>(manifestPath)
     : { sources: [] }
-  return { dir, summary, manifest }
-}
-
-export function readProjectDir(dir: string): ProjectDir {
-  const deployed = readJson<DeployedJson>(path.join(dir, 'deployed.json'))
-  return { ...readAuditedSourcesDir(dir), deployed }
-}
-
-/** Entries of `deployed-contracts/_zk/zk-sources.json`, empty when absent. */
-export function readZkSources(dir: string): ZkSourceEntry[] {
-  const file = path.join(dir, ZK_DIR, 'zk-sources.json')
-  return existsSync(file) ? readJson<ZkSourceEntry[]>(file) : []
-}
-
-/** Source files of one zk entry, as paths relative to the project directory. */
-export function listZkSourceFiles(dir: string, entry: ZkSourceEntry): string[] {
-  const root = path.join(dir, ZK_DIR, entry.path)
-  if (!existsSync(root)) return []
-  const files: string[] = []
-  const walk = (current: string) => {
-    for (const name of readdirSync(current).sort()) {
-      const full = path.join(current, name)
-      if (statSync(full).isDirectory()) walk(full)
-      else files.push(path.relative(dir, full).split(path.sep).join('/'))
-    }
+  return {
+    id,
+    name: summary.project || id,
+    kind,
+    dir,
+    relativeDir,
+    summary,
+    manifest,
   }
-  walk(root)
-  return files
+}
+
+export function readRegistry(root: string): RegistryJson {
+  const file = path.join(root, 'repositories.json')
+  return existsSync(file)
+    ? readJson<RegistryJson>(file)
+    : { schema_version: '1.0.0', repositories: {} }
 }
 
 /** Reads a file referenced from `manifest.sources[].files[].file`. */
-export function readAuditedFile(dir: string, file: string): string {
-  return readFileSync(path.join(dir, 'audited-sources', file), 'utf8')
-}
-
-/** Reads a file referenced from `deployed.json` `sourceFiles`. */
-export function readDeployedFile(dir: string, file: string): string {
-  return readFileSync(path.join(dir, file), 'utf8')
-}
-
-/** Finds the fetched files for one audited (repository, path, commit). */
-export function findManifestSource(
-  manifest: ManifestJson,
-  repository: string,
-  sourcePath: string,
-  commit: string,
-): ManifestSource | undefined {
-  return manifest.sources.find(
-    (s) =>
-      s.repository === repository &&
-      s.source_path === sourcePath &&
-      s.commit === commit,
+export function readAuditedFile(collection: Collection, file: string): string {
+  return readFileSync(
+    path.join(collection.dir, 'audited-sources', file),
+    'utf8',
   )
 }
 
@@ -109,6 +115,16 @@ export function githubBlobUrl(source: ManifestSource, repoPath: string) {
   return `${base}/blob/${source.commit}/${repoPath}`
 }
 
-function readJson<T>(file: string): T {
+/** Repositories referenced by a collection's relevant reports. */
+export function referencedRepositories(collection: Collection): string[] {
+  const repos = new Set<string>()
+  for (const report of collection.summary.reports) {
+    if (!report.isRelevant) continue
+    for (const scope of report.scopes) repos.add(scope.repository)
+  }
+  return [...repos].sort()
+}
+
+export function readJson<T>(file: string): T {
   return JSON.parse(readFileSync(file, 'utf8')) as T
 }

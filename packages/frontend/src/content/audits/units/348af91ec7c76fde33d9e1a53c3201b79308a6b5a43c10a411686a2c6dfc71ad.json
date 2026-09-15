@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "348af91ec7c76fde33d9e1a53c3201b79308a6b5a43c10a411686a2c6dfc71ad",
+  "name": "AccessControl",
+  "kind": "abstract",
+  "lines": 187,
+  "source": "abstract contract AccessControl is Context, IAccessControl, ERC165 {\n    struct RoleData {\n        mapping(address => bool) members;\n        bytes32 adminRole;\n    }\n\n    mapping(bytes32 => RoleData) private _roles;\n\n    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;\n\n    /**\n     * @dev Modifier that checks that an account has a specific role. Reverts\n     * with a standardized message including the required role.\n     *\n     * The format of the revert reason is given by the following regular expression:\n     *\n     *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/\n     *\n     * _Available since v4.1._\n     */\n    modifier onlyRole(bytes32 role) {\n        _checkRole(role);\n        _;\n    }\n\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IAccessControl).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev Returns `true` if `account` has been granted `role`.\n     */\n    function hasRole(bytes32 role, address account) public view virtual override returns (bool) {\n        return _roles[role].members[account];\n    }\n\n    /**\n     * @dev Revert with a standard message if `_msgSender()` is missing `role`.\n     * Overriding this function changes the behavior of the {onlyRole} modifier.\n     *\n     * Format of the revert message is described in {_checkRole}.\n     *\n     * _Available since v4.6._\n     */\n    function _checkRole(bytes32 role) internal view virtual {\n        _checkRole(role, _msgSender());\n    }\n\n    /**\n     * @dev Revert with a standard message if `account` is missing `role`.\n     *\n     * The format of the revert reason is given by the following regular expression:\n     *\n     *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/\n     */\n    function _checkRole(bytes32 role, address account) internal view virtual {\n        if (!hasRole(role, account)) {\n            revert(\n                string(\n                    abi.encodePacked(\n                        \"AccessControl: account \",\n                        Strings.toHexString(uint160(account), 20),\n                        \" is missing role \",\n                        Strings.toHexString(uint256(role), 32)\n                    )\n                )\n            );\n        }\n    }\n\n    /**\n     * @dev Returns the admin role that controls `role`. See {grantRole} and\n     * {revokeRole}.\n     *\n     * To change a role's admin, use {_setRoleAdmin}.\n     */\n    function getRoleAdmin(bytes32 role) public view virtual override returns (bytes32) {\n        return _roles[role].adminRole;\n    }\n\n    /**\n     * @dev Grants `role` to `account`.\n     *\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\n     * event.\n     *\n     * Requirements:\n     *\n     * - the caller must have ``role``'s admin role.\n     */\n    function grantRole(bytes32 role, address account) public virtual override onlyRole(getRoleAdmin(role)) {\n        _grantRole(role, account);\n    }\n\n    /**\n     * @dev Revokes `role` from `account`.\n     *\n     * If `account` had been granted `role`, emits a {RoleRevoked} event.\n     *\n     * Requirements:\n     *\n     * - the caller must have ``role``'s admin role.\n     */\n    function revokeRole(bytes32 role, address account) public virtual override onlyRole(getRoleAdmin(role)) {\n        _revokeRole(role, account);\n    }\n\n    /**\n     * @dev Revokes `role` from the calling account.\n     *\n     * Roles are often managed via {grantRole} and {revokeRole}: this function's\n     * purpose is to provide a mechanism for accounts to lose their privileges\n     * if they are compromised (such as when a trusted device is misplaced).\n     *\n     * If the calling account had been revoked `role`, emits a {RoleRevoked}\n     * event.\n     *\n     * Requirements:\n     *\n     * - the caller must be `account`.\n     */\n    function renounceRole(bytes32 role, address account) public virtual override {\n        require(account == _msgSender(), \"AccessControl: can only renounce roles for self\");\n\n        _revokeRole(role, account);\n    }\n\n    /**\n     * @dev Grants `role` to `account`.\n     *\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\n     * event. Note that unlike {grantRole}, this function doesn't perform any\n     * checks on the calling account.\n     *\n     * [WARNING]\n     * ====\n     * This function should only be called from the constructor when setting\n     * up the initial roles for the system.\n     *\n     * Using this function in any other way is effectively circumventing the admin\n     * system imposed by {AccessControl}.\n     * ====\n     *\n     * NOTE: This function is deprecated in favor of {_grantRole}.\n     */\n    function _setupRole(bytes32 role, address account) internal virtual {\n        _grantRole(role, account);\n    }\n\n    /**\n     * @dev Sets `adminRole` as ``role``'s admin role.\n     *\n     * Emits a {RoleAdminChanged} event.\n     */\n    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {\n        bytes32 previousAdminRole = getRoleAdmin(role);\n        _roles[role].adminRole = adminRole;\n        emit RoleAdminChanged(role, previousAdminRole, adminRole);\n    }\n\n    /**\n     * @dev Grants `role` to `account`.\n     *\n     * Internal function without access restriction.\n     */\n    function _grantRole(bytes32 role, address account) internal virtual {\n        if (!hasRole(role, account)) {\n            _roles[role].members[account] = true;\n            emit RoleGranted(role, account, _msgSender());\n        }\n    }\n\n    /**\n     * @dev Revokes `role` from `account`.\n     *\n     * Internal function without access restriction.\n     */\n    function _revokeRole(bytes32 role, address account) internal virtual {\n        if (hasRole(role, account)) {\n            _roles[role].members[account] = false;\n            emit RoleRevoked(role, account, _msgSender());\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 180,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "AccessControl",
+        "similarity": 0.917,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-03",
+        "repository": "Certora/openzeppelin-contracts",
+        "path": "contracts/access/AccessControl.sol",
+        "commit": "4088540aef299ea6d2b7f78a72d35af49eec2ff0",
+        "commitTimestamp": "2021-11-08T21:47:21Z",
+        "url": "https://github.com/Certora/openzeppelin-contracts/blob/4088540aef299ea6d2b7f78a72d35af49eec2ff0/contracts/access/AccessControl.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora Prover verification of four specified properties on grantRole/revokeRole (onlyRole revert propagation and no effect on other accounts; loops unrolled once) plus a manual review; guarantees limited to the specified rules.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 7,
+        "removed": 4,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 0,
+        "unchanged": 180,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "     * _Available since v4.1._"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    modifier onlyRole(bytes32 role) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        _checkRole(role, _msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        _checkRole(role);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 18,
+            "newStart": 33,
+            "newLines": 30,
+            "lines": [
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "     * @dev Returns `true` if `account` has been granted `role`."
+              },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    function hasRole(bytes32 role, address account) public view override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    function hasRole(bytes32 role, address account) public view virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        return _roles[role].members[account];"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * @dev Revert with a standard message if `_msgSender()` is missing `role`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * Overriding this function changes the behavior of the {onlyRole} modifier.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 43, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * Format of the revert message is described in {_checkRole}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * _Available since v4.6._",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    function _checkRole(bytes32 role) internal view virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        _checkRole(role, _msgSender());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 50, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 51, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 53,
+                "text": "     * @dev Revert with a standard message if `account` is missing `role`."
+              },
+              { "type": " ", "oldLine": 42, "newLine": 54, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 55,
+                "text": "     * The format of the revert reason is given by the following regular expression:"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 56, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 57,
+                "text": "     *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 58, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function _checkRole(bytes32 role, address account) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    function _checkRole(bytes32 role, address account) internal view virtual {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 60,
+                "text": "        if (!hasRole(role, account)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 61,
+                "text": "            revert("
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 62,
+                "text": "                string("
+              }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 7,
+            "newStart": 77,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 65, "newLine": 77, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 78,
+                "text": "     * To change a role's admin, use {_setRoleAdmin}."
+              },
+              { "type": " ", "oldLine": 67, "newLine": 79, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    function getRoleAdmin(bytes32 role) public view override returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    function getRoleAdmin(bytes32 role) public view virtual override returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 81,
+                "text": "        return _roles[role].adminRole;"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 82, "text": "    }" },
+              { "type": " ", "oldLine": 71, "newLine": 83, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

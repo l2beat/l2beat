@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9cc3c8774483a93e16ecde4de283654d2e9247dbfed0e221a9770f21347531db",
+  "name": "BlockTimestamp",
+  "kind": "abstract",
+  "lines": 7,
+  "source": "abstract contract BlockTimestamp {\n    /// @dev Method that exists purely to be overridden for tests\n    /// @return The current block timestamp\n    function _blockTimestamp() internal view virtual returns (uint256) {\n        return block.timestamp;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "29bc3abee21b19c53d37efa02cd7ef6c169737c1701c0db773d7fa06ea080308",
+  "name": "NonfungiblePositionManager",
+  "kind": "contract",
+  "lines": 346,
+  "source": "contract NonfungiblePositionManager is\n    INonfungiblePositionManager,\n    Multicall,\n    ERC721Permit,\n    PeripheryImmutableState,\n    PoolInitializer,\n    LiquidityManagement,\n    PeripheryValidation,\n    SelfPermit\n{\n    // details about the uniswap position\n    struct Position {\n        // the nonce for permits\n        uint96 nonce;\n        // the address that is approved for spending this token\n        address operator;\n        // the ID of the pool with which this token is connected\n        uint80 poolId;\n        // the tick range of the position\n        int24 tickLower;\n        int24 tickUpper;\n        // the liquidity of the position\n        uint128 liquidity;\n        // the fee growth of the aggregate position as of the last action on the individual position\n        uint256 feeGrowthInside0LastX128;\n        uint256 feeGrowthInside1LastX128;\n        // how many uncollected tokens are owed to the position, as of the last computation\n        uint128 tokensOwed0;\n        uint128 tokensOwed1;\n    }\n\n    /// @dev IDs of pools assigned by this contract\n    mapping(address => uint80) private _poolIds;\n\n    /// @dev Pool keys by pool ID, to save on SSTOREs for position data\n    mapping(uint80 => PoolAddress.PoolKey) private _poolIdToPoolKey;\n\n    /// @dev The token ID position data\n    mapping(uint256 => Position) private _positions;\n\n    /// @dev The ID of the next token that will be minted. Skips 0\n    uint176 private _nextId = 1;\n    /// @dev The ID of the next pool that is used for the first time. Skips 0\n    uint80 private _nextPoolId = 1;\n\n    /// @dev The address of the token descriptor contract, which handles generating token URIs for position tokens\n    address private immutable _tokenDescriptor;\n\n    constructor(address _factory, address _WETH9, address _tokenDescriptor_)\n        ERC721Permit(\"Uniswap V3 Positions NFT-V1\", \"UNI-V3-POS\", \"1\")\n        PeripheryImmutableState(_factory, _WETH9)\n    {\n        _tokenDescriptor = _tokenDescriptor_;\n    }\n\n    /// @inheritdoc INonfungiblePositionManager\n    function positions(uint256 tokenId)\n        external\n        view\n        override\n        returns (\n            uint96 nonce,\n            address operator,\n            address token0,\n            address token1,\n            uint24 fee,\n            int24 tickLower,\n            int24 tickUpper,\n            uint128 liquidity,\n            uint256 feeGrowthInside0LastX128,\n            uint256 feeGrowthInside1LastX128,\n            uint128 tokensOwed0,\n            uint128 tokensOwed1\n        )\n    {\n        Position memory position = _positions[tokenId];\n        require(position.poolId != 0, \"Invalid token ID\");\n        PoolAddress.PoolKey memory poolKey = _poolIdToPoolKey[position.poolId];\n        return (\n            position.nonce,\n            position.operator,\n            poolKey.token0,\n            poolKey.token1,\n            poolKey.fee,\n            position.tickLower,\n            position.tickUpper,\n            position.liquidity,\n            position.feeGrowthInside0LastX128,\n            position.feeGrowthInside1LastX128,\n            position.tokensOwed0,\n            position.tokensOwed1\n        );\n    }\n\n    /// @dev Caches a pool key\n    function cachePoolKey(address pool, PoolAddress.PoolKey memory poolKey) private returns (uint80 poolId) {\n        poolId = _poolIds[pool];\n        if (poolId == 0) {\n            _poolIds[pool] = (poolId = _nextPoolId++);\n            _poolIdToPoolKey[poolId] = poolKey;\n        }\n    }\n\n    /// @inheritdoc INonfungiblePositionManager\n    function mint(MintParams calldata params)\n        external\n        payable\n        override\n        checkDeadline(params.deadline)\n        returns (uint256 tokenId, uint128 liquidity, uint256 amount0, uint256 amount1)\n    {\n        IUniswapV3Pool pool;\n        (liquidity, amount0, amount1, pool) = addLiquidity(\n            AddLiquidityParams({\n                token0: params.token0,\n                token1: params.token1,\n                fee: params.fee,\n                recipient: address(this),\n                tickLower: params.tickLower,\n                tickUpper: params.tickUpper,\n                amount0Desired: params.amount0Desired,\n                amount1Desired: params.amount1Desired,\n                amount0Min: params.amount0Min,\n                amount1Min: params.amount1Min\n            })\n        );\n\n        _mint(params.recipient, (tokenId = _nextId++));\n\n        bytes32 positionKey = PositionKey.compute(address(this), params.tickLower, params.tickUpper);\n        (, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128,,) = pool.positions(positionKey);\n\n        // idempotent set\n        uint80 poolId = cachePoolKey(\n            address(pool), PoolAddress.PoolKey({token0: params.token0, token1: params.token1, fee: params.fee})\n        );\n\n        _positions[tokenId] = Position({\n            nonce: 0,\n            operator: address(0),\n            poolId: poolId,\n            tickLower: params.tickLower,\n            tickUpper: params.tickUpper,\n            liquidity: liquidity,\n            feeGrowthInside0LastX128: feeGrowthInside0LastX128,\n            feeGrowthInside1LastX128: feeGrowthInside1LastX128,\n            tokensOwed0: 0,\n            tokensOwed1: 0\n        });\n\n        emit IncreaseLiquidity(tokenId, liquidity, amount0, amount1);\n    }\n\n    modifier isAuthorizedForToken(uint256 tokenId) {\n        require(_isApprovedOrOwner(msg.sender, tokenId), \"Not approved\");\n        _;\n    }\n\n    function tokenURI(uint256 tokenId) public view override(ERC721, IERC721Metadata) returns (string memory) {\n        require(_exists(tokenId));\n        return INonfungibleTokenPositionDescriptor(_tokenDescriptor).tokenURI(this, tokenId);\n    }\n\n    // save bytecode by removing implementation of unused method\n    function baseURI() public pure override returns (string memory) {}\n\n    /// @inheritdoc INonfungiblePositionManager\n    function increaseLiquidity(IncreaseLiquidityParams calldata params)\n        external\n        payable\n        override\n        checkDeadline(params.deadline)\n        returns (uint128 liquidity, uint256 amount0, uint256 amount1)\n    {\n        Position storage position = _positions[params.tokenId];\n\n        PoolAddress.PoolKey memory poolKey = _poolIdToPoolKey[position.poolId];\n\n        IUniswapV3Pool pool;\n        (liquidity, amount0, amount1, pool) = addLiquidity(\n            AddLiquidityParams({\n                token0: poolKey.token0,\n                token1: poolKey.token1,\n                fee: poolKey.fee,\n                tickLower: position.tickLower,\n                tickUpper: position.tickUpper,\n                amount0Desired: params.amount0Desired,\n                amount1Desired: params.amount1Desired,\n                amount0Min: params.amount0Min,\n                amount1Min: params.amount1Min,\n                recipient: address(this)\n            })\n        );\n\n        bytes32 positionKey = PositionKey.compute(address(this), position.tickLower, position.tickUpper);\n\n        // this is now updated to the current transaction\n        (, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128,,) = pool.positions(positionKey);\n\n        position.tokensOwed0 += uint128(\n            FullMath.mulDiv(\n                feeGrowthInside0LastX128 - position.feeGrowthInside0LastX128, position.liquidity, FixedPoint128.Q128\n            )\n        );\n        position.tokensOwed1 += uint128(\n            FullMath.mulDiv(\n                feeGrowthInside1LastX128 - position.feeGrowthInside1LastX128, position.liquidity, FixedPoint128.Q128\n            )\n        );\n\n        position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128;\n        position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128;\n        position.liquidity += liquidity;\n\n        emit IncreaseLiquidity(params.tokenId, liquidity, amount0, amount1);\n    }\n\n    /// @inheritdoc INonfungiblePositionManager\n    function decreaseLiquidity(DecreaseLiquidityParams calldata params)\n        external\n        payable\n        override\n        isAuthorizedForToken(params.tokenId)\n        checkDeadline(params.deadline)\n        returns (uint256 amount0, uint256 amount1)\n    {\n        require(params.liquidity > 0);\n        Position storage position = _positions[params.tokenId];\n\n        uint128 positionLiquidity = position.liquidity;\n        require(positionLiquidity >= params.liquidity);\n\n        PoolAddress.PoolKey memory poolKey = _poolIdToPoolKey[position.poolId];\n        IUniswapV3Pool pool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));\n        (amount0, amount1) = pool.burn(position.tickLower, position.tickUpper, params.liquidity);\n\n        require(amount0 >= params.amount0Min && amount1 >= params.amount1Min, \"Price slippage check\");\n\n        bytes32 positionKey = PositionKey.compute(address(this), position.tickLower, position.tickUpper);\n        // this is now updated to the current transaction\n        (, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128,,) = pool.positions(positionKey);\n\n        position.tokensOwed0 += uint128(amount0)\n            + uint128(\n                FullMath.mulDiv(\n                    feeGrowthInside0LastX128 - position.feeGrowthInside0LastX128, positionLiquidity, FixedPoint128.Q128\n                )\n            );\n        position.tokensOwed1 += uint128(amount1)\n            + uint128(\n                FullMath.mulDiv(\n                    feeGrowthInside1LastX128 - position.feeGrowthInside1LastX128, positionLiquidity, FixedPoint128.Q128\n                )\n            );\n\n        position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128;\n        position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128;\n        // subtraction is safe because we checked positionLiquidity is gte params.liquidity\n        position.liquidity = positionLiquidity - params.liquidity;\n\n        emit DecreaseLiquidity(params.tokenId, params.liquidity, amount0, amount1);\n    }\n\n    /// @inheritdoc INonfungiblePositionManager\n    function collect(CollectParams calldata params)\n        external\n        payable\n        override\n        isAuthorizedForToken(params.tokenId)\n        returns (uint256 amount0, uint256 amount1)\n    {\n        require(params.amount0Max > 0 || params.amount1Max > 0);\n        // allow collecting to the nft position manager address with address 0\n        address recipient = params.recipient == address(0) ? address(this) : params.recipient;\n\n        Position storage position = _positions[params.tokenId];\n\n        PoolAddress.PoolKey memory poolKey = _poolIdToPoolKey[position.poolId];\n\n        IUniswapV3Pool pool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));\n\n        (uint128 tokensOwed0, uint128 tokensOwed1) = (position.tokensOwed0, position.tokensOwed1);\n\n        // trigger an update of the position fees owed and fee growth snapshots if it has any liquidity\n        if (position.liquidity > 0) {\n            pool.burn(position.tickLower, position.tickUpper, 0);\n            (, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128,,) =\n                pool.positions(PositionKey.compute(address(this), position.tickLower, position.tickUpper));\n\n            tokensOwed0 += uint128(\n                FullMath.mulDiv(\n                    feeGrowthInside0LastX128 - position.feeGrowthInside0LastX128, position.liquidity, FixedPoint128.Q128\n                )\n            );\n            tokensOwed1 += uint128(\n                FullMath.mulDiv(\n                    feeGrowthInside1LastX128 - position.feeGrowthInside1LastX128, position.liquidity, FixedPoint128.Q128\n                )\n            );\n\n            position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128;\n            position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128;\n        }\n\n        // compute the arguments to give to the pool#collect method\n        (uint128 amount0Collect, uint128 amount1Collect) = (\n            params.amount0Max > tokensOwed0 ? tokensOwed0 : params.amount0Max,\n            params.amount1Max > tokensOwed1 ? tokensOwed1 : params.amount1Max\n        );\n\n        // the actual amounts collected are returned\n        (amount0, amount1) =\n            pool.collect(recipient, position.tickLower, position.tickUpper, amount0Collect, amount1Collect);\n\n        // sometimes there will be a few less wei than expected due to rounding down in core, but we just subtract the full amount expected\n        // instead of the actual amount so we can burn the token\n        (position.tokensOwed0, position.tokensOwed1) = (tokensOwed0 - amount0Collect, tokensOwed1 - amount1Collect);\n\n        emit Collect(params.tokenId, recipient, amount0Collect, amount1Collect);\n    }\n\n    /// @inheritdoc INonfungiblePositionManager\n    function burn(uint256 tokenId) external payable override isAuthorizedForToken(tokenId) {\n        Position storage position = _positions[tokenId];\n        require(position.liquidity == 0 && position.tokensOwed0 == 0 && position.tokensOwed1 == 0, \"Not cleared\");\n        delete _positions[tokenId];\n        _burn(tokenId);\n    }\n\n    function _getAndIncrementNonce(uint256 tokenId) internal override returns (uint256) {\n        return uint256(_positions[tokenId].nonce++);\n    }\n\n    /// @inheritdoc IERC721\n    function getApproved(uint256 tokenId) public view override(ERC721, IERC721) returns (address) {\n        require(_exists(tokenId), \"ERC721: approved query for nonexistent token\");\n\n        return _positions[tokenId].operator;\n    }\n\n    /// @dev Overrides _approve to use the operator in the position, which is packed with the position permit nonce\n    function _approve(address to, uint256 tokenId) internal override(ERC721) {\n        _positions[tokenId].operator = to;\n        emit Approval(ownerOf(tokenId), to, tokenId);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 342,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "NonfungiblePositionManager",
+        "similarity": 0.957,
+        "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
+        "repository": "Uniswap/v3-periphery",
+        "path": "contracts/NonfungiblePositionManager.sol",
+        "commit": "987842552ede76d428e60116672fb0ff67fe551e",
+        "commitTimestamp": "2021-04-14T20:55:55Z",
+        "url": "https://github.com/Uniswap/v3-periphery/blob/987842552ede76d428e60116672fb0ff67fe551e/contracts/NonfungiblePositionManager.sol",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fix for the Critical decreaseLiquidity finding; the Major missing-token-existence-check finding remains open",
+        "majorFindings": 1,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 19,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 3,
+        "unchanged": 342,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 6,
+            "newStart": 3,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    Multicall,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    ERC721Permit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    PeripheryImmutableState,"
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    PoolInitializer,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "    LiquidityManagement,"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "    PeripheryValidation,"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    SelfPermit"
+              }
+            ]
+          },
+          {
+            "oldStart": 91,
+            "oldLines": 26,
+            "newStart": 92,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 92,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 93, "text": "    }" },
+              { "type": " ", "oldLine": 93, "newLine": 94, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @inheritdoc INonfungiblePositionManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    function createAndInitializePoolIfNecessary(address tokenA, address tokenB, uint24 fee, uint160 sqrtPriceX96)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        payable",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        returns (address pool)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        pool = IUniswapV3Factory(factory).getPool(tokenA, tokenB, fee);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 102, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        if (pool == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "            pool = IUniswapV3Factory(factory).createPool(tokenA, tokenB, fee);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "            IUniswapV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "            (uint160 sqrtPriceX96Existing,,,,,,) = IUniswapV3Pool(pool).slot0();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "            if (sqrtPriceX96Existing == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "                IUniswapV3Pool(pool).initialize(sqrtPriceX96);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 113, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 95,
+                "text": "    /// @dev Caches a pool key"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 96,
+                "text": "    function cachePoolKey(address pool, PoolAddress.PoolKey memory poolKey) private returns (uint80 poolId) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 97,
+                "text": "        poolId = _poolIds[pool];"
+              }
+            ]
+          },
+          {
+            "oldStart": 289,
+            "oldLines": 6,
+            "newStart": 270,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 270,
+                "text": "        returns (uint256 amount0, uint256 amount1)"
+              },
+              { "type": " ", "oldLine": 290, "newLine": 271, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 272,
+                "text": "        require(params.amount0Max > 0 || params.amount1Max > 0);"
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "        // allow collecting to the nft position manager address with address 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 274,
+                "text": "        address recipient = params.recipient == address(0) ? address(this) : params.recipient;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 275, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 276,
+                "text": "        Position storage position = _positions[params.tokenId];"
+              },
+              { "type": " ", "oldLine": 293, "newLine": 277, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 278,
+                "text": "        PoolAddress.PoolKey memory poolKey = _poolIdToPoolKey[position.poolId];"
+              }
+            ]
+          },
+          {
+            "oldStart": 326,
+            "oldLines": 13,
+            "newStart": 310,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 326, "newLine": 310, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 311,
+                "text": "        // the actual amounts collected are returned"
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 312,
+                "text": "        (amount0, amount1) ="
+              },
+              {
+                "type": "-",
+                "oldLine": 329,
+                "text": "            pool.collect(params.recipient, position.tickLower, position.tickUpper, amount0Collect, amount1Collect);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "            pool.collect(recipient, position.tickLower, position.tickUpper, amount0Collect, amount1Collect);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 330, "newLine": 314, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 331,
+                "newLine": 315,
+                "text": "        // sometimes there will be a few less wei than expected due to rounding down in core, but we just subtract the full amount expected"
+              },
+              {
+                "type": " ",
+                "oldLine": 332,
+                "newLine": 316,
+                "text": "        // instead of the actual amount so we can burn the token"
+              },
+              {
+                "type": " ",
+                "oldLine": 333,
+                "newLine": 317,
+                "text": "        (position.tokensOwed0, position.tokensOwed1) = (tokensOwed0 - amount0Collect, tokensOwed1 - amount1Collect);"
+              },
+              { "type": " ", "oldLine": 334, "newLine": 318, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 335,
+                "text": "        emit Collect(params.tokenId, params.recipient, amount0Collect, amount1Collect);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "        emit Collect(params.tokenId, recipient, amount0Collect, amount1Collect);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 336, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 337, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 322,
+                "text": "    /// @inheritdoc INonfungiblePositionManager"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

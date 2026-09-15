@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f75cb58879db9c67ca9f0e3c805c6542d1e707aa08e79d2d4f264ed6df09f719",
+  "name": "IProtocolFees",
+  "kind": "interface",
+  "lines": 44,
+  "source": "interface IProtocolFees {\n    /// @notice Thrown when protocol fee is set too high\n    error ProtocolFeeTooLarge(uint24 fee);\n\n    /// @notice Thrown when collectProtocolFees or setProtocolFee is not called by the controller.\n    error InvalidCaller();\n\n    /// @notice Thrown when collectProtocolFees is attempted on a token that is synced.\n    error ProtocolFeeCurrencySynced();\n\n    /// @notice Emitted when the protocol fee controller address is updated in setProtocolFeeController.\n    event ProtocolFeeControllerUpdated(address indexed protocolFeeController);\n\n    /// @notice Emitted when the protocol fee is updated for a pool.\n    event ProtocolFeeUpdated(PoolId indexed id, uint24 protocolFee);\n\n    /// @notice Given a currency address, returns the protocol fees accrued in that currency\n    /// @param currency The currency to check\n    /// @return amount The amount of protocol fees accrued in the currency\n    function protocolFeesAccrued(Currency currency) external view returns (uint256 amount);\n\n    /// @notice Sets the protocol fee for the given pool\n    /// @param key The key of the pool to set a protocol fee for\n    /// @param newProtocolFee The fee to set\n    function setProtocolFee(PoolKey memory key, uint24 newProtocolFee) external;\n\n    /// @notice Sets the protocol fee controller\n    /// @param controller The new protocol fee controller\n    function setProtocolFeeController(address controller) external;\n\n    /// @notice Collects the protocol fees for a given recipient and currency, returning the amount collected\n    /// @dev This will revert if the contract is unlocked\n    /// @param recipient The address to receive the protocol fees\n    /// @param currency The currency to withdraw\n    /// @param amount The amount of currency to withdraw\n    /// @return amountCollected The amount of currency successfully withdrawn\n    function collectProtocolFees(address recipient, Currency currency, uint256 amount)\n        external\n        returns (uint256 amountCollected);\n\n    /// @notice Returns the current protocol fee controller address\n    /// @return address The current protocol fee controller address\n    function protocolFeeController() external view returns (address);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

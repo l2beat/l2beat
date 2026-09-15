@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1271f7894cbba8afcd60dc6b61bf8685cf99833b597cbf2329fbec019e7a4e0b",
+  "name": "Tick",
+  "kind": "library",
+  "lines": 172,
+  "source": "library Tick {\n    using LowGasSafeMath for int256;\n    using SafeCast for int256;\n\n    // info stored for each initialized individual tick\n    struct Info {\n        // the total position liquidity that references this tick\n        uint128 liquidityGross;\n        // amount of net liquidity added (subtracted) when tick is crossed from left to right (right to left),\n        int128 liquidityNet;\n        // fee growth per unit of liquidity on the _other_ side of this tick (relative to the current tick)\n        // only has relative meaning, not absolute — the value depends on when the tick is initialized\n        uint256 feeGrowthOutside0X128;\n        uint256 feeGrowthOutside1X128;\n        // the cumulative tick value on the other side of the tick\n        int56 tickCumulativeOutside;\n        // the seconds per unit of liquidity on the _other_ side of this tick (relative to the current tick)\n        // only has relative meaning, not absolute — the value depends on when the tick is initialized\n        uint160 secondsPerLiquidityOutsideX128;\n        // the seconds spent on the other side of the tick (relative to the current tick)\n        // only has relative meaning, not absolute — the value depends on when the tick is initialized\n        uint32 secondsOutside;\n        // true iff the tick is initialized, i.e. the value is exactly equivalent to the expression liquidityGross != 0\n        // these 8 bits are set to prevent fresh sstores when crossing newly initialized ticks\n        bool initialized;\n    }\n\n    /// @notice Derives max liquidity per tick from given tick spacing\n    /// @dev Executed within the pool constructor\n    /// @param tickSpacing The amount of required tick separation, realized in multiples of `tickSpacing`\n    ///     e.g., a tickSpacing of 3 requires ticks to be initialized every 3rd tick i.e., ..., -6, -3, 0, 3, 6, ...\n    /// @return The max liquidity per tick\n    function tickSpacingToMaxLiquidityPerTick(int24 tickSpacing) internal pure returns (uint128) {\n        int24 minTick = (TickMath.MIN_TICK / tickSpacing) * tickSpacing;\n        int24 maxTick = (TickMath.MAX_TICK / tickSpacing) * tickSpacing;\n        uint24 numTicks = uint24((maxTick - minTick) / tickSpacing) + 1;\n        return type(uint128).max / numTicks;\n    }\n\n    /// @notice Retrieves fee growth data\n    /// @param self The mapping containing all tick information for initialized ticks\n    /// @param tickLower The lower tick boundary of the position\n    /// @param tickUpper The upper tick boundary of the position\n    /// @param tickCurrent The current tick\n    /// @param feeGrowthGlobal0X128 The all-time global fee growth, per unit of liquidity, in token0\n    /// @param feeGrowthGlobal1X128 The all-time global fee growth, per unit of liquidity, in token1\n    /// @return feeGrowthInside0X128 The all-time fee growth in token0, per unit of liquidity, inside the position's tick boundaries\n    /// @return feeGrowthInside1X128 The all-time fee growth in token1, per unit of liquidity, inside the position's tick boundaries\n    function getFeeGrowthInside(\n        mapping(int24 => Tick.Info) storage self,\n        int24 tickLower,\n        int24 tickUpper,\n        int24 tickCurrent,\n        uint256 feeGrowthGlobal0X128,\n        uint256 feeGrowthGlobal1X128\n    ) internal view returns (uint256 feeGrowthInside0X128, uint256 feeGrowthInside1X128) {\n        Info storage lower = self[tickLower];\n        Info storage upper = self[tickUpper];\n\n        // calculate fee growth below\n        uint256 feeGrowthBelow0X128;\n        uint256 feeGrowthBelow1X128;\n        if (tickCurrent >= tickLower) {\n            feeGrowthBelow0X128 = lower.feeGrowthOutside0X128;\n            feeGrowthBelow1X128 = lower.feeGrowthOutside1X128;\n        } else {\n            feeGrowthBelow0X128 = feeGrowthGlobal0X128 - lower.feeGrowthOutside0X128;\n            feeGrowthBelow1X128 = feeGrowthGlobal1X128 - lower.feeGrowthOutside1X128;\n        }\n\n        // calculate fee growth above\n        uint256 feeGrowthAbove0X128;\n        uint256 feeGrowthAbove1X128;\n        if (tickCurrent < tickUpper) {\n            feeGrowthAbove0X128 = upper.feeGrowthOutside0X128;\n            feeGrowthAbove1X128 = upper.feeGrowthOutside1X128;\n        } else {\n            feeGrowthAbove0X128 = feeGrowthGlobal0X128 - upper.feeGrowthOutside0X128;\n            feeGrowthAbove1X128 = feeGrowthGlobal1X128 - upper.feeGrowthOutside1X128;\n        }\n\n        feeGrowthInside0X128 = feeGrowthGlobal0X128 - feeGrowthBelow0X128 - feeGrowthAbove0X128;\n        feeGrowthInside1X128 = feeGrowthGlobal1X128 - feeGrowthBelow1X128 - feeGrowthAbove1X128;\n    }\n\n    /// @notice Updates a tick and returns true if the tick was flipped from initialized to uninitialized, or vice versa\n    /// @param self The mapping containing all tick information for initialized ticks\n    /// @param tick The tick that will be updated\n    /// @param tickCurrent The current tick\n    /// @param liquidityDelta A new amount of liquidity to be added (subtracted) when tick is crossed from left to right (right to left)\n    /// @param feeGrowthGlobal0X128 The all-time global fee growth, per unit of liquidity, in token0\n    /// @param feeGrowthGlobal1X128 The all-time global fee growth, per unit of liquidity, in token1\n    /// @param secondsPerLiquidityCumulativeX128 The all-time seconds per max(1, liquidity) of the pool\n    /// @param time The current block timestamp cast to a uint32\n    /// @param upper true for updating a position's upper tick, or false for updating a position's lower tick\n    /// @param maxLiquidity The maximum liquidity allocation for a single tick\n    /// @return flipped Whether the tick was flipped from initialized to uninitialized, or vice versa\n    function update(\n        mapping(int24 => Tick.Info) storage self,\n        int24 tick,\n        int24 tickCurrent,\n        int128 liquidityDelta,\n        uint256 feeGrowthGlobal0X128,\n        uint256 feeGrowthGlobal1X128,\n        uint160 secondsPerLiquidityCumulativeX128,\n        int56 tickCumulative,\n        uint32 time,\n        bool upper,\n        uint128 maxLiquidity\n    ) internal returns (bool flipped) {\n        Tick.Info storage info = self[tick];\n\n        uint128 liquidityGrossBefore = info.liquidityGross;\n        uint128 liquidityGrossAfter = LiquidityMath.addDelta(liquidityGrossBefore, liquidityDelta);\n\n        require(liquidityGrossAfter <= maxLiquidity, \"LO\");\n\n        flipped = (liquidityGrossAfter == 0) != (liquidityGrossBefore == 0);\n\n        if (liquidityGrossBefore == 0) {\n            // by convention, we assume that all growth before a tick was initialized happened _below_ the tick\n            if (tick <= tickCurrent) {\n                info.feeGrowthOutside0X128 = feeGrowthGlobal0X128;\n                info.feeGrowthOutside1X128 = feeGrowthGlobal1X128;\n                info.secondsPerLiquidityOutsideX128 = secondsPerLiquidityCumulativeX128;\n                info.tickCumulativeOutside = tickCumulative;\n                info.secondsOutside = time;\n            }\n            info.initialized = true;\n        }\n\n        info.liquidityGross = liquidityGrossAfter;\n\n        // when the lower (upper) tick is crossed left to right (right to left), liquidity must be added (removed)\n        info.liquidityNet = upper\n            ? int256(info.liquidityNet).sub(liquidityDelta).toInt128()\n            : int256(info.liquidityNet).add(liquidityDelta).toInt128();\n    }\n\n    /// @notice Clears tick data\n    /// @param self The mapping containing all initialized tick information for initialized ticks\n    /// @param tick The tick that will be cleared\n    function clear(mapping(int24 => Tick.Info) storage self, int24 tick) internal {\n        delete self[tick];\n    }\n\n    /// @notice Transitions to next tick as needed by price movement\n    /// @param self The mapping containing all tick information for initialized ticks\n    /// @param tick The destination tick of the transition\n    /// @param feeGrowthGlobal0X128 The all-time global fee growth, per unit of liquidity, in token0\n    /// @param feeGrowthGlobal1X128 The all-time global fee growth, per unit of liquidity, in token1\n    /// @param secondsPerLiquidityCumulativeX128 The current seconds per liquidity\n    /// @param time The current block.timestamp\n    /// @return liquidityNet The amount of liquidity added (subtracted) when tick is crossed from left to right (right to left)\n    function cross(\n        mapping(int24 => Tick.Info) storage self,\n        int24 tick,\n        uint256 feeGrowthGlobal0X128,\n        uint256 feeGrowthGlobal1X128,\n        uint160 secondsPerLiquidityCumulativeX128,\n        int56 tickCumulative,\n        uint32 time\n    ) internal returns (int128 liquidityNet) {\n        Tick.Info storage info = self[tick];\n        info.feeGrowthOutside0X128 = feeGrowthGlobal0X128 - info.feeGrowthOutside0X128;\n        info.feeGrowthOutside1X128 = feeGrowthGlobal1X128 - info.feeGrowthOutside1X128;\n        info.secondsPerLiquidityOutsideX128 = secondsPerLiquidityCumulativeX128 - info.secondsPerLiquidityOutsideX128;\n        info.tickCumulativeOutside = tickCumulative - info.tickCumulativeOutside;\n        info.secondsOutside = time - info.secondsOutside;\n        liquidityNet = info.liquidityNet;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Tick",
+        "similarity": 0.901,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/Tick.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/libraries/Tick.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 18,
+        "removed": 1,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 6,
+            "newStart": 12,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        // only has relative meaning, not absolute — the value depends on when the tick is initialized"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "        uint256 feeGrowthOutside0X128;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "        uint256 feeGrowthOutside1X128;"
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        // the cumulative tick value on the other side of the tick",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        int56 tickCumulativeOutside;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        // the seconds per unit of liquidity on the _other_ side of this tick (relative to the current tick)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        // only has relative meaning, not absolute — the value depends on when the tick is initialized",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        uint160 secondsPerLiquidityOutsideX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        // the seconds spent on the other side of the tick (relative to the current tick)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        // only has relative meaning, not absolute — the value depends on when the tick is initialized",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        uint32 secondsOutside;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        // true iff the tick is initialized, i.e. the value is exactly equivalent to the expression liquidityGross != 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        // these 8 bits are set to prevent fresh sstores when crossing newly initialized ticks",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        bool initialized;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 27, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 28,
+                "text": "    /// @notice Derives max liquidity per tick from given tick spacing"
+              }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 6,
+            "newStart": 90,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 90,
+                "text": "    /// @param liquidityDelta A new amount of liquidity to be added (subtracted) when tick is crossed from left to right (right to left)"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 91,
+                "text": "    /// @param feeGrowthGlobal0X128 The all-time global fee growth, per unit of liquidity, in token0"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 92,
+                "text": "    /// @param feeGrowthGlobal1X128 The all-time global fee growth, per unit of liquidity, in token1"
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    /// @param secondsPerLiquidityCumulativeX128 The all-time seconds per max(1, liquidity) of the pool",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    /// @param time The current block timestamp cast to a uint32",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 95,
+                "text": "    /// @param upper true for updating a position's upper tick, or false for updating a position's lower tick"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 96,
+                "text": "    /// @param maxLiquidity The maximum liquidity allocation for a single tick"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 97,
+                "text": "    /// @return flipped Whether the tick was flipped from initialized to uninitialized, or vice versa"
+              }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 6,
+            "newStart": 102,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 102,
+                "text": "        int128 liquidityDelta,"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 103,
+                "text": "        uint256 feeGrowthGlobal0X128,"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 104,
+                "text": "        uint256 feeGrowthGlobal1X128,"
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        uint160 secondsPerLiquidityCumulativeX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        int56 tickCumulative,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        uint32 time,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 108,
+                "text": "        bool upper,"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 109,
+                "text": "        uint128 maxLiquidity"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 110,
+                "text": "    ) internal returns (bool flipped) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 106,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 122,
+                "text": "            if (tick <= tickCurrent) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 123,
+                "text": "                info.feeGrowthOutside0X128 = feeGrowthGlobal0X128;"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 124,
+                "text": "                info.feeGrowthOutside1X128 = feeGrowthGlobal1X128;"
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "                info.secondsPerLiquidityOutsideX128 = secondsPerLiquidityCumulativeX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "                info.tickCumulativeOutside = tickCumulative;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                info.secondsOutside = time;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 128,
+                "text": "            }"
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "            info.initialized = true;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 130,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 111, "newLine": 131, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 132,
+                "text": "        info.liquidityGross = liquidityGrossAfter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 129,
+            "oldLines": 16,
+            "newStart": 149,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 149,
+                "text": "    /// @param tick The destination tick of the transition"
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 150,
+                "text": "    /// @param feeGrowthGlobal0X128 The all-time global fee growth, per unit of liquidity, in token0"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 151,
+                "text": "    /// @param feeGrowthGlobal1X128 The all-time global fee growth, per unit of liquidity, in token1"
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "    /// @param secondsPerLiquidityCumulativeX128 The current seconds per liquidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "    /// @param time The current block.timestamp",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 154,
+                "text": "    /// @return liquidityNet The amount of liquidity added (subtracted) when tick is crossed from left to right (right to left)"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 155,
+                "text": "    function cross("
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 156,
+                "text": "        mapping(int24 => Tick.Info) storage self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 157,
+                "text": "        int24 tick,"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 158,
+                "text": "        uint256 feeGrowthGlobal0X128,"
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "        uint256 feeGrowthGlobal1X128",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "        uint256 feeGrowthGlobal1X128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "        uint160 secondsPerLiquidityCumulativeX128,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "        int56 tickCumulative,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "        uint32 time",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 163,
+                "text": "    ) internal returns (int128 liquidityNet) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 164,
+                "text": "        Tick.Info storage info = self[tick];"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 165,
+                "text": "        info.feeGrowthOutside0X128 = feeGrowthGlobal0X128 - info.feeGrowthOutside0X128;"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 166,
+                "text": "        info.feeGrowthOutside1X128 = feeGrowthGlobal1X128 - info.feeGrowthOutside1X128;"
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "        info.secondsPerLiquidityOutsideX128 = secondsPerLiquidityCumulativeX128 - info.secondsPerLiquidityOutsideX128;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        info.tickCumulativeOutside = tickCumulative - info.tickCumulativeOutside;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "        info.secondsOutside = time - info.secondsOutside;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 170,
+                "text": "        liquidityNet = info.liquidityNet;"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 171, "text": "    }" },
+              { "type": " ", "oldLine": 144, "newLine": 172, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

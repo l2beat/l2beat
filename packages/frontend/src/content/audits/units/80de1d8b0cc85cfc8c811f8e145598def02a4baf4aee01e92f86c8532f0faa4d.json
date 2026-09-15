@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "80de1d8b0cc85cfc8c811f8e145598def02a4baf4aee01e92f86c8532f0faa4d",
+  "name": "ISP1VerifierGateway",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface ISP1VerifierGateway is ISP1VerifierGatewayEvents, ISP1VerifierGatewayErrors, ISP1Verifier {\n    /// @notice Mapping of 4-byte verifier selectors to verifier routes.\n    /// @dev Only one verifier route can be added for each selector.\n    /// @param selector The verifier selector, which is both the first 4 bytes of the VERIFIER_HASH\n    /// and the first 4 bytes of the proofs designed for that verifier.\n    /// @return verifier The address of the verifier contract.\n    /// @return frozen Whether the verifier is frozen.\n    function routes(bytes4 selector) external view returns (address verifier, bool frozen);\n\n    /// @notice Adds a verifier route. This enable proofs to be routed to this verifier.\n    /// @dev Only callable by the owner. The owner is responsible for ensuring that the specified\n    /// verifier is correct with a valid VERIFIER_HASH. Once a route to a verifier is added, it\n    /// cannot be removed.\n    /// @param verifier The address of the verifier contract. This verifier MUST implement the\n    /// ISP1VerifierWithHash interface.\n    function addRoute(address verifier) external;\n\n    /// @notice Freezes a verifier route. This prevents proofs from being routed to this verifier.\n    /// @dev Only callable by the owner. Once a route to a verifier is frozen, it cannot be\n    /// unfrozen.\n    /// @param selector The verifier selector to freeze.\n    function freezeRoute(bytes4 selector) external;\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 23,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISP1VerifierGateway",
+        "similarity": 1,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/ISP1VerifierGateway.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/ISP1VerifierGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

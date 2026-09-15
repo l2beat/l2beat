@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ca195a8bd2cbc33bacccaeabac4309f510edf6baae9723163d0514b91ad9e504",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 29,
+  "source": "[package]\nname = \"range\"\nversion = \"0.1.0\"\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\nrkyv.workspace = true\n\n# kona\nkona-proof.workspace = true\n\n# sp1\nsp1-zkvm.workspace = true\n\n# op-succinct\nop-succinct-client-utils.workspace = true\nop-succinct-ethereum-client-utils.workspace = true\nop-succinct-range-utils.workspace = true\n\n# `tracing-subscriber` feature dependencies\ntracing-subscriber = { workspace = true, optional = true }\n\n[features]\nembedded = [\"sp1-zkvm/embedded\"]\ntracing-subscriber = [\"dep:tracing-subscriber\"]",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

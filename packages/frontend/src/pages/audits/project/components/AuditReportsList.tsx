@@ -1,23 +1,63 @@
-import type { AuditsReportEntry } from '~/server/features/audits/types'
+import type {
+  AuditMatchOrigin,
+  AuditsContextEntry,
+  AuditsReportEntry,
+} from '~/server/features/audits/types'
+
+const ORIGIN_ORDER: AuditMatchOrigin[] = [
+  'own',
+  'upstream',
+  'stack',
+  'library',
+  'other',
+]
+
+const ORIGIN_TITLE: Record<AuditMatchOrigin, string> = {
+  own: 'Project audits',
+  upstream: 'Upstream audits (forked code)',
+  stack: 'Stack and shared component audits',
+  library: 'Audited standard libraries',
+  other: 'Audits of other projects with identical or similar code',
+}
 
 export function AuditReportsList({
   reports,
+  context,
 }: {
   reports: AuditsReportEntry[]
+  context: AuditsContextEntry[]
 }) {
-  const own = reports.filter((r) => r.origin === 'project')
-  const libs = reports.filter((r) => r.origin === 'library')
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-bold text-lg">Audit reports used</h2>
-      <ReportGroup
-        title="Project audits"
-        reports={own}
-        empty="No project audit matched a deployed unit."
-      />
-      {libs.length > 0 && (
-        <ReportGroup title="Audited standard libraries" reports={libs} />
+      {context.length > 0 && (
+        <p className="text-secondary text-xs">
+          Evidence searched with priority:{' '}
+          {context.map((c, i) => (
+            <span key={c.collection}>
+              {i > 0 && ', '}
+              <span className="font-medium text-primary">
+                {c.collectionName}
+              </span>{' '}
+              ({c.origin}, {c.relation})
+            </span>
+          ))}
+          . Identical code is accepted from any collection in the dataset.
+        </p>
       )}
+      {ORIGIN_ORDER.map((origin) => {
+        const group = reports.filter((r) => r.origin === origin)
+        if (group.length === 0 && origin !== 'own') return null
+        return (
+          <ReportGroup
+            key={origin}
+            title={ORIGIN_TITLE[origin]}
+            reports={group}
+            showCollection={origin !== 'own'}
+            empty="No project audit matched a deployed unit."
+          />
+        )
+      })}
     </div>
   )
 }
@@ -25,10 +65,12 @@ export function AuditReportsList({
 function ReportGroup({
   title,
   reports,
+  showCollection,
   empty,
 }: {
   title: string
   reports: AuditsReportEntry[]
+  showCollection: boolean
   empty?: string
 }) {
   return (
@@ -57,7 +99,7 @@ function ReportGroup({
               <span className="text-secondary">
                 {report.auditor}
                 {report.reportDate && ` · ${report.reportDate}`}
-                {report.libraryName && ` · ${report.libraryName}`}
+                {showCollection && ` · ${report.collectionName}`}
               </span>
             </li>
           ))}

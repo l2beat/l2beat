@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d43c9d1e8e12895749aa0264a3f022cb4ed74f6e852ca274cf45369dc9edd11b",
+  "name": "IStaticERC1967Proxy",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IStaticERC1967Proxy {\n    function implementation() external view returns (address);\n\n    function admin() external view returns (address);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "79c75758acc9699ef8647e0506d5036d5ba29f0a45c4f2a501f9f37cabac670e",
+  "name": "Position",
+  "kind": "library",
+  "lines": 69,
+  "source": "library Position {\n    // info stored for each user's position\n    struct Info {\n        // the amount of liquidity owned by this position\n        uint128 liquidity;\n        // fee growth per unit of liquidity as of the last update to liquidity or fees owed\n        uint256 feeGrowthInside0LastX128;\n        uint256 feeGrowthInside1LastX128;\n        // the fees owed to the position owner in token0/token1\n        uint128 tokensOwed0;\n        uint128 tokensOwed1;\n    }\n\n    /// @notice Returns the Info struct of a position, given an owner and position boundaries\n    /// @param self The mapping containing all user positions\n    /// @param owner The address of the position owner\n    /// @param tickLower The lower tick boundary of the position\n    /// @param tickUpper The upper tick boundary of the position\n    /// @return position The position info struct of the given owners' position\n    function get(mapping(bytes32 => Info) storage self, address owner, int24 tickLower, int24 tickUpper)\n        internal\n        view\n        returns (Position.Info storage position)\n    {\n        position = self[keccak256(abi.encodePacked(owner, tickLower, tickUpper))];\n    }\n\n    /// @notice Credits accumulated fees to a user's position\n    /// @param self The individual position to update\n    /// @param liquidityDelta The change in pool liquidity as a result of the position update\n    /// @param feeGrowthInside0X128 The all-time fee growth in token0, per unit of liquidity, inside the position's tick boundaries\n    /// @param feeGrowthInside1X128 The all-time fee growth in token1, per unit of liquidity, inside the position's tick boundaries\n    function update(\n        Info storage self,\n        int128 liquidityDelta,\n        uint256 feeGrowthInside0X128,\n        uint256 feeGrowthInside1X128\n    ) internal {\n        Info memory _self = self;\n\n        uint128 liquidityNext;\n        if (liquidityDelta == 0) {\n            require(_self.liquidity > 0, \"NP\"); // disallow pokes for 0 liquidity positions\n            liquidityNext = _self.liquidity;\n        } else {\n            liquidityNext = LiquidityMath.addDelta(_self.liquidity, liquidityDelta);\n        }\n\n        // calculate accumulated fees\n        uint128 tokensOwed0 = uint128(\n            FullMath.mulDiv(feeGrowthInside0X128 - _self.feeGrowthInside0LastX128, _self.liquidity, FixedPoint128.Q128)\n        );\n        uint128 tokensOwed1 = uint128(\n            FullMath.mulDiv(feeGrowthInside1X128 - _self.feeGrowthInside1LastX128, _self.liquidity, FixedPoint128.Q128)\n        );\n\n        // update the position\n        if (liquidityDelta != 0) {\n            self.liquidity = liquidityNext;\n        }\n        self.feeGrowthInside0LastX128 = feeGrowthInside0X128;\n        self.feeGrowthInside1LastX128 = feeGrowthInside1X128;\n        if (tokensOwed0 > 0 || tokensOwed1 > 0) {\n            // overflow is acceptable, have to withdraw before you hit type(uint128).max fees\n            self.tokensOwed0 += tokensOwed0;\n            self.tokensOwed1 += tokensOwed1;\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 69,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Position",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/Position.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/Position.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 69,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 26,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    /// @notice Credits accumulated fees to a user's position"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param self The mapping containing all user positions",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @param self The individual position to update",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    /// @param liquidityDelta The change in pool liquidity as a result of the position update"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// @param feeGrowthInside0X128 The all-time fee growth in token0, per unit of liquidity, inside the position's tick boundaries"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    /// @param feeGrowthInside1X128 The all-time fee growth in token1, per unit of liquidity, inside the position's tick boundaries"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

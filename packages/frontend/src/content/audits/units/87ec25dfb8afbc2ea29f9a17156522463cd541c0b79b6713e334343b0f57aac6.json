@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "87ec25dfb8afbc2ea29f9a17156522463cd541c0b79b6713e334343b0f57aac6",
+  "name": "SecuredTokenTransfer",
+  "kind": "contract",
+  "lines": 20,
+  "source": "contract SecuredTokenTransfer {\n    /// @dev Transfers a token and returns if it was a success\n    /// @param token Token that should be transferred\n    /// @param receiver Receiver to whom the token should be transferred\n    /// @param amount The amount of tokens that should be transferred\n    function transferToken(address token, address receiver, uint256 amount) internal returns (bool transferred) {\n        // 0xa9059cbb - keccack(\"transfer(address,uint256)\")\n        bytes memory data = abi.encodeWithSelector(0xa9059cbb, receiver, amount);\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            // We write the return value to scratch space.\n            // See https://docs.soliditylang.org/en/v0.7.6/internals/layout_in_memory.html#layout-in-memory\n            let success := call(sub(gas(), 10000), token, 0, add(data, 0x20), mload(data), 0, 0x20)\n            switch returndatasize()\n            case 0 { transferred := success }\n            case 0x20 { transferred := iszero(or(iszero(success), iszero(mload(0)))) }\n            default { transferred := 0 }\n        }\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 20,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SecuredTokenTransfer",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/common/SecuredTokenTransfer.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/common/SecuredTokenTransfer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    },
+    "827d4d19b493dbb6": {
+      "status": "library",
+      "coveredLines": 20,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SecuredTokenTransfer",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/common/SecuredTokenTransfer.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/common/SecuredTokenTransfer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

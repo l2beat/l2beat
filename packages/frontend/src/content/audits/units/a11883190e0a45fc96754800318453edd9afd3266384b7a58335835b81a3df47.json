@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a11883190e0a45fc96754800318453edd9afd3266384b7a58335835b81a3df47",
+  "name": "ISwapRouter02",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface ISwapRouter02 is IV2SwapRouter, IV3SwapRouter, IApproveAndCall, IMulticallExtended, ISelfPermit {}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

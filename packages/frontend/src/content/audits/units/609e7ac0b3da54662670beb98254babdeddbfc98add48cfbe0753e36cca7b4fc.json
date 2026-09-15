@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "609e7ac0b3da54662670beb98254babdeddbfc98add48cfbe0753e36cca7b4fc",
+  "name": "ILegacyMintableERC20",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface ILegacyMintableERC20 is IERC165 {\n    function l1Token() external view returns (address);\n\n    function mint(address _to, uint256 _amount) external;\n\n    function burn(address _from, uint256 _amount) external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

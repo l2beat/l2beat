@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "601c9bc72494b7ec256ed91fa7a2f6ef0d5445e545330eb512bff2c1dee2f75b",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 4,
+  "source": "struct RelayerState {\n    uint256 balance;\n    bytes32 ensHash;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

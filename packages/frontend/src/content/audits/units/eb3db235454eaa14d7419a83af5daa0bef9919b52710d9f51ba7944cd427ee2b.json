@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eb3db235454eaa14d7419a83af5daa0bef9919b52710d9f51ba7944cd427ee2b",
+  "name": "PeripheryPaymentsWithFee",
+  "kind": "abstract",
+  "lines": 46,
+  "source": "abstract contract PeripheryPaymentsWithFee is PeripheryPayments, IPeripheryPaymentsWithFee {\n    using LowGasSafeMath for uint256;\n\n    /// @inheritdoc IPeripheryPaymentsWithFee\n    function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)\n        public\n        payable\n        override\n    {\n        require(feeBips > 0 && feeBips <= 100);\n\n        uint256 balanceWETH9 = IWETH9(WETH9).balanceOf(address(this));\n        require(balanceWETH9 >= amountMinimum, \"Insufficient WETH9\");\n\n        if (balanceWETH9 > 0) {\n            IWETH9(WETH9).withdraw(balanceWETH9);\n            uint256 feeAmount = balanceWETH9.mul(feeBips) / 10_000;\n            if (feeAmount > 0) {\n                TransferHelper.safeTransferETH(feeRecipient, feeAmount);\n            }\n            TransferHelper.safeTransferETH(recipient, balanceWETH9 - feeAmount);\n        }\n    }\n\n    /// @inheritdoc IPeripheryPaymentsWithFee\n    function sweepTokenWithFee(\n        address token,\n        uint256 amountMinimum,\n        address recipient,\n        uint256 feeBips,\n        address feeRecipient\n    ) public payable override {\n        require(feeBips > 0 && feeBips <= 100);\n\n        uint256 balanceToken = IERC20(token).balanceOf(address(this));\n        require(balanceToken >= amountMinimum, \"Insufficient token\");\n\n        if (balanceToken > 0) {\n            uint256 feeAmount = balanceToken.mul(feeBips) / 10_000;\n            if (feeAmount > 0) {\n                TransferHelper.safeTransfer(token, feeRecipient, feeAmount);\n            }\n            TransferHelper.safeTransfer(token, recipient, balanceToken - feeAmount);\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "859be4d28a31d07b0d673beacb53cf3639202649685a33cfc09da8030e81a7b9",
+  "name": "Umbra",
+  "kind": "contract",
+  "lines": 298,
+  "source": "contract Umbra is Ownable {\n    // =========================================== Events ============================================\n\n    /// @notice Emitted when a payment is sent\n    event Announcement( // stealth address\n        // funds\n        // token address or ETH placeholder\n        // ephemeral public key x coordinate\n        // encrypted entropy and payload extension\n    address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext);\n\n    /// @notice Emitted when a token is withdrawn\n    event TokenWithdrawal( // stealth address\n        // destination of funds\n        // funds\n        // token address\n    address indexed receiver, address indexed acceptor, uint256 amount, address indexed token);\n\n    // ======================================= State variables =======================================\n\n    /// @dev Placeholder address used to identify transfer of native ETH\n    address internal constant ETH_TOKEN_PLACHOLDER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\n\n    /// @notice An ETH amount that must be sent alongside each payment; used as an anti-spam measure\n    uint256 public toll;\n\n    /// @notice A privileged address, set by the admin, that can sweep all collected ETH tolls\n    address public tollCollector;\n\n    /// @notice The address where ETH funds are sent when collected by the tollCollector\n    address payable public tollReceiver;\n\n    /// @notice Token payments pending withdrawal; stealth address => token address => amount\n    mapping(address => mapping(address => uint256)) public tokenPayments;\n\n    // ======================================= Setup & Admin ========================================\n\n    /**\n     * @param _toll Amount of ETH required per send\n     * @param _tollCollector Address that can sweep collected funds\n     * @param _tollReceiver Address that receives collected funds\n     */\n    constructor(uint256 _toll, address _tollCollector, address payable _tollReceiver) {\n        toll = _toll;\n        tollCollector = _tollCollector;\n        tollReceiver = _tollReceiver;\n    }\n\n    /**\n     * @notice Admin only function to update the toll\n     * @param _newToll New ETH toll in wei\n     */\n    function setToll(uint256 _newToll) external onlyOwner {\n        toll = _newToll;\n    }\n\n    /**\n     * @notice Admin only function to update the toll collector\n     * @param _newTollCollector New address which has fund sweeping privileges\n     */\n    function setTollCollector(address _newTollCollector) external onlyOwner {\n        tollCollector = _newTollCollector;\n    }\n\n    /**\n     * @notice Admin only function to update the toll receiver\n     * @param _newTollReceiver New address which receives collected funds\n     */\n    function setTollReceiver(address payable _newTollReceiver) external onlyOwner {\n        tollReceiver = _newTollReceiver;\n    }\n\n    /**\n     * @notice Function only the toll collector can call to sweep funds to the toll receiver\n     */\n    function collectTolls() external {\n        require(msg.sender == tollCollector, \"Umbra: Not toll collector\");\n        tollReceiver.transfer(address(this).balance);\n    }\n\n    // ======================================= Send =================================================\n\n    /**\n     * @notice Send and announce ETH payment to a stealth address\n     * @param _receiver Stealth address receiving the payment\n     * @param _tollCommitment Exact toll the sender is paying; should equal contract toll;\n     * the committment is used to prevent frontrunning attacks by the owner;\n     * see https://github.com/ScopeLift/umbra-protocol/issues/54 for more information\n     * @param _pkx X-coordinate of the ephemeral public key used to encrypt the payload\n     * @param _ciphertext Encrypted entropy (used to generated the stealth address) and payload extension\n     */\n    function sendEth(\n        address payable _receiver,\n        uint256 _tollCommitment,\n        bytes32 _pkx, // ephemeral public key x coordinate\n        bytes32 _ciphertext\n    ) external payable {\n        require(_tollCommitment == toll, \"Umbra: Invalid or outdated toll commitment\");\n\n        // also protects from underflow\n        require(msg.value > toll, \"Umbra: Must pay more than the toll\");\n\n        uint256 amount = msg.value - toll;\n        emit Announcement(_receiver, amount, ETH_TOKEN_PLACHOLDER, _pkx, _ciphertext);\n\n        _receiver.transfer(amount);\n    }\n\n    /**\n     * @notice Send and announce an ERC20 payment to a stealth address\n     * @param _receiver Stealth address receiving the payment\n     * @param _tokenAddr Address of the ERC20 token being sent\n     * @param _amount Amount of the token to send, in its own base units\n     * @param _pkx X-coordinate of the ephemeral public key used to encrypt the payload\n     * @param _ciphertext Encrypted entropy (used to generated the stealth address) and payload extension\n     */\n    function sendToken(\n        address _receiver,\n        address _tokenAddr,\n        uint256 _amount,\n        bytes32 _pkx, // ephemeral public key x coordinate\n        bytes32 _ciphertext\n    ) external payable {\n        require(msg.value == toll, \"Umbra: Must pay the exact toll\");\n        require(tokenPayments[_receiver][_tokenAddr] == 0, \"Umbra: Cannot send more tokens to stealth address\");\n\n        tokenPayments[_receiver][_tokenAddr] = _amount;\n        emit Announcement(_receiver, _amount, _tokenAddr, _pkx, _ciphertext);\n\n        SafeERC20.safeTransferFrom(IERC20(_tokenAddr), msg.sender, address(this), _amount);\n    }\n\n    // ======================================= Withdraw =============================================\n\n    /**\n     * @notice Withdraw an ERC20 token payment sent to a stealth address\n     * @dev This method must be directly called by the stealth address\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     */\n    function withdrawToken(address _acceptor, address _tokenAddr) external {\n        _withdrawTokenInternal(msg.sender, _acceptor, _tokenAddr, address(0), 0, IUmbraHookReceiver(0), \"\");\n    }\n\n    /**\n     * @notice Withdraw an ERC20 token payment sent to a stealth address\n     * @dev This method must be directly called by the stealth address\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     * @param _hook Contract that will be called after the token withdrawal has completed\n     * @param _data Arbitrary data that will be passed to the post-withdraw hook contract\n     */\n    function withdrawTokenAndCall(address _acceptor, address _tokenAddr, IUmbraHookReceiver _hook, bytes memory _data)\n        external\n    {\n        _withdrawTokenInternal(msg.sender, _acceptor, _tokenAddr, address(0), 0, _hook, _data);\n    }\n\n    /**\n     * @notice Withdraw an ERC20 token payment on behalf of a stealth address via signed authorization\n     * @param _stealthAddr The stealth address whose token balance will be withdrawn\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     * @param _sponsor Address which is compensated for submitting the withdrawal tx\n     * @param _sponsorFee Amount of the token to pay to the sponsor\n     * @param _v ECDSA signature component: Parity of the `y` coordinate of point `R`\n     * @param _r ECDSA signature component: x-coordinate of `R`\n     * @param _s ECDSA signature component: `s` value of the signature\n     */\n    function withdrawTokenOnBehalf(\n        address _stealthAddr,\n        address _acceptor,\n        address _tokenAddr,\n        address _sponsor,\n        uint256 _sponsorFee,\n        uint8 _v,\n        bytes32 _r,\n        bytes32 _s\n    ) external {\n        _validateWithdrawSignature(\n            _stealthAddr, _acceptor, _tokenAddr, _sponsor, _sponsorFee, IUmbraHookReceiver(0), \"\", _v, _r, _s\n        );\n        _withdrawTokenInternal(_stealthAddr, _acceptor, _tokenAddr, _sponsor, _sponsorFee, IUmbraHookReceiver(0), \"\");\n    }\n\n    /**\n     * @notice Withdraw an ERC20 token payment on behalf of a stealth address via signed authorization\n     * @param _stealthAddr The stealth address whose token balance will be withdrawn\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     * @param _sponsor Address which is compensated for submitting the withdrawal tx\n     * @param _sponsorFee Amount of the token to pay to the sponsor\n     * @param _hook Contract that will be called after the token withdrawal has completed\n     * @param _data Arbitrary data that will be passed to the post-withdraw hook contract\n     * @param _v ECDSA signature component: Parity of the `y` coordinate of point `R`\n     * @param _r ECDSA signature component: x-coordinate of `R`\n     * @param _s ECDSA signature component: `s` value of the signature\n     */\n    function withdrawTokenAndCallOnBehalf(\n        address _stealthAddr,\n        address _acceptor,\n        address _tokenAddr,\n        address _sponsor,\n        uint256 _sponsorFee,\n        IUmbraHookReceiver _hook,\n        bytes memory _data,\n        uint8 _v,\n        bytes32 _r,\n        bytes32 _s\n    ) external {\n        _validateWithdrawSignature(_stealthAddr, _acceptor, _tokenAddr, _sponsor, _sponsorFee, _hook, _data, _v, _r, _s);\n        _withdrawTokenInternal(_stealthAddr, _acceptor, _tokenAddr, _sponsor, _sponsorFee, _hook, _data);\n    }\n\n    /**\n     * @notice Low level withdrawal function that should only be called after safety checks\n     * @param _stealthAddr The stealth address whose token balance will be withdrawn\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     * @param _sponsor Address which is compensated for submitting the withdrawal tx\n     * @param _sponsorFee Amount of the token to pay to the sponsor\n     * @param _hook Contract that will be called after the token withdrawal has completed\n     * @param _data Arbitrary data that will be passed to the post-withdraw hook contract\n     */\n    function _withdrawTokenInternal(\n        address _stealthAddr,\n        address _acceptor,\n        address _tokenAddr,\n        address _sponsor,\n        uint256 _sponsorFee,\n        IUmbraHookReceiver _hook,\n        bytes memory _data\n    ) internal {\n        uint256 _amount = tokenPayments[_stealthAddr][_tokenAddr];\n\n        // also protects from underflow\n        require(_amount > _sponsorFee, \"Umbra: No balance to withdraw or fee exceeds balance\");\n\n        uint256 _withdrawalAmount = _amount - _sponsorFee;\n        delete tokenPayments[_stealthAddr][_tokenAddr];\n        emit TokenWithdrawal(_stealthAddr, _acceptor, _withdrawalAmount, _tokenAddr);\n\n        SafeERC20.safeTransfer(IERC20(_tokenAddr), _acceptor, _withdrawalAmount);\n\n        if (_sponsorFee > 0) {\n            SafeERC20.safeTransfer(IERC20(_tokenAddr), _sponsor, _sponsorFee);\n        }\n\n        if (address(_hook) != address(0)) {\n            _hook.tokensWithdrawn(_withdrawalAmount, _stealthAddr, _acceptor, _tokenAddr, _sponsor, _sponsorFee, _data);\n        }\n    }\n\n    /**\n     * @notice Internal method which recovers address from signature of the parameters and throws if not _stealthAddr\n     * @param _stealthAddr The stealth address whose token balance will be withdrawn\n     * @param _acceptor Address where withdrawn funds should be sent\n     * @param _tokenAddr Address of the ERC20 token being withdrawn\n     * @param _sponsor Address which is compensated for submitting the withdrawal tx\n     * @param _sponsorFee Amount of the token to pay to the sponsor\n     * @param _hook Contract that will be called after the token withdrawal has completed\n     * @param _data Arbitrary data that will be passed to the post-withdraw hook contract\n     * @param _v ECDSA signature component: Parity of the `y` coordinate of point `R`\n     * @param _r ECDSA signature component: x-coordinate of `R`\n     * @param _s ECDSA signature component: `s` value of the signature\n     */\n    function _validateWithdrawSignature(\n        address _stealthAddr,\n        address _acceptor,\n        address _tokenAddr,\n        address _sponsor,\n        uint256 _sponsorFee,\n        IUmbraHookReceiver _hook,\n        bytes memory _data,\n        uint8 _v,\n        bytes32 _r,\n        bytes32 _s\n    ) internal view {\n        uint256 _chainId;\n        assembly {\n            _chainId := chainid()\n        }\n\n        bytes32 _digest = keccak256(\n            abi.encodePacked(\n                \"\\x19Ethereum Signed Message:\\n32\",\n                keccak256(\n                    abi.encode(\n                        _chainId, address(this), _acceptor, _tokenAddr, _sponsor, _sponsorFee, address(_hook), _data\n                    )\n                )\n            )\n        );\n\n        address _recoveredAddress = ecrecover(_digest, _v, _r, _s);\n        require(_recoveredAddress != address(0) && _recoveredAddress == _stealthAddr, \"Umbra: Invalid Signature\");\n    }\n}",
+  "resolutions": {
+    "43889a0aeb1d556f": {
+      "status": "differs",
+      "coveredLines": 297,
+      "match": {
+        "origin": "own",
+        "collection": "umbra",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Umbra",
+        "similarity": 0.993,
+        "reportId": "umbra/consensys-diligence-umbra-smart-contracts-2021-03",
+        "repository": "ScopeLift/umbra-protocol",
+        "path": "contracts/contracts/Umbra.sol",
+        "commit": "d6e4235fc143c0ac53c054aec7de4c4cdc01846c",
+        "commitTimestamp": "2021-04-07T20:28:24Z",
+        "url": "https://github.com/ScopeLift/umbra-protocol/blob/d6e4235fc143c0ac53c054aec7de4c4cdc01846c/contracts/contracts/Umbra.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "review of the fix for the withdrawal-signature recommendation",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 297,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    // ======================================= State variables ======================================="
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    /// @dev Placeholder address used to identify transfer of native ETH"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    address constant ETH_TOKEN_PLACHOLDER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    address internal constant ETH_TOKEN_PLACHOLDER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @notice An ETH amount that must be sent alongside each payment; used as an anti-spam measure"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    uint256 public toll;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

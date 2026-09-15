@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f25bf83502d9e2ffd20856cb2093f498b2901b7df01d673d787cb8eeb4bc79b5",
+  "name": "AddressAliasHelper",
+  "kind": "library",
+  "lines": 23,
+  "source": "library AddressAliasHelper {\n    uint160 constant offset = uint160(0x1111000000000000000000000000000000001111);\n\n    /// @notice Utility function that converts the address in the L1 that submitted a tx to\n    /// the inbox to the msg.sender viewed in the L2\n    /// @param l1Address the address in the L1 that triggered the tx to L2\n    /// @return l2Address L2 address as viewed in msg.sender\n    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {\n        unchecked {\n            l2Address = address(uint160(l1Address) + offset);\n        }\n    }\n\n    /// @notice Utility function that converts the msg.sender viewed in the L2 to the\n    /// address in the L1 that submitted a tx to the inbox\n    /// @param l2Address L2 address as viewed in msg.sender\n    /// @return l1Address the address in the L1 that triggered the tx to L2\n    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {\n        unchecked {\n            l1Address = address(uint160(l2Address) - offset);\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 23,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e0468a2c08e93d60172034989049cee485575dbbb608485864b8349e173af8ca",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 2,
+  "source": "error SignatureExpired(uint256 signatureDeadline);\nerror InvalidNonce();",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3ae1fb04115832e6f302ff2637855bdbe8b9e203f5391d48d0bd40d967b4963c",
+  "name": "IV2SwapRouter",
+  "kind": "interface",
+  "lines": 25,
+  "source": "interface IV2SwapRouter {\n    /// @notice Swaps `amountIn` of one token for as much as possible of another token\n    /// @dev Setting `amountIn` to 0 will cause the contract to look up its own balance,\n    /// and swap the entire amount, enabling contracts to send tokens before calling this function.\n    /// @param amountIn The amount of token to swap\n    /// @param amountOutMin The minimum amount of output that must be received\n    /// @param path The ordered list of tokens to swap through\n    /// @param to The recipient address\n    /// @return amountOut The amount of the received token\n    function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, address[] calldata path, address to)\n        external\n        payable\n        returns (uint256 amountOut);\n\n    /// @notice Swaps as little as possible of one token for an exact amount of another token\n    /// @param amountOut The amount of token to swap for\n    /// @param amountInMax The maximum amount of input that the caller will pay\n    /// @param path The ordered list of tokens to swap through\n    /// @param to The recipient address\n    /// @return amountIn The amount of token to pay\n    function swapTokensForExactTokens(uint256 amountOut, uint256 amountInMax, address[] calldata path, address to)\n        external\n        payable\n        returns (uint256 amountIn);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

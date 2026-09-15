@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8bb735bfe35376ad842b0387e691d1490558c4803a379b26f9072167ac172ea",
+  "name": "IERC721",
+  "kind": "interface",
+  "lines": 125,
+  "source": "interface IERC721 is IERC165 {\n    /**\n     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.\n     */\n    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);\n\n    /**\n     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.\n     */\n    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);\n\n    /**\n     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\n     */\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\n\n    /**\n     * @dev Returns the number of tokens in ``owner``'s account.\n     */\n    function balanceOf(address owner) external view returns (uint256 balance);\n\n    /**\n     * @dev Returns the owner of the `tokenId` token.\n     *\n     * Requirements:\n     *\n     * - `tokenId` must exist.\n     */\n    function ownerOf(uint256 tokenId) external view returns (address owner);\n\n    /**\n     * @dev Safely transfers `tokenId` token from `from` to `to`.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must exist and be owned by `from`.\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon\n     *   a safe transfer.\n     *\n     * Emits a {Transfer} event.\n     */\n    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;\n\n    /**\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients\n     * are aware of the ERC-721 protocol to prevent tokens from being forever locked.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must exist and be owned by `from`.\n     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or\n     *   {setApprovalForAll}.\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon\n     *   a safe transfer.\n     *\n     * Emits a {Transfer} event.\n     */\n    function safeTransferFrom(address from, address to, uint256 tokenId) external;\n\n    /**\n     * @dev Transfers `tokenId` token from `from` to `to`.\n     *\n     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC-721\n     * or else they may be permanently lost. Usage of {safeTransferFrom} prevents loss, though the caller must\n     * understand this adds an external call which potentially creates a reentrancy vulnerability.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must be owned by `from`.\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\n     *\n     * Emits a {Transfer} event.\n     */\n    function transferFrom(address from, address to, uint256 tokenId) external;\n\n    /**\n     * @dev Gives permission to `to` to transfer `tokenId` token to another account.\n     * The approval is cleared when the token is transferred.\n     *\n     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.\n     *\n     * Requirements:\n     *\n     * - The caller must own the token or be an approved operator.\n     * - `tokenId` must exist.\n     *\n     * Emits an {Approval} event.\n     */\n    function approve(address to, uint256 tokenId) external;\n\n    /**\n     * @dev Approve or remove `operator` as an operator for the caller.\n     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.\n     *\n     * Requirements:\n     *\n     * - The `operator` cannot be the address zero.\n     *\n     * Emits an {ApprovalForAll} event.\n     */\n    function setApprovalForAll(address operator, bool approved) external;\n\n    /**\n     * @dev Returns the account approved for `tokenId` token.\n     *\n     * Requirements:\n     *\n     * - `tokenId` must exist.\n     */\n    function getApproved(uint256 tokenId) external view returns (address operator);\n\n    /**\n     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.\n     *\n     * See {setApprovalForAll}\n     */\n    function isApprovedForAll(address owner, address operator) external view returns (bool);\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 125,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC721",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 5,
+        "unchanged": 125,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "     * - `to` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "     * - `tokenId` token must exist and be owned by `from`."
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     *   a safe transfer.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 41, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 43,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 43, "newLine": 44, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 15,
+            "newStart": 46,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 45, "newLine": 46, "text": "" },
+              { "type": " ", "oldLine": 46, "newLine": 47, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 48,
+                "text": "     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * are aware of the ERC721 protocol to prevent tokens from being forever locked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * are aware of the ERC-721 protocol to prevent tokens from being forever locked.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 49, "newLine": 50, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 51,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 52, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "     * - `from` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 54,
+                "text": "     * - `to` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 55,
+                "text": "     * - `tokenId` token must exist and be owned by `from`."
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     *   {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     *   a safe transfer.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 57, "newLine": 60, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 61,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 59, "newLine": 62, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 62,
+            "oldLines": 7,
+            "newStart": 65,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 62, "newLine": 65, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "     * @dev Transfers `tokenId` token from `from` to `to`."
+              },
+              { "type": " ", "oldLine": 64, "newLine": 67, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC-721",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 69,
+                "text": "     * or else they may be permanently lost. Usage of {safeTransferFrom} prevents loss, though the caller must"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 70,
+                "text": "     * understand this adds an external call which potentially creates a reentrancy vulnerability."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 71, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

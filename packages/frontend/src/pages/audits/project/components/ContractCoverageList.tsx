@@ -22,7 +22,6 @@ import {
 import { UnitRow } from './UnitRow'
 
 interface Props {
-  slug: string
   contracts: AuditsContractEntry[]
 }
 
@@ -37,7 +36,7 @@ function rowKey(contract: AuditsContractEntry): string {
     : `${contract.chain}:${contract.address}`
 }
 
-export function ContractCoverageList({ slug, contracts }: Props) {
+export function ContractCoverageList({ contracts }: Props) {
   const [statuses, setStatuses] = useState<Set<AuditUnitStatus>>(
     () => new Set(AUDIT_STATUS_ORDER),
   )
@@ -287,7 +286,7 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                           </span>
                         </div>
                         {units.map((unit) => (
-                          <UnitRow key={unit.id} slug={slug} unit={unit} />
+                          <UnitRow key={unit.id} unit={unit} />
                         ))}
                       </div>
                     ),

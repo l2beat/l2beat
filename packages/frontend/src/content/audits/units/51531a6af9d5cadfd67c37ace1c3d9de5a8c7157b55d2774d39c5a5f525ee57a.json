@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "51531a6af9d5cadfd67c37ace1c3d9de5a8c7157b55d2774d39c5a5f525ee57a",
+  "name": "EnsResolve",
+  "kind": "contract",
+  "lines": 23,
+  "source": "contract EnsResolve {\n    function resolve(bytes32 node) public view virtual returns (address) {\n        ENS Registry = ENS(\n            getChainId() == 1 ? 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e : 0x8595bFb0D940DfEDC98943FA8a907091203f25EE\n        );\n        return Registry.resolver(node).addr(node);\n    }\n\n    function bulkResolve(bytes32[] memory domains) public view returns (address[] memory result) {\n        result = new address[](domains.length);\n        for (uint256 i = 0; i < domains.length; i++) {\n            result[i] = resolve(domains[i]);\n        }\n    }\n\n    function getChainId() internal pure returns (uint256) {\n        uint256 chainId;\n        assembly {\n            chainId := chainid()\n        }\n        return chainId;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

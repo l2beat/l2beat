@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "aca218b076c18de9cdd6834172a794b5c7bc918e7786925abf97be97d8e0a3aa",
+  "name": "IV4Router",
+  "kind": "interface",
+  "lines": 40,
+  "source": "interface IV4Router is IImmutableState {\n    /// @notice Emitted when an exactInput swap does not receive its minAmountOut\n    error V4TooLittleReceived(uint256 minAmountOutReceived, uint256 amountReceived);\n    /// @notice Emitted when an exactOutput is asked for more than its maxAmountIn\n    error V4TooMuchRequested(uint256 maxAmountInRequested, uint256 amountRequested);\n\n    /// @notice Parameters for a single-hop exact-input swap\n    struct ExactInputSingleParams {\n        PoolKey poolKey;\n        bool zeroForOne;\n        uint128 amountIn;\n        uint128 amountOutMinimum;\n        bytes hookData;\n    }\n\n    /// @notice Parameters for a multi-hop exact-input swap\n    struct ExactInputParams {\n        Currency currencyIn;\n        PathKey[] path;\n        uint128 amountIn;\n        uint128 amountOutMinimum;\n    }\n\n    /// @notice Parameters for a single-hop exact-output swap\n    struct ExactOutputSingleParams {\n        PoolKey poolKey;\n        bool zeroForOne;\n        uint128 amountOut;\n        uint128 amountInMaximum;\n        bytes hookData;\n    }\n\n    /// @notice Parameters for a multi-hop exact-output swap\n    struct ExactOutputParams {\n        Currency currencyOut;\n        PathKey[] path;\n        uint128 amountOut;\n        uint128 amountInMaximum;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

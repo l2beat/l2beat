@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dbef1d95c5020cdbf6da221997988ef75ae0e8c6e6d84f1955153c87c8d7fcc8",
+  "name": "IVerifier",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IVerifier {\n    function verifyProof(bytes memory _proof, uint256[6] memory _input) external returns (bool);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 2,
+      "match": {
+        "origin": "other",
+        "collection": "aztecnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "IVerifier",
+        "similarity": 0.667,
+        "reportId": "aztecnetwork/cantina-payload-2026-03-05",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
+        "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+        "commitTimestamp": "2026-02-27T09:20:07Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 2,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 3,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IVerifier {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function verifyProof(bytes memory _proof, uint256[6] memory _input) external returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "20f9820b1949a43761d5fdc1a87ef24b703f4c3052ab8c0bbbb9c264bf0e345c",
+  "name": "IRewardSwap",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IRewardSwap {\n    function swap(address recipient, uint256 amount) external returns (uint256);\n\n    function setPoolWeight(uint256 newWeight) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 4,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRewardSwap",
+        "similarity": 0.75,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/interfaces/IRewardSwap.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/interfaces/IRewardSwap.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 4,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IRewardSwap {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // prettier-ignore",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    function swap(address recipient, uint256 amount) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function swap(address recipient, uint256 amount) external returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 4,
+                "text": "    function setPoolWeight(uint256 newWeight) external;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 5, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

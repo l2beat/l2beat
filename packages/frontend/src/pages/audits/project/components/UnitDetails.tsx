@@ -6,17 +6,19 @@ import { UnitSourceView } from './UnitSourceView'
 
 /** Loads the unit source or diff on first expand. */
 export function UnitDetails({
-  slug,
   unit,
   view,
 }: {
-  slug: string
   unit: AuditsUnitEntry
   view: 'source' | 'diff'
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
-    trpc.audits.unitDetails.queryOptions({ slug, unitId: unit.id }),
+    trpc.audits.unitDetails.queryOptions({
+      unitHash: unit.unitHash,
+      contextKey: unit.contextKey,
+      startLine: unit.startLine,
+    }),
   )
 
   if (isLoading) {

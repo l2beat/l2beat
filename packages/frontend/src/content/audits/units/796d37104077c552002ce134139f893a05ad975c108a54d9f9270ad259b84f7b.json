@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "796d37104077c552002ce134139f893a05ad975c108a54d9f9270ad259b84f7b",
+  "name": "IPeripheryImmutableState",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IPeripheryImmutableState {\n    /// @return Returns the address of the Uniswap V3 factory\n    function factory() external view returns (address);\n\n    /// @return Returns the address of WETH9\n    function WETH9() external view returns (address);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 7,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "IPeripheryImmutableState",
+        "similarity": 0.889,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-v3-contracts",
+        "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
+        "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+        "commitTimestamp": "2024-10-01T05:16:57Z",
+        "url": "https://github.com/ronin-chain/katana-v3-contracts/blob/03c80179e04f40d96f06c451ea494bb18f2a58fc/src/periphery/interfaces/IPeripheryImmutableState.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 3,
+        "unchanged": 7,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IPeripheryImmutableState {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @return Returns the address of the Katana V3 factory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @return Returns the address of the Uniswap V3 factory",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    function factory() external view returns (address);"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @return Returns the address of the governance contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function governance() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 5,
+                "text": "    /// @return Returns the address of WETH9"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 6,
+                "text": "    function WETH9() external view returns (address);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 7, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ef70730f88a9d7cf99de5d46114aef27e0e8599646e0fa45d36acf8680db0342",
+  "name": "LoopbackProxy",
+  "kind": "contract",
+  "lines": 15,
+  "source": "contract LoopbackProxy is TransparentUpgradeableProxy, EnsResolve {\n    /**\n     * @dev Initializes an upgradeable proxy backed by the implementation at `_logic`.\n     */\n    constructor(bytes32 _logic, bytes memory _data)\n        public\n        payable\n        TransparentUpgradeableProxy(resolve(_logic), address(this), _data)\n    {}\n\n    /**\n     * @dev Override to allow admin (itself) access the fallback function.\n     */\n    function _beforeFallback() internal override {}\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

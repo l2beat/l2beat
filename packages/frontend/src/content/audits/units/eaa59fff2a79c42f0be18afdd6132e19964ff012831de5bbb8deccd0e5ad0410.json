@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eaa59fff2a79c42f0be18afdd6132e19964ff012831de5bbb8deccd0e5ad0410",
+  "name": "IERC721Receiver",
+  "kind": "interface",
+  "lines": 14,
+  "source": "interface IERC721Receiver {\n    /**\n     * @dev Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}\n     * by `operator` from `from`, this function is called.\n     *\n     * It must return its Solidity selector to confirm the token transfer.\n     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.\n     *\n     * The selector can be obtained in Solidity with `IERC721.onERC721Received.selector`.\n     */\n    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)\n        external\n        returns (bytes4);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "library",
+      "coveredLines": 14,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 14,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * It must return its Solidity selector to confirm the token transfer."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted."
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * The selector can be obtained in Solidity with `IERC721.onERC721Received.selector`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        external"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "827d4d19b493dbb6": {
+      "status": "library",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 1,
+        "unchanged": 15,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * by `operator` from `from`, this function is called."
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * It must return its Solidity selector to confirm the token transfer."
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * reverted.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 8, "newLine": 9, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 11, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

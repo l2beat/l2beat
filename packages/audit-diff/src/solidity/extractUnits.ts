@@ -1,4 +1,11 @@
-import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
+import {
+  type ASTNode,
+  type BaseASTNode,
+  type ContractDefinition,
+  parse,
+  type TypeName,
+  type VariableDeclaration,
+} from '@mradomski/fast-solidity-parser'
 import type { UnitKind } from '../contract/schema.js'
 
 export interface ExtractedUnit {
@@ -8,6 +15,12 @@ export interface ExtractedUnit {
   endLine: number
   /** Exact text of the unit's lines. */
   source: string
+  /**
+   * Function, event and error signatures (`name(type,type)`), a cheap
+   * fingerprint used to prefilter rename candidates. Empty for non-contract
+   * units.
+   */
+  signatures: string[]
 }
 
 export const FILE_LEVEL_UNIT_NAME = '(file-level declarations)'
@@ -41,6 +54,7 @@ export function extractUnits(source: string): ExtractedUnit[] {
         startLine,
         endLine,
         source: lines.slice(startLine - 1, endLine).join('\n'),
+        signatures: signaturesOf(node),
       })
     } else {
       fileLevel.push({ startLine, endLine })
@@ -59,11 +73,61 @@ export function extractUnits(source: string): ExtractedUnit[] {
         source: fileLevel
           .map((r) => lines.slice(r.startLine - 1, r.endLine).join('\n'))
           .join('\n'),
+        signatures: [],
       })
     }
   }
 
   return units
+}
+
+function signaturesOf(node: ContractDefinition): string[] {
+  const out = new Set<string>()
+  for (const sub of node.subNodes as BaseASTNode[]) {
+    const n = sub as BaseASTNode & {
+      type: string
+      name?: string | null
+      parameters?: VariableDeclaration[] | null
+      isConstructor?: boolean
+      isFallback?: boolean
+      isReceiveEther?: boolean
+    }
+    if (
+      n.type !== 'FunctionDefinition' &&
+      n.type !== 'EventDefinition' &&
+      n.type !== 'CustomErrorDefinition'
+    ) {
+      continue
+    }
+    const name =
+      n.name ??
+      (n.isConstructor
+        ? 'constructor'
+        : n.isFallback
+          ? 'fallback'
+          : n.isReceiveEther
+            ? 'receive'
+            : '')
+    const params = (n.parameters ?? []).map((p) => typeNameToString(p.typeName))
+    out.add(`${name}(${params.join(',')})`)
+  }
+  return [...out].sort()
+}
+
+function typeNameToString(type: TypeName | null | undefined): string {
+  if (!type) return '?'
+  switch (type.type) {
+    case 'ElementaryTypeName':
+      return type.name
+    case 'UserDefinedTypeName':
+      return type.namePath
+    case 'ArrayTypeName':
+      return `${typeNameToString(type.baseTypeName)}[]`
+    case 'Mapping':
+      return `mapping(${typeNameToString(type.keyType)}=>${typeNameToString(type.valueType)})`
+    default:
+      return type.type
+  }
 }
 
 function toUnitKind(kind: string): UnitKind {

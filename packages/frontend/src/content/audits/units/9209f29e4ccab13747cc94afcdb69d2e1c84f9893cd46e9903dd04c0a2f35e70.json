@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9209f29e4ccab13747cc94afcdb69d2e1c84f9893cd46e9903dd04c0a2f35e70",
+  "name": "ERC20",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface ERC20 {\n    function balanceOf(address) external view returns (uint256);\n    function transfer(address to, uint256 amount) external returns (bool);\n    function transferFrom(address from, address to, uint256 amount) external returns (bool);\n    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ERC20",
+        "similarity": 0.118,
+        "reportId": "openzeppelin/contracts__audits__2017-03",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20.sol",
+        "commit": "9c5975a706b076b7000e8179f8101e0c61024c87",
+        "commitTimestamp": "2017-03-09T21:13:27Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9c5975a706b076b7000e8179f8101e0c61024c87/contracts/token/ERC20.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
+        "majorFindings": 2,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 6,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ERC20 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "  uint public totalSupply;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "  function balanceOf(address who) constant returns (uint);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "  function allowance(address owner, address spender) constant returns (uint);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 5, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "  function transfer(address to, uint value) returns (bool ok);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "  function transferFrom(address from, address to, uint value) returns (bool ok);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "  function approve(address spender, uint value) returns (bool ok);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "  event Transfer(address indexed from, address indexed to, uint value);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "  event Approval(address indexed owner, address indexed spender, uint value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface ERC20 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function balanceOf(address) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    function transfer(address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function transferFrom(address from, address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "        external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

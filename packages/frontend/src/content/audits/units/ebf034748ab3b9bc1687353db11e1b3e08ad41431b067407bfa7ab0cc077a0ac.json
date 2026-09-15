@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ebf034748ab3b9bc1687353db11e1b3e08ad41431b067407bfa7ab0cc077a0ac",
+  "name": "ISignatureValidator",
+  "kind": "contract",
+  "lines": 12,
+  "source": "contract ISignatureValidator is ISignatureValidatorConstants {\n    /**\n     * @dev Should return whether the signature provided is valid for the provided data\n     * @param _data Arbitrary length data signed on the behalf of address(this)\n     * @param _signature Signature byte array associated with _data\n     *\n     * MUST return the bytes4 magic value 0x20c13b0b when function passes.\n     * MUST NOT modify state (using STATICCALL for solc < 0.5, view modifier for solc > 0.5)\n     * MUST allow external calls\n     */\n    function isValidSignature(bytes memory _data, bytes memory _signature) public view returns (bytes4);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 12,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISignatureValidator",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/ISignatureValidator.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/interfaces/ISignatureValidator.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

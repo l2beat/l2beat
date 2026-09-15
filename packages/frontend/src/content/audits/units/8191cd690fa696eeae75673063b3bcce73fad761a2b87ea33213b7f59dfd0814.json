@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8191cd690fa696eeae75673063b3bcce73fad761a2b87ea33213b7f59dfd0814",
+  "name": "RiscZeroVerifierRouter",
+  "kind": "contract",
+  "lines": 77,
+  "source": "contract RiscZeroVerifierRouter is IRiscZeroVerifier, Ownable2Step {\n    /// @notice Mapping from 4-byte verifier selector to verifier contracts.\n    ///         Used to route receipts to verifiers that are able to check the receipt.\n    mapping(bytes4 => IRiscZeroVerifier) public verifiers;\n\n    /// @notice Value of an entry that has never been set.\n    IRiscZeroVerifier internal constant UNSET = IRiscZeroVerifier(address(0));\n    /// @notice A \"tombstone\" value used to mark verifier entries that have been removed from the mapping.\n    IRiscZeroVerifier internal constant TOMBSTONE = IRiscZeroVerifier(address(1));\n\n    /// @notice Error raised when attempting to verify a receipt with a selector that is not\n    ///         registered on this router. Generally, this indicates a version mismatch where the\n    ///         prover generated a receipt with version of the zkVM that does not match any\n    ///         registered version on this router contract.\n    error SelectorUnknown(bytes4 selector);\n    /// @notice Error raised when attempting to add a verifier for a selector that is already registered.\n    error SelectorInUse(bytes4 selector);\n    /// @notice Error raised when attempting to verify a receipt with a selector that has been\n    ///         removed, or attempting to add a new verifier with a selector that was previously\n    ///         registered and then removed.\n    error SelectorRemoved(bytes4 selector);\n\n    constructor(address admin) Ownable(admin) {}\n\n    /// @notice Adds a verifier to the router, such that it can receive receipt verification calls.\n    function addVerifier(bytes4 selector, IRiscZeroVerifier verifier) external onlyOwner {\n        if (verifiers[selector] == TOMBSTONE) {\n            revert SelectorRemoved({selector: selector});\n        }\n        if (verifiers[selector] != UNSET) {\n            revert SelectorInUse({selector: selector});\n        }\n        verifiers[selector] = verifier;\n    }\n\n    /// @notice Removes verifier from the router, such that it can not receive verification calls.\n    ///         Removing a selector sets it to the tombstone value. It can never be set to any\n    ///         other value, and can never be reused for a new verifier, in order to enforce the\n    ///         property that each selector maps to at most one implementation across time.\n    function removeVerifier(bytes4 selector) external onlyOwner {\n        // Simple check to reduce the chance of accidents.\n        // NOTE: If there ever _is_ a reason to remove a selector that has never been set, the owner\n        // can call addVerifier with the tombstone address.\n        if (verifiers[selector] == UNSET) {\n            revert SelectorUnknown({selector: selector});\n        }\n        verifiers[selector] = TOMBSTONE;\n    }\n\n    /// @notice Get the associatied verifier, reverting if the selector is unknown or removed.\n    function getVerifier(bytes4 selector) public view returns (IRiscZeroVerifier) {\n        IRiscZeroVerifier verifier = verifiers[selector];\n        if (verifier == UNSET) {\n            revert SelectorUnknown({selector: selector});\n        }\n        if (verifier == TOMBSTONE) {\n            revert SelectorRemoved({selector: selector});\n        }\n        return verifier;\n    }\n\n    /// @notice Get the associatied verifier, reverting if the selector is unknown or removed.\n    function getVerifier(bytes calldata seal) public view returns (IRiscZeroVerifier) {\n        // Use the first 4 bytes of the seal at the selector to look up in the mapping.\n        return getVerifier(bytes4(seal[0:4]));\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verify(bytes calldata seal, bytes32 imageId, bytes32 journalDigest) external view {\n        getVerifier(seal).verify(seal, imageId, journalDigest);\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verifyIntegrity(Receipt calldata receipt) external view {\n        getVerifier(receipt.seal).verifyIntegrity(receipt);\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 77,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "RiscZeroVerifierRouter",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 77,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @notice A \"tombstone\" value used to mark verifier entries that have been removed from the mapping."
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    IRiscZeroVerifier internal constant TOMBSTONE = IRiscZeroVerifier(address(1));"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    //0xe4ea6542",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 11,
+                "text": "    /// @notice Error raised when attempting to verify a receipt with a selector that is not"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "    ///         registered on this router. Generally, this indicates a version mismatch where the"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "    ///         prover generated a receipt with version of the zkVM that does not match any"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

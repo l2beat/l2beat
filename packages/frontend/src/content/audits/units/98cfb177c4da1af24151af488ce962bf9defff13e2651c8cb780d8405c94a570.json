@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "98cfb177c4da1af24151af488ce962bf9defff13e2651c8cb780d8405c94a570",
+  "name": "IHasher",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IHasher {\n    function poseidon(bytes32[2] calldata inputs) external pure returns (bytes32);\n\n    function poseidon(bytes32[3] calldata inputs) external pure returns (bytes32);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IHasher",
+        "similarity": 1,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/interfaces/IHasher.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/interfaces/IHasher.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 1,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "932981d359c4d9f8f8c036a1c9f4e97c73487be39e56a5e3b1252ee41a60e8fc",
+  "name": "release.sh",
+  "kind": "program",
+  "lines": 89,
+  "source": "#!/bin/bash\nset -e\n\n# Get the version from the command line.\nVERSION=$1\n\n# Specify the S3 bucket name\nS3_BUCKET=\"sp1-circuits\"\n\n# Check for unstaged changes in the Git repository\nif ! git diff --quiet; then\n    echo \"Error: There are unstaged changes. Please commit or stash them before running this script.\"\n    exit 1\nfi\n\n# Get the current git commit hash (shorthand)\nCOMMIT_HASH=$(git rev-parse --short HEAD)\nif [ $? -ne 0 ]; then\n    echo \"Failed to retrieve Git commit hash.\"\n    exit 1\nfi\n\n# Put the version in the build directory\necho \"$COMMIT_HASH $VERSION\" > ./build/SP1_COMMIT\n\n# Create archives for Groth16, Plonk, and Trusted Setup\nGROTH16_ARCHIVE=\"${VERSION}-groth16.tar.gz\"\nPLONK_ARCHIVE=\"${VERSION}-plonk.tar.gz\"\nTRUSTED_SETUP_ARCHIVE=\"${VERSION}-trusted-setup.tar.gz\"\n\n# Create Groth16 archive\ncd ./build/groth16\ntar --exclude='srs.bin' --exclude='srs_lagrange.bin' -czvf \"../../$GROTH16_ARCHIVE\" .\ncd ../..\nif [ $? -ne 0 ]; then\n    echo \"Failed to create Groth16 archive.\"\n    exit 1\nfi\n\n# Create Plonk archive\ncd ./build/plonk\ntar --exclude='srs.bin' --exclude='srs_lagrange.bin' -czvf \"../../$PLONK_ARCHIVE\" .\ncd ../..\nif [ $? -ne 0 ]; then\n    echo \"Failed to create Plonk archive.\"\n    exit 1\nfi\n\n# Create Trusted Setup archive\ncd ./trusted-setup\ntar -czvf \"../$TRUSTED_SETUP_ARCHIVE\" .\ncd ..\nif [ $? -ne 0 ]; then\n    echo \"Failed to create Trusted Setup archive.\"\n    exit 1\nfi\n\n# Upload Groth16 archive to S3\naws s3 cp \"$GROTH16_ARCHIVE\" \"s3://$S3_BUCKET/$GROTH16_ARCHIVE\"\nif [ $? -ne 0 ]; then\n    echo \"Failed to upload Groth16 archive to S3.\"\n    exit 1\nfi\n\n# Upload Plonk archive to S3\naws s3 cp \"$PLONK_ARCHIVE\" \"s3://$S3_BUCKET/$PLONK_ARCHIVE\"\nif [ $? -ne 0 ]; then\n    echo \"Failed to upload Plonk archive to S3.\"\n    exit 1\nfi\n\n# Upload Trusted Setup archive to S3\naws s3 cp \"$TRUSTED_SETUP_ARCHIVE\" \"s3://$S3_BUCKET/$TRUSTED_SETUP_ARCHIVE\"\nif [ $? -ne 0 ]; then\n    echo \"Failed to upload Trusted Setup archive to S3.\"\n    exit 1\nfi\n\n# Copy Groth16 and Plonk vks to verifier crate\ncp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin\ncp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin\n\necho \"Successfully uploaded build artifacts to S3:\"\necho \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\"\necho \"- s3://$S3_BUCKET/$PLONK_ARCHIVE\"\necho \"- s3://$S3_BUCKET/$TRUSTED_SETUP_ARCHIVE\"\n\n# Clean up local archive files\nrm \"$GROTH16_ARCHIVE\" \"$PLONK_ARCHIVE\" \"$TRUSTED_SETUP_ARCHIVE\"",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

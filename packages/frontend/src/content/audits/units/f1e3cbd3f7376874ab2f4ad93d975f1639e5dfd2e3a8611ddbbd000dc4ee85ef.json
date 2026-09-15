@@ -1,0 +1,1190 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f1e3cbd3f7376874ab2f4ad93d975f1639e5dfd2e3a8611ddbbd000dc4ee85ef",
+  "name": "Encoding",
+  "kind": "library",
+  "lines": 266,
+  "source": "library Encoding {\n    /// @notice Thrown when a provided Super Root proof has an invalid version.\n    error Encoding_InvalidSuperRootVersion();\n\n    /// @notice Thrown when a provided Super Root proof has no Output Roots.\n    error Encoding_EmptySuperRoot();\n\n    /// @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent\n    ///         to the L2 system. Useful for searching for a deposit in the L2 system. The\n    ///         transaction is prefixed with 0x7e to identify its EIP-2718 type.\n    /// @param _tx User deposit transaction to encode.\n    /// @return RLP encoded L2 deposit transaction.\n    function encodeDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes memory) {\n        bytes32 source = Hashing.hashDepositSource(_tx.l1BlockHash, _tx.logIndex);\n        bytes[] memory raw = new bytes[](8);\n        raw[0] = RLPWriter.writeBytes(abi.encodePacked(source));\n        raw[1] = RLPWriter.writeAddress(_tx.from);\n        raw[2] = _tx.isCreation ? RLPWriter.writeBytes(\"\") : RLPWriter.writeAddress(_tx.to);\n        raw[3] = RLPWriter.writeUint(_tx.mint);\n        raw[4] = RLPWriter.writeUint(_tx.value);\n        raw[5] = RLPWriter.writeUint(uint256(_tx.gasLimit));\n        raw[6] = RLPWriter.writeBool(false);\n        raw[7] = RLPWriter.writeBytes(_tx.data);\n        return abi.encodePacked(uint8(0x7e), RLPWriter.writeList(raw));\n    }\n\n    /// @notice Encodes the cross domain message based on the version that is encoded into the\n    ///         message nonce.\n    /// @param _nonce    Message nonce with version encoded into the first two bytes.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        (, uint16 version) = decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return encodeCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Encoding: unknown cross domain message version\");\n        }\n    }\n\n    /// @notice Encodes a cross domain message based on the V0 (legacy) encoding.\n    /// @param _target Address of the target of the message.\n    /// @param _sender Address of the sender of the message.\n    /// @param _data   Data to send with the message.\n    /// @param _nonce  Message nonce.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes memory)\n    {\n        // nosemgrep: sol-style-use-abi-encodecall\n        return abi.encodeWithSignature(\"relayMessage(address,address,bytes,uint256)\", _target, _sender, _data, _nonce);\n    }\n\n    /// @notice Encodes a cross domain message based on the V1 (current) encoding.\n    /// @param _nonce    Message nonce.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        // nosemgrep: sol-style-use-abi-encodecall\n        return abi.encodeWithSignature(\n            \"relayMessage(uint256,address,address,uint256,uint256,bytes)\",\n            _nonce,\n            _sender,\n            _target,\n            _value,\n            _gasLimit,\n            _data\n        );\n    }\n\n    /// @notice Adds a version number into the first two bytes of a message nonce.\n    /// @param _nonce   Message nonce to encode into.\n    /// @param _version Version number to encode into the message nonce.\n    /// @return Message nonce with version encoded into the first two bytes.\n    function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {\n        uint256 nonce;\n        assembly {\n            nonce := or(shl(240, _version), _nonce)\n        }\n        return nonce;\n    }\n\n    /// @notice Pulls the version out of a version-encoded nonce.\n    /// @param _nonce Message nonce with version encoded into the first two bytes.\n    /// @return Nonce without encoded version.\n    /// @return Version of the message.\n    function decodeVersionedNonce(uint256 _nonce) internal pure returns (uint240, uint16) {\n        uint240 nonce;\n        uint16 version;\n        assembly {\n            nonce := and(_nonce, 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)\n            version := shr(240, _nonce)\n        }\n        return (nonce, version);\n    }\n\n    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesEcotone\n    /// @param _baseFeeScalar       L1 base fee Scalar\n    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar\n    /// @param _sequenceNumber      Number of L2 blocks since epoch start.\n    /// @param _timestamp           L1 timestamp.\n    /// @param _number              L1 blocknumber.\n    /// @param _baseFee             L1 base fee.\n    /// @param _blobBaseFee         L1 blob base fee.\n    /// @param _hash                L1 blockhash.\n    /// @param _batcherHash         Versioned hash to authenticate batcher by.\n    function encodeSetL1BlockValuesEcotone(\n        uint32 _baseFeeScalar,\n        uint32 _blobBaseFeeScalar,\n        uint64 _sequenceNumber,\n        uint64 _timestamp,\n        uint64 _number,\n        uint256 _baseFee,\n        uint256 _blobBaseFee,\n        bytes32 _hash,\n        bytes32 _batcherHash\n    ) internal pure returns (bytes memory) {\n        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesEcotone()\"));\n        return abi.encodePacked(\n            functionSignature,\n            _baseFeeScalar,\n            _blobBaseFeeScalar,\n            _sequenceNumber,\n            _timestamp,\n            _number,\n            _baseFee,\n            _blobBaseFee,\n            _hash,\n            _batcherHash\n        );\n    }\n\n    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesIsthmus\n    /// @param _baseFeeScalar       L1 base fee Scalar\n    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar\n    /// @param _sequenceNumber      Number of L2 blocks since epoch start.\n    /// @param _timestamp           L1 timestamp.\n    /// @param _number              L1 blocknumber.\n    /// @param _baseFee             L1 base fee.\n    /// @param _blobBaseFee         L1 blob base fee.\n    /// @param _hash                L1 blockhash.\n    /// @param _batcherHash         Versioned hash to authenticate batcher by.\n    /// @param _operatorFeeScalar   Operator fee scalar.\n    /// @param _operatorFeeConstant Operator fee constant.\n    function encodeSetL1BlockValuesIsthmus(\n        uint32 _baseFeeScalar,\n        uint32 _blobBaseFeeScalar,\n        uint64 _sequenceNumber,\n        uint64 _timestamp,\n        uint64 _number,\n        uint256 _baseFee,\n        uint256 _blobBaseFee,\n        bytes32 _hash,\n        bytes32 _batcherHash,\n        uint32 _operatorFeeScalar,\n        uint64 _operatorFeeConstant\n    ) internal pure returns (bytes memory) {\n        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesIsthmus()\"));\n        return abi.encodePacked(\n            functionSignature,\n            _baseFeeScalar,\n            _blobBaseFeeScalar,\n            _sequenceNumber,\n            _timestamp,\n            _number,\n            _baseFee,\n            _blobBaseFee,\n            _hash,\n            _batcherHash,\n            _operatorFeeScalar,\n            _operatorFeeConstant\n        );\n    }\n\n    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesJovian\n    /// @param _baseFeeScalar        L1 base fee Scalar\n    /// @param _blobBaseFeeScalar    L1 blob base fee Scalar\n    /// @param _sequenceNumber       Number of L2 blocks since epoch start.\n    /// @param _timestamp            L1 timestamp.\n    /// @param _number               L1 blocknumber.\n    /// @param _baseFee              L1 base fee.\n    /// @param _blobBaseFee          L1 blob base fee.\n    /// @param _hash                 L1 blockhash.\n    /// @param _batcherHash          Versioned hash to authenticate batcher by.\n    /// @param _operatorFeeScalar    Operator fee scalar.\n    /// @param _operatorFeeConstant  Operator fee constant.\n    /// @param _daFootprintGasScalar DA Footprint scalar.\n    function encodeSetL1BlockValuesJovian(\n        uint32 _baseFeeScalar,\n        uint32 _blobBaseFeeScalar,\n        uint64 _sequenceNumber,\n        uint64 _timestamp,\n        uint64 _number,\n        uint256 _baseFee,\n        uint256 _blobBaseFee,\n        bytes32 _hash,\n        bytes32 _batcherHash,\n        uint32 _operatorFeeScalar,\n        uint64 _operatorFeeConstant,\n        uint16 _daFootprintGasScalar\n    ) internal pure returns (bytes memory) {\n        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesJovian()\"));\n\n        // Split up the encoding into multiple parts to avoid stack too deep.\n        return abi.encodePacked(\n            abi.encodePacked(\n                functionSignature, _baseFeeScalar, _blobBaseFeeScalar, _sequenceNumber, _timestamp, _number, _baseFee\n            ),\n            abi.encodePacked(\n                _blobBaseFee, _hash, _batcherHash, _operatorFeeScalar, _operatorFeeConstant, _daFootprintGasScalar\n            )\n        );\n    }\n\n    /// @notice Encodes a super root proof into the preimage of a Super Root.\n    /// @param _superRootProof Super root proof to encode.\n    /// @return Encoded super root proof.\n    function encodeSuperRootProof(Types.SuperRootProof memory _superRootProof) internal pure returns (bytes memory) {\n        // Version must match the expected version.\n        if (_superRootProof.version != 0x01) {\n            revert Encoding_InvalidSuperRootVersion();\n        }\n\n        // Output roots must not be empty.\n        if (_superRootProof.outputRoots.length == 0) {\n            revert Encoding_EmptySuperRoot();\n        }\n\n        // Start with version byte and timestamp.\n        bytes memory encoded = bytes.concat(bytes1(_superRootProof.version), bytes8(_superRootProof.timestamp));\n\n        // Add each output root (chainId + root)\n        for (uint256 i = 0; i < _superRootProof.outputRoots.length; i++) {\n            Types.OutputRootWithChainId memory outputRoot = _superRootProof.outputRoots[i];\n            encoded = bytes.concat(encoded, bytes32(outputRoot.chainId), outputRoot.root);\n        }\n\n        return encoded;\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 202,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Encoding",
+        "similarity": 0.698,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 64,
+        "removed": 25,
+        "ignoredAdded": 46,
+        "ignoredRemoved": 13,
+        "unchanged": 202,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Encoding {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Thrown when a provided Super Root proof has an invalid version.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    error Encoding_InvalidSuperRootVersion();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Thrown when a provided Super Root proof has no Output Roots.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    error Encoding_EmptySuperRoot();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 8,
+                "text": "    /// @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 9,
+                "text": "    ///         to the L2 system. Useful for searching for a deposit in the L2 system. The"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 10,
+                "text": "    ///         transaction is prefixed with 0x7e to identify its EIP-2718 type."
+              }
+            ]
+          },
+          {
+            "oldStart": 56,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 62,
+                "text": "        pure"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 63,
+                "text": "        returns (bytes memory)"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 64, "text": "    {" },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        // nosemgrep: sol-style-use-abi-encodecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 66,
+                "text": "        return abi.encodeWithSignature(\"relayMessage(address,address,bytes,uint256)\", _target, _sender, _data, _nonce);"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 67, "text": "    }" },
+              { "type": " ", "oldLine": 61, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 6,
+            "newStart": 82,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 82,
+                "text": "        uint256 _gasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 83,
+                "text": "        bytes memory _data"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 84,
+                "text": "    ) internal pure returns (bytes memory) {"
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        // nosemgrep: sol-style-use-abi-encodecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 86,
+                "text": "        return abi.encodeWithSignature("
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 87,
+                "text": "            \"relayMessage(uint256,address,address,uint256,uint256,bytes)\","
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 88,
+                "text": "            _nonce,"
+              }
+            ]
+          },
+          {
+            "oldStart": 113,
+            "oldLines": 42,
+            "newStart": 121,
+            "newLines": 42,
+            "lines": [
+              { "type": " ", "oldLine": 113, "newLine": 121, "text": "    }" },
+              { "type": " ", "oldLine": 114, "newLine": 122, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 123,
+                "text": "    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesEcotone"
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    /// @param baseFeeScalar       L1 base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    /// @param blobBaseFeeScalar   L1 blob base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    /// @param sequenceNumber      Number of L2 blocks since epoch start.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    /// @param timestamp           L1 timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    /// @param number              L1 blocknumber.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    /// @param baseFee             L1 base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /// @param blobBaseFee         L1 blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /// @param hash                L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// @param batcherHash         Versioned hash to authenticate batcher by.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    /// @param _baseFeeScalar       L1 base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "    /// @param _sequenceNumber      Number of L2 blocks since epoch start.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "    /// @param _timestamp           L1 timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    /// @param _number              L1 blocknumber.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "    /// @param _baseFee             L1 base fee.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "    /// @param _blobBaseFee         L1 blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    /// @param _hash                L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "    /// @param _batcherHash         Versioned hash to authenticate batcher by.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 133,
+                "text": "    function encodeSetL1BlockValuesEcotone("
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        uint32 baseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        uint32 blobBaseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        uint64 sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        uint64 timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        uint64 number,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "        uint256 baseFee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        uint256 blobBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        bytes32 hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        bytes32 batcherHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "        uint32 _baseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "        uint32 _blobBaseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "        uint64 _sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "        uint64 _timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        uint64 _number,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        uint256 _baseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        uint256 _blobBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "        bytes32 _hash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        bytes32 _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 143,
+                "text": "    ) internal pure returns (bytes memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 144,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesEcotone()\"));"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 145,
+                "text": "        return abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 146,
+                "text": "            functionSignature,"
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "            baseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "            blobBaseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "            sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "            timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "            number,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "            baseFee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "            blobBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "            hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "            batcherHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "            _baseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "            _blobBaseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "            _sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "            _timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "            _number,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "            _baseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "            _blobBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "            _hash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "            _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 156,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 149, "newLine": 157, "text": "    }" },
+              { "type": " ", "oldLine": 150, "newLine": 158, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesInterop",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesIsthmus",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 160,
+                "text": "    /// @param _baseFeeScalar       L1 base fee Scalar"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 161,
+                "text": "    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 162,
+                "text": "    /// @param _sequenceNumber      Number of L2 blocks since epoch start."
+              }
+            ]
+          },
+          {
+            "oldStart": 158,
+            "oldLines": 8,
+            "newStart": 166,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 166,
+                "text": "    /// @param _blobBaseFee         L1 blob base fee."
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 167,
+                "text": "    /// @param _hash                L1 blockhash."
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 168,
+                "text": "    /// @param _batcherHash         Versioned hash to authenticate batcher by."
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    /// @param _dependencySet       Array of the chain IDs in the interop dependency set.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    function encodeSetL1BlockValuesInterop(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    /// @param _operatorFeeScalar   Operator fee scalar.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "    /// @param _operatorFeeConstant Operator fee constant.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    function encodeSetL1BlockValuesIsthmus(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 172,
+                "text": "        uint32 _baseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 173,
+                "text": "        uint32 _blobBaseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 174,
+                "text": "        uint64 _sequenceNumber,"
+              }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 13,
+            "newStart": 178,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 178,
+                "text": "        uint256 _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 179,
+                "text": "        bytes32 _hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 180,
+                "text": "        bytes32 _batcherHash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "        uint256[] memory _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "        uint32 _operatorFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "        uint64 _operatorFeeConstant",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 183,
+                "text": "    ) internal pure returns (bytes memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "        require(_dependencySet.length <= type(uint8).max, \"Encoding: dependency set length is too large\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "        // Check that the batcher hash is just the address with 0 padding to the left for version 0.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "        require(uint160(uint256(_batcherHash)) == uint256(_batcherHash), \"Encoding: invalid batcher hash\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 177, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesInterop()\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesIsthmus()\"));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 185,
+                "text": "        return abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 186,
+                "text": "            functionSignature,"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 187,
+                "text": "            _baseFeeScalar,"
+              }
+            ]
+          },
+          {
+            "oldStart": 187,
+            "oldLines": 8,
+            "newStart": 193,
+            "newLines": 74,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 193,
+                "text": "            _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 194,
+                "text": "            _hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 195,
+                "text": "            _batcherHash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            uint8(_dependencySet.length),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "            _operatorFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            _operatorFeeConstant",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 198,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 199, "text": "    }" },
+              { "type": "+", "newLine": 200, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesJovian",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "    /// @param _baseFeeScalar        L1 base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "    /// @param _blobBaseFeeScalar    L1 blob base fee Scalar",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "    /// @param _sequenceNumber       Number of L2 blocks since epoch start.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "    /// @param _timestamp            L1 timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "    /// @param _number               L1 blocknumber.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "    /// @param _baseFee              L1 base fee.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "    /// @param _blobBaseFee          L1 blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "    /// @param _hash                 L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    /// @param _batcherHash          Versioned hash to authenticate batcher by.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "    /// @param _operatorFeeScalar    Operator fee scalar.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "    /// @param _operatorFeeConstant  Operator fee constant.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "    /// @param _daFootprintGasScalar DA Footprint scalar.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    function encodeSetL1BlockValuesJovian(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "        uint32 _baseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "        uint32 _blobBaseFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "        uint64 _sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "        uint64 _timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "        uint64 _number,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 220,
+                "text": "        uint256 _baseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "        uint256 _blobBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "        bytes32 _hash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "        bytes32 _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "        uint32 _operatorFeeScalar,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "        uint64 _operatorFeeConstant,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "        uint16 _daFootprintGasScalar",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "    ) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 228,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesJovian()\"));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 229, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "        // Split up the encoding into multiple parts to avoid stack too deep.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "        return abi.encodePacked(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 232,
+                "text": "            abi.encodePacked(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "                functionSignature, _baseFeeScalar, _blobBaseFeeScalar, _sequenceNumber, _timestamp, _number, _baseFee",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "            ),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "            abi.encodePacked(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "                _blobBaseFee, _hash, _batcherHash, _operatorFeeScalar, _operatorFeeConstant, _daFootprintGasScalar",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 240, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "    /// @notice Encodes a super root proof into the preimage of a Super Root.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "    /// @param _superRootProof Super root proof to encode.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "    /// @return Encoded super root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "    function encodeSuperRootProof(Types.SuperRootProof memory _superRootProof) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "        // Version must match the expected version.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "        if (_superRootProof.version != 0x01) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "            revert Encoding_InvalidSuperRootVersion();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 249, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 250,
+                "text": "        // Output roots must not be empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "        if (_superRootProof.outputRoots.length == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "            revert Encoding_EmptySuperRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 254, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        // Start with version byte and timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        bytes memory encoded = bytes.concat(bytes1(_superRootProof.version), bytes8(_superRootProof.timestamp));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 257, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "        // Add each output root (chainId + root)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "        for (uint256 i = 0; i < _superRootProof.outputRoots.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "            Types.OutputRootWithChainId memory outputRoot = _superRootProof.outputRoots[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "            encoded = bytes.concat(encoded, bytes32(outputRoot.chainId), outputRoot.root);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 263, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "        return encoded;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 194, "newLine": 266, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -12,6 +12,14 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
 
   return reports.map((report) => {
     const project = projects.find((p) => p.slug === report.slug)
+    const own = new Set(
+      report.context.collections
+        .filter((c) => c.origin === 'own')
+        .map((c) => c.id),
+    )
+    const ownReportsCount = report.reportIds.filter((id) =>
+      own.has(collectionOf(id)),
+    ).length
     return {
       id: report.projectId,
       slug: report.slug,
@@ -23,12 +31,16 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       contractsWithoutSource: report.summary.contractsWithoutSource,
       coverage: toCoverageNumbers(report.summary),
       uniqueUnits: report.summary.uniqueUnits,
-      reportsCount: report.reports.filter((r) => r.origin === 'project').length,
-      libraryReportsCount: report.reports.filter((r) => r.origin === 'library')
-        .length,
+      ownReportsCount,
+      sharedReportsCount: report.reportIds.length - ownReportsCount,
       discoveryTimestamp: report.discoveryTimestamp,
     }
   })
+}
+
+/** Global report ids are `<collection>/<report id>`. */
+function collectionOf(reportId: string): string {
+  return reportId.split('/')[0] ?? reportId
 }
 
 export function toCoverageNumbers(summary: ProjectAuditCoverage['summary']) {

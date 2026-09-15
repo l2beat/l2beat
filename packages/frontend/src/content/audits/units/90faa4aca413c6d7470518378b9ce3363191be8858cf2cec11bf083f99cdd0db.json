@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "90faa4aca413c6d7470518378b9ce3363191be8858cf2cec11bf083f99cdd0db",
+  "name": "IGasCompensationVault",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IGasCompensationVault {\n    function compensateGas(address recipient, uint256 gasAmount) external;\n\n    function withdrawToGovernance(uint256 amount) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c88fba807bf1db5b1567d260ab1ab8276000e188f54509c5655fb9cad37d596f",
+  "name": "GovernanceStakingUpgrade",
+  "kind": "contract",
+  "lines": 45,
+  "source": "contract GovernanceStakingUpgrade is GovernanceGasUpgrade {\n    ITornadoStakingRewards public immutable Staking;\n\n    event RewardUpdateSuccessful(address indexed account);\n    event RewardUpdateFailed(address indexed account, bytes indexed errorData);\n\n    constructor(address stakingRewardsAddress, address gasCompLogic, address userVaultAddress)\n        public\n        GovernanceGasUpgrade(gasCompLogic, userVaultAddress)\n    {\n        Staking = ITornadoStakingRewards(stakingRewardsAddress);\n    }\n\n    /**\n     * @notice This modifier should make a call to Staking to update the rewards for account without impacting logic on revert\n     * @dev try / catch block to handle reverts\n     * @param account Account to update rewards for.\n     *\n     */\n    modifier updateRewards(address account) {\n        try Staking.updateRewardsOnLockedBalanceChange(account, lockedBalance[account]) {\n            emit RewardUpdateSuccessful(account);\n        } catch (bytes memory errorData) {\n            emit RewardUpdateFailed(account, errorData);\n        }\n        _;\n    }\n\n    function lock(address owner, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        public\n        virtual\n        override\n        updateRewards(owner)\n    {\n        super.lock(owner, amount, deadline, v, r, s);\n    }\n\n    function lockWithApproval(uint256 amount) public virtual override updateRewards(msg.sender) {\n        super.lockWithApproval(amount);\n    }\n\n    function unlock(uint256 amount) public virtual override updateRewards(msg.sender) {\n        super.unlock(amount);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

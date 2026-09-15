@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bbaaaf2901e15452bb7c7de0804a52d2b79d7083b7433fbb58df5322264d330a",
+  "name": "TransferHelper",
+  "kind": "library",
+  "lines": 42,
+  "source": "library TransferHelper {\n    /// @notice Transfers tokens from the targeted address to the given destination\n    /// @notice Errors with 'STF' if transfer fails\n    /// @param token The contract address of the token to be transferred\n    /// @param from The originating address from which the tokens will be transferred\n    /// @param to The destination address of the transfer\n    /// @param value The amount to be transferred\n    function safeTransferFrom(address token, address from, address to, uint256 value) internal {\n        (bool success, bytes memory data) =\n            token.call(abi.encodeWithSelector(IERC20.transferFrom.selector, from, to, value));\n        require(success && (data.length == 0 || abi.decode(data, (bool))), \"STF\");\n    }\n\n    /// @notice Transfers tokens from msg.sender to a recipient\n    /// @dev Errors with ST if transfer fails\n    /// @param token The contract address of the token which will be transferred\n    /// @param to The recipient of the transfer\n    /// @param value The value of the transfer\n    function safeTransfer(address token, address to, uint256 value) internal {\n        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(IERC20.transfer.selector, to, value));\n        require(success && (data.length == 0 || abi.decode(data, (bool))), \"ST\");\n    }\n\n    /// @notice Approves the stipulated contract to spend the given allowance in the given token\n    /// @dev Errors with 'SA' if transfer fails\n    /// @param token The contract address of the token to be approved\n    /// @param to The target of the approval\n    /// @param value The amount of the given token the target will be allowed to spend\n    function safeApprove(address token, address to, uint256 value) internal {\n        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(IERC20.approve.selector, to, value));\n        require(success && (data.length == 0 || abi.decode(data, (bool))), \"SA\");\n    }\n\n    /// @notice Transfers ETH to the recipient address\n    /// @dev Fails with `STE`\n    /// @param to The destination of the transfer\n    /// @param value The value to be transferred\n    function safeTransferETH(address to, uint256 value) internal {\n        (bool success,) = to.call{value: value}(new bytes(0));\n        require(success, \"STE\");\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "TransferHelper",
+        "similarity": 0.385,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/TransferHelper.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/TransferHelper.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 1,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 11,
+        "removed": 1,
+        "ignoredAdded": 23,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 12,
+            "newStart": 1,
+            "newLines": 42,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library TransferHelper {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Transfers tokens from the targeted address to the given destination",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @notice Errors with 'STF' if transfer fails",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param token The contract address of the token to be transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @param from The originating address from which the tokens will be transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @param to The destination address of the transfer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @param value The amount to be transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function safeTransferFrom(address token, address from, address to, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        (bool success, bytes memory data) =",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            token.call(abi.encodeWithSelector(IERC20.transferFrom.selector, from, to, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        require(success && (data.length == 0 || abi.decode(data, (bool))), \"STF\");",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 12, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 14,
+                "text": "    /// @notice Transfers tokens from msg.sender to a recipient"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @dev Calls transfer on token contract, errors with TF if transfer fails",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @dev Errors with ST if transfer fails",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 16,
+                "text": "    /// @param token The contract address of the token which will be transferred"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 17,
+                "text": "    /// @param to The recipient of the transfer"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 18,
+                "text": "    /// @param value The value of the transfer"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 19,
+                "text": "    function safeTransfer(address token, address to, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        (bool success, bytes memory data) =",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "            token.call(abi.encodeWithSelector(IERC20Minimal.transfer.selector, to, value));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        require(success && (data.length == 0 || abi.decode(data, (bool))), \"TF\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(IERC20.transfer.selector, to, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        require(success && (data.length == 0 || abi.decode(data, (bool))), \"ST\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 11, "newLine": 22, "text": "    }" },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @notice Approves the stipulated contract to spend the given allowance in the given token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @dev Errors with 'SA' if transfer fails",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @param token The contract address of the token to be approved",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param to The target of the approval",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param value The amount of the given token the target will be allowed to spend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    function safeApprove(address token, address to, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(IERC20.approve.selector, to, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        require(success && (data.length == 0 || abi.decode(data, (bool))), \"SA\");",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 32, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 33, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// @notice Transfers ETH to the recipient address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @dev Fails with `STE`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @param to The destination of the transfer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// @param value The value to be transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    function safeTransferETH(address to, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        (bool success,) = to.call{value: value}(new bytes(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        require(success, \"STE\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 41, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 12, "newLine": 42, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

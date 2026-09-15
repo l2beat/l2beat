@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c872f1aae56fa6ad30d4532a699070e1538d5332a23cd0ff035cba31242d91aa",
+  "name": "ITokenJar",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface ITokenJar {\n    /// @notice Thrown when an unauthorized address attempts to call a restricted function\n    error Unauthorized();\n\n    /// @return Address of the current IReleaser\n    /// @dev The releaser has exclusive access to the `release()` function\n    function releaser() external view returns (address);\n\n    /// @notice Set the address of the IReleaser contract\n    /// @dev only callabe by `owner`\n    function setReleaser(address _releaser) external;\n\n    /// @notice Release assets to a specified recipient\n    /// @dev only callable by `releaser`\n    function release(Currency[] calldata assets, address recipient) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

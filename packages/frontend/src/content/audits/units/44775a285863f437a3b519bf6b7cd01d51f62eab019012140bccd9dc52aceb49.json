@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "44775a285863f437a3b519bf6b7cd01d51f62eab019012140bccd9dc52aceb49",
+  "name": "V4SwapRouter",
+  "kind": "abstract",
+  "lines": 7,
+  "source": "abstract contract V4SwapRouter is V4Router, Permit2Payments {\n    constructor(address _poolManager) V4Router(IPoolManager(_poolManager)) {}\n\n    function _pay(Currency token, address payer, uint256 amount) internal override {\n        payOrPermit2Transfer(Currency.unwrap(token), payer, address(poolManager), amount);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -3,8 +3,9 @@ import { auditCoverageSource } from './AuditCoverageSource'
 import type { AuditsUnitDetails } from './types'
 
 export const AuditsUnitDetailsParams = v.object({
-  slug: v.string(),
-  unitId: v.string(),
+  unitHash: v.string(),
+  contextKey: v.string(),
+  startLine: v.number(),
 })
 export type AuditsUnitDetailsParams = v.infer<typeof AuditsUnitDetailsParams>
 
@@ -12,29 +13,25 @@ export type AuditsUnitDetailsParams = v.infer<typeof AuditsUnitDetailsParams>
 export function getAuditsUnitDetails(
   params: AuditsUnitDetailsParams,
 ): AuditsUnitDetails | undefined {
-  const report = auditCoverageSource.getProject(params.slug)
-  if (!report) return undefined
-  for (const contract of report.contracts) {
-    for (const file of contract.files) {
-      const unit = file.units.find((u) => u.id === params.unitId)
-      if (!unit) continue
-      return {
-        startLine: unit.startLine,
-        source: unit.source,
-        diff: unit.diff && {
-          added: unit.diff.added,
-          removed: unit.diff.removed,
-          ignoredAdded: unit.diff.ignoredAdded,
-          ignoredRemoved: unit.diff.ignoredRemoved,
-          ignoredOnly: unit.diff.ignoredOnly,
-          hunks: unit.diff.hunks.map((h) => ({
-            oldStart: h.oldStart,
-            newStart: h.newStart,
-            lines: h.lines,
-          })),
-        },
-      }
-    }
+  const record = auditCoverageSource.getUnit(params.unitHash)
+  if (!record) return undefined
+  const resolution =
+    record.resolutions[params.contextKey] ??
+    Object.values(record.resolutions)[0]
+  return {
+    startLine: params.startLine,
+    source: record.source,
+    diff: resolution?.diff && {
+      added: resolution.diff.added,
+      removed: resolution.diff.removed,
+      ignoredAdded: resolution.diff.ignoredAdded,
+      ignoredRemoved: resolution.diff.ignoredRemoved,
+      ignoredOnly: resolution.diff.ignoredOnly,
+      hunks: resolution.diff.hunks.map((h) => ({
+        oldStart: h.oldStart,
+        newStart: h.newStart,
+        lines: h.lines,
+      })),
+    },
   }
-  return undefined
 }

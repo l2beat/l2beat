@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6d6cf1e676061b1ae42313ae6052a65b0d38222ea5fccc4c21030f1c04b7ec50",
+  "name": "ResourceManager",
+  "kind": "abstract",
+  "lines": 36,
+  "source": "abstract contract ResourceManager is IResourceManager, Owned {\n    /// @inheritdoc IResourceManager\n    uint256 public threshold;\n\n    /// @inheritdoc IResourceManager\n    address public thresholdSetter;\n\n    /// @inheritdoc IResourceManager\n    ERC20 public immutable RESOURCE;\n\n    /// @inheritdoc IResourceManager\n    address public immutable RESOURCE_RECIPIENT;\n\n    /// @notice Ensures only the threshold setter can call the setThreshold function\n    modifier onlyThresholdSetter() {\n        require(msg.sender == thresholdSetter, Unauthorized());\n        _;\n    }\n\n    /// @dev At construction the thresholdSetter defaults to 0 and its on the owner to set.\n    constructor(address _resource, uint256 _threshold, address _owner, address _recipient) Owned(_owner) {\n        RESOURCE = ERC20(_resource);\n        RESOURCE_RECIPIENT = _recipient;\n        threshold = _threshold;\n    }\n\n    /// @inheritdoc IResourceManager\n    function setThresholdSetter(address _thresholdSetter) external onlyOwner {\n        thresholdSetter = _thresholdSetter;\n    }\n\n    /// @inheritdoc IResourceManager\n    function setThreshold(uint256 _threshold) external onlyThresholdSetter {\n        threshold = _threshold;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "16471c91161384a4280c2d3120a454b38f6a31c9cc14269daa6c291132d7f3c4",
+  "name": "RiscZeroVerifierEmergencyStop",
+  "kind": "contract",
+  "lines": 48,
+  "source": "contract RiscZeroVerifierEmergencyStop is IRiscZeroVerifier, Ownable2Step, Pausable {\n    IRiscZeroVerifier public immutable verifier;\n\n    /// @notice Error raised when calling estop with a receipt that cannot be verified as proof\n    /// of an exploit on the verifier contract.\n    error InvalidProofOfExploit();\n\n    constructor(IRiscZeroVerifier _verifier, address guardian) Ownable(guardian) {\n        verifier = _verifier;\n    }\n\n    /// @notice Initiate an emergency stop of the verifier contract.\n    ///         Can only be used by the guardian address assigned as owner of this contract.\n    ///\n    ///         When stopped, all calls to the verify and verifyIntegrity functions will revert.\n    ///         Once stopped, this contract can never be restarted.\n    function estop() external onlyOwner {\n        _pause();\n    }\n\n    /// @notice Initiate an emergency stop of the verifier contract, via the \"circuit breaker\".\n    ///         This method can be called by anyone who can produce a verifying proof for a receipt\n    ///         claim digest of all zeroes. The existence of such a proof demonstrates a critical\n    ///         vulnerability in the proof system.\n    ///\n    ///         When stopped, all calls to the verify and verifyIntegrity functions will revert.\n    ///         Once stopped, this contract can never be restarted.\n    function estop(Receipt calldata receipt) external {\n        if (receipt.claimDigest != bytes32(0)) {\n            revert InvalidProofOfExploit();\n        }\n        // Check that the proof of exploit receipt really does verify.\n        verifyIntegrity(receipt);\n        _pause();\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verify(bytes calldata seal, bytes32 imageId, bytes32 journalDigest) external view whenNotPaused {\n        // Forward the call on to the wrapped contract.\n        verifier.verify(seal, imageId, journalDigest);\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verifyIntegrity(Receipt calldata receipt) public view whenNotPaused {\n        // Forward the call on to the wrapped contract.\n        verifier.verifyIntegrity(receipt);\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5cfc08108e3d119eb454d89fb849bbfe601a517c2456261f3662ba4e0ed07e87",
+  "name": "LowGasSafeMath",
+  "kind": "library",
+  "lines": 41,
+  "source": "library LowGasSafeMath {\n    /// @notice Returns x + y, reverts if sum overflows uint256\n    /// @param x The augend\n    /// @param y The addend\n    /// @return z The sum of x and y\n    function add(uint256 x, uint256 y) internal pure returns (uint256 z) {\n        require((z = x + y) >= x);\n    }\n\n    /// @notice Returns x - y, reverts if underflows\n    /// @param x The minuend\n    /// @param y The subtrahend\n    /// @return z The difference of x and y\n    function sub(uint256 x, uint256 y) internal pure returns (uint256 z) {\n        require((z = x - y) <= x);\n    }\n\n    /// @notice Returns x * y, reverts if overflows\n    /// @param x The multiplicand\n    /// @param y The multiplier\n    /// @return z The product of x and y\n    function mul(uint256 x, uint256 y) internal pure returns (uint256 z) {\n        require(x == 0 || (z = x * y) / x == y);\n    }\n\n    /// @notice Returns x + y, reverts if overflows or underflows\n    /// @param x The augend\n    /// @param y The addend\n    /// @return z The sum of x and y\n    function add(int256 x, int256 y) internal pure returns (int256 z) {\n        require((z = x + y) >= x == (y >= 0));\n    }\n\n    /// @notice Returns x - y, reverts if overflows or underflows\n    /// @param x The minuend\n    /// @param y The subtrahend\n    /// @return z The difference of x and y\n    function sub(int256 x, int256 y) internal pure returns (int256 z) {\n        require((z = x - y) <= x == (y >= 0));\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 41,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "LowGasSafeMath",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/LowGasSafeMath.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/LowGasSafeMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 0,
+        "unchanged": 41,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 29,
+            "newStart": 1,
+            "newLines": 39,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library LowGasSafeMath {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Returns x + y, reverts if sum overflows uint256"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param x The augend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param y The addend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    /// @return z The sum of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    function add(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "        require((z = x + y) >= x);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    /// @notice Returns x - y, reverts if underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param x The minuend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param y The subtrahend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 13,
+                "text": "    /// @return z The difference of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 14,
+                "text": "    function sub(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 15,
+                "text": "        require((z = x - y) <= x);"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 18,
+                "text": "    /// @notice Returns x * y, reverts if overflows"
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param x The multiplicand",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param y The multiplier",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 21,
+                "text": "    /// @return z The product of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 22,
+                "text": "    function mul(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 23,
+                "text": "        require(x == 0 || (z = x * y) / x == y);"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 26,
+                "text": "    /// @notice Returns x + y, reverts if overflows or underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param x The augend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param y The addend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 29,
+                "text": "    /// @return z The sum of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 30,
+                "text": "    function add(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 31,
+                "text": "        require((z = x + y) >= x == (y >= 0));"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 32, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 33, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 34,
+                "text": "    /// @notice Returns x - y, reverts if overflows or underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @param x The minuend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @param y The subtrahend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 37,
+                "text": "    /// @return z The difference of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 38,
+                "text": "    function sub(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 39,
+                "text": "        require((z = x - y) <= x == (y >= 0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 41,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LowGasSafeMath",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/LowGasSafeMath.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/LowGasSafeMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 0,
+        "unchanged": 41,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 29,
+            "newStart": 1,
+            "newLines": 39,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library LowGasSafeMath {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Returns x + y, reverts if sum overflows uint256"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param x The augend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param y The addend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    /// @return z The sum of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    function add(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "        require((z = x + y) >= x);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    /// @notice Returns x - y, reverts if underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param x The minuend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param y The subtrahend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 13,
+                "text": "    /// @return z The difference of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 14,
+                "text": "    function sub(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 15,
+                "text": "        require((z = x - y) <= x);"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 18,
+                "text": "    /// @notice Returns x * y, reverts if overflows"
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param x The multiplicand",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param y The multiplier",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 21,
+                "text": "    /// @return z The product of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 22,
+                "text": "    function mul(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 23,
+                "text": "        require(x == 0 || (z = x * y) / x == y);"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 26,
+                "text": "    /// @notice Returns x + y, reverts if overflows or underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param x The augend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param y The addend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 29,
+                "text": "    /// @return z The sum of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 30,
+                "text": "    function add(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 31,
+                "text": "        require((z = x + y) >= x == (y >= 0));"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 32, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 33, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 34,
+                "text": "    /// @notice Returns x - y, reverts if overflows or underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @param x The minuend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @param y The subtrahend",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 37,
+                "text": "    /// @return z The difference of x and y"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 38,
+                "text": "    function sub(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 39,
+                "text": "        require((z = x - y) <= x == (y >= 0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

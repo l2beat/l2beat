@@ -25,13 +25,7 @@ const KIND_LABEL: Record<AuditsUnitEntry['kind'], string> = {
 
 type View = 'source' | 'diff' | undefined
 
-export function UnitRow({
-  slug,
-  unit,
-}: {
-  slug: string
-  unit: AuditsUnitEntry
-}) {
+export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
   const [view, setView] = useState<View>(undefined)
   const meta = AUDIT_STATUS_META[unit.status]
   const match = unit.match
@@ -86,8 +80,17 @@ export function UnitRow({
             ) : (
               meta.label
             )}
-            {match?.origin === 'library' && match.libraryName && (
-              <span className="text-secondary"> · {match.libraryName}</span>
+            {match && match.origin !== 'own' && (
+              <Tooltip>
+                <TooltipTrigger className="text-secondary">
+                  {' '}
+                  · {match.collectionName}
+                </TooltipTrigger>
+                <TooltipContent>
+                  Evidence from the {match.origin} collection{' '}
+                  {match.collectionName} ({match.relation}).
+                </TooltipContent>
+              </Tooltip>
             )}
             {match?.renamed && (
               <span className="text-secondary"> · as {match.auditedName}</span>
@@ -228,7 +231,7 @@ export function UnitRow({
           )}
         </span>
       </div>
-      {view && <UnitDetails slug={slug} unit={unit} view={view} />}
+      {view && <UnitDetails unit={unit} view={view} />}
     </div>
   )
 }

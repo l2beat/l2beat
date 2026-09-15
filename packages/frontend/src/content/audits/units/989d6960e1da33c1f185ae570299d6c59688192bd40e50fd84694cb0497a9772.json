@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "989d6960e1da33c1f185ae570299d6c59688192bd40e50fd84694cb0497a9772",
+  "name": "IApproveAndCall",
+  "kind": "interface",
+  "lines": 68,
+  "source": "interface IApproveAndCall {\n    enum ApprovalType {\n        NOT_REQUIRED,\n        MAX,\n        MAX_MINUS_ONE,\n        ZERO_THEN_MAX,\n        ZERO_THEN_MAX_MINUS_ONE\n    }\n\n    /// @dev Lens to be called off-chain to determine which (if any) of the relevant approval functions should be called\n    /// @param token The token to approve\n    /// @param amount The amount to approve\n    /// @return The required approval type\n    function getApprovalType(address token, uint256 amount) external returns (ApprovalType);\n\n    /// @notice Approves a token for the maximum possible amount\n    /// @param token The token to approve\n    function approveMax(address token) external payable;\n\n    /// @notice Approves a token for the maximum possible amount minus one\n    /// @param token The token to approve\n    function approveMaxMinusOne(address token) external payable;\n\n    /// @notice Approves a token for zero, then the maximum possible amount\n    /// @param token The token to approve\n    function approveZeroThenMax(address token) external payable;\n\n    /// @notice Approves a token for zero, then the maximum possible amount minus one\n    /// @param token The token to approve\n    function approveZeroThenMaxMinusOne(address token) external payable;\n\n    /// @notice Calls the position manager with arbitrary calldata\n    /// @param data Calldata to pass along to the position manager\n    /// @return result The result from the call\n    function callPositionManager(bytes memory data) external payable returns (bytes memory result);\n\n    struct MintParams {\n        address token0;\n        address token1;\n        uint24 fee;\n        int24 tickLower;\n        int24 tickUpper;\n        uint256 amount0Min;\n        uint256 amount1Min;\n        address recipient;\n    }\n\n    /// @notice Calls the position manager's mint function\n    /// @param params Calldata to pass along to the position manager\n    /// @return result The result from the call\n    function mint(MintParams calldata params) external payable returns (bytes memory result);\n\n    struct IncreaseLiquidityParams {\n        address token0;\n        address token1;\n        uint256 tokenId;\n        uint256 amount0Min;\n        uint256 amount1Min;\n    }\n\n    /// @notice Calls the position manager's increaseLiquidity function\n    /// @param params Calldata to pass along to the position manager\n    /// @return result The result from the call\n    function increaseLiquidity(IncreaseLiquidityParams calldata params)\n        external\n        payable\n        returns (bytes memory result);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

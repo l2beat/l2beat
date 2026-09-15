@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dd94dac614989bfdf5d7443d328ce46115ef340781eb7cffef0a8369a5cf1bc3",
+  "name": "Features",
+  "kind": "library",
+  "lines": 7,
+  "source": "library Features {\n    /// @notice The ETH_LOCKBOX feature determines if the system is configured to use the\n    ///         ETHLockbox contract in the OptimismPortal. When the ETH_LOCKBOX feature is active\n    ///         and the ETHLockbox contract has been configured, the OptimismPortal will use the\n    ///         ETHLockbox to store ETH instead of storing ETH directly in the portal itself.\n    bytes32 internal constant ETH_LOCKBOX = \"ETH_LOCKBOX\";\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

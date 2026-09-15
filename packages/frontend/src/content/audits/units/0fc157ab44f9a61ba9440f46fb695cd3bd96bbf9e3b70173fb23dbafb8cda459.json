@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0fc157ab44f9a61ba9440f46fb695cd3bd96bbf9e3b70173fb23dbafb8cda459",
+  "name": "SP1VerifierGateway",
+  "kind": "contract",
+  "lines": 51,
+  "source": "contract SP1VerifierGateway is ISP1VerifierGateway, Ownable {\n    /// @inheritdoc ISP1VerifierGateway\n    mapping(bytes4 => VerifierRoute) public routes;\n\n    constructor(address initialOwner) Ownable(initialOwner) {}\n\n    /// @inheritdoc ISP1Verifier\n    function verifyProof(bytes32 programVKey, bytes calldata publicValues, bytes calldata proofBytes) external view {\n        bytes4 selector = bytes4(proofBytes[:4]);\n        VerifierRoute memory route = routes[selector];\n        if (route.verifier == address(0)) {\n            revert RouteNotFound(selector);\n        } else if (route.frozen) {\n            revert RouteIsFrozen(selector);\n        }\n\n        ISP1Verifier(route.verifier).verifyProof(programVKey, publicValues, proofBytes);\n    }\n\n    /// @inheritdoc ISP1VerifierGateway\n    function addRoute(address verifier) external onlyOwner {\n        bytes4 selector = bytes4(ISP1VerifierWithHash(verifier).VERIFIER_HASH());\n        if (selector == bytes4(0)) {\n            revert SelectorCannotBeZero();\n        }\n\n        VerifierRoute storage route = routes[selector];\n        if (route.verifier != address(0)) {\n            revert RouteAlreadyExists(route.verifier);\n        }\n\n        route.verifier = verifier;\n\n        emit RouteAdded(selector, verifier);\n    }\n\n    /// @inheritdoc ISP1VerifierGateway\n    function freezeRoute(bytes4 selector) external onlyOwner {\n        VerifierRoute storage route = routes[selector];\n        if (route.verifier == address(0)) {\n            revert RouteNotFound(selector);\n        }\n        if (route.frozen) {\n            revert RouteIsFrozen(selector);\n        }\n\n        route.frozen = true;\n\n        emit RouteFrozen(selector, route.verifier);\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SP1VerifierGateway",
+        "similarity": 1,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/SP1VerifierGateway.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/SP1VerifierGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

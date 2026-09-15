@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cd1fe6e748df26966b7f14c3763e93472236a42d580573b3f64cbc0fc80dd1f5",
+  "name": "IAnchorStateRegistry",
+  "kind": "interface",
+  "lines": 45,
+  "source": "interface IAnchorStateRegistry is IProxyAdminOwnedBase {\n    error AnchorStateRegistry_InvalidAnchorGame();\n    error AnchorStateRegistry_Unauthorized();\n    error ReinitializableBase_ZeroInitVersion();\n\n    event AnchorUpdated(IFaultDisputeGame indexed game);\n    event DisputeGameBlacklisted(IDisputeGame indexed disputeGame);\n    event Initialized(uint8 version);\n    event RespectedGameTypeSet(GameType gameType);\n    event RetirementTimestampSet(uint256 timestamp);\n\n    function initVersion() external view returns (uint8);\n    function anchorGame() external view returns (IFaultDisputeGame);\n    function anchors(GameType) external view returns (Hash, uint256);\n    function blacklistDisputeGame(IDisputeGame _disputeGame) external;\n    function disputeGameBlacklist(IDisputeGame) external view returns (bool);\n    function getAnchorRoot() external view returns (Hash, uint256);\n    function disputeGameFinalityDelaySeconds() external view returns (uint256);\n    function disputeGameFactory() external view returns (IDisputeGameFactory);\n    function initialize(\n        ISystemConfig _systemConfig,\n        IDisputeGameFactory _disputeGameFactory,\n        Proposal memory _startingAnchorRoot,\n        GameType _startingRespectedGameType\n    ) external;\n    function isGameBlacklisted(IDisputeGame _game) external view returns (bool);\n    function isGameProper(IDisputeGame _game) external view returns (bool);\n    function isGameRegistered(IDisputeGame _game) external view returns (bool);\n    function isGameResolved(IDisputeGame _game) external view returns (bool);\n    function isGameRespected(IDisputeGame _game) external view returns (bool);\n    function isGameRetired(IDisputeGame _game) external view returns (bool);\n    function isGameFinalized(IDisputeGame _game) external view returns (bool);\n    function isGameClaimValid(IDisputeGame _game) external view returns (bool);\n    function paused() external view returns (bool);\n    function respectedGameType() external view returns (GameType);\n    function retirementTimestamp() external view returns (uint64);\n    function setAnchorState(IDisputeGame _game) external;\n    function setRespectedGameType(GameType _gameType) external;\n    function systemConfig() external view returns (ISystemConfig);\n    function updateRetirementTimestamp() external;\n    function version() external view returns (string memory);\n    function superchainConfig() external view returns (ISuperchainConfig);\n\n    function __constructor__(uint256 _disputeGameFinalityDelaySeconds) external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

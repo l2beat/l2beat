@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1c6477644f4161ec83ddc9c6d076d3c9fd11ba30474e8e5d4b84a3a612437fa1",
+  "name": "LiquidityMath",
+  "kind": "library",
+  "lines": 13,
+  "source": "library LiquidityMath {\n    /// @notice Add a signed liquidity delta to liquidity and revert if it overflows or underflows\n    /// @param x The liquidity before change\n    /// @param y The delta by which liquidity should be changed\n    /// @return z The liquidity delta\n    function addDelta(uint128 x, int128 y) internal pure returns (uint128 z) {\n        if (y < 0) {\n            require((z = x - uint128(-y)) < x, \"LS\");\n        } else {\n            require((z = x + uint128(y)) >= x, \"LA\");\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LiquidityMath",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/LiquidityMath.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/LiquidityMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 13,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library LiquidityMath {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Add a signed liquidity delta to liquidity and revert if it overflows or underflows"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param x The liquidity before change",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param y The delta by which liquidity should be changed",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    /// @return z The liquidity delta"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    function addDelta(uint128 x, int128 y) internal pure returns (uint128 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "        if (y < 0) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

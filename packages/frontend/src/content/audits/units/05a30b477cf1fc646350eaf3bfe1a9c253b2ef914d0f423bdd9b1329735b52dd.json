@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "05a30b477cf1fc646350eaf3bfe1a9c253b2ef914d0f423bdd9b1329735b52dd",
+  "name": "IKailuaTreasury",
+  "kind": "interface",
+  "lines": 32,
+  "source": "interface IKailuaTreasury {\n    /// @notice Emitted when the participation bond is updated\n    /// @param amount The new required bond amount\n    event BondUpdated(uint256 amount);\n\n    /// @notice Returns the game index at which proposer was proven faulty\n    function eliminationRound(address proposer) external view returns (uint256);\n\n    /// @notice Returns the proposer of a game\n    function proposerOf(address game) external view returns (address);\n\n    /// @notice Eliminates a child's proposer and allocates their bond to the prover\n    function eliminate(address child, address prover) external;\n\n    /// @notice Returns true iff a proposal is currently being submitted\n    function isProposing() external view returns (bool);\n\n    /// @notice Returns the last resolved proposal contract address\n    function lastResolved() external view returns (address);\n\n    /// @notice Updates the last resolved contract address to that of the caller\n    function updateLastResolved() external;\n\n    /// @notice Returns the collateral required to submit proposals\n    function participationBond() external view returns (uint256);\n\n    /// @notice Returns the prover's number of shares in elimination rewards\n    function ELIMINATION_SPLIT_PROVER_NUM() external view returns (uint256);\n\n    /// @notice Returns the total number of shares for elimination rewards\n    function ELIMINATION_SPLIT_DENOM() external view returns (uint256);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 32,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IKailuaTreasury",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaLib.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "warnings": []
+    }
+  }
+}

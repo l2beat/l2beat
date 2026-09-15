@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f04a80741015f34e8d145c8f81cb49ed2730b0a8f80cb1b68ca1182ec9257534",
+  "name": "Proposal",
+  "kind": "contract",
+  "lines": 124,
+  "source": "contract Proposal is EnsResolve {\n    ITornadoTreesV1 public constant tornadoTreesV1 = ITornadoTreesV1(0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417);\n    ITornadoProxyV1 public constant tornadoProxyV1 = ITornadoProxyV1(0x905b63Fff465B9fFBF41DeA908CEb12478ec7601);\n    IMiner public constant miner = IMiner(0x746Aebc06D2aE31B71ac51429A19D54E797878E9);\n\n    event DeploymentOf(string name, address addr);\n\n    address public immutable verifier;\n\n    // params used to search for array lengths on V1 contracts\n    uint256 private immutable depositsFrom;\n    uint256 private immutable depositsStep;\n    uint256 private immutable withdrawalsFrom;\n    uint256 private immutable withdrawalsStep;\n\n    constructor(\n        address _verifier,\n        uint256 _depositsFrom,\n        uint256 _depositsStep,\n        uint256 _withdrawalsFrom,\n        uint256 _withdrawalsStep\n    ) public {\n        verifier = _verifier;\n        depositsFrom = _depositsFrom;\n        depositsStep = _depositsStep;\n        withdrawalsFrom = _withdrawalsFrom;\n        withdrawalsStep = _withdrawalsStep;\n    }\n\n    function executeProposal() public {\n        // Disable all instances on old tornado proxy\n        bytes32[4] memory miningInstances = getEthInstances();\n        for (uint256 i = 0; i < miningInstances.length; i++) {\n            tornadoProxyV1.updateInstance(resolve(miningInstances[i]), false);\n        }\n\n        // Deploy new TornadoTrees implementation\n        TornadoTrees tornadoTreesImpl = new TornadoTrees(address(this), tornadoTreesV1, getSearchParams());\n        emit DeploymentOf(\"TornadoTrees implementation\", address(tornadoTreesImpl));\n\n        // Deploy TornadoTrees upgradeable proxy\n        AdminUpgradeableProxy upgradeableProxy = new AdminUpgradeableProxy(address(tornadoTreesImpl), address(this), \"\");\n        TornadoTrees tornadoTrees = TornadoTrees(address(upgradeableProxy));\n        emit DeploymentOf(\"TornadoTrees upgradeable proxy\", address(upgradeableProxy));\n\n        // Deploy new TornadoProxy\n        TornadoProxy tornadoProxy = new TornadoProxy(address(tornadoTrees), address(this), getInstances());\n        emit DeploymentOf(\"TornadoProxy\", address(tornadoProxy));\n\n        // Init tornado trees\n        tornadoTrees.initialize(address(tornadoProxy), IBatchTreeUpdateVerifier(verifier));\n\n        // Update TornadoTrees address on the mining contract\n        miner.setTornadoTreesContract(address(tornadoTrees));\n    }\n\n    function getSearchParams() public view returns (TornadoTrees.SearchParams memory) {\n        return TornadoTrees.SearchParams({\n            depositsFrom: depositsFrom,\n            depositsStep: depositsStep,\n            withdrawalsFrom: withdrawalsFrom,\n            withdrawalsStep: withdrawalsStep\n        });\n    }\n\n    function getEthInstances() internal pure returns (bytes32[4] memory) {\n        return [\n            bytes32(0xc041982b4f77cbbd82ef3b9ea748738ac6c281d3f1af198770d29f75ac32d80a), // eth-01.tornadocash.eth\n            bytes32(0x9e5bc9215eecd103644145a5db4f69d5efaf4885bb5bf968f8db271ec5cd539b), // eth-1.tornadocash.eth\n            bytes32(0x917e42347647689051abc744f502bff342c76ad30c0670b46b305b2f7e1f893d), // eth-10.tornadocash.eth\n            bytes32(0xddfc726d74f912f49389ef7471e75291969852ce7e5df0509a17bc1e46646985) //  eth-100.tornadocash.eth\n        ];\n    }\n\n    function getErc20Instances() internal pure returns (bytes32[15] memory) {\n        return [\n            bytes32(0x95ad5771ba164db3fc73cc74d4436cb6a6babd7a2774911c69d8caae30410982), // dai-100.tornadocash.eth\n            bytes32(0x109d0334da83a2c3a687972cc806b0eda52ee7a30f3e44e77b39ae2a20248321), // dai-1000.tornadocash.eth\n            bytes32(0x3de4b55be5058f538617d5a6a72bff5b5850a239424b34cc5271021cfcc4ccc8), // dai-10000.tornadocash.eth\n            bytes32(0xf50559e0d2f0213bcb8c67ad45b93308b46b9abdd5ca9c7044efc025fc557f59), // dai-100000.tornadocash.eth\n            bytes32(0xc9395879ffcee571b0dfd062153b27d62a6617e0f272515f2eb6259fe829c3df), // cdai-5000.tornadocash.eth\n            bytes32(0xf840ad6cba4dbbab0fa58a13b092556cd53a6eeff716a3c4a41d860a888b6155), // cdai-50000.tornadocash.eth\n            bytes32(0x8e52ade66daf81cf3f50053e9bfca86a57d685eca96bf6c0b45da481806952b1), // cdai-500000.tornadocash.eth\n            bytes32(0x0b86f5b8c2f9dcd95382a469480b35302eead707f3fd36359e346b59f3591de2), // cdai-5000000.tornadocash.eth\n            bytes32(0xd49809328056ea7b7be70076070bf741ec1a27b86bebafdc484eee88c1834191), // usdc-100.tornadocash.eth\n            bytes32(0x77e2b15eddc494b6da6cee0d797ed30ed3945f2c7de0150f16f0405a12e5665f), // usdc-1000.tornadocash.eth\n            bytes32(0x36bab2c045f88613be6004ec1dc0c3937941fcf4d4cb78d814c933bf1cf25baf), // usdt-100.tornadocash.eth\n            bytes32(0x7a3b0883165756c26821d9b8c9737166a156a78b478b17e42da72fba7a373356), // usdt-1000.tornadocash.eth\n            bytes32(0x10ca74c40211fa1598f0531f35c7d54c19c808082aad53c72ad1fb22ea94ab83), // wbtc-01.tornadocash.eth\n            bytes32(0x6cea0cba8e46fc4ffaf837edf544ba36e5a35503636c6bca4578e965ab640e2c), // wbtc-1.tornadocash.eth\n            bytes32(0x82c57bf2f80547b5e31b92c1f92c4f8bc02ad0df3d27326373e9f55adda5bd15) //  wbtc-10.tornadocash.eth\n        ];\n    }\n\n    function getInstances() public view returns (TornadoProxy.Tornado[] memory instances) {\n        bytes32[4] memory miningInstances = getEthInstances();\n        bytes32[15] memory allowedInstances = getErc20Instances();\n        instances = new TornadoProxy.Tornado[](allowedInstances.length + miningInstances.length);\n\n        for (uint256 i = 0; i < miningInstances.length; i++) {\n            // Enable mining for ETH instances\n            instances[i] = TornadoProxy.Tornado(\n                ITornadoInstance(resolve(miningInstances[i])),\n                TornadoProxy.Instance({\n                    isERC20: false,\n                    token: IERC20(address(0)),\n                    state: TornadoProxy.InstanceState.MINEABLE\n                })\n            );\n        }\n        for (uint256 i = 0; i < allowedInstances.length; i++) {\n            // ERC20 are only allowed on proxy without enabling mining for them\n            ITornadoInstance instance = ITornadoInstance(resolve(allowedInstances[i]));\n            instances[miningInstances.length + i] = TornadoProxy.Tornado({\n                addr: instance,\n                instance: TornadoProxy.Instance({\n                    isERC20: true,\n                    token: IERC20(instance.token()),\n                    state: TornadoProxy.InstanceState.ENABLED\n                })\n            });\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 35,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Proposal",
+        "similarity": 0.122,
+        "reportId": "roninnetwork/certik-axie-infinity-ronin-bridge-2022-06",
+        "repository": "axieinfinity/ronin-smart-contracts",
+        "path": "contracts/v0.8/library/Proposal.sol",
+        "commit": "abe18fe7c333657297fa29409025dbb54852d204",
+        "commitTimestamp": "2022-05-17T04:02:48Z",
+        "url": "https://github.com/axieinfinity/ronin-smart-contracts/blob/abe18fe7c333657297fa29409025dbb54852d204/contracts/v0.8/library/Proposal.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at the first audited commit abe18fe7 (report lists file with SHA256).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 89,
+        "removed": 36,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 25,
+        "unchanged": 35,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 75,
+            "newStart": 1,
+            "newLines": 124,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Proposal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    struct ProposalDetail {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "        // Nonce to make sure proposals are executed in order",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "        uint256 nonce;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        // Value 0: all chain should run this proposal",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "        // Other values: only specifc chain has to execute",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        uint256 chainId;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        address[] targets;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        uint256[] values;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        bytes[] calldatas;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract Proposal is EnsResolve {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    ITornadoTreesV1 public constant tornadoTreesV1 = ITornadoTreesV1(0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ITornadoProxyV1 public constant tornadoProxyV1 = ITornadoProxyV1(0x905b63Fff465B9fFBF41DeA908CEb12478ec7601);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    IMiner public constant miner = IMiner(0x746Aebc06D2aE31B71ac51429A19D54E797878E9);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    string internal constant _CALL_ERROR_MESSAGE = \"Proposal: call reverted without message\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    // keccak256(\"ProposalDetail(uint256 nonce,uint256 chainId,address[] targets,uint256[] values,bytes[] calldatas)\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    bytes32 public constant TYPE_HASH = 0x1f0b22dae207031fb7f9f05ebbc84b1d9360145aefb92e75009d6d320f1fc95a;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    event DeploymentOf(string name, address addr);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev Validates the proposal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    function validate(ProposalDetail memory _proposal) internal pure {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "            _proposal.targets.length > 0 && _proposal.targets.length == _proposal.values.length",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "                && _proposal.targets.length == _proposal.calldatas.length,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "            \"Proposal: invalid array length\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        );",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    address public immutable verifier;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 9, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev Returns struct hash of the proposal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function hash(ProposalDetail memory _proposal) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        bytes32 _targetsHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        bytes32 _valuesHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        bytes32 _calldatasHash;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    // params used to search for array lengths on V1 contracts",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    uint256 private immutable depositsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    uint256 private immutable depositsStep;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    uint256 private immutable withdrawalsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    uint256 private immutable withdrawalsStep;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 35, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        uint256[] memory _values = _proposal.values;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        address[] memory _targets = _proposal.targets;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        bytes32[] memory _calldataHashList = new bytes32[](_proposal.calldatas.length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        for (uint256 _i; _i < _calldataHashList.length; _i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            _calldataHashList[_i] = keccak256(_proposal.calldatas[_i]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    constructor(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        address _verifier,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        uint256 _depositsFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        uint256 _depositsStep,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        uint256 _withdrawalsFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        uint256 _withdrawalsStep",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    ) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        verifier = _verifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        depositsFrom = _depositsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        depositsStep = _depositsStep;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        withdrawalsFrom = _withdrawalsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        withdrawalsStep = _withdrawalsStep;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 28, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 42, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "            _targetsHash := keccak256(add(_targets, 32), mul(mload(_targets), 32))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "            _valuesHash := keccak256(add(_values, 32), mul(mload(_values), 32))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "            _calldatasHash := keccak256(add(_calldataHashList, 32), mul(mload(_calldataHashList), 32))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function executeProposal() public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        // Disable all instances on old tornado proxy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        bytes32[4] memory miningInstances = getEthInstances();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        for (uint256 i = 0; i < miningInstances.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "            tornadoProxyV1.updateInstance(resolve(miningInstances[i]), false);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 35,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 48, "newLine": 36, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        return keccak256(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "            abi.encode(TYPE_HASH, _proposal.nonce, _proposal.chainId, _targetsHash, _valuesHash, _calldatasHash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        );",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // Deploy new TornadoTrees implementation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        TornadoTrees tornadoTreesImpl = new TornadoTrees(address(this), tornadoTreesV1, getSearchParams());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        emit DeploymentOf(\"TornadoTrees implementation\", address(tornadoTreesImpl));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        // Deploy TornadoTrees upgradeable proxy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        AdminUpgradeableProxy upgradeableProxy = new AdminUpgradeableProxy(address(tornadoTreesImpl), address(this), \"\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        TornadoTrees tornadoTrees = TornadoTrees(address(upgradeableProxy));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        emit DeploymentOf(\"TornadoTrees upgradeable proxy\", address(upgradeableProxy));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 45, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        // Deploy new TornadoProxy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        TornadoProxy tornadoProxy = new TornadoProxy(address(tornadoTrees), address(this), getInstances());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        emit DeploymentOf(\"TornadoProxy\", address(tornadoProxy));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        // Init tornado trees",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        tornadoTrees.initialize(address(tornadoProxy), IBatchTreeUpdateVerifier(verifier));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 52, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        // Update TornadoTrees address on the mining contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        miner.setTornadoTreesContract(address(tornadoTrees));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 55, "text": "    }" },
+              { "type": " ", "oldLine": 53, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     * @dev Returns whether the proposal is executable for the current chain.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 56, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @notice Does not check whether the call result is successful or not. Please use `execute` instead.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 58, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    function executable(ProposalDetail memory _proposal) internal view returns (bool _result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        return _proposal.chainId == 0 || _proposal.chainId == block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function getSearchParams() public view returns (TornadoTrees.SearchParams memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return TornadoTrees.SearchParams({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            depositsFrom: depositsFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            depositsStep: depositsStep,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "            withdrawalsFrom: withdrawalsFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "            withdrawalsStep: withdrawalsStep",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        });",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 63, "newLine": 65, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * @dev Executes the proposal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    function execute(ProposalDetail memory _proposal) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        require(executable(_proposal), \"Proposal: query for invalid chainId\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        for (uint256 i = 0; i < _proposal.targets.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            (bool _success, bytes memory _returndata) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "                _proposal.targets[i].call{value: _proposal.values[i]}(_proposal.calldatas[i]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "            Address.verifyCallResult(_success, _returndata, _CALL_ERROR_MESSAGE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    function getEthInstances() internal pure returns (bytes32[4] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        return [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            bytes32(0xc041982b4f77cbbd82ef3b9ea748738ac6c281d3f1af198770d29f75ac32d80a), // eth-01.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            bytes32(0x9e5bc9215eecd103644145a5db4f69d5efaf4885bb5bf968f8db271ec5cd539b), // eth-1.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "            bytes32(0x917e42347647689051abc744f502bff342c76ad30c0670b46b305b2f7e1f893d), // eth-10.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            bytes32(0xddfc726d74f912f49389ef7471e75291969852ce7e5df0509a17bc1e46646985) //  eth-100.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        ];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 73, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 74, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    function getErc20Instances() internal pure returns (bytes32[15] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        return [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "            bytes32(0x95ad5771ba164db3fc73cc74d4436cb6a6babd7a2774911c69d8caae30410982), // dai-100.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "            bytes32(0x109d0334da83a2c3a687972cc806b0eda52ee7a30f3e44e77b39ae2a20248321), // dai-1000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "            bytes32(0x3de4b55be5058f538617d5a6a72bff5b5850a239424b34cc5271021cfcc4ccc8), // dai-10000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "            bytes32(0xf50559e0d2f0213bcb8c67ad45b93308b46b9abdd5ca9c7044efc025fc557f59), // dai-100000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "            bytes32(0xc9395879ffcee571b0dfd062153b27d62a6617e0f272515f2eb6259fe829c3df), // cdai-5000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "            bytes32(0xf840ad6cba4dbbab0fa58a13b092556cd53a6eeff716a3c4a41d860a888b6155), // cdai-50000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            bytes32(0x8e52ade66daf81cf3f50053e9bfca86a57d685eca96bf6c0b45da481806952b1), // cdai-500000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "            bytes32(0x0b86f5b8c2f9dcd95382a469480b35302eead707f3fd36359e346b59f3591de2), // cdai-5000000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "            bytes32(0xd49809328056ea7b7be70076070bf741ec1a27b86bebafdc484eee88c1834191), // usdc-100.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "            bytes32(0x77e2b15eddc494b6da6cee0d797ed30ed3945f2c7de0150f16f0405a12e5665f), // usdc-1000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            bytes32(0x36bab2c045f88613be6004ec1dc0c3937941fcf4d4cb78d814c933bf1cf25baf), // usdt-100.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            bytes32(0x7a3b0883165756c26821d9b8c9737166a156a78b478b17e42da72fba7a373356), // usdt-1000.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "            bytes32(0x10ca74c40211fa1598f0531f35c7d54c19c808082aad53c72ad1fb22ea94ab83), // wbtc-01.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "            bytes32(0x6cea0cba8e46fc4ffaf837edf544ba36e5a35503636c6bca4578e965ab640e2c), // wbtc-1.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "            bytes32(0x82c57bf2f80547b5e31b92c1f92c4f8bc02ad0df3d27326373e9f55adda5bd15) //  wbtc-10.tornadocash.eth",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        ];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 93, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 94, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    function getInstances() public view returns (TornadoProxy.Tornado[] memory instances) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        bytes32[4] memory miningInstances = getEthInstances();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        bytes32[15] memory allowedInstances = getErc20Instances();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        instances = new TornadoProxy.Tornado[](allowedInstances.length + miningInstances.length);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 99, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        for (uint256 i = 0; i < miningInstances.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            // Enable mining for ETH instances",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "            instances[i] = TornadoProxy.Tornado(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "                ITornadoInstance(resolve(miningInstances[i])),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "                TornadoProxy.Instance({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "                    isERC20: false,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "                    token: IERC20(address(0)),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "                    state: TornadoProxy.InstanceState.MINEABLE",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "                })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "            );",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 110,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "        for (uint256 i = 0; i < allowedInstances.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "            // ERC20 are only allowed on proxy without enabling mining for them",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            ITornadoInstance instance = ITornadoInstance(resolve(allowedInstances[i]));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            instances[miningInstances.length + i] = TornadoProxy.Tornado({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                addr: instance,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "                instance: TornadoProxy.Instance({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                    isERC20: true,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "                    token: IERC20(instance.token()),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "                    state: TornadoProxy.InstanceState.ENABLED",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "                })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 74, "newLine": 123, "text": "    }" },
+              { "type": " ", "oldLine": 75, "newLine": 124, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch", "low-similarity"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dab9832f6d5f7798afdff89b91df801f96d7b70460c1f201b7c12421607bc284",
+  "name": "IUnorderedNonce",
+  "kind": "interface",
+  "lines": 12,
+  "source": "interface IUnorderedNonce {\n    error NonceAlreadyUsed();\n\n    /// @notice mapping of nonces consumed by each address, where a nonce is a single bit on the 256-bit bitmap\n    /// @dev word is at most type(uint248).max\n    function nonces(address owner, uint256 word) external view returns (uint256);\n\n    /// @notice Revoke a nonce by spending it, preventing it from being used again\n    /// @dev Used in cases where a valid nonce has not been broadcasted onchain, and the owner wants to revoke the validity of the nonce\n    /// @dev payable so it can be multicalled with native-token related actions\n    function revokeNonce(uint256 nonce) external payable;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

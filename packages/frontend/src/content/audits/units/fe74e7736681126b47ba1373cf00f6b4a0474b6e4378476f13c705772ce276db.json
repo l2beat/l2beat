@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fe74e7736681126b47ba1373cf00f6b4a0474b6e4378476f13c705772ce276db",
+  "name": "ITornadoStakingRewards",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ITornadoStakingRewards {\n    function addBurnRewards(uint256 amount) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

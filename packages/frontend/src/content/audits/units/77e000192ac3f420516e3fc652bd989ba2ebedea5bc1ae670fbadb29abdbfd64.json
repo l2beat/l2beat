@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77e000192ac3f420516e3fc652bd989ba2ebedea5bc1ae670fbadb29abdbfd64",
+  "name": "ETHTornado",
+  "kind": "contract",
+  "lines": 25,
+  "source": "contract ETHTornado is Tornado {\n    constructor(IVerifier _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)\n        public\n        Tornado(_verifier, _denomination, _merkleTreeHeight, _operator)\n    {}\n\n    function _processDeposit() internal {\n        require(msg.value == denomination, \"Please send `mixDenomination` ETH along with transaction\");\n    }\n\n    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund)\n        internal\n    {\n        // sanity checks\n        require(msg.value == 0, \"Message value is supposed to be zero for ETH instance\");\n        require(_refund == 0, \"Refund value is supposed to be zero for ETH instance\");\n\n        (bool success,) = _recipient.call.value(denomination - _fee)(\"\");\n        require(success, \"payment to _recipient did not go thru\");\n        if (_fee > 0) {\n            (success,) = _relayer.call.value(_fee)(\"\");\n            require(success, \"payment to _relayer did not go thru\");\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 23,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "ETHMixer",
+        "similarity": 0.933,
+        "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
+        "repository": "peppersec/tornado-mixer",
+        "path": "contracts/ETHMixer.sol",
+        "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+        "commitTimestamp": "2019-11-18T20:03:44Z",
+        "url": "https://github.com/peppersec/tornado-mixer/blob/d0e312eb808797a4f20a81fda2224185a3f914b4/contracts/ETHMixer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audit snapshot after remediation",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 23,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ETHMixer is Mixer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ETHTornado is Tornado {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    constructor(IVerifier _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        public"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "        Mixer(_verifier, _denomination, _merkleTreeHeight, _operator)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "        Tornado(_verifier, _denomination, _merkleTreeHeight, _operator)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    {}" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    function _processDeposit() internal {"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 8,
+            "newStart": 12,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        internal"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "        // sanity checks"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        require(msg.value == 0, \"Message value is supposed to be zero for ETH mixer\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        require(_refund == 0, \"Refund value is supposed to be zero for ETH mixer\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        require(msg.value == 0, \"Message value is supposed to be zero for ETH instance\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        require(_refund == 0, \"Refund value is supposed to be zero for ETH instance\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        (bool success,) = _recipient.call.value(denomination - _fee)(\"\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        require(success, \"payment to _recipient did not go thru\");"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

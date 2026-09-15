@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "16507c48074ac74724f115ea5c274967d17bc245e372e15a7de36470a058ef33",
+  "name": "IUniswapV2Pair",
+  "kind": "interface",
+  "lines": 51,
+  "source": "interface IUniswapV2Pair {\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    function name() external pure returns (string memory);\n    function symbol() external pure returns (string memory);\n    function decimals() external pure returns (uint8);\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address owner) external view returns (uint256);\n    function allowance(address owner, address spender) external view returns (uint256);\n\n    function approve(address spender, uint256 value) external returns (bool);\n    function transfer(address to, uint256 value) external returns (bool);\n    function transferFrom(address from, address to, uint256 value) external returns (bool);\n\n    function DOMAIN_SEPARATOR() external view returns (bytes32);\n    function PERMIT_TYPEHASH() external pure returns (bytes32);\n    function nonces(address owner) external view returns (uint256);\n\n    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        external;\n\n    event Mint(address indexed sender, uint256 amount0, uint256 amount1);\n    event Burn(address indexed sender, uint256 amount0, uint256 amount1, address indexed to);\n    event Swap(\n        address indexed sender,\n        uint256 amount0In,\n        uint256 amount1In,\n        uint256 amount0Out,\n        uint256 amount1Out,\n        address indexed to\n    );\n    event Sync(uint112 reserve0, uint112 reserve1);\n\n    function MINIMUM_LIQUIDITY() external pure returns (uint256);\n    function factory() external view returns (address);\n    function token0() external view returns (address);\n    function token1() external view returns (address);\n    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n    function price0CumulativeLast() external view returns (uint256);\n    function price1CumulativeLast() external view returns (uint256);\n    function kLast() external view returns (uint256);\n\n    function mint(address to) external returns (uint256 liquidity);\n    function burn(address to) external returns (uint256 amount0, uint256 amount1);\n    function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes calldata data) external;\n    function skim(address to) external;\n    function sync() external;\n\n    function initialize(address, address) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV2Pair",
+        "similarity": 1,
+        "reportId": "celo/verilog-celo-monorepo-prs-9798-10159-2023-03",
+        "repository": "celo-org/celo-monorepo",
+        "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
+        "commit": "1faaa07d0b98fcf05fe9914d9b1a5e613f879b61",
+        "commitTimestamp": "2023-02-24T18:35:46Z",
+        "url": "https://github.com/celo-org/celo-monorepo/blob/1faaa07d0b98fcf05fe9914d9b1a5e613f879b61/packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "PR #10159 diff review",
+        "coverage": "Only the changes introduced by PR #10159 were reviewed (head commit of the PR).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

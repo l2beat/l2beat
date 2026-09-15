@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "05c8e1b39e7f7bdb62a859e88f2fa2afa8e26b85876fcbeb29c689937b35276b",
+  "name": "ArrayLib",
+  "kind": "library",
+  "lines": 16,
+  "source": "library ArrayLib {\n    /// @notice Checks if a value exists in a uint24 array\n    /// @dev Performs a linear search through the array to find the value\n    /// @param array The storage array to search through\n    /// @param value The uint24 value to search for\n    /// @return True if the value exists in the array, false otherwise\n    function includes(uint24[] storage array, uint24 value) internal view returns (bool) {\n        uint256 length = array.length;\n        for (uint256 i; i < length; i++) {\n            if (array[i] == value) {\n                return true;\n            }\n        }\n        return false;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

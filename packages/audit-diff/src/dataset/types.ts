@@ -1,22 +1,6 @@
 // Raw shapes of the audit-dataset files. Only the fields the engine reads are
 // declared; the dataset schema is documented in AUDIT_EXTRACT_SKILL.md there.
 
-export interface DeployedJson {
-  project: string
-  discoveryTimestamp: number
-  contractSelection: 'critical' | 'all'
-  contracts: DeployedContract[]
-}
-
-export interface DeployedContract {
-  name: string
-  address: string
-  chain: string
-  chainSpecificAddress: string
-  sourceFiles: string[]
-  template?: string
-}
-
 export interface AuditSummaryJson {
   schema_version: string
   project: string
@@ -31,6 +15,7 @@ export interface AuditReport {
   isRelevant: boolean
   auditor: string
   report_date: string | null
+  repositories: { id: string; url: string }[]
   scopes: AuditScope[]
 }
 
@@ -58,19 +43,8 @@ export interface AuditVersion {
   major_findings: number
 }
 
-/** One entry of `deployed-contracts/_zk/zk-sources.json`. */
-export interface ZkSourceEntry {
-  type: 'verifier' | 'program'
-  name: string
-  link: string
-  commit: string
-  /** Chain-specific address, e.g. `eth:0x...`, verifiers only. */
-  address?: string
-  /** Directory inside `_zk` holding the fetched sources. */
-  path: string
-}
-
 export interface ManifestJson {
+  schema_version?: string
   sources: ManifestSource[]
 }
 
@@ -80,5 +54,25 @@ export interface ManifestSource {
   source_path: string
   path_kind: 'file' | 'directory_recursive'
   commit: string
-  files: { file: string }[]
+  files: ManifestFile[]
+}
+
+export interface ManifestFile {
+  file: string
+  /** sha256 of the file as stored (post-format), see index_sources.py. */
+  sha256?: string
+  /** Top-level Solidity declarations, or the basename for other files. */
+  units?: string[]
+}
+
+/** Root `repositories.json`. */
+export interface RegistryJson {
+  schema_version: string
+  repositories: Record<string, RegistryEntry>
+}
+
+export interface RegistryEntry {
+  url: string
+  fork_of?: string
+  manual?: boolean
 }

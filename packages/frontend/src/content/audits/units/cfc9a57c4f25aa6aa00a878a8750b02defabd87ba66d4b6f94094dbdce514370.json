@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cfc9a57c4f25aa6aa00a878a8750b02defabd87ba66d4b6f94094dbdce514370",
+  "name": "SystemStateLib",
+  "kind": "library",
+  "lines": 17,
+  "source": "library SystemStateLib {\n    bytes32 constant TAG_DIGEST = sha256(\"risc0.SystemState\");\n\n    function digest(SystemState memory state) internal pure returns (bytes32) {\n        return sha256(\n            abi.encodePacked(\n                TAG_DIGEST,\n                // down\n                state.merkle_root,\n                // data\n                reverseByteOrderUint32(state.pc),\n                // down.length\n                uint16(1) << 8\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "SystemStateLib",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

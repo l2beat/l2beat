@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8719809c62f0893794a545202d4f30e3aeaa307cb4dffa27028f351a297c9b26",
+  "name": "SafeCallback",
+  "kind": "abstract",
+  "lines": 23,
+  "source": "abstract contract SafeCallback is ImmutableState, IUnlockCallback {\n    /// @notice Thrown when calling unlockCallback where the caller is not PoolManager\n    error NotPoolManager();\n\n    constructor(IPoolManager _poolManager) ImmutableState(_poolManager) {}\n\n    /// @notice Only allow calls from the PoolManager contract\n    modifier onlyPoolManager() {\n        if (msg.sender != address(poolManager)) {\n            revert NotPoolManager();\n        }\n        _;\n    }\n\n    /// @inheritdoc IUnlockCallback\n    /// @dev We force the onlyPoolManager modifier by exposing a virtual function after the onlyPoolManager check.\n    function unlockCallback(bytes calldata data) external onlyPoolManager returns (bytes memory) {\n        return _unlockCallback(data);\n    }\n\n    /// @dev to be implemented by the child contract, to safely guarantee the logic is only executed by the PoolManager\n    function _unlockCallback(bytes calldata data) internal virtual returns (bytes memory);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

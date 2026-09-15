@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "369229d2408505114a0e72711df4e55b02ffe404c2ab44aebe12db92aa1cc689",
+  "name": "UniswapV3Factory",
+  "kind": "contract",
+  "lines": 62,
+  "source": "contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegateCall {\n    /// @inheritdoc IUniswapV3Factory\n    address public override owner;\n\n    /// @inheritdoc IUniswapV3Factory\n    mapping(uint24 => int24) public override feeAmountTickSpacing;\n    /// @inheritdoc IUniswapV3Factory\n    mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;\n\n    constructor() {\n        owner = msg.sender;\n        emit OwnerChanged(address(0), msg.sender);\n\n        feeAmountTickSpacing[500] = 10;\n        emit FeeAmountEnabled(500, 10);\n        feeAmountTickSpacing[3000] = 60;\n        emit FeeAmountEnabled(3000, 60);\n        feeAmountTickSpacing[10000] = 200;\n        emit FeeAmountEnabled(10000, 200);\n    }\n\n    /// @inheritdoc IUniswapV3Factory\n    function createPool(address tokenA, address tokenB, uint24 fee)\n        external\n        override\n        noDelegateCall\n        returns (address pool)\n    {\n        require(tokenA != tokenB);\n        (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);\n        require(token0 != address(0));\n        int24 tickSpacing = feeAmountTickSpacing[fee];\n        require(tickSpacing != 0);\n        require(getPool[token0][token1][fee] == address(0));\n        pool = deploy(address(this), token0, token1, fee, tickSpacing);\n        getPool[token0][token1][fee] = pool;\n        // populate mapping in the reverse direction, deliberate choice to avoid the cost of comparing addresses\n        getPool[token1][token0][fee] = pool;\n        emit PoolCreated(token0, token1, fee, tickSpacing, pool);\n    }\n\n    /// @inheritdoc IUniswapV3Factory\n    function setOwner(address _owner) external override {\n        require(msg.sender == owner);\n        emit OwnerChanged(owner, _owner);\n        owner = _owner;\n    }\n\n    /// @inheritdoc IUniswapV3Factory\n    function enableFeeAmount(uint24 fee, int24 tickSpacing) public override {\n        require(msg.sender == owner);\n        require(fee < 1000000);\n        // tick spacing is capped at 16384 to prevent the situation where tickSpacing is so large that\n        // TickBitmap#nextInitializedTickWithinOneWord overflows int24 container from a valid tick\n        // 16384 ticks represents a >5x price change with ticks of 1 bips\n        require(tickSpacing > 0 && tickSpacing < 16384);\n        require(feeAmountTickSpacing[fee] == 0);\n\n        feeAmountTickSpacing[fee] = tickSpacing;\n        emit FeeAmountEnabled(fee, tickSpacing);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 62,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "UniswapV3Factory",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/UniswapV3Factory.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/UniswapV3Factory.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

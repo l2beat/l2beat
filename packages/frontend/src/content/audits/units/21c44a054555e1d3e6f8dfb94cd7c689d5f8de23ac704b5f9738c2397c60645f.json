@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "21c44a054555e1d3e6f8dfb94cd7c689d5f8de23ac704b5f9738c2397c60645f",
+  "name": "ImmutableState",
+  "kind": "contract",
+  "lines": 8,
+  "source": "contract ImmutableState is IImmutableState {\n    /// @inheritdoc IImmutableState\n    IPoolManager public immutable poolManager;\n\n    constructor(IPoolManager _poolManager) {\n        poolManager = _poolManager;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

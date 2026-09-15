@@ -18,7 +18,7 @@ export const AUDIT_STATUS_META: Record<
   identical: {
     label: 'Identical',
     description:
-      "Deployed unit is identical to a revision covered by the project's own audits.",
+      "Deployed unit is identical to a revision covered by an audit in the dataset: the project's own audits, audits of the upstream code it forks, of its stack, or of another project that deployed the same code.",
     bg: 'bg-positive',
     text: 'text-positive',
   },

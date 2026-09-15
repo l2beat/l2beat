@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "18cfa822dcfdada6156713d5846f538bff1dfb4ceb19e503806253bab7c182f4",
+  "name": "PoolIdLibrary",
+  "kind": "library",
+  "lines": 9,
+  "source": "library PoolIdLibrary {\n    /// @notice Returns value equal to keccak256(abi.encode(poolKey))\n    function toId(PoolKey memory poolKey) internal pure returns (PoolId poolId) {\n        assembly (\"memory-safe\") {\n            // 0xa0 represents the total size of the poolKey struct (5 slots of 32 bytes)\n            poolId := keccak256(poolKey, 0xa0)\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

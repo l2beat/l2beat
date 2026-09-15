@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2ca8f4952437e6e722b5e35d4a251921d4bc92022a36d5306dd8e3db776927aa",
+  "name": "IERC20Decimals",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IERC20Decimals {\n    function decimals() external view returns (uint8);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

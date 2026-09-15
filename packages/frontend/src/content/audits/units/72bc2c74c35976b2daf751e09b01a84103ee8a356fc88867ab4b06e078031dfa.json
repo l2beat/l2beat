@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "72bc2c74c35976b2daf751e09b01a84103ee8a356fc88867ab4b06e078031dfa",
+  "name": "SecuredTokenTransfer",
+  "kind": "abstract",
+  "lines": 25,
+  "source": "abstract contract SecuredTokenTransfer {\n    /**\n     * @notice Transfers a token and returns a boolean if it was a success\n     * @dev It checks the return data of the transfer call and returns true if the transfer was successful.\n     *      It doesn't check if the `token` address is a contract or not.\n     * @param token Token that should be transferred\n     * @param receiver Receiver to whom the token should be transferred\n     * @param amount The amount of tokens that should be transferred\n     * @return transferred Returns true if the transfer was successful\n     */\n    function transferToken(address token, address receiver, uint256 amount) internal returns (bool transferred) {\n        // 0xa9059cbb - keccack(\"transfer(address,uint256)\")\n        bytes memory data = abi.encodeWithSelector(0xa9059cbb, receiver, amount);\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            // We write the return value to scratch space.\n            // See https://docs.soliditylang.org/en/v0.7.6/internals/layout_in_memory.html#layout-in-memory\n            let success := call(sub(gas(), 10000), token, 0, add(data, 0x20), mload(data), 0, 0x20)\n            switch returndatasize()\n            case 0 { transferred := success }\n            case 0x20 { transferred := iszero(or(iszero(success), iszero(mload(0)))) }\n            default { transferred := 0 }\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 25,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "SecuredTokenTransfer",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

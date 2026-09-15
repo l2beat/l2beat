@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2be0db8931684a2ddc0ab8471144cf0474093c38ded4c3b561be4250c6cbc184",
+  "name": "NonzeroDeltaCount",
+  "kind": "library",
+  "lines": 29,
+  "source": "library NonzeroDeltaCount {\n    // The slot holding the number of nonzero deltas. bytes32(uint256(keccak256(\"NonzeroDeltaCount\")) - 1)\n    bytes32 internal constant NONZERO_DELTA_COUNT_SLOT =\n        0x7d4b3164c6e45b97e7d87b7125a44c5828d005af88f9d751cfd78729c5d99a0b;\n\n    function read() internal view returns (uint256 count) {\n        assembly (\"memory-safe\") {\n            count := tload(NONZERO_DELTA_COUNT_SLOT)\n        }\n    }\n\n    function increment() internal {\n        assembly (\"memory-safe\") {\n            let count := tload(NONZERO_DELTA_COUNT_SLOT)\n            count := add(count, 1)\n            tstore(NONZERO_DELTA_COUNT_SLOT, count)\n        }\n    }\n\n    /// @notice Potential to underflow. Ensure checks are performed by integrating contracts to ensure this does not happen.\n    /// Current usage ensures this will not happen because we call decrement with known boundaries (only up to the number of times we call increment).\n    function decrement() internal {\n        assembly (\"memory-safe\") {\n            let count := tload(NONZERO_DELTA_COUNT_SLOT)\n            count := sub(count, 1)\n            tstore(NONZERO_DELTA_COUNT_SLOT, count)\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

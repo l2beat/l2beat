@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e4c92958a2ecb2ba9a74aefbcb320704fa5e232378e4ebaaa54afb7f556f72a6",
+  "name": "ECDSA",
+  "kind": "library",
+  "lines": 79,
+  "source": "library ECDSA {\n    /**\n     * @dev Returns the address that signed a hashed message (`hash`) with\n     * `signature`. This address can then be used for verification purposes.\n     *\n     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:\n     * this function rejects them by requiring the `s` value to be in the lower\n     * half order, and the `v` value to be either 27 or 28.\n     *\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\n     * verification to be secure: it is possible to craft signatures that\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\n     * this is by receiving a hash of the original message (which may otherwise\n     * be too long), and then calling {toEthSignedMessageHash} on it.\n     */\n    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {\n        // Check the signature length\n        if (signature.length != 65) {\n            revert(\"ECDSA: invalid signature length\");\n        }\n\n        // Divide the signature in r, s and v variables\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n\n        // ecrecover takes the signature parameters, and the only way to get them\n        // currently is to use assembly.\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            r := mload(add(signature, 0x20))\n            s := mload(add(signature, 0x40))\n            v := mload(add(signature, 0x41))\n        }\n\n        return recover(hash, v, r, s);\n    }\n\n    /**\n     * @dev Overload of {ECDSA-recover-bytes32-bytes-} that receives the `v`,\n     * `r` and `s` signature fields separately.\n     */\n    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {\n        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature\n        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines\n        // the valid range for s in (281): 0 < s < secp256k1n ÷ 2 + 1, and for v in (282): v ∈ {27, 28}. Most\n        // signatures from current libraries generate a unique signature with an s-value in the lower half order.\n        //\n        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value\n        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or\n        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept\n        // these malleable signatures as well.\n        require(\n            uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0,\n            \"ECDSA: invalid signature 's' value\"\n        );\n        require(v == 27 || v == 28, \"ECDSA: invalid signature 'v' value\");\n\n        // If the signature is valid (and not malleable), return the signer address\n        address signer = ecrecover(hash, v, r, s);\n        require(signer != address(0), \"ECDSA: invalid signature\");\n\n        return signer;\n    }\n\n    /**\n     * @dev Returns an Ethereum Signed Message, created from a `hash`. This\n     * replicates the behavior of the\n     * https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign[`eth_sign`]\n     * JSON-RPC method.\n     *\n     * See {recover}.\n     */\n    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {\n        // 32 is the length in bytes of hash,\n        // enforced by the type signature above\n        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", hash));\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 67,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ECDSA",
+        "similarity": 0.519,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/cryptography/ECDSA.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 12,
+        "removed": 9,
+        "ignoredAdded": 41,
+        "ignoredRemoved": 16,
+        "unchanged": 67,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 47,
+            "newStart": 1,
+            "newLines": 75,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library ECDSA {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Recover signer address from a message by using their signature",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * @param hash bytes32 message, the hash is the signed message. What is recovered is the signer address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @param signature bytes signature, the signature is generated using web3.eth.sign()",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns the address that signed a hashed message (`hash`) with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * `signature`. This address can then be used for verification purposes.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * this function rejects them by requiring the `s` value to be in the lower",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * half order, and the `v` value to be either 27 or 28.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     * IMPORTANT: `hash` _must_ be the result of a hash operation for the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     * verification to be secure: it is possible to craft signatures that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * recover to arbitrary addresses for non-hashed data. A safe way to ensure",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * this is by receiving a hash of the original message (which may otherwise",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     * be too long), and then calling {toEthSignedMessageHash} on it.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 15, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    function recover(bytes32 hash, bytes signature) internal pure returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        bytes32 r;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        bytes32 s;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        uint8 v;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 11, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 17,
+                "text": "        // Check the signature length"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 18,
+                "text": "        if (signature.length != 65) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "            return (address(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            revert(\"ECDSA: invalid signature length\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 20,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 22,
+                "text": "        // Divide the signature in r, s and v variables"
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        bytes32 r;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        bytes32 s;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        uint8 v;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 26, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 27,
+                "text": "        // ecrecover takes the signature parameters, and the only way to get them"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 28,
+                "text": "        // currently is to use assembly."
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 30,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 31,
+                "text": "            r := mload(add(signature, 0x20))"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 32,
+                "text": "            s := mload(add(signature, 0x40))"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "            v := byte(0, mload(add(signature, 0x60)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            v := mload(add(signature, 0x41))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 34,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        // Version of signature should be 27 or 28, but 0 and 1 are also possible versions",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        if (v < 27) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "            v += 27;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        return recover(hash, v, r, s);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 37, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 31, "newLine": 38, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        // If the version is correct return the signer address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        if (v != 27 && v != 28) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "            return (address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "            // solium-disable-next-line arg-overflow",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            return ecrecover(hash, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @dev Overload of {ECDSA-recover-bytes32-bytes-} that receives the `v`,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * `r` and `s` signature fields separately.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        // the valid range for s in (281): 0 < s < secp256k1n ÷ 2 + 1, and for v in (282): v ∈ {27, 28}. Most",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        // signatures from current libraries generate a unique signature with an s-value in the lower half order.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        //",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        // these malleable signatures as well.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "            uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "            \"ECDSA: invalid signature 's' value\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        require(v == 27 || v == 28, \"ECDSA: invalid signature 'v' value\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        // If the signature is valid (and not malleable), return the signer address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        address signer = ecrecover(hash, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        require(signer != address(0), \"ECDSA: invalid signature\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 62, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        return signer;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 39, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 65, "text": "" },
+              { "type": " ", "oldLine": 41, "newLine": 66, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "     * toEthSignedMessageHash",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "     * @dev prefix a bytes32 value with \"\\x19Ethereum Signed Message:\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * and hash the result",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @dev Returns an Ethereum Signed Message, created from a `hash`. This",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * replicates the behavior of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     * https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign[`eth_sign`]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "     * JSON-RPC method.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 71, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     * See {recover}.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 45, "newLine": 73, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 74,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 75,
+                "text": "        // 32 is the length in bytes of hash,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

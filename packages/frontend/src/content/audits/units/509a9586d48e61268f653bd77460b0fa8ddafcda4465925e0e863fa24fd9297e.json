@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "509a9586d48e61268f653bd77460b0fa8ddafcda4465925e0e863fa24fd9297e",
+  "name": "IERC721",
+  "kind": "interface",
+  "lines": 120,
+  "source": "interface IERC721 is IERC165 {\n    /**\n     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.\n     */\n    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);\n\n    /**\n     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.\n     */\n    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);\n\n    /**\n     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\n     */\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\n\n    /**\n     * @dev Returns the number of tokens in ``owner``'s account.\n     */\n    function balanceOf(address owner) external view returns (uint256 balance);\n\n    /**\n     * @dev Returns the owner of the `tokenId` token.\n     *\n     * Requirements:\n     *\n     * - `tokenId` must exist.\n     */\n    function ownerOf(uint256 tokenId) external view returns (address owner);\n\n    /**\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients\n     * are aware of the ERC721 protocol to prevent tokens from being forever locked.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must exist and be owned by `from`.\n     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\n     *\n     * Emits a {Transfer} event.\n     */\n    function safeTransferFrom(address from, address to, uint256 tokenId) external;\n\n    /**\n     * @dev Transfers `tokenId` token from `from` to `to`.\n     *\n     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must be owned by `from`.\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\n     *\n     * Emits a {Transfer} event.\n     */\n    function transferFrom(address from, address to, uint256 tokenId) external;\n\n    /**\n     * @dev Gives permission to `to` to transfer `tokenId` token to another account.\n     * The approval is cleared when the token is transferred.\n     *\n     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.\n     *\n     * Requirements:\n     *\n     * - The caller must own the token or be an approved operator.\n     * - `tokenId` must exist.\n     *\n     * Emits an {Approval} event.\n     */\n    function approve(address to, uint256 tokenId) external;\n\n    /**\n     * @dev Returns the account approved for `tokenId` token.\n     *\n     * Requirements:\n     *\n     * - `tokenId` must exist.\n     */\n    function getApproved(uint256 tokenId) external view returns (address operator);\n\n    /**\n     * @dev Approve or remove `operator` as an operator for the caller.\n     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.\n     *\n     * Requirements:\n     *\n     * - The `operator` cannot be the caller.\n     *\n     * Emits an {ApprovalForAll} event.\n     */\n    function setApprovalForAll(address operator, bool _approved) external;\n\n    /**\n     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.\n     *\n     * See {setApprovalForAll}\n     */\n    function isApprovedForAll(address owner, address operator) external view returns (bool);\n\n    /**\n     * @dev Safely transfers `tokenId` token from `from` to `to`.\n     *\n     * Requirements:\n     *\n     * - `from` cannot be the zero address.\n     * - `to` cannot be the zero address.\n     * - `tokenId` token must exist and be owned by `from`.\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\n     *\n     * Emits a {Transfer} event.\n     */\n    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 118,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "IERC721",
+        "similarity": 0.857,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 24,
+        "ignoredRemoved": 26,
+        "unchanged": 118,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 29,
+            "oldLines": 21,
+            "newStart": 29,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    function ownerOf(uint256 tokenId) external view returns (address owner);"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * @dev Safely transfers `tokenId` token from `from` to `to`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * - `from` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     * - `to` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * - `tokenId` token must exist and be owned by `from`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 41, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "     * Emits a {Transfer} event.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 45, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 32,
+                "text": "     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 33,
+                "text": "     * are aware of the ERC721 protocol to prevent tokens from being forever locked."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 34, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 37,
+                "text": "     * - `from` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 38,
+                "text": "     * - `to` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 39,
+                "text": "     * - `tokenId` token must exist and be owned by `from`."
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 41,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer."
+              },
+              { "type": " ", "oldLine": 57, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 43,
+                "text": "     * Emits a {Transfer} event."
+              }
+            ]
+          },
+          {
+            "oldStart": 62,
+            "oldLines": 9,
+            "newStart": 47,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 62, "newLine": 47, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 48,
+                "text": "     * @dev Transfers `tokenId` token from `from` to `to`."
+              },
+              { "type": " ", "oldLine": 64, "newLine": 49, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     * or else they may be permanently lost. Usage of {safeTransferFrom} prevents loss, though the caller must",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * understand this adds an external call which potentially creates a reentrancy vulnerability.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 51, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 52,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 53, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 93,
+            "oldLines": 25,
+            "newStart": 76,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 76,
+                "text": "    function approve(address to, uint256 tokenId) external;"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 77, "text": "" },
+              { "type": " ", "oldLine": 95, "newLine": 78, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "     * @dev Approve or remove `operator` as an operator for the caller.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * @dev Returns the account approved for `tokenId` token.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 98, "newLine": 80, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 81,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 100, "newLine": 82, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * - The `operator` cannot be the address zero.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     * Emits an {ApprovalForAll} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     * - `tokenId` must exist.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 104, "newLine": 84, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    function setApprovalForAll(address operator, bool approved) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function getApproved(uint256 tokenId) external view returns (address operator);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 106, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 107, "newLine": 87, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     * @dev Returns the account approved for `tokenId` token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "     * @dev Approve or remove `operator` as an operator for the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 109, "newLine": 90, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 91,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 111, "newLine": 92, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     * - `tokenId` must exist.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     * - The `operator` cannot be the caller.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 94, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * Emits an {ApprovalForAll} event.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 113, "newLine": 96, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    function getApproved(uint256 tokenId) external view returns (address operator);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    function setApprovalForAll(address operator, bool _approved) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 115, "newLine": 98, "text": "" },
+              { "type": " ", "oldLine": 116, "newLine": 99, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 100,
+                "text": "     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`."
+              }
+            ]
+          },
+          {
+            "oldStart": 119,
+            "oldLines": 4,
+            "newStart": 102,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 102,
+                "text": "     * See {setApprovalForAll}"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 103,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 104,
+                "text": "    function isApprovedForAll(address owner, address operator) external view returns (bool);"
+              },
+              { "type": "+", "newLine": 105, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "     * @dev Safely transfers `tokenId` token from `from` to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * - `from` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * - `to` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     * - `tokenId` token must exist and be owned by `from`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * Emits a {Transfer} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 122, "newLine": 120, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

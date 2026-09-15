@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dd9ed1e665667060218ff5eba242fcf2cecc21335338c1dcbb0a0d089fb233ec",
+  "name": "PeripheryValidationExtended",
+  "kind": "abstract",
+  "lines": 6,
+  "source": "abstract contract PeripheryValidationExtended is PeripheryValidation {\n    modifier checkPreviousBlockhash(bytes32 previousBlockhash) {\n        require(blockhash(block.number - 1) == previousBlockhash, \"Blockhash\");\n        _;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

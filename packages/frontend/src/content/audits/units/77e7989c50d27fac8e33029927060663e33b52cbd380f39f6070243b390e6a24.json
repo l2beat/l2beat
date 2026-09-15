@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77e7989c50d27fac8e33029927060663e33b52cbd380f39f6070243b390e6a24",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 11,
+  "source": "enum Fork {\n    NONE,\n    DELTA,\n    ECOTONE,\n    FJORD,\n    GRANITE,\n    HOLOCENE,\n    ISTHMUS,\n    JOVIAN,\n    INTEROP\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

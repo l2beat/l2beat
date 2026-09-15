@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9993fbd5b6b0e0fb2e9b895d653d1a7d25d5996062b309336c62f2531e5d5aa8",
+  "name": "IMulticall_v4",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IMulticall_v4 {\n    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed\n    /// @dev The `msg.value` is passed onto all subcalls, even if a previous subcall has consumed the ether.\n    /// Subcalls can instead use `address(this).value` to see the available ETH, and consume it using {value: x}.\n    /// @param data The encoded function data for each of the calls to make to this contract\n    /// @return results The results from each of the calls passed in via data\n    function multicall(bytes[] calldata data) external payable returns (bytes[] memory results);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

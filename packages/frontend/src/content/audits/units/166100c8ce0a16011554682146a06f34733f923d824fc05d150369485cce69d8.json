@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "166100c8ce0a16011554682146a06f34733f923d824fc05d150369485cce69d8",
+  "name": "TransientStateLibrary",
+  "kind": "library",
+  "lines": 41,
+  "source": "library TransientStateLibrary {\n    /// @notice returns the reserves for the synced currency\n    /// @param manager The pool manager contract.\n\n    /// @return uint256 The reserves of the currency.\n    /// @dev returns 0 if the reserves are not synced or value is 0.\n    /// Checks the synced currency to only return valid reserve values (after a sync and before a settle).\n    function getSyncedReserves(IPoolManager manager) internal view returns (uint256) {\n        if (getSyncedCurrency(manager).isAddressZero()) {\n            return 0;\n        }\n        return uint256(manager.exttload(CurrencyReserves.RESERVES_OF_SLOT));\n    }\n\n    function getSyncedCurrency(IPoolManager manager) internal view returns (Currency) {\n        return Currency.wrap(address(uint160(uint256(manager.exttload(CurrencyReserves.CURRENCY_SLOT)))));\n    }\n\n    /// @notice Returns the number of nonzero deltas open on the PoolManager that must be zeroed out before the contract is locked\n    function getNonzeroDeltaCount(IPoolManager manager) internal view returns (uint256) {\n        return uint256(manager.exttload(NonzeroDeltaCount.NONZERO_DELTA_COUNT_SLOT));\n    }\n\n    /// @notice Get the current delta for a caller in the given currency\n    /// @param target The credited account address\n    /// @param currency The currency for which to lookup the delta\n    function currencyDelta(IPoolManager manager, address target, Currency currency) internal view returns (int256) {\n        bytes32 key;\n        assembly (\"memory-safe\") {\n            mstore(0, and(target, 0xffffffffffffffffffffffffffffffffffffffff))\n            mstore(32, and(currency, 0xffffffffffffffffffffffffffffffffffffffff))\n            key := keccak256(0, 64)\n        }\n        return int256(uint256(manager.exttload(key)));\n    }\n\n    /// @notice Returns whether the contract is unlocked or not\n    function isUnlocked(IPoolManager manager) internal view returns (bool) {\n        return manager.exttload(Lock.IS_UNLOCKED_SLOT) != 0x0;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

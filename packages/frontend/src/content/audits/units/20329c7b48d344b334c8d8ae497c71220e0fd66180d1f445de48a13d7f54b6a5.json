@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "20329c7b48d344b334c8d8ae497c71220e0fd66180d1f445de48a13d7f54b6a5",
+  "name": "GovernanceProposalStateUpgrade",
+  "kind": "contract",
+  "lines": 33,
+  "source": "contract GovernanceProposalStateUpgrade is GovernanceExploitPatchUpgrade {\n    constructor(address stakingRewardsAddress, address gasCompLogic, address userVaultAddress)\n        public\n        GovernanceExploitPatchUpgrade(stakingRewardsAddress, gasCompLogic, userVaultAddress)\n    {}\n\n    /// @notice Return the version of the contract\n    function version() external pure virtual override returns (string memory) {\n        return \"5.proposal-state-patch\";\n    }\n\n    function state(uint256 proposalId) public view virtual override returns (ProposalState) {\n        require(proposalId <= proposalCount() && proposalId > 0, \"Governance::state: invalid proposal id\");\n        Proposal storage proposal = proposals[proposalId];\n        if (getBlockTimestamp() <= proposal.startTime) {\n            return ProposalState.Pending;\n        } else if (getBlockTimestamp() <= proposal.endTime) {\n            return ProposalState.Active;\n        } else if (proposal.executed) {\n            return ProposalState.Executed;\n        } else if (\n            proposal.forVotes <= proposal.againstVotes || proposal.forVotes + proposal.againstVotes < QUORUM_VOTES\n        ) {\n            return ProposalState.Defeated;\n        } else if (getBlockTimestamp() >= proposal.endTime.add(EXECUTION_DELAY).add(EXECUTION_EXPIRATION)) {\n            return ProposalState.Expired;\n        } else if (getBlockTimestamp() >= proposal.endTime.add(EXECUTION_DELAY)) {\n            return ProposalState.AwaitingExecution;\n        } else {\n            return ProposalState.Timelocked;\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8cc7ba1787092886d931ed924c59e0c2ee2061180989caa9516d896dbefcf08e",
+  "name": "UniswapV3PoolDeployer",
+  "kind": "contract",
+  "lines": 28,
+  "source": "contract UniswapV3PoolDeployer is IUniswapV3PoolDeployer {\n    struct Parameters {\n        address factory;\n        address token0;\n        address token1;\n        uint24 fee;\n        int24 tickSpacing;\n    }\n\n    /// @inheritdoc IUniswapV3PoolDeployer\n    Parameters public override parameters;\n\n    /// @dev Deploys a pool with the given parameters by transiently setting the parameters storage slot and then\n    /// clearing it after deploying the pool.\n    /// @param factory The contract address of the Uniswap V3 factory\n    /// @param token0 The first token of the pool by address sort order\n    /// @param token1 The second token of the pool by address sort order\n    /// @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip\n    /// @param tickSpacing The spacing between usable ticks\n    function deploy(address factory, address token0, address token1, uint24 fee, int24 tickSpacing)\n        internal\n        returns (address pool)\n    {\n        parameters = Parameters({factory: factory, token0: token0, token1: token1, fee: fee, tickSpacing: tickSpacing});\n        pool = address(new UniswapV3Pool{salt: keccak256(abi.encode(token0, token1, fee))}());\n        delete parameters;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 28,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "UniswapV3PoolDeployer",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/UniswapV3PoolDeployer.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/UniswapV3PoolDeployer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 28,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 6,
+            "newStart": 12,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    /// @dev Deploys a pool with the given parameters by transiently setting the parameters storage slot and then"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// clearing it after deploying the pool."
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @param factory The contract address of the Uniswap V3 factory",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param token0 The first token of the pool by address sort order",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param token1 The second token of the pool by address sort order",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param tickSpacing The spacing between usable ticks",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 20,
+                "text": "    function deploy(address factory, address token0, address token1, uint24 fee, int24 tickSpacing)"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 21,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 22,
+                "text": "        returns (address pool)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

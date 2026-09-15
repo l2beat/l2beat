@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "027105e7220435aaad4c78539706ec02142115e7acf71607205f5f281b8682d9",
+  "name": "IPeripheryPaymentsWithFee",
+  "kind": "interface",
+  "lines": 19,
+  "source": "interface IPeripheryPaymentsWithFee is IPeripheryPayments {\n    /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH, with a percentage between\n    /// 0 (exclusive), and 1 (inclusive) going to feeRecipient\n    /// @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.\n    function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)\n        external\n        payable;\n\n    /// @notice Transfers the full amount of a token held by this contract to recipient, with a percentage between\n    /// 0 (exclusive) and 1 (inclusive) going to feeRecipient\n    /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users\n    function sweepTokenWithFee(\n        address token,\n        uint256 amountMinimum,\n        address recipient,\n        uint256 feeBips,\n        address feeRecipient\n    ) external payable;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4c47e2e53ba1e9fcb05d2c0032cfafc74b08c08db41a3d6d183f653c65ad650d",
+  "name": "MulticallExtended",
+  "kind": "abstract",
+  "lines": 23,
+  "source": "abstract contract MulticallExtended is IMulticallExtended, Multicall, PeripheryValidationExtended {\n    /// @inheritdoc IMulticallExtended\n    function multicall(uint256 deadline, bytes[] calldata data)\n        external\n        payable\n        override\n        checkDeadline(deadline)\n        returns (bytes[] memory)\n    {\n        return multicall(data);\n    }\n\n    /// @inheritdoc IMulticallExtended\n    function multicall(bytes32 previousBlockhash, bytes[] calldata data)\n        external\n        payable\n        override\n        checkPreviousBlockhash(previousBlockhash)\n        returns (bytes[] memory)\n    {\n        return multicall(data);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

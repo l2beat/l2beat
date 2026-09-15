@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "13e9d3c409acdb01b9b1cb1a682cee3e09a4d2a29f59a9e12238e831581beeda",
+  "name": "LibGameId",
+  "kind": "library",
+  "lines": 33,
+  "source": "library LibGameId {\n    /// @notice Packs values into a 32 byte GameId type.\n    /// @param _gameType The game type.\n    /// @param _timestamp The timestamp of the game's creation.\n    /// @param _gameProxy The game proxy address.\n    /// @return gameId_ The packed GameId.\n    function pack(GameType _gameType, Timestamp _timestamp, address _gameProxy)\n        internal\n        pure\n        returns (GameId gameId_)\n    {\n        assembly {\n            gameId_ := or(or(shl(224, _gameType), shl(160, _timestamp)), _gameProxy)\n        }\n    }\n\n    /// @notice Unpacks values from a 32 byte GameId type.\n    /// @param _gameId The packed GameId.\n    /// @return gameType_ The game type.\n    /// @return timestamp_ The timestamp of the game's creation.\n    /// @return gameProxy_ The game proxy address.\n    function unpack(GameId _gameId)\n        internal\n        pure\n        returns (GameType gameType_, Timestamp timestamp_, address gameProxy_)\n    {\n        assembly {\n            gameType_ := shr(224, _gameId)\n            timestamp_ := and(shr(160, _gameId), 0xFFFFFFFFFFFFFFFF)\n            gameProxy_ := and(_gameId, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 33,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibGameId",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

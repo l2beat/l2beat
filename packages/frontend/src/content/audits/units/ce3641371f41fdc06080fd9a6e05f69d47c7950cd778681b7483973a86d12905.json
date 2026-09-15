@@ -1,0 +1,1433 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ce3641371f41fdc06080fd9a6e05f69d47c7950cd778681b7483973a86d12905",
+  "name": "Proxy",
+  "kind": "contract",
+  "lines": 156,
+  "source": "contract Proxy {\n    /// @notice An event that is emitted each time the implementation is changed. This event is part\n    ///         of the EIP-1967 specification.\n    /// @param implementation The address of the implementation contract\n    event Upgraded(address indexed implementation);\n\n    /// @notice An event that is emitted each time the owner is upgraded. This event is part of the\n    ///         EIP-1967 specification.\n    /// @param previousAdmin The previous owner of the contract\n    /// @param newAdmin      The new owner of the contract\n    event AdminChanged(address previousAdmin, address newAdmin);\n\n    /// @notice A modifier that reverts if not called by the owner or by address(0) to allow\n    ///         eth_call to interact with this proxy without needing to use low-level storage\n    ///         inspection. We assume that nobody is able to trigger calls from address(0) during\n    ///         normal EVM execution.\n    modifier proxyCallIfNotAdmin() {\n        if (msg.sender == _getAdmin() || msg.sender == address(0)) {\n            _;\n        } else {\n            // This WILL halt the call frame on completion.\n            _doProxyCall();\n        }\n    }\n\n    /// @notice Sets the initial admin during contract deployment. Admin address is stored at the\n    ///         EIP-1967 admin storage slot so that accidental storage collision with the\n    ///         implementation is not possible.\n    /// @param _admin Address of the initial contract admin. Admin as the ability to access the\n    ///               transparent proxy interface.\n    constructor(address _admin) {\n        _changeAdmin(_admin);\n    }\n\n    // slither-disable-next-line locked-ether\n    receive() external payable {\n        // Proxy call by default.\n        _doProxyCall();\n    }\n\n    // slither-disable-next-line locked-ether\n    fallback() external payable {\n        // Proxy call by default.\n        _doProxyCall();\n    }\n\n    /// @notice Set the implementation contract address. The code at the given address will execute\n    ///         when this contract is called.\n    /// @param _implementation Address of the implementation contract.\n    function upgradeTo(address _implementation) public virtual proxyCallIfNotAdmin {\n        _setImplementation(_implementation);\n    }\n\n    /// @notice Set the implementation and call a function in a single transaction. Useful to ensure\n    ///         atomic execution of initialization-based upgrades.\n    /// @param _implementation Address of the implementation contract.\n    /// @param _data           Calldata to delegatecall the new implementation with.\n    function upgradeToAndCall(address _implementation, bytes calldata _data)\n        public\n        payable\n        virtual\n        proxyCallIfNotAdmin\n        returns (bytes memory)\n    {\n        _setImplementation(_implementation);\n        (bool success, bytes memory returndata) = _implementation.delegatecall(_data);\n        require(success, \"Proxy: delegatecall to new implementation contract failed\");\n        return returndata;\n    }\n\n    /// @notice Changes the owner of the proxy contract. Only callable by the owner.\n    /// @param _admin New owner of the proxy contract.\n    function changeAdmin(address _admin) public virtual proxyCallIfNotAdmin {\n        _changeAdmin(_admin);\n    }\n\n    /// @notice Gets the owner of the proxy contract.\n    /// @return Owner address.\n    function admin() public virtual proxyCallIfNotAdmin returns (address) {\n        return _getAdmin();\n    }\n\n    //// @notice Queries the implementation address.\n    /// @return Implementation address.\n    function implementation() public virtual proxyCallIfNotAdmin returns (address) {\n        return _getImplementation();\n    }\n\n    /// @notice Sets the implementation address.\n    /// @param _implementation New implementation address.\n    function _setImplementation(address _implementation) internal {\n        bytes32 proxyImplementation = Constants.PROXY_IMPLEMENTATION_ADDRESS;\n        assembly {\n            sstore(proxyImplementation, _implementation)\n        }\n        emit Upgraded(_implementation);\n    }\n\n    /// @notice Changes the owner of the proxy contract.\n    /// @param _admin New owner of the proxy contract.\n    function _changeAdmin(address _admin) internal {\n        address previous = _getAdmin();\n        bytes32 proxyOwner = Constants.PROXY_OWNER_ADDRESS;\n        assembly {\n            sstore(proxyOwner, _admin)\n        }\n        emit AdminChanged(previous, _admin);\n    }\n\n    /// @notice Performs the proxy call via a delegatecall.\n    function _doProxyCall() internal {\n        address impl = _getImplementation();\n        require(impl != address(0), \"Proxy: implementation not initialized\");\n\n        assembly {\n            // Copy calldata into memory at 0x0....calldatasize.\n            calldatacopy(0x0, 0x0, calldatasize())\n\n            // Perform the delegatecall, make sure to pass all available gas.\n            let success := delegatecall(gas(), impl, 0x0, calldatasize(), 0x0, 0x0)\n\n            // Copy returndata into memory at 0x0....returndatasize. Note that this *will*\n            // overwrite the calldata that we just copied into memory but that doesn't really\n            // matter because we'll be returning in a second anyway.\n            returndatacopy(0x0, 0x0, returndatasize())\n\n            // Success == 0 means a revert. We'll revert too and pass the data up.\n            if iszero(success) { revert(0x0, returndatasize()) }\n\n            // Otherwise we'll just return and pass the data up.\n            return(0x0, returndatasize())\n        }\n    }\n\n    /// @notice Queries the implementation address.\n    /// @return Implementation address.\n    function _getImplementation() internal view returns (address) {\n        address impl;\n        bytes32 proxyImplementation = Constants.PROXY_IMPLEMENTATION_ADDRESS;\n        assembly {\n            impl := sload(proxyImplementation)\n        }\n        return impl;\n    }\n\n    /// @notice Queries the owner of the proxy contract.\n    /// @return Owner address.\n    function _getAdmin() internal view returns (address) {\n        address owner;\n        bytes32 proxyOwner = Constants.PROXY_OWNER_ADDRESS;\n        assembly {\n            owner := sload(proxyOwner)\n        }\n        return owner;\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 101,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.307,
+        "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
+        "repository": "celo-org/celo-monorepo",
+        "path": "packages/protocol/contracts/common/Proxy.sol",
+        "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+        "commitTimestamp": "2024-10-17T11:21:11Z",
+        "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 55,
+        "removed": 50,
+        "ignoredAdded": 66,
+        "ignoredRemoved": 57,
+        "unchanged": 101,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 142,
+            "newStart": 1,
+            "newLines": 156,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract Proxy {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // Used to store the address of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    bytes32 private constant OWNER_POSITION = bytes32(uint256(keccak256(\"eip1967.proxy.admin\")) - 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    // Used to store the address of the implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    bytes32 private constant IMPLEMENTATION_POSITION = bytes32(uint256(keccak256(\"eip1967.proxy.implementation\")) - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice An event that is emitted each time the implementation is changed. This event is part",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ///         of the EIP-1967 specification.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param implementation The address of the implementation contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    event Upgraded(address indexed implementation);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    event OwnerSet(address indexed owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    event ImplementationSet(address indexed implementation);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @notice An event that is emitted each time the owner is upgraded. This event is part of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ///         EIP-1967 specification.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param previousAdmin The previous owner of the contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param newAdmin      The new owner of the contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    event AdminChanged(address previousAdmin, address newAdmin);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @notice Throws if called by any account other than the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    modifier onlyOwner() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        require(msg.sender == _getOwner(), \"sender was not owner\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        _;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @notice A modifier that reverts if not called by the owner or by address(0) to allow",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    ///         eth_call to interact with this proxy without needing to use low-level storage",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    ///         inspection. We assume that nobody is able to trigger calls from address(0) during",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    ///         normal EVM execution.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    modifier proxyCallIfNotAdmin() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        if (msg.sender == _getAdmin() || msg.sender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            _;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "            // This WILL halt the call frame on completion.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "            _doProxyCall();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 16, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    constructor() public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        _setOwner(msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Sets the initial admin during contract deployment. Admin address is stored at the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    ///         EIP-1967 admin storage slot so that accidental storage collision with the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    ///         implementation is not possible.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @param _admin Address of the initial contract admin. Admin as the ability to access the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    ///               transparent proxy interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    constructor(address _admin) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _changeAdmin(_admin);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * @notice Delegates calls to the implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    function() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        bytes32 implementationPosition = IMPLEMENTATION_POSITION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    // slither-disable-next-line locked-ether",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    receive() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // Proxy call by default.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        _doProxyCall();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 39, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 27, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        address implementationAddress;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    // slither-disable-next-line locked-ether",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    fallback() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        // Proxy call by default.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        _doProxyCall();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 45, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 29, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        // Load the address of the implementation contract from an explicit storage slot.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            implementationAddress := sload(implementationPosition)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Set the implementation contract address. The code at the given address will execute",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    ///         when this contract is called.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    /// @param _implementation Address of the implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    function upgradeTo(address _implementation) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        _setImplementation(_implementation);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 52, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 34, "newLine": 53, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        // Avoid checking if address is a contract or executing delegated call when",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        // implementation address is 0x0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        require(implementationAddress != address(0), \"No Implementation set\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        require(Address.isContract(implementationAddress), \"Invalid contract address\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @notice Set the implementation and call a function in a single transaction. Useful to ensure",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    ///         atomic execution of initialization-based upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @param _implementation Address of the implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @param _data           Calldata to delegatecall the new implementation with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    function upgradeToAndCall(address _implementation, bytes calldata _data)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        payable",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        proxyCallIfNotAdmin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        returns (bytes memory)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "    {", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        _setImplementation(_implementation);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        (bool success, bytes memory returndata) = _implementation.delegatecall(_data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(success, \"Proxy: delegatecall to new implementation contract failed\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        return returndata;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 69, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 39, "newLine": 70, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            // Extract the position of the transaction data (i.e. function ID and arguments).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            let newCallDataPosition := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            mstore(0x40, add(newCallDataPosition, calldatasize))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "            calldatacopy(newCallDataPosition, 0, calldatasize)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    /// @notice Changes the owner of the proxy contract. Only callable by the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    /// @param _admin New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function changeAdmin(address _admin) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        _changeAdmin(_admin);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 75, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 45, "newLine": 76, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "            // Call the smart contract at `implementationAddress` in the context of the proxy contract,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "            // with the same msg.sender and value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            let delegatecallSuccess := delegatecall(gas, implementationAddress, newCallDataPosition, calldatasize, 0, 0)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 49, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "            // Copy the return value of the call so it can be returned.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            let returnDataSize := returndatasize",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "            let returnDataPosition := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "            mstore(0x40, add(returnDataPosition, returnDataSize))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            returndatacopy(returnDataPosition, 0, returnDataSize)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            // Revert or return depending on whether or not the call was successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            switch delegatecallSuccess",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            case 0 { revert(returnDataPosition, returnDataSize) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "            default { return(returnDataPosition, returnDataSize) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "    /// @notice Gets the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /// @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    function admin() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        return _getAdmin();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "     * @notice Transfers ownership of Proxy to a new owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * @param newOwner Address of the new owner account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    function _transferOwnership(address newOwner) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        _setOwner(newOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    //// @notice Queries the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function implementation() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        return _getImplementation();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 70, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * @notice Sets the address of the implementation contract and calls into it.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     * @param implementation Address of the new target contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * @param callbackData The abi-encoded function call to perform in the implementation",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     * @dev Throws if the initialization callback fails.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "     * @dev If the target contract does not need initialization, use",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "     * setImplementation instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    function _setAndInitializeImplementation(address implementation, bytes calldata callbackData)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        payable",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        onlyOwner",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 84, "text": "    {", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        _setImplementation(implementation);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        bool success;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        bytes memory returnValue;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        (success, returnValue) = implementation.delegatecall(callbackData);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        require(success, \"initialization callback failed\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @notice Sets the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param _implementation New implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    function _setImplementation(address _implementation) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        bytes32 proxyImplementation = Constants.PROXY_IMPLEMENTATION_ADDRESS;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            sstore(proxyImplementation, _implementation)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        emit Upgraded(_implementation);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 90, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 91, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "     * @notice Returns the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    function _getImplementation() external view returns (address implementation) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        bytes32 implementationPosition = IMPLEMENTATION_POSITION;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        // Load the address of the implementation contract from an explicit storage slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice Changes the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param _admin New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    function _changeAdmin(address _admin) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        address previous = _getAdmin();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        bytes32 proxyOwner = Constants.PROXY_OWNER_ADDRESS;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 104,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            implementation := sload(implementationPosition)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            sstore(proxyOwner, _admin)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 106,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        emit AdminChanged(previous, _admin);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 101, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 102, "newLine": 109, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     * @notice Sets the address of the implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "     * @param implementation Address of the new target contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "     * @dev If the target contract needs to be initialized, call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     * setAndInitializeImplementation instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    function _setImplementation(address implementation) public onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "        bytes32 implementationPosition = IMPLEMENTATION_POSITION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @notice Performs the proxy call via a delegatecall.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    function _doProxyCall() internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        address impl = _getImplementation();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        require(impl != address(0), \"Proxy: implementation not initialized\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 111, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        require(Address.isContract(implementation), \"Invalid contract address\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 113, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        // Store the address of the implementation contract in an explicit storage slot.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 115,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "            sstore(implementationPosition, implementation)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "            // Copy calldata into memory at 0x0....calldatasize.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            calldatacopy(0x0, 0x0, calldatasize())",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 118, "newLine": 118, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        emit ImplementationSet(implementation);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            // Perform the delegatecall, make sure to pass all available gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            let success := delegatecall(gas(), impl, 0x0, calldatasize(), 0x0, 0x0)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 121, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "            // Copy returndata into memory at 0x0....returndatasize. Note that this *will*",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "            // overwrite the calldata that we just copied into memory but that doesn't really",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            // matter because we'll be returning in a second anyway.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            returndatacopy(0x0, 0x0, returndatasize())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 126, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            // Success == 0 means a revert. We'll revert too and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            if iszero(success) { revert(0x0, returndatasize()) }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 129, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "            // Otherwise we'll just return and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "            return(0x0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 120, "newLine": 133, "text": "    }" },
+              { "type": " ", "oldLine": 121, "newLine": 134, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "     * @notice Returns the Proxy owner's address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    function _getOwner() public view returns (address owner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        bytes32 position = OWNER_POSITION;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        // Load the address of the contract owner from an explicit storage slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "    /// @notice Queries the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "    /// @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    function _getImplementation() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        address impl;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        bytes32 proxyImplementation = Constants.PROXY_IMPLEMENTATION_ADDRESS;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 140,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            owner := sload(position)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "            impl := sload(proxyImplementation)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 142,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        return impl;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 131, "newLine": 144, "text": "    }" },
+              { "type": " ", "oldLine": 132, "newLine": 145, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "    function _setOwner(address newOwner) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        require(newOwner != address(0), \"owner cannot be 0\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        bytes32 position = OWNER_POSITION;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        // Store the address of the contract owner in an explicit storage slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "    /// @notice Queries the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "    /// @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "    function _getAdmin() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "        address owner;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "        bytes32 proxyOwner = Constants.PROXY_OWNER_ADDRESS;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 151,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "            sstore(position, newOwner)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "            owner := sload(proxyOwner)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 153,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "        emit OwnerSet(newOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "        return owner;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 141, "newLine": 155, "text": "    }" },
+              { "type": " ", "oldLine": 142, "newLine": 156, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

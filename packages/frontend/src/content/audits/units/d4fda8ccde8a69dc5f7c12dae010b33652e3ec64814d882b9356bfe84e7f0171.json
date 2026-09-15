@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d4fda8ccde8a69dc5f7c12dae010b33652e3ec64814d882b9356bfe84e7f0171",
+  "name": "L1ChugSplashProxy",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface L1ChugSplashProxy {\n    receive() external payable;\n    fallback() external payable;\n    function setStorage(bytes32 _key, bytes32 _value) external;\n    function setOwner(address _owner) external;\n    function getOwner() external returns (address);\n    function getImplementation() external returns (address);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

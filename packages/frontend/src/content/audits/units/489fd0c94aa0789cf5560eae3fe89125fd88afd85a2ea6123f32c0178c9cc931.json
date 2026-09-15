@@ -1,0 +1,737 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "489fd0c94aa0789cf5560eae3fe89125fd88afd85a2ea6123f32c0178c9cc931",
+  "name": "V3SwapRouter",
+  "kind": "abstract",
+  "lines": 168,
+  "source": "abstract contract V3SwapRouter is UniswapImmutables, Permit2Payments, IUniswapV3SwapCallback {\n    using V3Path for bytes;\n    using BytesLib for bytes;\n    using CalldataDecoder for bytes;\n    using SafeCast_1 for uint256;\n\n    error V3InvalidSwap();\n    error V3TooLittleReceived();\n    error V3TooMuchRequested();\n    error V3InvalidAmountOut();\n    error V3InvalidCaller();\n\n    /// @dev The minimum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MIN_TICK)\n    uint160 internal constant MIN_SQRT_RATIO = 4295128739;\n\n    /// @dev The maximum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MAX_TICK)\n    uint160 internal constant MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342;\n\n    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata data) external {\n        if (amount0Delta <= 0 && amount1Delta <= 0) {\n            revert V3InvalidSwap();\n        } // swaps entirely within 0-liquidity regions are not supported\n        (, address payer) = abi.decode(data, (bytes, address));\n        bytes calldata path = data.toBytes(0);\n\n        // because exact output swaps are executed in reverse order, in this case tokenOut is actually tokenIn\n        (address tokenIn, uint24 fee, address tokenOut) = path.decodeFirstPool();\n\n        if (computePoolAddress(tokenIn, tokenOut, fee) != msg.sender) {\n            revert V3InvalidCaller();\n        }\n\n        (bool isExactInput, uint256 amountToPay) =\n            amount0Delta > 0 ? (tokenIn < tokenOut, uint256(amount0Delta)) : (tokenOut < tokenIn, uint256(amount1Delta));\n\n        if (isExactInput) {\n            // Pay the pool (msg.sender)\n            payOrPermit2Transfer(tokenIn, payer, msg.sender, amountToPay);\n        } else {\n            // either initiate the next swap or pay\n            if (path.hasMultiplePools()) {\n                // this is an intermediate step so the payer is actually this contract\n                path = path.skipToken();\n                _swap(-amountToPay.toInt256(), msg.sender, path, payer, false);\n            } else {\n                if (amountToPay > MaxInputAmount.get()) {\n                    revert V3TooMuchRequested();\n                }\n                // note that because exact output swaps are executed in reverse order, tokenOut is actually tokenIn\n                payOrPermit2Transfer(tokenOut, payer, msg.sender, amountToPay);\n            }\n        }\n    }\n\n    /// @notice Performs a Uniswap v3 exact input swap\n    /// @param recipient The recipient of the output tokens\n    /// @param amountIn The amount of input tokens for the trade\n    /// @param amountOutMinimum The minimum desired amount of output tokens\n    /// @param path The path of the trade as a bytes string\n    /// @param payer The address that will be paying the input\n    function v3SwapExactInput(\n        address recipient,\n        uint256 amountIn,\n        uint256 amountOutMinimum,\n        bytes calldata path,\n        address payer\n    ) internal {\n        // use amountIn == ActionConstants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract\n        if (amountIn == ActionConstants.CONTRACT_BALANCE) {\n            address tokenIn = path.decodeFirstToken();\n            amountIn = ERC20(tokenIn).balanceOf(address(this));\n        }\n\n        uint256 amountOut;\n        while (true) {\n            bool hasMultiplePools = path.hasMultiplePools();\n\n            // the outputs of prior swaps become the inputs to subsequent ones\n            (int256 amount0Delta, int256 amount1Delta, bool zeroForOne) = _swap(\n                amountIn.toInt256(),\n                hasMultiplePools ? address(this) : recipient, // for intermediate swaps, this contract custodies\n                path.getFirstPool(), // only the first pool is needed\n                payer, // for intermediate swaps, this contract custodies\n                true\n            );\n\n            amountIn = uint256(-(zeroForOne ? amount1Delta : amount0Delta));\n\n            // decide whether to continue or terminate\n            if (hasMultiplePools) {\n                payer = address(this);\n                path = path.skipToken();\n            } else {\n                amountOut = amountIn;\n                break;\n            }\n        }\n\n        if (amountOut < amountOutMinimum) {\n            revert V3TooLittleReceived();\n        }\n    }\n\n    /// @notice Performs a Uniswap v3 exact output swap\n    /// @param recipient The recipient of the output tokens\n    /// @param amountOut The amount of output tokens to receive for the trade\n    /// @param amountInMaximum The maximum desired amount of input tokens\n    /// @param path The path of the trade as a bytes string\n    /// @param payer The address that will be paying the input\n    function v3SwapExactOutput(\n        address recipient,\n        uint256 amountOut,\n        uint256 amountInMaximum,\n        bytes calldata path,\n        address payer\n    ) internal {\n        MaxInputAmount.set(amountInMaximum);\n        (int256 amount0Delta, int256 amount1Delta, bool zeroForOne) =\n            _swap(-amountOut.toInt256(), recipient, path, payer, false);\n\n        uint256 amountOutReceived = zeroForOne ? uint256(-amount1Delta) : uint256(-amount0Delta);\n\n        if (amountOutReceived != amountOut) {\n            revert V3InvalidAmountOut();\n        }\n\n        MaxInputAmount.set(0);\n    }\n\n    /// @dev Performs a single swap for both exactIn and exactOut\n    /// For exactIn, `amount` is `amountIn`. For exactOut, `amount` is `-amountOut`\n    function _swap(int256 amount, address recipient, bytes calldata path, address payer, bool isExactIn)\n        private\n        returns (int256 amount0Delta, int256 amount1Delta, bool zeroForOne)\n    {\n        (address tokenIn, uint24 fee, address tokenOut) = path.decodeFirstPool();\n\n        zeroForOne = isExactIn ? tokenIn < tokenOut : tokenOut < tokenIn;\n\n        (amount0Delta, amount1Delta) = IUniswapV3Pool(computePoolAddress(tokenIn, tokenOut, fee)).swap(\n            recipient,\n            zeroForOne,\n            amount,\n            (zeroForOne ? MIN_SQRT_RATIO + 1 : MAX_SQRT_RATIO - 1),\n            abi.encode(path, payer)\n        );\n    }\n\n    function computePoolAddress(address tokenA, address tokenB, uint24 fee) private view returns (address pool) {\n        if (tokenA > tokenB) {\n            (tokenA, tokenB) = (tokenB, tokenA);\n        }\n        pool = address(\n            uint160(\n                uint256(\n                    keccak256(\n                        abi.encodePacked(\n                            hex\"ff\",\n                            UNISWAP_V3_FACTORY,\n                            keccak256(abi.encode(tokenA, tokenB, fee)),\n                            UNISWAP_V3_POOL_INIT_CODE_HASH\n                        )\n                    )\n                )\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 157,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "V3SwapRouter",
+        "similarity": 0.857,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-operation-contracts",
+        "path": "src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",
+        "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+        "commitTimestamp": "2024-10-08T04:43:53Z",
+        "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 11,
+        "removed": 26,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 9,
+        "unchanged": 157,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 29,
+            "newStart": 1,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract V3SwapRouter is KatanaImmutables, Permit2Payments, IKatanaV3SwapCallback {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract V3SwapRouter is UniswapImmutables, Permit2Payments, IUniswapV3SwapCallback {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using V3Path for bytes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using BytesLib for bytes;"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    using SafeCast for uint256;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    using CalldataDecoder for bytes;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    using SafeCast_1 for uint256;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "    error V3InvalidSwap();"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "    error V3TooLittleReceived();"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    error V3TooMuchRequested();"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "    error V3InvalidAmountOut();"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "    error V3InvalidCaller();"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    error V3UnauthorizedSwap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @dev Used as the placeholder value for maxAmountIn, because the computed amount in for an exact output swap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// can never actually be this value",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    uint256 private constant DEFAULT_MAX_AMOUNT_IN = type(uint256).max;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 16, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @dev Transient storage variable used for checking slippage",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    uint256 private maxAmountInCached = DEFAULT_MAX_AMOUNT_IN;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 19, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 13,
+                "text": "    /// @dev The minimum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MIN_TICK)"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 14,
+                "text": "    uint160 internal constant MIN_SQRT_RATIO = 4295128739;"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 16,
+                "text": "    /// @dev The maximum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MAX_TICK)"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 17,
+                "text": "    uint160 internal constant MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    function katanaV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata data) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata data) external {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 20,
+                "text": "        if (amount0Delta <= 0 && amount1Delta <= 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 21,
+                "text": "            revert V3InvalidSwap();"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 22,
+                "text": "        } // swaps entirely within 0-liquidity regions are not supported"
+              }
+            ]
+          },
+          {
+            "oldStart": 50,
+            "oldLines": 7,
+            "newStart": 43,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 43,
+                "text": "                path = path.skipToken();"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 44,
+                "text": "                _swap(-amountToPay.toInt256(), msg.sender, path, payer, false);"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 45,
+                "text": "            } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "                if (amountToPay > maxAmountInCached) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "                if (amountToPay > MaxInputAmount.get()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 47,
+                "text": "                    revert V3TooMuchRequested();"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 48,
+                "text": "                }"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 49,
+                "text": "                // note that because exact output swaps are executed in reverse order, tokenOut is actually tokenIn"
+              }
+            ]
+          },
+          {
+            "oldStart": 59,
+            "oldLines": 7,
+            "newStart": 52,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 52,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 61, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /// @notice Performs a Katana v3 exact input swap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @notice Performs a Uniswap v3 exact input swap",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 56,
+                "text": "    /// @param recipient The recipient of the output tokens"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 57,
+                "text": "    /// @param amountIn The amount of input tokens for the trade"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 58,
+                "text": "    /// @param amountOutMinimum The minimum desired amount of output tokens"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 8,
+            "newStart": 65,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 65,
+                "text": "        bytes calldata path,"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 66,
+                "text": "        address payer"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 67,
+                "text": "    ) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "        // use amountIn == Constants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        if (amountIn == Constants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        // use amountIn == ActionConstants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        if (amountIn == ActionConstants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 70,
+                "text": "            address tokenIn = path.decodeFirstToken();"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 71,
+                "text": "            amountIn = ERC20(tokenIn).balanceOf(address(this));"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 72, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 108,
+            "oldLines": 7,
+            "newStart": 101,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 101,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 109, "newLine": 102, "text": "    }" },
+              { "type": " ", "oldLine": 110, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @notice Performs a Katana v3 exact output swap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// @notice Performs a Uniswap v3 exact output swap",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 105,
+                "text": "    /// @param recipient The recipient of the output tokens"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 106,
+                "text": "    /// @param amountOut The amount of output tokens to receive for the trade"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 107,
+                "text": "    /// @param amountInMaximum The maximum desired amount of input tokens"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 7,
+            "newStart": 114,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 114,
+                "text": "        bytes calldata path,"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 115,
+                "text": "        address payer"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 116,
+                "text": "    ) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        maxAmountInCached = amountInMaximum;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        MaxInputAmount.set(amountInMaximum);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 118,
+                "text": "        (int256 amount0Delta, int256 amount1Delta, bool zeroForOne) ="
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 119,
+                "text": "            _swap(-amountOut.toInt256(), recipient, path, payer, false);"
+              },
+              { "type": " ", "oldLine": 127, "newLine": 120, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 131,
+            "oldLines": 23,
+            "newStart": 124,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 124,
+                "text": "            revert V3InvalidAmountOut();"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 125,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 133, "newLine": 126, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        maxAmountInCached = DEFAULT_MAX_AMOUNT_IN;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        MaxInputAmount.set(0);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 135, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 136, "newLine": 129, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "    function checkAuthorizedV3Path(bytes calldata path) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        uint256 length = path.length / Constants.NEXT_V3_POOL_OFFSET + 1;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "        address[] memory tokens = new address[](length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "        for (uint256 i; i < length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "            tokens[i] = path.decodeFirstToken();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "            if (i + 1 < length) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "                path = path.skipToken();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "        if (!IKatanaGovernance(KATANA_GOVERNANCE).isAuthorized(tokens, msg.sender)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "            revert V3UnauthorizedSwap();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 150, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 130,
+                "text": "    /// @dev Performs a single swap for both exactIn and exactOut"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 131,
+                "text": "    /// For exactIn, `amount` is `amountIn`. For exactOut, `amount` is `-amountOut`"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 132,
+                "text": "    function _swap(int256 amount, address recipient, bytes calldata path, address payer, bool isExactIn)"
+              }
+            ]
+          },
+          {
+            "oldStart": 158,
+            "oldLines": 7,
+            "newStart": 137,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 158, "newLine": 137, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 138,
+                "text": "        zeroForOne = isExactIn ? tokenIn < tokenOut : tokenOut < tokenIn;"
+              },
+              { "type": " ", "oldLine": 160, "newLine": 139, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "        (amount0Delta, amount1Delta) = IKatanaV3Pool(computePoolAddress(tokenIn, tokenOut, fee)).swap(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        (amount0Delta, amount1Delta) = IUniswapV3Pool(computePoolAddress(tokenIn, tokenOut, fee)).swap(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 141,
+                "text": "            recipient,"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 142,
+                "text": "            zeroForOne,"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 143,
+                "text": "            amount,"
+              }
+            ]
+          },
+          {
+            "oldStart": 177,
+            "oldLines": 9,
+            "newStart": 156,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 156,
+                "text": "                    keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 157,
+                "text": "                        abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 158,
+                "text": "                            hex\"ff\","
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "                            KATANA_V3_FACTORY,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "                            UNISWAP_V3_FACTORY,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 160,
+                "text": "                            keccak256(abi.encode(tokenA, tokenB, fee)),"
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "                            KATANA_V3_POOL_INIT_CODE_HASH",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "                            UNISWAP_V3_POOL_INIT_CODE_HASH",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 162,
+                "text": "                        )"
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 163,
+                "text": "                    )"
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 164,
+                "text": "                )"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

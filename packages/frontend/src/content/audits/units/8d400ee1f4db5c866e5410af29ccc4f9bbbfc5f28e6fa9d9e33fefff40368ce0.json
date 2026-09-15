@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8d400ee1f4db5c866e5410af29ccc4f9bbbfc5f28e6fa9d9e33fefff40368ce0",
+  "name": "MaxInputAmount",
+  "kind": "library",
+  "lines": 16,
+  "source": "library MaxInputAmount {\n    // The slot holding the the maximum desired amount of input tokens, transiently. bytes32(uint256(keccak256(\"MaxAmountIn\")) - 1)\n    bytes32 constant MAX_AMOUNT_IN_SLOT = 0xaf28d9864a81dfdf71cab65f4e5d79a0cf9b083905fb8971425e6cb581b3f692;\n\n    function set(uint256 maxAmountIn) internal {\n        assembly (\"memory-safe\") {\n            tstore(MAX_AMOUNT_IN_SLOT, maxAmountIn)\n        }\n    }\n\n    function get() internal view returns (uint256 maxAmountIn) {\n        assembly (\"memory-safe\") {\n            maxAmountIn := tload(MAX_AMOUNT_IN_SLOT)\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

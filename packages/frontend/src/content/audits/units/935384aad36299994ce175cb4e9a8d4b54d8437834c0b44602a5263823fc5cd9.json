@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "935384aad36299994ce175cb4e9a8d4b54d8437834c0b44602a5263823fc5cd9",
+  "name": "TRUSTED_SETUP.md",
+  "kind": "program",
+  "lines": 89,
+  "source": "# Groth16 Trusted Setup\n\n## Prerequisites\n\nMake sure you have already built the circuits to the `build/groth16` directory.\n\n```\nmake build-circuits\n```\n\nThe trusted setup process will overwrite the proving key, verifying key, and the relevant\ncontracts in the `build/groth16` directory.\n\n## Powers of Tau\n\nDownload the powers of tau file for the given number of constraints. You will need to choose the\nnumber based on the number of constraints in the circuit (nearest power of 2 above the number of constraints).\n\n```\nexport NB_CONSTRAINTS_LOG2=23\nwget https://storage.googleapis.com/zkevm/ptau/powersOfTau28_hez_final_${NB_CONSTRAINTS_LOG2}.ptau \\\n    -O powersOfTau28_hez_final.ptau\n```\n\n## Semaphore Install\n\n```\ngit clone https://github.com/jtguibas/semaphore-gnark-11.git\ngit checkout ee57a61abfc3924c61ffc0a3d033bb92dfe7bbe8\ngo build\nmv semaphore-mtb-setup semaphore-gnark-11\ncp semaphore-gnark-11 ../sp1/crates/prover/\n```\n\n## Phase 1 Setup\n\n```\nmkdir -p trusted-setup\n./semaphore-gnark-11 p1i powersOfTau28_hez_final.ptau trusted-setup/phase1\n```\n\n## Phase 2 Setup\n\n```\n./semaphore-gnark-11 p2n trusted-setup/phase1 build/groth16/groth16_circuit.bin trusted-setup/phase2 trusted-setup/evals\n```\n\n## Phase 2 Contributions\n\n```\n./semaphore-gnark-11 p2c trusted-setup/phase2 trusted-setup/phase2-1-jtguibas\n./semaphore-gnark-11 p2c trusted-setup/phase2-1-jtguibas trusted-setup/phase2-2-pumatheuma\ncp trusted-setup/phase2-2-pumatheuma trusted-setup/phase2-final\n```\n\n## Export Keys\n\n```\n./semaphore-gnark-11 key trusted-setup/phase1 trusted-setup/phase2-final trusted-setup/evals build/groth16/groth16_circuit.bin\ncp pk trusted-setup/groth16_pk.bin\ncp vk trusted-setup/groth16_vk.bin\n```\n\n## Export Verifier\n\n```\n./semaphore-gnark-11 sol vk\ncp Groth16Verifier.sol trusted-setup/Groth16Verifier.sol\n```\n\n## Override Existing Build\n\n```\ncp trusted-setup/groth16_pk.bin build/groth16/groth16_pk.bin\ncp trusted-setup/groth16_vk.bin build/groth16/groth16_vk.bin\ncp trusted-setup/Groth16Verifier.sol build/groth16/Groth16Verifier.sol\n```\n\n## Post Trusted Setup\n\n```\ncargo run --bin post_trusted_setup --release -- --build-dir build/groth16\n```\n\n## Release\n\n```\nmake release-circuits\n```",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 89,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TRUSTED_SETUP.md",
+        "similarity": 1,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/TRUSTED_SETUP.md",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/TRUSTED_SETUP.md",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

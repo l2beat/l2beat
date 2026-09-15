@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77c89755d4a2bb5a9662e971f658cfd03b1e1ddc559dd41e5675e8403b1f85ef",
+  "name": "IPermit2Forwarder",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface IPermit2Forwarder {\n    /// @notice allows forwarding a single permit to permit2\n    /// @dev this function is payable to allow multicall with NATIVE based actions\n    /// @param owner the owner of the tokens\n    /// @param permitSingle the permit data\n    /// @param signature the signature of the permit; abi.encodePacked(r, s, v)\n    /// @return err the error returned by a reverting permit call, empty if successful\n    function permit(address owner, IAllowanceTransfer.PermitSingle calldata permitSingle, bytes calldata signature)\n        external\n        payable\n        returns (bytes memory err);\n\n    /// @notice allows forwarding batch permits to permit2\n    /// @dev this function is payable to allow multicall with NATIVE based actions\n    /// @param owner the owner of the tokens\n    /// @param _permitBatch a batch of approvals\n    /// @param signature the signature of the permit; abi.encodePacked(r, s, v)\n    /// @return err the error returned by a reverting permit call, empty if successful\n    function permitBatch(address owner, IAllowanceTransfer.PermitBatch calldata _permitBatch, bytes calldata signature)\n        external\n        payable\n        returns (bytes memory err);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

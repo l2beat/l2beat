@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3b9ca650cc294b595a7d92bb43ff58919ad1b67eb5f64db4dae1e1f1a46845b3",
+  "name": "IStaticL1ChugSplashProxy",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IStaticL1ChugSplashProxy {\n    function getImplementation() external view returns (address);\n\n    function getOwner() external view returns (address);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

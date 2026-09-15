@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bfc78f75ca7869789e08f0d7afb3ed2161692210614392467dc33cdf750d1cdf",
+  "name": "IKailuaTournament",
+  "kind": "interface",
+  "lines": 17,
+  "source": "interface IKailuaTournament {\n    /// @notice Emitted when a proof is submitted.\n    /// @param signature The proposal signature\n    /// @param status The proven status\n    event Proven(bytes32 indexed signature, ProofStatus indexed status);\n\n    /// @notice Returns the KailuaTreasury of this tournament\n    function KAILUA_TREASURY() external view returns (IKailuaTreasury);\n    /// @notice The timestamp of when the first proof for a proposal signature was made\n    function provenAt(bytes32) external view returns (Timestamp);\n    /// @notice Returns the hash of the output claim and all blob hashes associated with this proposal\n    function signature() external view returns (bytes32);\n    /// @notice Returns whether a child can be considered valid\n    function isViableSignature(bytes32 childSignature) external view returns (bool);\n    /// @notice Returns the signature of the child proven valid\n    function validChildSignature() external view returns (bytes32);\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IKailuaTournament",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaLib.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

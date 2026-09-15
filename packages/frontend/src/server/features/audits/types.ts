@@ -12,6 +12,14 @@ export type AuditUnitKind =
   /** A whole non-Solidity source file, e.g. a zk circuit. */
   | 'program'
 
+/** How the evidence collection relates to the project. */
+export type AuditMatchOrigin =
+  | 'own'
+  | 'upstream'
+  | 'stack'
+  | 'library'
+  | 'other'
+
 export type AuditStatusCounts = Record<AuditUnitStatus, number>
 
 export interface AuditCoverageNumbers {
@@ -30,8 +38,10 @@ export interface AuditsSummaryEntry {
   contractsWithoutSource: number
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
-  reportsCount: number
-  libraryReportsCount: number
+  /** Reports from the project's own collection that matched a unit. */
+  ownReportsCount: number
+  /** Reports from every other collection (upstream, stack, libraries, ...). */
+  sharedReportsCount: number
   discoveryTimestamp: number
 }
 
@@ -42,16 +52,20 @@ export interface AuditsReportEntry {
   reportDate: string | null
   /** Report file (pdf when available) in the dataset repository. */
   url?: string
-  origin: 'project' | 'library'
-  libraryName?: string
+  origin: AuditMatchOrigin
+  collection: string
+  collectionName: string
 }
 
 export interface AuditsUnitMatchEntry {
-  origin: 'project' | 'library'
-  libraryName?: string
+  origin: AuditMatchOrigin
+  collection: string
+  collectionName: string
+  /** Human readable relation, e.g. "fork of ethereum-optimism/optimism". */
+  relation: string
   auditedName: string
   renamed: boolean
-  matchedBy: 'name' | 'alias' | 'similarity'
+  matchedBy: 'identity' | 'name' | 'alias' | 'similarity'
   similarity: number
   reportId: string
   reportTitle: string
@@ -72,7 +86,10 @@ export interface AuditsUnitMatchEntry {
 }
 
 export interface AuditsUnitEntry {
+  /** Unique within a project page. */
   id: string
+  unitHash: string
+  contextKey: string
   name: string
   kind: AuditUnitKind
   startLine: number
@@ -112,6 +129,13 @@ export interface AuditsContractEntry {
   files: AuditsFileEntry[]
 }
 
+export interface AuditsContextEntry {
+  collection: string
+  collectionName: string
+  origin: AuditMatchOrigin
+  relation: string
+}
+
 export interface AuditsProjectDetails {
   slug: string
   projectId: string
@@ -126,7 +150,8 @@ export interface AuditsProjectDetails {
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
   reports: AuditsReportEntry[]
-  libraries: { id: string; name: string }[]
+  /** Own, upstream and stack collections ranked for this project. */
+  context: AuditsContextEntry[]
   contractEntries: AuditsContractEntry[]
 }
 

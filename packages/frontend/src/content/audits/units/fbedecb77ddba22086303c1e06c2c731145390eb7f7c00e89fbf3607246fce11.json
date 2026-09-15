@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fbedecb77ddba22086303c1e06c2c731145390eb7f7c00e89fbf3607246fce11",
+  "name": "KailuaPayLib",
+  "kind": "library",
+  "lines": 9,
+  "source": "library KailuaPayLib {\n    /// @notice Transfers ETH from the contract's balance to the recipient\n    function pay(uint256 amount, address recipient) internal {\n        (bool success,) = recipient.call{value: amount}(hex\"\");\n        if (!success) {\n            revert BondTransferFailed();\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 9,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "KailuaPayLib",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaLib.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

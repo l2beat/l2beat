@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc40604add0caa19e90e0345d7f225de32ee1597dff2b95c7d3f9f364ccf6d3a",
+  "name": "IMulticallExtended",
+  "kind": "interface",
+  "lines": 18,
+  "source": "interface IMulticallExtended is IMulticall {\n    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed\n    /// @dev The `msg.value` should not be trusted for any method callable from multicall.\n    /// @param deadline The time by which this function must be called before failing\n    /// @param data The encoded function data for each of the calls to make to this contract\n    /// @return results The results from each of the calls passed in via data\n    function multicall(uint256 deadline, bytes[] calldata data) external payable returns (bytes[] memory results);\n\n    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed\n    /// @dev The `msg.value` should not be trusted for any method callable from multicall.\n    /// @param previousBlockhash The expected parent blockHash\n    /// @param data The encoded function data for each of the calls to make to this contract\n    /// @return results The results from each of the calls passed in via data\n    function multicall(bytes32 previousBlockhash, bytes[] calldata data)\n        external\n        payable\n        returns (bytes[] memory results);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

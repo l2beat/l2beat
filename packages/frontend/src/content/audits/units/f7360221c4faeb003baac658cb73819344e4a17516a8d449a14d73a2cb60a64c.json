@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f7360221c4faeb003baac658cb73819344e4a17516a8d449a14d73a2cb60a64c",
+  "name": "Tornado",
+  "kind": "abstract",
+  "lines": 103,
+  "source": "abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {\n    IVerifier public immutable verifier;\n    uint256 public immutable denomination;\n\n    mapping(bytes32 => bool) public nullifierHashes;\n    // we store all commitments just to prevent accidental deposits with the same commitment\n    mapping(bytes32 => bool) public commitments;\n\n    event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp);\n    event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee);\n\n    /**\n     * @dev The constructor\n     * @param _verifier the address of SNARK verifier for this contract\n     * @param _hasher the address of MiMC hash contract\n     * @param _denomination transfer amount for each deposit\n     * @param _merkleTreeHeight the height of deposits' Merkle Tree\n     */\n    constructor(IVerifier _verifier, IHasher _hasher, uint256 _denomination, uint32 _merkleTreeHeight)\n        MerkleTreeWithHistory(_merkleTreeHeight, _hasher)\n    {\n        require(_denomination > 0, \"denomination should be greater than 0\");\n        verifier = _verifier;\n        denomination = _denomination;\n    }\n\n    /**\n     * @dev Deposit funds into the contract. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this instance.\n     * @param _commitment the note commitment, which is PedersenHash(nullifier + secret)\n     */\n    function deposit(bytes32 _commitment) external payable nonReentrant {\n        require(!commitments[_commitment], \"The commitment has been submitted\");\n\n        uint32 insertedIndex = _insert(_commitment);\n        commitments[_commitment] = true;\n        _processDeposit();\n\n        emit Deposit(_commitment, insertedIndex, block.timestamp);\n    }\n\n    /**\n     * @dev this function is defined in a child contract\n     */\n    function _processDeposit() internal virtual;\n\n    /**\n     * @dev Withdraw a deposit from the contract. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs\n     * `input` array consists of:\n     *   - merkle root of all deposits in the contract\n     *   - hash of unique deposit nullifier to prevent double spends\n     *   - the recipient of funds\n     *   - optional fee that goes to the transaction sender (usually a relay)\n     */\n    function withdraw(\n        bytes calldata _proof,\n        bytes32 _root,\n        bytes32 _nullifierHash,\n        address payable _recipient,\n        address payable _relayer,\n        uint256 _fee,\n        uint256 _refund\n    ) external payable nonReentrant {\n        require(_fee <= denomination, \"Fee exceeds transfer value\");\n        require(!nullifierHashes[_nullifierHash], \"The note has been already spent\");\n        require(isKnownRoot(_root), \"Cannot find your merkle root\"); // Make sure to use a recent one\n        require(\n            verifier.verifyProof(\n                _proof, [uint256(_root), uint256(_nullifierHash), uint256(_recipient), uint256(_relayer), _fee, _refund]\n            ),\n            \"Invalid withdraw proof\"\n        );\n\n        nullifierHashes[_nullifierHash] = true;\n        _processWithdraw(_recipient, _relayer, _fee, _refund);\n        emit Withdrawal(_recipient, _nullifierHash, _relayer, _fee);\n    }\n\n    /**\n     * @dev this function is defined in a child contract\n     */\n    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund)\n        internal\n        virtual;\n\n    /**\n     * @dev whether a note is already spent\n     */\n    function isSpent(bytes32 _nullifierHash) public view returns (bool) {\n        return nullifierHashes[_nullifierHash];\n    }\n\n    /**\n     * @dev whether an array of notes is already spent\n     */\n    function isSpentArray(bytes32[] calldata _nullifierHashes) external view returns (bool[] memory spent) {\n        spent = new bool[](_nullifierHashes.length);\n        for (uint256 i = 0; i < _nullifierHashes.length; i++) {\n            if (isSpent(_nullifierHashes[i])) {\n                spent[i] = true;\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 89,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "alias",
+        "auditedName": "Mixer",
+        "similarity": 0.717,
+        "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
+        "repository": "peppersec/tornado-mixer",
+        "path": "contracts/Mixer.sol",
+        "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+        "commitTimestamp": "2019-11-18T20:03:44Z",
+        "url": "https://github.com/peppersec/tornado-mixer/blob/d0e312eb808797a4f20a81fda2224185a3f914b4/contracts/Mixer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audit snapshot after remediation",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 14,
+        "removed": 19,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 15,
+        "unchanged": 89,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 41,
+            "newStart": 1,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Mixer is MerkleTreeWithHistory, ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint256 public denomination;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    IVerifier public immutable verifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    uint256 public immutable denomination;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    mapping(bytes32 => bool) public nullifierHashes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    // we store all commitments just to prevent accidental deposits with the same commitment"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "    mapping(bytes32 => bool) public commitments;"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    IVerifier public verifier;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // operator can update snark verification key",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // after the final trusted setup ceremony operator rights are supposed to be transferred to zero address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    address public operator;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    modifier onlyOperator() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        require(msg.sender == operator, \"Only operator can call this function.\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        _;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 9,
+                "text": "    event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp);"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 10,
+                "text": "    event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee);"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 20, "newLine": 12, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 13,
+                "text": "     * @dev The constructor"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 14,
+                "text": "     * @param _verifier the address of SNARK verifier for this contract"
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     * @param _hasher the address of MiMC hash contract",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 16,
+                "text": "     * @param _denomination transfer amount for each deposit"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 17,
+                "text": "     * @param _merkleTreeHeight the height of deposits' Merkle Tree"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @param _operator operator address (see operator comment above)",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 26, "newLine": 18, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    constructor(IVerifier _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        MerkleTreeWithHistory(_merkleTreeHeight)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    constructor(IVerifier _verifier, IHasher _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        MerkleTreeWithHistory(_merkleTreeHeight, _hasher)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 21, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 22,
+                "text": "        require(_denomination > 0, \"denomination should be greater than 0\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 23,
+                "text": "        verifier = _verifier;"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        operator = _operator;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 24,
+                "text": "        denomination = _denomination;"
+              },
+              { "type": " ", "oldLine": 35, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 36, "newLine": 26, "text": "" },
+              { "type": " ", "oldLine": 37, "newLine": 27, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * @dev Deposit funds into mixer. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this mixer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * @dev Deposit funds into the contract. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this instance.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 29,
+                "text": "     * @param _commitment the note commitment, which is PedersenHash(nullifier + secret)"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 31,
+                "text": "    function deposit(bytes32 _commitment) external payable nonReentrant {"
+              }
+            ]
+          },
+          {
+            "oldStart": 51,
+            "oldLines": 12,
+            "newStart": 41,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 51, "newLine": 41, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 42,
+                "text": "     * @dev this function is defined in a child contract"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 43, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function _processDeposit() internal;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    function _processDeposit() internal virtual;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 55, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 56, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @dev Withdraw a deposit from the mixer. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Withdraw a deposit from the contract. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 48,
+                "text": "     * `input` array consists of:"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     *   - merkle root of all deposits in the mixer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     *   - merkle root of all deposits in the contract",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 50,
+                "text": "     *   - hash of unique deposit nullifier to prevent double spends"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 51,
+                "text": "     *   - the recipient of funds"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 52,
+                "text": "     *   - optional fee that goes to the transaction sender (usually a relay)"
+              }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 27,
+            "newStart": 79,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 79,
+                "text": "     * @dev this function is defined in a child contract"
+              },
+              { "type": " ", "oldLine": 90, "newLine": 80, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 81,
+                "text": "    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund)"
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        internal;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        virtual;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 93, "newLine": 84, "text": "" },
+              { "type": " ", "oldLine": 94, "newLine": 85, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 86,
+                "text": "     * @dev whether a note is already spent"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 87, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    function isSpent(bytes32 _nullifierHash) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    function isSpent(bytes32 _nullifierHash) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 89,
+                "text": "        return nullifierHashes[_nullifierHash];"
+              },
+              { "type": " ", "oldLine": 99, "newLine": 90, "text": "    }" },
+              { "type": " ", "oldLine": 100, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 101, "newLine": 92, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * @dev allow operator to update SNARK verification keys. This is needed to update keys after the final trusted setup ceremony is held.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     * After that operator rights are supposed to be transferred to zero address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     * @dev whether an array of notes is already spent",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 104, "newLine": 94, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    function updateVerifier(address _newVerifier) external onlyOperator {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        verifier = IVerifier(_newVerifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    function isSpentArray(bytes32[] calldata _nullifierHashes) external view returns (bool[] memory spent) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        spent = new bool[](_nullifierHashes.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        for (uint256 i = 0; i < _nullifierHashes.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            if (isSpent(_nullifierHashes[i])) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "                spent[i] = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 107, "newLine": 102, "text": "    }" },
+              { "type": "-", "oldLine": 108, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * @dev operator can change his address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    function changeOperator(address _newOperator) external onlyOperator {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        operator = _newOperator;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 114, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 115, "newLine": 103, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

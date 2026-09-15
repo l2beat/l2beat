@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a8a4cdcbd906ac4dfb851bb89001f0ea1d54c234330e374dc75acc9bd17cf033",
+  "name": "GovernanceExploitPatchUpgrade",
+  "kind": "contract",
+  "lines": 64,
+  "source": "contract GovernanceExploitPatchUpgrade is GovernanceStakingUpgrade {\n    mapping(uint256 => bytes32) public proposalCodehashes;\n\n    constructor(address stakingRewardsAddress, address gasCompLogic, address userVaultAddress)\n        public\n        GovernanceStakingUpgrade(stakingRewardsAddress, gasCompLogic, userVaultAddress)\n    {}\n\n    /// @notice Return the version of the contract\n    function version() external pure virtual override returns (string memory) {\n        return \"4.patch-exploit\";\n    }\n\n    /**\n     * @notice Execute a proposal\n     * @dev This upgrade should protect against Metamorphic contracts by comparing the proposal's extcodehash with a stored one\n     * @param proposalId The proposal's ID\n     */\n    function execute(uint256 proposalId) public payable virtual override(Governance) {\n        require(msg.sender != address(this), \"Governance::propose: pseudo-external function\");\n\n        Proposal storage proposal = proposals[proposalId];\n\n        address target = proposal.target;\n\n        bytes32 proposalCodehash;\n\n        assembly {\n            proposalCodehash := extcodehash(target)\n        }\n\n        require(\n            proposalCodehash == proposalCodehashes[proposalId], \"Governance::propose: metamorphic contracts not allowed\"\n        );\n\n        super.execute(proposalId);\n    }\n\n    /**\n     * @notice Internal function called from propoese\n     * @dev This should store the extcodehash of the proposal contract\n     * @param proposer proposer address\n     * @param target smart contact address that will be executed as result of voting\n     * @param description description of the proposal\n     * @return proposalId new proposal id\n     */\n    function _propose(address proposer, address target, string memory description)\n        internal\n        virtual\n        override(Governance)\n        returns (uint256 proposalId)\n    {\n        // Implies all former predicates were valid\n        proposalId = super._propose(proposer, target, description);\n\n        bytes32 proposalCodehash;\n\n        assembly {\n            proposalCodehash := extcodehash(target)\n        }\n\n        proposalCodehashes[proposalId] = proposalCodehash;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

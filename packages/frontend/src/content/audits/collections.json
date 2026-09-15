@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "collections": {
+    "aztecnetwork": {
+      "id": "aztecnetwork",
+      "name": "aztecnetwork",
+      "kind": "project"
+    },
+    "bob": {
+      "id": "bob",
+      "name": "bob",
+      "kind": "project"
+    },
+    "celo": {
+      "id": "celo",
+      "name": "celo",
+      "kind": "project"
+    },
+    "eth-infinitism": {
+      "id": "eth-infinitism",
+      "name": "eth-infinitism",
+      "kind": "library"
+    },
+    "ethscriptions": {
+      "id": "ethscriptions",
+      "name": "ethscriptions",
+      "kind": "project"
+    },
+    "facet": {
+      "id": "facet",
+      "name": "facet",
+      "kind": "project"
+    },
+    "lighter": {
+      "id": "lighter",
+      "name": "lighter",
+      "kind": "project"
+    },
+    "openzeppelin": {
+      "id": "openzeppelin",
+      "name": "openzeppelin",
+      "kind": "library"
+    },
+    "privacy-pools": {
+      "id": "privacy-pools",
+      "name": "privacy-pools",
+      "kind": "project"
+    },
+    "roninnetwork": {
+      "id": "roninnetwork",
+      "name": "roninnetwork",
+      "kind": "project"
+    },
+    "safe": {
+      "id": "safe",
+      "name": "Safe",
+      "kind": "library"
+    },
+    "scroll": {
+      "id": "scroll",
+      "name": "scroll",
+      "kind": "project"
+    },
+    "solady": {
+      "id": "solady",
+      "name": "Solady",
+      "kind": "library"
+    },
+    "solmate": {
+      "id": "solmate",
+      "name": "Solmate",
+      "kind": "library"
+    },
+    "sp1": {
+      "id": "sp1",
+      "name": "SP1",
+      "kind": "library"
+    },
+    "tornado-cash": {
+      "id": "tornado-cash",
+      "name": "tornado-cash",
+      "kind": "project"
+    },
+    "umbra": {
+      "id": "umbra",
+      "name": "umbra",
+      "kind": "project"
+    },
+    "unichain": {
+      "id": "unichain",
+      "name": "unichain",
+      "kind": "project"
+    },
+    "uniswapv3": {
+      "id": "uniswapv3",
+      "name": "uniswapv3",
+      "kind": "project"
+    }
+  }
+}

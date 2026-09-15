@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f57b849df208bf13cdbc27fd892cfb73d56553a4c2e867bc69c777ff46fc907",
+  "name": "IProxyAdmin",
+  "kind": "interface",
+  "lines": 29,
+  "source": "interface IProxyAdmin {\n    enum ProxyType {\n        ERC1967,\n        CHUGSPLASH,\n        RESOLVED\n    }\n\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function addressManager() external view returns (IAddressManager);\n    function changeProxyAdmin(address payable _proxy, address _newAdmin) external;\n    function getProxyAdmin(address payable _proxy) external view returns (address);\n    function getProxyImplementation(address _proxy) external view returns (address);\n    function implementationName(address) external view returns (string memory);\n    function isUpgrading() external view returns (bool);\n    function owner() external view returns (address);\n    function proxyType(address) external view returns (ProxyType);\n    function renounceOwnership() external;\n    function setAddress(string memory _name, address _address) external;\n    function setAddressManager(IAddressManager _address) external;\n    function setImplementationName(address _address, string memory _name) external;\n    function setProxyType(address _address, ProxyType _type) external;\n    function setUpgrading(bool _upgrading) external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n    function upgrade(address payable _proxy, address _implementation) external;\n    function upgradeAndCall(address payable _proxy, address _implementation, bytes memory _data) external payable;\n\n    function __constructor__(address _owner) external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1d9eadd20601f4221a43ecd11f6eab3559eff34c6477b53dddb0713a9d5b7b98",
+  "name": "fibonacci_groth16.rs",
+  "kind": "program",
+  "lines": 78,
+  "source": "//! Tests end-to-end performance of wrapping a recursion proof to PLONK.\n\nuse std::time::Instant;\n\nuse itertools::iproduct;\nuse sp1_core_executor::SP1Context;\nuse sp1_core_machine::io::SP1Stdin;\nuse sp1_prover::components::CpuProverComponents;\nuse sp1_prover::SP1Prover;\nuse sp1_stark::SP1ProverOpts;\nuse tracing_subscriber::fmt::format::FmtSpan;\nuse tracing_subscriber::util::SubscriberInitExt;\nuse tracing_subscriber::EnvFilter;\n\nfn main() {\n    // Setup tracer.\n    let default_filter = \"off\";\n    let log_appender = tracing_appender::rolling::never(\"scripts/results\", \"fibonacci_groth16.log\");\n    let env_filter = EnvFilter::try_from_default_env()\n        .unwrap_or_else(|_| EnvFilter::new(default_filter))\n        .add_directive(\"p3_keccak_air=off\".parse().unwrap())\n        .add_directive(\"p3_fri=off\".parse().unwrap())\n        .add_directive(\"p3_challenger=off\".parse().unwrap())\n        .add_directive(\"p3_dft=off\".parse().unwrap())\n        .add_directive(\"sp1_core=off\".parse().unwrap());\n    tracing_subscriber::fmt::Subscriber::builder()\n        .with_ansi(false)\n        .with_file(false)\n        .with_target(false)\n        .with_thread_names(false)\n        .with_env_filter(env_filter)\n        .with_span_events(FmtSpan::CLOSE)\n        .with_writer(log_appender)\n        .finish()\n        .init();\n\n    // Setup environment variables.\n    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");\n\n    // Initialize prover.\n    let prover = SP1Prover::<CpuProverComponents>::new();\n\n    // Setup sweep.\n    let iterations = [480000u32];\n    let shard_sizes = [1 << 22];\n    let batch_sizes = [2];\n    let elf = test_artifacts::FIBONACCI_ELF;\n    let (pk, vk) = prover.setup(elf);\n\n    for (shard_size, iterations, batch_size) in iproduct!(shard_sizes, iterations, batch_sizes) {\n        tracing::info!(\n            \"running: shard_size={}, iterations={}, batch_size={}\",\n            shard_size,\n            iterations,\n            batch_size\n        );\n        std::env::set_var(\"SHARD_SIZE\", shard_size.to_string());\n\n        tracing::info!(\"proving leaves\");\n        let stdin = SP1Stdin {\n            buffer: vec![bincode::serialize::<u32>(&iterations).unwrap()],\n            ptr: 0,\n            proofs: vec![],\n        };\n        let leaf_proving_start = Instant::now();\n        let proof = prover\n            .prove_core(&pk, &stdin, SP1ProverOpts::default(), SP1Context::default())\n            .unwrap();\n        let leaf_proving_duration = leaf_proving_start.elapsed().as_secs_f64();\n        tracing::info!(\"leaf_proving_duration={}\", leaf_proving_duration);\n\n        tracing::info!(\"proving inner\");\n        let recursion_proving_start = Instant::now();\n        let _ = prover.compress(&vk, proof, vec![], SP1ProverOpts::default());\n        let recursion_proving_duration = recursion_proving_start.elapsed().as_secs_f64();\n        tracing::info!(\"recursion_proving_duration={}\", recursion_proving_duration);\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "differs",
+      "coveredLines": 76,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "fibonacci_groth16.rs",
+        "similarity": 0.969,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/fibonacci_groth16.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/fibonacci_groth16.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 76,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::fmt::format::FmtSpan;"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 7,
+            "newStart": 38,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

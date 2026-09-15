@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a28c90452060cda8b25943ab80e524157f784736291211dbde062f61c4efd3da",
+  "name": "Constants",
+  "kind": "library",
+  "lines": 37,
+  "source": "library Constants {\n    /// @notice Special address to be used as the tx origin for gas estimation calls in the\n    ///         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if\n    ///         the minimum gas limit specified by the user is not actually enough to execute the\n    ///         given message and you're attempting to estimate the actual necessary gas limit. We\n    ///         use address(1) because it's the ecrecover precompile and therefore guaranteed to\n    ///         never have any code on any EVM chain.\n    address internal constant ESTIMATION_ADDRESS = address(1);\n\n    /// @notice Value used for the L2 sender storage slot in both the OptimismPortal and the\n    ///         CrossDomainMessenger contracts before an actual sender is set. This value is\n    ///         non-zero to reduce the gas cost of message passing transactions.\n    address internal constant DEFAULT_L2_SENDER = 0x000000000000000000000000000000000000dEaD;\n\n    /// @notice The storage slot that holds the address of a proxy implementation.\n    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)`\n    bytes32 internal constant PROXY_IMPLEMENTATION_ADDRESS =\n        0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\n\n    /// @notice The storage slot that holds the address of the owner.\n    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`\n    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;\n\n    /// @notice Returns the default values for the ResourceConfig. These are the recommended values\n    ///         for a production network.\n    function DEFAULT_RESOURCE_CONFIG() internal pure returns (ResourceMetering.ResourceConfig memory) {\n        ResourceMetering.ResourceConfig memory config = ResourceMetering.ResourceConfig({\n            maxResourceLimit: 20_000_000,\n            elasticityMultiplier: 10,\n            baseFeeMaxChangeDenominator: 8,\n            minimumBaseFee: 1 gwei,\n            systemTxMaxGas: 1_000_000,\n            maximumBaseFee: type(uint128).max\n        });\n        return config;\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 37,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Constants",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

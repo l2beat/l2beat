@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bd75e7b0162ad74600de30a4ea779a246cc9cb8ca87468ca07d75e11be7b0080",
+  "name": "Firepit",
+  "kind": "contract",
+  "lines": 5,
+  "source": "contract Firepit is ExchangeReleaser {\n    constructor(address _resource, uint256 _threshold, address _tokenJar)\n        ExchangeReleaser(_resource, _threshold, _tokenJar, address(0xdead))\n    {}\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

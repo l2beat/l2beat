@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ee362de6eccf88198c7af6d860f4bf67a9ee920742b05fc9ee8ba17c4ea02b15",
+  "name": "LibVMStatus",
+  "kind": "library",
+  "lines": 10,
+  "source": "library LibVMStatus {\n    /// @notice Get the value of a `VMStatus` type in the form of the underlying uint8.\n    /// @param _vmstatus The `VMStatus` type to get the value of.\n    /// @return vmstatus_ The value of the `VMStatus` type as a uint8 type.\n    function raw(VMStatus _vmstatus) internal pure returns (uint8 vmstatus_) {\n        assembly {\n            vmstatus_ := _vmstatus\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibVMStatus",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

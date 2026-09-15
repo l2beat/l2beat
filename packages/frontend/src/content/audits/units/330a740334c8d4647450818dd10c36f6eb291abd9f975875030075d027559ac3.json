@@ -1,0 +1,861 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "330a740334c8d4647450818dd10c36f6eb291abd9f975875030075d027559ac3",
+  "name": "L1Block",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface L1Block {\n    function DEPOSITOR_ACCOUNT() external pure returns (address addr_);\n    function number() external view returns (uint64);\n    function timestamp() external view returns (uint64);\n    function hash() external view returns (bytes32);\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "own",
+        "collection": "ethscriptions",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1Block",
+        "similarity": 0.024,
+        "reportId": "ethscriptions/zellic-facet-node-2024-11-05",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/L2/L1Block.sol",
+        "commit": "7bd9331b24e23879ebe5f6ebcb85447aaea7baac",
+        "commitTimestamp": "2024-10-30T14:14:02Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/7bd9331b24e23879ebe5f6ebcb85447aaea7baac/packages/contracts-bedrock/src/L2/L1Block.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "scope extension: FCT mint mechanism updates",
+        "coverage": "in-scope file evaluated at the head of branch facetv1.9.1",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 5,
+        "removed": 77,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 78,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 156,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1Block is ISemver, IGasToken {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Event emitted when the gas paying token is set.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    event GasPayingTokenSet(address indexed token, uint8 indexed decimals, bytes32 name, bytes32 symbol);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 4, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @notice Address of the special depositor account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function DEPOSITOR_ACCOUNT() public pure returns (address addr_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        addr_ = Constants.DEPOSITOR_ACCOUNT;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice The latest L1 block number known by the L2 system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    uint64 public number;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 12, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice The latest L1 timestamp known by the L2 system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    uint64 public timestamp;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @notice The latest L1 base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    uint256 public basefee;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @notice The latest L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    bytes32 public hash;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 21, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @notice The number of L2 blocks in the same epoch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    uint64 public sequenceNumber;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 24, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @notice The scalar value applied to the L1 blob base fee portion of the blob-capable L1 cost func.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    uint32 public blobBaseFeeScalar;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice The scalar value applied to the L1 base fee portion of the blob-capable L1 cost func.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    uint32 public baseFeeScalar;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 30, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @notice The versioned hash to authenticate the batcher by.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    bytes32 public batcherHash;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @notice The overhead value applied to the L1 portion of the transaction fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    uint256 public l1FeeOverhead;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 37, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @notice The scalar value applied to the L1 portion of the transaction fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    uint256 public l1FeeScalar;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 41, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @notice The latest L1 blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    uint256 public blobBaseFee;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 44, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    uint128 public fctMintRate;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    uint128 public fctMintPeriodL1DataGas;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 48, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @custom:semver 1.4.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    function version() public pure virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        return \"1.4.1-beta.1\";",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 52, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 53, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /// @notice Returns the gas paying token, its decimals, name and symbol.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    ///         If nothing is set in state, then it means ether is used.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    function gasPayingToken() public view returns (address addr_, uint8 decimals_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        (addr_, decimals_) = GasPayingToken.getToken();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /// @notice Returns the gas paying token name.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    ///         If nothing is set in state, then it means ether is used.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function gasPayingTokenName() public view returns (string memory name_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        name_ = GasPayingToken.getName();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 64, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 65, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    /// @notice Returns the gas paying token symbol.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    ///         If nothing is set in state, then it means ether is used.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    function gasPayingTokenSymbol() public view returns (string memory symbol_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        symbol_ = GasPayingToken.getSymbol();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 70, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 71, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    /// @notice Getter for custom gas token paying networks. Returns true if the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    ///         network uses a custom gas token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function isCustomGasToken() public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "        (address token,) = gasPayingToken();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        return token != Constants.ETHER;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 78, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /// @notice Updates the L1 block values.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    /// @param _number         L1 blocknumber.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// @param _timestamp      L1 timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @param _basefee        L1 basefee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// @param _hash           L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    /// @param _sequenceNumber Number of L2 blocks since epoch start.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @param _batcherHash    Versioned hash to authenticate batcher by.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// @param _l1FeeOverhead  L1 fee overhead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /// @param _l1FeeScalar    L1 fee scalar.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    function setL1BlockValues(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        uint64 _number,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        uint64 _timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        uint256 _basefee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        bytes32 _hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        uint64 _sequenceNumber,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "        bytes32 _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        uint256 _l1FeeOverhead,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        uint256 _l1FeeScalar",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "    ) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        require(msg.sender == DEPOSITOR_ACCOUNT(), \"L1Block: only the depositor account can set L1 block values\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 100, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        number = _number;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "        timestamp = _timestamp;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        basefee = _basefee;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        hash = _hash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        sequenceNumber = _sequenceNumber;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        batcherHash = _batcherHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        l1FeeOverhead = _l1FeeOverhead;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        l1FeeScalar = _l1FeeScalar;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 110, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @notice Updates the L1 block values for an Ecotone upgraded chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /// Params are packed and passed in as raw msg.data instead of ABI to reduce calldata size.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    /// Params are expected to be in the following order:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    ///   1. _baseFeeScalar      L1 base fee scalar",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    ///   2. _blobBaseFeeScalar  L1 blob base fee scalar",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    ///   3. _sequenceNumber     Number of L2 blocks since epoch start.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    ///   4. _timestamp          L1 timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    ///   5. _number             L1 blocknumber.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    ///   6. _basefee            L1 base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    ///   7. _blobBaseFee        L1 blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    ///   8. _hash               L1 blockhash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    ///   9. _batcherHash        Versioned hash to authenticate batcher by.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    function setL1BlockValuesEcotone() external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        address depositor = DEPOSITOR_ACCOUNT();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "            // Revert if the caller is not the depositor account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "            if xor(caller(), depositor) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "                mstore(0x00, 0x3cc50b45) // 0x3cc50b45 is the 4-byte selector of \"NotDepositor()\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "                revert(0x1C, 0x04) // returns the stored 4-byte selector from above",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "            // sequencenum (uint64), blobBaseFeeScalar (uint32), baseFeeScalar (uint32)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "            sstore(sequenceNumber.slot, shr(128, calldataload(4)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "            // number (uint64) and timestamp (uint64)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "            sstore(number.slot, shr(128, calldataload(20)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            sstore(basefee.slot, calldataload(36)) // uint256",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            sstore(blobBaseFee.slot, calldataload(68)) // uint256",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "            sstore(hash.slot, calldataload(100)) // bytes32",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "            sstore(batcherHash.slot, calldataload(132)) // bytes32",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "            // fctMintRate (uint128) and fctMintPeriodL1DataGas (uint128)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "            sstore(fctMintRate.slot, calldataload(164))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 143, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    /// @notice Sets the gas paying token for the L2 system. Can only be called by the special",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "    ///         depositor account. This function is not called on every L2 block but instead",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "    ///         only called by specially crafted L1 deposit transactions.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "        if (msg.sender != DEPOSITOR_ACCOUNT()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "            revert NotDepositor();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 151, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "        GasPayingToken.set({_token: _token, _decimals: _decimals, _name: _name, _symbol: _symbol});",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 153, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "        emit GasPayingTokenSet({token: _token, decimals: _decimals, name: _name, symbol: _symbol});",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface L1Block {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function DEPOSITOR_ACCOUNT() external pure returns (address addr_);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    function number() external view returns (uint64);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function timestamp() external view returns (uint64);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function hash() external view returns (bytes32);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 156, "newLine": 6, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

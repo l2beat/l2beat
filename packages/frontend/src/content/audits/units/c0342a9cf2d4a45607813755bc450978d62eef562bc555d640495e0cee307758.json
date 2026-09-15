@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c0342a9cf2d4a45607813755bc450978d62eef562bc555d640495e0cee307758",
+  "name": "RiscZeroSetVerifierLib",
+  "kind": "library",
+  "lines": 16,
+  "source": "library RiscZeroSetVerifierLib {\n    function selector(bytes32 imageId) internal pure returns (bytes4) {\n        return bytes4(\n            sha256(\n                abi.encodePacked(\n                    // tag\n                    sha256(\"risc0.SetInclusionReceiptVerifierParameters\"),\n                    // down\n                    imageId,\n                    // down length\n                    uint16(1) << 8\n                )\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "RiscZeroSetVerifierLib",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

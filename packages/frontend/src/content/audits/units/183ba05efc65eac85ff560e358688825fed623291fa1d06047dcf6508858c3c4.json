@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "183ba05efc65eac85ff560e358688825fed623291fa1d06047dcf6508858c3c4",
+  "name": "SafeMath",
+  "kind": "library",
+  "lines": 58,
+  "source": "library SafeMath {\n    /**\n     * @dev Multiplies two numbers, reverts on overflow.\n     */\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n        // benefit is lost if 'b' is also tested.\n        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522\n        if (a == 0) {\n            return 0;\n        }\n\n        uint256 c = a * b;\n        require(c / a == b);\n\n        return c;\n    }\n\n    /**\n     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.\n     */\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        require(b > 0); // Solidity only automatically asserts when dividing by 0\n        uint256 c = a / b;\n        // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n\n        return c;\n    }\n\n    /**\n     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).\n     */\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        require(b <= a);\n        uint256 c = a - b;\n\n        return c;\n    }\n\n    /**\n     * @dev Adds two numbers, reverts on overflow.\n     */\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a);\n\n        return c;\n    }\n\n    /**\n     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),\n     * reverts when dividing by zero.\n     */\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\n        require(b != 0);\n        return a % b;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 58,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeMath",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

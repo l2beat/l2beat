@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fe5ff09a24cf4308815c598d4015ddd5bbfb601d38ca0bb5600e4c119d7e0207",
+  "name": "ImmutableState",
+  "kind": "abstract",
+  "lines": 11,
+  "source": "abstract contract ImmutableState is IImmutableState {\n    /// @inheritdoc IImmutableState\n    address public immutable override factoryV2;\n    /// @inheritdoc IImmutableState\n    address public immutable override positionManager;\n\n    constructor(address _factoryV2, address _positionManager) {\n        factoryV2 = _factoryV2;\n        positionManager = _positionManager;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

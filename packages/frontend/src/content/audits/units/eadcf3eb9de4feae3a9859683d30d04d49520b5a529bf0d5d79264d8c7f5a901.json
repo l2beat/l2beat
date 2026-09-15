@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eadcf3eb9de4feae3a9859683d30d04d49520b5a529bf0d5d79264d8c7f5a901",
+  "name": "SignatureDecoder",
+  "kind": "contract",
+  "lines": 27,
+  "source": "contract SignatureDecoder {\n    /// @dev divides bytes signature into `uint8 v, bytes32 r, bytes32 s`.\n    /// @notice Make sure to peform a bounds check for @param pos, to avoid out of bounds access on @param signatures\n    /// @param pos which signature to read. A prior bounds check of this parameter should be performed, to avoid out of bounds access\n    /// @param signatures concatenated rsv signatures\n    function signatureSplit(bytes memory signatures, uint256 pos)\n        internal\n        pure\n        returns (uint8 v, bytes32 r, bytes32 s)\n    {\n        // The signature format is a compact form of:\n        //   {bytes32 r}{bytes32 s}{uint8 v}\n        // Compact means, uint8 is not padded to 32 bytes.\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            let signaturePos := mul(0x41, pos)\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n            // Here we are loading the last 32 bytes, including 31 bytes\n            // of 's'. There is no 'mload8' to do this.\n            //\n            // 'byte' is not working due to the Solidity parser, so lets\n            // use the second best option, 'and'\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n        }\n    }\n}",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 27,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 27,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 11,
+            "oldLines": 7,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        // The signature format is a compact form of:"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        //   {bytes32 r}{bytes32 s}{uint8 v}"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "        // Compact means, uint8 is not padded to 32 bytes."
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "            let signaturePos := mul(0x41, pos)"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "            r := mload(add(signatures, add(signaturePos, 0x20)))"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "827d4d19b493dbb6": {
+      "status": "library",
+      "coveredLines": 27,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 27,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 11,
+            "oldLines": 7,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        // The signature format is a compact form of:"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        //   {bytes32 r}{bytes32 s}{uint8 v}"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "        // Compact means, uint8 is not padded to 32 bytes."
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "            let signaturePos := mul(0x41, pos)"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "            r := mload(add(signatures, add(signaturePos, 0x20)))"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

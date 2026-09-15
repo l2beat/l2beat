@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c4e71e455d8efe8b16746bd8735fe51bf881a91284739a175791e48ecb3a96c8",
+  "name": "ITornadoGovernance",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface ITornadoGovernance {\n    function lockedBalance(address account) external view returns (uint256);\n\n    function userVault() external view returns (ITornadoVault);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

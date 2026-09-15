@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f459e05d4ca326956922c6f01f0f01bb558c1a37b03c601d6a36d63543ee580f",
+  "name": "ResourceMetering",
+  "kind": "abstract",
+  "lines": 158,
+  "source": "abstract contract ResourceMetering is Initializable {\n    /// @notice Error returned when too much gas resource is consumed.\n    error OutOfGas();\n\n    /// @notice Represents the various parameters that control the way in which resources are\n    ///         metered. Corresponds to the EIP-1559 resource metering system.\n    /// @custom:field prevBaseFee   Base fee from the previous block(s).\n    /// @custom:field prevBoughtGas Amount of gas bought so far in the current block.\n    /// @custom:field prevBlockNum  Last block number that the base fee was updated.\n    struct ResourceParams {\n        uint128 prevBaseFee;\n        uint64 prevBoughtGas;\n        uint64 prevBlockNum;\n    }\n\n    /// @notice Represents the configuration for the EIP-1559 based curve for the deposit gas\n    ///         market. These values should be set with care as it is possible to set them in\n    ///         a way that breaks the deposit gas market. The target resource limit is defined as\n    ///         maxResourceLimit / elasticityMultiplier. This struct was designed to fit within a\n    ///         single word. There is additional space for additions in the future.\n    /// @custom:field maxResourceLimit             Represents the maximum amount of deposit gas that\n    ///                                            can be purchased per block.\n    /// @custom:field elasticityMultiplier         Determines the target resource limit along with\n    ///                                            the resource limit.\n    /// @custom:field baseFeeMaxChangeDenominator  Determines max change on fee per block.\n    /// @custom:field minimumBaseFee               The min deposit base fee, it is clamped to this\n    ///                                            value.\n    /// @custom:field systemTxMaxGas               The amount of gas supplied to the system\n    ///                                            transaction. This should be set to the same\n    ///                                            number that the op-node sets as the gas limit\n    ///                                            for the system transaction.\n    /// @custom:field maximumBaseFee               The max deposit base fee, it is clamped to this\n    ///                                            value.\n    struct ResourceConfig {\n        uint32 maxResourceLimit;\n        uint8 elasticityMultiplier;\n        uint8 baseFeeMaxChangeDenominator;\n        uint32 minimumBaseFee;\n        uint32 systemTxMaxGas;\n        uint128 maximumBaseFee;\n    }\n\n    /// @notice EIP-1559 style gas parameters.\n    ResourceParams public params;\n\n    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.\n    uint256[48] private __gap;\n\n    /// @notice Meters access to a function based an amount of a requested resource.\n    /// @param _amount Amount of the resource requested.\n    modifier metered(uint64 _amount) {\n        // Record initial gas amount so we can refund for it later.\n        uint256 initialGas = gasleft();\n\n        // Run the underlying function.\n        _;\n\n        // Run the metering function.\n        _metered(_amount, initialGas);\n    }\n\n    /// @notice An internal function that holds all of the logic for metering a resource.\n    /// @param _amount     Amount of the resource requested.\n    /// @param _initialGas The amount of gas before any modifier execution.\n    function _metered(uint64 _amount, uint256 _initialGas) internal {\n        // Update block number and base fee if necessary.\n        uint256 blockDiff = block.number - params.prevBlockNum;\n\n        ResourceConfig memory config = _resourceConfig();\n        int256 targetResourceLimit =\n            int256(uint256(config.maxResourceLimit)) / int256(uint256(config.elasticityMultiplier));\n\n        if (blockDiff > 0) {\n            // Handle updating EIP-1559 style gas parameters. We use EIP-1559 to restrict the rate\n            // at which deposits can be created and therefore limit the potential for deposits to\n            // spam the L2 system. Fee scheme is very similar to EIP-1559 with minor changes.\n            int256 gasUsedDelta = int256(uint256(params.prevBoughtGas)) - targetResourceLimit;\n            int256 baseFeeDelta = (int256(uint256(params.prevBaseFee)) * gasUsedDelta)\n                / (targetResourceLimit * int256(uint256(config.baseFeeMaxChangeDenominator)));\n\n            // Update base fee by adding the base fee delta and clamp the resulting value between\n            // min and max.\n            int256 newBaseFee = Arithmetic.clamp({\n                _value: int256(uint256(params.prevBaseFee)) + baseFeeDelta,\n                _min: int256(uint256(config.minimumBaseFee)),\n                _max: int256(uint256(config.maximumBaseFee))\n            });\n\n            // If we skipped more than one block, we also need to account for every empty block.\n            // Empty block means there was no demand for deposits in that block, so we should\n            // reflect this lack of demand in the fee.\n            if (blockDiff > 1) {\n                // Update the base fee by repeatedly applying the exponent 1-(1/change_denominator)\n                // blockDiff - 1 times. Simulates multiple empty blocks. Clamp the resulting value\n                // between min and max.\n                newBaseFee = Arithmetic.clamp({\n                    _value: Arithmetic.cdexp({\n                        _coefficient: newBaseFee,\n                        _denominator: int256(uint256(config.baseFeeMaxChangeDenominator)),\n                        _exponent: int256(blockDiff - 1)\n                    }),\n                    _min: int256(uint256(config.minimumBaseFee)),\n                    _max: int256(uint256(config.maximumBaseFee))\n                });\n            }\n\n            // Update new base fee, reset bought gas, and update block number.\n            params.prevBaseFee = uint128(uint256(newBaseFee));\n            params.prevBoughtGas = 0;\n            params.prevBlockNum = uint64(block.number);\n        }\n\n        // Make sure we can actually buy the resource amount requested by the user.\n        params.prevBoughtGas += _amount;\n        if (int256(uint256(params.prevBoughtGas)) > int256(uint256(config.maxResourceLimit))) {\n            revert OutOfGas();\n        }\n\n        // Determine the amount of ETH to be paid.\n        uint256 resourceCost = uint256(_amount) * uint256(params.prevBaseFee);\n\n        // We currently charge for this ETH amount as an L1 gas burn, so we convert the ETH amount\n        // into gas by dividing by the L1 base fee. We assume a minimum base fee of 1 gwei to avoid\n        // division by zero for L1s that don't support 1559 or to avoid excessive gas burns during\n        // periods of extremely low L1 demand. One-day average gas fee hasn't dipped below 1 gwei\n        // during any 1 day period in the last 5 years, so should be fine.\n        uint256 gasCost = resourceCost / Math.max(block.basefee, 1 gwei);\n\n        // Give the user a refund based on the amount of gas they used to do all of the work up to\n        // this point. Since we're at the end of the modifier, this should be pretty accurate. Acts\n        // effectively like a dynamic stipend (with a minimum value).\n        uint256 usedGas = _initialGas - gasleft();\n        if (gasCost > usedGas) {\n            Burn.gas(gasCost - usedGas);\n        }\n    }\n\n    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used\n    ///         when L2 system transactions are generated from L1.\n    /// @param _amount Amount of the L2 gas resource requested.\n    function useGas(uint32 _amount) internal {\n        params.prevBoughtGas += uint64(_amount);\n    }\n\n    /// @notice Virtual function that returns the resource config.\n    ///         Contracts that inherit this contract must implement this function.\n    /// @return ResourceConfig\n    function _resourceConfig() internal virtual returns (ResourceConfig memory);\n\n    /// @notice Sets initial resource parameter values.\n    ///         This function must either be called by the initializer function of an upgradeable\n    ///         child contract.\n    function __ResourceMetering_init() internal onlyInitializing {\n        if (params.prevBlockNum == 0) {\n            params = ResourceParams({prevBaseFee: 1 gwei, prevBoughtGas: 0, prevBlockNum: uint64(block.number)});\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ResourceMetering",
+        "similarity": 0.965,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable_0 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Error returned when too much gas resource is consumed."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error OutOfGas();"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "    }" },
+              { "type": " ", "oldLine": 137, "newLine": 137, "text": "" },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    ///         when L2 system transactions are generated from L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    /// @param _amount Amount of the L2 gas resource requested.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function useGas(uint32 _amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        params.prevBoughtGas += uint64(_amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 145,
+                "text": "    /// @notice Virtual function that returns the resource config."
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 146,
+                "text": "    ///         Contracts that inherit this contract must implement this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 147,
+                "text": "    /// @return ResourceConfig"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

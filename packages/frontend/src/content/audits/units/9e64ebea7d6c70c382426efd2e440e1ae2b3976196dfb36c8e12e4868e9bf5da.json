@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9e64ebea7d6c70c382426efd2e440e1ae2b3976196dfb36c8e12e4868e9bf5da",
+  "name": "IENS",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IENS {\n    function owner(bytes32 node) external view returns (address);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

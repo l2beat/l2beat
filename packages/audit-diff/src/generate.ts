@@ -1,53 +1,43 @@
-import { existsSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import type { ProjectConfig } from './config.js'
 import type {
   AuditReportRef,
   ContractCoverage,
   CoverageSummary,
-  LibraryRef,
   ProjectAuditCoverage,
   SourceFileCoverage,
   StatusCounts,
-  UnitCoverage,
   UnitMatch,
+  UnitRef,
+  UnitResolution,
   UnitStatus,
 } from './contract/schema.js'
-import {
-  listZkSourceFiles,
-  readDeployedFile,
-  readProjectDir,
-  readZkSources,
-} from './dataset/read.js'
+import type { Collection } from './dataset/read.js'
 import type { AuditReport } from './dataset/types.js'
+import type { Formatter } from './deployed/format.js'
+import { readDeployedProject } from './deployed/read.js'
+import { listZkSourceFiles, readZkSources } from './deployed/zk.js'
 import { buildUnitDiff } from './diffing/diff.js'
-import {
-  comparableText,
-  countLines,
-  normalizeSource,
-} from './diffing/normalize.js'
-import { lineSimilarity } from './diffing/similarity.js'
-import {
-  type AuditedIndex,
-  buildAuditedIndex,
-  type IndexLog,
-  joinComparableLines,
-  wholeFileUnit,
-} from './matching/index.js'
-import { type MatchResult, matchUnit } from './matching/match.js'
-import { selectVersion } from './matching/select.js'
-import { type ExtractedUnit, extractUnits } from './solidity/extractUnits.js'
-
-export interface ProjectConfig {
-  slug?: string
-  /** Deployed unit name → audited unit name, for renamed contracts. */
-  aliases?: Record<string, string>
-}
+import { countLines } from './diffing/normalize.js'
+import type { EvidenceIndex } from './evidence/index.js'
+import { type PreparedUnit, prepareFile } from './evidence/units.js'
+import { buildContext, type RankingContext } from './resolve/context.js'
+import { type Resolution, resolveUnit } from './resolve/resolve.js'
+import type { UnitStore } from './store/store.js'
 
 export interface GenerateOptions {
-  datasetDir: string
   projectId: string
-  libraries: AuditedIndex[]
+  /** `packages/config/src/projects`. */
+  projectsDir: string
+  /** `.cache/zk`, written by `fetch-zk`. */
+  zkCacheDir: string
+  evidence: EvidenceIndex
+  store: UnitStore
+  formatter: Formatter
+  collectionHints: Record<string, string | string[]>
   config?: ProjectConfig
+  allContracts?: boolean
   datasetRevision?: string
   /** Base URL of the dataset repository, used to link audit report files. */
   datasetRepoUrl?: string
@@ -58,209 +48,170 @@ export function generateProject(
   options: GenerateOptions,
 ): ProjectAuditCoverage {
   const log = options.log ?? (() => {})
-  const projectDir = path.join(options.datasetDir, options.projectId)
-  const data = readProjectDir(projectDir)
-
-  const indexLog: IndexLog = { skippedVersions: [], parseErrors: [] }
-  const projectIndex = buildAuditedIndex(
-    data,
-    'project',
-    options.projectId,
-    undefined,
-    indexLog,
+  const { evidence, store } = options
+  const deployed = readDeployedProject(options.projectsDir, options.projectId, {
+    allContracts: options.allContracts,
+  })
+  const context = buildContext(evidence, {
+    projectId: options.projectId,
+    ownCollection: options.config?.collection,
+    templates: deployed.templates,
+    collectionHints: options.collectionHints,
+    aliases: options.config?.aliases,
+  })
+  log(
+    `context ${context.key}: ${
+      [...context.ranked.values()]
+        .filter((c) => c.rank <= 2)
+        .map((c) => `${c.origin}=${c.id}`)
+        .join(', ') || '(no own/upstream/stack collections)'
+    }`,
   )
-  for (const line of indexLog.skippedVersions) log(`skip: ${line}`)
-  for (const line of indexLog.parseErrors) log(`parse error: ${line}`)
 
-  const usedReports = new Map<string, AuditReportRef>()
-  const usedLibraries = new Map<string, LibraryRef>()
-  const aliases = options.config?.aliases ?? {}
+  const usedReports = new Set<string>()
+  // Resolved once per (unit hash, context) within this run.
+  const resolvedInRun = new Map<string, UnitResolution>()
 
-  /**
-   * Matches one deployed unit against the audited indexes and returns its
-   * coverage entry. Shared by Solidity units and whole-file zk programs; the
-   * latter only ever match project audited files with the same basename.
-   */
-  function classify(
-    unit: ExtractedUnit,
-    ownerId: string,
+  function resolvePrepared(
+    unit: PreparedUnit,
     ownerName: string,
-    file: string,
-  ): UnitCoverage {
-    const normalized = normalizeSource(unit.source)
-    const comparable = comparableText(normalized)
-    const comparableJoined = joinComparableLines(normalized)
-    const base = {
-      id: `${ownerId}/${path.posix.basename(file)}#${unit.name}`,
+    repoPath?: string,
+  ): UnitResolution {
+    const cacheKey = `${unit.unitHash}|${context.key}`
+    let resolution = resolvedInRun.get(cacheKey)
+    if (!resolution) {
+      resolution = store.getResolution(unit.unitHash, context.key)
+      if (!resolution) {
+        resolution = classify(
+          unit,
+          resolveUnit(unit, evidence, context, repoPath),
+          context,
+          evidence,
+        )
+        store.putResolution(
+          {
+            unitHash: unit.unitHash,
+            name: unit.name,
+            kind: unit.kind,
+            lines: countLines(unit.normalized),
+            source: unit.normalized,
+          },
+          context.key,
+          resolution,
+        )
+        if (resolution.status === 'unaudited' && unit.kind !== 'file-level') {
+          log(`${ownerName}/${unit.name}: no audited source`)
+        } else if (resolution.match?.matchedBy === 'similarity') {
+          log(
+            `${ownerName}/${unit.name}: matched ${resolution.match.auditedName} in ${resolution.match.collection} by similarity ${resolution.match.similarity.toFixed(2)}`,
+          )
+        }
+      }
+      resolvedInRun.set(cacheKey, resolution)
+    }
+    if (resolution.match) {
+      usedReports.add(resolution.match.reportId)
+      const report = evidence
+        .collection(resolution.match.collection)
+        ?.reports.get(resolution.match.reportId)
+      const collection = evidence.collection(
+        resolution.match.collection,
+      )?.collection
+      if (report && collection) {
+        store.addReport(toReportRef(collection, report, options.datasetRepoUrl))
+      }
+    }
+    return resolution
+  }
+
+  function toRef(unit: PreparedUnit, resolution: UnitResolution): UnitRef {
+    return {
+      unitHash: unit.unitHash,
+      contextKey: context.key,
       name: unit.name,
       kind: unit.kind,
       startLine: unit.startLine,
       endLine: unit.endLine,
       lines: unit.endLine - unit.startLine + 1,
-      source: normalized,
-    }
-
-    const match =
-      unit.kind === 'program'
-        ? matchProgramFile(unit, comparableJoined)
-        : matchUnit(
-            unit,
-            comparableJoined,
-            projectIndex,
-            options.libraries,
-            aliases,
-          )
-    const selection =
-      match && selectVersion(comparable, comparableJoined, match.versions)
-    if (!match || !selection) {
-      if (unit.kind !== 'file-level') {
-        log(`${ownerName}/${unit.name}: no audited source`)
-      }
-      return { ...base, status: 'unaudited', coveredLines: 0, warnings: [] }
-    }
-
-    const { index } = match
-    const version = selection.version
-    usedReports.set(
-      version.report.id,
-      toReportRef(version.report, index, options.datasetRepoUrl),
-    )
-    if (index.libraryId) {
-      usedLibraries.set(index.libraryId, {
-        id: index.libraryId,
-        name: index.libraryName ?? index.libraryId,
-      })
-    }
-    if (match.matchedBy === 'similarity') {
-      log(
-        `${ownerName}/${unit.name}: matched ${match.auditedName} by similarity ${match.similarity.toFixed(2)}`,
-      )
-    }
-
-    const unitMatch: UnitMatch = {
-      origin: index.origin,
-      libraryId: index.libraryId,
-      matchedBy: match.matchedBy,
-      auditedName: match.auditedName,
-      similarity: round(selection.similarity),
-      reportId: version.report.id,
-      repository: version.repository,
-      path: version.path,
-      commit: version.commit,
-      commitTimestamp: version.timestamp,
-      url: version.url,
-      auditStatus: version.auditStatus,
-      reviewPhase: version.reviewPhase,
-      coverage: version.coverage,
-      majorFindings: version.majorFindings,
-      isLatestVersion: version === match.versions[0],
-      laterAuditedVersionExists: selection.laterAuditedVersionExists,
-      totalVersions: match.versions.length,
-    }
-
-    if (selection.identical) {
-      const status: UnitStatus =
-        index.origin === 'library' ? 'library' : 'identical'
-      // Identical modulo ignored changes: keep the diff so the reader can see
-      // the comment / message changes; status is unaffected.
-      const diff =
-        version.normalized === normalized
-          ? undefined
-          : buildUnitDiff(version.normalized, normalized, { allIgnored: true })
-      return {
-        ...base,
-        status,
-        coveredLines: base.lines,
-        match: unitMatch,
-        diff,
-        warnings: match.warnings,
-      }
-    }
-
-    const diff = buildUnitDiff(version.normalized, normalized)
-    return {
-      ...base,
-      status: 'differs',
-      coveredLines: base.lines - diff.added,
-      match: unitMatch,
-      diff,
-      warnings: match.warnings,
+      status: resolution.status,
+      coveredLines: resolution.coveredLines,
+      match: resolution.match,
+      diffStats: resolution.diff && {
+        added: resolution.diff.added,
+        removed: resolution.diff.removed,
+        ignoredAdded: resolution.diff.ignoredAdded,
+        ignoredRemoved: resolution.diff.ignoredRemoved,
+        unchanged: resolution.diff.unchanged,
+        ignoredOnly: resolution.diff.ignoredOnly,
+      },
+      warnings: resolution.warnings,
     }
   }
 
-  /** Whole-file program units match audited files with the same basename. */
-  function matchProgramFile(
-    unit: ExtractedUnit,
-    comparableJoined: string,
-  ): MatchResult | undefined {
-    const versions = projectIndex.programFiles.get(unit.name)
-    if (!versions) return undefined
-    let similarity = 0
-    for (const version of versions) {
-      similarity = Math.max(
-        similarity,
-        lineSimilarity(comparableJoined, version.comparableLines),
-      )
-    }
-    return {
-      index: projectIndex,
-      auditedName: unit.name,
-      matchedBy: 'name',
-      versions,
-      similarity,
-      warnings: [],
-    }
-  }
-
-  const contracts: ContractCoverage[] = data.deployed.contracts.map(
-    (contract) => {
-      const files: SourceFileCoverage[] = contract.sourceFiles.map((file) => {
-        const source = readDeployedFile(projectDir, file)
-        return {
-          path: file,
-          role: file.endsWith('.p.sol') ? 'proxy' : 'implementation',
-          lines: countLines(source),
-          units: extractUnits(source).map((unit) =>
-            classify(unit, contract.chainSpecificAddress, contract.name, file),
-          ),
-        }
-      })
-
-      return {
-        name: contract.name,
-        address: contract.address,
-        chain: contract.chain,
-        template: contract.template,
-        noSource: contract.sourceFiles.length === 0,
-        summary: summarize(
-          files.flatMap((f) => f.units),
-          1,
-          files.length === 0 ? 1 : 0,
-        ),
-        files,
-      }
-    },
+  // Format every deployed Solidity file up front (one forge run per chunk).
+  const formatted = options.formatter.formatFiles(
+    deployed.contracts.flatMap((c) => c.sourceFiles.map((f) => f.file)),
   )
 
-  // zk verifiers and programs fetched into deployed-contracts/_zk; each entry
-  // is listed next to the deployed contracts, one whole-file unit per source.
-  for (const entry of readZkSources(projectDir)) {
+  const contracts: ContractCoverage[] = deployed.contracts.map((contract) => {
+    const files: SourceFileCoverage[] = contract.sourceFiles.map((file) => {
+      const content =
+        formatted.get(file.file) ?? readFileSync(file.file, 'utf8')
+      let units: UnitRef[]
+      try {
+        units = prepareFile(path.basename(file.file), content).map((unit) =>
+          toRef(unit, resolvePrepared(unit, contract.name)),
+        )
+      } catch (e) {
+        log(
+          `${contract.name}: parse error in ${file.relativePath}: ${String(e)}`,
+        )
+        units = []
+      }
+      return {
+        path: file.relativePath,
+        role: file.role,
+        lines: countLines(content),
+        units,
+      }
+    })
+    return {
+      name: contract.name,
+      address: contract.address,
+      chain: contract.chain,
+      template: contract.template,
+      noSource: contract.sourceFiles.length === 0,
+      summary: summarize(
+        files.flatMap((f) => f.units),
+        1,
+        files.length === 0 ? 1 : 0,
+      ),
+      files,
+    }
+  })
+
+  // zk verifiers and programs fetched by `fetch-zk`; one whole-file unit per
+  // source, matched by identity or by repository path suffix.
+  for (const entry of readZkSources(options.zkCacheDir, options.projectId)) {
     const [chain, address] = entry.address?.includes(':')
       ? (entry.address.split(':') as [string, string])
       : ['', entry.address ?? '']
-    const ownerId = entry.address ?? `zk:${entry.path}`
-    const files: SourceFileCoverage[] = listZkSourceFiles(projectDir, entry)
-      .filter((file) => !file.endsWith('.json'))
-      .map((file) => {
-        const content = readDeployedFile(projectDir, file)
-        const unit = wholeFileUnit(path.posix.basename(file), content)
-        return {
-          path: file,
-          role: 'program' as const,
-          lines: countLines(content),
-          units: [classify(unit, ownerId, entry.name, file)],
-        }
-      })
+    const files: SourceFileCoverage[] = listZkSourceFiles(
+      options.zkCacheDir,
+      options.projectId,
+      entry,
+    ).map((file) => {
+      const content = readFileSync(file.file, 'utf8')
+      const units = prepareFile(path.basename(file.file), content)
+      return {
+        path: file.relativePath,
+        role: 'program' as const,
+        lines: countLines(content),
+        units: units.map((unit) =>
+          toRef(unit, resolvePrepared(unit, entry.name, file.repoPath)),
+        ),
+      }
+    })
     contracts.push({
       name: entry.name,
       address,
@@ -278,26 +229,99 @@ export function generateProject(
 
   const allUnits = contracts.flatMap((c) => c.files.flatMap((f) => f.units))
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     projectId: options.projectId,
     slug: options.config?.slug ?? options.projectId,
     generatedAt: Math.floor(Date.now() / 1000),
     datasetRevision: options.datasetRevision,
-    discoveryTimestamp: data.deployed.discoveryTimestamp,
-    contractSelection: data.deployed.contractSelection,
+    discoveryTimestamp: deployed.discoveryTimestamp,
+    contractSelection: deployed.contractSelection,
+    context: {
+      key: context.key,
+      collections: [...context.ranked.values()].sort(
+        (a, b) => a.rank - b.rank || a.id.localeCompare(b.id),
+      ),
+    },
     summary: summarize(
       allUnits,
       contracts.length,
       contracts.filter((c) => c.noSource).length,
     ),
-    reports: [...usedReports.values()].sort((a, b) => a.id.localeCompare(b.id)),
-    libraries: [...usedLibraries.values()],
+    reportIds: [...usedReports].sort(),
     contracts,
   }
 }
 
+/** Turns a resolution into the stored outcome: status, match, diff. */
+function classify(
+  unit: PreparedUnit,
+  resolution: Resolution | undefined,
+  context: RankingContext,
+  evidence: EvidenceIndex,
+): UnitResolution {
+  const lines = countLines(unit.normalized)
+  if (!resolution) {
+    return { status: 'unaudited', coveredLines: 0, warnings: [] }
+  }
+  const { selection } = resolution
+  const version = selection.version
+  const ranked = context.ranked.get(resolution.collection)
+  const collection = evidence.collection(resolution.collection)?.collection
+  const match: UnitMatch = {
+    origin: ranked?.origin ?? 'other',
+    collection: resolution.collection,
+    relation: ranked?.relation ?? { type: 'name' },
+    rank: ranked?.rank ?? 4,
+    matchedBy: resolution.matchedBy,
+    auditedName: resolution.auditedName,
+    similarity: round(selection.similarity),
+    reportId: `${resolution.collection}/${version.report.id}`,
+    repository: version.repository,
+    path: version.path,
+    commit: version.commit,
+    commitTimestamp: version.timestamp,
+    url: version.url,
+    auditStatus: version.auditStatus,
+    reviewPhase: version.reviewPhase,
+    coverage: version.coverage,
+    majorFindings: version.majorFindings,
+    isLatestVersion: version === resolution.versions[0],
+    laterAuditedVersionExists: selection.laterAuditedVersionExists,
+    totalVersions: resolution.versions.length,
+  }
+
+  if (selection.identical) {
+    const status: UnitStatus =
+      collection?.kind === 'library' ? 'library' : 'identical'
+    // Identical modulo ignored changes: keep the diff so the reader can see
+    // the comment / message changes; status is unaffected.
+    const diff =
+      version.normalized === unit.normalized
+        ? undefined
+        : buildUnitDiff(version.normalized, unit.normalized, {
+            allIgnored: true,
+          })
+    return {
+      status,
+      coveredLines: lines,
+      match,
+      diff,
+      warnings: resolution.warnings,
+    }
+  }
+
+  const diff = buildUnitDiff(version.normalized, unit.normalized)
+  return {
+    status: 'differs',
+    coveredLines: Math.max(0, lines - diff.added),
+    match,
+    diff,
+    warnings: resolution.warnings,
+  }
+}
+
 function summarize(
-  units: UnitCoverage[],
+  units: UnitRef[],
   contracts: number,
   contractsWithoutSource: number,
 ): CoverageSummary {
@@ -308,13 +332,12 @@ function summarize(
   let covered = 0
   for (const unit of units) {
     counts[unit.status]++
-    const key = `${unit.status}|${unit.source}`
-    if (!seen.has(key)) {
-      seen.add(key)
+    if (!seen.has(unit.unitHash)) {
+      seen.add(unit.unitHash)
       unique[unit.status]++
     }
     total += unit.lines
-    covered += unit.coveredLines
+    covered += Math.min(unit.lines, unit.coveredLines)
   }
   return {
     contracts,
@@ -329,22 +352,21 @@ function emptyCounts(): StatusCounts {
   return { identical: 0, library: 0, differs: 0, unaudited: 0 }
 }
 
-function toReportRef(
+export function toReportRef(
+  collection: Collection,
   report: AuditReport,
-  index: AuditedIndex,
   datasetRepoUrl: string | undefined,
 ): AuditReportRef {
   return {
-    id: report.id,
+    id: `${collection.id}/${report.id}`,
+    collection: collection.id,
     title: report.title,
     auditor: report.auditor,
     reportDate: report.report_date,
     reportFile: report.report_file,
     url: datasetRepoUrl
-      ? reportUrl(datasetRepoUrl, index, report.report_file)
+      ? reportUrl(datasetRepoUrl, collection, report.report_file)
       : undefined,
-    origin: index.origin,
-    libraryId: index.libraryId,
   }
 }
 
@@ -355,19 +377,19 @@ function toReportRef(
  */
 function reportUrl(
   datasetRepoUrl: string,
-  index: AuditedIndex,
+  collection: Collection,
   reportFile: string,
 ): string {
   const stem = reportFile.replace(/\.md$/, '')
   let file = reportFile
   for (const ext of ['.pdf', '.html']) {
-    if (existsSync(path.join(index.dir, 'reports', `${stem}${ext}`))) {
+    if (existsSync(path.join(collection.dir, 'reports', `${stem}${ext}`))) {
       file = `${stem}${ext}`
       break
     }
   }
   const segments = [
-    ...index.relativeDir.split('/'),
+    ...collection.relativeDir.split('/'),
     'reports',
     ...file.split('/'),
   ]

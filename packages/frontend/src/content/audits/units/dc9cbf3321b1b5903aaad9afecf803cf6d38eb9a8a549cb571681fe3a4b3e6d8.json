@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc9cbf3321b1b5903aaad9afecf803cf6d38eb9a8a549cb571681fe3a4b3e6d8",
+  "name": "LibGameType",
+  "kind": "library",
+  "lines": 10,
+  "source": "library LibGameType {\n    /// @notice Get the value of a `GameType` type in the form of the underlying uint32.\n    /// @param _gametype The `GameType` type to get the value of.\n    /// @return gametype_ The value of the `GameType` type as a uint32 type.\n    function raw(GameType _gametype) internal pure returns (uint32 gametype_) {\n        assembly {\n            gametype_ := _gametype\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibGameType",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

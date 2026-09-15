@@ -31,13 +31,13 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
               />
             </PrimaryCard>
             <PrimaryCard>
-              <AuditReportsList reports={details.reports} />
+              <AuditReportsList
+                reports={details.reports}
+                context={details.context}
+              />
             </PrimaryCard>
             <PrimaryCard>
-              <ContractCoverageList
-                slug={details.slug}
-                contracts={details.contractEntries}
-              />
+              <ContractCoverageList contracts={details.contractEntries} />
             </PrimaryCard>
           </div>
         </SideNavLayout>

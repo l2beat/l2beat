@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "80b9d3eaa2de36bf91826626a85a158d06cc15218413b24b3e0b7b78760e2092",
+  "name": "Arithmetic",
+  "kind": "library",
+  "lines": 46,
+  "source": "library Arithmetic {\n    /// @notice Clamps a value between a minimum and maximum.\n    /// @param _value The value to clamp.\n    /// @param _min   The minimum value.\n    /// @param _max   The maximum value.\n    /// @return The clamped value.\n    function clamp(int256 _value, int256 _min, int256 _max) internal pure returns (int256) {\n        return SignedMath.min(SignedMath.max(_value, _min), _max);\n    }\n\n    /// @notice (c)oefficient (d)enominator (exp)onentiation function.\n    ///         Returns the result of: c * (1 - 1/d)^exp.\n    /// @param _coefficient Coefficient of the function.\n    /// @param _denominator Fractional denominator.\n    /// @param _exponent    Power function exponent.\n    /// @return Result of c * (1 - 1/d)^exp.\n    function cdexp(int256 _coefficient, int256 _denominator, int256 _exponent) internal pure returns (int256) {\n        return (_coefficient * (FixedPointMathLib.powWad(1e18 - (1e18 / _denominator), _exponent * 1e18))) / 1e18;\n    }\n\n    /// @notice Saturating addition.\n    /// @param _x The first value.\n    /// @param _y The second value.\n    /// @return z_ The sum of the two values, or the maximum value if the sum overflows.\n    /// @dev Returns `min(2 ** 256 - 1, x + y)`.\n    /// @dev Taken from Solady\n    /// https://github.com/Vectorized/solady/blob/63416d60c78aba70a12ca1b3c11125d1061caa12/src/utils/FixedPointMathLib.sol#L673\n    function saturatingAdd(uint256 _x, uint256 _y) internal pure returns (uint256 z_) {\n        assembly (\"memory-safe\") {\n            z_ := or(sub(0, lt(add(_x, _y), _x)), add(_x, _y))\n        }\n    }\n\n    /// @notice Saturating multiplication.\n    /// @param _x The first value.\n    /// @param _y The second value.\n    /// @return z_ The product of the two values, or the maximum value if the product overflows.\n    /// @dev Returns `min(2 ** 256 - 1, x * y).\n    /// @dev Taken from Solady\n    /// https://github.com/Vectorized/solady/blob/63416d60c78aba70a12ca1b3c11125d1061caa12/src/utils/FixedPointMathLib.sol#L681\n    function saturatingMul(uint256 _x, uint256 _y) internal pure returns (uint256 z_) {\n        assembly (\"memory-safe\") {\n            z_ := or(sub(or(iszero(_x), eq(div(mul(_x, _y), _x), _y)), 1), mul(_x, _y))\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 36,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Arithmetic",
+        "similarity": 0.615,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 10,
+        "removed": 0,
+        "ignoredAdded": 16,
+        "ignoredRemoved": 0,
+        "unchanged": 36,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 4,
+            "newStart": 17,
+            "newLines": 30,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    function cdexp(int256 _coefficient, int256 _denominator, int256 _exponent) internal pure returns (int256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        return (_coefficient * (FixedPointMathLib.powWad(1e18 - (1e18 / _denominator), _exponent * 1e18))) / 1e18;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "    }" },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Saturating addition.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param _x The first value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param _y The second value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @return z_ The sum of the two values, or the maximum value if the sum overflows.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @dev Returns `min(2 ** 256 - 1, x + y)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @dev Taken from Solady",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// https://github.com/Vectorized/solady/blob/63416d60c78aba70a12ca1b3c11125d1061caa12/src/utils/FixedPointMathLib.sol#L673",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    function saturatingAdd(uint256 _x, uint256 _y) internal pure returns (uint256 z_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "            z_ := or(sub(0, lt(add(_x, _y), _x)), add(_x, _y))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 32, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 33, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// @notice Saturating multiplication.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @param _x The first value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @param _y The second value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// @return z_ The product of the two values, or the maximum value if the product overflows.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    /// @dev Returns `min(2 ** 256 - 1, x * y).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @dev Taken from Solady",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// https://github.com/Vectorized/solady/blob/63416d60c78aba70a12ca1b3c11125d1061caa12/src/utils/FixedPointMathLib.sol#L681",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function saturatingMul(uint256 _x, uint256 _y) internal pure returns (uint256 z_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "            z_ := or(sub(or(iszero(_x), eq(div(mul(_x, _y), _x), _y)), 1), mul(_x, _y))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 45, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 46, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

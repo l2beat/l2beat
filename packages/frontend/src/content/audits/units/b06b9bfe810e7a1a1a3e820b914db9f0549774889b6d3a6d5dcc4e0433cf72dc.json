@@ -1,0 +1,564 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b06b9bfe810e7a1a1a3e820b914db9f0549774889b6d3a6d5dcc4e0433cf72dc",
+  "name": "Initializable",
+  "kind": "abstract",
+  "lines": 46,
+  "source": "abstract contract Initializable {\n    /**\n     * @dev Indicates that the contract has been initialized.\n     */\n    bool private _initialized;\n\n    /**\n     * @dev Indicates that the contract is in the process of being initialized.\n     */\n    bool private _initializing;\n\n    /**\n     * @dev Modifier to protect an initializer function from being invoked twice.\n     */\n    modifier initializer() {\n        require(_initializing || _isConstructor() || !_initialized, \"Initializable: contract is already initialized\");\n\n        bool isTopLevelCall = !_initializing;\n        if (isTopLevelCall) {\n            _initializing = true;\n            _initialized = true;\n        }\n\n        _;\n\n        if (isTopLevelCall) {\n            _initializing = false;\n        }\n    }\n\n    /// @dev Returns true if and only if the function is running in the constructor\n    function _isConstructor() private view returns (bool) {\n        // extcodesize checks the size of the code stored in an address, and\n        // address returns the current address. Since the code is still not\n        // deployed when running a constructor, any checks on its code size will\n        // yield zero, making it an effective way to detect if a contract is\n        // under construction or not.\n        address self = address(this);\n        uint256 cs;\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            cs := extcodesize(self)\n        }\n        return cs == 0;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 37,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 0.476,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 9,
+        "removed": 24,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 32,
+        "unchanged": 37,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Initializable {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Indicates that the contract has been initialized."
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * @custom:oz-retyped-from bool",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 5, "newLine": 4, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    uint8 private _initialized;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bool private _initialized;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 8, "newLine": 7, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 8,
+                "text": "     * @dev Indicates that the contract is in the process of being initialized."
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 72,
+            "newStart": 10,
+            "newLines": 37,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "    bool private _initializing;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 13, "newLine": 12, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @dev Triggered when the contract has been initialized or reinitialized.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Modifier to protect an initializer function from being invoked twice.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 14, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    event Initialized(uint8 version);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 17, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * @dev A modifier that defines a protected initializer function that can be invoked at most once. In its scope,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * `onlyInitializing` functions can be used to initialize parent contracts. Equivalent to `reinitializer(1)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 15,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        require(_initializing || _isConstructor() || !_initialized, \"Initializable: contract is already initialized\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 18,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "            \"Initializable: contract is already initialized\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        _initialized = 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 19,
+                "text": "        if (isTopLevelCall) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 20,
+                "text": "            _initializing = true;"
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "            _initialized = true;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 22,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 24,
+                "text": "        _;"
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 26,
+                "text": "        if (isTopLevelCall) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 27,
+                "text": "            _initializing = false;"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "            emit Initialized(1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 28,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * @dev A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "     * used to initialize parent contracts.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 43, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * `initializer` is equivalent to `reinitializer(1)`, so a reinitializer may be used after the original",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "     * initialization step. This is essential to configure modules that are added through upgrades and that require",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * initialization.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 47, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * a contract, executing them in the right order is up to the developer or operator.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    modifier reinitializer(uint8 version) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        require(!_initializing && _initialized < version, \"Initializable: contract is already initialized\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        _initialized = version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        _initializing = true;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        _;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        _initializing = false;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        emit Initialized(version);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @dev Modifier to protect an initialization function so that it can only be invoked by functions with the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * {initializer} and {reinitializer} modifiers, directly or indirectly.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    modifier onlyInitializing() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        require(_initializing, \"Initializable: contract is not initializing\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        _;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 67, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 68, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "     * @dev Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * to any version. It is recommended to use this to lock implementation contracts that are designed to be called",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     * through proxies.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    function _disableInitializers() internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        require(!_initializing, \"Initializable: contract is initializing\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        if (_initialized < type(uint8).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "            _initialized = type(uint8).max;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "            emit Initialized(type(uint8).max);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /// @dev Returns true if and only if the function is running in the constructor",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    function _isConstructor() private view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        // extcodesize checks the size of the code stored in an address, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        // address returns the current address. Since the code is still not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        // deployed when running a constructor, any checks on its code size will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        // yield zero, making it an effective way to detect if a contract is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // under construction or not.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        address self = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        uint256 cs;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "            cs := extcodesize(self)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 43,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        return cs == 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 82, "newLine": 46, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

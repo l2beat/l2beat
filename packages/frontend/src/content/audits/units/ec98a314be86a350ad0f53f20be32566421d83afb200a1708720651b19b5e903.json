@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ec98a314be86a350ad0f53f20be32566421d83afb200a1708720651b19b5e903",
+  "name": "LibDuration",
+  "kind": "library",
+  "lines": 10,
+  "source": "library LibDuration {\n    /// @notice Get the value of a `Duration` type in the form of the underlying uint64.\n    /// @param _duration The `Duration` type to get the value of.\n    /// @return duration_ The value of the `Duration` type as a uint64 type.\n    function raw(Duration _duration) internal pure returns (uint64 duration_) {\n        assembly {\n            duration_ := _duration\n        }\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LibDuration",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

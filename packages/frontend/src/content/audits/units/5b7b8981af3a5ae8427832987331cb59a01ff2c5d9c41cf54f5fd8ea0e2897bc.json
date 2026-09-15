@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5b7b8981af3a5ae8427832987331cb59a01ff2c5d9c41cf54f5fd8ea0e2897bc",
+  "name": "ITornadoStakingRewards",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ITornadoStakingRewards {\n    function updateRewardsOnLockedBalanceChange(address account, uint256 amountLockedBeforehand) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

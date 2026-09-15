@@ -1,0 +1,1959 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "87fb544c4a56d623386a43071bdb238cc3eb427be00d559052f13dd83de8dc89",
+  "name": "ERC20",
+  "kind": "contract",
+  "lines": 283,
+  "source": "contract ERC20 is Context, IERC20 {\n    using SafeMath for uint256;\n    using Address for address;\n\n    mapping(address => uint256) private _balances;\n\n    mapping(address => mapping(address => uint256)) private _allowances;\n\n    uint256 private _totalSupply;\n\n    string private _name;\n    string private _symbol;\n    uint8 private _decimals;\n\n    /**\n     * @dev Sets the values for {name} and {symbol}, initializes {decimals} with\n     * a default value of 18.\n     *\n     * To select a different value for {decimals}, use {_setupDecimals}.\n     *\n     * All three of these values are immutable: they can only be set once during\n     * construction.\n     */\n    constructor(string memory name, string memory symbol) public {\n        _name = name;\n        _symbol = symbol;\n        _decimals = 18;\n    }\n\n    /**\n     * @dev Returns the name of the token.\n     */\n    function name() public view returns (string memory) {\n        return _name;\n    }\n\n    /**\n     * @dev Returns the symbol of the token, usually a shorter version of the\n     * name.\n     */\n    function symbol() public view returns (string memory) {\n        return _symbol;\n    }\n\n    /**\n     * @dev Returns the number of decimals used to get its user representation.\n     * For example, if `decimals` equals `2`, a balance of `505` tokens should\n     * be displayed to a user as `5,05` (`505 / 10 ** 2`).\n     *\n     * Tokens usually opt for a value of 18, imitating the relationship between\n     * Ether and Wei. This is the value {ERC20} uses, unless {_setupDecimals} is\n     * called.\n     *\n     * NOTE: This information is only used for _display_ purposes: it in\n     * no way affects any of the arithmetic of the contract, including\n     * {IERC20-balanceOf} and {IERC20-transfer}.\n     */\n    function decimals() public view returns (uint8) {\n        return _decimals;\n    }\n\n    /**\n     * @dev See {IERC20-totalSupply}.\n     */\n    function totalSupply() public view override returns (uint256) {\n        return _totalSupply;\n    }\n\n    /**\n     * @dev See {IERC20-balanceOf}.\n     */\n    function balanceOf(address account) public view override returns (uint256) {\n        return _balances[account];\n    }\n\n    /**\n     * @dev See {IERC20-transfer}.\n     *\n     * Requirements:\n     *\n     * - `recipient` cannot be the zero address.\n     * - the caller must have a balance of at least `amount`.\n     */\n    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {\n        _transfer(_msgSender(), recipient, amount);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-allowance}.\n     */\n    function allowance(address owner, address spender) public view virtual override returns (uint256) {\n        return _allowances[owner][spender];\n    }\n\n    /**\n     * @dev See {IERC20-approve}.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     */\n    function approve(address spender, uint256 amount) public virtual override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-transferFrom}.\n     *\n     * Emits an {Approval} event indicating the updated allowance. This is not\n     * required by the EIP. See the note at the beginning of {ERC20};\n     *\n     * Requirements:\n     * - `sender` and `recipient` cannot be the zero address.\n     * - `sender` must have a balance of at least `amount`.\n     * - the caller must have allowance for ``sender``'s tokens of at least\n     * `amount`.\n     */\n    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(\n            sender,\n            _msgSender(),\n            _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\")\n        );\n        return true;\n    }\n\n    /**\n     * @dev Atomically increases the allowance granted to `spender` by the caller.\n     *\n     * This is an alternative to {approve} that can be used as a mitigation for\n     * problems described in {IERC20-approve}.\n     *\n     * Emits an {Approval} event indicating the updated allowance.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     */\n    function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {\n        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));\n        return true;\n    }\n\n    /**\n     * @dev Atomically decreases the allowance granted to `spender` by the caller.\n     *\n     * This is an alternative to {approve} that can be used as a mitigation for\n     * problems described in {IERC20-approve}.\n     *\n     * Emits an {Approval} event indicating the updated allowance.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     * - `spender` must have allowance for the caller of at least\n     * `subtractedValue`.\n     */\n    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {\n        _approve(\n            _msgSender(),\n            spender,\n            _allowances[_msgSender()][spender].sub(subtractedValue, \"ERC20: decreased allowance below zero\")\n        );\n        return true;\n    }\n\n    /**\n     * @dev Moves tokens `amount` from `sender` to `recipient`.\n     *\n     * This is internal function is equivalent to {transfer}, and can be used to\n     * e.g. implement automatic token fees, slashing mechanisms, etc.\n     *\n     * Emits a {Transfer} event.\n     *\n     * Requirements:\n     *\n     * - `sender` cannot be the zero address.\n     * - `recipient` cannot be the zero address.\n     * - `sender` must have a balance of at least `amount`.\n     */\n    function _transfer(address sender, address recipient, uint256 amount) internal virtual {\n        require(sender != address(0), \"ERC20: transfer from the zero address\");\n        require(recipient != address(0), \"ERC20: transfer to the zero address\");\n\n        _beforeTokenTransfer(sender, recipient, amount);\n\n        _balances[sender] = _balances[sender].sub(amount, \"ERC20: transfer amount exceeds balance\");\n        _balances[recipient] = _balances[recipient].add(amount);\n        emit Transfer(sender, recipient, amount);\n    }\n\n    /**\n     * @dev Creates `amount` tokens and assigns them to `account`, increasing\n     * the total supply.\n     *\n     * Emits a {Transfer} event with `from` set to the zero address.\n     *\n     * Requirements\n     *\n     * - `to` cannot be the zero address.\n     */\n    function _mint(address account, uint256 amount) internal virtual {\n        require(account != address(0), \"ERC20: mint to the zero address\");\n\n        _beforeTokenTransfer(address(0), account, amount);\n\n        _totalSupply = _totalSupply.add(amount);\n        _balances[account] = _balances[account].add(amount);\n        emit Transfer(address(0), account, amount);\n    }\n\n    /**\n     * @dev Destroys `amount` tokens from `account`, reducing the\n     * total supply.\n     *\n     * Emits a {Transfer} event with `to` set to the zero address.\n     *\n     * Requirements\n     *\n     * - `account` cannot be the zero address.\n     * - `account` must have at least `amount` tokens.\n     */\n    function _burn(address account, uint256 amount) internal virtual {\n        require(account != address(0), \"ERC20: burn from the zero address\");\n\n        _beforeTokenTransfer(account, address(0), amount);\n\n        _balances[account] = _balances[account].sub(amount, \"ERC20: burn amount exceeds balance\");\n        _totalSupply = _totalSupply.sub(amount);\n        emit Transfer(account, address(0), amount);\n    }\n\n    /**\n     * @dev Sets `amount` as the allowance of `spender` over the `owner` s tokens.\n     *\n     * This internal function is equivalent to `approve`, and can be used to\n     * e.g. set automatic allowances for certain subsystems, etc.\n     *\n     * Emits an {Approval} event.\n     *\n     * Requirements:\n     *\n     * - `owner` cannot be the zero address.\n     * - `spender` cannot be the zero address.\n     */\n    function _approve(address owner, address spender, uint256 amount) internal virtual {\n        require(owner != address(0), \"ERC20: approve from the zero address\");\n        require(spender != address(0), \"ERC20: approve to the zero address\");\n\n        _allowances[owner][spender] = amount;\n        emit Approval(owner, spender, amount);\n    }\n\n    /**\n     * @dev Sets {decimals} to a value other than the default one of 18.\n     *\n     * WARNING: This function should only be called from the constructor. Most\n     * applications that interact with token contracts will not expect\n     * {decimals} to ever change, and may work incorrectly if it does.\n     */\n    function _setupDecimals(uint8 decimals_) internal {\n        _decimals = decimals_;\n    }\n\n    /**\n     * @dev Hook that is called before any transfer of tokens. This includes\n     * minting and burning.\n     *\n     * Calling conditions:\n     *\n     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens\n     * will be to transferred to `to`.\n     * - when `from` is zero, `amount` tokens will be minted for `to`.\n     * - when `to` is zero, `amount` of ``from``'s tokens will be burned.\n     * - `from` and `to` are never both zero.\n     *\n     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].\n     */\n    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual {}\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 228,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ERC20",
+        "similarity": 0.353,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/ERC20.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/ERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 55,
+        "removed": 88,
+        "ignoredAdded": 56,
+        "ignoredRemoved": 46,
+        "unchanged": 228,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ERC20 is Context, IERC20 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    using Address for address;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 5,
+                "text": "    mapping(address => uint256) private _balances;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 7,
+                "text": "    mapping(address => mapping(address => uint256)) private _allowances;"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 27,
+            "newStart": 10,
+            "newLines": 27,
+            "lines": [
+              { "type": " ", "oldLine": 7, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 11,
+                "text": "    string private _name;"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 12,
+                "text": "    string private _symbol;"
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    uint8 private _decimals;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 11, "newLine": 15, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * @dev Indicates a failed `decreaseAllowance` request.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    error ERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Sets the values for {name} and {symbol}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     * @dev Sets the values for {name} and {symbol}, initializes {decimals} with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * a default value of 18.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * All two of these values are immutable: they can only be set once during",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "     * To select a different value for {decimals}, use {_setupDecimals}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * All three of these values are immutable: they can only be set once during",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 22,
+                "text": "     * construction."
+              },
+              { "type": " ", "oldLine": 21, "newLine": 23, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    constructor(string memory name_, string memory symbol_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        _name = name_;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        _symbol = symbol_;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    constructor(string memory name, string memory symbol) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        _name = name;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        _symbol = symbol;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        _decimals = 18;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 29, "text": "" },
+              { "type": " ", "oldLine": 27, "newLine": 30, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 31,
+                "text": "     * @dev Returns the name of the token."
+              },
+              { "type": " ", "oldLine": 29, "newLine": 32, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    function name() public view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function name() public view returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 34,
+                "text": "        return _name;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 36, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 38,
+            "newStart": 38,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 38,
+                "text": "     * @dev Returns the symbol of the token, usually a shorter version of the"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 39,
+                "text": "     * name."
+              },
+              { "type": " ", "oldLine": 37, "newLine": 40, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function symbol() public view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function symbol() public view returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 42,
+                "text": "        return _symbol;"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 43, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 44, "text": "" },
+              { "type": " ", "oldLine": 42, "newLine": 45, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 46,
+                "text": "     * @dev Returns the number of decimals used to get its user representation."
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 47,
+                "text": "     * For example, if `decimals` equals `2`, a balance of `505` tokens should"
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "     * be displayed to a user as `5.05` (`505 / 10 ** 2`).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * be displayed to a user as `5,05` (`505 / 10 ** 2`).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 46, "newLine": 49, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 50,
+                "text": "     * Tokens usually opt for a value of 18, imitating the relationship between"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * Ether and Wei. This is the default value returned by this function, unless",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * it's overridden.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * Ether and Wei. This is the value {ERC20} uses, unless {_setupDecimals} is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * called.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 50, "newLine": 53, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 54,
+                "text": "     * NOTE: This information is only used for _display_ purposes: it in"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 55,
+                "text": "     * no way affects any of the arithmetic of the contract, including"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 56,
+                "text": "     * {IERC20-balanceOf} and {IERC20-transfer}."
+              },
+              { "type": " ", "oldLine": 54, "newLine": 57, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function decimals() public view virtual override returns (uint8) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        return 18;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    function decimals() public view returns (uint8) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        return _decimals;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 60, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 61, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 62, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 63,
+                "text": "     * @dev See {IERC20-totalSupply}."
+              },
+              { "type": " ", "oldLine": 61, "newLine": 64, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function totalSupply() public view virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    function totalSupply() public view override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "        return _totalSupply;"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 67, "text": "    }" },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" },
+              { "type": " ", "oldLine": 66, "newLine": 69, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 70,
+                "text": "     * @dev See {IERC20-balanceOf}."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 71, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    function balanceOf(address account) public view virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    function balanceOf(address account) public view override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 73,
+                "text": "        return _balances[account];"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "    }" },
+              { "type": " ", "oldLine": 72, "newLine": 75, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 12,
+            "newStart": 78,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 75, "newLine": 78, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 79,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 80, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "     * - `to` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "     * - `recipient` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 82,
+                "text": "     * - the caller must have a balance of at least `amount`."
+              },
+              { "type": " ", "oldLine": 80, "newLine": 83, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    function transfer(address to, uint256 amount) public virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        address owner = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        _transfer(owner, to, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        _transfer(_msgSender(), recipient, amount);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 86,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 85, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 86, "newLine": 88, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 94,
+            "oldLines": 16,
+            "newStart": 96,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 94, "newLine": 96, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 97,
+                "text": "     * @dev See {IERC20-approve}."
+              },
+              { "type": " ", "oldLine": 96, "newLine": 98, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "     * NOTE: If `amount` is the maximum `uint256`, the allowance is not updated on",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "     * `transferFrom`. This is semantically equivalent to an infinite approval.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 99, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 99,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 101, "newLine": 100, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 101,
+                "text": "     * - `spender` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 102,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 103,
+                "text": "    function approve(address spender, uint256 amount) public virtual override returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        address owner = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        _approve(owner, spender, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        _approve(_msgSender(), spender, amount);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 105,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 108, "newLine": 106, "text": "    }" },
+              { "type": " ", "oldLine": 109, "newLine": 107, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 22,
+            "newStart": 109,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 109,
+                "text": "     * @dev See {IERC20-transferFrom}."
+              },
+              { "type": " ", "oldLine": 112, "newLine": 110, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 111,
+                "text": "     * Emits an {Approval} event indicating the updated allowance. This is not"
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * required by the EIP. See the note at the beginning of {ERC20}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * required by the EIP. See the note at the beginning of {ERC20};",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 115, "newLine": 113, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "     * NOTE: Does not update the allowance if the current allowance",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "     * is the maximum `uint256`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 114,
+                "text": "     * Requirements:"
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     * - `from` and `to` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "     * - `from` must have a balance of at least `amount`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "     * - the caller must have allowance for ``from``'s tokens of at least",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * - `sender` and `recipient` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * - `sender` must have a balance of at least `amount`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * - the caller must have allowance for ``sender``'s tokens of at least",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 118,
+                "text": "     * `amount`."
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 119,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    function transferFrom(address from, address to, uint256 amount) public virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        address spender = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        _spendAllowance(from, spender, amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        _transfer(from, to, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        _transfer(sender, recipient, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        _approve(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "            sender,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            _msgSender(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 127,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 131, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 132, "newLine": 129, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 143,
+            "oldLines": 8,
+            "newStart": 140,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 140,
+                "text": "     * - `spender` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 141,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 142,
+                "text": "    function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "        address owner = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "        _approve(owner, spender, allowance(owner, spender) + addedValue);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 144,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 149, "newLine": 145, "text": "    }" },
+              { "type": " ", "oldLine": 150, "newLine": 146, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 160,
+            "oldLines": 104,
+            "newStart": 156,
+            "newLines": 81,
+            "lines": [
+              { "type": " ", "oldLine": 160, "newLine": 156, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 157,
+                "text": "     * - `spender` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 158,
+                "text": "     * - `spender` must have allowance for the caller of at least"
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "     * `requestedDecrease`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "     * `subtractedValue`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 160,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    function decreaseAllowance(address spender, uint256 requestedDecrease) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "        address owner = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "        uint256 currentAllowance = allowance(owner, spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "        if (currentAllowance < requestedDecrease) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "            revert ERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            _approve(owner, spender, currentAllowance - requestedDecrease);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 174, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "        _approve(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "            _msgSender(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "            spender,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "            _allowances[_msgSender()][spender].sub(subtractedValue, \"ERC20: decreased allowance below zero\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 167,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 176, "newLine": 168, "text": "    }" },
+              { "type": " ", "oldLine": 177, "newLine": 169, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 170,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "     * @dev Moves `amount` of tokens from `from` to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "     * @dev Moves tokens `amount` from `sender` to `recipient`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 180, "newLine": 172, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "     * This internal function is equivalent to {transfer}, and can be used to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "     * This is internal function is equivalent to {transfer}, and can be used to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 174,
+                "text": "     * e.g. implement automatic token fees, slashing mechanisms, etc."
+              },
+              { "type": " ", "oldLine": 183, "newLine": 175, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 176,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 185, "newLine": 177, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "     * NOTE: This function is not virtual, {_update} should be overridden instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "    function _transfer(address from, address to, uint256 amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "        if (from == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            revert ERC20InvalidSender(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "        if (to == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "            revert ERC20InvalidReceiver(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "        _update(from, to, amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 197, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "     * @dev Transfers `amount` of tokens from `from` to `to`, or alternatively mints (or burns) if `from` (or `to`) is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "     * the zero address. All customizations to transfers, mints, and burns should be done by overriding this function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 201, "newLine": 179, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "     * Emits a {Transfer} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "     * - `sender` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "     * - `recipient` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "     * - `sender` must have a balance of at least `amount`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 183,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "    function _update(address from, address to, uint256 amount) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "        if (from == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "            _totalSupply += amount;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "            uint256 fromBalance = _balances[from];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "            if (fromBalance < amount) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "                revert ERC20InsufficientBalance(from, fromBalance, amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "                // Overflow not possible: amount <= fromBalance <= totalSupply.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "                _balances[from] = fromBalance - amount;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "    function _transfer(address sender, address recipient, uint256 amount) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        require(sender != address(0), \"ERC20: transfer from the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "        require(recipient != address(0), \"ERC20: transfer to the zero address\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 217, "newLine": 187, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "        if (to == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "                // Overflow not possible: amount <= totalSupply or amount <= fromBalance <= totalSupply.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "                _totalSupply -= amount;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "                // Overflow not possible: balance + amount is at most totalSupply, which we know fits into a uint256.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "                _balances[to] += amount;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "        _beforeTokenTransfer(sender, recipient, amount);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 229, "newLine": 189, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "        emit Transfer(from, to, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "        _balances[sender] = _balances[sender].sub(amount, \"ERC20: transfer amount exceeds balance\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "        _balances[recipient] = _balances[recipient].add(amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "        emit Transfer(sender, recipient, amount);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 231, "newLine": 193, "text": "    }" },
+              { "type": " ", "oldLine": 232, "newLine": 194, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 195,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "     * @dev Creates `amount` tokens and assigns them to `account`, by transferring it from address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "     * Relies on the `_update` mechanism",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "     * @dev Creates `amount` tokens and assigns them to `account`, increasing",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "     * the total supply.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 236, "newLine": 198, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 199,
+                "text": "     * Emits a {Transfer} event with `from` set to the zero address."
+              },
+              { "type": " ", "oldLine": 238, "newLine": 200, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "     * NOTE: This function is not virtual, {_update} should be overridden instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "     * Requirements",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "     * - `to` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 204,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "    function _mint(address account, uint256 amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "        if (account == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "            revert ERC20InvalidReceiver(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "        _update(address(0), account, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "    function _mint(address account, uint256 amount) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "        require(account != address(0), \"ERC20: mint to the zero address\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 207, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "        _beforeTokenTransfer(address(0), account, amount);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 209, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "        _totalSupply = _totalSupply.add(amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "        _balances[account] = _balances[account].add(amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "        emit Transfer(address(0), account, amount);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 246, "newLine": 213, "text": "    }" },
+              { "type": " ", "oldLine": 247, "newLine": 214, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 215,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "     * @dev Destroys `amount` tokens from `account`, by transferring it to address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "     * Relies on the `_update` mechanism.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "     * @dev Destroys `amount` tokens from `account`, reducing the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "     * total supply.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 251, "newLine": 218, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 219,
+                "text": "     * Emits a {Transfer} event with `to` set to the zero address."
+              },
+              { "type": " ", "oldLine": 253, "newLine": 220, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "     * NOTE: This function is not virtual, {_update} should be overridden instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "     * Requirements",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "     * - `account` cannot be the zero address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "     * - `account` must have at least `amount` tokens.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 225,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "    function _burn(address account, uint256 amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        if (account == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "            revert ERC20InvalidSender(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "        _update(account, address(0), amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "    function _burn(address account, uint256 amount) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "        require(account != address(0), \"ERC20: burn from the zero address\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 228, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "        _beforeTokenTransfer(account, address(0), amount);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 230, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "        _balances[account] = _balances[account].sub(amount, \"ERC20: burn amount exceeds balance\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 232,
+                "text": "        _totalSupply = _totalSupply.sub(amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "        emit Transfer(account, address(0), amount);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 261, "newLine": 234, "text": "    }" },
+              { "type": " ", "oldLine": 262, "newLine": 235, "text": "" },
+              { "type": " ", "oldLine": 263, "newLine": 236, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 274,
+            "oldLines": 33,
+            "newStart": 247,
+            "newLines": 37,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 247,
+                "text": "     * - `spender` cannot be the zero address."
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 248,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 249,
+                "text": "    function _approve(address owner, address spender, uint256 amount) internal virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 277,
+                "text": "        if (owner == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "            revert ERC20InvalidApprover(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "        if (spender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 281,
+                "text": "            revert ERC20InvalidSpender(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 282,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 250,
+                "text": "        require(owner != address(0), \"ERC20: approve from the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "        require(spender != address(0), \"ERC20: approve to the zero address\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 252, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 253,
+                "text": "        _allowances[owner][spender] = amount;"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 254,
+                "text": "        emit Approval(owner, spender, amount);"
+              },
+              { "type": " ", "oldLine": 285, "newLine": 255, "text": "    }" },
+              { "type": " ", "oldLine": 286, "newLine": 256, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 257,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "     * @dev Updates `owner` s allowance for `spender` based on spent `amount`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "     * @dev Sets {decimals} to a value other than the default one of 18.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 289, "newLine": 259, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 290,
+                "text": "     * Does not update the allowance amount in case of infinite allowance.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 291,
+                "text": "     * Revert if not enough allowance is available.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 292,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 293,
+                "text": "     * Might emit an {Approval} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "     * WARNING: This function should only be called from the constructor. Most",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "     * applications that interact with token contracts will not expect",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "     * {decimals} to ever change, and may work incorrectly if it does.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 263,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 295,
+                "text": "    function _spendAllowance(address owner, address spender, uint256 amount) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 296,
+                "text": "        uint256 currentAllowance = allowance(owner, spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 297,
+                "text": "        if (currentAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 298,
+                "text": "            if (currentAllowance < amount) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 299,
+                "text": "                revert ERC20InsufficientAllowance(spender, currentAllowance, amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 302,
+                "text": "                _approve(owner, spender, currentAllowance - amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 303,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "    function _setupDecimals(uint8 decimals_) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "        _decimals = decimals_;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 305, "newLine": 266, "text": "    }" },
+              { "type": "+", "newLine": 267, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "     * @dev Hook that is called before any transfer of tokens. This includes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     * minting and burning.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "     * Calling conditions:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 274,
+                "text": "     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "     * will be to transferred to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "     * - when `from` is zero, `amount` tokens will be minted for `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "     * - when `to` is zero, `amount` of ``from``'s tokens will be burned.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "     * - `from` and `to` are never both zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual {}",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 306, "newLine": 283, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

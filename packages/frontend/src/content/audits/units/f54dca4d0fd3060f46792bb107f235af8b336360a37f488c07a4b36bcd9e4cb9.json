@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f54dca4d0fd3060f46792bb107f235af8b336360a37f488c07a4b36bcd9e4cb9",
+  "name": "FullMath",
+  "kind": "library",
+  "lines": 110,
+  "source": "library FullMath {\n    /// @notice Calculates floor(a×b÷denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\n    /// @param a The multiplicand\n    /// @param b The multiplier\n    /// @param denominator The divisor\n    /// @return result The 256-bit result\n    /// @dev Credit to Remco Bloemen under MIT license https://xn--2-umb.com/21/muldiv\n    function mulDiv(uint256 a, uint256 b, uint256 denominator) internal pure returns (uint256 result) {\n        // 512-bit multiply [prod1 prod0] = a * b\n        // Compute the product mod 2**256 and mod 2**256 - 1\n        // then use the Chinese Remainder Theorem to reconstruct\n        // the 512 bit result. The result is stored in two 256\n        // variables such that product = prod1 * 2**256 + prod0\n        uint256 prod0; // Least significant 256 bits of the product\n        uint256 prod1; // Most significant 256 bits of the product\n        assembly {\n            let mm := mulmod(a, b, not(0))\n            prod0 := mul(a, b)\n            prod1 := sub(sub(mm, prod0), lt(mm, prod0))\n        }\n\n        // Handle non-overflow cases, 256 by 256 division\n        if (prod1 == 0) {\n            require(denominator > 0);\n            assembly {\n                result := div(prod0, denominator)\n            }\n            return result;\n        }\n\n        // Make sure the result is less than 2**256.\n        // Also prevents denominator == 0\n        require(denominator > prod1);\n\n        ///////////////////////////////////////////////\n        // 512 by 256 division.\n        ///////////////////////////////////////////////\n\n        // Make division exact by subtracting the remainder from [prod1 prod0]\n        // Compute remainder using mulmod\n        uint256 remainder;\n        assembly {\n            remainder := mulmod(a, b, denominator)\n        }\n        // Subtract 256 bit number from 512 bit number\n        assembly {\n            prod1 := sub(prod1, gt(remainder, prod0))\n            prod0 := sub(prod0, remainder)\n        }\n\n        // Factor powers of two out of denominator\n        // Compute largest power of two divisor of denominator.\n        // Always >= 1.\n        uint256 twos = (type(uint256).max - denominator + 1) & denominator;\n        // Divide denominator by power of two\n        assembly {\n            denominator := div(denominator, twos)\n        }\n\n        // Divide [prod1 prod0] by the factors of two\n        assembly {\n            prod0 := div(prod0, twos)\n        }\n        // Shift in bits from prod1 into prod0. For this we need\n        // to flip `twos` such that it is 2**256 / twos.\n        // If twos is zero, then it becomes one\n        assembly {\n            twos := add(div(sub(0, twos), twos), 1)\n        }\n        prod0 |= prod1 * twos;\n\n        // Invert denominator mod 2**256\n        // Now that denominator is an odd number, it has an inverse\n        // modulo 2**256 such that denominator * inv = 1 mod 2**256.\n        // Compute the inverse by starting with a seed that is correct\n        // correct for four bits. That is, denominator * inv = 1 mod 2**4\n        uint256 inv = (3 * denominator) ^ 2;\n        // Now use Newton-Raphson iteration to improve the precision.\n        // Thanks to Hensel's lifting lemma, this also works in modular\n        // arithmetic, doubling the correct bits in each step.\n        inv *= 2 - denominator * inv; // inverse mod 2**8\n        inv *= 2 - denominator * inv; // inverse mod 2**16\n        inv *= 2 - denominator * inv; // inverse mod 2**32\n        inv *= 2 - denominator * inv; // inverse mod 2**64\n        inv *= 2 - denominator * inv; // inverse mod 2**128\n        inv *= 2 - denominator * inv; // inverse mod 2**256\n\n        // Because the division is now exact we can divide by multiplying\n        // with the modular inverse of denominator. This will give us the\n        // correct result modulo 2**256. Since the precoditions guarantee\n        // that the outcome is less than 2**256, this is the final result.\n        // We don't need to compute the high bits of the result and prod1\n        // is no longer required.\n        result = prod0 * inv;\n        return result;\n    }\n\n    /// @notice Calculates ceil(a×b÷denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\n    /// @param a The multiplicand\n    /// @param b The multiplier\n    /// @param denominator The divisor\n    /// @return result The 256-bit result\n    function mulDivRoundingUp(uint256 a, uint256 b, uint256 denominator) internal pure returns (uint256 result) {\n        result = mulDiv(a, b, denominator);\n        if (mulmod(a, b, denominator) > 0) {\n            require(result < type(uint256).max);\n            result++;\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 109,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "FullMath",
+        "similarity": 0.981,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/FullMath.sol",
+        "commit": "fc783807986595e33cdfc6ac82479535a42b955b",
+        "commitTimestamp": "2021-03-05T07:18:03Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/fc783807986595e33cdfc6ac82479535a42b955b/contracts/libraries/FullMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 109,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 51,
+            "oldLines": 7,
+            "newStart": 51,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "        // Factor powers of two out of denominator"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "        // Compute largest power of two divisor of denominator."
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "        // Always >= 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        uint256 twos = -denominator & denominator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        uint256 twos = (type(uint256).max - denominator + 1) & denominator;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "        // Divide denominator by power of two"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "            denominator := div(denominator, twos)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

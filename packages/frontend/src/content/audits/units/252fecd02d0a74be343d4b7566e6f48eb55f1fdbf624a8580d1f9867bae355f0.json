@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "252fecd02d0a74be343d4b7566e6f48eb55f1fdbf624a8580d1f9867bae355f0",
+  "name": "IAddressManager",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IAddressManager is IOwnable {\n    event AddressSet(string indexed name, address newAddress, address oldAddress);\n\n    function getAddress(string memory _name) external view returns (address);\n    function setAddress(string memory _name, address _address) external;\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

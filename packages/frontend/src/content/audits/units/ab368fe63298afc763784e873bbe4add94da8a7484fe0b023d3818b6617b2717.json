@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ab368fe63298afc763784e873bbe4add94da8a7484fe0b023d3818b6617b2717",
+  "name": "GovernanceVaultUpgrade",
+  "kind": "contract",
+  "lines": 33,
+  "source": "contract GovernanceVaultUpgrade is Governance {\n    using SafeMath for uint256;\n\n    // vault which stores user TORN\n    ITornadoVault public immutable userVault;\n\n    // call Governance v1 constructor\n    constructor(address _userVault) public Governance() {\n        userVault = ITornadoVault(_userVault);\n    }\n\n    /// @notice Withdraws TORN from governance if conditions permit\n    /// @param amount the amount of TORN to withdraw\n    function unlock(uint256 amount) public virtual override {\n        require(getBlockTimestamp() > canWithdrawAfter[msg.sender], \"Governance: tokens are locked\");\n        lockedBalance[msg.sender] = lockedBalance[msg.sender].sub(amount, \"Governance: insufficient balance\");\n        userVault.withdrawTorn(msg.sender, amount);\n    }\n\n    /// @notice checker for success on deployment\n    /// @return returns precise version of governance\n    function version() external pure virtual returns (string memory) {\n        return \"2.vault-migration\";\n    }\n\n    /// @notice transfers tokens from the contract to the vault, withdrawals are unlock()\n    /// @param owner account/contract which (this) spender will send to the user vault\n    /// @param amount amount which spender will send to the user vault\n    function _transferTokens(address owner, uint256 amount) internal virtual override {\n        require(torn.transferFrom(owner, address(userVault), amount), \"TORN: transferFrom failed\");\n        lockedBalance[owner] = lockedBalance[owner].add(amount);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

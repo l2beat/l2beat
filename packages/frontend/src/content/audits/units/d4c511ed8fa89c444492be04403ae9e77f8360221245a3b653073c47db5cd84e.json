@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d4c511ed8fa89c444492be04403ae9e77f8360221245a3b653073c47db5cd84e",
+  "name": "MIPS64Arch",
+  "kind": "library",
+  "lines": 6,
+  "source": "library MIPS64Arch {\n    uint64 internal constant WORD_SIZE = 64;\n    uint64 internal constant WORD_SIZE_BYTES = 8;\n    uint64 internal constant EXT_MASK = 0x7;\n    uint64 internal constant ADDRESS_MASK = 0xFFFFFFFFFFFFFFF8;\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

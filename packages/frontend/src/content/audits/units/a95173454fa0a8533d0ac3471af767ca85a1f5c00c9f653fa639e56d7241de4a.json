@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a95173454fa0a8533d0ac3471af767ca85a1f5c00c9f653fa639e56d7241de4a",
+  "name": "Actions",
+  "kind": "library",
+  "lines": 43,
+  "source": "library Actions {\n    // pool actions\n    // liquidity actions\n    uint256 internal constant INCREASE_LIQUIDITY = 0x00;\n    uint256 internal constant DECREASE_LIQUIDITY = 0x01;\n    uint256 internal constant MINT_POSITION = 0x02;\n    uint256 internal constant BURN_POSITION = 0x03;\n    uint256 internal constant INCREASE_LIQUIDITY_FROM_DELTAS = 0x04;\n    uint256 internal constant MINT_POSITION_FROM_DELTAS = 0x05;\n\n    // swapping\n    uint256 internal constant SWAP_EXACT_IN_SINGLE = 0x06;\n    uint256 internal constant SWAP_EXACT_IN = 0x07;\n    uint256 internal constant SWAP_EXACT_OUT_SINGLE = 0x08;\n    uint256 internal constant SWAP_EXACT_OUT = 0x09;\n\n    // donate\n    // note this is not supported in the position manager or router\n    uint256 internal constant DONATE = 0x0a;\n\n    // closing deltas on the pool manager\n    // settling\n    uint256 internal constant SETTLE = 0x0b;\n    uint256 internal constant SETTLE_ALL = 0x0c;\n    uint256 internal constant SETTLE_PAIR = 0x0d;\n    // taking\n    uint256 internal constant TAKE = 0x0e;\n    uint256 internal constant TAKE_ALL = 0x0f;\n    uint256 internal constant TAKE_PORTION = 0x10;\n    uint256 internal constant TAKE_PAIR = 0x11;\n\n    uint256 internal constant CLOSE_CURRENCY = 0x12;\n    uint256 internal constant CLEAR_OR_TAKE = 0x13;\n    uint256 internal constant SWEEP = 0x14;\n\n    uint256 internal constant WRAP = 0x15;\n    uint256 internal constant UNWRAP = 0x16;\n\n    // minting/burning 6909s to close deltas\n    // note this is not supported in the position manager or router\n    uint256 internal constant MINT_6909 = 0x17;\n    uint256 internal constant BURN_6909 = 0x18;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

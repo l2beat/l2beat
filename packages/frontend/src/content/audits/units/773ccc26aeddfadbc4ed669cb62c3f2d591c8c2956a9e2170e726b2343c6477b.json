@@ -1,0 +1,981 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "773ccc26aeddfadbc4ed669cb62c3f2d591c8c2956a9e2170e726b2343c6477b",
+  "name": "Oracle",
+  "kind": "library",
+  "lines": 314,
+  "source": "library Oracle {\n    struct Observation {\n        // the block timestamp of the observation\n        uint32 blockTimestamp;\n        // the tick accumulator, i.e. tick * time elapsed since the pool was first initialized\n        int56 tickCumulative;\n        // the seconds per liquidity, i.e. seconds elapsed / max(1, liquidity) since the pool was first initialized\n        uint160 secondsPerLiquidityCumulativeX128;\n        // whether or not the observation is initialized\n        bool initialized;\n    }\n\n    /// @notice Transforms a previous observation into a new observation, given the passage of time and the current tick and liquidity values\n    /// @dev blockTimestamp _must_ be chronologically equal to or greater than last.blockTimestamp, safe for 0 or 1 overflows\n    /// @param last The specified observation to be transformed\n    /// @param blockTimestamp The timestamp of the new observation\n    /// @param tick The active tick at the time of the new observation\n    /// @param liquidity The total in-range liquidity at the time of the new observation\n    /// @return Observation The newly populated observation\n    function transform(Observation memory last, uint32 blockTimestamp, int24 tick, uint128 liquidity)\n        private\n        pure\n        returns (Observation memory)\n    {\n        uint32 delta = blockTimestamp - last.blockTimestamp;\n        return Observation({\n            blockTimestamp: blockTimestamp,\n            tickCumulative: last.tickCumulative + int56(tick) * delta,\n            secondsPerLiquidityCumulativeX128: last.secondsPerLiquidityCumulativeX128\n                + ((uint160(delta) << 128) / (liquidity > 0 ? liquidity : 1)),\n            initialized: true\n        });\n    }\n\n    /// @notice Initialize the oracle array by writing the first slot. Called once for the lifecycle of the observations array\n    /// @param self The stored oracle array\n    /// @param time The time of the oracle initialization, via block.timestamp truncated to uint32\n    /// @return cardinality The number of populated elements in the oracle array\n    /// @return cardinalityNext The new length of the oracle array, independent of population\n    function initialize(Observation[65535] storage self, uint32 time)\n        internal\n        returns (uint16 cardinality, uint16 cardinalityNext)\n    {\n        self[0] = Observation({\n            blockTimestamp: time,\n            tickCumulative: 0,\n            secondsPerLiquidityCumulativeX128: 0,\n            initialized: true\n        });\n        return (1, 1);\n    }\n\n    /// @notice Writes an oracle observation to the array\n    /// @dev Writable at most once per block. Index represents the most recently written element. cardinality and index must be tracked externally.\n    /// If the index is at the end of the allowable array length (according to cardinality), and the next cardinality\n    /// is greater than the current one, cardinality may be increased. This restriction is created to preserve ordering.\n    /// @param self The stored oracle array\n    /// @param index The index of the observation that was most recently written to the observations array\n    /// @param blockTimestamp The timestamp of the new observation\n    /// @param tick The active tick at the time of the new observation\n    /// @param liquidity The total in-range liquidity at the time of the new observation\n    /// @param cardinality The number of populated elements in the oracle array\n    /// @param cardinalityNext The new length of the oracle array, independent of population\n    /// @return indexUpdated The new index of the most recently written element in the oracle array\n    /// @return cardinalityUpdated The new cardinality of the oracle array\n    function write(\n        Observation[65535] storage self,\n        uint16 index,\n        uint32 blockTimestamp,\n        int24 tick,\n        uint128 liquidity,\n        uint16 cardinality,\n        uint16 cardinalityNext\n    ) internal returns (uint16 indexUpdated, uint16 cardinalityUpdated) {\n        Observation memory last = self[index];\n\n        // early return if we've already written an observation this block\n        if (last.blockTimestamp == blockTimestamp) {\n            return (index, cardinality);\n        }\n\n        // if the conditions are right, we can bump the cardinality\n        if (cardinalityNext > cardinality && index == (cardinality - 1)) {\n            cardinalityUpdated = cardinalityNext;\n        } else {\n            cardinalityUpdated = cardinality;\n        }\n\n        indexUpdated = (index + 1) % cardinalityUpdated;\n        self[indexUpdated] = transform(last, blockTimestamp, tick, liquidity);\n    }\n\n    /// @notice Prepares the oracle array to store up to `next` observations\n    /// @param self The stored oracle array\n    /// @param current The current next cardinality of the oracle array\n    /// @param next The proposed next cardinality which will be populated in the oracle array\n    /// @return next The next cardinality which will be populated in the oracle array\n    function grow(Observation[65535] storage self, uint16 current, uint16 next) internal returns (uint16) {\n        require(current > 0, \"I\");\n        // no-op if the passed next value isn't greater than the current next value\n        if (next <= current) {\n            return current;\n        }\n        // store in each slot to prevent fresh SSTOREs in swaps\n        // this data will not be used because the initialized boolean is still false\n        for (uint16 i = current; i < next; i++) {\n            self[i].blockTimestamp = 1;\n        }\n        return next;\n    }\n\n    /// @notice comparator for 32-bit timestamps\n    /// @dev safe for 0 or 1 overflows, a and b _must_ be chronologically before or equal to time\n    /// @param time A timestamp truncated to 32 bits\n    /// @param a A comparison timestamp from which to determine the relative position of `time`\n    /// @param b From which to determine the relative position of `time`\n    /// @return bool Whether `a` is chronologically <= `b`\n    function lte(uint32 time, uint32 a, uint32 b) private pure returns (bool) {\n        // if there hasn't been overflow, no need to adjust\n        if (a <= time && b <= time) {\n            return a <= b;\n        }\n\n        uint256 aAdjusted = a > time ? a : a + 2 ** 32;\n        uint256 bAdjusted = b > time ? b : b + 2 ** 32;\n\n        return aAdjusted <= bAdjusted;\n    }\n\n    /// @notice Fetches the observations beforeOrAt and atOrAfter a target, i.e. where [beforeOrAt, atOrAfter] is satisfied.\n    /// The result may be the same observation, or adjacent observations.\n    /// @dev The answer must be contained in the array, used when the target is located within the stored observation\n    /// boundaries: older than the most recent observation and younger, or the same age as, the oldest observation\n    /// @param self The stored oracle array\n    /// @param time The current block.timestamp\n    /// @param target The timestamp at which the reserved observation should be for\n    /// @param index The index of the observation that was most recently written to the observations array\n    /// @param cardinality The number of populated elements in the oracle array\n    /// @return beforeOrAt The observation recorded before, or at, the target\n    /// @return atOrAfter The observation recorded at, or after, the target\n    function binarySearch(Observation[65535] storage self, uint32 time, uint32 target, uint16 index, uint16 cardinality)\n        private\n        view\n        returns (Observation memory beforeOrAt, Observation memory atOrAfter)\n    {\n        uint256 l = (index + 1) % cardinality; // oldest observation\n        uint256 r = l + cardinality - 1; // newest observation\n        uint256 i;\n        while (true) {\n            i = (l + r) / 2;\n\n            beforeOrAt = self[i % cardinality];\n\n            // we've landed on an uninitialized tick, keep searching higher (more recently)\n            if (!beforeOrAt.initialized) {\n                l = i + 1;\n                continue;\n            }\n\n            atOrAfter = self[(i + 1) % cardinality];\n\n            bool targetAtOrAfter = lte(time, beforeOrAt.blockTimestamp, target);\n\n            // check if we've found the answer!\n            if (targetAtOrAfter && lte(time, target, atOrAfter.blockTimestamp)) {\n                break;\n            }\n\n            if (!targetAtOrAfter) {\n                r = i - 1;\n            } else {\n                l = i + 1;\n            }\n        }\n    }\n\n    /// @notice Fetches the observations beforeOrAt and atOrAfter a given target, i.e. where [beforeOrAt, atOrAfter] is satisfied\n    /// @dev Assumes there is at least 1 initialized observation.\n    /// Used by observeSingle() to compute the counterfactual accumulator values as of a given block timestamp.\n    /// @param self The stored oracle array\n    /// @param time The current block.timestamp\n    /// @param target The timestamp at which the reserved observation should be for\n    /// @param tick The active tick at the time of the returned or simulated observation\n    /// @param index The index of the observation that was most recently written to the observations array\n    /// @param liquidity The total pool liquidity at the time of the call\n    /// @param cardinality The number of populated elements in the oracle array\n    /// @return beforeOrAt The observation which occurred at, or before, the given timestamp\n    /// @return atOrAfter The observation which occurred at, or after, the given timestamp\n    function getSurroundingObservations(\n        Observation[65535] storage self,\n        uint32 time,\n        uint32 target,\n        int24 tick,\n        uint16 index,\n        uint128 liquidity,\n        uint16 cardinality\n    ) private view returns (Observation memory beforeOrAt, Observation memory atOrAfter) {\n        // optimistically set before to the newest observation\n        beforeOrAt = self[index];\n\n        // if the target is chronologically at or after the newest observation, we can early return\n        if (lte(time, beforeOrAt.blockTimestamp, target)) {\n            if (beforeOrAt.blockTimestamp == target) {\n                // if newest observation equals target, we're in the same block, so we can ignore atOrAfter\n                return (beforeOrAt, atOrAfter);\n            } else {\n                // otherwise, we need to transform\n                return (beforeOrAt, transform(beforeOrAt, target, tick, liquidity));\n            }\n        }\n\n        // now, set before to the oldest observation\n        beforeOrAt = self[(index + 1) % cardinality];\n        if (!beforeOrAt.initialized) {\n            beforeOrAt = self[0];\n        }\n\n        // ensure that the target is chronologically at or after the oldest observation\n        require(lte(time, beforeOrAt.blockTimestamp, target), \"OLD\");\n\n        // if we've reached this point, we have to binary search\n        return binarySearch(self, time, target, index, cardinality);\n    }\n\n    /// @dev Reverts if an observation at or before the desired observation timestamp does not exist.\n    /// 0 may be passed as `secondsAgo' to return the current cumulative values.\n    /// If called with a timestamp falling between two observations, returns the counterfactual accumulator values\n    /// at exactly the timestamp between the two observations.\n    /// @param self The stored oracle array\n    /// @param time The current block timestamp\n    /// @param secondsAgo The amount of time to look back, in seconds, at which point to return an observation\n    /// @param tick The current tick\n    /// @param index The index of the observation that was most recently written to the observations array\n    /// @param liquidity The current in-range pool liquidity\n    /// @param cardinality The number of populated elements in the oracle array\n    /// @return tickCumulative The tick * time elapsed since the pool was first initialized, as of `secondsAgo`\n    /// @return secondsPerLiquidityCumulativeX128 The time elapsed / max(1, liquidity) since the pool was first initialized, as of `secondsAgo`\n    function observeSingle(\n        Observation[65535] storage self,\n        uint32 time,\n        uint32 secondsAgo,\n        int24 tick,\n        uint16 index,\n        uint128 liquidity,\n        uint16 cardinality\n    ) internal view returns (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) {\n        if (secondsAgo == 0) {\n            Observation memory last = self[index];\n            if (last.blockTimestamp != time) {\n                last = transform(last, time, tick, liquidity);\n            }\n            return (last.tickCumulative, last.secondsPerLiquidityCumulativeX128);\n        }\n\n        uint32 target = time - secondsAgo;\n\n        (Observation memory beforeOrAt, Observation memory atOrAfter) =\n            getSurroundingObservations(self, time, target, tick, index, liquidity, cardinality);\n\n        if (target == beforeOrAt.blockTimestamp) {\n            // we're at the left boundary\n            return (beforeOrAt.tickCumulative, beforeOrAt.secondsPerLiquidityCumulativeX128);\n        } else if (target == atOrAfter.blockTimestamp) {\n            // we're at the right boundary\n            return (atOrAfter.tickCumulative, atOrAfter.secondsPerLiquidityCumulativeX128);\n        } else {\n            // we're in the middle\n            uint32 observationTimeDelta = atOrAfter.blockTimestamp - beforeOrAt.blockTimestamp;\n            uint32 targetDelta = target - beforeOrAt.blockTimestamp;\n            return (\n                beforeOrAt.tickCumulative\n                    + ((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / observationTimeDelta) * targetDelta,\n                beforeOrAt.secondsPerLiquidityCumulativeX128\n                    + uint160(\n                        (\n                            uint256(\n                                atOrAfter.secondsPerLiquidityCumulativeX128 - beforeOrAt.secondsPerLiquidityCumulativeX128\n                            ) * targetDelta\n                        ) / observationTimeDelta\n                    )\n            );\n        }\n    }\n\n    /// @notice Returns the accumulator values as of each time seconds ago from the given time in the array of `secondsAgos`\n    /// @dev Reverts if `secondsAgos` > oldest observation\n    /// @param self The stored oracle array\n    /// @param time The current block.timestamp\n    /// @param secondsAgos Each amount of time to look back, in seconds, at which point to return an observation\n    /// @param tick The current tick\n    /// @param index The index of the observation that was most recently written to the observations array\n    /// @param liquidity The current in-range pool liquidity\n    /// @param cardinality The number of populated elements in the oracle array\n    /// @return tickCumulatives The tick * time elapsed since the pool was first initialized, as of each `secondsAgo`\n    /// @return secondsPerLiquidityCumulativeX128s The cumulative seconds / max(1, liquidity) since the pool was first initialized, as of each `secondsAgo`\n    function observe(\n        Observation[65535] storage self,\n        uint32 time,\n        uint32[] memory secondsAgos,\n        int24 tick,\n        uint16 index,\n        uint128 liquidity,\n        uint16 cardinality\n    ) internal view returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s) {\n        require(cardinality > 0, \"I\");\n\n        tickCumulatives = new int56[](secondsAgos.length);\n        secondsPerLiquidityCumulativeX128s = new uint160[](secondsAgos.length);\n        for (uint256 i = 0; i < secondsAgos.length; i++) {\n            (tickCumulatives[i], secondsPerLiquidityCumulativeX128s[i]) =\n                observeSingle(self, time, secondsAgos[i], tick, index, liquidity, cardinality);\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 284,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Oracle",
+        "similarity": 0.868,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/Oracle.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/libraries/Oracle.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 30,
+        "removed": 16,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 9,
+        "unchanged": 284,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 8,
+            "newStart": 4,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        uint32 blockTimestamp;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "        // the tick accumulator, i.e. tick * time elapsed since the pool was first initialized"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        int56 tickCumulative;"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        // the liquidity accumulator, i.e. liquidity * time elapsed since the pool was first initialized",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        uint160 liquidityCumulative;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        // the seconds per liquidity, i.e. seconds elapsed / max(1, liquidity) since the pool was first initialized",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        uint160 secondsPerLiquidityCumulativeX128;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        // whether or not the observation is initialized"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "        bool initialized;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "        return Observation({"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "            blockTimestamp: blockTimestamp,"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "            tickCumulative: last.tickCumulative + int56(tick) * delta,"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "            liquidityCumulative: last.liquidityCumulative + uint160(liquidity) * delta,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "            secondsPerLiquidityCumulativeX128: last.secondsPerLiquidityCumulativeX128",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "                + ((uint160(delta) << 128) / (liquidity > 0 ? liquidity : 1)),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 31,
+                "text": "            initialized: true"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 32,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 33, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 7,
+            "newStart": 41,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 41,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 42,
+                "text": "        returns (uint16 cardinality, uint16 cardinalityNext)"
+              },
+              { "type": " ", "oldLine": 42, "newLine": 43, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        self[0] = Observation({blockTimestamp: time, tickCumulative: 0, liquidityCumulative: 0, initialized: true});",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        self[0] = Observation({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            blockTimestamp: time,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "            tickCumulative: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            secondsPerLiquidityCumulativeX128: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "            initialized: true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        });",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 50,
+                "text": "        return (1, 1);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 52, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 7,
+            "newStart": 55,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 55,
+                "text": "    /// If the index is at the end of the allowable array length (according to cardinality), and the next cardinality"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 56,
+                "text": "    /// is greater than the current one, cardinality may be increased. This restriction is created to preserve ordering."
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 57,
+                "text": "    /// @param self The stored oracle array"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @param index The location of the most recently updated observation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    /// @param index The index of the observation that was most recently written to the observations array",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 59,
+                "text": "    /// @param blockTimestamp The timestamp of the new observation"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 60,
+                "text": "    /// @param tick The active tick at the time of the new observation"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 61,
+                "text": "    /// @param liquidity The total in-range liquidity at the time of the new observation"
+              }
+            ]
+          },
+          {
+            "oldStart": 128,
+            "oldLines": 7,
+            "newStart": 134,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 134,
+                "text": "    /// @param self The stored oracle array"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 135,
+                "text": "    /// @param time The current block.timestamp"
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 136,
+                "text": "    /// @param target The timestamp at which the reserved observation should be for"
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "    /// @param index The location of the most recently written observation within the oracle array",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    /// @param index The index of the observation that was most recently written to the observations array",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 138,
+                "text": "    /// @param cardinality The number of populated elements in the oracle array"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 139,
+                "text": "    /// @return beforeOrAt The observation recorded before, or at, the target"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 140,
+                "text": "    /// @return atOrAfter The observation recorded at, or after, the target"
+              }
+            ]
+          },
+          {
+            "oldStart": 175,
+            "oldLines": 7,
+            "newStart": 181,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 181,
+                "text": "    /// @param time The current block.timestamp"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 182,
+                "text": "    /// @param target The timestamp at which the reserved observation should be for"
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 183,
+                "text": "    /// @param tick The active tick at the time of the returned or simulated observation"
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "    /// @param index The location of a given observation within the oracle array",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "    /// @param index The index of the observation that was most recently written to the observations array",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 185,
+                "text": "    /// @param liquidity The total pool liquidity at the time of the call"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 186,
+                "text": "    /// @param cardinality The number of populated elements in the oracle array"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 187,
+                "text": "    /// @return beforeOrAt The observation which occurred at, or before, the given timestamp"
+              }
+            ]
+          },
+          {
+            "oldStart": 224,
+            "oldLines": 11,
+            "newStart": 230,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 230,
+                "text": "    /// @param time The current block timestamp"
+              },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 231,
+                "text": "    /// @param secondsAgo The amount of time to look back, in seconds, at which point to return an observation"
+              },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 232,
+                "text": "    /// @param tick The current tick"
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "    /// @param index The location of a given observation within the oracle array",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "    /// @param index The index of the observation that was most recently written to the observations array",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 234,
+                "text": "    /// @param liquidity The current in-range pool liquidity"
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 235,
+                "text": "    /// @param cardinality The number of populated elements in the oracle array"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 236,
+                "text": "    /// @return tickCumulative The tick * time elapsed since the pool was first initialized, as of `secondsAgo`"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "    /// @return liquidityCumulative The liquidity * time elapsed since the pool was first initialized, as of `secondsAgo`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "    /// @return secondsPerLiquidityCumulativeX128 The time elapsed / max(1, liquidity) since the pool was first initialized, as of `secondsAgo`",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 238,
+                "text": "    function observeSingle("
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 239,
+                "text": "        Observation[65535] storage self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 240,
+                "text": "        uint32 time,"
+              }
+            ]
+          },
+          {
+            "oldStart": 237,
+            "oldLines": 13,
+            "newStart": 243,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 243,
+                "text": "        uint16 index,"
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 244,
+                "text": "        uint128 liquidity,"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 245,
+                "text": "        uint16 cardinality"
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "    ) private view returns (int56 tickCumulative, uint160 liquidityCumulative) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "    ) internal view returns (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 247,
+                "text": "        if (secondsAgo == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 248,
+                "text": "            Observation memory last = self[index];"
+              },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 249,
+                "text": "            if (last.blockTimestamp != time) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 250,
+                "text": "                last = transform(last, time, tick, liquidity);"
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 251,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "            return (last.tickCumulative, last.liquidityCumulative);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "            return (last.tickCumulative, last.secondsPerLiquidityCumulativeX128);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 253,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 248, "newLine": 254, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 255,
+                "text": "        uint32 target = time - secondsAgo;"
+              }
+            ]
+          },
+          {
+            "oldStart": 251,
+            "oldLines": 22,
+            "newStart": 257,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 257,
+                "text": "        (Observation memory beforeOrAt, Observation memory atOrAfter) ="
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 258,
+                "text": "            getSurroundingObservations(self, time, target, tick, index, liquidity, cardinality);"
+              },
+              { "type": " ", "oldLine": 253, "newLine": 259, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "        Oracle.Observation memory at;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 260,
+                "text": "        if (target == beforeOrAt.blockTimestamp) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 261,
+                "text": "            // we're at the left boundary"
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "            at = beforeOrAt;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "            return (beforeOrAt.tickCumulative, beforeOrAt.secondsPerLiquidityCumulativeX128);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 263,
+                "text": "        } else if (target == atOrAfter.blockTimestamp) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 264,
+                "text": "            // we're at the right boundary"
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "            at = atOrAfter;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            return (atOrAfter.tickCumulative, atOrAfter.secondsPerLiquidityCumulativeX128);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 266,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 267,
+                "text": "            // we're in the middle"
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "            uint32 delta = atOrAfter.blockTimestamp - beforeOrAt.blockTimestamp;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "            int24 tickDerived = int24((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / delta);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "            uint128 liquidityDerived = uint128((atOrAfter.liquidityCumulative - beforeOrAt.liquidityCumulative) / delta);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "            at = transform(beforeOrAt, target, tickDerived, liquidityDerived);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "            uint32 observationTimeDelta = atOrAfter.blockTimestamp - beforeOrAt.blockTimestamp;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "            uint32 targetDelta = target - beforeOrAt.blockTimestamp;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "            return (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "                beforeOrAt.tickCumulative",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "                    + ((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / observationTimeDelta) * targetDelta,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "                beforeOrAt.secondsPerLiquidityCumulativeX128",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 274,
+                "text": "                    + uint160(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "                        (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "                            uint256(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "                                atOrAfter.secondsPerLiquidityCumulativeX128 - beforeOrAt.secondsPerLiquidityCumulativeX128",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "                            ) * targetDelta",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "                        ) / observationTimeDelta",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 282,
+                "text": "        }"
+              },
+              { "type": "-", "oldLine": 268, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "        return (at.tickCumulative, at.liquidityCumulative);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 270, "newLine": 283, "text": "    }" },
+              { "type": " ", "oldLine": 271, "newLine": 284, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 285,
+                "text": "    /// @notice Returns the accumulator values as of each time seconds ago from the given time in the array of `secondsAgos`"
+              }
+            ]
+          },
+          {
+            "oldStart": 275,
+            "oldLines": 11,
+            "newStart": 288,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 288,
+                "text": "    /// @param time The current block.timestamp"
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 289,
+                "text": "    /// @param secondsAgos Each amount of time to look back, in seconds, at which point to return an observation"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 290,
+                "text": "    /// @param tick The current tick"
+              },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "    /// @param index The location of a given observation within the oracle array",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "    /// @param index The index of the observation that was most recently written to the observations array",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 279,
+                "newLine": 292,
+                "text": "    /// @param liquidity The current in-range pool liquidity"
+              },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 293,
+                "text": "    /// @param cardinality The number of populated elements in the oracle array"
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 294,
+                "text": "    /// @return tickCumulatives The tick * time elapsed since the pool was first initialized, as of each `secondsAgo`"
+              },
+              {
+                "type": "-",
+                "oldLine": 282,
+                "text": "    /// @return liquidityCumulatives The liquidity * time elapsed since the pool was first initialized, as of each `secondsAgo`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "    /// @return secondsPerLiquidityCumulativeX128s The cumulative seconds / max(1, liquidity) since the pool was first initialized, as of each `secondsAgo`",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 296,
+                "text": "    function observe("
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 297,
+                "text": "        Observation[65535] storage self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 298,
+                "text": "        uint32 time,"
+              }
+            ]
+          },
+          {
+            "oldStart": 288,
+            "oldLines": 13,
+            "newStart": 301,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 301,
+                "text": "        uint16 index,"
+              },
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 302,
+                "text": "        uint128 liquidity,"
+              },
+              {
+                "type": " ",
+                "oldLine": 290,
+                "newLine": 303,
+                "text": "        uint16 cardinality"
+              },
+              {
+                "type": "-",
+                "oldLine": 291,
+                "text": "    ) internal view returns (int56[] memory tickCumulatives, uint160[] memory liquidityCumulatives) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "    ) internal view returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 305,
+                "text": "        require(cardinality > 0, \"I\");"
+              },
+              { "type": " ", "oldLine": 293, "newLine": 306, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 307,
+                "text": "        tickCumulatives = new int56[](secondsAgos.length);"
+              },
+              {
+                "type": "-",
+                "oldLine": 295,
+                "text": "        liquidityCumulatives = new uint160[](secondsAgos.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "        secondsPerLiquidityCumulativeX128s = new uint160[](secondsAgos.length);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 296,
+                "newLine": 309,
+                "text": "        for (uint256 i = 0; i < secondsAgos.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 297,
+                "text": "            (tickCumulatives[i], liquidityCumulatives[i]) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "            (tickCumulatives[i], secondsPerLiquidityCumulativeX128s[i]) =",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 311,
+                "text": "                observeSingle(self, time, secondsAgos[i], tick, index, liquidity, cardinality);"
+              },
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 312,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 300, "newLine": 313, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

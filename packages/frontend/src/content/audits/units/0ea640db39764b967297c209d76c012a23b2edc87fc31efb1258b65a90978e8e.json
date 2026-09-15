@@ -1,0 +1,1846 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0ea640db39764b967297c209d76c012a23b2edc87fc31efb1258b65a90978e8e",
+  "name": "TornadoTrees",
+  "kind": "contract",
+  "lines": 273,
+  "source": "contract TornadoTrees is Initializable {\n    address public immutable governance;\n    bytes32 public depositRoot;\n    bytes32 public previousDepositRoot;\n    bytes32 public withdrawalRoot;\n    bytes32 public previousWithdrawalRoot;\n    address public tornadoProxy;\n    IBatchTreeUpdateVerifier public treeUpdateVerifier;\n    ITornadoTreesV1 public immutable tornadoTreesV1;\n\n    uint256 public constant CHUNK_TREE_HEIGHT = 8;\n    uint256 public constant CHUNK_SIZE = 2 ** CHUNK_TREE_HEIGHT;\n    uint256 public constant ITEM_SIZE = 32 + 20 + 4;\n    uint256 public constant BYTES_SIZE = 32 + 32 + 4 + CHUNK_SIZE * ITEM_SIZE;\n    uint256 public constant SNARK_FIELD = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\n\n    mapping(uint256 => bytes32) public deposits;\n    uint256 public depositsLength;\n    uint256 public lastProcessedDepositLeaf;\n    uint256 public immutable depositsV1Length;\n\n    mapping(uint256 => bytes32) public withdrawals;\n    uint256 public withdrawalsLength;\n    uint256 public lastProcessedWithdrawalLeaf;\n    uint256 public immutable withdrawalsV1Length;\n\n    event DepositData(address instance, bytes32 indexed hash, uint256 block, uint256 index);\n    event WithdrawalData(address instance, bytes32 indexed hash, uint256 block, uint256 index);\n    event VerifierUpdated(address newVerifier);\n    event ProxyUpdated(address newProxy);\n\n    struct TreeLeaf {\n        bytes32 hash;\n        address instance;\n        uint32 block;\n    }\n\n    modifier onlyTornadoProxy() {\n        require(msg.sender == tornadoProxy, \"Not authorized\");\n        _;\n    }\n\n    modifier onlyGovernance() {\n        require(msg.sender == governance, \"Only governance can perform this action\");\n        _;\n    }\n\n    struct SearchParams {\n        uint256 depositsFrom;\n        uint256 depositsStep;\n        uint256 withdrawalsFrom;\n        uint256 withdrawalsStep;\n    }\n\n    constructor(address _governance, ITornadoTreesV1 _tornadoTreesV1, SearchParams memory _searchParams) public {\n        governance = _governance;\n        tornadoTreesV1 = _tornadoTreesV1;\n\n        depositsV1Length = findArrayLength(\n            _tornadoTreesV1, \"deposits(uint256)\", _searchParams.depositsFrom, _searchParams.depositsStep\n        );\n\n        withdrawalsV1Length = findArrayLength(\n            _tornadoTreesV1, \"withdrawals(uint256)\", _searchParams.withdrawalsFrom, _searchParams.withdrawalsStep\n        );\n    }\n\n    function initialize(address _tornadoProxy, IBatchTreeUpdateVerifier _treeUpdateVerifier)\n        public\n        initializer\n        onlyGovernance\n    {\n        tornadoProxy = _tornadoProxy;\n        treeUpdateVerifier = _treeUpdateVerifier;\n\n        depositRoot = tornadoTreesV1.depositRoot();\n        uint256 lastDepositLeaf = tornadoTreesV1.lastProcessedDepositLeaf();\n        require(lastDepositLeaf % CHUNK_SIZE == 0, \"Incorrect TornadoTrees state\");\n        lastProcessedDepositLeaf = lastDepositLeaf;\n        depositsLength = depositsV1Length;\n\n        withdrawalRoot = tornadoTreesV1.withdrawalRoot();\n        uint256 lastWithdrawalLeaf = tornadoTreesV1.lastProcessedWithdrawalLeaf();\n        require(lastWithdrawalLeaf % CHUNK_SIZE == 0, \"Incorrect TornadoTrees state\");\n        lastProcessedWithdrawalLeaf = lastWithdrawalLeaf;\n        withdrawalsLength = withdrawalsV1Length;\n    }\n\n    /// @dev Queue a new deposit data to be inserted into a merkle tree\n    function registerDeposit(address _instance, bytes32 _commitment) public onlyTornadoProxy {\n        uint256 _depositsLength = depositsLength;\n        deposits[_depositsLength] = keccak256(abi.encode(_instance, _commitment, blockNumber()));\n        emit DepositData(_instance, _commitment, blockNumber(), _depositsLength);\n        depositsLength = _depositsLength + 1;\n    }\n\n    /// @dev Queue a new withdrawal data to be inserted into a merkle tree\n    function registerWithdrawal(address _instance, bytes32 _nullifierHash) public onlyTornadoProxy {\n        uint256 _withdrawalsLength = withdrawalsLength;\n        withdrawals[_withdrawalsLength] = keccak256(abi.encode(_instance, _nullifierHash, blockNumber()));\n        emit WithdrawalData(_instance, _nullifierHash, blockNumber(), _withdrawalsLength);\n        withdrawalsLength = _withdrawalsLength + 1;\n    }\n\n    /// @dev Insert a full batch of queued deposits into a merkle tree\n    /// @param _proof A snark proof that elements were inserted correctly\n    /// @param _argsHash A hash of snark inputs\n    /// @param _argsHash Current merkle tree root\n    /// @param _newRoot Updated merkle tree root\n    /// @param _pathIndices Merkle path to inserted batch\n    /// @param _events A batch of inserted events (leaves)\n    function updateDepositTree(\n        bytes calldata _proof,\n        bytes32 _argsHash,\n        bytes32 _currentRoot,\n        bytes32 _newRoot,\n        uint32 _pathIndices,\n        TreeLeaf[CHUNK_SIZE] calldata _events\n    ) public {\n        uint256 offset = lastProcessedDepositLeaf;\n        require(_currentRoot == depositRoot, \"Proposed deposit root is invalid\");\n        require(_pathIndices == offset >> CHUNK_TREE_HEIGHT, \"Incorrect deposit insert index\");\n\n        bytes memory data = new bytes(BYTES_SIZE);\n        assembly {\n            mstore(add(data, 0x44), _pathIndices)\n            mstore(add(data, 0x40), _newRoot)\n            mstore(add(data, 0x20), _currentRoot)\n        }\n        for (uint256 i = 0; i < CHUNK_SIZE; i++) {\n            (bytes32 hash, address instance, uint32 blockNumber) =\n                (_events[i].hash, _events[i].instance, _events[i].block);\n            bytes32 leafHash = keccak256(abi.encode(instance, hash, blockNumber));\n            bytes32 deposit =\n                offset + i >= depositsV1Length ? deposits[offset + i] : tornadoTreesV1.deposits(offset + i);\n            require(leafHash == deposit, \"Incorrect deposit\");\n            assembly {\n                let itemOffset := add(data, mul(ITEM_SIZE, i))\n                mstore(add(itemOffset, 0x7c), blockNumber)\n                mstore(add(itemOffset, 0x78), instance)\n                mstore(add(itemOffset, 0x64), hash)\n            }\n            if (offset + i >= depositsV1Length) {\n                delete deposits[offset + i];\n            } else {\n                emit DepositData(instance, hash, blockNumber, offset + i);\n            }\n        }\n\n        uint256 argsHash = uint256(sha256(data)) % SNARK_FIELD;\n        require(argsHash == uint256(_argsHash), \"Invalid args hash\");\n        require(treeUpdateVerifier.verifyProof(_proof, [argsHash]), \"Invalid deposit tree update proof\");\n\n        previousDepositRoot = _currentRoot;\n        depositRoot = _newRoot;\n        lastProcessedDepositLeaf = offset + CHUNK_SIZE;\n    }\n\n    /// @dev Insert a full batch of queued withdrawals into a merkle tree\n    /// @param _proof A snark proof that elements were inserted correctly\n    /// @param _argsHash A hash of snark inputs\n    /// @param _argsHash Current merkle tree root\n    /// @param _newRoot Updated merkle tree root\n    /// @param _pathIndices Merkle path to inserted batch\n    /// @param _events A batch of inserted events (leaves)\n    function updateWithdrawalTree(\n        bytes calldata _proof,\n        bytes32 _argsHash,\n        bytes32 _currentRoot,\n        bytes32 _newRoot,\n        uint32 _pathIndices,\n        TreeLeaf[CHUNK_SIZE] calldata _events\n    ) public {\n        uint256 offset = lastProcessedWithdrawalLeaf;\n        require(_currentRoot == withdrawalRoot, \"Proposed withdrawal root is invalid\");\n        require(_pathIndices == offset >> CHUNK_TREE_HEIGHT, \"Incorrect withdrawal insert index\");\n\n        bytes memory data = new bytes(BYTES_SIZE);\n        assembly {\n            mstore(add(data, 0x44), _pathIndices)\n            mstore(add(data, 0x40), _newRoot)\n            mstore(add(data, 0x20), _currentRoot)\n        }\n        for (uint256 i = 0; i < CHUNK_SIZE; i++) {\n            (bytes32 hash, address instance, uint32 blockNumber) =\n                (_events[i].hash, _events[i].instance, _events[i].block);\n            bytes32 leafHash = keccak256(abi.encode(instance, hash, blockNumber));\n            bytes32 withdrawal =\n                offset + i >= withdrawalsV1Length ? withdrawals[offset + i] : tornadoTreesV1.withdrawals(offset + i);\n            require(leafHash == withdrawal, \"Incorrect withdrawal\");\n            assembly {\n                let itemOffset := add(data, mul(ITEM_SIZE, i))\n                mstore(add(itemOffset, 0x7c), blockNumber)\n                mstore(add(itemOffset, 0x78), instance)\n                mstore(add(itemOffset, 0x64), hash)\n            }\n            if (offset + i >= withdrawalsV1Length) {\n                delete withdrawals[offset + i];\n            } else {\n                emit WithdrawalData(instance, hash, blockNumber, offset + i);\n            }\n        }\n\n        uint256 argsHash = uint256(sha256(data)) % SNARK_FIELD;\n        require(argsHash == uint256(_argsHash), \"Invalid args hash\");\n        require(treeUpdateVerifier.verifyProof(_proof, [argsHash]), \"Invalid withdrawal tree update proof\");\n\n        previousWithdrawalRoot = _currentRoot;\n        withdrawalRoot = _newRoot;\n        lastProcessedWithdrawalLeaf = offset + CHUNK_SIZE;\n    }\n\n    function validateRoots(bytes32 _depositRoot, bytes32 _withdrawalRoot) public view {\n        require(_depositRoot == depositRoot || _depositRoot == previousDepositRoot, \"Incorrect deposit tree root\");\n        require(\n            _withdrawalRoot == withdrawalRoot || _withdrawalRoot == previousWithdrawalRoot,\n            \"Incorrect withdrawal tree root\"\n        );\n    }\n\n    /// @dev There is no array length getter for deposit and withdrawal arrays\n    /// in the previous contract, so we have to find them length manually.\n    /// Used only during deployment\n    function findArrayLength(\n        ITornadoTreesV1 _tornadoTreesV1,\n        string memory _type,\n        uint256 _from, // most likely array length after the proposal has passed\n        uint256 _step // optimal step size to find first match, approximately equals dispersion\n    ) internal view virtual returns (uint256) {\n        // Find the segment with correct array length\n        bool direction = elementExists(_tornadoTreesV1, _type, _from);\n        do {\n            _from = direction ? _from + _step : _from - _step;\n        } while (direction == elementExists(_tornadoTreesV1, _type, _from));\n        uint256 high = direction ? _from : _from + _step;\n        uint256 low = direction ? _from - _step : _from;\n        uint256 mid = (high + low) / 2;\n\n        // Perform a binary search in this segment\n        while (low < mid) {\n            if (elementExists(_tornadoTreesV1, _type, mid)) {\n                low = mid;\n            } else {\n                high = mid;\n            }\n            mid = (low + high) / 2;\n        }\n        return mid + 1;\n    }\n\n    function elementExists(ITornadoTreesV1 _tornadoTreesV1, string memory _type, uint256 index)\n        public\n        view\n        returns (bool success)\n    {\n        // Try to get the element. If it succeeds the array length is higher, it it reverts the length is equal or lower\n        (success,) = address(_tornadoTreesV1).staticcall{gas: 2500}(abi.encodeWithSignature(_type, index));\n    }\n\n    function setTornadoProxyContract(address _tornadoProxy) external onlyGovernance {\n        tornadoProxy = _tornadoProxy;\n        emit ProxyUpdated(_tornadoProxy);\n    }\n\n    function setVerifierContract(IBatchTreeUpdateVerifier _treeUpdateVerifier) external onlyGovernance {\n        treeUpdateVerifier = _treeUpdateVerifier;\n        emit VerifierUpdated(address(_treeUpdateVerifier));\n    }\n\n    function blockNumber() public view virtual returns (uint256) {\n        return block.number;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 98,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "TornadoTrees",
+        "similarity": 0.234,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/TornadoTrees.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/TornadoTrees.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 2,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 175,
+        "removed": 59,
+        "ignoredAdded": 45,
+        "ignoredRemoved": 10,
+        "unchanged": 98,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 22,
+            "newStart": 1,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract TornadoTrees is ITornadoTrees, EnsResolve {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    OwnableMerkleTree public immutable depositTree;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    OwnableMerkleTree public immutable withdrawalTree;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    IHasher public immutable hasher;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    address public immutable tornadoProxy;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract TornadoTrees is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    address public immutable governance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    bytes32 public depositRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    bytes32 public previousDepositRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes32 public withdrawalRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    bytes32 public previousWithdrawalRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address public tornadoProxy;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    IBatchTreeUpdateVerifier public treeUpdateVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    ITornadoTreesV1 public immutable tornadoTreesV1;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    bytes32[] public deposits;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    uint256 public constant CHUNK_TREE_HEIGHT = 8;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    uint256 public constant CHUNK_SIZE = 2 ** CHUNK_TREE_HEIGHT;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    uint256 public constant ITEM_SIZE = 32 + 20 + 4;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    uint256 public constant BYTES_SIZE = 32 + 32 + 4 + CHUNK_SIZE * ITEM_SIZE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    uint256 public constant SNARK_FIELD = 21888242871839275222246405745257275088548364400416034343698204186575808495617;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    mapping(uint256 => bytes32) public deposits;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    uint256 public depositsLength;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 19,
+                "text": "    uint256 public lastProcessedDepositLeaf;"
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    uint256 public immutable depositsV1Length;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 21, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    bytes32[] public withdrawals;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    mapping(uint256 => bytes32) public withdrawals;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    uint256 public withdrawalsLength;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 24,
+                "text": "    uint256 public lastProcessedWithdrawalLeaf;"
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    uint256 public immutable withdrawalsV1Length;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 27,
+                "text": "    event DepositData(address instance, bytes32 indexed hash, uint256 block, uint256 index);"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 28,
+                "text": "    event WithdrawalData(address instance, bytes32 indexed hash, uint256 block, uint256 index);"
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event VerifierUpdated(address newVerifier);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    event ProxyUpdated(address newProxy);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 32,
+                "text": "    struct TreeLeaf {"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        address instance;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 33,
+                "text": "        bytes32 hash;"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        uint256 block;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        address instance;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        uint32 block;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 36, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 37, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 38,
+                "text": "    modifier onlyTornadoProxy() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 96,
+            "newStart": 40,
+            "newLines": 231,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 40,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    constructor(bytes32 _tornadoProxy, bytes32 _hasher2, bytes32 _hasher3, uint32 _levels) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        tornadoProxy = resolve(_tornadoProxy);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        hasher = IHasher(resolve(_hasher3));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        depositTree = new OwnableMerkleTree(_levels, IHasher(resolve(_hasher2)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        withdrawalTree = new OwnableMerkleTree(_levels, IHasher(resolve(_hasher2)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    modifier onlyGovernance() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        require(msg.sender == governance, \"Only governance can perform this action\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        _;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 46, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 47, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    function registerNewDeposit(address instance, bytes32 commitment) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        deposits.push(keccak256(abi.encode(instance, commitment, blockNumber())));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    struct SearchParams {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        uint256 depositsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        uint256 depositsStep;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        uint256 withdrawalsFrom;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        uint256 withdrawalsStep;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 36, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function registerNewWithdrawal(address instance, bytes32 nullifier) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        withdrawals.push(keccak256(abi.encode(instance, nullifier, blockNumber())));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    constructor(address _governance, ITornadoTreesV1 _tornadoTreesV1, SearchParams memory _searchParams) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        governance = _governance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        tornadoTreesV1 = _tornadoTreesV1;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        depositsV1Length = findArrayLength(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            _tornadoTreesV1, \"deposits(uint256)\", _searchParams.depositsFrom, _searchParams.depositsStep",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 62, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        withdrawalsV1Length = findArrayLength(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "            _tornadoTreesV1, \"withdrawals(uint256)\", _searchParams.withdrawalsFrom, _searchParams.withdrawalsStep",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 66, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 67, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    function updateRoots(TreeLeaf[] calldata _deposits, TreeLeaf[] calldata _withdrawals) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        if (_deposits.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "            updateDepositTree(_deposits);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        if (_withdrawals.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "            updateWithdrawalTree(_withdrawals);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    function initialize(address _tornadoProxy, IBatchTreeUpdateVerifier _treeUpdateVerifier)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        initializer",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        onlyGovernance",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 72, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        tornadoProxy = _tornadoProxy;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        treeUpdateVerifier = _treeUpdateVerifier;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 75, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        depositRoot = tornadoTreesV1.depositRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        uint256 lastDepositLeaf = tornadoTreesV1.lastProcessedDepositLeaf();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        require(lastDepositLeaf % CHUNK_SIZE == 0, \"Incorrect TornadoTrees state\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        lastProcessedDepositLeaf = lastDepositLeaf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        depositsLength = depositsV1Length;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 81, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        withdrawalRoot = tornadoTreesV1.withdrawalRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        uint256 lastWithdrawalLeaf = tornadoTreesV1.lastProcessedWithdrawalLeaf();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        require(lastWithdrawalLeaf % CHUNK_SIZE == 0, \"Incorrect TornadoTrees state\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        lastProcessedWithdrawalLeaf = lastWithdrawalLeaf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        withdrawalsLength = withdrawalsV1Length;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    function updateDepositTree(TreeLeaf[] memory _deposits) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        bytes32[] memory leaves = new bytes32[](_deposits.length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        uint256 offset = lastProcessedDepositLeaf;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @dev Queue a new deposit data to be inserted into a merkle tree",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    function registerDeposit(address _instance, bytes32 _commitment) public onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "        uint256 _depositsLength = depositsLength;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        deposits[_depositsLength] = keccak256(abi.encode(_instance, _commitment, blockNumber()));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        emit DepositData(_instance, _commitment, blockNumber(), _depositsLength);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        depositsLength = _depositsLength + 1;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 95, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 54, "newLine": 96, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        for (uint256 i = 0; i < _deposits.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            TreeLeaf memory deposit = _deposits[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            bytes32 leafHash = keccak256(abi.encode(deposit.instance, deposit.hash, deposit.block));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            require(deposits[offset + i] == leafHash, \"Incorrect deposit\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    /// @dev Queue a new withdrawal data to be inserted into a merkle tree",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    function registerWithdrawal(address _instance, bytes32 _nullifierHash) public onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        uint256 _withdrawalsLength = withdrawalsLength;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        withdrawals[_withdrawalsLength] = keccak256(abi.encode(_instance, _nullifierHash, blockNumber()));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        emit WithdrawalData(_instance, _nullifierHash, blockNumber(), _withdrawalsLength);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        withdrawalsLength = _withdrawalsLength + 1;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 103, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 59, "newLine": 104, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            leaves[i] = hasher.poseidon([bytes32(uint256(deposit.instance)), deposit.hash, bytes32(deposit.block)]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            delete deposits[offset + i];",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @dev Insert a full batch of queued deposits into a merkle tree",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /// @param _proof A snark proof that elements were inserted correctly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @param _argsHash A hash of snark inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param _argsHash Current merkle tree root",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @param _newRoot Updated merkle tree root",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param _pathIndices Merkle path to inserted batch",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @param _events A batch of inserted events (leaves)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    function updateDepositTree(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        bytes calldata _proof,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        bytes32 _argsHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        bytes32 _currentRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        bytes32 _newRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        uint32 _pathIndices,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "        TreeLeaf[CHUNK_SIZE] calldata _events",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    ) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        uint256 offset = lastProcessedDepositLeaf;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        require(_currentRoot == depositRoot, \"Proposed deposit root is invalid\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        require(_pathIndices == offset >> CHUNK_TREE_HEIGHT, \"Incorrect deposit insert index\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 123, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            emit DepositData(deposit.instance, deposit.hash, deposit.block, offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        bytes memory data = new bytes(BYTES_SIZE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            mstore(add(data, 0x44), _pathIndices)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            mstore(add(data, 0x40), _newRoot)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            mstore(add(data, 0x20), _currentRoot)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 129,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "        for (uint256 i = 0; i < CHUNK_SIZE; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "            (bytes32 hash, address instance, uint32 blockNumber) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "                (_events[i].hash, _events[i].instance, _events[i].block);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            bytes32 leafHash = keccak256(abi.encode(instance, hash, blockNumber));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "            bytes32 deposit =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "                offset + i >= depositsV1Length ? deposits[offset + i] : tornadoTreesV1.deposits(offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "            require(leafHash == deposit, \"Incorrect deposit\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "            assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "                let itemOffset := add(data, mul(ITEM_SIZE, i))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "                mstore(add(itemOffset, 0x7c), blockNumber)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "                mstore(add(itemOffset, 0x78), instance)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "                mstore(add(itemOffset, 0x64), hash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "            if (offset + i >= depositsV1Length) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "                delete deposits[offset + i];",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "            } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                emit DepositData(instance, hash, blockNumber, offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 65, "newLine": 149, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        lastProcessedDepositLeaf = offset + _deposits.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        depositTree.bulkInsert(leaves);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "        uint256 argsHash = uint256(sha256(data)) % SNARK_FIELD;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        require(argsHash == uint256(_argsHash), \"Invalid args hash\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "        require(treeUpdateVerifier.verifyProof(_proof, [argsHash]), \"Invalid deposit tree update proof\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 153, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "        previousDepositRoot = _currentRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "        depositRoot = _newRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        lastProcessedDepositLeaf = offset + CHUNK_SIZE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 68, "newLine": 157, "text": "    }" },
+              { "type": " ", "oldLine": 69, "newLine": 158, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    function updateWithdrawalTree(TreeLeaf[] memory _withdrawals) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        bytes32[] memory leaves = new bytes32[](_withdrawals.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "    /// @dev Insert a full batch of queued withdrawals into a merkle tree",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    /// @param _proof A snark proof that elements were inserted correctly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    /// @param _argsHash A hash of snark inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    /// @param _argsHash Current merkle tree root",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    /// @param _newRoot Updated merkle tree root",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "    /// @param _pathIndices Merkle path to inserted batch",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    /// @param _events A batch of inserted events (leaves)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "    function updateWithdrawalTree(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "        bytes calldata _proof,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        bytes32 _argsHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "        bytes32 _currentRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "        bytes32 _newRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "        uint32 _pathIndices,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "        TreeLeaf[CHUNK_SIZE] calldata _events",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    ) public {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 174,
+                "text": "        uint256 offset = lastProcessedWithdrawalLeaf;"
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "        require(_currentRoot == withdrawalRoot, \"Proposed withdrawal root is invalid\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "        require(_pathIndices == offset >> CHUNK_TREE_HEIGHT, \"Incorrect withdrawal insert index\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 73, "newLine": 177, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        for (uint256 i = 0; i < _withdrawals.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "            TreeLeaf memory withdrawal = _withdrawals[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "            bytes32 leafHash = keccak256(abi.encode(withdrawal.instance, withdrawal.hash, withdrawal.block));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            require(withdrawals[offset + i] == leafHash, \"Incorrect withdrawal\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 78, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "            leaves[i] =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "                hasher.poseidon([bytes32(uint256(withdrawal.instance)), withdrawal.hash, bytes32(withdrawal.block)]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            delete withdrawals[offset + i];",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "            emit WithdrawalData(withdrawal.instance, withdrawal.hash, withdrawal.block, offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "        bytes memory data = new bytes(BYTES_SIZE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "            mstore(add(data, 0x44), _pathIndices)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            mstore(add(data, 0x40), _newRoot)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "            mstore(add(data, 0x20), _currentRoot)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 183,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        for (uint256 i = 0; i < CHUNK_SIZE; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "            (bytes32 hash, address instance, uint32 blockNumber) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "                (_events[i].hash, _events[i].instance, _events[i].block);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "            bytes32 leafHash = keccak256(abi.encode(instance, hash, blockNumber));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "            bytes32 withdrawal =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "                offset + i >= withdrawalsV1Length ? withdrawals[offset + i] : tornadoTreesV1.withdrawals(offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "            require(leafHash == withdrawal, \"Incorrect withdrawal\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "                let itemOffset := add(data, mul(ITEM_SIZE, i))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "                mstore(add(itemOffset, 0x7c), blockNumber)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "                mstore(add(itemOffset, 0x78), instance)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "                mstore(add(itemOffset, 0x64), hash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            if (offset + i >= withdrawalsV1Length) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "                delete withdrawals[offset + i];",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "            } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "                emit WithdrawalData(instance, hash, blockNumber, offset + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 85, "newLine": 203, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        lastProcessedWithdrawalLeaf = offset + _withdrawals.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        withdrawalTree.bulkInsert(leaves);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "        uint256 argsHash = uint256(sha256(data)) % SNARK_FIELD;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        require(argsHash == uint256(_argsHash), \"Invalid args hash\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "        require(treeUpdateVerifier.verifyProof(_proof, [argsHash]), \"Invalid withdrawal tree update proof\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 207, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "        previousWithdrawalRoot = _currentRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "        withdrawalRoot = _newRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "        lastProcessedWithdrawalLeaf = offset + CHUNK_SIZE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 88, "newLine": 211, "text": "    }" },
+              { "type": " ", "oldLine": 89, "newLine": 212, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 213,
+                "text": "    function validateRoots(bytes32 _depositRoot, bytes32 _withdrawalRoot) public view {"
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        require(depositTree.isKnownRoot(_depositRoot), \"Incorrect deposit tree root\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        require(withdrawalTree.isKnownRoot(_withdrawalRoot), \"Incorrect withdrawal tree root\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        require(_depositRoot == depositRoot || _depositRoot == previousDepositRoot, \"Incorrect deposit tree root\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "            _withdrawalRoot == withdrawalRoot || _withdrawalRoot == previousWithdrawalRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "            \"Incorrect withdrawal tree root\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 93, "newLine": 219, "text": "    }" },
+              { "type": " ", "oldLine": 94, "newLine": 220, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    function depositRoot() external view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        return depositTree.getLastRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "    /// @dev There is no array length getter for deposit and withdrawal arrays",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "    /// in the previous contract, so we have to find them length manually.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "    /// Used only during deployment",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "    function findArrayLength(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "        ITornadoTreesV1 _tornadoTreesV1,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "        string memory _type,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "        uint256 _from, // most likely array length after the proposal has passed",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 228,
+                "text": "        uint256 _step // optimal step size to find first match, approximately equals dispersion",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "    ) internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "        // Find the segment with correct array length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "        bool direction = elementExists(_tornadoTreesV1, _type, _from);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 232,
+                "text": "        do {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "            _from = direction ? _from + _step : _from - _step;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "        } while (direction == elementExists(_tornadoTreesV1, _type, _from));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "        uint256 high = direction ? _from : _from + _step;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "        uint256 low = direction ? _from - _step : _from;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "        uint256 mid = (high + low) / 2;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 238, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "        // Perform a binary search in this segment",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "        while (low < mid) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "            if (elementExists(_tornadoTreesV1, _type, mid)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "                low = mid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "            } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "                high = mid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "            mid = (low + high) / 2;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        return mid + 1;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 249, "text": "    }" },
+              { "type": " ", "oldLine": 98, "newLine": 250, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    function withdrawalRoot() external view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        return withdrawalTree.getLastRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "    function elementExists(ITornadoTreesV1 _tornadoTreesV1, string memory _type, uint256 index)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "        returns (bool success)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        // Try to get the element. If it succeeds the array length is higher, it it reverts the length is equal or lower",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "        (success,) = address(_tornadoTreesV1).staticcall{gas: 2500}(abi.encodeWithSignature(_type, index));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 101, "newLine": 258, "text": "    }" },
+              { "type": " ", "oldLine": 102, "newLine": 259, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    function getRegisteredDeposits() external view returns (bytes32[] memory _deposits) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        uint256 count = deposits.length - lastProcessedDepositLeaf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        _deposits = new bytes32[](count);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        for (uint256 i = 0; i < count; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "            _deposits[i] = deposits[lastProcessedDepositLeaf + i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "    function setTornadoProxyContract(address _tornadoProxy) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "        tornadoProxy = _tornadoProxy;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "        emit ProxyUpdated(_tornadoProxy);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 109, "newLine": 263, "text": "    }" },
+              { "type": " ", "oldLine": 110, "newLine": 264, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    function getRegisteredWithdrawals() external view returns (bytes32[] memory _withdrawals) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        uint256 count = withdrawals.length - lastProcessedWithdrawalLeaf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        _withdrawals = new bytes32[](count);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        for (uint256 i = 0; i < count; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "            _withdrawals[i] = withdrawals[lastProcessedWithdrawalLeaf + i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "    function setVerifierContract(IBatchTreeUpdateVerifier _treeUpdateVerifier) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "        treeUpdateVerifier = _treeUpdateVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "        emit VerifierUpdated(address(_treeUpdateVerifier));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 117, "newLine": 268, "text": "    }" },
+              { "type": " ", "oldLine": 118, "newLine": 269, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 270,
+                "text": "    function blockNumber() public view virtual returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cb23ed2e229afa2e9ca4df18785814e12de300445bfa2893d803153f67e8585e",
+  "name": "Multicall",
+  "kind": "abstract",
+  "lines": 22,
+  "source": "abstract contract Multicall is IMulticall {\n    /// @inheritdoc IMulticall\n    function multicall(bytes[] calldata data) external payable override returns (bytes[] memory results) {\n        results = new bytes[](data.length);\n        for (uint256 i = 0; i < data.length; i++) {\n            (bool success, bytes memory result) = address(this).delegatecall(data[i]);\n\n            if (!success) {\n                // Next 5 lines from https://ethereum.stackexchange.com/a/83577\n                if (result.length < 68) {\n                    revert();\n                }\n                assembly {\n                    result := add(result, 0x04)\n                }\n                revert(abi.decode(result, (string)));\n            }\n\n            results[i] = result;\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 9,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Multicall",
+        "similarity": 0.37,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Multicall.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/Multicall.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 13,
+        "removed": 4,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 9,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 13,
+            "newStart": 1,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Multicall {",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Receives and executes a batch of function calls on this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * @custom:oz-upgrades-unsafe-allow-reachable delegatecall",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function multicall(bytes[] calldata data) external virtual returns (bytes[] memory results) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract Multicall is IMulticall {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @inheritdoc IMulticall",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    function multicall(bytes[] calldata data) external payable override returns (bytes[] memory results) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 4,
+                "text": "        results = new bytes[](data.length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 5,
+                "text": "        for (uint256 i = 0; i < data.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "            results[i] = Address.functionDelegateCall(address(this), data[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "            (bool success, bytes memory result) = address(this).delegatecall(data[i]);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "            if (!success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "                // Next 5 lines from https://ethereum.stackexchange.com/a/83577",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "                if (result.length < 68) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "                    revert();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "                assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "                    result := add(result, 0x04)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "                revert(abi.decode(result, (string)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 18, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            results[i] = result;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 20,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        return results;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 21, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 22, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

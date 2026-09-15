@@ -122,15 +122,15 @@ const columns = [
       },
     },
   ),
-  columnHelper.accessor('reportsCount', {
+  columnHelper.accessor('ownReportsCount', {
     header: 'Audits',
     cell: (ctx) => (
       <span className="font-medium text-sm">
         {ctx.getValue()}
-        {ctx.row.original.libraryReportsCount > 0 && (
+        {ctx.row.original.sharedReportsCount > 0 && (
           <span className="text-secondary">
             {' '}
-            +{ctx.row.original.libraryReportsCount} lib
+            +{ctx.row.original.sharedReportsCount} shared
           </span>
         )}
       </span>
@@ -138,7 +138,7 @@ const columns = [
     meta: {
       align: 'right',
       tooltip:
-        "Audit reports that matched at least one deployed unit: the project's own reports, plus standard library reports.",
+        "Audit reports that matched at least one deployed unit: the project's own reports, plus reports of upstream code, stacks, standard libraries and other projects.",
     },
   }),
 ]

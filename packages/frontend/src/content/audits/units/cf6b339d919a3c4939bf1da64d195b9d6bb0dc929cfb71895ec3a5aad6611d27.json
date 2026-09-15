@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cf6b339d919a3c4939bf1da64d195b9d6bb0dc929cfb71895ec3a5aad6611d27",
+  "name": "shapes.sh",
+  "kind": "program",
+  "lines": 26,
+  "source": "#!/bin/bash\n\n# S3 bucket name.\nS3_BUCKET=\"sp1-circuits\"\n\n# Check for unstaged changes in the Git repository\nif ! git diff --quiet; then\n    echo \"Error: There are unstaged changes. Please commit or stash them before running this script.\"\n    exit 1\nfi\n\n# Get the current short Git reference.\nGIT_REF=$(git rev-parse --short HEAD)\n\n# Upload allowed_vk_map.bin.\naws s3 cp allowed_vk_map.bin \"s3://${S3_BUCKET}/shapes-${GIT_REF}/allowed_vk_map.bin\"\n\n# Upload dummy_vk_map.bin.\naws s3 cp dummy_vk_map.bin \"s3://${S3_BUCKET}/shapes-${GIT_REF}/dummy_vk_map.bin\"\n\n# Print the uploaded shapes.\necho \"\\n\"\necho \"Successfully uploaded shapes to s3:\"\necho \"- https://${S3_BUCKET}.s3.us-east-2.amazonaws.com/shapes-${GIT_REF}/allowed_vk_map.bin\"\necho \"- https://${S3_BUCKET}.s3.us-east-2.amazonaws.com/shapes-${GIT_REF}/dummy_vk_map.bin\"\necho \"Shape Version: ${GIT_REF}\"",
+  "resolutions": {
+    "522759382dcd98c2": {
+      "status": "library",
+      "coveredLines": 26,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "shapes.sh",
+        "similarity": 1,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/shapes.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/shapes.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

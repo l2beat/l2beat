@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4ca9cd65c184013494ebf091940a6af6b4fc55555de60e8c293512574e0073c0",
+  "name": "KailuaTreasury",
+  "kind": "contract",
+  "lines": 357,
+  "source": "contract KailuaTreasury is KailuaTournament, IKailuaTreasury {\n    /// @notice Semantic version.\n    /// @custom:semver 1.2.0\n    string public constant version = \"1.2.0\";\n\n    // ------------------------------\n    // Immutable configuration\n    // ------------------------------\n\n    /// @notice The initial root claim for the deployment\n    Claim public immutable ROOT_CLAIM;\n\n    /// @notice The L2 block number of the initial root claim for the deployment\n    uint64 public immutable L2_BLOCK_NUMBER;\n\n    constructor(\n        KailuaVerifier _kailuaVerifier,\n        uint64 _proposalOutputCount,\n        uint64 _outputBlockSpan,\n        GameType _gameType,\n        IOptimismPortal2 _optimismPortal,\n        Claim _rootClaim,\n        uint64 _l2BlockNumber\n    )\n        KailuaTournament(\n            KailuaTreasury(this),\n            _kailuaVerifier,\n            _proposalOutputCount,\n            _outputBlockSpan,\n            _gameType,\n            _optimismPortal\n        )\n    {\n        ROOT_CLAIM = _rootClaim;\n        L2_BLOCK_NUMBER = _l2BlockNumber;\n    }\n\n    // ------------------------------\n    // IInitializable implementation\n    // ------------------------------\n\n    function initialize() external payable override {\n        super.initializeInternal();\n\n        // Revert if the calldata size is not the expected length.\n        //\n        // This is to prevent adding extra or omitting bytes from to `extraData` that result in a different game UUID\n        // in the factory, but are not used by the game, which would allow for multiple dispute games for the same\n        // output proposal to be created.\n        //\n        // Expected length: 0x76\n        // - 0x04 selector                      0x00 0x04\n        // - 0x14 creator address               0x04 0x18\n        // - 0x20 root claim                    0x18 0x38\n        // - 0x20 l1 head                       0x38 0x58\n        // - 0x1c extraData:                    0x58 0x74\n        //      + 0x08 l2BlockNumber            0x58 0x60\n        //      + 0x14 kailuaTreasuryAddress    0x60 0x74\n        // - 0x02 CWIA bytes                    0x74 0x76\n        if (msg.data.length != 0x76) {\n            revert BadExtraData();\n        }\n\n        // Accept only the initialized root claim\n        if (rootClaim().raw() != ROOT_CLAIM.raw()) {\n            revert UnexpectedRootClaim(rootClaim());\n        }\n\n        // Accept only the initialized l2 block number\n        if (l2BlockNumber() != L2_BLOCK_NUMBER) {\n            revert BlockNumberMismatch(l2BlockNumber(), L2_BLOCK_NUMBER);\n        }\n\n        // Accept only the address of the deployment treasury\n        if (treasuryAddress() != address(KAILUA_TREASURY)) {\n            revert BadExtraData();\n        }\n    }\n\n    /// @notice Returns the treasury address used in initialization\n    function treasuryAddress() public pure returns (address treasuryAddress_) {\n        treasuryAddress_ = _getArgAddress(0x5c);\n    }\n\n    // ------------------------------\n    // IDisputeGame implementation\n    // ------------------------------\n\n    /// @inheritdoc IDisputeGame\n    function extraData() external pure returns (bytes memory extraData_) {\n        // The extra data starts at the second word within the cwia calldata and\n        // is 32 bytes long.\n        extraData_ = _getArgBytes(0x54, 0x1c);\n    }\n\n    /// @inheritdoc IDisputeGame\n    function resolve() external onlyFactoryOwner returns (GameStatus status_) {\n        // INVARIANT: Resolution cannot occur unless the game is currently in progress.\n        if (status != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // Update the status and emit the resolved event, note that we're performing a storage update here.\n        emit Resolved(status = status_ = GameStatus.DEFENDER_WINS);\n\n        // Mark resolution timestamp\n        resolvedAt = Timestamp.wrap(uint64(block.timestamp));\n\n        // Update lastResolved\n        KAILUA_TREASURY.updateLastResolved();\n    }\n\n    // ------------------------------\n    // Fault proving\n    // ------------------------------\n\n    /// @inheritdoc KailuaTournament\n    function verifyIntermediateOutput(uint64, uint256, bytes calldata, bytes calldata)\n        external\n        pure\n        override\n        returns (bool success)\n    {\n        // No known blobs to reference\n    }\n\n    /// @inheritdoc KailuaTournament\n    function getChallengerDuration(uint256) public pure override returns (Duration duration_) {\n        // No challenge period\n    }\n\n    /// @inheritdoc KailuaTournament\n    function minCreationTime() public view override returns (Timestamp minCreationTime_) {\n        minCreationTime_ = createdAt;\n    }\n\n    /// @inheritdoc KailuaTournament\n    function parentGame() public view override returns (KailuaTournament parentGame_) {\n        parentGame_ = this;\n    }\n\n    // ------------------------------\n    // IKailuaTreasury implementation\n    // ------------------------------\n\n    /// @inheritdoc IKailuaTreasury\n    mapping(address => uint256) public eliminationRound;\n\n    /// @inheritdoc IKailuaTreasury\n    mapping(address => address) public proposerOf;\n\n    /// @inheritdoc IKailuaTreasury\n    function eliminate(address _child, address prover) external {\n        KailuaTournament child = KailuaTournament(_child);\n\n        // INVARIANT: Only the child's parent may call this\n        KailuaTournament parent = child.parentGame();\n        if (msg.sender != address(parent)) {\n            revert Blacklisted(msg.sender, address(parent));\n        }\n\n        // INVARIANT: Only known proposals may be eliminated\n        address eliminated = proposerOf[address(child)];\n        if (eliminated == address(0x0)) {\n            revert NotProposed();\n        }\n\n        // INVARIANT: Cannot double-eliminate players\n        if (eliminationRound[eliminated] > 0) {\n            revert AlreadyEliminated();\n        }\n\n        // Record elimination round\n        eliminationRound[eliminated] = child.gameIndex();\n\n        uint256 bond = paidBonds[eliminated];\n        paidBonds[eliminated] = 0;\n\n        // Split the slashed bond into prover / winner / burn.\n        uint256 proverShare = (bond * ELIMINATION_SPLIT_PROVER_NUM) / ELIMINATION_SPLIT_DENOM;\n        uint256 winnerShare = (bond * ELIMINATION_SPLIT_WINNER_NUM) / ELIMINATION_SPLIT_DENOM;\n        uint256 burnShare = bond - proverShare - winnerShare;\n\n        eliminationRewards[prover] += proverShare;\n        winnerSharesByParent[parent] += winnerShare;\n        // Burn by sending it to the zero address.\n        // The zero address has no code, so this external call cannot reenter.\n        KailuaPayLib.pay(burnShare, address(0));\n    }\n\n    /// @inheritdoc IKailuaTreasury\n    bool public isProposing;\n\n    /// @inheritdoc IKailuaTreasury\n    address public lastResolved;\n\n    /// @inheritdoc IKailuaTreasury\n    function updateLastResolved() external {\n        address proposer = proposerOf[msg.sender];\n\n        // INVARIANT: Only known proposal contracts may call this function\n        if (proposer == address(0x0)) {\n            revert NotProposed();\n        }\n\n        KailuaTournament parent = KailuaTournament(msg.sender).parentGame();\n        eliminationRewards[proposer] += winnerSharesByParent[parent];\n        winnerSharesByParent[parent] = 0;\n\n        lastResolved = msg.sender;\n    }\n\n    // ------------------------------\n    // Treasury\n    // ------------------------------\n\n    /// @notice Fixed split of a slashed participation bond between prover, winner, and burn.\n    uint256 public constant ELIMINATION_SPLIT_DENOM = 3;\n    uint256 public constant ELIMINATION_SPLIT_PROVER_NUM = 1;\n    uint256 public constant ELIMINATION_SPLIT_WINNER_NUM = 1;\n\n    /// @notice The locked collateral required for proposal submission\n    uint256 public participationBond;\n\n    /// @notice The locked collateral still paid by proposers for participation\n    mapping(address => uint256) public paidBonds;\n\n    /// @notice The total share of elimination bonds accumulated for the eventual tournament winner.\n    /// @dev Keyed by the parent game (tournament) contract.\n    mapping(KailuaTournament => uint256) private winnerSharesByParent;\n\n    /// @notice The unpaid rewards from eliminated invalid proposals\n    mapping(address => uint256) public eliminationRewards;\n\n    /// @notice The last proposal made by each proposer\n    mapping(address => KailuaTournament) public lastProposal;\n\n    /// @notice The leading proposer that can extend the proposal tree\n    address public vanguard;\n\n    /// @notice The duration for which the vanguard may lead\n    Duration public vanguardAdvantage;\n\n    /// @notice Boolean flag to prevent re-entrant calls\n    bool internal isLocked;\n\n    modifier nonReentrant() {\n        require(!isLocked);\n        isLocked = true;\n        _;\n        isLocked = false;\n    }\n\n    modifier onlyFactoryOwner() {\n        if (msg.sender != DISPUTE_GAME_FACTORY.owner()) {\n            revert NotFactoryOwner();\n        }\n        _;\n    }\n\n    /// @notice Pays the elimination rewards the sender has accrued\n    function claimEliminationRewards() public nonReentrant {\n        uint256 payout = eliminationRewards[msg.sender];\n        eliminationRewards[msg.sender] = 0;\n\n        if (payout > 0) {\n            KailuaPayLib.pay(payout, msg.sender);\n        }\n    }\n\n    /// @notice Pays the proposer back its bond\n    function claimProposerBond() public nonReentrant {\n        // INVARIANT: Can only claim back bond if not eliminated\n        if (eliminationRound[msg.sender] != 0) {\n            revert AlreadyEliminated();\n        }\n\n        // INVARIANT: Can only claim bond back if no pending proposals are left\n        KailuaTournament previousGame = lastProposal[msg.sender];\n        if (address(previousGame) != address(0x0)) {\n            KailuaTournament lastTournament = previousGame.parentGame();\n            if (lastTournament.children(lastTournament.contenderIndex()).status() != GameStatus.DEFENDER_WINS) {\n                revert GameNotResolved();\n            }\n        }\n\n        uint256 payout = paidBonds[msg.sender];\n        // INVARIANT: Can only claim bond if it is paid\n        if (payout == 0) {\n            revert NoCreditToClaim();\n        }\n\n        // Pay out and clear bond\n        paidBonds[msg.sender] = 0;\n        KailuaPayLib.pay(payout, msg.sender);\n    }\n\n    /// @notice Updates the required bond for new proposals\n    function setParticipationBond(uint256 amount) external onlyFactoryOwner {\n        participationBond = amount;\n        emit BondUpdated(amount);\n    }\n\n    /// @notice Updates the vanguard address and advantage duration\n    function assignVanguard(address _vanguard, Duration _vanguardAdvantage) external onlyFactoryOwner {\n        vanguard = _vanguard;\n        vanguardAdvantage = _vanguardAdvantage;\n    }\n\n    /// @notice Checks the proposer's bonded amount and creates a new proposal through the factory\n    function propose(Claim _rootClaim, bytes calldata _extraData)\n        external\n        payable\n        returns (KailuaTournament tournament)\n    {\n        // Check proposer honesty\n        if (eliminationRound[msg.sender] > 0) {\n            revert BadAuth();\n        }\n        // Update proposer bond\n        if (msg.value > 0) {\n            paidBonds[msg.sender] += msg.value;\n        }\n        // Check proposer bond\n        if (paidBonds[msg.sender] < participationBond) {\n            revert IncorrectBondAmount();\n        }\n        // Create proposal\n        isProposing = true;\n        tournament = KailuaTournament(address(DISPUTE_GAME_FACTORY.create(GAME_TYPE, _rootClaim, _extraData)));\n        isProposing = false;\n        // Check proposal progression\n        KailuaTournament previousGame = lastProposal[msg.sender];\n        if (address(previousGame) != address(0x0)) {\n            // INVARIANT: Proposers may only extend the proposal set incrementally\n            if (previousGame.l2BlockNumber() >= tournament.l2BlockNumber()) {\n                revert BlockNumberMismatch(previousGame.l2BlockNumber(), tournament.l2BlockNumber());\n            }\n        }\n        // Check whether the proposer must follow a vanguard if one is set\n        if (vanguard != address(0x0) && vanguard != msg.sender) {\n            // The proposer may only counter the vanguard during the advantage time\n            KailuaTournament proposalParent = tournament.parentGame();\n            if (proposalParent.childCount() == 1) {\n                // Count the advantage clock since proposal was possible\n                uint64 elapsedAdvantage = uint64(block.timestamp - tournament.minCreationTime().raw());\n                if (elapsedAdvantage < vanguardAdvantage.raw()) {\n                    revert VanguardError(address(proposalParent));\n                }\n            }\n        }\n        // Record proposer\n        proposerOf[address(tournament)] = msg.sender;\n        // Record proposal\n        lastProposal[msg.sender] = tournament;\n    }\n}",
+  "resolutions": {
+    "827d4d19b493dbb6": {
+      "status": "differs",
+      "coveredLines": 355,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "KailuaTreasury",
+        "similarity": 0.987,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaTreasury.sol",
+        "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+        "commitTimestamp": "2026-02-06T13:05:10Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/ccf2771857721a9cda5f7943ed7ef1d236c20bbd/crates/contracts/foundry/src/KailuaTreasury.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Veridise review on commit ccf2771 of boundless-xyz/kailua limited to the changes made to this file since commit 7eb9869 (fault proof permit system and its integration). No fixed findings located here; Warnings V-KLA-VUL-004/006 (locked bonds) acknowledged without fix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 355,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        uint64 _proposalOutputCount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        uint64 _outputBlockSpan,"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        GameType _gameType,"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        OptimismPortal2 _optimismPortal,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        IOptimismPortal2 _optimismPortal,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        Claim _rootClaim,"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        uint64 _l2BlockNumber"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    )" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 7,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // IInitializable implementation"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    // ------------------------------"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @inheritdoc IInitializable",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 42,
+                "text": "    function initialize() external payable override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 43,
+                "text": "        super.initializeInternal();"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 44, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 253,
+            "oldLines": 8,
+            "newStart": 252,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 253, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 254, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 254,
+                "text": "    modifier onlyFactoryOwner() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "        OwnableUpgradeable factoryContract = OwnableUpgradeable(address(DISPUTE_GAME_FACTORY));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        if (msg.sender != factoryContract.owner()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        if (msg.sender != DISPUTE_GAME_FACTORY.owner()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 256,
+                "text": "            revert NotFactoryOwner();"
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 257,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 258,
+                "text": "        _;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

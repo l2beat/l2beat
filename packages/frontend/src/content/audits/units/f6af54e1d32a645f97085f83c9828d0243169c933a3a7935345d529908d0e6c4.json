@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f6af54e1d32a645f97085f83c9828d0243169c933a3a7935345d529908d0e6c4",
+  "name": "V3Path",
+  "kind": "library",
+  "lines": 36,
+  "source": "library V3Path {\n    using BytesLib for bytes;\n\n    /// @notice Returns true iff the path contains two or more pools\n    /// @param path The encoded swap path\n    /// @return True if path contains two or more pools, otherwise false\n    function hasMultiplePools(bytes calldata path) internal pure returns (bool) {\n        return path.length >= Constants.MULTIPLE_V3_POOLS_MIN_LENGTH;\n    }\n\n    /// @notice Decodes the first pool in path\n    /// @param path The bytes encoded swap path\n    /// @return tokenA The first token of the given pool\n    /// @return fee The fee level of the pool\n    /// @return tokenB The second token of the given pool\n    function decodeFirstPool(bytes calldata path) internal pure returns (address, uint24, address) {\n        return path.toPool();\n    }\n\n    /// @notice Gets the segment corresponding to the first pool in the path\n    /// @param path The bytes encoded swap path\n    /// @return The segment containing all data necessary to target the first pool in the path\n    function getFirstPool(bytes calldata path) internal pure returns (bytes calldata) {\n        return path[:Constants.V3_POP_OFFSET];\n    }\n\n    function decodeFirstToken(bytes calldata path) internal pure returns (address tokenA) {\n        tokenA = path.toAddress();\n    }\n\n    /// @notice Skips a token + fee element\n    /// @param path The swap path\n    function skipToken(bytes calldata path) internal pure returns (bytes calldata) {\n        return path[Constants.NEXT_V3_POOL_OFFSET:];\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

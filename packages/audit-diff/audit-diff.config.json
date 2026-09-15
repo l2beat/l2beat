@@ -1,5 +1,27 @@
 {
   "datasetRepoUrl": "https://github.com/sergeyshemyakov/audit-dataset/blob/main",
+  "collectionHints": {
+    "opstack": "optimism",
+    "orbitstack": "arbitrum",
+    "shared-zk-stack": "zksync2",
+    "polygon-cdk": "polygonzkevm",
+    "shared-sharp-verifier": "starknet",
+    "succinct": "sp1",
+    "aztecv1": "aztecnetwork",
+    "GnosisSafe": "safe",
+    "ChainlinkAggregatorProxy": "chainlink",
+    "ChainlinkAuthorizedForwarder": "chainlink",
+    "ChainlinkOCR2Aggregator": "chainlink",
+    "global/ProxyAdmin": "openzeppelin",
+    "global/TimelockController": "openzeppelin",
+    "global/UpgradeableBeacon": "openzeppelin",
+    "gnosisSafeModules": "optimism",
+    "gnosisSafeModules/ZodiacDelay": "safe",
+    "transporter": "chainlink",
+    "ccip": "chainlink",
+    "shared-circle": "circle",
+    "polygonposbridge": "polygon-pos"
+  },
   "projects": {
     "tornado-cash": {
       "aliases": {
