@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x744a252d244d9333bd5d0848dca1892f6d38d91e
+
+# Diff at Tue, 15 Sep 2026 11:31:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1787151120
+- current timestamp: 1789471807
+
+## Description
+
+Revoker changed: This is used to revoke vesting token positions.
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.
++++ description: Address used by ATP positions as the revocation authority.
+      values.getRevoker:
+-        "eth:0xA70D1A21b251eE5F15C4aD77179114d70917F0Bf"
++        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
+    }
+```
+
 Generated with discovered.json: 0x58d6fa812da486580c22090cddc233c63f35ac83
 
 # Diff at Wed, 19 Aug 2026 14:30:13 GMT:
