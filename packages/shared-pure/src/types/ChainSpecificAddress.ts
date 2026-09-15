@@ -82,55 +82,30 @@ export type ChainSpecificAddress = string & {
 }
 
 export function ChainSpecificAddress(value: string): ChainSpecificAddress {
-  const result = parseChainSpecificAddress(value)
-  if (!result.success) {
-    throw new TypeError(result.error)
+  const [chain, address] = value.split(':')
+  if (chain === undefined || address === undefined) {
+    throw new TypeError(`Incorrect ChainSpecificAddress format: ${value}`)
   }
-  return result.address
-}
 
-// Scanning discovery values probes many strings that are not addresses, and
-// constructing an exception per miss is ~10x slower than a successful parse.
-ChainSpecificAddress.tryFrom = function tryFrom(
-  value: string,
-): ChainSpecificAddress | undefined {
-  const result = parseChainSpecificAddress(value)
-  return result.success ? result.address : undefined
+  const result = validateAddress(address)
+  if (!result.valid) {
+    throw new TypeError(`Invalid ChainSpecificAddress: ${value}`)
+  }
+
+  if (!SHORT_CHAIN_NAMES.has(chain as ShortChainName)) {
+    throw new TypeError(`Unknown chain name: ${chain}`)
+  }
+
+  return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
 
 ChainSpecificAddress.check = function check(
   value: string,
 ): value is ChainSpecificAddress {
-  return (
-    typeof value === 'string' && ChainSpecificAddress.tryFrom(value) === value
-  )
-}
-
-function parseChainSpecificAddress(
-  value: string,
-):
-  | { success: true; address: ChainSpecificAddress }
-  | { success: false; error: string } {
-  const [chain, address] = value.split(':')
-  if (chain === undefined || address === undefined) {
-    return {
-      success: false,
-      error: `Incorrect ChainSpecificAddress format: ${value}`,
-    }
-  }
-
-  const result = validateAddress(address)
-  if (!result.valid) {
-    return { success: false, error: `Invalid ChainSpecificAddress: ${value}` }
-  }
-
-  if (!SHORT_CHAIN_NAMES.has(chain as ShortChainName)) {
-    return { success: false, error: `Unknown chain name: ${chain}` }
-  }
-
-  return {
-    success: true,
-    address: `${chain}:${result.address}` as unknown as ChainSpecificAddress,
+  try {
+    return ChainSpecificAddress(value).toString() === value
+  } catch {
+    return false
   }
 }
 
