@@ -20,7 +20,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'A payment can reach a predicted Safe before it is deployed, without an onchain announcement linking it to the recipient account. Deployment later exposes the individual stealth owner and any enabled modules, not the parent account. Auto-earn deposits remain attributable to that Safe, and combining balances or sending to an identified personal wallet publicly connects the activity.',
+        'A payment can reach a predicted Safe before it is deployed, without an onchain announcement linking it to the recipient account. Deployment later exposes the individual stealth owner and any enabled modules, not the parent account.',
       advice:
         'Generate a fresh address for each receive, keep unrelated funds separate using labels, and send to destinations that have no public link to you.',
       sources: [

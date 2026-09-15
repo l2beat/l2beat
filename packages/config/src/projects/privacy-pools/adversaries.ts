@@ -9,7 +9,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Which approved deposit a withdrawal spends is hidden. Partial withdrawals with change notes are supported and indistinguishable from full withdrawals, but cannot consume more than a single deposit.',
+        'Which approved deposit a withdrawal spends is hidden. Partial withdrawals with change notes are supported and indistinguishable from full withdrawals.',
       advice:
         'Withdraw through a relayer. Use partial withdrawals to fresh addresses. Ragequit only untouched deposits. Ragequitting a change note reveals the withdrawal it came from.',
       sources: [
