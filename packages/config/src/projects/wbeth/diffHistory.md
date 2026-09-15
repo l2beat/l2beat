@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x1e805d090492d769eda6c68e7c3fb3ede4a4e8b1
+
+# Diff at Tue, 15 Sep 2026 11:48:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1788041852
+- current timestamp: 1789472833
+
+## Description
+
+Config change (no change onchain).
+
+## Watched changes
+
+```diff
+    contract UnwrapTokenV1ETH (eth:0x79973d557CD9dd87eb61E250cc2572c990e20196) [wbeth/UnwrapTokenV1ETH] {
+    +++ description: Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. 136 claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress.
+      description:
+-        "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. 134 claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress."
++        "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. 136 claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress."
+    }
+```
+
+```diff
+    contract wBETH (eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1) [wbeth/WrapTokenV3ETH] {
+    +++ description: Liquid staking token (wBETH) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; 3175313719288555978183752 is the live supply.
+      description:
+-        "Liquid staking token (wBETH) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; 3175308537299494959722021 is the live supply."
++        "Liquid staking token (wBETH) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; 3175313719288555978183752 is the live supply."
+    }
+```
+
 Generated with discovered.json: 0x8c8e2a9dc324ee6d1714e85554e832117fefec11
 
 # Diff at Mon, 07 Sep 2026 14:12:17 GMT:
