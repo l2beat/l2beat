@@ -57,6 +57,51 @@ const reportWaitDelay = formatSeconds(
   { fullUnit: true },
 )
 
+// --- Liquid staking risk comparison (DeFi summary tab) ---
+const OPERATIONS_SAFE = 'eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC'
+const operationsSafe = discovery.getMultisigStats(OPERATIONS_SAFE)
+const reportPeriod = formatSeconds(
+  discovery.getContractValue<number>('EtherFiOracle', 'reportPeriodSlot') * 12,
+  { fullUnit: true },
+)
+const maxNegativeRebaseBps = value(
+  'EtherFiAdmin',
+  'effectiveMaxNegativeRebaseBps',
+)
+const staleOracleWindow = formatSeconds(
+  discovery.getContractValue<number>(
+    'EtherFiAdmin',
+    'staleOracleReportBlockWindow',
+  ) * 12,
+  { fullUnit: true },
+)
+const maxFinalizedPerDay = wholeEth(
+  'EtherFiAdmin',
+  'maxFinalizedWithdrawalAmountPerDay',
+)
+const stethSharePct = `${(
+  Number(
+    (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
+  ) / 100
+).toFixed(1)}%`
+const whitelistEnabled = discovery.getContractValue<boolean>(
+  'AuctionManager',
+  'whitelistEnabled',
+)
+const minBidEth = Number(BigInt(value('AuctionManager', 'minBidAmount'))) / 1e18
+const maxBidEth = Number(BigInt(value('AuctionManager', 'maxBidAmount'))) / 1e18
+const upgradeDelayDays =
+  discovery.getContractValue<number>(UPGRADE_TIMELOCK, 'getMinDelay') / 86400
+const operatingDelayDays =
+  discovery.getContractValue<number>(OPERATING_TIMELOCK, 'getMinDelay') / 86400
+const eigenLayerDelayDays =
+  (discovery.getContractValue<number>(
+    'EtherFiNode',
+    'EIGENLAYER_WITHDRAWAL_DELAY_BLOCKS',
+  ) *
+    12) /
+  86400
+
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
   slug: 'etherfi',
@@ -103,6 +148,45 @@ export const etherfi: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    liquidStaking: {
+      token: `${value('eETH', 'symbol')}, ${value('weETH', 'symbol')}`,
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'gated by ether.fi ops',
+        sentiment: 'good',
+        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; the Liquifier also mints against stETH. Staking needs ether.fi's operations roles: a spawner registered via the ${operatingDelayDays}-day timelock registers keys for a whitelisted operator and the oracle-operations role (an EOA and the ${operationsSafe} Safe) funds each validator, with credentials hard-coded to a protocol EigenPod. ${value('weETH', 'symbol')} wraps ${value('eETH', 'symbol')} shares.`,
+      },
+      operators: {
+        value: 'Whitelisted',
+        secondLine: 'no bond',
+        sentiment: 'warning',
+        description: `Operators are whitelisted by the ${operationsSafe} Safe (whitelist ${whitelistEnabled ? 'on' : 'off'}); bids (${minBidEth} to ${maxBidEth} ETH) go to the treasury, not a loss bond. Slashing is socialised via the rebase, capped at ${maxNegativeRebaseBps} bps per report; native stake is also restaked in EigenLayer, where AVS slashing can cut principal.`,
+      },
+      backing: {
+        value: 'EigenPods, stETH',
+        secondLine: 'creds: EigenPod',
+        sentiment: 'warning',
+        description: `0x02 credentials point at EigenPods owned by EtherFiNode contracts, so the ETH sits in EigenLayer (upgradeable by its governance, ${eigenLayerDelayDays}-day withdrawal delay). ${stethSharePct} of backing is stETH in EtherFiRestaker; ${bufferPct} is in the liquid buffer.`,
+      },
+      exchangeRate: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `~4h · ≤${maxPositiveRebase}`,
+        sentiment: 'warning',
+        description: `All ${oracleMembers} members must submit an identical report every ${reportPeriod}; EtherFiAdmin applies it after ${reportWaitDelay} (cancellable by the operating multisig) within caps of +${maxPositiveRebase} per report, ${acceptableRebaseApr} APR and −${maxNegativeRebaseBps} bps. A permissionless fallback opens after ${staleOracleWindow} of silence.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: '~1 day · pausable',
+        sentiment: 'warning',
+        description: `Burn ${value('eETH', 'symbol')} for a WithdrawRequestNFT finalized from oracle reports (at most ${maxFinalizedPerDay} ETH a day), claimed at the lower of request and finalization rate; a committee finalizing nothing stalls the queue until ${staleOracleWindow} of silence. Instant redemption pays from the buffer for up to ${maxExitFee}; the ${operationsSafe} Safe can pause everything.`,
+      },
+      upgrades: {
+        value: '6/10 Safe',
+        secondLine: `${upgradeDelayDays}d · no veto`,
+        sentiment: 'warning',
+        description: `Upgrades go only through the ${upgradeDelayDays}-day Upgrade Timelock, proposed by a 6-of-10 Safe, which also owns the RoleRegistry (role grants take ${upgradeDelayDays} days). A ${operatingDelayDays}-day Operating Timelock (${operationsSafe} Safe) tunes parameters within immutable ceilings. Holders have no veto.`,
+      },
+    },
   },
   externalDependencies: [
     {

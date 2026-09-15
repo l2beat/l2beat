@@ -1,4 +1,8 @@
-import type { Project, ProjectDefiCategory } from '@l2beat/config'
+import type {
+  Project,
+  ProjectDefiCategory,
+  ProjectDefiLiquidStakingRisks,
+} from '@l2beat/config'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
@@ -26,6 +30,7 @@ export interface DefiSummaryEntry {
   category: ProjectDefiCategory
   totalValueLockedUsd?: number
   dependencies?: DefiDependency[]
+  liquidStaking?: ProjectDefiLiquidStakingRisks
   isUnderReview: boolean
 }
 
@@ -65,6 +70,7 @@ export function buildDefiSummaryEntries(
                 dependencyProjectsById,
               )
             : undefined,
+        liquidStaking: project.defiInfo.liquidStaking,
         isUnderReview: !!project.statuses.reviewStatus,
       }
     })
