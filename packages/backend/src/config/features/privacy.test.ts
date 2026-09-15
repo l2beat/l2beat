@@ -11,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
+import { ERC20_TRANSFER_TOPIC } from '../../modules/privacy/utils/erc20'
 import { FeatureFlags } from '../FeatureFlags'
 import { getPrivacyConfig } from './privacy'
 
@@ -142,8 +143,6 @@ describe(getPrivacyConfig.name, () => {
     const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
     const TOKEN = EthereumAddress('0x2222222222222222222222222222222222222222')
     const POOL_TOPIC = `0x${'00'.repeat(12)}${POOL.slice(2).toLowerCase()}`
-    const TRANSFER_EVENT =
-      '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
     type FlowSource = ProjectPrivacyToken['buckets'][number]['withdrawal']
 
     async function getFlowConfigs(deposit: FlowSource, withdrawal: FlowSource) {
@@ -200,12 +199,12 @@ describe(getPrivacyConfig.name, () => {
     it('queries the token contract filtered by the pool as receiver or sender', async () => {
       const [deposit, withdrawal] = await getFlowConfigs(
         {
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { to: POOL },
         },
         {
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: POOL },
         },
@@ -216,7 +215,7 @@ describe(getPrivacyConfig.name, () => {
           direction: 'deposit',
           chain: 'ethereum',
           address: TOKEN,
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           topics: [null, POOL_TOPIC],
         }),
       )
@@ -225,7 +224,7 @@ describe(getPrivacyConfig.name, () => {
           direction: 'withdrawal',
           chain: 'ethereum',
           address: TOKEN,
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           topics: [POOL_TOPIC],
         }),
       )
@@ -235,12 +234,12 @@ describe(getPrivacyConfig.name, () => {
     it('filters both ends when from and to are set', async () => {
       const [deposit] = await getFlowConfigs(
         {
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: TOKEN, to: POOL },
         },
         {
-          event: TRANSFER_EVENT,
+          event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: POOL },
         },
@@ -256,13 +255,13 @@ describe(getPrivacyConfig.name, () => {
       await expect(
         getFlowConfigs(
           {
-            event: TRANSFER_EVENT,
+            event: ERC20_TRANSFER_TOPIC,
             extractor: 'erc20Transfer',
             // The type forbids this, so bypass it to exercise the runtime guard.
             params: {} as { from: typeof POOL },
           },
           {
-            event: TRANSFER_EVENT,
+            event: ERC20_TRANSFER_TOPIC,
             extractor: 'erc20Transfer',
             params: { from: POOL },
           },

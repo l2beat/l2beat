@@ -51,7 +51,7 @@ function formatBasisPoints(value: number): string {
 }
 
 // topic0 of the standard ERC-20 Transfer(address,address,uint256)
-const TRANSFER_EVENT =
+const ERC20_TRANSFER_EVENT =
   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
 const poolAddress = ChainSpecificAddress.address(pool.address)
@@ -100,12 +100,12 @@ const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
           address: pool.address,
           sinceTimestamp,
           deposit: {
-            event: TRANSFER_EVENT,
+            event: ERC20_TRANSFER_EVENT,
             extractor: 'erc20Transfer',
             params: { to: poolAddress },
           },
           withdrawal: {
-            event: TRANSFER_EVENT,
+            event: ERC20_TRANSFER_EVENT,
             extractor: 'erc20Transfer',
             params: { from: poolAddress },
           },

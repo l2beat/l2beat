@@ -4,12 +4,12 @@ import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { utils } from 'ethers'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig, PrivacyLogTopicFilter } from '../types'
+import { ERC20_TRANSFER_TOPIC, erc20Interface } from '../utils/erc20'
 import { PrivacyFlowIndexer } from './PrivacyFlowIndexer'
 
 const ADDRESS_A = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -21,10 +21,6 @@ const TOPIC_B =
 const POOL = EthereumAddress('0x3333333333333333333333333333333333333333')
 const USER = EthereumAddress('0x4444444444444444444444444444444444444444')
 const POOL_TOPIC = `0x${'00'.repeat(12)}${POOL.slice(2).toLowerCase()}`
-const erc20Interface = new utils.Interface([
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-])
-const TRANSFER_EVENT = erc20Interface.getEventTopic('Transfer')
 
 describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.multiUpdate.name, () => {
@@ -890,14 +886,14 @@ describe(PrivacyFlowIndexer.name, () => {
         50,
         150,
         [ADDRESS_B.toString()],
-        [[TRANSFER_EVENT], null, POOL_TOPIC],
+        [[ERC20_TRANSFER_TOPIC], null, POOL_TOPIC],
       )
       expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
         3,
         50,
         150,
         [ADDRESS_B.toString()],
-        [[TRANSFER_EVENT], POOL_TOPIC],
+        [[ERC20_TRANSFER_TOPIC], POOL_TOPIC],
       )
 
       const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
@@ -1096,7 +1092,7 @@ function transferConfig(opts: {
       direction: opts.direction,
       chain: 'ethereum',
       address: ADDRESS_B,
-      event: TRANSFER_EVENT,
+      event: ERC20_TRANSFER_TOPIC,
       topics: opts.topics,
       sinceTimestamp: UnixTime(0),
       priceId: 'ethereum',

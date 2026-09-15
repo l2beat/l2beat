@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 
@@ -19,10 +20,6 @@ const railgunInterface = new utils.Interface([
 const umbraInterface = new utils.Interface([
   'event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)',
   'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
-])
-
-const erc20Interface = new utils.Interface([
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
 ])
 
 const zamaInterface = new utils.Interface([
