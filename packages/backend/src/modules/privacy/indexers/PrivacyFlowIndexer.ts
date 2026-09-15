@@ -1,9 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import {
+  type BlockProvider,
+  createPrivacyConfigurationId,
+  type LogsProvider,
+  stringifyPrivacyConfigurationParams,
+} from '@l2beat/shared'
 import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -246,7 +250,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       config.address.toString(),
       config.event,
       config.extractor,
-      stringifyParams(config.params),
+      stringifyPrivacyConfigurationParams(config.params),
     ])
   }
 }
@@ -257,11 +261,6 @@ interface RawRecord {
   count: number
   amount: bigint
   timestamp: UnixTime
-}
-
-function stringifyParams(params: Record<string, unknown>): string {
-  const keys = Object.keys(params).sort()
-  return keys.map((k) => `${k}=${String(params[k])}`).join(',')
 }
 
 // Splits the bigint into whole/fractional parts before casting to Number to

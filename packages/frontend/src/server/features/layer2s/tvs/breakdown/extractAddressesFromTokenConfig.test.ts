@@ -13,7 +13,7 @@ describe(extractAddressesFromTokenConfig.name, () => {
   it('returns empty array if no amount', () => {
     const token = mockToken()
     const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqual({ addresses: [], escrows: [] })
+    expect(result).toEqual([])
   })
 
   it('should handle calculation', () => {
@@ -54,14 +54,10 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result.addresses).toEqualUnsorted([
+    expect(result).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add2, chain: '1' },
       { address: add4, chain: '2' },
-    ])
-    expect(result.escrows).toEqualUnsorted([
-      { address: add2, chain: '1' },
-      { address: add3, chain: '1' },
     ])
   })
 
@@ -99,11 +95,10 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result.addresses).toEqualUnsorted([
+    expect(result).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add3, chain: '1' },
     ])
-    expect(result.escrows).toEqualUnsorted([{ address: add2, chain: '1' }])
   })
 
   it('should handle a Starknet token balance', () => {
@@ -121,10 +116,25 @@ describe(extractAddressesFromTokenConfig.name, () => {
       }),
     )
 
-    expect(result).toEqual({
-      addresses: [{ address: tokenAddress, chain: 'starknet' }],
-      escrows: [{ address: poolAddress, chain: 'starknet' }],
-    })
+    expect(result).toEqual([{ address: tokenAddress, chain: 'starknet' }])
+  })
+
+  it('collects only the token address of an aggregate escrow formula', () => {
+    const tokenAddress = EthereumAddress.random()
+    const escrowAddresses = [EthereumAddress.random(), EthereumAddress.random()]
+
+    const result = extractAddressesFromTokenConfig(
+      mockToken({
+        type: 'balanceOfEscrows',
+        address: tokenAddress,
+        escrowAddresses,
+        chain: 'arbitrum',
+        sinceTimestamp: 0,
+        decimals: 18,
+      }),
+    )
+
+    expect(result).toEqual([{ address: tokenAddress, chain: 'arbitrum' }])
   })
 
   it('should return empty array for types with no addresses', () => {
@@ -141,8 +151,7 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result.addresses).toEqual([])
-    expect(result.escrows).toEqual([])
+    expect(result).toEqual([])
   })
 })
 

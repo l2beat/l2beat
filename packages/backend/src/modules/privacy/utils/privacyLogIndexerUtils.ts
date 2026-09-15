@@ -59,7 +59,7 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   const matches: PrivacyLogMatch<T>[] = []
 
   for (const log of logs) {
-    const key = getPrivacyLogConfigKey(log.address, log.topics[0])
+    const key = getPrivacyLogKey(log)
     const matching = configMap.get(key) ?? []
     if (matching.length === 0) continue
 
@@ -137,7 +137,7 @@ async function buildPrivacyBlockTimestampLookup(
   return lookup
 }
 
-function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
+export function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): { addresses: string[]; events: string[] } {
   const addresses = Array.from(
@@ -150,7 +150,7 @@ function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   return { addresses, events }
 }
 
-function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
+export function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): Map<string, Configuration<T>[]> {
   const configMap = new Map<string, Configuration<T>[]>()
@@ -173,4 +173,8 @@ function getPrivacyLogConfigKey(
   event: string | undefined,
 ): string {
   return `${address.toLowerCase()}:${event?.toLowerCase() ?? ''}`
+}
+
+export function getPrivacyLogKey(log: Pick<Log, 'address' | 'topics'>): string {
+  return getPrivacyLogConfigKey(log.address, log.topics[0])
 }

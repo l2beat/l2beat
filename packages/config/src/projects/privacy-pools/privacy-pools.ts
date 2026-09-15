@@ -201,6 +201,10 @@ export const privacyPools: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('WithdrawalVerifier').address,
+      discovery.getContract('RagequitVerifier').address,
+    ],
   },
 }
 

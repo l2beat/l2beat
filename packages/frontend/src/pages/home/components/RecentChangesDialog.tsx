@@ -126,6 +126,7 @@ function RecentChangesBody({
               <UpdateCard
                 key={`${update.date}-${index}`}
                 update={update}
+                sections={update.sections}
                 isSelected={false}
                 copyLinkPath={group.projectHref}
               />

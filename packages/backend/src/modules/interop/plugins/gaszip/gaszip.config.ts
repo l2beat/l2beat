@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   defineConfig,
@@ -193,16 +194,15 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
   }),
 ])
 
-interface GasZipApiChain {
-  name: string
-  chain: number
-  short: number
-  mainnet: boolean
-}
+const GasZipApiChain = v.object({
+  name: v.string(),
+  chain: v.number(),
+  short: v.number(),
+  mainnet: v.boolean(),
+})
+type GasZipApiChain = v.infer<typeof GasZipApiChain>
 
-interface GasZipApiResponse {
-  chains: GasZipApiChain[]
-}
+const GasZipApiResponse = v.object({ chains: v.array(GasZipApiChain) })
 
 function normalizeGasZipChainName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '')
@@ -316,7 +316,7 @@ export class GasZipConfigPlugin
       throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
     }
 
-    const json: GasZipApiResponse = await response.json()
+    const json = GasZipApiResponse.parse(await response.json())
     const usedNames = new Set<string>()
     const networks: GasZipChain[] = []
 

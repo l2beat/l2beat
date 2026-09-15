@@ -11,7 +11,6 @@ export interface SizeMetrics {
 }
 
 export function getSizeMetrics(ssrData: unknown): SizeMetrics {
-  const ssrDataJson = JSON.stringify(ssrData)
   const domHtml = document.documentElement.outerHTML
   const navigationEntry = performance.getEntriesByType('navigation')[0] as
     | PerformanceNavigationTiming
@@ -33,7 +32,7 @@ export function getSizeMetrics(ssrData: unknown): SizeMetrics {
   const pageBodyBytes = (htmlBodyBytes ?? 0) + resourceBodyBytes
 
   return {
-    ssrDataBytes: textEncoder.encode(ssrDataJson).length,
+    ssrDataBytes: getJsonByteSize(ssrData) ?? 0,
     domHtmlBytes: textEncoder.encode(domHtml).length,
     htmlTransferBytes,
     htmlBodyBytes,
@@ -41,4 +40,10 @@ export function getSizeMetrics(ssrData: unknown): SizeMetrics {
     pageBodyBytes,
     resourceCount: resourceEntries.length,
   }
+}
+
+/** Returns undefined for values JSON.stringify drops, e.g. `undefined`. */
+export function getJsonByteSize(value: unknown): number | undefined {
+  const json = JSON.stringify(value)
+  return json === undefined ? undefined : textEncoder.encode(json).length
 }

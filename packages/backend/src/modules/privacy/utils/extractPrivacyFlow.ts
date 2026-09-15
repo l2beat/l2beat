@@ -1,17 +1,13 @@
+import type {
+  PrivacyFlowExtractorConfig,
+  PrivacyFlowSource,
+} from '@l2beat/config'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type {
-  PrivacyFlowExtractResult,
-  PrivacyFlowIndexerConfig,
-  PrivacyRpcLog,
-} from '../types'
+import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
 const ERC20_TOKEN_TYPE = 0
-
-const privacyPoolsInterface = new utils.Interface([
-  'event Deposited(address indexed depositor, uint256 commitment, uint256 label, uint256 value, uint256 precommitmentHash)',
-  'event Withdrawn(address indexed processooor, uint256 value, uint256 spentNullifier, uint256 newCommitment)',
-])
 
 const railgunInterface = new utils.Interface([
   'event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)',
@@ -32,8 +28,8 @@ const zamaInterface = new utils.Interface([
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
 ])
 
-export function extractPrivacyFlow(
-  source: PrivacyFlowIndexerConfig,
+export function extractPrivacyFlow<T extends PrivacyFlowSource>(
+  source: T,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   switch (source.extractor) {
@@ -43,7 +39,10 @@ export function extractPrivacyFlow(
         amount: BigInt(source.params.amount),
       }
     case 'privacyPoolsValue':
-      return extractPrivacyPoolsValue(log)
+      return {
+        count: 1,
+        amount: extractPrivacyPoolsEvent(log).amount,
+      }
     case 'railgunShield':
       return extractRailgunShield(source, log)
     case 'railgunUnshield':
@@ -59,20 +58,8 @@ export function extractPrivacyFlow(
   }
 }
 
-function extractPrivacyPoolsValue(
-  log: PrivacyRpcLog,
-): PrivacyFlowExtractResult | undefined {
-  const parsedLog = privacyPoolsInterface.parseLog(log)
-  const value = parsedLog.args.value
-
-  return {
-    count: 1,
-    amount: BigInt(value.toString()),
-  }
-}
-
 function extractRailgunShield(
-  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'railgunShield' }>,
+  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'railgunShield' }>,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   const parsedLog = railgunInterface.parseLog(log)
@@ -101,7 +88,7 @@ function extractRailgunShield(
 }
 
 function extractRailgunUnshield(
-  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'railgunUnshield' }>,
+  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'railgunUnshield' }>,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   const parsedLog = railgunInterface.parseLog(log)
@@ -122,7 +109,7 @@ function extractRailgunUnshield(
 }
 
 function extractUmbraAmount(
-  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'umbraAmount' }>,
+  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'umbraAmount' }>,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   const parsedLog = umbraInterface.parseLog(log)
@@ -147,7 +134,7 @@ function extractZamaWrap(log: PrivacyRpcLog): PrivacyFlowExtractResult {
 }
 
 function extractZamaUnwrap(
-  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'zamaUnwrap' }>,
+  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'zamaUnwrap' }>,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult {
   const parsedLog = zamaInterface.parseLog(log)
