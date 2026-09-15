@@ -8,18 +8,21 @@
     <script type="module" src="/app.js"></script>
   </head>
   <body>
-    <header><a href="/" class="brand">astra <span>/ queryable facts</span></a><span class="stage">STAGE 01 · DIRECT WRITES</span></header>
+    <header><a href="/" class="brand">astra <span>/ queryable facts</span></a><span class="stage" id="lesson-badge">LESSON 01 · DIRECT WRITES</span></header>
     <main>
       <section class="intro">
         <p class="eyebrow">A SMALL, INSPECTABLE ANALYSIS</p>
         <h1>Find the write.<br /><span>Keep the claim precise.</span></h1>
         <p class="lede">Turn Solidity syntax into facts, then ask one small rule which functions contain assignments to state variables.</p>
+      <label class="lesson-toggle"><input type="checkbox" id="enable-reader" /> Enable lesson 02 · Read with AI</label>
+        <p class="caption">Adds source reading and an AI explanation after the same rules. Leave it off to present lesson 01.</p>
       </section>
       <nav class="flow" aria-label="The pipeline">
         <a href="#source-section"><b>01</b> Solidity source</a><span>→</span>
         <a href="#facts-section"><b>02</b> Compiler → facts</a><span>→</span>
         <a href="#rules-section"><b>03</b> Soufflé rules</a><span>→</span>
         <a href="#findings-section"><b>04</b> Observations</a>
+        <a href="#reader-section" id="reader-link" hidden><b>05</b> Read with AI</a>
       </nav>
       <section id="source-section" class="card source-card">
         <div class="section-top"><div><p class="eyebrow">01 / INPUT</p><h2>Start with the source</h2></div><label>Example<select id="example" aria-label="Example"></select></label></div>
@@ -59,9 +62,36 @@
             <div id="findings"></div>
             <div class="boundary"><h3>Certain about syntax.<br />Open about execution.</h3><p>The tuple establishes where an assignment appears. Calling its function may fail, the assignment may be unreachable, or the transaction may later revert.</p><p><b>Potential writer ≠ anyone can write.</b></p></div>
             <details open><summary>The boundary of this lesson</summary><ul id="scope"></ul></details>
-            <div class="next"><p class="eyebrow">THE NEXT QUESTION</p><p>Now that we have found the assignment, what source code would a researcher or AI need to read before explaining who can execute it?</p><p class="caption">That analysis is the next stage. There is no AI or solver verdict here.</p></div>
+            <div class="next"><p class="eyebrow">THE NEXT QUESTION</p><p>Now that we have found the assignment, what source code would a researcher or AI need to read before explaining who can execute it?</p><p class="caption">Enable lesson 02 at the top to explore this question with source and AI. These observations remain syntax facts.</p></div>
           </section>
         </div>
+        <section id="reader-section" class="card" hidden>
+          <div class="section-top"><div><p class="eyebrow">05 / LESSON 02</p><h2>Ask a question. Follow the investigation.</h2></div><span class="badge">Same rules · source on request</span></div>
+          <div class="reading-flow" aria-label="How this lesson works">
+            <div><b>Your question</b><p>AI chooses where to start</p></div><span>→</span>
+            <div><b>Facts and source</b><p>Fetched as the investigation unfolds</p></div><span>→</span>
+            <div><b>An explained answer</b><p>Claims alongside the code that supports them</p></div>
+          </div>
+          <label for="question">Research question</label><textarea id="question" maxlength="2000" rows="2">Who can change score, and what conditions must hold?</textarea>
+          <div class="actions"><button id="ask-ai">Ask AI</button><button id="cancel-ai" class="secondary" hidden>Stop</button><span id="ai-config" class="caption"></span></div>
+          <p class="caption">AI starts with a symbol index and the rules’ scope. It requests potential writers and source excerpts as needed. Requests and results appear below as they happen.</p>
+          <details><summary>What AI starts with</summary><p id="briefing-size" class="caption"></p><pre id="briefing" class="code long"></pre></details>
+          <p id="ai-status" role="status" aria-live="polite"></p><pre id="ai-error" role="alert" hidden></pre>
+          <details id="investigation" hidden open>
+            <summary>Investigation <span id="investigation-count" class="caption"></span></summary>
+            <p class="caption">Actual requests and returned results, with the AI’s stated purpose for each request. This is an inspection log, not a transcript of internal reasoning.</p>
+            <ol id="investigation-steps"></ol>
+          </details>
+          <section id="ai-answer" hidden>
+            <h2>Answer and supporting code</h2>
+            <p class="answer-basis">AI interpretation of retrieved source and facts. Highlighted lines show what the AI cites; they are not a correctness check.</p>
+            <div id="ai-claims"></div>
+            <h3>What remains uncertain</h3><ul id="ai-unknowns"></ul>
+            <details><summary>How to read this evidence</summary><p>Source excerpts and Soufflé observations come from the saved run. The explanation of why they support a claim is written by AI and may be wrong. We check that cited material was retrieved and highlighted lines belong to it; this does not prove the conclusion.</p></details>
+            <button id="download-answer" class="secondary">Download investigation</button>
+            <p id="ai-record" class="caption"></p>
+          </section>
+        </section>
         <footer><div><b>Every output is inspectable.</b><p id="artifact-path"></p></div><button id="download" class="secondary">Download run JSON</button></footer>
       </div>
     </main>

@@ -1,5 +1,6 @@
 import { displayAtom, makeIdLabels } from './id-labels.js'
 import { renderAstTree } from './ast-tree.js'
+import { createReader } from './reader.js'
 
 const $ = (id) => document.getElementById(id)
 let examples = []
@@ -31,6 +32,8 @@ function highlight(text) {
   }
   return html + escape(text.slice(position))
 }
+const reader = createReader({ escape, highlight })
+
 function atom(name, row) { return displayAtom(name, row, idLabels, $('raw-ids').checked) }
 function code(id, text) { $(id).innerHTML = highlight(text) }
 
@@ -43,6 +46,7 @@ function setEditing(editing) {
 }
 
 function invalidate() {
+  reader.clear()
   code('source-preview', $('source').value)
   currentRun = undefined
   $('results').hidden = true
@@ -59,6 +63,7 @@ function selectExample() {
 }
 
 function render(result) {
+  reader.update(result)
   currentRun = result
   $('results').hidden = false
   $('empty').hidden = true

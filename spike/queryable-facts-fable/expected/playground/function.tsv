@@ -1,0 +1,8 @@
+ClosedGate.authorize(address)	ClosedGate	authorize	function	external	pure
+IGate.authorize(address)	IGate	authorize	function	external	nonpayable
+OwnerGate.authorize(address)	OwnerGate	authorize	function	external	view
+OwnerGate.constructor(address)	OwnerGate	constructor	constructor	public	nonpayable
+Playground.constructor(address,address,IGate)	Playground	constructor	constructor	public	nonpayable
+Playground.doubled()	Playground	doubled	function	external	view
+Playground.setGuardian(address)	Playground	setGuardian	function	external	nonpayable
+Playground.setScore(uint256)	Playground	setScore	function	external	nonpayable

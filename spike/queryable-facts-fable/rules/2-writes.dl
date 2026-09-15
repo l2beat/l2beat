@@ -1,0 +1,137 @@
+// =============================================================================
+// Level 2: direct writes
+// Question: which functions contain a statement that writes a state variable?
+//
+// This is the first level that says something about behaviour, and it says the smallest useful
+// thing: "this function contains a write to that variable". No calls are followed yet (level 3),
+// and no conditions are read (level 5). The result is the list of *potential writers* of each
+// variable: the functions a reader has to open to learn how the variable changes.
+//
+// A write is an assignment (`x = ...`, `x += ...`), `x++`, `x--`, `delete x`, or `push`/`pop` on a
+// storage array. What is written is found by peeling the left side down to its root:
+// `items[i].owner = a` writes `items`, `(a, b) = f()` writes both.
+//
+// Claims at this level:
+//   writes(F, V)        exact for writes that name the variable. F really contains such a statement.
+//   doesNotWrite(F, V)  exact, and only stated when F has no blind spot (below). "F never changes V
+//                       by name, and has no way to change it without naming it."
+//   blindSpot(...)      every place where this level's view may be incomplete: inline assembly,
+//                       delegatecall, writes through storage pointers. Nothing is dropped silently;
+//                       level 4 resolves what it can, and what stays opaque stays listed.
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// 2a. Write operations, at the node level
+// ---------------------------------------------------------------------------
+
+// An expression whose type lives in storage (a storage pointer, or a call returning one).
+.decl storageTyped(N: number)
+storageTyped(N) :- attr(N, "typeDescriptions.typeIdentifier", T), contains("_storage", T).
+
+// `a.push(x)` / `a.pop()` where a is a storage array. solc resolves nothing for these members, so
+// they are recognised by name on a storage-typed receiver.
+.decl arrayOp(K: number, Op: symbol, Base: number)
+arrayOp(K, Op, B) :- inFn(K, _), node(K, "FunctionCall"), child(K, "expression", 0, E), node(E, "MemberAccess"),
+                     attr(E, "memberName", Op), (Op = "push" ; Op = "pop"), child(E, "expression", 0, B), storageTyped(B).
+
+// Site W writes the expression L with operator Op.
+.decl writeOp(W: number, Op: symbol, L: number)
+writeOp(A, Op, L) :- inFn(A, _), node(A, "Assignment"), attr(A, "operator", Op), child(A, "leftHandSide", 0, L).
+writeOp(U, Op, L) :- inFn(U, _), node(U, "UnaryOperation"), attr(U, "operator", Op), (Op = "++" ; Op = "--" ; Op = "delete"), child(U, "subExpression", 0, L).
+writeOp(K, Op, B) :- arrayOp(K, Op, B).
+
+// Destructuring `(a, b) = f()` writes each component. Tuples with one component are just parentheses.
+.decl tupleSlots(T: number, N: number)
+tupleSlots(T, N) :- node(T, "TupleExpression"), N = count : { child(T, "components", _, _) }.
+.decl multiTuple(T: number)
+multiTuple(T) :- tupleSlots(T, N), N > 1.
+.decl lhs(W: number, Op: symbol, E: number)
+lhs(W, Op, E) :- writeOp(W, Op, E), !multiTuple(E).
+lhs(W, Op, C) :- writeOp(W, Op, T), multiTuple(T), child(T, "components", _, C).
+lhs(W, Op, C) :- lhs(W, Op, T), multiTuple(T), child(T, "components", _, C).
+
+// Peeling an access chain down to its root: `items[i].x` → `items`, `(d)` → `d`.
+.decl peel(E: number, B: number)
+peel(E, B) :- node(E, "IndexAccess"), child(E, "baseExpression", 0, B).
+peel(E, B) :- node(E, "IndexRangeAccess"), child(E, "baseExpression", 0, B).
+peel(E, B) :- node(E, "MemberAccess"), child(E, "expression", 0, B).
+peel(E, B) :- node(E, "TupleExpression"), tupleSlots(E, 1), child(E, "components", 0, B).
+.decl root(E: number, R: number)
+root(E, E) :- lhs(_, _, E), !peel(E, _).
+root(E, R) :- lhs(_, _, E), peel(E, B), rootFrom(B, R).
+.decl rootFrom(E: number, R: number)
+rootFrom(E, E) :- peel(_, E), !peel(E, _).
+rootFrom(E, R) :- peel(_, E), peel(E, B), rootFrom(B, R).
+
+// ---------------------------------------------------------------------------
+// 2b. The tables
+// ---------------------------------------------------------------------------
+
+// Site W in function F writes state variable V with operator Op (= += -= ... ++ -- delete push pop).
+// strength: exact
+.decl writeSite(W: symbol, F: symbol, V: symbol, Op: symbol)
+.output writeSite
+writeSite(W, F, V, Op) :- lhs(WN, Op, E), root(E, R), node(R, "Identifier"), refOf(R, D), isStateVar(D), name(D, V),
+                          siteId(WN, W), inFn(WN, FN), functionName(FN, F).
+
+// The hello world of the issue: F contains a write to V.
+// strength: exact
+.decl writes(F: symbol, V: symbol)
+.output writes
+writes(F, V) :- writeSite(_, F, V, _).
+
+// A state variable declared with an initial value: written once, at deployment, before any constructor runs.
+// strength: exact
+.decl initializer(V: symbol, Text: symbol)
+.output initializer
+initializer(V, Text) :- isStateVar(VN), child(VN, "value", 0, E), name(VN, V), text(E, Text).
+
+// ---------------------------------------------------------------------------
+// 2c. Honesty: where this level cannot see
+// ---------------------------------------------------------------------------
+
+// A left side whose root is a local variable or a parameter: a write to memory or the stack, not to state.
+.decl localRoot(R: number)
+localRoot(R) :- node(R, "Identifier"), refOf(R, D), node(D, "VariableDeclaration"), !isStateVar(D), storageLoc(D, L), L != "storage".
+
+// Site K in F is a low-level call whose callee runs with *our* storage: `addr.delegatecall(data)`, `addr.callcode(data)`.
+.decl delegateCall(K: number, F: number, Member: symbol)
+delegateCall(K, F, M) :- inFn(K, F), node(K, "FunctionCall"), child(K, "expression", 0, E), node(E, "MemberAccess"),
+                         attr(E, "memberName", M), (M = "delegatecall" ; M = "callcode"), !hasNum(E, "referencedDeclaration").
+delegateCall(K, F, M) :- inFn(K, F), node(K, "FunctionCall"), child(K, "expression", 0, O), node(O, "FunctionCallOptions"), child(O, "expression", 0, E),
+                         node(E, "MemberAccess"), attr(E, "memberName", M), (M = "delegatecall" ; M = "callcode"), !hasNum(E, "referencedDeclaration").
+
+// A place in F where writes may happen that this level cannot attribute to a variable by name.
+//   "storage pointer"  a write through a local/parameter declared `storage` (`Data storage d = items[i]; d.x = 1;`)
+//   "call result"      a write through a storage pointer returned by a call (`find(key).value = 1;`)
+//   "assembly"         inline assembly: `sstore` can write any slot
+//   "delegatecall"     another contract's code runs with this contract's storage
+//   "unrecognised"     a left side this level does not understand at all
+// strength: exact
+.decl blindSpot(Site: symbol, F: symbol, Kind: symbol, Text: symbol)
+.output blindSpot
+blindSpot(W, F, "storage pointer", T) :- lhs(WN, _, E), root(E, R), node(R, "Identifier"), refOf(R, D), node(D, "VariableDeclaration"), storageLoc(D, "storage"),
+                                          siteId(WN, W), inFn(WN, FN), functionName(FN, F), text(WN, T).
+blindSpot(W, F, "call result", T)     :- lhs(WN, _, E), root(E, R), node(R, "FunctionCall"), storageTyped(R),
+                                          siteId(WN, W), inFn(WN, FN), functionName(FN, F), text(WN, T).
+blindSpot(W, F, "unrecognised", T)    :- lhs(WN, _, E), root(E, R), !node(R, "Identifier"), !node(R, "FunctionCall"),
+                                          siteId(WN, W), inFn(WN, FN), functionName(FN, F), text(WN, T).
+blindSpot(W, F, "unrecognised", T)    :- lhs(WN, _, E), root(E, R), node(R, "Identifier"), !refOf(R, _),
+                                          siteId(WN, W), inFn(WN, FN), functionName(FN, F), text(WN, T).
+blindSpot(W, F, "unrecognised", T)    :- lhs(WN, _, E), root(E, R), node(R, "Identifier"), refOf(R, D), !isStateVar(D), !localRoot(R), !storageLoc(D, "storage"),
+                                          siteId(WN, W), inFn(WN, FN), functionName(FN, F), text(WN, T).
+blindSpot(S, F, "assembly", T)        :- inFn(N, FN), node(N, "InlineAssembly"), siteId(N, S), functionName(FN, F), text(N, T).
+blindSpot(S, F, "delegatecall", T)    :- delegateCall(K, FN, _), siteId(K, S), functionName(FN, F), text(K, T).
+
+.decl hasBlindSpot(F: symbol)
+hasBlindSpot(F) :- blindSpot(_, F, _, _).
+
+// F has a body and no blind spot, and contains no write to V, where V is a state variable of F's
+// contract or of one of its bases (constants are left out: nothing can write them). Stated per
+// (function, variable) pair so a reader can look up exactly the pair they care about.
+// Calls are not followed: F may still *call* something that writes V (level 3).
+// strength: exact
+.decl doesNotWrite(F: symbol, V: symbol)
+.output doesNotWrite
+doesNotWrite(F, V) :- function(F, C, _, _, _, _), C != "", hasBody(F), !hasBlindSpot(F),
+                      inherits(C, B, _), stateVariable(V, B, _, _, Mut), Mut != "constant", !writes(F, V).

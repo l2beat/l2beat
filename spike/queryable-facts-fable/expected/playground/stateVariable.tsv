@@ -1,0 +1,5 @@
+OwnerGate.owner	OwnerGate	owner	address	mutable
+Playground.gate	Playground	gate	IGate	mutable
+Playground.guardian	Playground	guardian	address	mutable
+Playground.owner	Playground	owner	address	mutable
+Playground.score	Playground	score	uint256	mutable

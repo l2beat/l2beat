@@ -1,0 +1,82 @@
+// =============================================================================
+// Level 0: facts
+// Question: what did the compiler see?
+//
+// A Solidity file goes through solc, and solc's answer (the syntax tree and the storage layout)
+// is written down as rows, one row per node and one row per field. Nothing here knows what a
+// function or an assignment is; that knowledge starts at level 1, as rules over these rows.
+//
+// These are the only relations read from disk. src/emit.ts produces them with an encoding that
+// depends only on the shape of solc's JSON, never on what a field means:
+//
+//   { nodeType, id, src, ... }    →  node(Id, Type)  loc(Id, Src, Start, Len, Line, EndLine)  text(Id, Text)
+//   field holding another node    →  child(Parent, Field, Index, Child)
+//   field holding a string/bool   →  attr(Id, Field, Value)
+//   field holding a number        →  num(Id, Field, Value)
+//   field holding an array        →  one row per element with its Index (child / attrList / numList)
+//   field holding a plain object  →  flattened with dotted keys ("typeDescriptions.typeString")
+//
+// Claims at this level: none. A fact is not a claim about the contract, it is a claim about what
+// solc returned. Every later tuple can be explained back down to these rows.
+// =============================================================================
+
+// The file this run is about and the compiler version that read it.
+// strength: exact
+.decl unit(Unit: symbol, File: symbol, Solc: symbol)
+.input unit
+
+// One row per AST node: solc's own node id and its nodeType ("FunctionDefinition", "Assignment",
+// "YulFunctionCall", ...). Yul nodes have no id in solc's JSON and get synthetic ids above the
+// largest solc id.
+// strength: exact
+.decl node(Id: number, Type: symbol)
+.input node
+
+// Where a node sits in the source. Src is solc's "<start>:<length>:<file>" string, Start/Len decode it
+// (bytes), StartLine/EndLine are 1-based lines of the first and last byte.
+// strength: exact
+.decl loc(Id: number, Src: symbol, Start: number, Len: number, StartLine: number, EndLine: number)
+.input loc
+
+// The tree itself: node Child sits in field Field of node Parent. Index is the position when the
+// field is an array (`statements`, `arguments`, `parameters`, ...), 0 otherwise.
+// strength: exact
+.decl child(Parent: number, Field: symbol, Index: number, Child: number)
+.input child
+
+// String and boolean fields of a node: name, operator, visibility, kind, stateMutability,
+// storageLocation, memberName, "typeDescriptions.typeString", ... Booleans are "true"/"false".
+// strength: exact
+.decl attr(Id: number, Key: symbol, Value: symbol)
+.input attr
+
+// Numeric fields of a node. The important one is referencedDeclaration: the id of the node an
+// Identifier or MemberAccess refers to. This is solc's name resolution, for free.
+// Builtins (`require`, `msg`, ...) have negative ids that the JSON prints as uint32 (>= 2^31).
+// strength: exact
+.decl num(Id: number, Key: symbol, Value: number)
+.input num
+
+// Strings/booleans inside arrays, with their index: `names` of a call with named arguments,
+// "externalReferences.isSlot" of an inline assembly block, ...
+// strength: exact
+.decl attrList(Id: number, Key: symbol, Index: number, Value: symbol)
+.input attrList
+
+// Numbers inside arrays, with their index: linearizedBaseContracts (the C3 order, most-derived
+// first), baseFunctions (what an override overrides), "externalReferences.declaration", ...
+// strength: exact
+.decl numList(Id: number, Key: symbol, Index: number, Value: number)
+.input numList
+
+// The source text under a node, collapsed to one line and cut at 200 characters. Display only:
+// no rule reasons about text when the tree is available.
+// strength: exact
+.decl text(Id: number, Text: symbol)
+.input text
+
+// solc's storageLayout for each contract, one row per state variable that occupies storage
+// (constants and immutables never appear). AstId is the VariableDeclaration's node id.
+// strength: exact
+.decl storageLayout(Contract: symbol, AstId: number, Label: symbol, Slot: number, Offset: number, Type: symbol)
+.input storageLayout

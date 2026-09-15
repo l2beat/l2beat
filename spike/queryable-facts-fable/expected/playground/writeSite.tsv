@@ -1,0 +1,6 @@
+OwnerGate.constructor(address)@50:1593	OwnerGate.constructor(address)	OwnerGate.owner	=
+Playground.constructor(address,address,IGate)@22:849	Playground.constructor(address,address,IGate)	Playground.owner	=
+Playground.constructor(address,address,IGate)@23:873	Playground.constructor(address,address,IGate)	Playground.guardian	=
+Playground.constructor(address,address,IGate)@24:903	Playground.constructor(address,address,IGate)	Playground.gate	=
+Playground.setGuardian(address)@41:1419	Playground.setGuardian(address)	Playground.guardian	=
+Playground.setScore(uint256)@30:1089	Playground.setScore(uint256)	Playground.score	=

@@ -1,0 +1,12 @@
+OwnerGate.authorize(address)	OwnerGate.owner
+Playground.constructor(address,address,IGate)	Playground.score
+Playground.doubled()	Playground.gate
+Playground.doubled()	Playground.guardian
+Playground.doubled()	Playground.owner
+Playground.doubled()	Playground.score
+Playground.setGuardian(address)	Playground.gate
+Playground.setGuardian(address)	Playground.owner
+Playground.setGuardian(address)	Playground.score
+Playground.setScore(uint256)	Playground.gate
+Playground.setScore(uint256)	Playground.guardian
+Playground.setScore(uint256)	Playground.owner

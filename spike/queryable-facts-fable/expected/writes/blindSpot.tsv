@@ -1,0 +1,4 @@
+Hidden.viaAssembly(uint256)@92:2716	Hidden.viaAssembly(uint256)	assembly	assembly { sstore(2, value) }
+Hidden.viaCall(uint256,uint256)@87:2580	Hidden.viaCall(uint256,uint256)	call result	find(id).amount = amount
+Hidden.viaDelegate(bytes)@99:2921	Hidden.viaDelegate(bytes)	delegatecall	implementation.delegatecall(data)
+Hidden.viaPointer(uint256,uint256)@78:2299	Hidden.viaPointer(uint256,uint256)	storage pointer	d.amount = amount

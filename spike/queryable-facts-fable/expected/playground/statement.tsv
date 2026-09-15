@@ -1,0 +1,18 @@
+ClosedGate.authorize(address)@60:1844	ClosedGate.authorize(address)	Block		0
+ClosedGate.authorize(address)@61:1854	ClosedGate.authorize(address)	ExpressionStatement	ClosedGate.authorize(address)@60:1844	0
+OwnerGate.authorize(address)@53:1669	OwnerGate.authorize(address)	Block		0
+OwnerGate.authorize(address)@54:1679	OwnerGate.authorize(address)	ExpressionStatement	OwnerGate.authorize(address)@53:1669	0
+OwnerGate.constructor(address)@49:1583	OwnerGate.constructor(address)	Block		0
+OwnerGate.constructor(address)@50:1593	OwnerGate.constructor(address)	ExpressionStatement	OwnerGate.constructor(address)@49:1583	0
+Playground.constructor(address,address,IGate)@21:839	Playground.constructor(address,address,IGate)	Block		0
+Playground.constructor(address,address,IGate)@22:849	Playground.constructor(address,address,IGate)	ExpressionStatement	Playground.constructor(address,address,IGate)@21:839	0
+Playground.constructor(address,address,IGate)@23:873	Playground.constructor(address,address,IGate)	ExpressionStatement	Playground.constructor(address,address,IGate)@21:839	1
+Playground.constructor(address,address,IGate)@24:903	Playground.constructor(address,address,IGate)	ExpressionStatement	Playground.constructor(address,address,IGate)@21:839	2
+Playground.doubled()@34:1202	Playground.doubled()	Block		0
+Playground.doubled()@35:1212	Playground.doubled()	Return	Playground.doubled()@34:1202	0
+Playground.setGuardian(address)@39:1354	Playground.setGuardian(address)	Block		0
+Playground.setGuardian(address)@40:1364	Playground.setGuardian(address)	ExpressionStatement	Playground.setGuardian(address)@39:1354	0
+Playground.setGuardian(address)@41:1419	Playground.setGuardian(address)	ExpressionStatement	Playground.setGuardian(address)@39:1354	1
+Playground.setScore(uint256)@28:1043	Playground.setScore(uint256)	Block		0
+Playground.setScore(uint256)@29:1053	Playground.setScore(uint256)	ExpressionStatement	Playground.setScore(uint256)@28:1043	0
+Playground.setScore(uint256)@30:1089	Playground.setScore(uint256)	ExpressionStatement	Playground.setScore(uint256)@28:1043	1

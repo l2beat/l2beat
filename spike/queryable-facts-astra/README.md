@@ -3,7 +3,8 @@
 An incremental teaching prototype for narrowing smart-contract analysis. Stage 01
 asks: **which functions contain bare-identifier assignments to state variables?**
 It runs the Solidity compiler and Soufflé, displaying actual inputs and outputs.
-There is no AI, discovery integration, or solver yet.
+Lesson 02 adds an optional AI explanation based on those observations and source
+reading. There is no discovery integration or solver.
 
 ## Run it
 
@@ -16,7 +17,7 @@ From the repository root:
 ```sh
 cd spike/queryable-facts-astra
 npm ci --workspaces=false --ignore-scripts
-npm run dev
+pnpm dev
 ```
 
 Open **http://localhost:5181**. Select an example and click **Run this stage**.
@@ -32,14 +33,15 @@ npm run pipeline -- examples/02-unreachable.sol
 npm test
 
 # Optional overrides:
-PORT=5182 npm run dev
+PORT=5182 pnpm dev
 SOUFFLE_BIN=/absolute/path/to/souffle npm run pipeline
 ```
 
 The server binds to localhost. This folder owns its dependencies, npm lockfile,
 examples, rules, website, and ignored `out/` directory. It imports no code or cache
-from other prototypes. Use the local npm commands above; no root workspace
-install or configuration change is required. After installation, it works offline.
+from other prototypes. Use the commands inside this folder; no root workspace
+install or configuration change is required. The compiler and Soufflé stage works offline. Asking AI requires a signed-in
+Codex CLI and network access; it sends the displayed briefing to the model.
 
 ## Present it in about five minutes
 
@@ -66,7 +68,7 @@ install or configuration change is required. After installation, it works offlin
 7. Optionally rename `score` or `setScore` and rerun. The same rule works because
    it follows declaration IDs, not example names.
 8. Stop at the next question on the page: “What source should a researcher or AI
-   read to explain who can execute this assignment?” That is the next increment.
+   read to explain who can execute this assignment?” Enable lesson 02 to continue.
 
 Even a trivial setter should not be described as “always changing score”: it may
 assign the value already stored. This stage makes no claim about callers,
@@ -111,8 +113,9 @@ labels; tuple IDs still distinguish overloaded or identically named functions.
 There is no general AST framework or plugin loader. CLI and server call the same
 pipeline. The browser is plain HTML, CSS, and JavaScript. The expandable AST uses native
 `details` elements built from the existing `child` facts, not another parser.
-Solidity, fact, rule, and JSON views use a small shared token highlighter. When we add a second
-stage, its selector should change the executed rules, not just hide results.
+Solidity, fact, rule, and JSON views use a small shared token highlighter. Lesson 02
+adds source reading, so it intentionally uses the same rules. Future rule-layer
+toggles must change the program executed, not just hide results.
 
 ## Exact boundary
 
@@ -127,7 +130,7 @@ general exclusion proof. Source editing supports exploring the lesson, not
 arbitrary-contract coverage. Scope is included in every run JSON and on the page.
 
 Source remains visible. We do not infer permission from missing guard facts.
-The pipeline cannot answer “who can change score?” An external call such as
+The rule alone cannot answer “who can change score?” An external call such as
 `gate.authorize(msg.sender)` must still be understood before making that claim.
 
 ## Reproduce a run
@@ -152,3 +155,134 @@ souffle -F out/runs/STAGE_RUN/facts -D out/runs/STAGE_RUN/derived out/runs/STAGE
 Tests cover setter/reader, unreachable code, renaming, shadowing, internal callers,
 guards, external authorization, unsupported writes, UTF-8 offsets, and compiler
 failure. They validate this lesson, not general Solidity execution semantics.
+
+
+## Lesson 02 · a question drives the investigation
+
+Restart your existing `pnpm dev` process after updating, then refresh the page.
+Enable **lesson 02 · Read with AI** at the top. It adds no new Soufflé rules.
+
+Ask a free-form question. There is no state-variable selector. Try:
+
+- “Who can change score?”
+- “How is access controlled in this contract?”
+- “Can the authorization dependency be replaced?”
+
+The model starts with a symbol index (names, IDs, kinds, line ranges), the question,
+and the exact scope of the current rules. **Source is not pasted into the initial
+prompt.** The model chooses which of three requests to make:
+
+| Request | Input | Returned material |
+| --- | --- | --- |
+| `writers` | State-variable declaration ID | Matching existing directWrite tuples and function IDs |
+| `source` | Symbol ID | A declaration, function, modifier, or contract excerpt |
+| `lines` | Source line range | A bounded excerpt for additional context |
+
+Requests are executed against the saved compiler/Soufflé run. This is retrieval,
+not another analysis engine. A writers request does not run new rules or infer
+permissions. It can return internal functions and constructors too; we have not
+yet added transitive callers or an external-entry-point analysis.
+
+Each request includes a short public purpose, such as “Inspect the caller check”.
+The website streams the actual request and result into the **Investigation** log.
+It shows the returned facts and code, not a simulated sequence. The purpose is an
+explanation of the requested inspection, not a transcript of private reasoning.
+
+```text
+question + symbol index + rule scope
+    ↓ AI chooses a request
+writers / source / lines
+    ↓ actual facts or source returned and displayed
+AI chooses another request, or answers
+    ↓
+claim → why this evidence supports it → named code excerpt
+```
+
+The expandable investigation log is shown above the final answer. Each claim has
+an explanation of why its evidence matters, with the named function/declaration
+shown in context and the cited lines highlighted. Soufflé observations have a
+separate visual style. Internal evidence IDs remain in the saved JSON and model
+protocol; the presentation does not display F/L identifiers or “reference exists”.
+
+The adapter checks that cited material was actually retrieved and that selected
+lines belong to the excerpt. Missing evidence is shown explicitly. These checks
+**do not validate the AI's explanation or prove its conclusion**. The AI cannot
+turn an existing tuple into a permission proof by citing it. All conclusions
+about execution or authorization remain source-based AI reasoning.
+
+### Present the same rule with different behavior
+
+1. Use **A setter and a reader**, enable lesson 02, and ask who can change score.
+   Watch the model request potential writers and then source.
+2. Use **The same write, after a revert**. The same rule finds an assignment, but
+   the answer should explain why the preceding unconditional revert prevents it.
+   The evidence should show the complete setter, not isolated line citations.
+3. Use **A write guarded by an owner check**. Ask “How is access controlled?”
+   The model can inspect the setter, owner declaration, owner writers, constructor,
+   and reader as relevant. The user did not have to select a variable first.
+4. Use **A write delegated to an unknown gate**. Watch the model follow the gate
+   dependency. Its implementation and deployed address are not provided, so the
+   exact authorization policy must remain unknown.
+5. Expand **Investigation** above the answer to revisit actual requests. Use
+   **Download investigation** to retain the question, initial briefing, requests,
+   returned material, and final answer.
+
+The order and number of inspections are model choices, not scripted lesson steps.
+A model may request an entire small contract explicitly when checking whether
+other code could matter. Source is available on request, not prohibited. The
+current rules have incomplete write/dependency coverage, so we do not claim the
+retrieved excerpts form an exhaustive program slice. A conclusion about “nobody
+else” requires broader source inspection and remains AI reasoning at this stage.
+
+### Implementation and limits
+
+Read these files in order:
+
+1. `src/briefing.mjs`: build the symbol index and initial briefing; serve the three
+   retrieval operations; resolve final evidence against material actually returned.
+2. `src/ask.mjs`: the small loop that asks the model for a request or an answer,
+   executes requests, saves every turn, and emits progress events.
+3. `web/reader.js`: show the stream of inspections and the explained answer.
+
+The loop uses the installed Codex CLI and existing authentication. Each model call
+receives the initial briefing plus the actual inspection history so far. Only
+requested source and facts enter that history. There is no custom Solidity
+interpreter, solver, shell tool, or second query language. Source retrieval is
+limited to 120 lines per request; truncated symbols explicitly report the remaining
+range so the model can request more.
+
+An investigation allows at most 12 inspections, five minutes overall, and 120,000
+characters per prompt. These are operational limits, not semantic bounds. If the
+model cannot finish within them, the UI retains the partial trail and reports that
+there is no final answer. Clicking **Stop**, changing the question/source, or
+leaving the lesson aborts the active request. Changing ID notation preserves the
+answer. Each question starts a fresh investigation.
+
+The default model is `gpt-5.6-sol`. To override the model or executable:
+
+```sh
+ASTRA_MODEL=gpt-5.6-sol pnpm dev
+CODEX=/absolute/path/to/codex pnpm dev
+```
+
+The adapter uses non-interactive `codex exec`, a read-only sandbox and structured
+output. It disables shell tools and web search and skips user configuration and
+project instructions. Auth remains with the normal CLI installation. See the
+[non-interactive CLI documentation](https://developers.openai.com/codex/noninteractive)
+and [configuration reference](https://developers.openai.com/codex/config-reference).
+No new package dependency is needed.
+
+Each investigation saves `briefing.txt`, `trail.json`, and `answer.json` under the
+run's `asks/ask-*` directory. Each `turn-*` subdirectory saves the exact `prompt.txt`,
+`schema.json`, `invocation.json`, raw `response.json`, and `cli.log`. Failed asks
+save `error.txt`. The original run JSON still represents only the deterministic
+compiler/Soufflé stage. Copying the initial briefing alone into a chat no longer
+reproduces the interaction: the retrieval loop must service the model's requests.
+
+`npm test` runs the compiler/Soufflé tests plus retrieval, evidence membership,
+source context, request corrections, bounded execution, and cancellation checks.
+Browser checks exercise free-form questions, streamed JSON, source highlights,
+HTML escaping, partial failures, stale-answer prevention, and mobile layout.
+Live Codex checks exercise both variable-specific and broader questions. These
+checks validate the interaction; they do not certify future model answers. No
+server is started for the checks.

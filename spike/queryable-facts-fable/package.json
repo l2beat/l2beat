@@ -1,0 +1,32 @@
+{
+  "name": "@l2beat/spike-queryable-facts-fable",
+  "version": "0.0.0",
+  "private": true,
+  "description": "L2B-14851, level by level: a Solidity file becomes facts, each level adds a few rules, and every level states exactly what it can and cannot claim.",
+  "scripts": {
+    "qf": "tsx src/cli.ts",
+    "test": "tsx src/cli.ts test",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "dev": "vite --config web/vite.config.ts"
+  },
+  "dependencies": {
+    "@ethereum-sourcify/compilers": "^1.1.1",
+    "@ethereum-sourcify/compilers-types": "^1.2.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "semver": "^7.7.1"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/semver": "^7.5.8",
+    "@vitejs/plugin-react-swc": "^4.2.3",
+    "tsx": "^4.9.3",
+    "vite": "^7.3.1"
+  }
+}

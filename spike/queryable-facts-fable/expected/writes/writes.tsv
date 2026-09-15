@@ -1,0 +1,11 @@
+Forms.addItem(address,uint256)	Forms.counter
+Forms.addItem(address,uint256)	Forms.items
+Forms.deposit(uint256)	Forms.balances
+Forms.deposit(uint256)	Forms.total
+Forms.pause()	Forms.paused
+Forms.removeLast()	Forms.counter
+Forms.removeLast()	Forms.items
+Forms.reset(address)	Forms.balances
+Forms.reset(address)	Forms.items
+Forms.swapOwner(address)	Forms.owner
+Hidden.plain(uint256)	Hidden.total

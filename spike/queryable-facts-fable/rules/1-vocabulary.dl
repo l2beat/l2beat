@@ -1,0 +1,286 @@
+// =============================================================================
+// Level 1: vocabulary
+// Question: what are the contracts, functions, variables and statements in this file?
+//
+// Level 0 says "there is a node of type FunctionDefinition with attribute name = setScore".
+// This level gives every declaration a readable, stable id and puts it in a table a person can
+// read: contracts, inheritance, state variables and their storage slots, functions, parameters,
+// statements, and where each of them is in the file.
+//
+// Ids are built from the tree, so they mean the same thing in every run:
+//   contract          Playground
+//   function          Playground.setScore(uint256)      constructor(), fallback(), receive(), modifiers alike
+//   state variable    Playground.score
+//   parameter/local   Playground.setScore(uint256)/next
+//   statement, site   Playground.setScore(uint256)@<line>:<byte offset>
+//
+// Claims at this level: everything is exact. These tables restate what the compiler resolved;
+// there is no analysis yet, so there is nothing to be wrong about except a bug in a rule.
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// 1a. Reading the tree: small helpers over the raw rows (not shown as results)
+// ---------------------------------------------------------------------------
+
+// A node has a given string attribute / numeric attribute / child field at all (for negation).
+.decl hasAttr(N: number, K: symbol)
+hasAttr(N, K) :- attr(N, K, _).
+.decl hasNum(N: number, K: symbol)
+hasNum(N, K) :- num(N, K, _).
+.decl hasChild(N: number, F: symbol)
+hasChild(N, F) :- child(N, F, _, _).
+
+// Top-level declarations (children of the SourceUnit) and contract members (children of a contract).
+.decl topLevel(N: number)
+topLevel(N) :- node(SU, "SourceUnit"), child(SU, "nodes", _, N).
+.decl memberOf(N: number, C: number)
+memberOf(N, C) :- node(C, "ContractDefinition"), child(C, "nodes", _, N).
+
+// Functions and modifiers share almost everything: parameters, a body, a place in a contract.
+.decl fnNode(F: number)
+fnNode(F) :- node(F, "FunctionDefinition").
+fnNode(F) :- node(F, "ModifierDefinition").
+
+// The I-th parameter of F (positions come from the ParameterList's array index).
+.decl fnParam(F: number, I: number, P: number)
+fnParam(F, I, P) :- fnNode(F), child(F, "parameters", 0, L), child(L, "parameters", I, P).
+.decl fnReturn(F: number, I: number, P: number)
+fnReturn(F, I, P) :- fnNode(F), child(F, "returnParameters", 0, L), child(L, "parameters", I, P).
+.decl paramCount(F: number, N: number)
+paramCount(F, N) :- fnNode(F), N = count : { fnParam(F, _, _) }.
+
+// solc's name resolution: N (an Identifier, MemberAccess, IdentifierPath, ...) refers to node D of
+// this file. Builtins refer to negative ids (printed as uint32), which point at nothing here.
+.decl refOf(N: number, D: number)
+refOf(N, D) :- num(N, "referencedDeclaration", D), node(D, _).
+
+// State variables, and the location of any declared variable: default | storage | memory | calldata.
+.decl isStateVar(V: number)
+isStateVar(V) :- node(V, "VariableDeclaration"), attr(V, "stateVariable", "true").
+.decl storageLoc(V: number, L: symbol)
+storageLoc(V, L) :- node(V, "VariableDeclaration"), attr(V, "storageLocation", L).
+storageLoc(V, "default") :- node(V, "VariableDeclaration"), !hasAttr(V, "storageLocation").
+
+// ---------------------------------------------------------------------------
+// 1b. Types as text: solc's typeString shortened ("contract IGate" → "IGate", "uint256[] memory" → "uint256[]")
+// ---------------------------------------------------------------------------
+
+.decl rawType(T: symbol)
+rawType(T) :- attr(_, "typeDescriptions.typeString", T).
+
+// Prefixes and suffixes are tested with substr, not regular expressions: solc's type strings can be
+// long (nested mappings, function types) and a backtracking regex on them can crash the interpreter.
+.decl typePrefix(P: symbol, Len: number)
+typePrefix("struct ", 7). typePrefix("contract ", 9). typePrefix("enum ", 5). typePrefix("library ", 8). typePrefix("interface ", 10).
+.decl typeSuffix(S: symbol, Len: number)
+typeSuffix(" storage pointer", 16). typeSuffix(" storage ref", 12). typeSuffix(" memory", 7). typeSuffix(" calldata", 9).
+
+.decl hasTypePrefix(T: symbol)
+hasTypePrefix(T) :- rawType(T), typePrefix(P, L), strlen(T) >= L, substr(T, 0, L) = P.
+.decl noPrefix(Raw: symbol, T: symbol)
+noPrefix(R, substr(R, L, strlen(R) - L)) :- rawType(R), typePrefix(P, L), strlen(R) >= L, substr(R, 0, L) = P.
+noPrefix(R, R) :- rawType(R), !hasTypePrefix(R).
+.decl hasTypeSuffix(T: symbol)
+hasTypeSuffix(T) :- noPrefix(_, T), typeSuffix(S, L), strlen(T) >= L, substr(T, strlen(T) - L, L) = S.
+.decl shortType(Raw: symbol, Short: symbol)
+shortType(R, substr(T, 0, strlen(T) - L)) :- noPrefix(R, T), typeSuffix(S, L), strlen(T) >= L, substr(T, strlen(T) - L, L) = S.
+shortType(R, T) :- noPrefix(R, T), !hasTypeSuffix(T).
+
+// The declared type of a variable ("?" when solc gave none).
+.decl declType(V: number, T: symbol)
+declType(V, T) :- node(V, "VariableDeclaration"), attr(V, "typeDescriptions.typeString", R), shortType(R, T).
+declType(V, "?") :- node(V, "VariableDeclaration"), !hasAttr(V, "typeDescriptions.typeString").
+
+// ---------------------------------------------------------------------------
+// 1c. Names: readable, stable ids for everything the levels above talk about
+// ---------------------------------------------------------------------------
+
+.decl contractName(C: number, Sym: symbol)
+contractName(C, N) :- node(C, "ContractDefinition"), attr(C, "name", N).
+
+// function | constructor | fallback | receive | modifier
+.decl fnKind(F: number, K: symbol)
+fnKind(F, "modifier") :- node(F, "ModifierDefinition").
+fnKind(F, K) :- node(F, "FunctionDefinition"), attr(F, "kind", K).
+
+// Constructors, fallback and receive functions have no name of their own: the kind stands in.
+.decl fnName(F: number, Name: symbol)
+fnName(F, K) :- fnKind(F, K), (K = "constructor" ; K = "fallback" ; K = "receive").
+fnName(F, N) :- fnKind(F, K), K != "constructor", K != "fallback", K != "receive", attr(F, "name", N).
+
+// name(type0,type1,...): the parameter types folded left to right by position.
+.decl sigPrefix(F: number, I: number, Text: symbol)
+sigPrefix(F, 0, T) :- fnParam(F, 0, P), declType(P, T).
+sigPrefix(F, I, cat(Prev, ",", T)) :- sigPrefix(F, J, Prev), fnParam(F, I, P), I = J + 1, declType(P, T).
+.decl signature(F: number, Sig: symbol)
+signature(F, cat(Name, "()")) :- fnName(F, Name), paramCount(F, 0).
+signature(F, cat(Name, "(", Types, ")")) :- fnName(F, Name), paramCount(F, N), N > 0, sigPrefix(F, M, Types), M = N - 1.
+
+// <Contract>.<signature>, or just <signature> for a free function.
+.decl functionName(F: number, Sym: symbol)
+functionName(F, cat(C, ".", Sig)) :- memberOf(F, CN), contractName(CN, C), signature(F, Sig).
+functionName(F, Sig) :- fnNode(F), topLevel(F), signature(F, Sig).
+
+// Which function a parameter, return variable or local belongs to.
+.decl declFn(V: number, F: number)
+declFn(V, F) :- fnParam(F, _, V).
+declFn(V, F) :- fnReturn(F, _, V).
+declFn(V, F) :- inFn(V, F), node(V, "VariableDeclaration").
+
+// Unnamed variables (e.g. `returns (uint256)`) print as "_".
+.decl varLabel(V: number, Name: symbol)
+varLabel(V, N) :- node(V, "VariableDeclaration"), attr(V, "name", N), N != "".
+varLabel(V, "_") :- node(V, "VariableDeclaration"), attr(V, "name", "").
+
+.decl varName(V: number, Sym: symbol)
+// state variable of a contract
+varName(V, cat(C, ".", Name)) :- isStateVar(V), memberOf(V, CN), contractName(CN, C), attr(V, "name", Name).
+// parameter, return variable or local of a function
+varName(V, cat(F, "/", Name)) :- declFn(V, FN), functionName(FN, F), varLabel(V, Name).
+// file-level constant
+varName(V, Name) :- node(V, "VariableDeclaration"), topLevel(V), attr(V, "name", Name).
+
+// Every declaration id in one place.
+.decl name(N: number, Sym: symbol)
+name(N, S) :- contractName(N, S).
+name(N, S) :- functionName(N, S).
+name(N, S) :- varName(N, S).
+.decl named(N: number)
+named(N) :- name(N, _).
+// A referenced id we could not name: "?ast<id>".
+.decl nameOr(N: number, Sym: symbol)
+nameOr(N, S) :- name(N, S).
+nameOr(N, cat("?ast", to_string(N))) :- num(_, "referencedDeclaration", N), !named(N).
+nameOr(N, cat("?ast", to_string(N))) :- numList(_, _, _, N), !named(N).
+
+// ---------------------------------------------------------------------------
+// 1d. Code: which nodes belong to which function, and which statement they sit in
+// ---------------------------------------------------------------------------
+
+// N is part of F's code: inside its body, or inside the arguments of one of its modifiers.
+.decl inFn(N: number, F: number)
+inFn(N, F) :- fnNode(F), child(F, "body", 0, N).
+inFn(M, F) :- fnNode(F), child(F, "modifiers", _, M).
+inFn(N, F) :- inFn(P, F), child(P, _, _, N).
+
+// <function>@<line>:<byte offset> for any node inside a function: the line for people, the offset for uniqueness.
+.decl siteId(N: number, Sym: symbol)
+siteId(N, cat(F, "@", to_string(Line), ":", to_string(S))) :- inFn(N, FN), functionName(FN, F), loc(N, _, S, _, Line, _).
+
+// The statement tree, exactly as a reader sees it: the body block, then statements nested through
+// blocks, if/else branches, loop parts and try clauses. Parent -1 marks the body itself.
+.decl stmtNode(S: number, F: number, P: number, I: number)
+stmtNode(B, F, -1, 0) :- fnNode(F), child(F, "body", 0, B).
+stmtNode(S, F, P, I) :- stmtNode(P, F, _, _), node(P, T), (T = "Block" ; T = "UncheckedBlock"), child(P, "statements", I, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, "IfStatement"), child(P, "trueBody", 0, S).
+stmtNode(S, F, P, 1) :- stmtNode(P, F, _, _), node(P, "IfStatement"), child(P, "falseBody", 0, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "initializationExpression", 0, S).
+stmtNode(S, F, P, 1) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "loopExpression", 0, S).
+stmtNode(S, F, P, 2) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "body", 0, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, T), (T = "WhileStatement" ; T = "DoWhileStatement"), child(P, "body", 0, S).
+stmtNode(S, F, P, I) :- stmtNode(P, F, _, _), node(P, "TryStatement"), child(P, "clauses", I, Cl), child(Cl, "block", 0, S).
+.decl isStmt(S: number)
+isStmt(S) :- stmtNode(S, _, _, _).
+
+// The innermost statement an expression node sits in (an if's condition sits in the if).
+.decl stmtOfNode(N: number, S: number)
+stmtOfNode(N, S) :- isStmt(S), child(S, _, _, N), !isStmt(N).
+stmtOfNode(N, S) :- stmtOfNode(P, S), child(P, _, _, N), !isStmt(N).
+
+// ---------------------------------------------------------------------------
+// 1e. The tables: what a reader gets at this level
+// ---------------------------------------------------------------------------
+
+// Kind: contract | interface | library. Abstract: 0/1.
+// strength: exact
+.decl contract(C: symbol, Kind: symbol, Abstract: number)
+.output contract
+contract(C, Kind, 1) :- contractName(CN, C), attr(CN, "contractKind", Kind), attr(CN, "abstract", "true").
+contract(C, Kind, 0) :- contractName(CN, C), attr(CN, "contractKind", Kind), !attr(CN, "abstract", "true").
+
+// C3 linearization as solc reports it: Order 0 is C itself, then bases most-derived first.
+// `contract A is B, C` gives inherits(A, A, 0), inherits(A, C, 1), inherits(A, B, 2).
+// strength: exact
+.decl inherits(C: symbol, Base: symbol, Order: number)
+.output inherits
+inherits(C, Base, Order) :- contractName(CN, C), numList(CN, "linearizedBaseContracts", Order, B), nameOr(B, Base).
+
+// Mutability: mutable | constant | immutable (older compilers only have the `constant` flag).
+.decl varMutability(V: number, M: symbol)
+varMutability(V, M) :- node(V, "VariableDeclaration"), attr(V, "mutability", M).
+varMutability(V, "constant") :- node(V, "VariableDeclaration"), !hasAttr(V, "mutability"), attr(V, "constant", "true").
+varMutability(V, "mutable") :- node(V, "VariableDeclaration"), !hasAttr(V, "mutability"), !attr(V, "constant", "true").
+
+// A state variable of contract C. Constants and immutables are listed too (they have no slot).
+// strength: exact
+.decl stateVariable(V: symbol, C: symbol, Name: symbol, Type: symbol, Mutability: symbol)
+.output stateVariable
+stateVariable(V, C, Name, Type, Mut) :- memberOf(VN, CN), isStateVar(VN), name(VN, V), contractName(CN, C),
+                                        attr(VN, "name", Name), declType(VN, Type), varMutability(VN, Mut).
+
+// Where V lives in the storage of a deployed C, from solc's layout. Inherited variables appear
+// under the contract that would be deployed, which is why C is a column and not part of V.
+// strength: exact
+.decl storageSlot(C: symbol, V: symbol, Slot: number, Offset: number)
+.output storageSlot
+storageSlot(C, V, Slot, Offset) :- storageLayout(C, Id, _, Slot, Offset, _), name(Id, V).
+
+// Optional header attributes with their "absent" spelling.
+.decl fnVisibility(F: number, V: symbol)
+fnVisibility(F, V) :- fnNode(F), attr(F, "visibility", V).
+fnVisibility(F, "") :- fnNode(F), !hasAttr(F, "visibility").
+.decl fnMutability(F: number, M: symbol)
+fnMutability(F, M) :- fnNode(F), attr(F, "stateMutability", M).
+fnMutability(F, "") :- fnNode(F), !hasAttr(F, "stateMutability").
+.decl fnContract(F: number, C: symbol)
+fnContract(F, C) :- fnNode(F), memberOf(F, CN), contractName(CN, C).
+fnContract(F, "") :- fnNode(F), topLevel(F).
+
+// Kind: function | constructor | fallback | receive | modifier. C is "" for free functions.
+// Visibility: public | external | internal | private. Mutability: nonpayable | view | pure | payable.
+// strength: exact
+.decl function(F: symbol, C: symbol, Name: symbol, Kind: symbol, Visibility: symbol, Mutability: symbol)
+.output function
+function(F, C, Name, Kind, Vis, Mut) :- functionName(FN, F), fnContract(FN, C), fnName(FN, Name),
+                                        fnKind(FN, Kind), fnVisibility(FN, Vis), fnMutability(FN, Mut).
+
+// F has a body. Interface members and abstract functions do not; nothing can be said about their code.
+// strength: exact
+.decl hasBody(F: symbol)
+.output hasBody
+hasBody(F) :- fnNode(FN), hasChild(FN, "body"), functionName(FN, F).
+
+// The Index-th parameter of F. Location: default | storage | memory | calldata.
+// strength: exact
+.decl parameter(F: symbol, Index: number, P: symbol, Name: symbol, Type: symbol, Location: symbol)
+.output parameter
+parameter(F, I, P, Name, Type, Loc) :- fnParam(FN, I, PN), functionName(FN, F), name(PN, P), varLabel(PN, Name), declType(PN, Type), storageLoc(PN, Loc).
+
+// F is declared with modifier M in position Index: `function f() onlyOwner whenNotPaused`.
+// Base-constructor calls written like modifiers (`constructor() Base(1)`) are listed too, with the base contract as M.
+// strength: exact
+.decl modifierOn(F: symbol, Index: number, M: symbol, Text: symbol)
+.output modifierOn
+modifierOn(F, I, M, Text) :- fnNode(FN), child(FN, "modifiers", I, MN), child(MN, "modifierName", 0, Ref), refOf(Ref, D), nameOr(D, M),
+                             functionName(FN, F), text(MN, Text).
+
+// The statement tree of F. Kind is the AST node type ("ExpressionStatement", "IfStatement", ...);
+// Parent is the enclosing statement, "" for the body block itself; Index is the position inside the parent.
+// strength: exact
+.decl statement(S: symbol, F: symbol, Kind: symbol, Parent: symbol, Index: number)
+.output statement
+statement(S, F, K, "", I) :- stmtNode(SN, FN, -1, I), siteId(SN, S), functionName(FN, F), node(SN, K).
+statement(S, F, K, P, I) :- stmtNode(SN, FN, PN, I), PN >= 0, siteId(SN, S), siteId(PN, P), functionName(FN, F), node(SN, K).
+
+// Which node each id points at, so any id can be taken back to the tree and the source.
+.decl located(Id: symbol, N: number)
+located(S, N) :- contractName(N, S).
+located(S, N) :- functionName(N, S).
+located(S, N) :- node(N, "VariableDeclaration"), name(N, S).
+located(S, N) :- isStmt(N), siteId(N, S).
+
+// Where every id is in the file: first and last line, and its text (cut at 200 characters).
+// strength: exact
+.decl location(Id: symbol, Line: number, EndLine: number, Text: symbol)
+.output location
+location(Id, L1, L2, T) :- located(Id, N), loc(N, _, _, _, L1, L2), text(N, T).
