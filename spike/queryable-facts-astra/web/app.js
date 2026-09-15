@@ -1,11 +1,13 @@
 import { displayAtom, makeIdLabels } from './id-labels.js'
 import { renderAstTree } from './ast-tree.js'
 import { createReader } from './reader.js'
+import { symbolIndex } from '/briefing.mjs'
 
 const $ = (id) => document.getElementById(id)
 let examples = []
 let currentRun
 let idLabels = new Map()
+let symbolLabels = new Map()
 
 const descriptions = {
   contractDefinition: 'A contract or interface declaration.',
@@ -81,6 +83,8 @@ function selectExample() {
 function render(result) {
   reader.update(result)
   currentRun = result
+  // Reuse the file-aware symbol index; keep raw fact names unchanged.
+  symbolLabels = new Map(symbolIndex(result).map((symbol) => [Number(symbol.id), symbol.label.split('(')[0]]))
   $('results').hidden = false
   $('empty').hidden = true
   const count = Object.values(result.facts).reduce((sum, rows) => sum + rows.length, 0)
@@ -121,7 +125,7 @@ function render(result) {
       atom('stateVariable', [variable, finding.variable]),
     ].join('\n')
     return `<article class="finding"><span class="potential">POTENTIAL WRITER</span>
-      <h3>${escape(finding.function)} → ${escape(finding.variable)}</h3>
+      <h3>${escape(symbolLabels.get(fn))} → ${escape(symbolLabels.get(variable))}</h3>
       <p>This function contains a direct assignment in ${escape(finding.file)} · line ${finding.line}.</p>
       <pre class="code">${highlight(finding.assignment)}</pre>
       <p class="caption">Derived by Soufflé</p><pre class="code atom">${highlight(atom('directWrite', finding.tuple))}</pre>
@@ -139,8 +143,8 @@ function renderCalls(result) {
   $('call-section').hidden = !result.followCalls
   if (!result.followCalls) return
   code('call-rules', result.callRules)
-  const names = new Map(result.facts.functionDefinition)
-  const variables = new Map(result.facts.stateVariable)
+  const names = symbolLabels
+  const variables = symbolLabels
   const visibility = new Map(result.facts.functionVisibility)
   $('entry-findings').innerHTML = result.derived.entryWrite.map(([entry, variable]) => {
     const edges = result.derived.writePathEdge.filter(([e, v]) => e === entry && v === variable)
@@ -154,7 +158,7 @@ function renderCalls(result) {
       const location = result.locations[fn]
       return `<li><b>${escape(label)}</b>${callSite ? `<span class="caption"> · call at line ${result.locations[callSite].line}</span>` : ''}
         <details><summary>Read ${escape(names.get(fn))} · ${escape(location.file)}:${location.line}</summary><pre class="code">${highlight(location.source)}</pre></details>
-        ${writes.map((f) => `<p class="path-write">↳ assigns ${escape(f.variable)} at line ${f.line}</p>`).join('')}
+        ${writes.map((f) => `<p class="path-write">↳ assigns ${escape(symbolLabels.get(f.tuple[1]))} at line ${f.line}</p>`).join('')}
         ${children ? `<ul>${children}</ul>` : ''}</li>`
     }
     return `<article class="finding"><span class="potential">EXTERNALLY CALLABLE POTENTIAL WRITER</span>
@@ -171,15 +175,12 @@ function renderConnections(result) {
   if (!result.connectContracts) return
   code('connection-rules', result.connectionRules)
   $('snapshot-status').textContent = result.snapshot ? `Using ${result.snapshot.name}/discovered.json (synthetic data). Entries associate each contract name with its deployed address and current values.` : 'No discovered.json attached. We can locate the call in source, but cannot select a deployed target from the available implementations.'
-  const names = new Map(result.facts.functionDefinition)
+  const names = symbolLabels
   const vars = new Map(result.facts.stateVariable)
   const contracts = new Map(result.facts.contractDefinition)
   const deployments = new Map(result.facts.snapshotDeployment)
   const variableContract = (variable) => result.facts.contractVariable.find(([, v]) => v === variable)?.[0]
-  const fnLabel = (fn) => {
-    const c = result.facts.contractFunction.find(([, f]) => f === fn)?.[0]
-    return `${c === undefined ? '' : contracts.get(c) + '.'}${names.get(fn)}`
-  }
+  const fnLabel = (fn) => names.get(fn)
   $('connection-findings').innerHTML = result.derived.externalDependency.map(([fn, call, variable]) => {
     const targets = result.derived.resolvedCall.filter(([, c]) => c === call)
     const location = result.locations[call]
