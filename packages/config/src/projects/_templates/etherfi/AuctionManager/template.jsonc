@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AuctionManager",
+  "category": "core",
+  "description": "Node-operator bid auction: operators post bids that are consumed when validators are assigned to them.",
+  "ignoreMethods": ["bids", "getBidOwner", "isBidActive", "proxiableUUID"]
+}

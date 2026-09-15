@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiNodesManager",
+  "category": "core",
+  "description": "Manages the fleet of EtherFiNode contracts: withdrawal credentials, rewards distribution and validator lifecycle.",
+  "ignoreMethods": ["proxiableUUID", "etherfiNodeAddress"]
+}
