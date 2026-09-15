@@ -7,6 +7,7 @@ import { Logo } from '~/components/Logo'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
+import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {
@@ -14,8 +15,8 @@ import {
   type ChartDataIndicatorType,
 } from './ChartDataIndicator'
 import {
+  legendOnboardingHintClassName,
   useChartLegendOnboarding,
-  useCurrentLegendOnboardingId,
 } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
@@ -138,9 +139,8 @@ function ChartContainer<T extends { timestamp: number }>({
           className={cn(
             chartContainerClassNames,
             // Chrome dispatches mouse moves as content scrolls under the
-            // pointer; each one re-renders the chart tooltip and forces
-            // layouts, so charts ignore the pointer while the page scrolls.
-            '[[data-scrolling]_&]:pointer-events-none',
+            // pointer; each one re-renders the tooltip with forced layouts.
+            ignorePointerWhileScrollingClassName,
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
@@ -263,8 +263,6 @@ function ChartLegendContent({
   > & {
     nameKey?: string
   }) {
-  const id = React.useId()
-
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
 
@@ -273,7 +271,6 @@ function ChartLegendContent({
     setHasFinishedOnboarding,
     hasFinishedOnboardingInitial,
   } = useChartLegendOnboarding()
-  const currentLegendOnboardingId = useCurrentLegendOnboardingId()
 
   if (!payload?.length) {
     return null
@@ -355,12 +352,11 @@ function ChartLegendContent({
         interactiveLegend &&
         !interactiveLegend.disableOnboarding && (
           <div
-            id={id}
             className={cn(
               '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
-              currentLegendOnboardingId !== id && 'opacity-0',
+              legendOnboardingHintClassName,
             )}
-            data-role="legend-onboarding"
+            data-legend-onboarding-hint=""
           >
             <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
             Try clicking legend items to toggle data

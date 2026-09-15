@@ -2,6 +2,7 @@ import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
+import { useDevice } from '~/hooks/useDevice'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scrollToItem'
 import type { SectionNavigationItem } from './SectionNavigation'
@@ -15,6 +16,8 @@ export function MobileSectionNavigation({ sections }: Props) {
   const overflowContainer = useRef<HTMLDivElement>(null)
 
   const currentSection = useCurrentSection()
+  // Hidden from lg up, but scrolling a hidden list still forces a layout.
+  const { isDesktop } = useDevice()
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
@@ -23,13 +26,11 @@ export function MobileSectionNavigation({ sections }: Props) {
   )
 
   useEffect(() => {
+    if (isDesktop) return
     if (!selectedItem.current || !overflowContainer.current || !currentSection)
       return
-    // The page hides this navigation from the lg breakpoint up. Scrolling a
-    // hidden list still forces a layout on every section change.
-    if (window.matchMedia('(min-width: 1024px)').matches) return
     scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [scrollToItem, currentSection])
+  }, [scrollToItem, currentSection, isDesktop])
 
   if (sections.length === 0) return null
 
