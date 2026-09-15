@@ -56,6 +56,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
       {props.items.map((item, index) => (
         <LazyHydrate
           key={item.props.id}
+          className="max-md:border-divider max-md:border-b max-md:last:border-none"
           eager={
             props.nested ||
             (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
