@@ -71,10 +71,8 @@ const registeredTokens = discovery
 // The pool's own events carry no usable amounts: epoch withdrawals settle in
 // batches without per-withdrawal events, and the deposit event signature
 // changed with the September 2026 upgrade. Flows are therefore tracked as
-// gross ERC-20 transfers across the pool boundary. Every deposit request,
-// portal deposit and withdrawal moves tokens this way, but so do deposit
-// cancellation refunds, treasury fee legs and gateway DeFi round trips, which
-// are all counted as they cross.
+// gross ERC-20 transfers across the pool boundary. What that includes is
+// spelled out for users in detailedDescription.md.
 const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
   ({ address, tokenInfo }) => {
     // Prices must cover the whole bucket range, so never start before listing.

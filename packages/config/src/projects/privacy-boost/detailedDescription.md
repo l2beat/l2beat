@@ -25,6 +25,10 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 
 Standard deposits are free of protocol fees. Portal deposits can charge a separate sweeper fee, capped at 10% and currently set to {{portalSweepFee}}, and have token-specific minimum sweep amounts. Withdrawals, including forced withdrawals and public gift exits, pay a {{withdrawFee}} fee forwarded to the treasury; a forced withdrawal records the fee at request time.
 
+### Deposit and withdrawal statistics
+
+The pool's own events do not carry per-transfer amounts, so L2BEAT counts every ERC-20 transfer into the pool as a deposit and every transfer out of it as a withdrawal. Besides regular deposits, portal sweeps and withdrawals, this includes refunds of cancelled deposit requests, withdrawal fees forwarded to the treasury, and both legs of DeFi operations executed through approved gateways.
+
 ### Compliance
 
 Registered auditors can query the Audit API of the TEE to fetch the balance and transaction history of any address. The TEE serves such requests without user consent, but is supposed to emit a record of every access on the AuditGateway smart contract, so that users can publicly verify whether and when their private data was disclosed.
