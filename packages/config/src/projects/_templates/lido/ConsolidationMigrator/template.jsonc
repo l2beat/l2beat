@@ -38,6 +38,11 @@
         }
       ]
     },
+    // Submitters are node operator controlled addresses, usually the target
+    // operator's manager address in the target module. They are not followed
+    // into discovery, the same way NodeOperatorsRegistry.signingKeyManagers is
+    // not: otherwise the operators that happen to be mid-migration get pulled
+    // in as an arbitrary, temporary subset of Lido's node operators.
     "allowedPairs": {
       "description": "Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.",
       "handler": {
@@ -45,7 +50,8 @@
         "select": ["sourceOperatorId", "targetOperatorId", "submitter"],
         "dedupBy": ["sourceOperatorId", "targetOperatorId"],
         "add": { "event": "ConsolidationPairAllowed" },
-        "remove": { "event": "ConsolidationPairDisallowed" }
+        "remove": { "event": "ConsolidationPairDisallowed" },
+        "ignoreRelative": true
       },
       "permissions": [
         {
