@@ -165,7 +165,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     const addressKey = addresses?.join(',') ?? 'all'
-    const topicsKey = topics?.join(',') ?? 'all'
+    const topicsKey = topics ? JSON.stringify(topics) : 'all'
     const key = this.buildSnapshotKey([
       'logs',
       from.toString(),

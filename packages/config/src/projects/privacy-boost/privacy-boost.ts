@@ -159,7 +159,7 @@ export const privacyBoost: BaseProject = {
   },
   escrows: [
     {
-      address: ChainSpecificAddress.address(pool.address),
+      address: poolAddress,
       chain: ChainSpecificAddress.longChain(pool.address),
       sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
       tokens: registeredTokens.map((token) => token.info.symbol),
