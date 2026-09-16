@@ -14,6 +14,10 @@
     "./setup": {
       "types": "./build/setup.d.ts",
       "default": "./build/setup.js"
+    },
+    "./postgres": {
+      "types": "./build/postgres.d.ts",
+      "default": "./build/postgres.js"
     }
   },
   "scripts": {
@@ -25,6 +29,9 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

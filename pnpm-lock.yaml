@@ -600,9 +600,15 @@ importers:
         specifier: ^8.8.0
         version: 8.13.1
     devDependencies:
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.13
@@ -1245,6 +1251,10 @@ importers:
         version: link:../vitest-config
 
   packages/test-utils:
+    dependencies:
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.4.5
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
