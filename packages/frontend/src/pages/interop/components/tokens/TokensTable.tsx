@@ -90,7 +90,7 @@ export function TokensTable({
     ],
   )
 
-  const table = useTable<TokenRow>({
+  const table = useTable<TokenRow>('TokensTable', {
     data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),

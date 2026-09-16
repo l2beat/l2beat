@@ -27,7 +27,7 @@ export function TvsBreakdownTokenTable(props: Props) {
     [props.entries, filterEntries],
   )
 
-  const table = useTable({
+  const table = useTable('TvsBreakdownTokenTable', {
     sortDescFirst: true,
     data: filteredEntries,
     columns,
