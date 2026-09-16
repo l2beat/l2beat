@@ -8,7 +8,8 @@ import type {
   TokenIngestionQueueRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
@@ -22,19 +23,21 @@ describe(TokenIngestionLoop.name, () => {
     it('runs token relation ingestion before enqueueing and draining', async () => {
       const order: string[] = []
       const relationIngestion = mockObject<TokenRelationIngestion>({
-        runOnce: mockFn().executes(async () => {
+        runOnce: vi.fn().mockImplementation(async () => {
           order.push('relations')
         }),
       })
-      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
-        order.push('enqueue')
-        return {
-          latestSerialId: undefined,
-          transferCount: 0,
-          tokenAddresses: [],
-        }
-      })
-      const findNextPending = mockFn().executes(async () => {
+      const getTokenAddressesAfterSerialId = vi
+        .fn()
+        .mockImplementation(async () => {
+          order.push('enqueue')
+          return {
+            latestSerialId: undefined,
+            transferCount: 0,
+            tokenAddresses: [],
+          }
+        })
+      const findNextPending = vi.fn().mockImplementation(async () => {
         order.push('drain')
         return undefined
       })
@@ -43,20 +46,20 @@ describe(TokenIngestionLoop.name, () => {
         mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             { findNextPending },
           ),
         }),
         mockObject({
-          refreshInteropTransferIndex: mockFn().resolvesTo({
-            findInvolving: mockFn().returns([]),
+          refreshInteropTransferIndex: vi.fn().mockResolvedValue({
+            findInvolving: vi.fn().mockReturnValue([]),
           }),
         }) as unknown as TokenIngestionProcessor,
         relationIngestion,
@@ -66,23 +69,25 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(order).toEqual(['relations', 'enqueue', 'drain'])
+      expect(order).toStrictEqual(['relations', 'enqueue', 'drain'])
     })
 
     it('still enqueues and drains when token relation ingestion fails', async () => {
       const order: string[] = []
       const relationIngestion = mockObject<TokenRelationIngestion>({
-        runOnce: mockFn().rejectsWith(new Error('poison transfer')),
+        runOnce: vi.fn().mockRejectedValue(new Error('poison transfer')),
       })
-      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
-        order.push('enqueue')
-        return {
-          latestSerialId: undefined,
-          transferCount: 0,
-          tokenAddresses: [],
-        }
-      })
-      const findNextPending = mockFn().executes(async () => {
+      const getTokenAddressesAfterSerialId = vi
+        .fn()
+        .mockImplementation(async () => {
+          order.push('enqueue')
+          return {
+            latestSerialId: undefined,
+            transferCount: 0,
+            tokenAddresses: [],
+          }
+        })
+      const findNextPending = vi.fn().mockImplementation(async () => {
         order.push('drain')
         return undefined
       })
@@ -91,20 +96,20 @@ describe(TokenIngestionLoop.name, () => {
         mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             { findNextPending },
           ),
         }),
         mockObject({
-          refreshInteropTransferIndex: mockFn().resolvesTo({
-            findInvolving: mockFn().returns([]),
+          refreshInteropTransferIndex: vi.fn().mockResolvedValue({
+            findInvolving: vi.fn().mockReturnValue([]),
           }),
         }) as unknown as TokenIngestionProcessor,
         relationIngestion,
@@ -114,18 +119,18 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(order).toEqual(['enqueue', 'drain'])
+      expect(order).toStrictEqual(['enqueue', 'drain'])
     })
 
     it('enqueues addresses after the stored cursor and advances it', async () => {
-      const get = mockFn().resolvesTo({
+      const get = vi.fn().mockResolvedValue({
         key: 'interop-transfers:lastSerialId',
         value: '10',
       })
-      const set = mockFn().resolvesTo(undefined)
-      const enqueue = mockFn().resolvesTo(undefined)
-      const findNextPending = mockFn().resolvesTo(undefined)
-      const getTokenAddressesAfterSerialId = mockFn().resolvesTo({
+      const set = vi.fn().mockResolvedValue(undefined)
+      const enqueue = vi.fn().mockResolvedValue(undefined)
+      const findNextPending = vi.fn().mockResolvedValue(undefined)
+      const getTokenAddressesAfterSerialId = vi.fn().mockResolvedValue({
         latestSerialId: '15',
         transferCount: 3,
         tokenAddresses: [
@@ -150,7 +155,7 @@ describe(TokenIngestionLoop.name, () => {
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
       })
@@ -159,7 +164,7 @@ describe(TokenIngestionLoop.name, () => {
 
       expect(get).toHaveBeenCalledWith('interop-transfers:lastSerialId')
       expect(getTokenAddressesAfterSerialId).toHaveBeenCalledWith('10')
-      expect(enqueue.calls.map((call) => call.args[0])).toEqual([
+      expect(enqueue.mock.calls.map((call) => call[0])).toStrictEqual([
         token('ethereum', '0xaaa'),
         token('base', '0xbbb'),
       ])
@@ -170,30 +175,30 @@ describe(TokenIngestionLoop.name, () => {
     })
 
     it('stages newly discovered addresses when auto-approve is disabled', async () => {
-      const enqueue = mockFn().resolvesTo(undefined)
+      const enqueue = vi.fn().mockResolvedValue(undefined)
 
       const loop = createLoop({
         newQueueState: 'staged',
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
-            set: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
+            set: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
               enqueue,
-              findNextPending: mockFn().resolvesTo(undefined),
+              findNextPending: vi.fn().mockResolvedValue(undefined),
             },
           ),
         }),
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: '1',
               transferCount: 1,
               tokenAddresses: [{ chain: 'ethereum', address: '0xaaa' }],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
       })
@@ -204,7 +209,7 @@ describe(TokenIngestionLoop.name, () => {
     })
 
     it('starts from zero when no cursor exists', async () => {
-      const getTokenAddressesAfterSerialId = mockFn().resolvesTo({
+      const getTokenAddressesAfterSerialId = vi.fn().mockResolvedValue({
         latestSerialId: undefined,
         transferCount: 0,
         tokenAddresses: [],
@@ -212,18 +217,18 @@ describe(TokenIngestionLoop.name, () => {
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn().resolvesTo(undefined),
+              findNextPending: vi.fn().mockResolvedValue(undefined),
             },
           ),
         }),
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
       })
@@ -234,12 +239,12 @@ describe(TokenIngestionLoop.name, () => {
     })
 
     it('does not advance the cursor when there are no new transfers', async () => {
-      const set = mockFn().resolvesTo(undefined)
-      const enqueue = mockFn().resolvesTo(undefined)
+      const set = vi.fn().mockResolvedValue(undefined)
+      const enqueue = vi.fn().mockResolvedValue(undefined)
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo({
+            get: vi.fn().mockResolvedValue({
               key: 'interop-transfers:lastSerialId',
               value: '10',
             }),
@@ -248,18 +253,18 @@ describe(TokenIngestionLoop.name, () => {
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
               enqueue,
-              findNextPending: mockFn().resolvesTo(undefined),
+              findNextPending: vi.fn().mockResolvedValue(undefined),
             },
           ),
         }),
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
       })
@@ -272,32 +277,36 @@ describe(TokenIngestionLoop.name, () => {
 
     it('stops draining when the processing limit is reached', async () => {
       const address = token('ethereum', '0xaaa')
-      const transferIndex = { findInvolving: mockFn().returns([]) }
-      const refreshInteropTransferIndex = mockFn().resolvesTo(transferIndex)
-      const process = mockFn().resolvesTo({
+      const transferIndex = { findInvolving: vi.fn().mockReturnValue([]) }
+      const refreshInteropTransferIndex = vi
+        .fn()
+        .mockResolvedValue(transferIndex)
+      const process = vi.fn().mockResolvedValue({
         id: 'ing_test',
         address,
         existingDeployedToken: undefined,
         steps: [],
         outcome: { kind: 'skip', reason: 'test' },
       } satisfies IngestionTrace)
-      const findNextPending = mockFn().executes(async () => queueEntry(address))
-      const countPending = mockFn().resolvesTo(1)
+      const findNextPending = vi
+        .fn()
+        .mockImplementation(async () => queueEntry(address))
+      const countPending = vi.fn().mockResolvedValue(1)
 
       const loop = new TokenIngestionLoop(
         mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
@@ -326,21 +335,22 @@ describe(TokenIngestionLoop.name, () => {
     it('updates an existing token from a non-swapping transfer without fetching deployed facts', async () => {
       const address = token('ethereum', '0xaaa')
       const otherAddress = token('base', '0xbbb')
-      const findNextPending = mockFn()
-        .resolvesToOnce(queueEntry(address))
-        .resolvesToOnce(undefined)
-      const updateByChainAndAddress = mockFn().resolvesTo(1)
-      const fetchDeployedTokenFacts = mockFn().resolvesTo(completeFacts())
+      const findNextPending = vi
+        .fn()
+        .mockResolvedValueOnce(queueEntry(address))
+        .mockResolvedValueOnce(undefined)
+      const updateByChainAndAddress = vi.fn().mockResolvedValue(1)
+      const fetchDeployedTokenFacts = vi.fn().mockResolvedValue(completeFacts())
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([
+            getTokenRoutes: vi.fn().mockResolvedValue([
               route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -349,7 +359,7 @@ describe(TokenIngestionLoop.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ]),
-            findByTransferId: mockFn().resolvesTo(
+            findByTransferId: vi.fn().mockResolvedValue(
               transfer({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -363,23 +373,25 @@ describe(TokenIngestionLoop.name, () => {
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
               findNextPending,
-              enqueue: mockFn().resolvesTo(undefined),
-              remove: mockFn().resolvesTo(1),
+              enqueue: vi.fn().mockResolvedValue(undefined),
+              remove: vi.fn().mockResolvedValue(1),
             },
           ),
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
-            insert: mockFn().resolvesTo(undefined),
+            insert: vi.fn().mockResolvedValue(undefined),
           }),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(
-              deployedToken({ ...address, abstractTokenId: null }),
-            ),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            findByChainAndAddress: vi
+              .fn()
+              .mockResolvedValue(
+                deployedToken({ ...address, abstractTokenId: null }),
+              ),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               deployedToken({
                 ...otherAddress,
                 abstractTokenId: 'USDC01',
@@ -388,7 +400,9 @@ describe(TokenIngestionLoop.name, () => {
             updateByChainAndAddress,
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractToken('USDC01', 'USDC')]),
           }),
         }),
         fetchDeployedTokenFacts,
@@ -410,17 +424,17 @@ describe(TokenIngestionLoop.name, () => {
       const address = token('ethereum', '0xaaa')
       const firstOther = token('base', '0xbbb')
       const secondOther = token('arbitrum', '0xccc')
-      const markConflict = mockFn().resolvesTo(1)
+      const markConflict = vi.fn().mockResolvedValue(1)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([
+            getTokenRoutes: vi.fn().mockResolvedValue([
               route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -440,78 +454,84 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
               markConflict,
             },
           ),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([
-              deployedToken({ ...firstOther, abstractTokenId: 'FIRST1' }),
-              deployedToken({ ...secondOther, abstractTokenId: 'SECOND' }),
-            ]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi
+              .fn()
+              .mockResolvedValue([
+                deployedToken({ ...firstOther, abstractTokenId: 'FIRST1' }),
+                deployedToken({ ...secondOther, abstractTokenId: 'SECOND' }),
+              ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractToken('FIRST1', 'FOO'),
-              abstractToken('SECOND', 'BAR'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([
+                abstractToken('FIRST1', 'FOO'),
+                abstractToken('SECOND', 'BAR'),
+              ]),
           }),
         }),
       })
 
       await loop.runOnce()
 
-      expect(markConflict.calls[0]?.args[1]).toEqual(
+      expect(markConflict.mock.calls[0][1]).toStrictEqual(
         'Non-swapping transfers point to multiple abstract tokens: FIRST1:FOO, SECOND:BAR.',
       )
     })
 
     it('drops the entry when no abstract token can be resolved', async () => {
       const address = token('ethereum', '0xaaa')
-      const remove = mockFn().resolvesTo(1)
-      const findByName = mockFn().resolvesTo(undefined)
+      const remove = vi.fn().mockResolvedValue(1)
+      const findByName = vi.fn().mockResolvedValue(undefined)
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
               remove,
             },
           ),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([]),
+            getAll: vi.fn().mockResolvedValue([]),
             findByName,
           }),
         }),
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([]),
+          getCoinList: vi.fn().mockResolvedValue([]),
         }),
       })
 
@@ -524,17 +544,17 @@ describe(TokenIngestionLoop.name, () => {
     it('marks an error when required deployed token facts are missing', async () => {
       const address = token('ethereum', '0xaaa')
       const otherAddress = token('base', '0xbbb')
-      const markError = mockFn().resolvesTo(1)
+      const markError = vi.fn().mockResolvedValue(1)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([
+            getTokenRoutes: vi.fn().mockResolvedValue([
               route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -543,7 +563,7 @@ describe(TokenIngestionLoop.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ]),
-            findByTransferId: mockFn().resolvesTo(
+            findByTransferId: vi.fn().mockResolvedValue(
               transfer({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -556,27 +576,32 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
               markError,
             },
           ),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([
-              deployedToken({ ...otherAddress, abstractTokenId: 'USDC01' }),
-            ]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi
+              .fn()
+              .mockResolvedValue([
+                deployedToken({ ...otherAddress, abstractTokenId: 'USDC01' }),
+              ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractToken('USDC01', 'USDC')]),
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -585,7 +610,7 @@ describe(TokenIngestionLoop.name, () => {
             }),
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'USDC',
           symbolSource: 'rpc',
@@ -602,7 +627,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markError.calls[0]?.args[1]).toEqual(
+      expect(markError.mock.calls[0][1]).toStrictEqual(
         'Missing required deployed-token facts: deploymentTimestamp. RPC lookup returned no value.',
       )
     })
@@ -610,43 +635,44 @@ describe(TokenIngestionLoop.name, () => {
     it('marks a CoinGecko data failure as an entry error and continues draining', async () => {
       const firstAddress = token('ethereum', '0xaaa')
       const secondAddress = token('ethereum', '0xbbb')
-      const markError = mockFn().resolvesTo(1)
-      const remove = mockFn().resolvesTo(1)
+      const markError = vi.fn().mockResolvedValue(1)
+      const remove = vi.fn().mockResolvedValue(1)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(firstAddress))
-                .resolvesToOnce(queueEntry(secondAddress))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(firstAddress))
+                .mockResolvedValueOnce(queueEntry(secondAddress))
+                .mockResolvedValueOnce(undefined),
               markError,
               remove,
             },
           ),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findByCoingeckoId: mockFn().resolvesTo(undefined),
+            findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([
+            getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
                 chainId: 1,
@@ -658,7 +684,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([
+          getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'usd-coin',
               name: 'USD Coin',
@@ -666,58 +692,64 @@ describe(TokenIngestionLoop.name, () => {
               platforms: { eth: firstAddress.address },
             },
           ]),
-          getCoinDataById: mockFn().rejectsWith(
-            new Error('CoinGecko API error: 429 Too Many Requests'),
-          ),
+          getCoinDataById: vi
+            .fn()
+            .mockRejectedValue(
+              new Error('CoinGecko API error: 429 Too Many Requests'),
+            ),
         }),
       })
 
       await loop.runOnce()
 
-      expect(markError).toHaveBeenOnlyCalledWith(
+      expect(markError).toHaveBeenCalledExactlyOnceWith(
         queueEntry(firstAddress),
         'Failed to fetch CoinGecko data for usd-coin: CoinGecko API error: 429 Too Many Requests.',
       )
-      expect(remove).toHaveBeenOnlyCalledWith(queueEntry(secondAddress))
+      expect(remove).toHaveBeenCalledExactlyOnceWith(queueEntry(secondAddress))
     })
 
     it('marks an unexpected entry failure as an error and continues draining', async () => {
       const firstAddress = token('ethereum', '0xaaa')
       const secondAddress = token('ethereum', '0xbbb')
-      const transferIndex = { findInvolving: mockFn().returns([]) }
-      const refreshInteropTransferIndex = mockFn().resolvesTo(transferIndex)
-      const process = mockFn()
-        .rejectsWithOnce(new Error('boom'))
-        .resolvesToOnce({
+      const transferIndex = { findInvolving: vi.fn().mockReturnValue([]) }
+      const refreshInteropTransferIndex = vi
+        .fn()
+        .mockResolvedValue(transferIndex)
+      const process = vi
+        .fn()
+        .mockRejectedValueOnce(new Error('boom'))
+        .mockResolvedValueOnce({
           id: 'ing_test',
           address: secondAddress,
           existingDeployedToken: undefined,
           steps: [],
           outcome: { kind: 'skip', reason: 'test' },
         } satisfies IngestionTrace)
-      const markError = mockFn().resolvesTo(1)
+      const markError = vi.fn().mockResolvedValue(1)
 
       const loop = new TokenIngestionLoop(
         mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(firstAddress))
-                .resolvesToOnce(queueEntry(secondAddress))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(firstAddress))
+                .mockResolvedValueOnce(queueEntry(secondAddress))
+                .mockResolvedValueOnce(undefined),
               markError,
             },
           ),
@@ -734,7 +766,7 @@ describe(TokenIngestionLoop.name, () => {
       await loop.runOnce()
 
       expect(process).toHaveBeenCalledTimes(2)
-      expect(markError).toHaveBeenOnlyCalledWith(
+      expect(markError).toHaveBeenCalledExactlyOnceWith(
         queueEntry(firstAddress),
         'Unexpected token ingestion error: boom.',
       )
@@ -742,48 +774,49 @@ describe(TokenIngestionLoop.name, () => {
 
     it('creates an abstract token from CoinGecko before inserting a deployed token', async () => {
       const address = token('ethereum', '0xaaa')
-      const abstractInsert = mockFn().resolvesTo('ABC123')
-      const deployedInsert = mockFn().resolvesTo(undefined)
+      const abstractInsert = vi.fn().mockResolvedValue('ABC123')
+      const deployedInsert = vi.fn().mockResolvedValue(undefined)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
-              remove: mockFn().resolvesTo(1),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
+              remove: vi.fn().mockResolvedValue(1),
             },
           ),
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
-            insert: mockFn().resolvesTo(undefined),
+            insert: vi.fn().mockResolvedValue(undefined),
           }),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
             insert: deployedInsert,
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findByCoingeckoId: mockFn().resolvesTo(undefined),
-            findById: mockFn().resolvesTo(undefined),
+            findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
             insert: abstractInsert,
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([
+            getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
                 chainId: 1,
@@ -792,7 +825,7 @@ describe(TokenIngestionLoop.name, () => {
                 apis: null,
               },
             ]),
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -802,7 +835,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([
+          getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'usd-coin',
               name: 'USD Coin',
@@ -810,30 +843,30 @@ describe(TokenIngestionLoop.name, () => {
               platforms: { eth: address.address },
             },
           ]),
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
             image: { large: 'https://example.com/usdc.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo(completeFacts()),
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue(completeFacts()),
         generateAbstractTokenId: () => 'ABC123',
       })
 
       await loop.runOnce()
 
-      expect(abstractInsert.calls[0]?.args[0]).toHaveSubset({
+      expect(abstractInsert.mock.calls[0][0]).toMatchObject({
         id: 'ABC123',
         symbol: 'USDC',
         coingeckoId: 'usd-coin',
         reviewed: false,
       })
-      expect(deployedInsert.calls[0]?.args[0]).toHaveSubset({
+      expect(deployedInsert.mock.calls[0][0]).toMatchObject({
         ...address,
         abstractTokenId: 'ABC123',
         symbol: 'USDC',
@@ -843,48 +876,49 @@ describe(TokenIngestionLoop.name, () => {
 
     it('adopts the deployed-token casing when CoinGecko symbol differs only in case', async () => {
       const address = token('ethereum', '0xaaa')
-      const abstractInsert = mockFn().resolvesTo('ABC123')
-      const deployedInsert = mockFn().resolvesTo(undefined)
+      const abstractInsert = vi.fn().mockResolvedValue('ABC123')
+      const deployedInsert = vi.fn().mockResolvedValue(undefined)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
-              remove: mockFn().resolvesTo(1),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
+              remove: vi.fn().mockResolvedValue(1),
             },
           ),
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
-            insert: mockFn().resolvesTo(undefined),
+            insert: vi.fn().mockResolvedValue(undefined),
           }),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
             insert: deployedInsert,
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findByCoingeckoId: mockFn().resolvesTo(undefined),
-            findById: mockFn().resolvesTo(undefined),
+            findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
             insert: abstractInsert,
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([
+            getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
                 chainId: 1,
@@ -893,7 +927,7 @@ describe(TokenIngestionLoop.name, () => {
                 apis: null,
               },
             ]),
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -903,7 +937,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([
+          getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'ethena-staked-usde',
               name: 'Ethena Staked USDe',
@@ -911,18 +945,18 @@ describe(TokenIngestionLoop.name, () => {
               platforms: { eth: address.address },
             },
           ]),
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'ethena-staked-usde',
             symbol: 'susde',
             image: { large: 'https://example.com/susde.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'sUSDe',
           symbolSource: 'rpc',
@@ -935,13 +969,13 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(abstractInsert.calls[0]?.args[0]).toHaveSubset({
+      expect(abstractInsert.mock.calls[0][0]).toMatchObject({
         id: 'ABC123',
         symbol: 'sUSDe',
         coingeckoId: 'ethena-staked-usde',
         reviewed: false,
       })
-      expect(deployedInsert.calls[0]?.args[0]).toHaveSubset({
+      expect(deployedInsert.mock.calls[0][0]).toMatchObject({
         ...address,
         abstractTokenId: 'ABC123',
         symbol: 'sUSDe',
@@ -951,45 +985,46 @@ describe(TokenIngestionLoop.name, () => {
 
     it('marks a conflict instead of creating a CoinGecko abstract when symbols differ', async () => {
       const address = token('ethereum', '0xaaa')
-      const markConflict = mockFn().resolvesTo(1)
-      const abstractInsert = mockFn().resolvesTo('ABC123')
-      const deployedInsert = mockFn().resolvesTo(undefined)
+      const markConflict = vi.fn().mockResolvedValue(1)
+      const abstractInsert = vi.fn().mockResolvedValue('ABC123')
+      const deployedInsert = vi.fn().mockResolvedValue(undefined)
 
       const loop = createLoop({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+            getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
               latestSerialId: undefined,
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getTokenRoutes: mockFn().resolvesTo([]),
+            getTokenRoutes: vi.fn().mockResolvedValue([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-            get: mockFn().resolvesTo(undefined),
+            get: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              findNextPending: mockFn()
-                .resolvesToOnce(queueEntry(address))
-                .resolvesToOnce(undefined),
+              findNextPending: vi
+                .fn()
+                .mockResolvedValueOnce(queueEntry(address))
+                .mockResolvedValueOnce(undefined),
               markConflict,
             },
           ),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
             insert: deployedInsert,
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findByCoingeckoId: mockFn().resolvesTo(undefined),
-            findById: mockFn().resolvesTo(undefined),
+            findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
             insert: abstractInsert,
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([
+            getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
                 chainId: 1,
@@ -998,7 +1033,7 @@ describe(TokenIngestionLoop.name, () => {
                 apis: null,
               },
             ]),
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1008,7 +1043,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([
+          getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'usd-coin',
               name: 'USD Coin',
@@ -1016,18 +1051,18 @@ describe(TokenIngestionLoop.name, () => {
               platforms: { eth: address.address },
             },
           ]),
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
             image: { large: 'https://example.com/usdc.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'DAI',
           symbolSource: 'rpc',
@@ -1040,7 +1075,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markConflict.calls[0]?.args[1]).toEqual(
+      expect(markConflict.mock.calls[0][1]).toStrictEqual(
         'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
       )
       expect(abstractInsert).toHaveBeenCalledTimes(0)
@@ -1062,24 +1097,26 @@ function createLoop(deps: {
 }) {
   const db = mockObject<Database>({
     interopTransfer: mockObject<Database['interopTransfer']>({
-      getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+      getTokenAddressesAfterSerialId: vi.fn().mockResolvedValue({
         latestSerialId: undefined,
         transferCount: 0,
         tokenAddresses: [],
       }),
-      getTokenRoutes: mockFn().resolvesTo([]),
-      findByTransferId: mockFn().executes(async (transferId: string) =>
-        transfer({ transferId }),
-      ),
+      getTokenRoutes: vi.fn().mockResolvedValue([]),
+      findByTransferId: vi
+        .fn()
+        .mockImplementation(async (transferId: string) =>
+          transfer({ transferId }),
+        ),
     }),
     ...deps.db,
   })
   const tokenDb = mockObject<TokenDatabase>({
     tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-      get: mockFn().resolvesTo(undefined),
+      get: vi.fn().mockResolvedValue(undefined),
     }),
     tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
-      findNextPending: mockFn().resolvesTo(undefined),
+      findNextPending: vi.fn().mockResolvedValue(undefined),
     }),
     ...deps.tokenDb,
   })
@@ -1110,7 +1147,7 @@ function createLoop(deps: {
 
 function stubRelationIngestion() {
   return mockObject<TokenRelationIngestion>({
-    runOnce: mockFn().resolvesTo(undefined),
+    runOnce: vi.fn().mockResolvedValue(undefined),
   })
 }
 

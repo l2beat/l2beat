@@ -4,5 +4,11 @@
     "rootDir": "./src"
   },
   "include": ["src"],
-  "exclude": ["build", "node_modules", "**/test/*", "**/*test.ts"]
+  "exclude": [
+    "build",
+    "node_modules",
+    "**/test/*",
+    "**/*test.ts",
+    "vitest.config.ts"
+  ]
 }

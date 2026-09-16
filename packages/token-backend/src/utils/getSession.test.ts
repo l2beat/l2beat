@@ -1,5 +1,6 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import type { jwtVerify } from 'jose'
+import { describe, expect, it } from 'vitest'
 import type { AuthConfig, Config } from '../config/Config'
 import { getSession } from './getSession'
 
@@ -22,7 +23,7 @@ describe(getSession.name, () => {
 
     const session = await getSession(new Headers(), mockNonAuthConfig)
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'dev@l2beat.com',
       permissions: ['read', 'write'],
     })
@@ -42,7 +43,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns session if auth is set but no correct token is set', async () => {
@@ -63,7 +64,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'someone@l2beat.com',
       permissions: ['read', 'write'],
     })
@@ -83,7 +84,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'dev-readonly@l2beat.com',
       permissions: ['read'],
     })
@@ -94,6 +95,6 @@ describe(getSession.name, () => {
 
     const session = await getSession(headers, mockConfig)
 
-    expect(session).toEqual(undefined)
+    expect(session).toStrictEqual(undefined)
   })
 })

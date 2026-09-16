@@ -26,7 +26,7 @@
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "import-generated": "tsx ./scripts/import-generated.ts",
     "test-client": "tsx ./scripts/test-client.ts"
@@ -49,9 +49,8 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "@types/mocha": "^10.0.6",
-    "earl": "^1.1.0",
-    "mocha": "^10.2.0",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

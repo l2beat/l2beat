@@ -6,26 +6,27 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { Command } from './commands'
 import { commitTokenChanges } from './commitTokenChanges'
 
 describe(commitTokenChanges.name, () => {
   it('routes each command kind to the matching repository call in order', async () => {
     const abstractToken = mockObject<TokenDatabase['abstractToken']>({
-      insert: mockFn().resolvesTo(undefined),
-      updateById: mockFn().resolvesTo(undefined),
-      deleteById: mockFn().resolvesTo(undefined),
+      insert: vi.fn().mockResolvedValue(undefined),
+      updateById: vi.fn().mockResolvedValue(undefined),
+      deleteById: vi.fn().mockResolvedValue(undefined),
     })
     const deployedToken = mockObject<TokenDatabase['deployedToken']>({
-      insert: mockFn().resolvesTo(undefined),
-      updateByChainAndAddress: mockFn().resolvesTo(undefined),
-      deleteByPrimaryKey: mockFn().resolvesTo(undefined),
+      insert: vi.fn().mockResolvedValue(undefined),
+      updateByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+      deleteByPrimaryKey: vi.fn().mockResolvedValue(undefined),
     })
     const tokenRelation = mockObject<TokenDatabase['tokenRelation']>({
-      insert: mockFn().resolvesTo(undefined),
-      updateByPrimaryKey: mockFn().resolvesTo(undefined),
-      deleteByPrimaryKey: mockFn().resolvesTo(undefined),
+      insert: vi.fn().mockResolvedValue(undefined),
+      updateByPrimaryKey: vi.fn().mockResolvedValue(undefined),
+      deleteByPrimaryKey: vi.fn().mockResolvedValue(undefined),
     })
     const tokenDb = mockObject<TokenDatabase>({
       abstractToken,
@@ -86,33 +87,40 @@ describe(commitTokenChanges.name, () => {
       intent: null,
     })
 
-    expect(abstractToken.insert).toHaveBeenOnlyCalledWith(abstract)
-    expect(abstractToken.updateById).toHaveBeenOnlyCalledWith(abstract.id, {
-      symbol: 'USDC2',
-    })
-    expect(abstractToken.deleteById).toHaveBeenOnlyCalledWith(abstract.id)
-    expect(deployedToken.insert).toHaveBeenOnlyCalledWith(deployed)
-    expect(deployedToken.updateByChainAndAddress).toHaveBeenOnlyCalledWith(
+    expect(abstractToken.insert).toHaveBeenCalledExactlyOnceWith(abstract)
+    expect(abstractToken.updateById).toHaveBeenCalledExactlyOnceWith(
+      abstract.id,
+      {
+        symbol: 'USDC2',
+      },
+    )
+    expect(abstractToken.deleteById).toHaveBeenCalledExactlyOnceWith(
+      abstract.id,
+    )
+    expect(deployedToken.insert).toHaveBeenCalledExactlyOnceWith(deployed)
+    expect(
+      deployedToken.updateByChainAndAddress,
+    ).toHaveBeenCalledExactlyOnceWith(
       { chain: deployed.chain, address: deployed.address },
       { symbol: 'USDC2' },
     )
-    expect(deployedToken.deleteByPrimaryKey).toHaveBeenOnlyCalledWith({
+    expect(deployedToken.deleteByPrimaryKey).toHaveBeenCalledExactlyOnceWith({
       chain: deployed.chain,
       address: deployed.address,
     })
-    expect(tokenRelation.insert).toHaveBeenOnlyCalledWith(relation)
-    expect(tokenRelation.updateByPrimaryKey).toHaveBeenOnlyCalledWith(
+    expect(tokenRelation.insert).toHaveBeenCalledExactlyOnceWith(relation)
+    expect(tokenRelation.updateByPrimaryKey).toHaveBeenCalledExactlyOnceWith(
       relationPk(relation),
       { transfer: { transferId: 'transfer-2' } },
     )
-    expect(tokenRelation.deleteByPrimaryKey).toHaveBeenOnlyCalledWith(
+    expect(tokenRelation.deleteByPrimaryKey).toHaveBeenCalledExactlyOnceWith(
       relationPk(relation),
     )
   })
 
   it('passes deployed-token commands through verbatim, including any proof field', async () => {
-    const insert = mockFn().resolvesTo(undefined)
-    const updateByChainAndAddress = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
+    const updateByChainAndAddress = vi.fn().mockResolvedValue(undefined)
     const tokenDb = mockObject<TokenDatabase>({
       deployedToken: mockObject<TokenDatabase['deployedToken']>({
         insert,
@@ -143,8 +151,8 @@ describe(commitTokenChanges.name, () => {
       { kind: 'manual', user: 'someone@x.io', intent: null },
     )
 
-    expect(insert).toHaveBeenOnlyCalledWith(deployed)
-    expect(updateByChainAndAddress).toHaveBeenOnlyCalledWith(pk, {
+    expect(insert).toHaveBeenCalledExactlyOnceWith(deployed)
+    expect(updateByChainAndAddress).toHaveBeenCalledExactlyOnceWith(pk, {
       abstractTokenId: 'USDT01',
       abstractTokenAssignmentProof: { kind: 'coingecko' },
     })
@@ -152,18 +160,18 @@ describe(commitTokenChanges.name, () => {
 
   describe('history recording', () => {
     it('stores the executed command verbatim with manual source', async () => {
-      const insert = mockFn<[TokenDbHistoryEntryInsert], Promise<void>>(() =>
-        Promise.resolve(),
+      const insert = vi.fn<(entry: TokenDbHistoryEntryInsert) => Promise<void>>(
+        () => Promise.resolve(),
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
       const tokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          insert: mockFn().resolvesTo(undefined),
-          deleteById: mockFn().resolvesTo(undefined),
+          insert: vi.fn().mockResolvedValue(undefined),
+          deleteById: vi.fn().mockResolvedValue(undefined),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          updateByChainAndAddress: mockFn().resolvesTo(undefined),
+          updateByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
@@ -190,10 +198,10 @@ describe(commitTokenChanges.name, () => {
       })
 
       expect(insert).toHaveBeenCalledTimes(3)
-      const entries = insert.calls.map((c) => c.args[0])
+      const entries = insert.mock.calls.map((c) => c[0])
 
-      expect(entries[0]!).toEqual({
-        timestamp: expect.a(Number),
+      expect(entries[0]!).toStrictEqual({
+        timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
         commandType: 'AddAbstractTokenCommand',
@@ -201,8 +209,8 @@ describe(commitTokenChanges.name, () => {
         intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
-      expect(entries[1]!).toEqual({
-        timestamp: expect.a(Number),
+      expect(entries[1]!).toStrictEqual({
+        timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
         commandType: 'UpdateDeployedTokenCommand',
@@ -210,8 +218,8 @@ describe(commitTokenChanges.name, () => {
         intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
-      expect(entries[2]!).toEqual({
-        timestamp: expect.a(Number),
+      expect(entries[2]!).toStrictEqual({
+        timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
         commandType: 'DeleteAbstractTokenCommand',
@@ -222,17 +230,17 @@ describe(commitTokenChanges.name, () => {
     })
 
     it('records ingestion source with the ingestion log and no userEmail', async () => {
-      const insert = mockFn<[TokenDbHistoryEntryInsert], Promise<void>>(() =>
-        Promise.resolve(),
+      const insert = vi.fn<(entry: TokenDbHistoryEntryInsert) => Promise<void>>(
+        () => Promise.resolve(),
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
       const tokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          insert: mockFn().resolvesTo(undefined),
+          insert: vi.fn().mockResolvedValue(undefined),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          insert: mockFn().resolvesTo(undefined),
+          insert: vi.fn().mockResolvedValue(undefined),
         }),
         tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
@@ -247,24 +255,24 @@ describe(commitTokenChanges.name, () => {
       )
 
       expect(insert).toHaveBeenCalledTimes(2)
-      for (const call of insert.calls) {
-        expect(call.args[0].source).toEqual('ingestion')
-        expect(call.args[0].userEmail).toEqual(null)
-        expect(call.args[0].intent).toEqual(null)
-        expect(call.args[0].ingestionLog).toEqual(
+      for (const call of insert.mock.calls) {
+        expect(call[0].source).toStrictEqual('ingestion')
+        expect(call[0].userEmail).toStrictEqual(null)
+        expect(call[0].intent).toStrictEqual(null)
+        expect(call[0].ingestionLog).toStrictEqual(
           'step 1\nstep 2\nOutcome: write',
         )
       }
     })
 
     it('records manual source with a null ingestion log', async () => {
-      const insert = mockFn<[TokenDbHistoryEntryInsert], Promise<void>>(() =>
-        Promise.resolve(),
+      const insert = vi.fn<(entry: TokenDbHistoryEntryInsert) => Promise<void>>(
+        () => Promise.resolve(),
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const tokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          insert: mockFn().resolvesTo(undefined),
+          insert: vi.fn().mockResolvedValue(undefined),
         }),
         tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
@@ -275,15 +283,15 @@ describe(commitTokenChanges.name, () => {
         { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
-      expect(insert.calls[0]!.args[0].ingestionLog).toEqual(null)
-      expect(insert.calls[0]!.args[0].intent).toEqual(null)
+      expect(insert.mock.calls[0]![0].ingestionLog).toStrictEqual(null)
+      expect(insert.mock.calls[0]![0].intent).toStrictEqual(null)
     })
   })
 })
 
 function mockHistory() {
   return mockObject<TokenDatabase['tokenDbHistory']>({
-    insert: mockFn().resolvesTo(undefined),
+    insert: vi.fn().mockResolvedValue(undefined),
   })
 }
 

@@ -6,7 +6,8 @@ import type {
   TokenIngestionQueueRecord,
 } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
@@ -18,20 +19,20 @@ describe(TokenIngestionProcessor.name, () => {
   describe(TokenIngestionProcessor.prototype.plan.name, () => {
     it('does not count non-swapping transfers without a recorded other side', async () => {
       const address = token('ethereum', '0xaaa')
-      const getByPrimaryKeys = mockFn().resolvesTo([])
+      const getByPrimaryKeys = vi.fn().mockResolvedValue([])
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
             getByPrimaryKeys,
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([]),
+            getAll: vi.fn().mockResolvedValue([]),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([]),
+          getCoinList: vi.fn().mockResolvedValue([]),
         }),
       })
 
@@ -48,11 +49,11 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.id).toMatchRegex(/^ing_[0-9a-f-]{36}$/)
-      expect(trace.existingDeployedToken).toEqual(undefined)
+      expect(trace.id).toMatch(/^ing_[0-9a-f-]{36}$/)
+      expect(trace.existingDeployedToken).toStrictEqual(undefined)
       expect(
         trace.steps.find((step) => step.kind === 'transfer-evidence'),
-      ).toEqual({
+      ).toStrictEqual({
         kind: 'transfer-evidence',
         total: 1,
         nonSwapping: 0,
@@ -87,16 +88,16 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(existing),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(existing),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
-            findById: mockFn().resolvesTo(
-              abstractTokenRecord('USDC01', 'USDC'),
-            ),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
+            findById: vi
+              .fn()
+              .mockResolvedValue(abstractTokenRecord('USDC01', 'USDC')),
           }),
         }),
       })
@@ -106,14 +107,17 @@ describe(TokenIngestionProcessor.name, () => {
         buildInteropTransferIndex([]),
       )
 
-      expect(trace.existingDeployedToken).toEqual(existing)
-      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
+      expect(trace.existingDeployedToken).toStrictEqual(existing)
+      expect(trace.outcome).toStrictEqual({
+        kind: 'noop',
+        deployedToken: existing,
+      })
     })
 
     it('returns pending-insert without fetching deployed-token facts for a new address', async () => {
       const address = token('ethereum', '0xaaa')
       const otherAddress = token('base', '0xbbb')
-      const fetchDeployedTokenFacts = mockFn().resolvesTo({
+      const fetchDeployedTokenFacts = vi.fn().mockResolvedValue({
         isContract: true,
         symbol: 'USDC',
         symbolSource: 'rpc',
@@ -121,12 +125,12 @@ describe(TokenIngestionProcessor.name, () => {
         deploymentTimestamp: UnixTime(1),
         warnings: [],
       })
-      const findByName = mockFn().resolvesTo(undefined)
+      const findByName = vi.fn().mockResolvedValue(undefined)
 
       const processor = createProcessor({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            findByTransferId: mockFn().resolvesTo(
+            findByTransferId: vi.fn().mockResolvedValue(
               transfer({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
@@ -141,8 +145,8 @@ describe(TokenIngestionProcessor.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
                 ...otherAddress,
                 abstractTokenId: 'USDC01',
@@ -156,9 +160,9 @@ describe(TokenIngestionProcessor.name, () => {
             ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
           }),
           chain: mockObject<TokenDatabase['chain']>({ findByName }),
         }),
@@ -178,23 +182,23 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toEqual('pending')
+      expect(trace.outcome.kind).toStrictEqual('pending')
       if (trace.outcome.kind !== 'pending') return
-      expect(trace.outcome.abstract).toEqual({
+      expect(trace.outcome.abstract).toStrictEqual({
         kind: 'existing',
         token: { id: 'USDC01', symbol: 'USDC' },
       })
-      expect(trace.outcome.neighborsToEnqueue).toEqual([otherAddress])
-      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
+      expect(trace.outcome.neighborsToEnqueue).toStrictEqual([otherAddress])
+      expect(trace.outcome.proof.kind).toStrictEqual('non-swapping-transfer')
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
       const proof = trace.outcome.proof
-      expect(proof.transfer.transferId).toEqual('transfer-id')
-      expect(proof.transfer.srcRawAmount).toEqual('0')
-      expect(proof.transfer.dstRawAmount).toEqual('123')
+      expect(proof.transfer.transferId).toStrictEqual('transfer-id')
+      expect(proof.transfer.srcRawAmount).toStrictEqual('0')
+      expect(proof.transfer.dstRawAmount).toStrictEqual('123')
       expect(() => JSON.stringify(proof)).not.toThrow()
-      expect(trace.steps.some((step) => step.kind === 'fetched-facts')).toEqual(
-        false,
-      )
+      expect(
+        trace.steps.some((step) => step.kind === 'fetched-facts'),
+      ).toStrictEqual(false)
       expect(fetchDeployedTokenFacts).toHaveBeenCalledTimes(0)
       expect(findByName).toHaveBeenCalledTimes(0)
     })
@@ -203,9 +207,9 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
       const knownOther = token('base', '0xbbb')
       const unknownOther = token('arbitrum', '0xccc')
-      const findByTransferId = mockFn().executes(async (id: string) =>
-        transfer({ transferId: id }),
-      )
+      const findByTransferId = vi
+        .fn()
+        .mockImplementation(async (id: string) => transfer({ transferId: id }))
 
       const processor = createProcessor({
         db: mockObject<Database>({
@@ -215,8 +219,8 @@ describe(TokenIngestionProcessor.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
                 ...knownOther,
                 abstractTokenId: 'USDC01',
@@ -230,12 +234,12 @@ describe(TokenIngestionProcessor.name, () => {
             ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo(undefined),
+            findByName: vi.fn().mockResolvedValue(undefined),
           }),
         }),
       })
@@ -270,22 +274,24 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toEqual('pending')
+      expect(trace.outcome.kind).toStrictEqual('pending')
       if (trace.outcome.kind !== 'pending') return
-      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
+      expect(trace.outcome.proof.kind).toStrictEqual('non-swapping-transfer')
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
-      expect(trace.outcome.proof.transfer.transferId).toEqual(
+      expect(trace.outcome.proof.transfer.transferId).toStrictEqual(
         'transfer-known-1',
       )
-      expect(findByTransferId).toHaveBeenOnlyCalledWith('transfer-known-1')
+      expect(findByTransferId).toHaveBeenCalledExactlyOnceWith(
+        'transfer-known-1',
+      )
     })
 
     it('downgrades a transfer-driven update of an existing token to conflict when symbols differ', async () => {
       const address = token('ethereum', '0xaaa')
       const otherAddress = token('base', '0xbbb')
-      const findByTransferId = mockFn().resolvesTo(
-        transfer({ bridgeType: 'lockAndMint' }),
-      )
+      const findByTransferId = vi
+        .fn()
+        .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' }))
 
       const processor = createProcessor({
         db: mockObject<Database>({
@@ -295,7 +301,7 @@ describe(TokenIngestionProcessor.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo({
+            findByChainAndAddress: vi.fn().mockResolvedValue({
               ...address,
               abstractTokenId: null,
               symbol: 'WETH',
@@ -305,7 +311,7 @@ describe(TokenIngestionProcessor.name, () => {
               ignored: false,
               metadata: null,
             }),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
                 ...otherAddress,
                 abstractTokenId: 'USDC01',
@@ -319,9 +325,9 @@ describe(TokenIngestionProcessor.name, () => {
             ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
           }),
         }),
       })
@@ -339,7 +345,7 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toEqual({
+      expect(trace.outcome).toStrictEqual({
         kind: 'conflict',
         message:
           'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
@@ -360,9 +366,9 @@ describe(TokenIngestionProcessor.name, () => {
         ignored: false,
         metadata: null,
       }
-      const findByTransferId = mockFn().resolvesTo(
-        transfer({ bridgeType: 'lockAndMint' }),
-      )
+      const findByTransferId = vi
+        .fn()
+        .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' }))
 
       const processor = createProcessor({
         db: mockObject<Database>({
@@ -372,8 +378,8 @@ describe(TokenIngestionProcessor.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(existing),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            findByChainAndAddress: vi.fn().mockResolvedValue(existing),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
                 ...otherAddress,
                 abstractTokenId: 'USDC01',
@@ -387,9 +393,9 @@ describe(TokenIngestionProcessor.name, () => {
             ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
           }),
         }),
       })
@@ -407,7 +413,10 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
+      expect(trace.outcome).toStrictEqual({
+        kind: 'noop',
+        deployedToken: existing,
+      })
       expect(findByTransferId).toHaveBeenCalledTimes(0)
     })
 
@@ -418,14 +427,14 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            findByTransferId: mockFn().resolvesTo(
-              transfer({ bridgeType: 'lockAndMint' }),
-            ),
+            findByTransferId: vi
+              .fn()
+              .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' })),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo({
+            findByChainAndAddress: vi.fn().mockResolvedValue({
               ...address,
               abstractTokenId: null,
               symbol: 'usdc',
@@ -435,7 +444,7 @@ describe(TokenIngestionProcessor.name, () => {
               ignored: false,
               metadata: null,
             }),
-            getByPrimaryKeys: mockFn().resolvesTo([
+            getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
                 ...otherAddress,
                 abstractTokenId: 'USDC01',
@@ -449,9 +458,9 @@ describe(TokenIngestionProcessor.name, () => {
             ]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
+            getByIds: vi
+              .fn()
+              .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
           }),
         }),
       })
@@ -469,31 +478,31 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toEqual('write')
+      expect(trace.outcome.kind).toStrictEqual('write')
       if (trace.outcome.kind !== 'write') return
-      expect(trace.outcome.deployedToken.type).toEqual('update')
+      expect(trace.outcome.deployedToken.type).toStrictEqual('update')
       if (trace.outcome.deployedToken.type !== 'update') return
-      expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
+      expect(trace.outcome.deployedToken.update.abstractTokenId).toStrictEqual(
         'USDC01',
       )
     })
 
     it('returns pending with new-coingecko abstract without calling CoinGecko coin endpoints', async () => {
       const address = token('ethereum', '0xaaa')
-      const getCoinDataById = mockFn().resolvesTo(undefined)
-      const getCoinMarketChartRange = mockFn().resolvesTo(undefined)
+      const getCoinDataById = vi.fn().mockResolvedValue(undefined)
+      const getCoinMarketChartRange = vi.fn().mockResolvedValue(undefined)
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(undefined),
-            getByPrimaryKeys: mockFn().resolvesTo([]),
+            findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+            getByPrimaryKeys: vi.fn().mockResolvedValue([]),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findByCoingeckoId: mockFn().resolvesTo(undefined),
+            findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
           }),
           chain: mockObject<TokenDatabase['chain']>({
-            getAll: mockFn().resolvesTo([
+            getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
                 chainId: 1,
@@ -505,7 +514,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinList: mockFn().resolvesTo([
+          getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'usd-coin',
               name: 'USD Coin',
@@ -523,7 +532,7 @@ describe(TokenIngestionProcessor.name, () => {
         buildInteropTransferIndex([]),
       )
 
-      expect(trace.outcome).toEqual({
+      expect(trace.outcome).toStrictEqual({
         kind: 'pending',
         operation: 'insert',
         existing: undefined,
@@ -552,12 +561,12 @@ describe(TokenIngestionProcessor.name, () => {
         outcome: { kind: 'skip', reason: 'whatever' } as const,
       }
       const result = await processor.fetch(trace)
-      expect(result).toEqual(trace)
+      expect(result).toStrictEqual(trace)
     })
 
     it('upgrades pending insert with existing abstract to write/insert when facts are complete', async () => {
       const address = token('ethereum', '0xaaa')
-      const fetchDeployedTokenFacts = mockFn().resolvesTo({
+      const fetchDeployedTokenFacts = vi.fn().mockResolvedValue({
         isContract: true,
         symbol: 'USDC',
         symbolSource: 'rpc' as const,
@@ -569,7 +578,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -600,7 +609,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toEqual({
+      expect(result.outcome).toStrictEqual({
         kind: 'write',
         newAbstractToken: undefined,
         deployedToken: {
@@ -623,13 +632,13 @@ describe(TokenIngestionProcessor.name, () => {
 
     it('builds the abstract from CoinGecko and inserts a deployed token for new-coingecko pending', async () => {
       const address = token('ethereum', '0xaaa')
-      const getCoinDataById = mockFn().resolvesTo({
+      const getCoinDataById = vi.fn().mockResolvedValue({
         id: 'usd-coin',
         symbol: 'usdc',
         image: { large: 'https://example.com/usdc.png' },
         platforms: {},
       })
-      const getCoinMarketChartRange = mockFn().resolvesTo({
+      const getCoinMarketChartRange = vi.fn().mockResolvedValue({
         prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
         marketCaps: [],
       })
@@ -637,7 +646,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -646,14 +655,14 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
           getCoinDataById,
           getCoinMarketChartRange,
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'USDC',
           symbolSource: 'rpc' as const,
@@ -683,11 +692,11 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('write')
+      expect(result.outcome.kind).toStrictEqual('write')
       expect(getCoinDataById).toHaveBeenCalledWith('usd-coin')
       expect(
         result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
 
     it('adopts deployed-token casing on the new CoinGecko abstract when symbols match case-insensitively', async () => {
@@ -696,7 +705,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -705,22 +714,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'ethena-staked-usde',
             symbol: 'susde',
             image: { large: 'https://example.com/susde.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'sUSDe',
           symbolSource: 'rpc' as const,
@@ -751,17 +760,17 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('write')
+      expect(result.outcome.kind).toStrictEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toEqual('sUSDe')
+      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('sUSDe')
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toEqual('sUSDe')
+      ).toStrictEqual('sUSDe')
       const correctionStep = result.steps.find(
         (step) => step.kind === 'corrected-coingecko-symbol-casing',
       )
-      expect(correctionStep).toEqual({
+      expect(correctionStep).toStrictEqual({
         kind: 'corrected-coingecko-symbol-casing',
         from: 'SUSDE',
         to: 'sUSDe',
@@ -774,7 +783,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -783,22 +792,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'pepe-coin',
             symbol: '$pepe',
             image: { large: 'https://example.com/pepe.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'Pepe',
           symbolSource: 'rpc' as const,
@@ -829,16 +838,16 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('write')
+      expect(result.outcome.kind).toStrictEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toEqual('Pepe')
-      expect(result.outcome.newAbstractToken?.comment).toEqual(
+      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('Pepe')
+      expect(result.outcome.newAbstractToken?.comment).toStrictEqual(
         'CoinGecko symbol "$PEPE" differs only in punctuation from the deployed token symbol "Pepe"; automatic ingestion used the deployed token symbol.',
       )
       const adoptionStep = result.steps.find(
         (step) => step.kind === 'adopted-deployed-token-symbol',
       )
-      expect(adoptionStep).toEqual({
+      expect(adoptionStep).toStrictEqual({
         kind: 'adopted-deployed-token-symbol',
         from: '$PEPE',
         to: 'Pepe',
@@ -851,7 +860,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -860,22 +869,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'virtu-coin',
             symbol: 'virtu',
             image: { large: 'https://example.com/virtu.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'VIRTU ',
           symbolSource: 'rpc' as const,
@@ -906,14 +915,14 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('write')
+      expect(result.outcome.kind).toStrictEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toEqual('VIRTU')
+      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('VIRTU')
       expect(
         result.steps.find(
           (step) => step.kind === 'adopted-deployed-token-symbol',
         ),
-      ).toEqual({
+      ).toStrictEqual({
         kind: 'adopted-deployed-token-symbol',
         from: 'VIRTU',
         to: 'VIRTU',
@@ -922,7 +931,7 @@ describe(TokenIngestionProcessor.name, () => {
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toEqual('VIRTU ')
+      ).toStrictEqual('VIRTU ')
     })
 
     it('does not treat two all-punctuation symbols as matching', async () => {
@@ -931,7 +940,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -940,22 +949,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'alchemist',
             symbol: '⚗️',
             image: { large: 'https://example.com/mist.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: '$',
           symbolSource: 'rpc' as const,
@@ -986,7 +995,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('conflict')
+      expect(result.outcome.kind).toStrictEqual('conflict')
     })
 
     it('downgrades pending insert with a new CoinGecko abstract to conflict when symbols differ', async () => {
@@ -995,7 +1004,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1004,22 +1013,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
             image: { large: 'https://example.com/usdc.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'DAI',
           symbolSource: 'rpc' as const,
@@ -1050,7 +1059,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toEqual({
+      expect(result.outcome).toStrictEqual({
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
@@ -1062,10 +1071,10 @@ describe(TokenIngestionProcessor.name, () => {
       })
       expect(
         result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
 
     it('downgrades pending insert with a transfer-resolved abstract to conflict when symbols differ', async () => {
@@ -1074,7 +1083,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1083,7 +1092,7 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'WETH',
           symbolSource: 'rpc' as const,
@@ -1112,14 +1121,14 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toEqual({
+      expect(result.outcome).toStrictEqual({
         kind: 'conflict',
         message:
           'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
       })
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
 
     it('keeps a transfer-resolved insert on write when symbols match case-insensitively', async () => {
@@ -1128,7 +1137,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1137,7 +1146,7 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'SUSDE',
           symbolSource: 'rpc' as const,
@@ -1166,18 +1175,18 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('write')
+      expect(result.outcome.kind).toStrictEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken).toEqual(undefined)
+      expect(result.outcome.newAbstractToken).toStrictEqual(undefined)
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toEqual('SUSDE')
+      ).toStrictEqual('SUSDE')
       expect(
         result.steps.some(
           (step) => step.kind === 'corrected-coingecko-symbol-casing',
         ),
-      ).toEqual(false)
+      ).toStrictEqual(false)
     })
 
     it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
@@ -1186,7 +1195,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1195,22 +1204,22 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
             image: { large: 'https://example.com/usdc.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: undefined,
           symbolSource: undefined,
@@ -1241,7 +1250,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toEqual({
+      expect(result.outcome).toStrictEqual({
         kind: 'error',
         message: 'Missing required deployed-token facts: symbol.',
       })
@@ -1253,17 +1262,17 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            findById: mockFn().resolvesTo(undefined),
+            findById: vi.fn().mockResolvedValue(undefined),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
-          getCoinDataById: mockFn().resolvesTo({
+          getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
             image: { large: 'https://example.com/usdc.png' },
             platforms: {},
           }),
-          getCoinMarketChartRange: mockFn().resolvesTo({
+          getCoinMarketChartRange: vi.fn().mockResolvedValue({
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
@@ -1302,7 +1311,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toEqual({
+      expect(result.outcome).toStrictEqual({
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
@@ -1319,7 +1328,7 @@ describe(TokenIngestionProcessor.name, () => {
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
           chain: mockObject<TokenDatabase['chain']>({
-            findByName: mockFn().resolvesTo({
+            findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
               explorerUrl: null,
@@ -1328,7 +1337,7 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           }),
         }),
-        fetchDeployedTokenFacts: mockFn().resolvesTo({
+        fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'USDC',
           symbolSource: 'rpc' as const,
@@ -1357,7 +1366,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toEqual('error')
+      expect(result.outcome.kind).toStrictEqual('error')
     })
   })
 
@@ -1365,9 +1374,9 @@ describe(TokenIngestionProcessor.name, () => {
     it('applies writes, propagates neighbors, and removes the queue entry', async () => {
       const address = token('ethereum', '0xaaa')
       const neighbor = token('base', '0xbbb')
-      const insert = mockFn().resolvesTo(undefined)
-      const enqueue = mockFn().resolvesTo(undefined)
-      const remove = mockFn().resolvesTo(1)
+      const insert = vi.fn().mockResolvedValue(undefined)
+      const enqueue = vi.fn().mockResolvedValue(undefined)
+      const remove = vi.fn().mockResolvedValue(1)
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
@@ -1376,7 +1385,7 @@ describe(TokenIngestionProcessor.name, () => {
             insert,
           }),
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
-            insert: mockFn().resolvesTo(undefined),
+            insert: vi.fn().mockResolvedValue(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
@@ -1442,7 +1451,7 @@ describe(TokenIngestionProcessor.name, () => {
       }
       await expect(
         processor.apply(queueEntry(trace.address), trace),
-      ).toBeRejected()
+      ).rejects.toThrow()
     })
   })
 
@@ -1451,7 +1460,7 @@ describe(TokenIngestionProcessor.name, () => {
     () => {
       it('builds the interop transfer index on first use and reuses it', async () => {
         const address = token('ethereum', '0xaaa')
-        const getTokenRoutes = mockFn().resolvesTo([
+        const getTokenRoutes = vi.fn().mockResolvedValue([
           route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
@@ -1468,22 +1477,23 @@ describe(TokenIngestionProcessor.name, () => {
         const first = await processor.getInteropTransferIndex()
         const second = await processor.getInteropTransferIndex()
 
-        expect(first.findInvolving(address).length).toEqual(1)
-        expect(second.findInvolving(address).length).toEqual(1)
+        expect(first.findInvolving(address).length).toStrictEqual(1)
+        expect(second.findInvolving(address).length).toStrictEqual(1)
         expect(getTokenRoutes).toHaveBeenCalledTimes(1)
       })
 
       it('refreshes the cached interop transfer index from the database', async () => {
         const firstAddress = token('ethereum', '0xaaa')
         const secondAddress = token('base', '0xbbb')
-        const getTokenRoutes = mockFn()
-          .resolvesToOnce([
+        const getTokenRoutes = vi
+          .fn()
+          .mockResolvedValueOnce([
             route({
               srcChain: firstAddress.chain,
               srcTokenAddress: firstAddress.address,
             }),
           ])
-          .resolvesToOnce([
+          .mockResolvedValueOnce([
             route({
               srcChain: secondAddress.chain,
               srcTokenAddress: secondAddress.address,
@@ -1500,8 +1510,8 @@ describe(TokenIngestionProcessor.name, () => {
         await processor.getInteropTransferIndex()
         const refreshed = await processor.refreshInteropTransferIndex()
 
-        expect(refreshed.findInvolving(firstAddress).length).toEqual(0)
-        expect(refreshed.findInvolving(secondAddress).length).toEqual(1)
+        expect(refreshed.findInvolving(firstAddress).length).toStrictEqual(0)
+        expect(refreshed.findInvolving(secondAddress).length).toStrictEqual(1)
         expect(getTokenRoutes).toHaveBeenCalledTimes(2)
       })
     },

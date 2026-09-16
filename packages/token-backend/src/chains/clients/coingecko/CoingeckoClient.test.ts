@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn } from 'earl'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CoingeckoClient } from './CoingeckoClient'
 
 describe(CoingeckoClient.name, () => {
@@ -22,7 +22,7 @@ describe(CoingeckoClient.name, () => {
 
     const result = await client.getCoinList({ includePlatform: true })
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'usd-coin',
         symbol: 'usdc',
@@ -30,10 +30,10 @@ describe(CoingeckoClient.name, () => {
         platforms: { ethereum: '0x1234' },
       },
     ])
-    expect(fetch.calls[0]?.args[0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toStrictEqual(
       'https://api.coingecko.com/api/v3/coins/list?include_platform=true',
     )
-    expect(fetch.calls[0]?.args[1]).toEqual({ headers: {} })
+    expect(fetch.mock.calls[0][1]).toStrictEqual({ headers: {} })
   })
 
   it('constructs the pro coin data request with an API key', async () => {
@@ -50,10 +50,10 @@ describe(CoingeckoClient.name, () => {
 
     await client.getCoinDataById('usd-coin')
 
-    expect(fetch.calls[0]?.args[0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toStrictEqual(
       'https://pro-api.coingecko.com/api/v3/coins/usd-coin?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false',
     )
-    expect(fetch.calls[0]?.args[1]).toEqual({
+    expect(fetch.mock.calls[0][1]).toStrictEqual({
       headers: { 'x-cg-pro-api-key': 'my-api-key' },
     })
   })
@@ -73,10 +73,10 @@ describe(CoingeckoClient.name, () => {
       UnixTime(1622577232),
     )
 
-    expect(fetch.calls[0]?.args[0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toStrictEqual(
       'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=2020-06-19&to=2021-06-01',
     )
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       prices: [{ date: new Date(1592611200000), value: 228.9 }],
       marketCaps: [{ date: new Date(1592611200000), value: 25_534_271_650 }],
     })
@@ -89,7 +89,7 @@ describe(CoingeckoClient.name, () => {
     )
     const client = new CoingeckoClient({ callsPerMinute: 100_000 })
 
-    await expect(client.getCoinDataById('usd-coin')).toBeRejectedWith(
+    await expect(client.getCoinDataById('usd-coin')).rejects.toThrow(
       'CoinGecko API error: 429 Too Many Requests',
     )
   })
@@ -105,7 +105,7 @@ function mockFetch(
   data: unknown,
   options?: { ok?: boolean; status?: number; statusText?: string },
 ) {
-  const fetch = mockFn().resolvesTo({
+  const fetch = vi.fn().mockResolvedValue({
     ok: options?.ok ?? true,
     status: options?.status ?? 200,
     statusText: options?.statusText ?? 'OK',

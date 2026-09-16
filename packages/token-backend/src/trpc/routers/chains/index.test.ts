@@ -1,5 +1,6 @@
 import type { ChainRecord, Database, TokenDatabase } from '@l2beat/database'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
 import type { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
 import type { RpcClient } from '../../../chains/clients/rpc/RpcClient'
@@ -13,14 +14,14 @@ describe('chainRouter', () => {
     it('returns empty array when no chains exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns all chains', async () => {
@@ -40,7 +41,7 @@ describe('chainRouter', () => {
           apis: [{ type: 'etherscan' }],
         },
       ]
-      const mockGetAll = mockFn().resolvesTo(chains)
+      const mockGetAll = vi.fn().mockResolvedValue(chains)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           getAll: mockGetAll,
@@ -50,7 +51,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
-      expect(result).toEqual(chains)
+      expect(result).toStrictEqual(chains)
       expect(mockGetAll).toHaveBeenCalledWith()
     })
   })
@@ -64,7 +65,7 @@ describe('chainRouter', () => {
         explorerUrl: 'https://etherscan.io',
         apis: [{ type: 'etherscan' }],
       }
-      const mockFindByName = mockFn().resolvesTo(chain)
+      const mockFindByName = vi.fn().mockResolvedValue(chain)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFindByName,
@@ -74,12 +75,12 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('ethereum')
 
-      expect(result).toEqual(chain)
+      expect(result).toStrictEqual(chain)
       expect(mockFindByName).toHaveBeenCalledWith('ethereum')
     })
 
     it('returns null when chain does not exist', async () => {
-      const mockFindByName = mockFn().resolvesTo(undefined)
+      const mockFindByName = vi.fn().mockResolvedValue(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFindByName,
@@ -89,7 +90,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('nonexistent')
 
-      expect(result).toEqual(null)
+      expect(result).toStrictEqual(null)
       expect(mockFindByName).toHaveBeenCalledWith('nonexistent')
     })
   })
@@ -103,7 +104,7 @@ describe('chainRouter', () => {
         explorerUrl: 'https://etherscan.io',
         apis: [{ type: 'etherscan' }],
       }
-      const mockInsert = mockFn().resolvesTo(undefined)
+      const mockInsert = vi.fn().mockResolvedValue(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
@@ -113,7 +114,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
 
@@ -125,7 +126,7 @@ describe('chainRouter', () => {
         explorerUrl: null,
         apis: null,
       }
-      const mockInsert = mockFn().resolvesTo(undefined)
+      const mockInsert = vi.fn().mockResolvedValue(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
@@ -135,7 +136,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
 
@@ -152,7 +153,7 @@ describe('chainRouter', () => {
           { type: 'routescan', url: 'https://routescan.io' },
         ],
       }
-      const mockInsert = mockFn().resolvesTo(undefined)
+      const mockInsert = vi.fn().mockResolvedValue(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
@@ -162,7 +163,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
   })
@@ -176,7 +177,7 @@ describe('chainRouter', () => {
         aliases: ['eth', 'mainnet', 'ethereum-mainnet'],
         apis: [{ type: 'etherscan' }],
       }
-      const mockUpdateByName = mockFn().resolvesTo(1)
+      const mockUpdateByName = vi.fn().mockResolvedValue(1)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
@@ -189,7 +190,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -198,7 +199,7 @@ describe('chainRouter', () => {
         name: 'ethereum',
         explorerUrl: 'https://updated-explorer.io',
       }
-      const mockUpdateByName = mockFn().resolvesTo(1)
+      const mockUpdateByName = vi.fn().mockResolvedValue(1)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
@@ -211,7 +212,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -222,7 +223,7 @@ describe('chainRouter', () => {
         explorerUrl: null,
         apis: null,
       }
-      const mockUpdateByName = mockFn().resolvesTo(1)
+      const mockUpdateByName = vi.fn().mockResolvedValue(1)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
@@ -235,14 +236,14 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('arbitrum', update)
     })
   })
 
   describe('delete', () => {
     it('deletes an existing chain', async () => {
-      const mockDeleteByName = mockFn().resolvesTo(1)
+      const mockDeleteByName = vi.fn().mockResolvedValue(1)
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
           deleteByName: mockDeleteByName,
@@ -252,7 +253,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.delete({ name: 'ethereum' })
 
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
       expect(mockDeleteByName).toHaveBeenCalledWith('ethereum')
     })
   })
@@ -261,7 +262,7 @@ describe('chainRouter', () => {
     describe('rpc', () => {
       it('returns success when RPC API is working', async () => {
         const mockRpcClient = mockObject<RpcClient>({
-          test: mockFn().resolvesTo({ success: true }),
+          test: vi.fn().mockResolvedValue({ success: true }),
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
@@ -276,13 +277,13 @@ describe('chainRouter', () => {
           url: 'https://rpc.example.com',
         })
 
-        expect(result).toEqual({ success: true })
+        expect(result).toStrictEqual({ success: true })
         expect(mockRpcClient.test).toHaveBeenCalledWith()
       })
 
       it('returns failure when RPC API returns error', async () => {
         const mockRpcClient = mockObject<RpcClient>({
-          test: mockFn().resolvesTo({
+          test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
@@ -300,14 +301,14 @@ describe('chainRouter', () => {
           url: 'https://rpc.example.com',
         })
 
-        expect(result).toEqual({ success: false, error: 'Error message' })
+        expect(result).toStrictEqual({ success: false, error: 'Error message' })
       })
     })
 
     describe('blockscout', () => {
       it('returns success when Blockscout API is working', async () => {
         const mockBlockscoutClient = mockObject<BlockscoutClient>({
-          test: mockFn().resolvesTo({ success: true }),
+          test: vi.fn().mockResolvedValue({ success: true }),
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
@@ -322,13 +323,13 @@ describe('chainRouter', () => {
           url: 'https://blockscout.example.com',
         })
 
-        expect(result).toEqual({ success: true })
+        expect(result).toStrictEqual({ success: true })
         expect(mockBlockscoutClient.test).toHaveBeenCalledWith()
       })
 
       it('returns failure when Blockscout API returns error', async () => {
         const mockBlockscoutClient = mockObject<BlockscoutClient>({
-          test: mockFn().resolvesTo({
+          test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
@@ -346,14 +347,14 @@ describe('chainRouter', () => {
           url: 'https://blockscout.example.com',
         })
 
-        expect(result).toEqual({ success: false, error: 'Error message' })
+        expect(result).toStrictEqual({ success: false, error: 'Error message' })
       })
     })
 
     describe('etherscan', () => {
       it('returns success when Etherscan API is working', async () => {
         const mockEtherscanClient = mockObject<EtherscanClient>({
-          test: mockFn().resolvesTo({ success: true }),
+          test: vi.fn().mockResolvedValue({ success: true }),
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
@@ -372,7 +373,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toEqual({ success: true })
+        expect(result).toStrictEqual({ success: true })
         expect(mockEtherscanClient.test).toHaveBeenCalledWith()
       })
 
@@ -387,7 +388,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           success: false,
           error: 'API key not configured',
         })
@@ -395,7 +396,7 @@ describe('chainRouter', () => {
 
       it('returns failure when Etherscan API returns error', async () => {
         const mockEtherscanClient = mockObject<EtherscanClient>({
-          test: mockFn().resolvesTo({
+          test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
@@ -417,7 +418,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toEqual({ success: false, error: 'Error message' })
+        expect(result).toStrictEqual({ success: false, error: 'Error message' })
       })
     })
   })

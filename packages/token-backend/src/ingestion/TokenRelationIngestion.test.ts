@@ -6,18 +6,20 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { TokenRelationIngestion } from './TokenRelationIngestion'
 
 const CURSOR_KEY = 'token-relations:lastSerialId'
 
 describe(TokenRelationIngestion.name, () => {
   it('creates relations from non-swapping transfers and advances the cursor', async () => {
-    const insert = mockFn().resolvesTo(undefined)
-    const historyInsert = mockFn().resolvesTo(undefined)
-    const set = mockFn().resolvesTo(undefined)
-    const getAfterSerialId = mockFn()
-      .resolvesToOnce({
+    const insert = vi.fn().mockResolvedValue(undefined)
+    const historyInsert = vi.fn().mockResolvedValue(undefined)
+    const set = vi.fn().mockResolvedValue(undefined)
+    const getAfterSerialId = vi
+      .fn()
+      .mockResolvedValueOnce({
         latestSerialId: '12',
         transfers: [
           transfer({
@@ -28,7 +30,7 @@ describe(TokenRelationIngestion.name, () => {
           }),
         ],
       })
-      .resolvesToOnce(emptyBatch())
+      .mockResolvedValueOnce(emptyBatch())
 
     const ingestion = createIngestion({
       getAfterSerialId,
@@ -40,13 +42,13 @@ describe(TokenRelationIngestion.name, () => {
 
     await ingestion.runOnce()
 
-    expect(getAfterSerialId).toHaveBeenCalledWith('10', expect.a(Number))
+    expect(getAfterSerialId).toHaveBeenCalledWith('10', expect.any(Number))
     expect(insert).toHaveBeenCalledTimes(1)
-    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
+    const inserted = insert.mock.calls[0][0] as TokenRelationRecord
     // Endpoints are stored in lexicographic order — base sorts before ethereum
     // — so the observed transfer direction is not what orients the row. The
     // locked endpoint (ethereum, whose token was not burned) is named instead.
-    expect(inserted).toHaveSubset({
+    expect(inserted).toMatchObject({
       tokenAChain: 'base',
       tokenAAddress: token('0xbbb'),
       tokenBChain: 'ethereum',
@@ -55,9 +57,9 @@ describe(TokenRelationIngestion.name, () => {
       bridgeType: 'lockAndMint',
       lockedToken: 'B',
     })
-    expect(evidenceTransferId(inserted)).toEqual('lock-mint')
+    expect(evidenceTransferId(inserted)).toStrictEqual('lock-mint')
     expect(historyInsert).toHaveBeenCalledTimes(1)
-    expect(historyInsert.calls[0]?.args[0]).toHaveSubset({
+    expect(historyInsert.mock.calls[0][0]).toMatchObject({
       source: 'ingestion',
       commandType: 'AddTokenRelationCommand',
     })
@@ -66,18 +68,19 @@ describe(TokenRelationIngestion.name, () => {
 
   it('commits all new relations of a batch in a single transaction', async () => {
     const events: string[] = []
-    const insert = mockFn().executes(async () => {
+    const insert = vi.fn().mockImplementation(async () => {
       events.push('insert')
     })
-    const transaction = mockFn().executes(
-      async (callback: () => Promise<void>) => {
+    const transaction = vi
+      .fn()
+      .mockImplementation(async (callback: () => Promise<void>) => {
         events.push('begin')
         await callback()
         events.push('commit')
-      },
-    )
-    const getAfterSerialId = mockFn()
-      .resolvesToOnce({
+      })
+    const getAfterSerialId = vi
+      .fn()
+      .mockResolvedValueOnce({
         latestSerialId: '12',
         transfers: [
           transfer({
@@ -92,30 +95,31 @@ describe(TokenRelationIngestion.name, () => {
           }),
         ],
       })
-      .resolvesToOnce(emptyBatch())
+      .mockResolvedValueOnce(emptyBatch())
 
     const ingestion = createIngestion({ getAfterSerialId, insert, transaction })
 
     await ingestion.runOnce()
 
-    expect(events).toEqual(['begin', 'insert', 'insert', 'commit'])
+    expect(events).toStrictEqual(['begin', 'insert', 'insert', 'commit'])
   })
 
   it('creates relations without ever consulting the token catalogue', async () => {
     // No deployedToken or tokenIngestionQueue mocks exist on the database
     // object below — any attempt to look up deployed tokens (e.g. to gate
     // relations behind token-level conflicts) would make this test throw.
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '2',
           transfers: [
             transfer({ transferId: 'unknown-tokens', srcWasBurned: true }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
@@ -127,11 +131,12 @@ describe(TokenRelationIngestion.name, () => {
   it('records one relation for both observed directions of a lock-and-mint route', async () => {
     // The deposit locks on ethereum and mints on base; the withdrawal burns on
     // base and unlocks on ethereum. Same pair, same locked endpoint, one row.
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -150,27 +155,28 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
     expect(insert).toHaveBeenCalledTimes(1)
-    expect(insert.calls[0]?.args[0]).toEqual(
+    expect(insert.mock.calls[0][0]).toStrictEqual(
       relationRecord({
         lockedToken: 'B',
-        transfer: expect.a(Object),
+        transfer: expect.any(Object),
       }),
     )
   })
 
   it('leaves the locked token unidentified when the flags do not identify one', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -181,13 +187,13 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
-    expect(insert.calls[0]?.args[0]).toHaveSubset({
+    expect(insert.mock.calls[0][0]).toMatchObject({
       bridgeType: 'lockAndMint',
       lockedToken: null,
     })
@@ -195,11 +201,12 @@ describe(TokenRelationIngestion.name, () => {
 
   it('never identifies a locked token for a burn-and-mint pair', async () => {
     // Both sides burn and mint, so the pair is symmetric — nothing is locked.
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -210,29 +217,30 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
-    expect(insert.calls[0]?.args[0]).toHaveSubset({
+    expect(insert.mock.calls[0][0]).toMatchObject({
       bridgeType: 'burnAndMint',
       lockedToken: null,
     })
   })
 
   it('resolves the locked token of a relation that was observed without one', async () => {
-    const update = mockFn().resolvesTo(1)
-    const insert = mockFn().resolvesTo(undefined)
+    const update = vi.fn().mockResolvedValue(1)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [transfer({ transferId: 'now-with-flags' })],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       existingRelations: [relationRecord({ lockedToken: null })],
       insert,
       update,
@@ -242,19 +250,20 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(0)
     expect(update).toHaveBeenCalledTimes(1)
-    expect(update.calls[0]?.args[1]).toEqual({ lockedToken: 'B' })
+    expect(update.mock.calls[0][1]).toStrictEqual({ lockedToken: 'B' })
   })
 
   it('does not overwrite a locked token that is already identified', async () => {
-    const update = mockFn().resolvesTo(1)
+    const update = vi.fn().mockResolvedValue(1)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [transfer({ transferId: 'already-known' })],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       existingRelations: [relationRecord({ lockedToken: 'B' })],
       update,
     })
@@ -267,11 +276,12 @@ describe(TokenRelationIngestion.name, () => {
   it('ignores transfers whose two endpoints are the same token', async () => {
     // A token is trivially the same asset as itself, so there is nothing to
     // record — and the pair could not be stored in a canonical order anyway.
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -281,7 +291,7 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
@@ -291,11 +301,12 @@ describe(TokenRelationIngestion.name, () => {
   })
 
   it('infers the bridge type from burn and mint flags when it is not stored', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -306,13 +317,13 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
-    expect(insert.calls[0]?.args[0]).toHaveSubset({
+    expect(insert.mock.calls[0][0]).toMatchObject({
       bridgeType: 'burnAndMint',
     })
   })
@@ -321,11 +332,12 @@ describe(TokenRelationIngestion.name, () => {
     // One-sided transfers often miss a flag. The plugin-declared bridgeType
     // is authoritative — the relation must be created, and the unobserved
     // flags must NOT be fabricated (they stay absent in the evidence JSON).
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '3',
           transfers: [
             transfer({
@@ -336,27 +348,28 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
     expect(insert).toHaveBeenCalledTimes(1)
-    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
-    expect(inserted.bridgeType).toEqual('lockAndMint')
+    const inserted = insert.mock.calls[0][0] as TokenRelationRecord
+    expect(inserted.bridgeType).toStrictEqual('lockAndMint')
     const evidence = inserted.transfer as Record<string, unknown>
-    expect('srcWasBurned' in evidence).toEqual(false)
-    expect(evidence['dstWasMinted']).toEqual(true)
+    expect('srcWasBurned' in evidence).toStrictEqual(false)
+    expect(evidence['dstWasMinted']).toStrictEqual(true)
   })
 
   it('ignores swap-like and unclassifiable transfers', async () => {
-    const insert = mockFn().resolvesTo(undefined)
-    const set = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
+    const set = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '4',
           transfers: [
             transfer({
@@ -371,7 +384,7 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
       set,
     })
@@ -383,11 +396,12 @@ describe(TokenRelationIngestion.name, () => {
   })
 
   it('ignores transfers missing a token address on either side', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '5',
           transfers: [
             transfer({ transferId: 'no-src', srcTokenAddress: undefined }),
@@ -395,7 +409,7 @@ describe(TokenRelationIngestion.name, () => {
             transfer({ transferId: 'zero-dst', dstTokenAddress: '0x' }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
@@ -405,15 +419,16 @@ describe(TokenRelationIngestion.name, () => {
   })
 
   it('skips relations that already exist', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '6',
           transfers: [transfer({ transferId: 'existing' })],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       existingRelations: [relationRecord({ lockedToken: 'B' })],
       insert,
     })
@@ -424,37 +439,39 @@ describe(TokenRelationIngestion.name, () => {
   })
 
   it('deduplicates transfers of the same route within a batch', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '7',
           transfers: [
             transfer({ transferId: 'first' }),
             transfer({ transferId: 'second' }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
     expect(insert).toHaveBeenCalledTimes(1)
-    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
-    expect(evidenceTransferId(inserted)).toEqual('first')
+    const inserted = insert.mock.calls[0][0] as TokenRelationRecord
+    expect(evidenceTransferId(inserted)).toStrictEqual('first')
   })
 
   it('pages through transfers and advances the cursor after every batch', async () => {
-    const insert = mockFn().resolvesTo(undefined)
-    const set = mockFn().resolvesTo(undefined)
-    const getAfterSerialId = mockFn()
-      .resolvesToOnce({
+    const insert = vi.fn().mockResolvedValue(undefined)
+    const set = vi.fn().mockResolvedValue(undefined)
+    const getAfterSerialId = vi
+      .fn()
+      .mockResolvedValueOnce({
         latestSerialId: '100',
         transfers: [transfer({ transferId: 'batch-one' })],
       })
-      .resolvesToOnce({
+      .mockResolvedValueOnce({
         latestSerialId: '200',
         transfers: [
           transfer({
@@ -464,19 +481,19 @@ describe(TokenRelationIngestion.name, () => {
           }),
         ],
       })
-      .resolvesToOnce(emptyBatch())
+      .mockResolvedValueOnce(emptyBatch())
 
     const ingestion = createIngestion({ getAfterSerialId, insert, set })
 
     await ingestion.runOnce()
 
-    expect(getAfterSerialId.calls.map((call) => call.args[0])).toEqual([
+    expect(getAfterSerialId.mock.calls.map((call) => call[0])).toStrictEqual([
       '0',
       '100',
       '200',
     ])
     expect(insert).toHaveBeenCalledTimes(2)
-    expect(set.calls.map((call) => call.args[0])).toEqual([
+    expect(set.mock.calls.map((call) => call[0])).toStrictEqual([
       { key: CURSOR_KEY, value: '100' },
       { key: CURSOR_KEY, value: '200' },
     ])
@@ -486,8 +503,8 @@ describe(TokenRelationIngestion.name, () => {
     // Never returns an empty batch — only the page budget can end the run.
     // The cursor persists after every page, so the next run picks up where
     // this one stopped.
-    const set = mockFn().resolvesTo(undefined)
-    const getAfterSerialId = mockFn().resolvesTo({
+    const set = vi.fn().mockResolvedValue(undefined)
+    const getAfterSerialId = vi.fn().mockResolvedValue({
       latestSerialId: '1',
       transfers: [transfer({ transferId: 'endless' })],
     })
@@ -501,13 +518,14 @@ describe(TokenRelationIngestion.name, () => {
   })
 
   it('normalizes Address32 token addresses to lowercase Ethereum addresses', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
     const ethereumAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
     const address32 = `0x000000000000000000000000${ethereumAddress.slice(2)}`
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn()
-        .resolvesToOnce({
+      getAfterSerialId: vi
+        .fn()
+        .mockResolvedValueOnce({
           latestSerialId: '8',
           transfers: [
             transfer({
@@ -516,22 +534,22 @@ describe(TokenRelationIngestion.name, () => {
             }),
           ],
         })
-        .resolvesToOnce(emptyBatch()),
+        .mockResolvedValueOnce(emptyBatch()),
       insert,
     })
 
     await ingestion.runOnce()
 
-    expect(insert.calls[0]?.args[0]).toHaveSubset({
+    expect(insert.mock.calls[0][0]).toMatchObject({
       tokenBAddress: ethereumAddress.toLowerCase(),
     })
   })
 
   it('does not advance the cursor when there are no new transfers', async () => {
-    const set = mockFn().resolvesTo(undefined)
+    const set = vi.fn().mockResolvedValue(undefined)
 
     const ingestion = createIngestion({
-      getAfterSerialId: mockFn().resolvesTo(emptyBatch()),
+      getAfterSerialId: vi.fn().mockResolvedValue(emptyBatch()),
       set,
     })
 
@@ -542,14 +560,14 @@ describe(TokenRelationIngestion.name, () => {
 })
 
 function createIngestion(opts: {
-  getAfterSerialId: ReturnType<typeof mockFn>
+  getAfterSerialId: ReturnType<typeof vi.fn>
   cursor?: string
   existingRelations?: TokenRelationRecord[]
-  insert?: ReturnType<typeof mockFn>
-  update?: ReturnType<typeof mockFn>
-  historyInsert?: ReturnType<typeof mockFn>
-  set?: ReturnType<typeof mockFn>
-  transaction?: ReturnType<typeof mockFn>
+  insert?: ReturnType<typeof vi.fn>
+  update?: ReturnType<typeof vi.fn>
+  historyInsert?: ReturnType<typeof vi.fn>
+  set?: ReturnType<typeof vi.fn>
+  transaction?: ReturnType<typeof vi.fn>
 }) {
   const db = mockObject<Database>({
     interopTransfer: mockObject<Database['interopTransfer']>({
@@ -561,18 +579,40 @@ function createIngestion(opts: {
     transaction: (opts.transaction ??
       (async (callback) => await callback())) as TokenDatabase['transaction'],
     tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-      get: mockFn().resolvesTo(
-        opts.cursor ? { key: CURSOR_KEY, value: opts.cursor } : undefined,
-      ),
-      set: opts.set ?? mockFn().resolvesTo(undefined),
+      get: vi
+        .fn()
+        .mockResolvedValue(
+          opts.cursor ? { key: CURSOR_KEY, value: opts.cursor } : undefined,
+        ),
+      set: (opts.set ??
+        vi
+          .fn()
+          .mockResolvedValue(
+            undefined,
+          )) as TokenDatabase['tokenDbSettings']['set'],
     }),
     tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-      getByPrimaryKeys: mockFn().resolvesTo(opts.existingRelations ?? []),
-      insert: opts.insert ?? mockFn().resolvesTo(undefined),
-      updateByPrimaryKey: opts.update ?? mockFn().resolvesTo(1),
+      getByPrimaryKeys: vi.fn().mockResolvedValue(opts.existingRelations ?? []),
+      insert: (opts.insert ??
+        vi
+          .fn()
+          .mockResolvedValue(
+            undefined,
+          )) as TokenDatabase['tokenRelation']['insert'],
+      updateByPrimaryKey: (opts.update ??
+        vi
+          .fn()
+          .mockResolvedValue(
+            1,
+          )) as TokenDatabase['tokenRelation']['updateByPrimaryKey'],
     }),
     tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
-      insert: opts.historyInsert ?? mockFn().resolvesTo(undefined),
+      insert: (opts.historyInsert ??
+        vi
+          .fn()
+          .mockResolvedValue(
+            undefined,
+          )) as TokenDatabase['tokenDbHistory']['insert'],
     }),
   })
 

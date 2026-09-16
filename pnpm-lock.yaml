@@ -1077,18 +1077,12 @@ importers:
       d3-force:
         specifier: ^3.0.0
         version: 3.0.0
-      earl:
-        specifier: ^1.1.0
-        version: 1.3.0
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
-      mocha:
-        specifier: ^10.2.0
-        version: 10.7.3
       monaco-editor:
         specifier: ^0.52.0
         version: 0.52.0
@@ -1114,9 +1108,15 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/ansi-html':
         specifier: ^0.0.0
         version: 0.0.0
@@ -1218,9 +1218,15 @@ importers:
         specifier: ^2.21.36
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/lodash':
         specifier: ^4.17.12
         version: 4.17.13
@@ -1308,18 +1314,15 @@ importers:
         specifier: ^2.31.6
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
-      '@types/mocha':
-        specifier: ^10.0.6
-        version: 10.0.9
-      earl:
-        specifier: ^1.1.0
-        version: 1.3.0
-      mocha:
-        specifier: ^10.2.0
-        version: 10.7.3
       tsx:
         specifier: ^4.9.3
         version: 4.19.2

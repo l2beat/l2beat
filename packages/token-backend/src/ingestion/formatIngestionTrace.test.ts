@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { formatIngestionTrace } from './formatIngestionTrace'
 import type { IngestionTrace } from './IngestionTrace'
 
@@ -63,7 +63,7 @@ describe(formatIngestionTrace.name, () => {
 
     const log = formatIngestionTrace(trace)
 
-    expect(log).toEqual(
+    expect(log).toStrictEqual(
       [
         'Ingestion ID: ing_test',
         'Address: ethereum:0xaaa',
@@ -100,8 +100,8 @@ describe(formatIngestionTrace.name, () => {
       log.includes(
         '1. Found 0 transfers (0 non-swapping). Other sides resolve to: no abstract tokens.',
       ),
-    ).toEqual(true)
-    expect(log.includes('Transfers by plugin')).toEqual(false)
+    ).toStrictEqual(true)
+    expect(log.includes('Transfers by plugin')).toStrictEqual(false)
   })
 
   it('renders the symbol adoption step', () => {
@@ -121,7 +121,7 @@ describe(formatIngestionTrace.name, () => {
       log.includes(
         '1. CoinGecko symbol $PEPE differs only in punctuation from the deployed-token symbol; adopted Pepe.',
       ),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 
   it('handles conflict outcomes', () => {
@@ -137,6 +137,6 @@ describe(formatIngestionTrace.name, () => {
       formatIngestionTrace(trace).includes(
         'Outcome: conflict — multiple abstracts',
       ),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 })

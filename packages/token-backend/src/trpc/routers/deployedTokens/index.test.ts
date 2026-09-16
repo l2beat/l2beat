@@ -8,7 +8,8 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { Address32 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
@@ -17,7 +18,7 @@ import { type DeployedTokensRouterDeps, deployedTokensRouter } from './index'
 describe('deployedTokensRouter', () => {
   describe('findByChainAndAddress', () => {
     it('returns null when token is not found', async () => {
-      const mockFindByChainAndAddress = mockFn().resolvesTo(undefined)
+      const mockFindByChainAndAddress = vi.fn().mockResolvedValue(undefined)
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
@@ -31,7 +32,7 @@ describe('deployedTokensRouter', () => {
         chain: 'ethereum',
         address: '0x123',
       })
-      expect(result).toEqual(null)
+      expect(result).toStrictEqual(null)
       expect(mockFindByChainAndAddress).toHaveBeenCalledWith({
         chain: 'ethereum',
         address: '0x123',
@@ -65,7 +66,7 @@ describe('deployedTokensRouter', () => {
       } satisfies DeployedTokenRecord
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(token),
+          findByChainAndAddress: vi.fn().mockResolvedValue(token),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -77,7 +78,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual(token)
+      expect(result).toStrictEqual(token)
     })
   })
 
@@ -85,7 +86,7 @@ describe('deployedTokensRouter', () => {
     it('returns false when token does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -97,7 +98,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual(false)
+      expect(result).toStrictEqual(false)
     })
 
     it('returns true when token exists', async () => {
@@ -108,7 +109,7 @@ describe('deployedTokensRouter', () => {
       }
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(token),
+          findByChainAndAddress: vi.fn().mockResolvedValue(token),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -120,7 +121,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
   })
 
@@ -175,7 +176,7 @@ describe('deployedTokensRouter', () => {
         deployedToken: DeployedTokenRecord
         abstractToken: AbstractTokenRecord | undefined
       }[]
-      const mockGetByChainAndAddress = mockFn().resolvesTo(tokens)
+      const mockGetByChainAndAddress = vi.fn().mockResolvedValue(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainAndAddress: mockGetByChainAndAddress,
@@ -190,7 +191,7 @@ describe('deployedTokensRouter', () => {
         { chain: 'arbitrum', address: '0x456' },
       ])
 
-      expect(result).toEqual(tokens)
+      expect(result).toStrictEqual(tokens)
       expect(mockGetByChainAndAddress).toHaveBeenCalledWith([
         { chain: 'ethereum', address: '0x123' },
         { chain: 'arbitrum', address: '0x456' },
@@ -219,8 +220,8 @@ describe('deployedTokensRouter', () => {
         reviewed: true,
         isPriceUnreliable: false,
       } satisfies AbstractTokenRecord
-      const findDeployedToken = mockFn().resolvesTo(token)
-      const findAbstractToken = mockFn().resolvesTo(abstractToken)
+      const findDeployedToken = vi.fn().mockResolvedValue(token)
+      const findAbstractToken = vi.fn().mockResolvedValue(abstractToken)
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: findDeployedToken,
@@ -241,14 +242,14 @@ describe('deployedTokensRouter', () => {
           chain: token.chain,
           address: token.address,
         }),
-      ).toEqual({ deployedToken: token, abstractToken })
+      ).toStrictEqual({ deployedToken: token, abstractToken })
       expect(findAbstractToken).toHaveBeenCalledWith('USDC')
     })
 
     it('returns null details for an uncatalogued endpoint', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const caller = createRouter(
@@ -262,7 +263,7 @@ describe('deployedTokensRouter', () => {
           chain: 'optimism',
           address: '0xccc',
         }),
-      ).toEqual({ deployedToken: null, abstractToken: null })
+      ).toStrictEqual({ deployedToken: null, abstractToken: null })
     })
   })
 
@@ -313,18 +314,15 @@ describe('deployedTokensRouter', () => {
         transfer: {},
       } satisfies TokenRelationRecord
 
-      const getRelationsFor = mockFn().resolvesTo([
-        locked,
-        minted,
-        unknownRole,
-        symmetric,
-      ])
+      const getRelationsFor = vi
+        .fn()
+        .mockResolvedValue([locked, minted, unknownRole, symmetric])
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           getRelationsFor,
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByPrimaryKeys: mockFn().resolvesTo([
+          getByPrimaryKeys: vi.fn().mockResolvedValue([
             deployedToken({
               chain: 'ethereum',
               address: '0xaaa',
@@ -348,7 +346,7 @@ describe('deployedTokensRouter', () => {
           role: entry.role,
           otherToken: entry.otherToken?.chain ?? null,
         })),
-      ).toEqual([
+      ).toStrictEqual([
         // This token is the escrowed original of the ethereum representation.
         { plugin: 'a-plugin', role: 'locked', otherToken: 'ethereum' },
         // ...and itself a representation of the arbitrum original, which is not
@@ -365,10 +363,9 @@ describe('deployedTokensRouter', () => {
 
   describe('getMintingPlugins', () => {
     it('returns the plugin names straight from the repository', async () => {
-      const getMintingPluginsFor = mockFn().resolvesTo([
-        'canonicalbridge',
-        'superbridge',
-      ])
+      const getMintingPluginsFor = vi
+        .fn()
+        .mockResolvedValue(['canonicalbridge', 'superbridge'])
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           getMintingPluginsFor,
@@ -382,7 +379,7 @@ describe('deployedTokensRouter', () => {
 
       expect(
         await caller.getMintingPlugins({ chain: 'base', address: '0xbbb' }),
-      ).toEqual(['canonicalbridge', 'superbridge'])
+      ).toStrictEqual(['canonicalbridge', 'superbridge'])
       expect(getMintingPluginsFor).toHaveBeenCalledWith({
         chain: 'base',
         address: '0xbbb',
@@ -409,7 +406,7 @@ describe('deployedTokensRouter', () => {
           dstTxHash: '0xdst',
         },
       } satisfies TokenRelationRecord
-      const findRelation = mockFn().resolvesTo(relation)
+      const findRelation = vi.fn().mockResolvedValue(relation)
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           findByPrimaryKey: findRelation,
@@ -421,9 +418,9 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraphRelationDetails(primaryKey)).toEqual(
-        relation,
-      )
+      expect(
+        await caller.getRelationsGraphRelationDetails(primaryKey),
+      ).toStrictEqual(relation)
       expect(findRelation).toHaveBeenCalledWith(primaryKey)
     })
   })
@@ -460,15 +457,15 @@ describe('deployedTokensRouter', () => {
           abstractTokenId: 'USDC',
         }),
       ]
-      const mockGetAllRelations = mockFn().resolvesTo(relations)
-      const mockGetTokens = mockFn().resolvesTo(tokens)
+      const mockGetAllRelations = vi.fn().mockResolvedValue(relations)
+      const mockGetTokens = vi.fn().mockResolvedValue(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           getAllRoutes: mockGetAllRelations,
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockGetTokens,
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -477,7 +474,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getRelationsGraph()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         nodes: [
           {
             id: 'base:0xbbb',
@@ -541,11 +538,11 @@ describe('deployedTokensRouter', () => {
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([conflict, unresolved]),
+          getAllRoutes: vi.fn().mockResolvedValue([conflict, unresolved]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByPrimaryKeys: mockFn().resolvesTo(tokens),
-          getAll: mockFn().resolvesTo([]),
+          getByPrimaryKeys: vi.fn().mockResolvedValue(tokens),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
 
@@ -555,7 +552,7 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraph()).toEqual({
+      expect(await caller.getRelationsGraph()).toStrictEqual({
         nodes: [
           {
             id: 'ethereum:0xaaa',
@@ -602,10 +599,10 @@ describe('deployedTokensRouter', () => {
       })
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([relation]),
+          getAllRoutes: vi.fn().mockResolvedValue([relation]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByPrimaryKeys: mockFn().resolvesTo([
+          getByPrimaryKeys: vi.fn().mockResolvedValue([
             deployedToken({
               chain: 'ethereum',
               address: '0xaaa',
@@ -618,7 +615,7 @@ describe('deployedTokensRouter', () => {
               symbol: 'OP',
             }),
           ]),
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
 
@@ -628,7 +625,7 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraph()).toEqual({
+      expect(await caller.getRelationsGraph()).toStrictEqual({
         nodes: [],
         relations: [],
       })
@@ -652,14 +649,14 @@ describe('deployedTokensRouter', () => {
         }),
         bridgeType: 'nonMinting' as const,
       }
-      const getTokens = mockFn().resolvesTo([])
+      const getTokens = vi.fn().mockResolvedValue([])
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([supported, unsupported]),
+          getAllRoutes: vi.fn().mockResolvedValue([supported, unsupported]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: getTokens,
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
 
@@ -669,7 +666,7 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraph()).toEqual({
+      expect(await caller.getRelationsGraph()).toStrictEqual({
         nodes: [
           {
             id: 'ethereum:0xaaa',
@@ -728,11 +725,11 @@ describe('deployedTokensRouter', () => {
       })
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([relation]),
+          getAllRoutes: vi.fn().mockResolvedValue([relation]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByPrimaryKeys: mockFn().resolvesTo(endpointTokens),
-          getAll: mockFn().resolvesTo([
+          getByPrimaryKeys: vi.fn().mockResolvedValue(endpointTokens),
+          getAll: vi.fn().mockResolvedValue([
             ...endpointTokens,
             withoutRelations,
             // A different abstract token with no endpoints — nowhere to go.
@@ -766,7 +763,7 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraph()).toEqual({
+      expect(await caller.getRelationsGraph()).toStrictEqual({
         nodes: [
           {
             id: 'base:0xbbb',
@@ -810,7 +807,7 @@ describe('deployedTokensRouter', () => {
       }
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(existingToken),
+          findByChainAndAddress: vi.fn().mockResolvedValue(existingToken),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -822,7 +819,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         error: {
           type: 'already-exists',
           message:
@@ -836,7 +833,7 @@ describe('deployedTokensRouter', () => {
     it('returns undefined error and data when address does not start with 0x', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -848,7 +845,7 @@ describe('deployedTokensRouter', () => {
         address: 'invalid-address',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         error: undefined,
         data: undefined,
         warnings: [],
@@ -858,10 +855,10 @@ describe('deployedTokensRouter', () => {
     it('returns chain-not-found error when chain does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(undefined),
+          findByName: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -873,7 +870,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         error: {
           type: 'chain-not-found',
           message: 'Chain not found.',
@@ -891,20 +888,20 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetCode = mockFn().resolvesTo('0x')
-      const mockCreateChain = mockFn().returns({
+      const mockGetCode = vi.fn().mockResolvedValue('0x')
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
           getCode: mockGetCode,
         },
       })
       const mockDb = mockObject<Database>({})
-      const mockGetCoinList = mockFn().resolvesTo([])
+      const mockGetCoinList = vi.fn().mockResolvedValue([])
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
@@ -919,7 +916,7 @@ describe('deployedTokensRouter', () => {
         address: '0x6fe981dbd557f81ff66836af0932cba535cbc343',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         error: {
           type: 'not-a-token',
           message:
@@ -943,9 +940,9 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetDecimals = mockFn().resolvesTo(18)
-      const mockGetSymbol = mockFn().resolvesTo('RPC-TKN')
-      const mockCreateChain = mockFn().returns({
+      const mockGetDecimals = vi.fn().mockResolvedValue(18)
+      const mockGetSymbol = vi.fn().mockResolvedValue('RPC-TKN')
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
           getDecimals: mockGetDecimals,
           getSymbol: mockGetSymbol,
@@ -954,19 +951,19 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'token-id',
             name: 'Token',
@@ -986,8 +983,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data).toEqual({
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data).toStrictEqual({
         symbol: 'RPC-TKN',
         symbolSource: 'rpc',
         suggestions: [],
@@ -1011,33 +1008,33 @@ describe('deployedTokensRouter', () => {
         apis: [],
       }
       const deploymentTimestamp = 1234567890
-      const mockCreateChain = mockFn().returns({
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
-          getDecimals: mockFn().resolvesTo(18),
-          getSymbol: mockFn().resolvesTo('TKN'),
+          getDecimals: vi.fn().mockResolvedValue(18),
+          getSymbol: vi.fn().mockResolvedValue('TKN'),
         },
         etherscan: {
-          getContractCreation: mockFn().resolvesTo([
-            { timestamp: deploymentTimestamp },
-          ]),
+          getContractCreation: vi
+            .fn()
+            .mockResolvedValue([{ timestamp: deploymentTimestamp }]),
         },
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'token-id',
             name: 'Token',
@@ -1057,8 +1054,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data).toEqual({
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data).toStrictEqual({
         symbol: 'TKN',
         symbolSource: 'rpc',
         suggestions: [],
@@ -1079,34 +1076,35 @@ describe('deployedTokensRouter', () => {
         apis: [],
       }
       const deploymentTimestamp = 1700000000
-      const mockCreateChain = mockFn().returns({
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
-          getDecimals: mockFn().resolvesTo(18),
-          getSymbol: mockFn().resolvesTo('TKN'),
-          getBlockNumber: mockFn().resolvesTo(100),
-          getCode: mockFn().executes(
-            async (_: string, block: 'latest' | number) =>
+          getDecimals: vi.fn().mockResolvedValue(18),
+          getSymbol: vi.fn().mockResolvedValue('TKN'),
+          getBlockNumber: vi.fn().mockResolvedValue(100),
+          getCode: vi
+            .fn()
+            .mockImplementation(async (_: string, block: 'latest' | number) =>
               block === 'latest' || block >= 50 ? '0xdead' : '0x',
-          ),
-          getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
+            ),
+          getBlockTimestamp: vi.fn().mockResolvedValue(deploymentTimestamp),
         },
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'token-id',
             name: 'Token',
@@ -1124,7 +1122,9 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
+      expect(result.data?.deploymentTimestamp).toStrictEqual(
+        deploymentTimestamp,
+      )
     })
 
     it('falls back to rpc when etherscan and blockscout throw', async () => {
@@ -1136,42 +1136,45 @@ describe('deployedTokensRouter', () => {
         apis: [],
       }
       const deploymentTimestamp = 1700000001
-      const mockCreateChain = mockFn().returns({
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
-          getDecimals: mockFn().resolvesTo(18),
-          getSymbol: mockFn().resolvesTo('TKN'),
-          getBlockNumber: mockFn().resolvesTo(100),
-          getCode: mockFn().executes(
-            async (_: string, block: 'latest' | number) =>
+          getDecimals: vi.fn().mockResolvedValue(18),
+          getSymbol: vi.fn().mockResolvedValue('TKN'),
+          getBlockNumber: vi.fn().mockResolvedValue(100),
+          getCode: vi
+            .fn()
+            .mockImplementation(async (_: string, block: 'latest' | number) =>
               block === 'latest' || block >= 50 ? '0xdead' : '0x',
-          ),
-          getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
+            ),
+          getBlockTimestamp: vi.fn().mockResolvedValue(deploymentTimestamp),
         },
         etherscan: {
-          getContractCreation: mockFn().rejectsWith(new Error('etherscan 500')),
+          getContractCreation: vi
+            .fn()
+            .mockRejectedValue(new Error('etherscan 500')),
         },
         blockscout: {
-          getContractCreation: mockFn().rejectsWith(
-            new Error('blockscout 500'),
-          ),
+          getContractCreation: vi
+            .fn()
+            .mockRejectedValue(new Error('blockscout 500')),
         },
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'token-id',
             name: 'Token',
@@ -1189,7 +1192,9 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
+      expect(result.data?.deploymentTimestamp).toStrictEqual(
+        deploymentTimestamp,
+      )
     })
 
     it('includes rpc symbol and decimals in not-found-on-coingecko response', async () => {
@@ -1200,9 +1205,9 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetDecimals = mockFn().resolvesTo(6)
-      const mockGetSymbol = mockFn().resolvesTo('USDC-RPC')
-      const mockCreateChain = mockFn().returns({
+      const mockGetDecimals = vi.fn().mockResolvedValue(6)
+      const mockGetSymbol = vi.fn().mockResolvedValue('USDC-RPC')
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
           getDecimals: mockGetDecimals,
           getSymbol: mockGetSymbol,
@@ -1211,18 +1216,18 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([]),
+        getCoinList: vi.fn().mockResolvedValue([]),
       })
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
@@ -1233,11 +1238,11 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual({
+      expect(result.error).toStrictEqual({
         type: 'not-found-on-coingecko',
         message: 'Coin not found on Coingecko.',
       })
-      expect(result.data).toEqual({
+      expect(result.data).toStrictEqual({
         symbol: 'USDC-RPC',
         symbolSource: 'rpc',
         suggestions: undefined,
@@ -1263,11 +1268,11 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'ethereum',
@@ -1279,7 +1284,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([]),
+        getCoinList: vi.fn().mockResolvedValue([]),
       })
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1288,11 +1293,11 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual({
+      expect(result.error).toStrictEqual({
         type: 'not-found-on-coingecko',
         message: 'Coin not found on Coingecko.',
       })
-      expect(result.data).toEqual({
+      expect(result.data).toStrictEqual({
         symbol: undefined,
         symbolSource: undefined,
         suggestions: undefined,
@@ -1313,7 +1318,7 @@ describe('deployedTokensRouter', () => {
         apis: [],
       }
       const targetAddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-      const mockGetWithPartialAbstractTokenIds = mockFn().resolvesTo([
+      const mockGetWithPartialAbstractTokenIds = vi.fn().mockResolvedValue([
         {
           plugin: 'test-plugin',
           bridgeType: undefined,
@@ -1360,11 +1365,11 @@ describe('deployedTokensRouter', () => {
       })
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             chainRecord,
             {
               id: 2,
@@ -1376,7 +1381,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 'abstract-usdc',
               symbol: 'USDC',
@@ -1394,7 +1399,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([]),
+        getCoinList: vi.fn().mockResolvedValue([]),
       })
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1403,7 +1408,7 @@ describe('deployedTokensRouter', () => {
         address: targetAddress,
       })
 
-      expect(result.data?.abstractTokenSuggestions).toEqual([
+      expect(result.data?.abstractTokenSuggestions).toStrictEqual([
         {
           id: 'abstract-usdc',
           symbol: 'USDC',
@@ -1424,7 +1429,7 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetAll = mockFn().resolvesTo([
+      const mockGetAll = vi.fn().mockResolvedValue([
         {
           id: 'abc123',
           symbol: 'USDC',
@@ -1439,27 +1444,27 @@ describe('deployedTokensRouter', () => {
           isPriceUnreliable: false,
         },
       ])
-      const mockCreateChain = mockFn().returns({
+      const mockCreateChain = vi.fn().mockReturnValue({
         rpc: {
-          getDecimals: mockFn().resolvesTo(18),
-          getSymbol: mockFn().resolvesTo('USDC'),
+          getDecimals: vi.fn().mockResolvedValue(18),
+          getSymbol: vi.fn().mockResolvedValue('USDC'),
         },
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAll,
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([]),
+        getCoinList: vi.fn().mockResolvedValue([]),
       })
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
@@ -1470,7 +1475,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.abstractTokenSuggestions).toEqual([])
+      expect(result.data?.abstractTokenSuggestions).toStrictEqual([])
       expect(mockGetAll).toHaveBeenCalledTimes(0)
     })
 
@@ -1482,22 +1487,22 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetAll = mockFn().resolvesTo([])
+      const mockGetAll = vi.fn().mockResolvedValue([])
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAll,
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([]),
+        getCoinList: vi.fn().mockResolvedValue([]),
       })
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1506,7 +1511,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.abstractTokenSuggestions).toEqual([])
+      expect(result.data?.abstractTokenSuggestions).toStrictEqual([])
       expect(mockGetAll).toHaveBeenCalledTimes(0)
     })
 
@@ -1521,7 +1526,7 @@ describe('deployedTokensRouter', () => {
       const targetAddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIdsForToken: mockFn().resolvesTo([
+          getWithPartialAbstractTokenIdsForToken: vi.fn().mockResolvedValue([
             {
               plugin: 'test-plugin',
               bridgeType: undefined,
@@ -1564,16 +1569,16 @@ describe('deployedTokensRouter', () => {
       })
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
-          getAll: mockFn().resolvesTo([
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 'abstract-usdc',
               symbol: 'USDC',
@@ -1591,7 +1596,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1609,8 +1614,8 @@ describe('deployedTokensRouter', () => {
         address: targetAddress,
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.abstractTokenSuggestions).toEqual([
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data?.abstractTokenSuggestions).toStrictEqual([
         {
           id: 'abstract-usdc',
           symbol: 'USDC',
@@ -1630,12 +1635,12 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'ethereum',
@@ -1646,7 +1651,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo({
+          findByCoingeckoId: vi.fn().mockResolvedValue({
             id: '1',
             coingeckoId: 'usd-coin',
             symbol: 'USDC',
@@ -1657,7 +1662,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1676,8 +1681,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data).toEqual({
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data).toStrictEqual({
         symbol: 'USDC',
         symbolSource: 'coingecko',
         decimals: undefined,
@@ -1700,19 +1705,19 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([chainRecord]),
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([chainRecord]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1730,9 +1735,9 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
-      expect(result.warnings).toEqual([
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data?.symbol).toStrictEqual('USDC')
+      expect(result.warnings).toStrictEqual([
         {
           field: 'decimals',
           message:
@@ -1761,12 +1766,12 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'ethereum',
@@ -1777,11 +1782,11 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1799,8 +1804,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data?.symbol).toStrictEqual('USDC')
     })
 
     it('returns otherChains information', async () => {
@@ -1811,31 +1816,33 @@ describe('deployedTokensRouter', () => {
         aliases: ['eth'],
         apis: [],
       }
+      // Arbitrum is the only chain this token is already deployed on; every
+      // other lookup misses.
+      const arbitrumUsdc = {
+        chain: 'arbitrum',
+        address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+        symbol: 'USDC',
+        decimals: 6,
+        comment: null,
+        ignored: false,
+        abstractTokenId: null,
+        deploymentTimestamp: 0,
+        metadata: null,
+      } satisfies DeployedTokenRecord
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn()
-            .resolvesTo(undefined)
-            .given({
-              chain: 'arbitrum',
-              address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-            })
-            .resolvesToOnce({
-              id: 2,
-              chain: 'arbitrum',
-              address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-              symbol: 'USDC',
-              decimals: 6,
-              comment: null,
-              ignored: false,
-              abstractTokenId: null,
-              deploymentTimestamp: 0,
-            }),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn(async (pk) =>
+            pk.chain === arbitrumUsdc.chain &&
+            pk.address === arbitrumUsdc.address
+              ? arbitrumUsdc
+              : undefined,
+          ),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'ethereum',
@@ -1853,11 +1860,11 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1876,8 +1883,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.suggestions).toEqual([
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data?.suggestions).toStrictEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
@@ -1896,12 +1903,12 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(undefined),
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFn().resolvesTo(chainRecord),
-          getAll: mockFn().resolvesTo([
+          findByName: vi.fn().mockResolvedValue(chainRecord),
+          getAll: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'ethereum',
@@ -1912,11 +1919,11 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findByCoingeckoId: mockFn().resolvesTo(undefined),
+          findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'USDC',
@@ -1934,8 +1941,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.error).toStrictEqual(undefined)
+      expect(result.data?.symbol).toStrictEqual('USDC')
     })
   })
 
@@ -1943,14 +1950,14 @@ describe('deployedTokensRouter', () => {
     it('returns empty array when coin is not found', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo(null),
+        getCoinDataById: vi.fn().mockResolvedValue(null),
       })
       const mockDb = mockObject<Database>({})
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result =
         await caller.getSuggestionsByCoingeckoId('nonexistent-coin')
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns suggestions for platforms that do not have deployed tokens', async () => {
@@ -1992,14 +1999,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue(deployedTokens),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2069,14 +2076,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue(deployedTokens),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2089,7 +2096,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('filters out platforms with empty address', async () => {
@@ -2105,14 +2112,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2125,7 +2132,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2147,14 +2154,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2167,7 +2174,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2189,14 +2196,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo([]),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2208,7 +2215,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2249,14 +2256,14 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo(chains),
+          getAll: vi.fn().mockResolvedValue(chains),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
+          getByChainsAndAddresses: vi.fn().mockResolvedValue(deployedTokens),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinDataById: mockFn().resolvesTo({
+        getCoinDataById: vi.fn().mockResolvedValue({
           id: 'usd-coin',
           image: { large: 'https://example.com/image.png' },
           platforms: {
@@ -2269,7 +2276,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
@@ -2340,20 +2347,20 @@ describe('deployedTokensRouter', () => {
     const mockTokenDbForSuggestions = (abstractTokens: AbstractTokenRecord[]) =>
       mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo(abstractTokens),
+          getAll: vi.fn().mockResolvedValue(abstractTokens),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
 
     it('returns empty array when no partial transfers exist', async () => {
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
+          getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([])
@@ -2362,7 +2369,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns suggestion for src side when srcAbstractTokenId is missing', async () => {
@@ -2375,7 +2382,7 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+          getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([transfer]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2384,7 +2391,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2416,7 +2423,7 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+          getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([transfer]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2425,7 +2432,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
@@ -2469,10 +2476,9 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
-            transfer1,
-            transfer2,
-          ]),
+          getWithPartialAbstractTokenIds: vi
+            .fn()
+            .mockResolvedValue([transfer1, transfer2]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2481,7 +2487,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2523,7 +2529,7 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+          getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([transfer]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2532,7 +2538,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('excludes suggestions for chain/address that already has deployed token', async () => {
@@ -2545,15 +2551,15 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+          getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([transfer]),
         }),
       })
       const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([ABSTRACT_USDC]),
+          getAll: vi.fn().mockResolvedValue([ABSTRACT_USDC]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getAll: mockFn().resolvesTo([
+          getAll: vi.fn().mockResolvedValue([
             {
               chain: 'ethereum',
               address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2561,7 +2567,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
+          getAll: vi.fn().mockResolvedValue([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
@@ -2569,7 +2575,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('excludes nonMinting and unknown transfers from suggestions', async () => {
@@ -2582,9 +2588,9 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
-            nonMintingTransfer,
-          ]),
+          getWithPartialAbstractTokenIds: vi
+            .fn()
+            .mockResolvedValue([nonMintingTransfer]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2593,7 +2599,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns suggestions from both lockAndMint and burnAndMint transfers', async () => {
@@ -2621,10 +2627,9 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
-          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
-            lockAndMintTransfer,
-            burnAndMintTransfer,
-          ]),
+          getWithPartialAbstractTokenIds: vi
+            .fn()
+            .mockResolvedValue([lockAndMintTransfer, burnAndMintTransfer]),
         }),
       })
       const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
@@ -2633,7 +2638,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2693,7 +2698,7 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([
+          getAll: vi.fn().mockResolvedValue([
             usdc,
             {
               id: 'abstract-missing',
@@ -2724,7 +2729,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([
+          getAll: vi.fn().mockResolvedValue([
             {
               name: 'ethereum',
               chainId: 1,
@@ -2749,13 +2754,13 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getAll: mockFn().resolvesTo([
-            { chain: 'arbitrum', address: '0x222' },
-          ]),
+          getAll: vi
+            .fn()
+            .mockResolvedValue([{ chain: 'arbitrum', address: '0x222' }]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
-        getCoinList: mockFn().resolvesTo([
+        getCoinList: vi.fn().mockResolvedValue([
           {
             id: 'usd-coin',
             symbol: 'usdc',
@@ -2772,7 +2777,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getCoingeckoSuggestions()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           chain: 'ethereum',
           address: '0x111',
@@ -2852,8 +2857,8 @@ function createRouter(
     interopTransfer:
       mockInteropTransfer ??
       mockObject<Database['interopTransfer']>({
-        getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
-        getWithPartialAbstractTokenIdsForToken: mockFn().resolvesTo([]),
+        getWithPartialAbstractTokenIds: vi.fn().mockResolvedValue([]),
+        getWithPartialAbstractTokenIdsForToken: vi.fn().mockResolvedValue([]),
       }),
   } satisfies Partial<Database>
   const db = mockObject<Database>(dbShape)

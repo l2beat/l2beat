@@ -4,7 +4,8 @@ import type {
   TokenDbHistoryEntryRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
 import { tokenDbHistoryRouter } from './index'
@@ -23,7 +24,7 @@ describe('tokenDbHistoryRouter', () => {
         ingestionLog: null,
       }
       const page = { entries: [entry], totalCount: 12 }
-      const getPage = mockFn().resolvesTo(page)
+      const getPage = vi.fn().mockResolvedValue(page)
 
       const caller = createCallerFactory(tokenDbHistoryRouter)({
         db: mockObject<Database>({}),
@@ -42,7 +43,7 @@ describe('tokenDbHistoryRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result).toEqual(page)
+      expect(result).toStrictEqual(page)
       expect(getPage).toHaveBeenCalledWith({
         offset: 5,
         limit: 5,

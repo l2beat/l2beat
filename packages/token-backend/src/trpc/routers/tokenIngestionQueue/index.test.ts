@@ -4,8 +4,9 @@ import type {
   TokenIngestionQueueRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
+import { mockObject } from '@l2beat/test-utils'
 import { TRPCError } from '@trpc/server'
-import { expect, mockFn, mockObject } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { DeployedTokenRecord } from '../../../schemas/DeployedToken'
 import { createCallerFactory } from '../../trpc'
@@ -18,7 +19,7 @@ describe('tokenIngestionQueueRouter', () => {
         queueEntry({ chain: 'ethereum', address: '0x111', state: 'staged' }),
         queueEntry({ chain: 'base', address: '0x222', state: 'conflict' }),
       ]
-      const getAll = mockFn().resolvesTo(entries)
+      const getAll = vi.fn().mockResolvedValue(entries)
 
       const caller = createRouter(
         mockObject<TokenDatabase>({
@@ -32,7 +33,7 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getAll()
 
-      expect(result).toEqual(entries)
+      expect(result).toStrictEqual(entries)
       expect(getAll).toHaveBeenCalledWith()
     })
   })
@@ -62,10 +63,10 @@ describe('tokenIngestionQueueRouter', () => {
         entries: [symbolConflictEntry, newEntry, transferConflictEntry],
         totalCount: 12,
       }
-      const getPage = mockFn().resolvesTo(page)
+      const getPage = vi.fn().mockResolvedValue(page)
       const deployedToken = mockObject<DeployedTokenRecord>({})
-      const transferIndex = { findInvolving: mockFn().returns([]) }
-      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const transferIndex = { findInvolving: vi.fn().mockReturnValue([]) }
+      const getInteropTransferIndex = vi.fn().mockResolvedValue(transferIndex)
       // A CoinGecko-symbol conflict only fires while the plan wants to build
       // a new abstract token from CoinGecko — the flag is derived from that.
       const symbolConflictPlanOutcome = {
@@ -81,8 +82,9 @@ describe('tokenIngestionQueueRouter', () => {
         neighborsToEnqueue: [],
         proof: { kind: 'coingecko' as const },
       }
-      const plan = mockFn()
-        .resolvesToOnce({
+      const plan = vi
+        .fn()
+        .mockResolvedValueOnce({
           address: {
             chain: symbolConflictEntry.chain,
             address: symbolConflictEntry.address,
@@ -91,13 +93,13 @@ describe('tokenIngestionQueueRouter', () => {
           steps: [],
           outcome: symbolConflictPlanOutcome,
         })
-        .resolvesToOnce({
+        .mockResolvedValueOnce({
           address: { chain: newEntry.chain, address: newEntry.address },
           existingDeployedToken: undefined,
           steps: [],
           outcome: { kind: 'noop', deployedToken },
         })
-        .resolvesToOnce({
+        .mockResolvedValueOnce({
           address: {
             chain: transferConflictEntry.chain,
             address: transferConflictEntry.address,
@@ -123,13 +125,13 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result.totalCount).toEqual(12)
-      expect(result.rows).toEqual([
+      expect(result.totalCount).toStrictEqual(12)
+      expect(result.rows).toStrictEqual([
         {
           entry: symbolConflictEntry,
           predictedOutcome: {
             ...symbolConflictPlanOutcome,
-            description: expect.a(String),
+            description: expect.any(String),
           },
           deployedTokenExists: true,
           resolvableSymbolConflict: true,
@@ -139,7 +141,7 @@ describe('tokenIngestionQueueRouter', () => {
           predictedOutcome: {
             kind: 'noop',
             deployedToken,
-            description: expect.a(String),
+            description: expect.any(String),
           },
           deployedTokenExists: false,
           resolvableSymbolConflict: false,
@@ -149,7 +151,7 @@ describe('tokenIngestionQueueRouter', () => {
           predictedOutcome: {
             kind: 'conflict',
             message: 'test conflict',
-            description: expect.a(String),
+            description: expect.any(String),
           },
           deployedTokenExists: true,
           resolvableSymbolConflict: false,
@@ -179,8 +181,8 @@ describe('tokenIngestionQueueRouter', () => {
   describe('preview', () => {
     it('uses the cached interop transfer index with plan and fetch', async () => {
       const input = { chain: 'ethereum', address: '0x111' }
-      const transferIndex = { findInvolving: mockFn().returns([]) }
-      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const transferIndex = { findInvolving: vi.fn().mockReturnValue([]) }
+      const getInteropTransferIndex = vi.fn().mockResolvedValue(transferIndex)
       const trace = {
         id: 'ing_test',
         address: input,
@@ -188,8 +190,8 @@ describe('tokenIngestionQueueRouter', () => {
         steps: [],
         outcome: { kind: 'skip' as const, reason: 'test' },
       }
-      const plan = mockFn().resolvesTo(trace)
-      const fetch = mockFn().resolvesTo(trace)
+      const plan = vi.fn().mockResolvedValue(trace)
+      const fetch = vi.fn().mockResolvedValue(trace)
 
       const caller = createRouter({
         tokenDb: mockObject<TokenDatabase>({}),
@@ -202,21 +204,21 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.preview(input)
 
-      expect(result.outcome).toHaveSubset({
+      expect(result.outcome).toMatchObject({
         kind: 'skip',
         reason: 'test',
-        description: expect.a(String),
+        description: expect.any(String),
       })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
-      expect(plan.calls[0]?.args[0]).toHaveSubset(input)
-      expect(plan.calls[0]?.args[1]).toEqual(transferIndex)
+      expect(plan.mock.calls[0][0]).toMatchObject(input)
+      expect(plan.mock.calls[0][1]).toStrictEqual(transferIndex)
       expect(fetch).toHaveBeenCalledWith(trace)
     })
   })
 
   describe('approve', () => {
     it('approves a staged entry', async () => {
-      const approve = mockFn().resolvesTo(1)
+      const approve = vi.fn().mockResolvedValue(1)
       const caller = createRouter(
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
@@ -230,7 +232,7 @@ describe('tokenIngestionQueueRouter', () => {
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.approve(input)
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
       expect(approve).toHaveBeenCalledWith(input)
     })
 
@@ -239,7 +241,7 @@ describe('tokenIngestionQueueRouter', () => {
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              approve: mockFn().resolvesTo(0),
+              approve: vi.fn().mockResolvedValue(0),
             },
           ),
         }),
@@ -247,13 +249,13 @@ describe('tokenIngestionQueueRouter', () => {
 
       await expect(
         caller.approve({ chain: 'ethereum', address: '0x111' }),
-      ).toBeRejectedWith(TRPCError)
+      ).rejects.toThrow(TRPCError)
     })
   })
 
   describe('approveMany', () => {
     it('approves supplied staged entries and returns the count', async () => {
-      const approve = mockFn().resolvesToOnce(1).resolvesToOnce(0)
+      const approve = vi.fn().mockResolvedValueOnce(1).mockResolvedValueOnce(0)
       const caller = createRouter(
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
@@ -268,16 +270,16 @@ describe('tokenIngestionQueueRouter', () => {
       const second = { chain: 'base', address: '0x222' }
       const result = await caller.approveMany([first, second])
 
-      expect(result).toEqual({ success: true, approved: 1 })
+      expect(result).toStrictEqual({ success: true, approved: 1 })
       expect(approve).toHaveBeenCalledTimes(2)
-      expect(approve.calls[0]?.args[0]).toEqual(first)
-      expect(approve.calls[1]?.args[0]).toEqual(second)
+      expect(approve.mock.calls[0][0]).toStrictEqual(first)
+      expect(approve.mock.calls[1][0]).toStrictEqual(second)
     })
   })
 
   describe('retry', () => {
     it('retries a conflict or error entry', async () => {
-      const retry = mockFn().resolvesTo(1)
+      const retry = vi.fn().mockResolvedValue(1)
       const caller = createRouter(
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
@@ -291,7 +293,7 @@ describe('tokenIngestionQueueRouter', () => {
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.retry(input)
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
       expect(retry).toHaveBeenCalledWith(input)
     })
 
@@ -300,7 +302,7 @@ describe('tokenIngestionQueueRouter', () => {
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
             {
-              retry: mockFn().resolvesTo(0),
+              retry: vi.fn().mockResolvedValue(0),
             },
           ),
         }),
@@ -308,13 +310,13 @@ describe('tokenIngestionQueueRouter', () => {
 
       await expect(
         caller.retry({ chain: 'ethereum', address: '0x111' }),
-      ).toBeRejectedWith(TRPCError)
+      ).rejects.toThrow(TRPCError)
     })
   })
 
   describe('retryMany', () => {
     it('retries supplied entries and returns the count', async () => {
-      const retry = mockFn().resolvesToOnce(1).resolvesToOnce(0)
+      const retry = vi.fn().mockResolvedValueOnce(1).mockResolvedValueOnce(0)
       const caller = createRouter(
         mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
@@ -329,10 +331,10 @@ describe('tokenIngestionQueueRouter', () => {
       const second = { chain: 'base', address: '0x222' }
       const result = await caller.retryMany([first, second])
 
-      expect(result).toEqual({ success: true, retried: 1 })
+      expect(result).toStrictEqual({ success: true, retried: 1 })
       expect(retry).toHaveBeenCalledTimes(2)
-      expect(retry.calls[0]?.args[0]).toEqual(first)
-      expect(retry.calls[1]?.args[0]).toEqual(second)
+      expect(retry.mock.calls[0][0]).toStrictEqual(first)
+      expect(retry.mock.calls[1][0]).toStrictEqual(second)
     })
   })
 })

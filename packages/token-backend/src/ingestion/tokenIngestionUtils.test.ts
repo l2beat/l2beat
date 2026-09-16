@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   buildInteropTransferIndex,
   type InteropTransferMatch,
@@ -31,7 +31,7 @@ describe(buildInteropTransferIndex.name, () => {
       address: srcToken,
     })
 
-    expect(matches).toEqual([
+    expect(matches).toStrictEqual([
       {
         plugin: 'cctp',
         bridgeType: 'burnAndMint',
@@ -59,7 +59,7 @@ describe(summarizeTransferPlugins.name, () => {
 
     expect(
       summary.map(({ plugin, transferCount }) => ({ plugin, transferCount })),
-    ).toEqual([
+    ).toStrictEqual([
       { plugin: 'cctp', transferCount: 5 },
       { plugin: 'across', transferCount: 1 },
       { plugin: 'oft', transferCount: 1 },
@@ -82,7 +82,7 @@ describe(summarizeTransferPlugins.name, () => {
       }),
     ])
 
-    expect(summary).toEqual([
+    expect(summary).toStrictEqual([
       {
         plugin: 'cctp',
         transferCount: 11,
@@ -119,12 +119,12 @@ describe(summarizeTransferPlugins.name, () => {
       },
     ]
 
-    expect(summarizeTransferPlugins([fullyHashed, busierPartial])).toEqual(
-      expected,
-    )
-    expect(summarizeTransferPlugins([busierPartial, fullyHashed])).toEqual(
-      expected,
-    )
+    expect(
+      summarizeTransferPlugins([fullyHashed, busierPartial]),
+    ).toStrictEqual(expected)
+    expect(
+      summarizeTransferPlugins([busierPartial, fullyHashed]),
+    ).toStrictEqual(expected)
   })
 
   it('prefers the busiest route among samples with tx hashes', () => {
@@ -143,7 +143,7 @@ describe(summarizeTransferPlugins.name, () => {
       }),
     ])
 
-    expect(summary).toEqual([
+    expect(summary).toStrictEqual([
       {
         plugin: 'cctp',
         transferCount: 11,
