@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { formatEcsLog } from './formatEcsLog'
 
 describe(formatEcsLog.name, () => {
@@ -11,7 +11,7 @@ describe(formatEcsLog.name, () => {
         module: 'module',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -34,7 +34,7 @@ describe(formatEcsLog.name, () => {
         feature: 'feature',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -57,7 +57,7 @@ describe(formatEcsLog.name, () => {
         source: 'source',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -81,7 +81,7 @@ describe(formatEcsLog.name, () => {
         module: 'module',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -108,7 +108,7 @@ describe(formatEcsLog.name, () => {
         project: 'project',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -134,7 +134,7 @@ describe(formatEcsLog.name, () => {
         chain: 'chain',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -158,7 +158,7 @@ describe(formatEcsLog.name, () => {
         foo: 'bar',
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },
@@ -185,7 +185,7 @@ describe(formatEcsLog.name, () => {
         },
       },
     })
-    expect(message).toEqual(
+    expect(message).toStrictEqual(
       JSON.stringify({
         '@timestamp': '1970-01-01T00:00:00.000Z',
         log: { level: 'INFO' },

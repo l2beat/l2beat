@@ -1,10 +1,10 @@
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import { Logger } from './Logger'
 import type { LoggerTransport } from './types'
 
 class TestTransport implements LoggerTransport {
-  log = mockFn<LoggerTransport['log']>().returns()
-  flush = mockFn<LoggerTransport['flush']>().returns()
+  log = vi.fn<LoggerTransport['log']>().mockReturnValue()
+  flush = vi.fn<LoggerTransport['flush']>().mockReturnValue()
 }
 
 describe(Logger.name, () => {
@@ -22,9 +22,9 @@ describe(Logger.name, () => {
   describe('configuration', () => {
     it('can be reconfigured', () => {
       let logger = new Logger({ level: 'INFO' })
-      expect(logger.options.level).toEqual('INFO')
+      expect(logger.options.level).toStrictEqual('INFO')
       logger = logger.configure({ level: 'ERROR' })
-      expect(logger.options.level).toEqual('ERROR')
+      expect(logger.options.level).toStrictEqual('ERROR')
     })
 
     it('supports tags', () => {
@@ -69,18 +69,18 @@ describe(Logger.name, () => {
 
     it('for string', () => {
       const logger = Logger.INFO.for('FooService')
-      expect(logger.tags).toEqual({ service: 'FooService' })
+      expect(logger.tags).toStrictEqual({ service: 'FooService' })
     })
 
     it('for class instance', () => {
       const fooService = new (class FooService {})()
       const logger = Logger.INFO.for(fooService)
-      expect(logger.tags).toEqual({ service: 'FooService' })
+      expect(logger.tags).toStrictEqual({ service: 'FooService' })
     })
 
     it('for member', () => {
       const logger = Logger.INFO.for('FooService').for('queue')
-      expect(logger.tags).toEqual({ service: 'FooService.queue' })
+      expect(logger.tags).toStrictEqual({ service: 'FooService.queue' })
     })
 
     it('filter', () => {
@@ -224,7 +224,7 @@ describe(Logger.name, () => {
             name: 'Error',
             error: 'Oops',
             cause: undefined,
-            stack: expect.a(Array),
+            stack: expect.any(Array),
           },
         },
       })
@@ -244,7 +244,7 @@ describe(Logger.name, () => {
             name: 'Error',
             error: 'Oops',
             cause: undefined,
-            stack: expect.a(Array),
+            stack: expect.any(Array),
           },
         },
       })
@@ -265,7 +265,7 @@ describe(Logger.name, () => {
             name: 'Error',
             error: 'Oops',
             cause: inner,
-            stack: expect.a(Array),
+            stack: expect.any(Array),
           },
         },
       })

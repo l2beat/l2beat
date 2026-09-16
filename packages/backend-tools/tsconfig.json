@@ -1,9 +1,10 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "types": ["node", "mocha"],
+    "types": ["node", "@l2beat/test-utils"],
     "outDir": "dist",
     "rootDir": "./src"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["vitest.config.ts"]
 }

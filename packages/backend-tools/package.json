@@ -36,7 +36,7 @@
     "!dist/test"
   ],
   "scripts": {
-    "test": "mocha",
+    "test": "vitest run",
     "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc",
     "start": "tsx src/index.ts",
@@ -56,6 +56,8 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

@@ -1,5 +1,4 @@
-import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 
 import { DEFAULT_RATE_LIMITER_LABEL, RateLimiter } from './RateLimiter'
 
@@ -27,7 +26,10 @@ describe(RateLimiter.name, () => {
 
   for (const { name, callsPerMinute, tick, expectedCount } of cases) {
     it(`enforces rate limits over ${name}`, () => {
-      const clock = FakeTimers.install()
+      // The counts above are the ones a limiter starting at the epoch
+      // produces: at time 0 the first call waits instead of dispatching.
+      vi.useFakeTimers()
+      vi.setSystemTime(0)
 
       let count = 0
       const rateLimiter = new RateLimiter({ callsPerMinute })
@@ -37,11 +39,11 @@ describe(RateLimiter.name, () => {
         })
       }
 
-      clock.tick(tick)
-      clock.uninstall()
+      vi.advanceTimersByTime(tick)
+      vi.useRealTimers()
       rateLimiter.clear()
 
-      expect(count).toEqual(expectedCount)
+      expect(count).toStrictEqual(expectedCount)
     })
   }
 
@@ -52,14 +54,15 @@ describe(RateLimiter.name, () => {
     }
     const promiseA = rateLimiter.call(fn)
     const promiseB = rateLimiter.call(fn)
-    await expect(promiseA).toBeRejectedWith('oops')
-    await expect(promiseB).toBeRejectedWith('oops')
+    await expect(promiseA).rejects.toThrow('oops')
+    await expect(promiseB).rejects.toThrow('oops')
   })
 
   describe(RateLimiter.prototype.takeStats.name, () => {
     it('tracks wait, queue depth and dispatch per label', () => {
       // a non-zero start time lets the first call dispatch immediately
-      const clock = FakeTimers.install({ now: 10_000 })
+      vi.useFakeTimers()
+      vi.setSystemTime(10_000)
       // 1 call per second
       const rateLimiter = new RateLimiter({ callsPerMinute: 60 })
 
@@ -70,16 +73,16 @@ describe(RateLimiter.name, () => {
         void rateLimiter.call(() => 3, 'a')
         void rateLimiter.call(() => 4, 'b')
 
-        expect(rateLimiter.queueLength).toEqual(3)
+        expect(rateLimiter.queueLength).toStrictEqual(3)
 
-        clock.tick(3_000)
+        vi.advanceTimersByTime(3_000)
         stats = rateLimiter.takeStats()
       } finally {
-        clock.uninstall()
+        vi.useRealTimers()
       }
 
-      expect(stats.queueLength).toEqual(0)
-      expect(stats.labels).toEqual({
+      expect(stats.queueLength).toStrictEqual(0)
+      expect(stats.labels).toStrictEqual({
         a: {
           enqueued: 3,
           dispatched: 3,
@@ -103,8 +106,8 @@ describe(RateLimiter.name, () => {
       const rateLimiter = new RateLimiter({ callsPerMinute: 100_000 })
       void rateLimiter.call(() => 1, 'a')
 
-      expect(rateLimiter.takeStats().labels.a?.dispatched).toEqual(1)
-      expect(rateLimiter.takeStats().labels).toEqual({})
+      expect(rateLimiter.takeStats().labels.a?.dispatched).toStrictEqual(1)
+      expect(rateLimiter.takeStats().labels).toStrictEqual({})
     })
 
     it('uses a default label', () => {
@@ -112,7 +115,9 @@ describe(RateLimiter.name, () => {
       void rateLimiter.call(() => 1)
 
       const stats = rateLimiter.takeStats()
-      expect(Object.keys(stats.labels)).toEqual([DEFAULT_RATE_LIMITER_LABEL])
+      expect(Object.keys(stats.labels)).toStrictEqual([
+        DEFAULT_RATE_LIMITER_LABEL,
+      ])
     })
 
     it('tracks in-flight calls', async () => {
@@ -128,8 +133,8 @@ describe(RateLimiter.name, () => {
       await new Promise((resolve) => setTimeout(resolve, 5))
 
       const before = rateLimiter.takeStats()
-      expect(before.inFlight).toEqual(2)
-      expect(before.inFlightMax).toEqual(2)
+      expect(before.inFlight).toStrictEqual(2)
+      expect(before.inFlightMax).toStrictEqual(2)
 
       release()
       await Promise.all([promiseA, promiseB])
@@ -137,10 +142,10 @@ describe(RateLimiter.name, () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
 
       const after = rateLimiter.takeStats()
-      expect(after.inFlight).toEqual(0)
+      expect(after.inFlight).toStrictEqual(0)
       // the max is reset to the in-flight count at the previous snapshot
-      expect(after.inFlightMax).toEqual(2)
-      expect(rateLimiter.takeStats().inFlightMax).toEqual(0)
+      expect(after.inFlightMax).toStrictEqual(2)
+      expect(rateLimiter.takeStats().inFlightMax).toStrictEqual(0)
     })
   })
 })
