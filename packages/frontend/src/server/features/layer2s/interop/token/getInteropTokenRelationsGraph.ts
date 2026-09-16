@@ -1,5 +1,8 @@
 import type { Project } from '@l2beat/config'
-import type { InteropTransferDeployedTokenPairStats } from '@l2beat/database'
+import type {
+  InteropTransferDeployedTokenPairStats,
+  TokenRelationRoute,
+} from '@l2beat/database'
 import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
@@ -14,7 +17,13 @@ import {
   type TokenRelationsGraphSource,
 } from './buildTokenRelationsGraph'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
-import type { InteropTokenRelations } from './getInteropTokenRelations'
+
+export interface InteropTokenRelations {
+  /** Relations with both endpoints among the token's deployments. */
+  routes: TokenRelationRoute[]
+  /** Past 24h up to the aggregated snapshot; undefined without a snapshot. */
+  pairStats: InteropTransferDeployedTokenPairStats[] | undefined
+}
 
 export interface InteropTokenStats {
   volume: number | null
