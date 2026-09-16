@@ -1,32 +1,32 @@
 import { parse, stringify } from 'comment-json'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { clone } from './cloneWithComments'
 
 describe('clone', () => {
   describe('primitives and null/undefined', () => {
     it('clones null', () => {
       const result = clone(null)
-      expect(result).toEqual(null)
+      expect(result).toStrictEqual(null)
     })
 
     it('clones undefined', () => {
       const result = clone(undefined)
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('clones string', () => {
       const result = clone('hello')
-      expect(result).toEqual('hello')
+      expect(result).toStrictEqual('hello')
     })
 
     it('clones number', () => {
       const result = clone(42)
-      expect(result).toEqual(42)
+      expect(result).toStrictEqual(42)
     })
 
     it('clones boolean', () => {
-      expect(clone(true)).toEqual(true)
-      expect(clone(false)).toEqual(false)
+      expect(clone(true)).toStrictEqual(true)
+      expect(clone(false)).toStrictEqual(false)
     })
   })
 
@@ -35,9 +35,9 @@ describe('clone', () => {
       const obj = { a: 1, b: 'test', c: true }
       const cloned = clone(obj)
 
-      expect(cloned).toEqual(obj)
+      expect(cloned).toStrictEqual(obj)
       // Verify it's a different reference (deep clone)
-      expect(cloned !== obj).toEqual(true)
+      expect(cloned !== obj).toStrictEqual(true)
     })
 
     it('clones object with top-level comments', () => {
@@ -49,9 +49,9 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('comment A')
-      expect(text).toInclude('"key"')
-      expect(text).toInclude('"value"')
+      expect(text).toContain('comment A')
+      expect(text).toContain('"key"')
+      expect(text).toContain('"value"')
     })
 
     it('clones object with inline comments', () => {
@@ -63,8 +63,8 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('inline comment')
-      expect(text).toInclude('block comment')
+      expect(text).toContain('inline comment')
+      expect(text).toContain('block comment')
     })
   })
 
@@ -74,9 +74,9 @@ describe('clone', () => {
       const cloned = clone(arr)
 
       // CommentArray has same elements
-      expect(Array.from(cloned as unknown[])).toEqual(arr)
+      expect(Array.from(cloned as unknown[])).toStrictEqual(arr)
       // Verify it's a different reference (deep clone)
-      expect(cloned !== arr).toEqual(true)
+      expect(cloned !== arr).toStrictEqual(true)
     })
 
     it('clones array with comments', () => {
@@ -89,10 +89,10 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('Comment before first element')
-      expect(text).toInclude('Comment after second element')
-      expect(text).toInclude('"item1"')
-      expect(text).toInclude('"item2"')
+      expect(text).toContain('Comment before first element')
+      expect(text).toContain('Comment after second element')
+      expect(text).toContain('"item1"')
+      expect(text).toContain('"item2"')
     })
 
     it('clones array with block comments', () => {
@@ -105,7 +105,7 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('block comment here')
+      expect(text).toContain('block comment here')
     })
   })
 
@@ -122,10 +122,10 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('Top level comment')
-      expect(text).toInclude('Nested comment')
-      expect(text).toInclude('"inner"')
-      expect(text).toInclude('"value"')
+      expect(text).toContain('Top level comment')
+      expect(text).toContain('Nested comment')
+      expect(text).toContain('"inner"')
+      expect(text).toContain('"value"')
     })
 
     it('clones deeply nested objects with comments', () => {
@@ -143,10 +143,10 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('Level 1 comment')
-      expect(text).toInclude('Level 2 comment')
-      expect(text).toInclude('Level 3 comment')
-      expect(text).toInclude('"deep value"')
+      expect(text).toContain('Level 1 comment')
+      expect(text).toContain('Level 2 comment')
+      expect(text).toContain('Level 3 comment')
+      expect(text).toContain('"deep value"')
     })
   })
 
@@ -164,9 +164,9 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('Array property comment')
-      expect(text).toInclude('Comment in array')
-      expect(text).toInclude('"item1"')
+      expect(text).toContain('Array property comment')
+      expect(text).toContain('Comment in array')
+      expect(text).toContain('"item1"')
     })
 
     it('clones array of objects with comments', () => {
@@ -184,10 +184,10 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('First object')
-      expect(text).toInclude('Second object')
-      expect(text).toInclude('"first"')
-      expect(text).toInclude('"second"')
+      expect(text).toContain('First object')
+      expect(text).toContain('Second object')
+      expect(text).toContain('"first"')
+      expect(text).toContain('"second"')
     })
   })
 
@@ -220,20 +220,20 @@ describe('clone', () => {
       const text = stringify(cloned, null, 2)
 
       // Verify all comments are preserved
-      expect(text).toInclude('Main configuration')
-      expect(text).toInclude('Discovery overrides')
-      expect(text).toInclude('Contract A')
-      expect(text).toInclude('Contract B')
-      expect(text).toInclude('Methods to ignore')
-      expect(text).toInclude('This method is noisy')
-      expect(text).toInclude('End of relatives')
+      expect(text).toContain('Main configuration')
+      expect(text).toContain('Discovery overrides')
+      expect(text).toContain('Contract A')
+      expect(text).toContain('Contract B')
+      expect(text).toContain('Methods to ignore')
+      expect(text).toContain('This method is noisy')
+      expect(text).toContain('End of relatives')
 
       // Verify data is intact
-      expect(text).toInclude('"test-project"')
-      expect(text).toInclude('"0x123"')
-      expect(text).toInclude('"0x456"')
-      expect(text).toInclude('"method1"')
-      expect(text).toInclude('"method2"')
+      expect(text).toContain('"test-project"')
+      expect(text).toContain('"0x123"')
+      expect(text).toContain('"0x456"')
+      expect(text).toContain('"method1"')
+      expect(text).toContain('"method2"')
     })
 
     it('clones mixed nested structures with comments everywhere', () => {
@@ -259,12 +259,12 @@ describe('clone', () => {
       const cloned = clone(parsed)
       const text = stringify(cloned, null, 2)
 
-      expect(text).toInclude('Top comment')
-      expect(text).toInclude('Array of configs')
-      expect(text).toInclude('Item 1 name')
-      expect(text).toInclude('Item 1 tags')
-      expect(text).toInclude('Settings object')
-      expect(text).toInclude('Always enabled')
+      expect(text).toContain('Top comment')
+      expect(text).toContain('Array of configs')
+      expect(text).toContain('Item 1 name')
+      expect(text).toContain('Item 1 tags')
+      expect(text).toContain('Settings object')
+      expect(text).toContain('Always enabled')
     })
   })
 
@@ -280,7 +280,7 @@ describe('clone', () => {
       const text2 = stringify(cloned, null, 2)
 
       // Both should produce the same output
-      expect(text1).toEqual(text2)
+      expect(text1).toStrictEqual(text2)
     })
 
     it('multiple clones preserve comments', () => {
@@ -294,8 +294,8 @@ describe('clone', () => {
       const clone3 = clone(clone2)
 
       const text = stringify(clone3, null, 2)
-      expect(text).toInclude('Original comment')
-      expect(text).toInclude('"data"')
+      expect(text).toContain('Original comment')
+      expect(text).toContain('"data"')
     })
   })
 
@@ -303,31 +303,31 @@ describe('clone', () => {
     it('clones empty object', () => {
       const obj = {}
       const cloned = clone(obj)
-      expect(cloned).toEqual({})
+      expect(cloned).toStrictEqual({})
       // Verify it's a different reference
-      expect(cloned !== obj).toEqual(true)
+      expect(cloned !== obj).toStrictEqual(true)
     })
 
     it('clones empty array', () => {
       const arr: unknown[] = []
       const cloned = clone(arr)
       // CommentArray is still an array
-      expect(Array.isArray(cloned)).toEqual(true)
-      expect((cloned as unknown[]).length).toEqual(0)
+      expect(Array.isArray(cloned)).toStrictEqual(true)
+      expect((cloned as unknown[]).length).toStrictEqual(0)
       // Verify it's a different reference
-      expect(cloned !== arr).toEqual(true)
+      expect(cloned !== arr).toStrictEqual(true)
     })
 
     it('clones object with undefined values', () => {
       const obj = { a: undefined, b: 'value' }
       const cloned = clone(obj)
-      expect(cloned).toEqual({ a: undefined, b: 'value' })
+      expect(cloned).toStrictEqual({ a: undefined, b: 'value' })
     })
 
     it('clones object with null values', () => {
       const obj = { a: null, b: 'value' }
       const cloned = clone(obj)
-      expect(cloned).toEqual({ a: null, b: 'value' })
+      expect(cloned).toStrictEqual({ a: null, b: 'value' })
     })
 
     it('handles circular references gracefully (or documents limitation)', () => {
@@ -346,14 +346,14 @@ describe('clone', () => {
     it('preserves array type', () => {
       const arr = [1, 2, 3]
       const cloned = clone(arr)
-      expect(Array.isArray(cloned)).toEqual(true)
+      expect(Array.isArray(cloned)).toStrictEqual(true)
     })
 
     it('preserves object type', () => {
       const obj = { a: 1 }
       const cloned = clone(obj)
-      expect(typeof cloned).toEqual('object')
-      expect(Array.isArray(cloned)).toEqual(false)
+      expect(typeof cloned).toStrictEqual('object')
+      expect(Array.isArray(cloned)).toStrictEqual(false)
     })
 
     it('preserves CommentArray special properties after cloning', () => {
@@ -366,7 +366,7 @@ describe('clone', () => {
 
       // Verify it's still a CommentArray that can be stringified with comments
       const text = stringify(cloned, null, 2)
-      expect(text).toInclude('Comment')
+      expect(text).toContain('Comment')
     })
   })
 })

@@ -14,8 +14,8 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "typecheck": "tsc --noEmit",
-    "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@l2beat/shared-pure": "workspace:*",
@@ -35,10 +35,8 @@
     "clsx": "^2.1.1",
     "comment-json": "^4.4.1",
     "d3-force": "^3.0.0",
-    "earl": "^1.1.0",
     "fuzzysort": "^3.1.0",
     "markdown-it": "^14.1.0",
-    "mocha": "^10.2.0",
     "monaco-editor": "^0.52.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -55,6 +53,8 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

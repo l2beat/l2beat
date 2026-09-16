@@ -1,10 +1,6 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { ConfigModel } from './ConfigModel'
-
-// Helper to convert CommentArray to regular array for testing
-export function toArray<T>(value: T[] | undefined): T[] {
-  return value ? Array.from(value) : []
-}
+import { toArray } from './toArray'
 
 describe('ConfigModel', () => {
   describe('comment preservation', () => {
@@ -23,8 +19,8 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
       const text = model.toString()
 
-      expect(text).toInclude('Top comment')
-      expect(text).toInclude('"test-project"')
+      expect(text).toContain('Top comment')
+      expect(text).toContain('"test-project"')
     })
   })
 
@@ -46,7 +42,7 @@ describe('ConfigModel', () => {
         peeked.overrides['0xContractA'].ignoreMethods.push('hacker')
       }
 
-      expect(toArray(model.getIgnoredMethods('0xContractA'))).toEqual([
+      expect(toArray(model.getIgnoredMethods('0xContractA'))).toStrictEqual([
         'method1',
         'method2',
       ])
@@ -60,13 +56,13 @@ describe('ConfigModel', () => {
 
       expect(
         model.hasOverrideDefinition('0xContract', 'ignoreMethods'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
       expect(
         model.hasOverrideDefinition('0xContract', 'ignoreRelatives'),
-      ).toEqual(false)
+      ).toStrictEqual(false)
       expect(
         model.hasOverrideDefinition('0xNonExistent', 'ignoreMethods'),
-      ).toEqual(false)
+      ).toStrictEqual(false)
     })
 
     it('removes override when all fields are removed', () => {
@@ -74,8 +70,8 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
       const updated = model.setFieldSeverity('0xContract', 'field1', undefined)
 
-      expect(updated.toString()).not.toInclude('0xContract')
-      expect(updated.peek().overrides).toEqual(undefined)
+      expect(updated.toString()).not.toContain('0xContract')
+      expect(updated.peek().overrides).toStrictEqual(undefined)
     })
 
     it('keeps override when some fields remain', () => {
@@ -83,9 +79,9 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
       const updated = model.setFieldSeverity('0xContract', 'field1', undefined)
 
-      expect(updated.toString()).toInclude('0xContract')
-      expect(updated.toString()).toInclude('field2')
-      expect(updated.toString()).not.toInclude('field1')
+      expect(updated.toString()).toContain('0xContract')
+      expect(updated.toString()).toContain('field2')
+      expect(updated.toString()).not.toContain('field1')
     })
 
     it('keeps override when it has other properties even if all fields are removed', () => {
@@ -93,9 +89,9 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
       const updated = model.setFieldSeverity('0xContract', 'field1', undefined)
 
-      expect(updated.toString()).toInclude('0xContract')
-      expect(updated.toString()).toInclude('ignoreMethods')
-      expect(updated.toString()).not.toInclude('field1')
+      expect(updated.toString()).toContain('0xContract')
+      expect(updated.toString()).toContain('ignoreMethods')
+      expect(updated.toString()).not.toContain('field1')
     })
   })
 
@@ -105,7 +101,7 @@ describe('ConfigModel', () => {
       const model1 = ConfigModel.fromRawJsonc(jsonc)
       const model2 = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model1.diff(model2)).toEqual(false)
+      expect(model1.diff(model2)).toStrictEqual(false)
     })
   })
 
@@ -117,7 +113,7 @@ describe('ConfigModel', () => {
       }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(true)
+      expect(model.hasComments()).toStrictEqual(true)
     })
 
     it('returns true when config has nested comments in overrides', () => {
@@ -132,14 +128,14 @@ describe('ConfigModel', () => {
       }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(true)
+      expect(model.hasComments()).toStrictEqual(true)
     })
 
     it('returns false when config has no comments', () => {
       const jsonc = `{ "name": "test-project", "overrides": { "0xContract": { "ignoreMethods": ["method1"] } } }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(false)
+      expect(model.hasComments()).toStrictEqual(false)
     })
   })
 })

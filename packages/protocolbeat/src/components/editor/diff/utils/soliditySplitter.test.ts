@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { splitCode } from './soliditySplitter'
 
 describe('splitCode', () => {
@@ -19,8 +19,8 @@ describe('splitCode', () => {
         'contract B': 'contract B { uint y; }',
       }
       const [leftOut, rightOut] = splitCode(left, right, true, true)
-      expect(leftOut.includes('contract A')).toEqual(false)
-      expect(rightOut.includes('contract A')).toEqual(false)
+      expect(leftOut.includes('contract A')).toStrictEqual(false)
+      expect(rightOut.includes('contract A')).toStrictEqual(false)
     })
 
     it('keeps a declaration whose code differs (not just comments)', () => {
@@ -31,8 +31,8 @@ describe('splitCode', () => {
         'contract A': '// comment\ncontract A { uint y; }',
       }
       const [leftOut, rightOut] = splitCode(left, right, true, true)
-      expect(leftOut.includes('uint x')).toEqual(true)
-      expect(rightOut.includes('uint y')).toEqual(true)
+      expect(leftOut.includes('uint x')).toStrictEqual(true)
+      expect(rightOut.includes('uint y')).toStrictEqual(true)
     })
 
     it('keeps a comment-only diff when ignoreComments=false', () => {
@@ -43,8 +43,8 @@ describe('splitCode', () => {
         'contract A': '// new comment\ncontract A { uint x; }',
       }
       const [leftOut, rightOut] = splitCode(left, right, true, false)
-      expect(leftOut.includes('// old comment')).toEqual(true)
-      expect(rightOut.includes('// new comment')).toEqual(true)
+      expect(leftOut.includes('// old comment')).toStrictEqual(true)
+      expect(rightOut.includes('// new comment')).toStrictEqual(true)
     })
   })
 })

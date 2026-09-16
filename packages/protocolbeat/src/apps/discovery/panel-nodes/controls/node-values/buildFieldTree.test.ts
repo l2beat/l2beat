@@ -1,4 +1,5 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { Field } from '../../store/State'
 import { buildFieldTree } from './buildFieldTree'
 
@@ -6,7 +7,7 @@ describe(buildFieldTree.name, () => {
   it('simple fields', () => {
     const fields = [field({ name: 'a' }), field({ name: 'c' })]
     const tree = buildFieldTree(fields)
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'simple',
         property: 'a',
@@ -25,7 +26,7 @@ describe(buildFieldTree.name, () => {
       field({ name: 'group-field:target', label: 'Member' }),
     ])
 
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'simple',
         property: 'Member',
@@ -41,7 +42,7 @@ describe(buildFieldTree.name, () => {
       field({ name: 'c.d' }),
     ]
     const tree = buildFieldTree(fields)
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'complex',
         property: 'a',
@@ -67,7 +68,7 @@ describe(buildFieldTree.name, () => {
       field({ name: 'a[2]' }),
     ]
     const tree = buildFieldTree(fields)
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'complex',
         property: 'a',
@@ -87,7 +88,7 @@ describe(buildFieldTree.name, () => {
       field({ name: 'map.0xKeyA.#key' }),
     ]
     const tree = buildFieldTree(fields)
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'complex',
         property: 'map',
@@ -119,7 +120,7 @@ describe(buildFieldTree.name, () => {
       field({ name: 'a[1][1]' }),
     ]
     const tree = buildFieldTree(fields)
-    expect(tree).toEqual([
+    expect(tree).toStrictEqual([
       {
         type: 'complex',
         property: 'a',

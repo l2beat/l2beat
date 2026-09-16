@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { AddressFieldValue, FieldValue } from '../../../api/types'
 import { buildPastUpgradeRows } from './pastUpgrades'
 
@@ -29,7 +29,7 @@ function entry(
 
 describe('buildPastUpgradeRows', () => {
   it('returns an empty list for non-array values', () => {
-    expect(buildPastUpgradeRows({ type: 'empty' })).toEqual([])
+    expect(buildPastUpgradeRows({ type: 'empty' })).toStrictEqual([])
   })
 
   it('returns an empty list when there are no implementations', () => {
@@ -46,7 +46,7 @@ describe('buildPastUpgradeRows', () => {
         },
       ],
     }
-    expect(buildPastUpgradeRows(value)).toEqual([])
+    expect(buildPastUpgradeRows(value)).toStrictEqual([])
   })
 
   it('orders rows newest first', () => {
@@ -62,12 +62,12 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.map((r) => r.formattedDate)).toEqual([
+    expect(rows.map((r) => r.formattedDate)).toStrictEqual([
       '2026-05-26',
       '2026-02-10',
       '2025-10-07',
     ])
-    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, C])
+    expect(rows.map((r) => r.addresses[0])).toStrictEqual([A, B, C])
   })
 
   it('builds the explorer transaction url from the implementation chain', () => {
@@ -78,8 +78,8 @@ describe('buildPastUpgradeRows', () => {
 
     const [row] = buildPastUpgradeRows(value)
 
-    expect(row?.txHash).toEqual('0xdeadbeef')
-    expect(row?.txUrl).toEqual('https://etherscan.io/tx/0xdeadbeef')
+    expect(row?.txHash).toStrictEqual('0xdeadbeef')
+    expect(row?.txUrl).toStrictEqual('https://etherscan.io/tx/0xdeadbeef')
   })
 
   it('keeps the transaction hash even when the chain has no explorer', () => {
@@ -92,8 +92,8 @@ describe('buildPastUpgradeRows', () => {
 
     const [row] = buildPastUpgradeRows(value)
 
-    expect(row?.txHash).toEqual('0xdeadbeef')
-    expect(row?.txUrl).toEqual(undefined)
+    expect(row?.txHash).toStrictEqual('0xdeadbeef')
+    expect(row?.txUrl).toStrictEqual(undefined)
   })
 
   it('exposes one address per facet for diamond upgrades', () => {
@@ -107,9 +107,9 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
-    expect(rows[0]?.addresses).toEqual([A, D])
-    expect(rows[1]?.addresses).toEqual([B, C])
+    expect(rows.length).toStrictEqual(2)
+    expect(rows[0]?.addresses).toStrictEqual([A, D])
+    expect(rows[1]?.addresses).toStrictEqual([B, C])
   })
 
   it('collapses entries that share a transaction hash and implementation set', () => {
@@ -127,8 +127,8 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
-    expect(rows.map((r) => r.addresses[0])).toEqual([A, D])
+    expect(rows.length).toStrictEqual(2)
+    expect(rows.map((r) => r.addresses[0])).toStrictEqual([A, D])
   })
 
   it('keeps distinct implementations changed within one transaction', () => {
@@ -144,9 +144,9 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(3)
-    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, C])
-    expect(rows.map((r) => r.txHash)).toEqual([
+    expect(rows.length).toStrictEqual(3)
+    expect(rows.map((r) => r.addresses[0])).toStrictEqual([A, B, C])
+    expect(rows.map((r) => r.txHash)).toStrictEqual([
       '0xsecond',
       '0xsecond',
       '0xfirst',
@@ -168,8 +168,8 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(4)
-    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, A, C])
+    expect(rows.length).toStrictEqual(4)
+    expect(rows.map((r) => r.addresses[0])).toStrictEqual([A, B, A, C])
   })
 
   it('still folds three consecutive identical diamond snapshots into one row', () => {
@@ -185,8 +185,8 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
-    expect(rows.map((r) => r.txHash)).toEqual(['0xreset', '0xdeploy'])
-    expect(rows.map((r) => r.addresses[0])).toEqual([D, D])
+    expect(rows.length).toStrictEqual(2)
+    expect(rows.map((r) => r.txHash)).toStrictEqual(['0xreset', '0xdeploy'])
+    expect(rows.map((r) => r.addresses[0])).toStrictEqual([D, D])
   })
 })

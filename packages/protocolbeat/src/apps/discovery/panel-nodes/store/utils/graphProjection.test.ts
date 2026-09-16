@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Node } from '../State'
 import {
   getGraphProjection,
@@ -13,7 +13,7 @@ describe(getGraphProjection.name, () => {
       makeNode('root', [['large[0]', 'target']], ['large[0]']),
       makeNode('target'),
     ]
-    expect(hidden(nodes)).toEqual(['target'])
+    expect(hidden(nodes)).toStrictEqual(['target'])
   })
 
   it('keeps a node with another visible incoming field', () => {
@@ -22,7 +22,7 @@ describe(getGraphProjection.name, () => {
       makeNode('second', [['owner', 'target']]),
       makeNode('target'),
     ]
-    expect(hidden(nodes)).toEqual([])
+    expect(hidden(nodes)).toStrictEqual([])
   })
 
   it('cascades through outgoing fields of newly hidden nodes', () => {
@@ -31,7 +31,7 @@ describe(getGraphProjection.name, () => {
       makeNode('middle', [['owner', 'target']]),
       makeNode('target'),
     ]
-    expect(hidden(nodes)).toEqual(['middle', 'target'])
+    expect(hidden(nodes)).toStrictEqual(['middle', 'target'])
   })
 
   it('hides a cycle disconnected by a hidden field', () => {
@@ -40,7 +40,7 @@ describe(getGraphProjection.name, () => {
       makeNode('first', [['next', 'second']]),
       makeNode('second', [['next', 'first']]),
     ]
-    expect(hidden(nodes)).toEqual(['first', 'second'])
+    expect(hidden(nodes)).toStrictEqual(['first', 'second'])
   })
 
   it('keeps a detached cycle visible while nothing is hidden into it', () => {
@@ -48,7 +48,7 @@ describe(getGraphProjection.name, () => {
       makeNode('first', [['next', 'second']]),
       makeNode('second', [['next', 'first']]),
     ]
-    expect(hidden(nodes)).toEqual([])
+    expect(hidden(nodes)).toStrictEqual([])
   })
 
   it('hides a detached node when all of its inbound fields are hidden', () => {
@@ -56,7 +56,7 @@ describe(getGraphProjection.name, () => {
       makeNode('first', [['next', 'second']]),
       makeNode('second', [['next', 'first']], ['next']),
     ]
-    expect(hidden(nodes)).toEqual(['first', 'second'])
+    expect(hidden(nodes)).toStrictEqual(['first', 'second'])
   })
 
   it('keeps a detached cycle while every node has visible inbound support', () => {
@@ -78,7 +78,7 @@ describe(getGraphProjection.name, () => {
         ['hidden'],
       ),
     ]
-    expect(hidden(nodes)).toEqual([])
+    expect(hidden(nodes)).toStrictEqual([])
   })
 
   it('preserves initial nodes and nodes with no references', () => {
@@ -87,7 +87,7 @@ describe(getGraphProjection.name, () => {
       makeNode('initial', [], [], true),
       makeNode('unreferenced'),
     ]
-    expect(hidden(nodes)).toEqual([])
+    expect(hidden(nodes)).toStrictEqual([])
   })
 
   it('preserves components that were unreachable before fields were hidden', () => {
@@ -97,7 +97,7 @@ describe(getGraphProjection.name, () => {
       makeNode('detached', [['next', 'detached-target']]),
       makeNode('detached-target'),
     ]
-    expect(hidden(nodes)).toEqual(['hidden'])
+    expect(hidden(nodes)).toStrictEqual(['hidden'])
   })
 
   it('projects only edges connecting visible nodes through visible fields', () => {
@@ -116,10 +116,10 @@ describe(getGraphProjection.name, () => {
 
     const projection = getGraphProjection(nodes)
 
-    expect(projection.visibleEdges).toEqual([
+    expect(projection.visibleEdges).toStrictEqual([
       { source: 'root', target: 'visible-target', fieldName: 'visible' },
     ])
-    expect(projection.hiddenFieldCount).toEqual(1)
+    expect(projection.hiddenFieldCount).toStrictEqual(1)
   })
 })
 
@@ -137,9 +137,9 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['target']))
 
-    expect(updated[0]?.hiddenFields).toEqual(['owner'])
-    expect(updated[1]?.hiddenFields).toEqual(['members[0]'])
-    expect(hidden(updated)).toEqual(['target'])
+    expect(updated[0]?.hiddenFields).toStrictEqual(['owner'])
+    expect(updated[1]?.hiddenFields).toStrictEqual(['members[0]'])
+    expect(hidden(updated)).toStrictEqual(['target'])
   })
 
   it('hides a target in a detached cycle', () => {
@@ -150,8 +150,8 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['first']))
 
-    expect(updated[1]?.hiddenFields).toEqual(['next'])
-    expect(hidden(updated)).toEqual(['first', 'second'])
+    expect(updated[1]?.hiddenFields).toStrictEqual(['next'])
+    expect(hidden(updated)).toStrictEqual(['first', 'second'])
   })
 
   it('expands group targets to their members', () => {
@@ -160,8 +160,8 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['group']))
 
-    expect(updated[0]?.hiddenFields).toEqual(['member'])
-    expect(hidden(updated)).toEqual(['group', 'member'])
+    expect(updated[0]?.hiddenFields).toStrictEqual(['member'])
+    expect(hidden(updated)).toStrictEqual(['group', 'member'])
   })
 
   it('keeps standalone targets and node references unchanged', () => {
@@ -169,8 +169,8 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['standalone']))
 
-    expect(updated === nodes).toEqual(true)
-    expect(updated[0] === nodes[0]).toEqual(true)
+    expect(updated === nodes).toStrictEqual(true)
+    expect(updated[0] === nodes[0]).toStrictEqual(true)
   })
 
   it('does not hide initial targets', () => {
@@ -181,8 +181,8 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['initial']))
 
-    expect(updated === nodes).toEqual(true)
-    expect(hidden(updated)).toEqual([])
+    expect(updated === nodes).toStrictEqual(true)
+    expect(hidden(updated)).toStrictEqual([])
   })
 })
 
@@ -198,9 +198,9 @@ describe(isHideable.name, () => {
     const nodes = [root, referenced, initial, standalone]
     const projection = getGraphProjection(nodes)
 
-    expect(isHideable(projection, referenced)).toEqual(true)
-    expect(isHideable(projection, initial)).toEqual(false)
-    expect(isHideable(projection, standalone)).toEqual(false)
+    expect(isHideable(projection, referenced)).toStrictEqual(true)
+    expect(isHideable(projection, initial)).toStrictEqual(false)
+    expect(isHideable(projection, standalone)).toStrictEqual(false)
   })
 })
 
@@ -221,8 +221,8 @@ describe('compressed rows and hiddenness', () => {
       makeNode('second'),
     ]
 
-    expect(hidden(nodes)).toEqual([])
-    expect(getGraphProjection(nodes).visibleEdges.length).toEqual(2)
+    expect(hidden(nodes)).toStrictEqual([])
+    expect(getGraphProjection(nodes).visibleEdges.length).toStrictEqual(2)
   })
 })
 
@@ -238,8 +238,8 @@ describe(mapGraphItems.name, () => {
       node.id === 'member' ? { ...node, name: 'updated' } : node,
     )
 
-    expect(updated[0]?.hiddenFields).toEqual(['group-field'])
-    expect(updated[0]?.subnodes[0]?.name).toEqual('updated')
+    expect(updated[0]?.hiddenFields).toStrictEqual(['group-field'])
+    expect(updated[0]?.subnodes[0]?.name).toStrictEqual('updated')
   })
 
   it('preserves references when nothing changes', () => {
@@ -248,8 +248,8 @@ describe(mapGraphItems.name, () => {
 
     const updated = mapGraphItems(nodes, (node) => node)
 
-    expect(updated[0] === group).toEqual(true)
-    expect(updated[0]?.subnodes[0] === group.subnodes[0]).toEqual(true)
+    expect(updated[0] === group).toStrictEqual(true)
+    expect(updated[0]?.subnodes[0] === group.subnodes[0]).toStrictEqual(true)
   })
 })
 

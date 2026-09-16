@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Field, Node, State } from '../State'
 import { getGraphProjection } from '../utils/graphProjection'
 import { applyStoredLayout } from './applyStoredLayout'
@@ -21,7 +21,7 @@ describe(applyStoredLayout.name, () => {
       'merge',
     )
 
-    expect(result.nodes?.[0]?.hiddenFields).toEqual(['member'])
+    expect(result.nodes?.[0]?.hiddenFields).toStrictEqual(['member'])
   })
 
   it('unions hidden fields in merge mode', () => {
@@ -49,7 +49,7 @@ describe(applyStoredLayout.name, () => {
       'merge',
     )
 
-    expect(result.nodes?.[0]?.hiddenFields).toEqual(['first', 'second'])
+    expect(result.nodes?.[0]?.hiddenFields).toStrictEqual(['first', 'second'])
   })
 
   it('clears nested hidden fields in replace mode', () => {
@@ -62,7 +62,7 @@ describe(applyStoredLayout.name, () => {
       'replace',
     )
 
-    expect(result.nodes?.[0]?.subnodes[0]?.hiddenFields).toEqual([])
+    expect(result.nodes?.[0]?.subnodes[0]?.hiddenFields).toStrictEqual([])
   })
 
   it('imports hidden fields for groups', () => {
@@ -83,7 +83,7 @@ describe(applyStoredLayout.name, () => {
       'merge',
     )
 
-    expect(result.nodes?.[0]?.hiddenFields).toEqual(['group-row'])
+    expect(result.nodes?.[0]?.hiddenFields).toStrictEqual(['group-row'])
   })
 })
 
@@ -94,7 +94,7 @@ describe(hideSelected.name, () => {
       selected: ['standalone'],
     }
 
-    expect(hideSelected(state)).toEqual({})
+    expect(hideSelected(state)).toStrictEqual({})
   })
 })
 
@@ -118,9 +118,9 @@ describe(showHidden.name, () => {
     const result = showHidden(state)
     const nodes = result.nodes ?? []
 
-    expect(nodes[0]?.hiddenFields).toEqual([])
-    expect(nodes[2]?.hiddenFields).toEqual([])
-    expect(getGraphProjection(nodes).hiddenFieldCount).toEqual(0)
+    expect(nodes[0]?.hiddenFields).toStrictEqual([])
+    expect(nodes[2]?.hiddenFields).toStrictEqual([])
+    expect(getGraphProjection(nodes).hiddenFieldCount).toStrictEqual(0)
   })
 })
 
@@ -133,11 +133,14 @@ describe(collectOutgoingFields.name, () => {
 
     const fields = collectOutgoingFields([member])
 
-    expect(fields.map((field) => field.name)).toEqual([
+    expect(fields.map((field) => field.name)).toStrictEqual([
       'group-field:first-target',
       'group-field:second-target',
     ])
-    expect(fields.map((field) => field.label)).toEqual(['member', 'member'])
+    expect(fields.map((field) => field.label)).toStrictEqual([
+      'member',
+      'member',
+    ])
   })
 })
 
@@ -157,8 +160,8 @@ describe(groupSelected.name, () => {
     const result = groupSelected(state)
     const rebuilt = result.nodes?.find((node) => node.id === 'existing-group')
 
-    expect(rebuilt?.fields).toEqual([])
-    expect(rebuilt?.hiddenFields).toEqual([])
+    expect(rebuilt?.fields).toStrictEqual([])
+    expect(rebuilt?.hiddenFields).toStrictEqual([])
   })
 })
 

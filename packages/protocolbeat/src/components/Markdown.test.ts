@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { renderMarkdown } from './Markdown'
 
 describe('renderMarkdown', () => {
@@ -8,7 +8,7 @@ describe('renderMarkdown', () => {
       { allowHtml: false },
     )
 
-    expect(rendered).toEqual(
+    expect(rendered).toStrictEqual(
       '<p>hello &lt;img src=x onerror=alert(1)&gt; <strong>world</strong></p>\n',
     )
   })

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { toShortenedAddress } from './toShortenedAddress'
 
 describe(toShortenedAddress.name, () => {
@@ -7,12 +7,12 @@ describe(toShortenedAddress.name, () => {
       toShortenedAddress(
         'robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d',
       ),
-    ).toEqual('robinhood:0x94bA…fF9d')
+    ).toStrictEqual('robinhood:0x94bA…fF9d')
   })
 
   it('handles an address without a chain prefix', () => {
     expect(
       toShortenedAddress('0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d'),
-    ).toEqual('0x94bA…fF9d')
+    ).toStrictEqual('0x94bA…fF9d')
   })
 })
