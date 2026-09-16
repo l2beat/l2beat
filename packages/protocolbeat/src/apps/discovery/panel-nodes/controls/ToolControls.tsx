@@ -3,19 +3,28 @@ import { IconCursor } from '../../../../icons/IconCursor'
 import { IconHand } from '../../../../icons/IconHand'
 import type { Tool } from '../store/State'
 import { useStore } from '../store/store'
+import { HAND_TOOL_KEY, SELECT_TOOL_KEY } from '../store/utils/constants'
 import { effectiveTool } from '../store/utils/tool'
 import { ControlButton } from './ControlButton'
 import { ControlGroup } from './ControlGroup'
 
-const TOOLS: { tool: Tool; label: string; title: string; icon: ReactNode }[] = [
+const TOOLS: {
+  tool: Tool
+  shortcut: string
+  label: string
+  title: string
+  icon: ReactNode
+}[] = [
   {
     tool: 'select',
+    shortcut: SELECT_TOOL_KEY.toUpperCase(),
     label: 'Selection tool',
     title: 'Selection tool (V)',
     icon: <IconCursor />,
   },
   {
     tool: 'hand',
+    shortcut: HAND_TOOL_KEY.toUpperCase(),
     label: 'Hand tool',
     title:
       'Hand tool (H): drag to move the view. Space + drag or middle mouse drag also pans.',
@@ -30,17 +39,23 @@ export function ToolControls() {
 
   return (
     <ControlGroup>
-      {TOOLS.map(({ tool, label, title, icon }) => (
+      {TOOLS.map(({ tool, shortcut, label, title, icon }) => (
         <ControlButton
           key={tool}
           title={title}
           aria-label={label}
           active={active === tool}
           onClick={() => setTool(tool)}
-          className="px-3 py-2.5"
+          className="relative px-3 py-2.5"
         >
           <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
             {icon}
+          </span>
+          <span
+            aria-hidden
+            className="absolute right-1 bottom-0.5 font-medium text-2xs text-coffee-400 leading-none"
+          >
+            {shortcut}
           </span>
         </ControlButton>
       ))}
