@@ -31,6 +31,10 @@ export interface MigrationReport {
 }
 
 const TEST_UTILS = '@l2beat/test-utils'
+const VITEST_CONFIG = '@l2beat/vitest-config'
+// Globs the shared preset already covers; overriding them would only duplicate
+// entries because the preset merges arrays by concatenation.
+const PRESET_INCLUDES = ['src/**/*.test.ts', 'scripts/**/*.test.ts']
 const DEFAULT_TEST_GLOB = '{src,test}/**/*.test.ts'
 const SKIPPED_DIRECTORIES = new Set([
   'node_modules',
@@ -101,7 +105,7 @@ function convertPackageConfig(
     manifest.scripts = { ...manifest.scripts, test: 'vitest run' }
     manifest.devDependencies = withoutMochaAndEarl({
       ...manifest.devDependencies,
-      vitest: '^5.0.0',
+      [VITEST_CONFIG]: 'workspace:*',
       ...(usesTestUtils ? { [TEST_UTILS]: 'workspace:*' } : {}),
     })
   })
@@ -144,18 +148,18 @@ function declareGlobals(config: any, usesTestUtils: boolean): void {
 }
 
 function vitestConfig(testGlob: string, usesTestUtils: boolean): string {
-  const setup = usesTestUtils
-    ? "\n    setupFiles: ['@l2beat/test-utils/setup'],"
-    : ''
-  return `import { defineConfig } from 'vitest/config'
+  const overrides = [
+    ...(PRESET_INCLUDES.includes(testGlob) ? [] : [`include: ['${testGlob}']`]),
+    ...(usesTestUtils ? ["setupFiles: ['@l2beat/test-utils/setup']"] : []),
+  ]
+  const argument =
+    overrides.length === 0
+      ? ''
+      : `{\n  test: {\n${overrides.map((it) => `    ${it},\n`).join('')}  },\n}`
+  return `import { defineVitestConfig } from '${VITEST_CONFIG}'
 
 // biome-ignore lint/style/noDefaultExport: Vitest config uses a default export.
-export default defineConfig({
-  test: {
-    include: ['${testGlob}'],${setup}
-    env: { NODE_ENV: 'test' },
-  },
-})
+export default defineVitestConfig(${argument})
 `
 }
 

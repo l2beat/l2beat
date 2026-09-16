@@ -1225,12 +1225,12 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       ts-morph:
         specifier: ^28.0.0
         version: 28.0.0
-      vitest:
-        specifier: ^5.0.0
-        version: 5.0.0(@opentelemetry/api@1.9.0)(@types/node@20.17.2)(vite@7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0))
 
   packages/token-backend:
     dependencies:
