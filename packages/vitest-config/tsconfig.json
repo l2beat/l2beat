@@ -1,7 +1,9 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "types": ["node", "mocha"],
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "verbatimModuleSyntax": true,
     "outDir": "dist",
     "rootDir": "./src"
   },

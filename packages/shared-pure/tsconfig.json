@@ -6,7 +6,6 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": false,
-    "types": ["node"],
     "verbatimModuleSyntax": true,
     "outDir": "build",
     "rootDir": "./src"

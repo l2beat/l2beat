@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "vitest": "^5.0.0"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

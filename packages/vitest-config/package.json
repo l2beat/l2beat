@@ -1,0 +1,24 @@
+{
+  "name": "@l2beat/vitest-config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm run clean && tsc",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
+  }
+}
