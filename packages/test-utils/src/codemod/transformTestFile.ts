@@ -96,6 +96,7 @@ function rewriteGlobal(node: Node, context: Context): void {
   if (name === 'mockFn' && isValueReference(node)) {
     context.edits.push(replace(node, 'vi.fn'))
     context.needed.add('vi')
+    rewriteMockFnSignature(node, context)
     return
   }
   const hook = lookup(MOCHA_HOOKS, name)
@@ -103,6 +104,36 @@ function rewriteGlobal(node: Node, context: Context): void {
     context.edits.push(replace(node, hook))
     context.needed.add(hook)
   }
+}
+
+/**
+ * earl took the argument tuple and the return type as two type arguments;
+ * vitest takes the one function type they describe, and rejects the pair.
+ */
+function rewriteMockFnSignature(node: Node, context: Context): void {
+  const call = node.getParent()
+  if (!Node.isCallExpression(call) || call.getExpression() !== node) {
+    return
+  }
+  const [parameters, returns] = call.getTypeArguments()
+  if (!parameters || !returns || !Node.isTupleTypeNode(parameters)) {
+    return
+  }
+  const signature = parameters
+    .getElements()
+    .map((element, index) =>
+      Node.isNamedTupleMember(element)
+        ? element.getText()
+        : `arg${index}: ${element.getText()}`,
+    )
+    .join(', ')
+  context.edits.push(
+    span(
+      parameters.getStart(),
+      returns.getEnd(),
+      `(${signature}) => ${returns.getText()}`,
+    ),
+  )
 }
 
 function rewriteMethodCall(

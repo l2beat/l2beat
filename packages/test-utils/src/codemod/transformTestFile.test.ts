@@ -134,6 +134,17 @@ describe(transformTestFile.name, () => {
       expect(output).toContain('vi.fn<(x: number) => string>()')
     })
 
+    it('folds the earl argument tuple and return type into one signature', () => {
+      const output = run(`
+        import { mockFn } from 'earl'
+        const a = mockFn<[], Promise<number>>()
+        const b = mockFn<[string, number], void>()
+      `)
+
+      expect(output).toContain('vi.fn<() => Promise<number>>()')
+      expect(output).toContain('vi.fn<(arg0: string, arg1: number) => void>()')
+    })
+
     it('leaves returns() alone on something that is not a mock', () => {
       const output = run(`
         import { expect } from 'earl'
