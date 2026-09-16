@@ -5,6 +5,7 @@ import {
   getL2LivenessEntries,
   type L2LivenessEntry,
 } from '~/server/features/layer2s/liveness/getL2LivenessEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -46,6 +47,7 @@ export async function getL2LivenessData(
       page: 'L2LivenessPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(entries),
         entries,
         projectsWithAnomalies: getProjectsWithAnomalies(entries),
       },

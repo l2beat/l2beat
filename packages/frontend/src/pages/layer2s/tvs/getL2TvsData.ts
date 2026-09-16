@@ -3,6 +3,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2TvsEntries } from '~/server/features/layer2s/tvs/getL2TvsEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -48,6 +49,7 @@ export async function getL2TvsData(
       page: 'L2TvsPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(data),
         ...data,
         milestones: HOMEPAGE_MILESTONES,
       },

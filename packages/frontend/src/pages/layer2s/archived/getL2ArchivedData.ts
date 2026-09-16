@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ArchivedEntries } from '~/server/features/layer2s/archived/getL2ArchivedEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -37,6 +38,7 @@ export async function getL2ArchivedData(
       page: 'L2ArchivedPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(entries),
         entries,
       },
     },

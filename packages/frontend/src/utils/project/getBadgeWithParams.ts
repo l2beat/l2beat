@@ -1,6 +1,7 @@
 import type { Badge, Project } from '@l2beat/config'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
-import { getBadgeLink } from '~/server/features/utils/getBadgeLink'
+import { getL2Tab } from '~/server/features/layer2s/getCommonL2Entry'
+import { getBadgeLink } from './getBadgeLink'
 import { getImageParams } from './getImageParams'
 
 const badgesParams: Record<
@@ -42,6 +43,10 @@ export function getBadgeWithParamsAndLink(
 
   return {
     ...badgeWithParams,
-    href: getBadgeLink(badge, project),
+    href: getBadgeLink(badge, {
+      name: project.name,
+      slug: project.slug,
+      tab: getL2Tab(project),
+    }),
   }
 }

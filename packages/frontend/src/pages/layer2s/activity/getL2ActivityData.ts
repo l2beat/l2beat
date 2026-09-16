@@ -3,6 +3,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ActivityEntries } from '~/server/features/layer2s/activity/getL2ActivityEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -43,6 +44,7 @@ export async function getL2ActivityData(
       page: 'L2ActivityPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(data),
         ...data,
         milestones: HOMEPAGE_MILESTONES,
       },

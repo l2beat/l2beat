@@ -15,6 +15,7 @@ import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/
 import { getL2SummaryData } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
@@ -76,6 +77,7 @@ export async function getHomeData(
       page: 'HomePage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(data),
         ...data,
       },
     },

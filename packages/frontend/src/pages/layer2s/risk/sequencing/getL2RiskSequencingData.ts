@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2RiskSequencingEntries } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -40,6 +41,7 @@ export async function getL2RiskSequencingData(
       page: 'L2RiskSequencingPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(props),
         ...props,
       },
     },

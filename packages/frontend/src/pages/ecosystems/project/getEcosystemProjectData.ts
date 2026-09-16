@@ -1,5 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getEcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -36,6 +37,7 @@ export async function getEcosystemProjectData(
       page: 'EcosystemProjectPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(ecosystem),
         ecosystem,
         queryState: helpers.dehydrate(),
       },

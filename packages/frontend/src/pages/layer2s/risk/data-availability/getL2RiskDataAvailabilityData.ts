@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2RiskDaEntries } from '~/server/features/layer2s/risks/data-availability/getL2RiskDaEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -41,6 +42,7 @@ export async function getL2RiskDataAvailabilityData(
       page: 'L2RiskDataAvailabilityPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(entries),
         entries,
       },
     },

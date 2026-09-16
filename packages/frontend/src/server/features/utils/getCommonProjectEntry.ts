@@ -1,6 +1,5 @@
 import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { RowBackgroundColor } from '~/components/table/utils/rowType'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
@@ -28,7 +27,7 @@ export interface CommonProjectEntry {
       }
     | undefined
   description?: string
-  badges?: BadgeWithParams[]
+  badgeIds?: string[]
 }
 
 export interface ProjectVerificationWarnings {

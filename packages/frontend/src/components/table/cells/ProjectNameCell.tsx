@@ -13,6 +13,8 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
+import { useBadgeDictionary } from '~/components/projects/BadgeDictionaryContext'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
@@ -28,10 +30,15 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
+import {
+  type BadgeLinkProject,
+  getBadgeLink,
+} from '~/utils/project/getBadgeLink'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
+  tab?: string
   isLayer3?: boolean
   purposes?: ProjectScalingPurpose[]
   capability?: ProjectScalingCapability
@@ -356,10 +363,11 @@ export function ProjectNameInfoTooltip({
 }) {
   const projectName = project.shortName ?? project.name
   const sections = getTooltipSections(project)
+  const badges = useProjectBadges(project)
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistance ||
-    (project.badges?.length ?? 0) > 0 ||
+    badges.length > 0 ||
     sections.length > 0
 
   if (!hasTooltipContent) {
@@ -377,13 +385,29 @@ export function ProjectNameInfoTooltip({
             projectName={projectName}
             description={project.description}
             sections={sections}
-            badges={project.badges}
+            badges={badges}
             sectionsFirst
           />
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
   )
+}
+
+function useProjectBadges(project: ProjectCellProject): BadgeWithParams[] {
+  const dictionary = useBadgeDictionary()
+  // Only scaling entries reference badges, and their tabs are L2 tabs
+  const tab = project.tab as BadgeLinkProject['tab'] | undefined
+  return (project.badgeIds ?? []).flatMap((id) => {
+    const badge = dictionary[id]
+    if (!badge) return []
+    return {
+      ...badge,
+      href: tab
+        ? getBadgeLink(badge, { name: project.name, slug: project.slug, tab })
+        : undefined,
+    }
+  })
 }
 
 function getTooltipSections(project: ProjectCellProject) {

@@ -1,10 +1,15 @@
-import type { Badge, Project } from '@l2beat/config'
+import type { Badge } from '@l2beat/config'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
-import { getL2Tab } from '../layer2s/getCommonL2Entry'
+
+export interface BadgeLinkProject {
+  name: string
+  slug: string
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
+}
 
 export function getBadgeLink(
-  badge: Badge,
-  project: Project<'scalingInfo' | 'statuses'>,
+  badge: Pick<Badge, 'action'>,
+  project: BadgeLinkProject,
 ): string | undefined {
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {
@@ -28,6 +33,6 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfDaHighlight') {
-    return `/layer2s/risk/data-availability?tab=${getL2Tab(project)}&highlight=${project.slug}`
+    return `/layer2s/risk/data-availability?tab=${project.tab}&highlight=${project.slug}`
   }
 }

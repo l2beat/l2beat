@@ -7,6 +7,10 @@ import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
+import {
+  type BadgeDictionary,
+  BadgeDictionaryContextProvider,
+} from '~/components/projects/BadgeDictionaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
 import { WhatsNewContextProvider } from '~/components/whats-new/WhatsNewContext'
 import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
@@ -20,6 +24,8 @@ export interface AppLayoutProps {
   recentChangelogEntriesIds: string[]
   whatsNew: WhatsNewWidget | undefined
   countdowns: typeof PROJECT_COUNTDOWNS
+  // Only pages listing scaling projects need it; see getReferencedBadges
+  badges?: BadgeDictionary
 }
 
 export function AppLayout({
@@ -29,6 +35,7 @@ export function AppLayout({
   recentChangelogEntriesIds,
   whatsNew,
   countdowns,
+  badges = {},
 }: AppLayoutProps & {
   children: React.ReactNode
 }) {
@@ -50,9 +57,11 @@ export function AppLayout({
                   <SearchBarContextProvider
                     recentlyAddedProjects={recentlyAddedProjects}
                   >
-                    <ChartLegendOnboardingProvider>
-                      {children}
-                    </ChartLegendOnboardingProvider>
+                    <BadgeDictionaryContextProvider badges={badges}>
+                      <ChartLegendOnboardingProvider>
+                        {children}
+                      </ChartLegendOnboardingProvider>
+                    </BadgeDictionaryContextProvider>
                   </SearchBarContextProvider>
                 </WhatsNewContextProvider>
               </ChangelogEntriesContextProvider>

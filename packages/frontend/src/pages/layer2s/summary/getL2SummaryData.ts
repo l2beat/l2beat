@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2SummaryEntries } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import { getReferencedBadges } from '~/server/features/projects/badges/getReferencedBadges'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -43,6 +44,7 @@ export async function getL2SummaryData(
       page: 'L2SummaryPage',
       props: {
         ...appLayoutProps,
+        badges: await getReferencedBadges(data),
         ...data,
       },
     },
