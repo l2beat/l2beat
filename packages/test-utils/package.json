@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@l2beat/vitest-config": "workspace:*",
-    "ts-morph": "^28.0.0"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

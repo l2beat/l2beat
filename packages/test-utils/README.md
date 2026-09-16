@@ -38,9 +38,3 @@ setupFiles: ['@l2beat/test-utils/setup']
 // tsconfig.json
 "types": ["node", "@l2beat/test-utils"]
 ```
-
-## Codemod
-
-`src/codemod` rewrites a package's earl + mocha tests to vitest. See
-`scripts/migrate-to-vitest.ts` at the repository root for usage and for the
-mappings that needed a judgement call.
