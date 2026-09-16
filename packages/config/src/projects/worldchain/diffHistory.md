@@ -10,7 +10,7 @@ Generated with discovered.json: 0x586635e18aafe78903665d858305475e348763fc
 
 Alchemy Multisig 1: threshold lowered from `5 of 8` to `3 of 8`. Same change on settlus, shape and worldchain.
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.), executed on 2026-08-25 by Alchemy Multisig 1 via the shared OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA.
+Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.), executed on 2026-08-25 by Alchemy Multisig 1 via the shared OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA. SystemConfig `batchInbox()` was re-initialized to the OPCM-derived `0x0000…21f6` (`0x00` ++ `keccak256(chainId)[0:19]`); batches are still posted to `0xff00…0480`.
 
 Version changes and implementation diffs:
 
