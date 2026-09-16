@@ -146,6 +146,7 @@ async function getCachedData({
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
+    deployments.length,
     relationsGraph,
   )
 
