@@ -7,12 +7,12 @@ import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
+import { ThemeProvider } from '~/components/ThemeProvider'
 import { WhatsNewContextProvider } from '~/components/whats-new/WhatsNewContext'
 import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { env } from '~/env'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { TRPCReactProvider } from '~/trpc/React'
-import { useThemeSync } from '~/utils/theme'
 
 export interface AppLayoutProps {
   terms: GlossaryTerm[]
@@ -32,30 +32,30 @@ export function AppLayout({
 }: AppLayoutProps & {
   children: React.ReactNode
 }) {
-  useThemeSync()
-
   return (
     <TRPCReactProvider>
-      <TooltipProvider delayDuration={300} disableHoverableContent>
-        {env.NODE_ENV === 'development' && <L2BeatDevTools />}
-        <CountdownsContextProvider countdowns={countdowns}>
-          <GlossaryContextProvider terms={terms}>
-            <ChangelogEntriesContextProvider
-              recentChangelogEntriesIds={recentChangelogEntriesIds}
-            >
-              <WhatsNewContextProvider whatsNew={whatsNew}>
-                <SearchBarContextProvider
-                  recentlyAddedProjects={recentlyAddedProjects}
-                >
-                  <ChartLegendOnboardingProvider>
-                    {children}
-                  </ChartLegendOnboardingProvider>
-                </SearchBarContextProvider>
-              </WhatsNewContextProvider>
-            </ChangelogEntriesContextProvider>
-          </GlossaryContextProvider>
-        </CountdownsContextProvider>
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider delayDuration={300} disableHoverableContent>
+          {env.NODE_ENV === 'development' && <L2BeatDevTools />}
+          <CountdownsContextProvider countdowns={countdowns}>
+            <GlossaryContextProvider terms={terms}>
+              <ChangelogEntriesContextProvider
+                recentChangelogEntriesIds={recentChangelogEntriesIds}
+              >
+                <WhatsNewContextProvider whatsNew={whatsNew}>
+                  <SearchBarContextProvider
+                    recentlyAddedProjects={recentlyAddedProjects}
+                  >
+                    <ChartLegendOnboardingProvider>
+                      {children}
+                    </ChartLegendOnboardingProvider>
+                  </SearchBarContextProvider>
+                </WhatsNewContextProvider>
+              </ChangelogEntriesContextProvider>
+            </GlossaryContextProvider>
+          </CountdownsContextProvider>
+        </TooltipProvider>
+      </ThemeProvider>
     </TRPCReactProvider>
   )
 }

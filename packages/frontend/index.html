@@ -2,7 +2,7 @@
 <html lang="en" class="has-[.smooth-scroll]:scroll-smooth bg-background">
 
 <head>
-  <!-- Applies the theme before first paint. Lives in <head> because an inline script ahead of the page content makes Arc flash a white frame. Keep in sync with src/utils/theme.ts -->
+  <!-- Applies the theme before first paint. Lives in <head> because an inline script ahead of the page content makes Arc flash a white frame. Keep in sync with src/components/ThemeProvider.tsx -->
   <script>
     (function () { try { var d = document.documentElement, e = localStorage.getItem("l2beat-theme"), t = e === "light" || e === "dark" ? e : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; d.classList.add(t); d.style.colorScheme = t } catch (e) { } })();
   </script>
