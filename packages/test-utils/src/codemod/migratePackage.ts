@@ -83,17 +83,24 @@ function convertPackageConfig(
   report: MigrationReport,
 ): void {
   const { packageDir, dryRun } = options
-  const mocha = readMochaConfig(packageDir)
+  const loaded = loadedMochaConfig(packageDir)
+  const mocha = readMochaConfig(packageDir, loaded)
   const includes = (
     mocha.specs.length > 0 ? mocha.specs : [DEFAULT_TEST_GLOB]
   ).filter((glob) => !PRESET_INCLUDES.includes(glob))
 
   for (const name of readdirSync(packageDir)) {
-    if (name.startsWith('.mocharc')) {
-      report.packageChanges.push(`removed ${name}`)
-      if (!dryRun) {
-        rmSync(join(packageDir, name))
-      }
+    if (!name.startsWith('.mocharc')) {
+      continue
+    }
+    report.packageChanges.push(`removed ${name}`)
+    if (name !== loaded) {
+      report.manualSteps.push(
+        `${name} was only reachable through \`mocha --config\`, so point the script that named it at vitest`,
+      )
+    }
+    if (!dryRun) {
+      rmSync(join(packageDir, name))
     }
   }
 
@@ -263,8 +270,10 @@ interface MochaConfig {
   setupFiles: string[]
 }
 
-function readMochaConfig(packageDir: string): MochaConfig {
-  const name = readdirSync(packageDir).find((it) => it.startsWith('.mocharc'))
+function readMochaConfig(
+  packageDir: string,
+  name: string | undefined,
+): MochaConfig {
   if (!name) {
     return { specs: [], setupFiles: [] }
   }
@@ -320,6 +329,16 @@ export function rewriteScripts(
     }
   }
   return rewritten
+}
+
+/**
+ * The config mocha picks up on its own is the one that says how `pnpm test`
+ * ran. A variant such as `.mocharc-smoke.json` is reachable only through
+ * `mocha --config`, and taking its spec - alphabetically it even comes first -
+ * would cut the package's test globs down to whatever that one script ran.
+ */
+function loadedMochaConfig(packageDir: string): string | undefined {
+  return readdirSync(packageDir).find((it) => it.startsWith('.mocharc.'))
 }
 
 function withoutMochaAndEarl(
