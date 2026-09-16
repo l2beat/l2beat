@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb46f39f0246149d84f4a27f518f4b6af964090cb
 
 ## Description
 
-Exited Superchain governance via [tx 0xa5888be6...](https://etherscan.io/tx/0xa5888be651d314fc0de435d6bef7f2c934c2c9f0328cb6af7b86210d966ac551) executed by the SuperchainProxyAdminOwner: ProxyAdmin and DisputeGameFactory `owner` and the `guardian` role moved to the Conduit Multisig 1, and `superchainConfig` was repointed from the shared Superchain instance to the Conduit-operated fork (pauses expire after 3mo 1d). Same change on metal, mode and zora.
+Exited Superchain governance, executed by the SuperchainProxyAdminOwner: ProxyAdmin and DisputeGameFactory `owner` and the `guardian` role moved to the Conduit Multisig 1, and `superchainConfig` was repointed from the shared Superchain instance to the Conduit-operated fork (pauses expire after 3mo 1d). Same change on metal, mode and zora.
 
 ## Watched changes
 
