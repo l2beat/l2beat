@@ -1,0 +1,126 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "etherfi",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 120,
+  "initialAddresses": [
+    "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2", // eETH
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee", // weETH
+    "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216", // LiquidityPool
+    "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d", // StakingManager
+    "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F", // EtherFiNodesManager
+    "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9", // AuctionManager
+    "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E", // NodeOperatorManager
+    "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41", // EtherFiOracle
+    "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705", // EtherFiAdmin
+    "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c", // WithdrawRequestNFT
+    "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0", // EtherFiRedemptionManager
+    "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9", // RoleRegistry
+    "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf", // EtherFiRestaker
+    "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F", // Liquifier
+    "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000", // MembershipManager
+    "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479", // MembershipNFT
+    "eth:0x8487c5F8550E3C3e7734Fe7DCF77DB2B72E4A848", // AddressProvider
+    "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a", // EtherFiAvsOperatorsManager
+    "eth:0x89E45081437c959A827d2027135bC201Ab33a2C8", // RestakingRewardsRouter
+    "eth:0xcfC6d9Bd7411962Bfe7145451A7EF71A24b6A7A2", // DepositAdapter
+    "eth:0xFbfe6b9cEe0E555Bad7e2E7309EFFC75200cBE38", // WeETHWithdrawAdapter
+    "eth:0x73f7b1184B5cD361cC0f7654998953E2a251dd58", // EtherFiRewardsRouter
+    "eth:0x9A8c5046a290664Bf42D065d33512fe403484534", // CumulativeMerkleRewardsDistributor
+    "eth:0x6Db24Ee656843E3fE03eb8762a54D86186bA6B64", // KINGDistributor
+    "eth:0xD0Ff8996DB4bDB46870b7E833b7532f484fEad1A", // EtherFiOperationParameters
+    "eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81" // EtherFiViewer
+  ],
+  "names": {
+    "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2": "eETH",
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": "weETH",
+    "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216": "LiquidityPool",
+    "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d": "StakingManager",
+    "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F": "EtherFiNodesManager",
+    "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9": "AuctionManager",
+    "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E": "NodeOperatorManager",
+    "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41": "EtherFiOracle",
+    "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705": "EtherFiAdmin",
+    "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c": "WithdrawRequestNFT",
+    "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0": "EtherFiRedemptionManager",
+    "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9": "RoleRegistry",
+    "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": "EtherFiRestaker",
+    "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": "Liquifier",
+    "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000": "MembershipManager",
+    "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": "MembershipNFT"
+  },
+  "overrides": {
+    // Boundary cuts: ether.fi fields pointing into external protocols (Lido,
+    // EigenLayer, LayerZero, Curve, Chainlink) or enumerating thousands of
+    // per-validator node clones. The boundary contracts stay in scope; the
+    // foreign graphs are not crawled.
+    "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": {
+      "ignoreRelatives": [
+        "dummies",
+        "lido",
+        "lidoWithdrawalQueue",
+        "stEth_Eth_Pool",
+        "stEthPriceFeed"
+      ]
+    },
+    "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": {
+      "ignoreRelatives": [
+        "lido",
+        "lidoWithdrawalQueue",
+        "eigenLayerDelegationManager",
+        "eigenLayerStrategyManager",
+        "rewardsCoordinator"
+      ]
+    },
+    "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F": {
+      "ignoreRelatives": ["etherfiNodeAddress", "BEACON_ETH_STRATEGY_ADDRESS"]
+    },
+    "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0": {
+      "ignoreRelatives": ["lido", "stEthPriceFeed"]
+    },
+    "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
+      "//": "EtherFiNode implementation (behind the beacon): cut EigenLayer wiring",
+      "ignoreRelatives": [
+        "delegationManager",
+        "eigenPodManager",
+        "getEigenPod",
+        "BEACON_ETH_STRATEGY_ADDRESS"
+      ]
+    },
+    "eth:0x556Db8c611FE63e694413F718d795f976dcF5881": {
+      "//": "EtherFiNode impl address as resolved via beacon: same EigenLayer cuts",
+      "ignoreRelatives": [
+        "delegationManager",
+        "eigenPodManager",
+        "getEigenPod",
+        "BEACON_ETH_STRATEGY_ADDRESS"
+      ]
+    },
+    "eth:0xcfC6d9Bd7411962Bfe7145451A7EF71A24b6A7A2": {
+      "//": "DepositAdapter: external LST/wETH tokens it zaps from",
+      "ignoreRelatives": ["stETH", "wETH", "wstETH"]
+    },
+    "eth:0x89E45081437c959A827d2027135bC201Ab33a2C8": {
+      "//": "RestakingRewardsRouter: EIGEN reward token is external",
+      "ignoreRelatives": ["rewardTokenAddress"]
+    },
+    "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a": {
+      "//": "EtherFiAvsOperatorsManager: EigenLayer core is external",
+      "ignoreRelatives": ["avsDirectory", "delegationManager", "avsOperators"]
+    },
+    "eth:0x6Db24Ee656843E3fE03eb8762a54D86186bA6B64": {
+      "//": "KINGDistributor (CumulativeMerkleDrop): the KING/LRT-squared/Liquid reward subgraph and its LayerZero OFT are separate products, out of scope for the weETH staking core",
+      "ignoreRelatives": ["token", "oftAdapter", "endpoint"]
+    },
+    "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63": {
+      "ignoreRelatives": ["endpoint", "msgInspector", "preCrime"]
+    },
+    "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146": {
+      "ignoreRelatives": ["endpoint"]
+    },
+    "eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29": {
+      "//": "AvsOperator implementation matched by the shared eigenlayer/AVSOperator template; implementation() reverts on the logic contract itself",
+      "ignoreMethods": ["implementation"]
+    }
+  }
+}
