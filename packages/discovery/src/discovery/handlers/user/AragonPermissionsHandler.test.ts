@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import {
@@ -53,8 +54,8 @@ describe(AragonPermissionsHandler.name, () => {
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(acl)
-        expect(topics).toEqual([
+        expect(providedAddress).toStrictEqual(acl)
+        expect(topics).toStrictEqual([
           [
             aclAbi.getEventTopic('SetPermission'),
             aclAbi.getEventTopic('ChangePermissionManager'),
@@ -96,7 +97,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await fetchAragonPermissions(provider, acl, app)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       [WIZARD_ROLE.toLowerCase()]: {
         members: [bob.toString()],
         managers: [manager.toString()],
@@ -141,7 +142,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await handler.execute(provider, app)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'aragonPermissions',
       value: {
         WIZARD_ROLE: {
@@ -182,7 +183,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await handler.execute(provider, app)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'aragonPermissions',
       value: {
         WIZARD_ROLE: {

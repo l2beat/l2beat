@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { validateBlip } from './validateBlip'
 
 describe(validateBlip.name, () => {

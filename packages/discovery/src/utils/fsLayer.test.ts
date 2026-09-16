@@ -1,4 +1,3 @@
-import { expect } from 'earl'
 import {
   mkdirSync,
   mkdtempSync,
@@ -9,6 +8,7 @@ import {
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { fileExistsCaseSensitive } from './fsLayer'
 
 // Listings are cached per directory, so each test mutates a real temporary
@@ -28,28 +28,30 @@ describe(fileExistsCaseSensitive.name, () => {
   it('matches the exact basename only', () => {
     writeFileSync(join(root, 'README.md'), '')
 
-    expect(fileExistsCaseSensitive(join(root, 'README.md'))).toEqual(true)
-    expect(fileExistsCaseSensitive(join(root, 'readme.md'))).toEqual(false)
+    expect(fileExistsCaseSensitive(join(root, 'README.md'))).toStrictEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'readme.md'))).toStrictEqual(
+      false,
+    )
   })
 
   it('sees entries added after the directory was listed', () => {
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toStrictEqual(false)
 
     mkdirSync(join(root, 'project'))
     bumpMtime(root)
 
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toStrictEqual(true)
   })
 
   it('sees entries renamed after the directory was listed', () => {
     mkdirSync(join(root, 'Project'))
-    expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'Project'))).toStrictEqual(true)
 
     renameSync(join(root, 'Project'), join(root, 'project'))
     bumpMtime(root)
 
-    expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(false)
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'Project'))).toStrictEqual(false)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toStrictEqual(true)
   })
 })
 

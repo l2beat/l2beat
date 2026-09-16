@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
@@ -33,7 +34,7 @@ describe(DiscoveryEngine.name, () => {
   const strC = C.toString()
   const strD = D.toString()
   const provider = mockObject<AllProviders>({
-    get: mockFn().resolvesTo(
+    get: vi.fn().mockResolvedValue(
       mockObject<Thenable<IProvider>>({
         then: undefined,
       }),
@@ -46,24 +47,24 @@ describe(DiscoveryEngine.name, () => {
     })
 
     const addressAnalyzer = mockObject<AddressAnalyzer>({
-      analyze: mockFn(),
+      analyze: vi.fn(),
     })
     addressAnalyzer.analyze
-      .resolvesToOnce({
+      .mockResolvedValueOnce({
         ...base,
         address: A,
         type: 'Contract',
         name: 'A',
         relatives: { [strB]: new Set(), [strC]: new Set() },
       })
-      .resolvesToOnce({
+      .mockResolvedValueOnce({
         ...base,
         address: C,
         type: 'Contract',
         name: 'C',
         relatives: { [strB]: new Set(), [strD]: new Set() },
       })
-      .resolvesToOnce({
+      .mockResolvedValueOnce({
         ...base,
         address: D,
         type: 'Contract',
@@ -74,7 +75,7 @@ describe(DiscoveryEngine.name, () => {
     const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
     const { analyses } = await engine.discover(provider, config.structure, 1234)
 
-    expect(analyses).toEqual([
+    expect(analyses).toStrictEqual([
       {
         ...base,
         type: 'Contract',

@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { Entrypoint } from '../config/StructureConfig'
@@ -26,17 +26,17 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
 
   it("doesn't match opstack/SuperchainConfig because address is not in validAddresses", () => {
     const templateService = new TemplateService(paths.discovery)
-    templateService.getAllShapes = mockFn().returns(templateShapes)
+    templateService.getAllShapes = vi.fn().mockReturnValue(templateShapes)
     const result = templateService.findMatchingTemplatesByHash(
       CORRECT_SUPERCHAIN_SOURCES_HASH,
       FAKE_SUPERCHAIN_CONFIG_ADDR,
     )
-    expect(result).toEqual(['opstack/SuperchainConfigFake'])
+    expect(result).toStrictEqual(['opstack/SuperchainConfigFake'])
   })
 
   it('matches ONLY opstack/SuperchainConfig because address is in validAddresses and is more specific', () => {
     const templateService = new TemplateService(paths.discovery)
-    templateService.getAllShapes = mockFn().returns(templateShapes)
+    templateService.getAllShapes = vi.fn().mockReturnValue(templateShapes)
     const result = templateService.findMatchingTemplatesByHash(
       CORRECT_SUPERCHAIN_SOURCES_HASH,
       CORRECT_SUPERCHAIN_CONFIG_ADDR,
@@ -44,7 +44,7 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
     // The opstack/SuperchainConfigFake template is not returned
     // even though there is an implementation match. That's because
     // the more specific match (criteria+hash) is found.
-    expect(result).toEqual(['opstack/SuperchainConfig'])
+    expect(result).toStrictEqual(['opstack/SuperchainConfig'])
   })
 })
 
@@ -58,8 +58,8 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
     entrypoints: Record<string, Entrypoint>,
   ) {
     const templateService = new TemplateService(getDiscoveryPaths().discovery)
-    templateService.getAllTemplateHashes = mockFn().returns({})
-    templateService.getAllShapes = mockFn().returns({})
+    templateService.getAllTemplateHashes = vi.fn().mockReturnValue({})
+    templateService.getAllShapes = vi.fn().mockReturnValue({})
 
     const config = new ConfigRegistry({
       name: CONSUMER,
@@ -100,11 +100,11 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: OWNER },
       }),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 
   it('asks for a refresh when the referenced entrypoint is gone', () => {
-    expect(entrypointReasons([reference], {}).length).toEqual(1)
+    expect(entrypointReasons([reference], {}).length).toStrictEqual(1)
   })
 
   it('asks for a refresh when the referenced entrypoint became legacy', () => {
@@ -112,7 +112,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
       }).length,
-    ).toEqual(1)
+    ).toStrictEqual(1)
   })
 
   it('asks for a refresh when the entrypoint owner changed', () => {
@@ -120,7 +120,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: 'someone-else' },
       }).length,
-    ).toEqual(1)
+    ).toStrictEqual(1)
   })
 
   it("asks for a refresh when a discovered entry became another project's entrypoint", () => {
@@ -128,7 +128,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: OWNER },
       }).length,
-    ).toEqual(1)
+    ).toStrictEqual(1)
   })
 
   it("is quiet when a discovered entry is the project's own entrypoint", () => {
@@ -136,7 +136,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: CONSUMER },
       }),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 
   // Legacy entrypoints exist precisely so that consumers may keep discovering
@@ -146,7 +146,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
       }),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 })
 

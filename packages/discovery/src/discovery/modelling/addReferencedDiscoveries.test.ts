@@ -3,7 +3,8 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, type Mock, vi } from 'vitest'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import {
@@ -25,7 +26,10 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(discoveries.getSortedProjects()).toEqual(['abstract', 'shared'])
+    expect(discoveries.getSortedProjects()).toStrictEqual([
+      'abstract',
+      'shared',
+    ])
   })
 
   // The point of the helper: the project was just discovered at a block that is
@@ -40,7 +44,7 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
+    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
   })
 
   it('collects the entries of the whole cluster', () => {
@@ -52,7 +56,7 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(clusterEntries(discoveries).map((e) => e.address)).toEqual([
+    expect(clusterEntries(discoveries).map((e) => e.address)).toStrictEqual([
       TIMELOCK,
       COUNCIL,
       COUNCIL,
@@ -77,14 +81,14 @@ describe(addReferencedDiscoveries.name, () => {
     expect(() =>
       addReferencedDiscoveries(discoveries, 'abstract', broken),
     ).toThrow()
-    expect(discoveries.getSortedProjects()).toEqual(['abstract'])
-    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
+    expect(discoveries.getSortedProjects()).toStrictEqual(['abstract'])
+    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
   })
 
   it('does not read the base project or load references removed from it', () => {
     const discoveries = new DiscoveryRegistry()
     discoveries.set('abstract', output('abstract', [contract(TIMELOCK)]))
-    const readDiscovery = mockFn<ConfigReader['readDiscovery']>()
+    const readDiscovery = vi.fn<ConfigReader['readDiscovery']>()
 
     addReferencedDiscoveries(
       discoveries,
@@ -93,7 +97,7 @@ describe(addReferencedDiscoveries.name, () => {
     )
 
     expect(readDiscovery).not.toHaveBeenCalled()
-    expect(discoveries.getSortedProjects()).toEqual(['abstract'])
+    expect(discoveries.getSortedProjects()).toStrictEqual(['abstract'])
   })
 
   it('loads transitive references once and stops cycles at the fresh project', () => {
@@ -103,11 +107,10 @@ describe(addReferencedDiscoveries.name, () => {
     ])
     const discoveries = new DiscoveryRegistry()
     discoveries.set('abstract', fresh)
-    const readDiscovery = mockFn<ConfigReader['readDiscovery']>()
-      .given('shared')
-      .returnsOnce(output('shared', [reference(COUNCIL, 'nested')]))
-      .given('nested')
-      .returnsOnce(output('nested', [reference(TIMELOCK, 'abstract')]))
+    const readDiscovery = readsProjects({
+      shared: output('shared', [reference(COUNCIL, 'nested')]),
+      nested: output('nested', [reference(TIMELOCK, 'abstract')]),
+    })
 
     addReferencedDiscoveries(
       discoveries,
@@ -115,21 +118,38 @@ describe(addReferencedDiscoveries.name, () => {
       mockObject<ConfigReader>({ readDiscovery }),
     )
 
-    expect(discoveries.getSortedProjects()).toEqual([
+    expect(discoveries.getSortedProjects()).toStrictEqual([
       'abstract',
       'nested',
       'shared',
     ])
     expect(readDiscovery).toHaveBeenCalledTimes(2)
-    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
+    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
   })
 })
 
 function reader(): ConfigReader {
   return mockObject<ConfigReader>({
-    readDiscovery: mockFn<ConfigReader['readDiscovery']>()
-      .given('shared')
-      .returnsOnce(output('shared', [contract(COUNCIL)])),
+    readDiscovery: readsProjects({
+      shared: output('shared', [contract(COUNCIL)]),
+    }),
+  })
+}
+
+/**
+ * Keys the stubbed reads by project rather than by call order, because the
+ * order in which references are traversed is an implementation detail. An
+ * unstubbed project throws, the way a missing file on disk would.
+ */
+function readsProjects(
+  outputs: Record<string, DiscoveryOutput>,
+): Mock<ConfigReader['readDiscovery']> {
+  return vi.fn<ConfigReader['readDiscovery']>((project) => {
+    const found = outputs[project]
+    if (!found) {
+      throw new Error(`No discovery committed for ${project}`)
+    }
+    return found
   })
 }
 

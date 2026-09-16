@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import { BytesToString } from './BytesToString'
 
 describe('BytesToString', () => {
@@ -7,16 +7,16 @@ describe('BytesToString', () => {
     const json =
       '{"gasPriceDeviationPPB":"4000000000","chainFeeDeviationDisabled":false}'
     const hex = utils.hexlify(utils.toUtf8Bytes(json))
-    expect(BytesToString.cast({}, hex)).toEqual(json)
+    expect(BytesToString.cast({}, hex)).toStrictEqual(json)
   })
 
   it('decodes empty bytes to an empty string', () => {
-    expect(BytesToString.cast({}, '0x')).toEqual('')
+    expect(BytesToString.cast({}, '0x')).toStrictEqual('')
   })
 
   it('returns the original value when bytes are not valid UTF-8', () => {
     const invalid = '0xff'
-    expect(BytesToString.cast({}, invalid)).toEqual(invalid)
+    expect(BytesToString.cast({}, invalid)).toStrictEqual(invalid)
   })
 
   it('throws if value is not a hex string', () => {

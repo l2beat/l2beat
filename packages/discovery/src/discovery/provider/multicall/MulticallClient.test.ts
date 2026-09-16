@@ -1,5 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import { type CallProvider, MulticallClient } from './MulticallClient'
 import {
@@ -53,13 +54,13 @@ describe(MulticallClient.name, () => {
       ],
       blockNumber,
     )
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
       // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
       { address: ADDRESS_B, data: Bytes.fromHex('0x') },
       { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
@@ -97,12 +98,12 @@ describe(MulticallClient.name, () => {
       ],
       blockNumber,
     )
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: false, data: Bytes.fromHex('0x0f00') },
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       {
         address: ADDRESS_3,
         data: encodeMulticall3([
@@ -144,8 +145,8 @@ describe(MulticallClient.name, () => {
       })),
       blockNumber,
     )
-    expect(result.length).toEqual(BATCH_SIZE * 2 + 1)
-    expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
+    expect(result.length).toStrictEqual(BATCH_SIZE * 2 + 1)
+    expect(calls).toStrictEqual([BATCH_SIZE, BATCH_SIZE, 1])
   })
 
   it('offers a named interface', async () => {
@@ -176,7 +177,7 @@ describe(MulticallClient.name, () => {
       blockNumber,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       foo: [{ success: true, data: Bytes.fromHex('0x1234') }],
       bar: [{ success: false, data: Bytes.fromHex('0xdead') }],
     })
@@ -194,7 +195,12 @@ describe(MulticallClient.name, () => {
       error['error'] = { error: { code: 123, message } }
 
       const discoveryProvider = mockObject<CallProvider>({
-        call: mockFn().throwsOnce(error).returns(Bytes.fromHex('0x42ab')),
+        call: vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw error
+          })
+          .mockReturnValue(Bytes.fromHex('0x42ab')),
       })
 
       const multicallClient = new MulticallClient(
@@ -211,7 +217,7 @@ describe(MulticallClient.name, () => {
         blockNumber,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         { success: true, data: Bytes.fromHex('0x42ab') },
         { success: true, data: Bytes.fromHex('0x42ab') },
         { success: true, data: Bytes.fromHex('0x42ab') },

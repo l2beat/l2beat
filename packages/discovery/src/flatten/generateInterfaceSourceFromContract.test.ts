@@ -1,5 +1,5 @@
 import type * as AST from '@mradomski/fast-solidity-parser'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   type DeclarationType,
@@ -66,7 +66,7 @@ interface E {
     function B(uint256 element, MyStruct calldata arg2) external returns (uint256);
     function X() external returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('generates abstract contract from abstract contract', () => {
@@ -85,7 +85,7 @@ interface E {
     function X() external returns (uint256);
     function XYZ(address receiver) external payable returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('generates corrects overrides', () => {
@@ -104,7 +104,7 @@ interface E {
     function X() external override(C1) returns (uint256);
     function XYZ(address receiver) external payable override(C1, C2) returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('converts memory to calldata for dynamic params in external functions', () => {
@@ -127,7 +127,7 @@ interface E {
     function setName(string calldata name) external;
     function setItems(uint256[] calldata items) external;
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('preserves address payable parameters', () => {
@@ -142,7 +142,7 @@ interface E {
 interface E {
     function foo(address payable to) external;
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits simple public variable', () => {
@@ -157,7 +157,7 @@ interface E {
 interface E {
     function totalSupply() external view returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits mapping public variable', () => {
@@ -172,7 +172,7 @@ interface E {
 interface E {
     function balanceOf(address) external view returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits nested mapping public variable', () => {
@@ -187,7 +187,7 @@ interface E {
 interface E {
     function allowance(address, address) external view returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits array public variable', () => {
@@ -202,7 +202,7 @@ interface E {
 interface E {
     function owners(uint256) external view returns (address);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('skips private and internal variables', () => {
@@ -219,7 +219,7 @@ interface E {
 interface E {
     function x() external returns (uint256);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits bytes and string public variables', () => {
@@ -236,7 +236,7 @@ interface E {
     function data() external view returns (bytes memory);
     function name() external view returns (string memory);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits struct public variable', () => {
@@ -256,7 +256,7 @@ interface E {
 
     function info() external view returns (Info memory);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits mapping to bytes public variable', () => {
@@ -271,7 +271,7 @@ interface E {
 interface E {
     function items(uint256) external view returns (bytes memory);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits typedef public variable', () => {
@@ -289,7 +289,7 @@ interface E {
 
     function currentPos() external view returns (Position);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits getter for public constant variable', () => {
@@ -304,7 +304,7 @@ interface E {
 interface E {
     function VERSION() external view returns (bytes memory);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('emits getter for public immutable variable', () => {
@@ -323,7 +323,7 @@ interface E {
 interface E {
     function owner() external view returns (address);
 }`
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('throws for enum', () => {

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { GreaterThan } from './GreaterThan'
 
 interface TestData {
@@ -60,7 +60,7 @@ describe('GreaterThan', () => {
         },
         data.incomingValue,
       )
-      expect(result).toEqual(data.expected)
+      expect(result).toStrictEqual(data.expected)
     })
   }
 })

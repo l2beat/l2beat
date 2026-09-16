@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { flattenStartingFrom } from './flatten'
 import type { FileContent } from './ParsedFilesManager'
 
@@ -75,7 +75,7 @@ describe('flatten', () => {
 
     const flattened = flattenStartingFrom('R1', 'Root.sol', files, remappings)
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract C3 { function r4() public {} }
 
@@ -110,7 +110,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract Foo { struct S { uint256 x; } }
 
@@ -158,7 +158,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract Base { struct S { uint256 x; } }
 
@@ -202,7 +202,7 @@ describe('flatten', () => {
     )
 
     const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [])
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract C2 { }
 
@@ -249,7 +249,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract C2 { }
 
@@ -307,7 +307,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract Shared { function s() public {} }
 
@@ -348,7 +348,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       abstract contract Shared { }
 
@@ -387,7 +387,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       abstract contract Shared { }
 
@@ -446,7 +446,7 @@ describe('flatten', () => {
       { includeAll: true },
     )
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       library LibVMStatus {
           function raw(VMStatus _vmstatus) internal pure returns (uint8 vmstatus_) {
@@ -498,7 +498,7 @@ describe('flatten', () => {
 
     const flattened = flattenStartingFrom('Root', 'Root.sol', [file], [])
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       library LibPosition {
           function update(Position self) internal pure returns (Position) {
@@ -565,7 +565,7 @@ describe('flatten', () => {
       [],
     )
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       library SafeCast {
           function toInt128(int256 value) internal pure returns (int128) {
@@ -626,7 +626,7 @@ describe('flatten', () => {
       [],
     )
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       library LibPosition {
           function update(Position self) internal pure returns (Position) {
@@ -670,7 +670,7 @@ describe('flatten', () => {
       [rootFile, c2File],
       [],
     )
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract C2 { }
 
@@ -703,7 +703,7 @@ describe('flatten', () => {
       [rootFile, c2File],
       ['@stdlib=../somewhere/'],
     )
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract StringClass { }
 
@@ -745,7 +745,7 @@ describe('flatten', () => {
       { includeAll: true },
     )
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       event EventHappened(uint256 value, address account);
 
@@ -802,7 +802,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       library Lib { function value() internal pure returns (uint256) { return 2; } }
 
@@ -868,7 +868,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       // NOTE(l2beat): This is an interface, generated from the contract source code.
       interface ToBeInterface {
@@ -908,7 +908,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract Newing {
           constructor() payable { }
@@ -965,7 +965,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       // NOTE(l2beat): This is an interface, generated from the contract source code.
       interface Newing {
@@ -1008,7 +1008,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract R1 {
           function f(address x) public {
@@ -1061,7 +1061,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R', 'Root.sol', files, [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       // NOTE(l2beat): This is an interface, generated from the contract source code.
       interface Whitelist {
@@ -1105,7 +1105,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R', 'root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       interface Iface {
       \tfunction foo(address payable to) external;
@@ -1142,7 +1142,7 @@ describe('flatten', () => {
     const flattened = flattenStartingFrom('R', 'root.sol', [file], [], {
       includeAll: true,
     })
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       function addTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {
         return Timestamp.wrap(Timestamp.unwrap(_a) + Timestamp.unwrap(_b));
@@ -1186,7 +1186,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
     // NOTE(l2beat): This is an interface, generated from the contract source code.
     interface Inner {}
@@ -1230,7 +1230,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       pragma experimental ABIEncoderV2;
 
@@ -1261,7 +1261,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       contract Base { constructor(uint256 x) {} }
 
@@ -1292,7 +1292,7 @@ describe('flatten', () => {
       includeAll: true,
     })
 
-    expect(flattened).toEqual(
+    expect(flattened).toStrictEqual(
       dedent(`
       uint256 constant CONSTANT = 42;
 
@@ -1327,7 +1327,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         contract Name { function cba() public {} }
 
@@ -1371,7 +1371,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         contract Base { function base1() public {} }
 
@@ -1406,7 +1406,7 @@ describe('flatten', () => {
 
       const flattened = flattenStartingFrom('Main', 'Root.sol', [file], [])
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         contract Base { }
 
@@ -1437,7 +1437,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         /// @title Base contract
         /// @notice This is the base
@@ -1474,7 +1474,7 @@ describe('flatten', () => {
         { includeAll: true },
       )
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         /**
          * @title MyContract
@@ -1517,7 +1517,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         /// @title IBase interface
         /// @notice Base functionality
@@ -1556,7 +1556,7 @@ describe('flatten', () => {
         { includeAll: true },
       )
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         /// @title Rollup
         /// @author Aztec Labs
@@ -1597,7 +1597,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1638,7 +1638,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Whitelist {
@@ -1675,7 +1675,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1712,7 +1712,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1753,7 +1753,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1795,7 +1795,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1838,7 +1838,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {
@@ -1890,7 +1890,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface DynamicContract {
@@ -1935,7 +1935,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface A {
@@ -1987,7 +1987,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface A {
@@ -2030,7 +2030,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {}
@@ -2071,7 +2071,7 @@ describe('flatten', () => {
         includeAll: true,
       })
 
-      expect(flattened).toEqual(
+      expect(flattened).toStrictEqual(
         dedent(`
         // NOTE(l2beat): This is an interface, generated from the contract source code.
         interface Service {

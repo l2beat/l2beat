@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import { StructureContract } from '../config/StructureConfig'
 import { shouldSkip } from './shouldSkip'
@@ -18,7 +18,7 @@ describe(shouldSkip.name, () => {
       },
     })
     const result = shouldSkip(address, config.structure, 0, 1)
-    expect(result).not.toEqual(undefined)
+    expect(result).not.toStrictEqual(undefined)
   })
 
   it('skips addresses that exceed max depth', () => {
@@ -30,7 +30,7 @@ describe(shouldSkip.name, () => {
       maxDepth: 1,
     })
     const result = shouldSkip(address, config.structure, 2, 1)
-    expect(result).not.toEqual(undefined)
+    expect(result).not.toStrictEqual(undefined)
   })
 
   it('skips addresses that exceed max addresses', () => {
@@ -42,7 +42,7 @@ describe(shouldSkip.name, () => {
       maxAddresses: 1,
     })
     const result = shouldSkip(address, config.structure, 0, 2)
-    expect(result).not.toEqual(undefined)
+    expect(result).not.toStrictEqual(undefined)
   })
 
   it('does not skip addresses that are not ignored', () => {
@@ -53,6 +53,6 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
     })
     const result = shouldSkip(address, config.structure, 0, 1)
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })

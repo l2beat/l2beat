@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 
 describe(gatherReachableAddresses.name, () => {
@@ -44,7 +44,7 @@ describe(gatherReachableAddresses.name, () => {
       addressRelatives,
     )
 
-    expect(result).toEqual(
+    expect(result).toStrictEqual(
       new Set([
         address1,
         address2,

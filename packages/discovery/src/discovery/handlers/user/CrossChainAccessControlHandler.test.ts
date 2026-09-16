@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { CrossChainAccessControlHandler } from './CrossChainAccessControlHandler'
@@ -104,7 +105,7 @@ describe(CrossChainAccessControlHandler.name, () => {
         ['function WARRIOR_ROLE() view returns (bytes32)'],
       )
       const value = await handler.execute(provider, address)
-      expect(value).toEqual({
+      expect(value).toStrictEqual({
         field: 'someName',
         value: [Alice.toString()],
         ignoreRelative: undefined,
@@ -123,7 +124,7 @@ describe(CrossChainAccessControlHandler.name, () => {
         ['function WARRIOR_ROLE() view returns (bytes32)'],
       )
       const value = await handler.execute(provider, address)
-      expect(value).toEqual({
+      expect(value).toStrictEqual({
         field: 'someName',
         value: {
           WIZARD_ROLE: {
@@ -154,7 +155,7 @@ describe(CrossChainAccessControlHandler.name, () => {
         ['function WARRIOR_ROLE() view returns (bytes32)'],
       )
       const value = await handler.execute(provider, address)
-      expect(value).toEqual({
+      expect(value).toStrictEqual({
         field: 'someName',
         value: {
           Chain1: [Alice.toString()],
@@ -178,7 +179,7 @@ describe(CrossChainAccessControlHandler.name, () => {
         ['function WARRIOR_ROLE() view returns (bytes32)'],
       )
       const value = await handler.execute(provider, address)
-      expect(value).toEqual({
+      expect(value).toStrictEqual({
         field: 'someName',
         value: {
           Chain1: {
@@ -212,8 +213,8 @@ describe(CrossChainAccessControlHandler.name, () => {
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([
           [
             abi.getEventTopic('RoleGranted'),
             abi.getEventTopic('RoleRevoked'),
@@ -232,7 +233,7 @@ describe(CrossChainAccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {},
       ignoreRelative: undefined,
@@ -256,7 +257,7 @@ describe(CrossChainAccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {},
       ignoreRelative: true,
@@ -315,7 +316,7 @@ describe(CrossChainAccessControlHandler.name, () => {
       ],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         Chain1: {

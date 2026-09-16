@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { StructureEntry } from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { buildPermissionsModel } from './relations'
@@ -26,9 +26,9 @@ describe(buildPermissionsModel.name, () => {
       CLUSTER_MAP,
     )
 
-    expect(model ?? '').toInclude('permission(')
-    expect(model ?? '').toInclude(modelId(PROXY_ADMIN))
-    expect(model ?? '').toInclude('"upgrade"')
+    expect(model ?? '').toContain('permission(')
+    expect(model ?? '').toContain(modelId(PROXY_ADMIN))
+    expect(model ?? '').toContain('"upgrade"')
   })
 
   it('skips a target that no discovery of the cluster knows', () => {
@@ -38,7 +38,7 @@ describe(buildPermissionsModel.name, () => {
       OWN_MAP,
     )
 
-    expect(model ?? '').not.toInclude('permission(')
+    expect(model ?? '').not.toContain('permission(')
   })
 
   it('emits nothing for a Reference stub', () => {
@@ -48,7 +48,7 @@ describe(buildPermissionsModel.name, () => {
       CLUSTER_MAP,
     )
 
-    expect(model).toEqual(undefined)
+    expect(model).toStrictEqual(undefined)
   })
 })
 

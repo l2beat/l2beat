@@ -1,11 +1,13 @@
 import {
   assert,
+  type Bytes,
   ChainSpecificAddress,
   type EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
 import { IMPLEMENTATION_SLOT } from '../auto/Eip1967Proxy'
 import { getEverclearProxy, modules } from './EverclearProxy'
@@ -50,6 +52,10 @@ describe(getEverclearProxy.name, () => {
     }
   }
 
+  const MODULE_ABI =
+    'function modules(bytes32 _moduleType) external view returns (address _module)'
+  const OWNER_ABI = 'function owner() view returns (address)'
+
   const ADDRESS = ChainSpecificAddress.random()
   const MAIN_IMPLEMENTATION = ChainSpecificAddress.random()
   const MODULE_IMPLEMENTATIONS = modules.map((_) =>
@@ -63,21 +69,39 @@ describe(getEverclearProxy.name, () => {
   )
   const ADMIN_R = ChainSpecificAddress.address(ADMIN)
 
-  it('fetches all modules, with past upgrades', async () => {
-    const callMethodMock = mockFn()
-      .given(ADDRESS, 'function owner() view returns (address)', [])
-      .resolvesToOnce(ADMIN_R)
+  /**
+   * The proxy asks for its modules in one batch, so the answers are keyed by
+   * the module type rather than by the order the calls come in.
+   */
+  const callMethodStub = async (
+    address: ChainSpecificAddress,
+    abi: string | utils.FunctionFragment,
+    args: unknown[],
+  ) => {
+    assert(address === ADDRESS, 'unexpected contract call')
+    if (abi === OWNER_ABI) {
+      return ADMIN_R
+    }
+    assert(abi === MODULE_ABI, `unstubbed method ${abi.toString()}`)
+    const index = modules.findIndex((m) => m.toString() === args[0])
+    assert(index !== -1, `unknown module ${String(args[0])}`)
+    return MODULE_IMPLEMENTATIONS_R[index]
+  }
 
-    // Set up responses for each module
-    modules.forEach((module, index) => {
-      callMethodMock
-        .given(
-          ADDRESS,
-          'function modules(bytes32 _moduleType) external view returns (address _module)',
-          [module.toString()],
-        )
-        .resolvesToOnce(MODULE_IMPLEMENTATIONS_R[index])
-    })
+  const implementationSlotStub = async (
+    address: ChainSpecificAddress,
+    slot: number | bigint | Bytes,
+  ) => {
+    assert(address === ADDRESS, 'unexpected contract read')
+    assert(
+      slot.toString() === IMPLEMENTATION_SLOT.toString(),
+      `unstubbed slot ${slot.toString()}`,
+    )
+    return MAIN_IMPLEMENTATION
+  }
+
+  it('fetches all modules, with past upgrades', async () => {
+    const callMethodMock = vi.fn().mockImplementation(callMethodStub)
 
     const EMI0 = ChainSpecificAddress.random()
     const M0I0 = ChainSpecificAddress.random()
@@ -118,13 +142,11 @@ describe(getEverclearProxy.name, () => {
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
       callMethod: callMethodMock,
-      getBlock: mockFn().resolvesTo({
+      getBlock: vi.fn().mockResolvedValue({
         timestamp: 987234,
         transactionHash: Hash256.random(),
       }),
-      getStorageAsAddress: mockFn()
-        .given(ADDRESS, IMPLEMENTATION_SLOT)
-        .resolvesToOnce(MAIN_IMPLEMENTATION),
+      getStorageAsAddress: implementationSlotStub,
       getLogs: getLogsStub(logs),
     })
 
@@ -132,7 +154,7 @@ describe(getEverclearProxy.name, () => {
     // each mocked event, so we just assume that the date is an error
     const expectedDate = 'ERROR'
     const result = await getEverclearProxy(provider, ADDRESS)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'Everclear proxy',
       values: {
         $admin: ADMIN.toString(),
@@ -222,32 +244,17 @@ describe(getEverclearProxy.name, () => {
   })
 
   it('fetches all modules, no past upgrades', async () => {
-    const callMethodMock = mockFn()
-      .given(ADDRESS, 'function owner() view returns (address)', [])
-      .resolvesToOnce(ADMIN_R)
-
-    // Set up responses for each module
-    modules.forEach((module, index) => {
-      callMethodMock
-        .given(
-          ADDRESS,
-          'function modules(bytes32 _moduleType) external view returns (address _module)',
-          [module.toString()],
-        )
-        .resolvesToOnce(MODULE_IMPLEMENTATIONS_R[index])
-    })
+    const callMethodMock = vi.fn().mockImplementation(callMethodStub)
 
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
       callMethod: callMethodMock,
-      getStorageAsAddress: mockFn()
-        .given(ADDRESS, IMPLEMENTATION_SLOT)
-        .resolvesToOnce(MAIN_IMPLEMENTATION),
-      getLogs: mockFn().resolvesTo([]),
+      getStorageAsAddress: implementationSlotStub,
+      getLogs: vi.fn().mockResolvedValue([]),
     })
 
     const result = await getEverclearProxy(provider, ADDRESS)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'Everclear proxy',
       values: {
         $admin: ADMIN.toString(),

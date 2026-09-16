@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import type { FieldDiff } from '../output/diffContracts'
 import { sortBySeverity } from './sortDiffs'
@@ -14,7 +14,7 @@ const DIFFS: FieldDiff[] = [
 
 describe(sortBySeverity.name, () => {
   it('sorts diffs by severity', () => {
-    expect(justTheKeys(sortBySeverity(DIFFS))).toEqual([
+    expect(justTheKeys(sortBySeverity(DIFFS))).toStrictEqual([
       { key: 'values.key1' },
       { key: 'values.key5' },
       { key: 'values.key3' },
@@ -25,12 +25,14 @@ describe(sortBySeverity.name, () => {
   })
 
   it('returns empty array if diffs is undefined', () => {
-    expect(sortBySeverity(undefined)).toEqual([])
+    expect(sortBySeverity(undefined)).toStrictEqual([])
   })
 
   it('returns diffs without sorting when no severity defined', () => {
     const diffsWithoutSeverity = justTheKeys(DIFFS)
-    expect(sortBySeverity(diffsWithoutSeverity)).toEqual(diffsWithoutSeverity)
+    expect(sortBySeverity(diffsWithoutSeverity)).toStrictEqual(
+      diffsWithoutSeverity,
+    )
   })
 })
 

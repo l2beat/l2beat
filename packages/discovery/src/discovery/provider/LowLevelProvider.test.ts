@@ -1,19 +1,27 @@
 import type { CoingeckoClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import type { providers } from 'ethers'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IEtherscanClient } from '../../utils/IEtherscanClient'
 import { LowLevelProvider } from './LowLevelProvider'
 
 const SERVER_ERROR = 'SERVER_ERROR'
 const TIMEOUT = 'TIMEOUT'
 
+function fireImmediately(
+  callback: (...args: unknown[]) => void,
+  _delayMs: number,
+  ...args: unknown[]
+): number {
+  callback(...args)
+  return 0
+}
+
 describe(LowLevelProvider.name, () => {
   const ETHERSCAN_PROVIDER = mockObject<IEtherscanClient>()
   const COINGECKO_CLIENT = mockObject<CoingeckoClient>()
 
-  let time: InstalledClock
   let originalConsole: {
     log: typeof console.log
     error: typeof console.error
@@ -25,24 +33,18 @@ describe(LowLevelProvider.name, () => {
   beforeEach(() => {
     originalConsole = { log: console.log, error: console.error }
 
-    time = install()
-
-    time.setTimeout = (callback, _, ...args) => {
-      callback(...args)
-      return 0
-    }
-
-    time.setInterval = (callback, _, ...args) => {
-      callback(...args)
-      return 0
-    }
+    // The retry loop sleeps through an exponential back-off that adds up to
+    // minutes. Firing the callback immediately keeps the suite fast, and no
+    // test here asserts on how long a retry waited.
+    vi.stubGlobal('setTimeout', fireImmediately)
+    vi.stubGlobal('setInterval', fireImmediately)
 
     console.error = () => {}
     console.log = () => {}
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.unstubAllGlobals()
     console.log = originalConsole.log
     console.error = originalConsole.error
   })
@@ -50,7 +52,7 @@ describe(LowLevelProvider.name, () => {
   it('returns immediately on success', async () => {
     const bytes = Bytes.randomOfLength(20)
     const ethersProvider = mockObject<providers.JsonRpcProvider>({
-      call: mockFn().returnsOnce(bytes.toString()),
+      call: vi.fn().mockReturnValueOnce(bytes.toString()),
     })
     const provider = new LowLevelProvider(
       ethersProvider,
@@ -61,16 +63,21 @@ describe(LowLevelProvider.name, () => {
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
 
-    expect(result).toEqual(bytes)
+    expect(result).toStrictEqual(bytes)
   })
 
   it('retries on server error until success', async () => {
     const bytes = Bytes.randomOfLength(20)
     const ethersProvider = mockObject<providers.JsonRpcProvider>({
-      call: mockFn()
-        .throwsOnce(makeEthersError('random message', { code: SERVER_ERROR }))
-        .throwsOnce(makeEthersError('random message', { code: SERVER_ERROR }))
-        .returnsOnce(bytes.toString()),
+      call: vi
+        .fn()
+        .mockImplementationOnce(() => {
+          throw makeEthersError('random message', { code: SERVER_ERROR })
+        })
+        .mockImplementationOnce(() => {
+          throw makeEthersError('random message', { code: SERVER_ERROR })
+        })
+        .mockReturnValueOnce(bytes.toString()),
     })
     const provider = new LowLevelProvider(
       ethersProvider,
@@ -81,16 +88,16 @@ describe(LowLevelProvider.name, () => {
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
 
-    expect(result).toEqual(bytes)
+    expect(result).toStrictEqual(bytes)
   })
 
   it('retries up to maximum attempts and then throws', async () => {
     const errorMessage = 'test error message string'
     const bytes = Bytes.randomOfLength(20)
     const ethersProvider = mockObject<providers.JsonRpcProvider>({
-      call: mockFn().throws(
-        makeEthersError(errorMessage, { code: SERVER_ERROR }),
-      ),
+      call: vi.fn().mockImplementation(() => {
+        throw makeEthersError(errorMessage, { code: SERVER_ERROR })
+      }),
     })
     const provider = new LowLevelProvider(
       ethersProvider,
@@ -101,7 +108,7 @@ describe(LowLevelProvider.name, () => {
 
     await expect(
       provider.call(EthereumAddress.random(), bytes, 10),
-    ).toBeRejectedWith(errorMessage)
+    ).rejects.toThrow(errorMessage)
   })
 
   const outOfGasMessage = [
@@ -115,7 +122,9 @@ describe(LowLevelProvider.name, () => {
     it(`does not retry on non-server error [${message}]`, async () => {
       const bytes = Bytes.randomOfLength(20)
       const ethersProvider = mockObject<providers.JsonRpcProvider>({
-        call: mockFn().throwsOnce(makeSubServerError(message)),
+        call: vi.fn().mockImplementationOnce(() => {
+          throw makeSubServerError(message)
+        }),
       })
       const provider = new LowLevelProvider(
         ethersProvider,
@@ -126,7 +135,7 @@ describe(LowLevelProvider.name, () => {
 
       await expect(
         provider.call(EthereumAddress.random(), bytes, 10),
-      ).toBeRejectedWith('LowLevelProvider test')
+      ).rejects.toThrow('LowLevelProvider test')
     })
   }
 
@@ -147,7 +156,9 @@ describe(LowLevelProvider.name, () => {
     })
     const bytes = Bytes.randomOfLength(20)
     const ethersProvider = mockObject<providers.JsonRpcProvider>({
-      call: mockFn().throwsOnce(error),
+      call: vi.fn().mockImplementationOnce(() => {
+        throw error
+      }),
     })
     const provider = new LowLevelProvider(
       ethersProvider,
@@ -158,7 +169,7 @@ describe(LowLevelProvider.name, () => {
 
     await expect(
       provider.call(EthereumAddress.random(), bytes, 10),
-    ).toBeRejectedWith(topErrorMessage)
+    ).rejects.toThrow(topErrorMessage)
   })
 
   const errors = [
@@ -217,7 +228,12 @@ describe(LowLevelProvider.name, () => {
     it('does retry on different errors', async () => {
       const bytes = Bytes.randomOfLength(20)
       const ethersProvider = mockObject<providers.JsonRpcProvider>({
-        call: mockFn().throwsOnce(error).returnsOnce(bytes.toString()),
+        call: vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw error
+          })
+          .mockReturnValueOnce(bytes.toString()),
       })
       const provider = new LowLevelProvider(
         ethersProvider,
@@ -226,7 +242,7 @@ describe(LowLevelProvider.name, () => {
         COINGECKO_CLIENT,
       )
       const result = await provider.call(EthereumAddress.random(), bytes, 10)
-      expect(result).toEqual(bytes)
+      expect(result).toStrictEqual(bytes)
     })
   }
 })

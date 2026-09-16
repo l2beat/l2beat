@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { removeSharedNesting } from './removeSharedNesting'
 
@@ -11,7 +11,7 @@ describe(removeSharedNesting.name, () => {
       ['/a/b/x.sol', '4'],
     ]
 
-    expect(removeSharedNesting(entries)).toEqual([
+    expect(removeSharedNesting(entries)).toStrictEqual([
       ['c/d.sol', '1'],
       ['e/f.sol', '2'],
       ['g/h.sol', '3'],
@@ -27,7 +27,7 @@ describe(removeSharedNesting.name, () => {
       ['/a/x/y.sol', '4'],
     ]
 
-    expect(removeSharedNesting(entries)).toEqual([
+    expect(removeSharedNesting(entries)).toStrictEqual([
       ['b/c/d.sol', '1'],
       ['b/e/f.sol', '2'],
       ['b/g/h.sol', '3'],
@@ -44,7 +44,7 @@ describe(removeSharedNesting.name, () => {
       ['1/2/3.sol', '5'],
     ]
 
-    expect(removeSharedNesting(entries)).toEqual([
+    expect(removeSharedNesting(entries)).toStrictEqual([
       ['a/b/c/d.sol', '1'],
       ['a/b/e/f.sol', '2'],
       ['a/b/g/h.sol', '3'],

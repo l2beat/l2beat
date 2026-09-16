@@ -1,20 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { EtherscanClient } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {
   const logger = Logger.SILENT
-  let time: InstalledClock
 
   beforeEach(() => {
-    time = install()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   const URL = 'http://example.com'
@@ -36,7 +35,7 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce(response),
+      fetch: vi.fn().mockResolvedValueOnce(response),
     })
     const client = new EtherscanClient(
       httpClient,
@@ -47,8 +46,8 @@ describe(EtherscanClient.name, () => {
     )
 
     const result = client.getContractDeploymentTx(ADDRESS)
-    await time.runAllAsync()
-    expect(await result).toEqual(TX_HASH)
+    await vi.runAllTimersAsync()
+    expect(await result).toStrictEqual(TX_HASH)
   })
 
   it('base-like creation date', async () => {
@@ -64,7 +63,7 @@ describe(EtherscanClient.name, () => {
       ],
     }
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce(response),
+      fetch: vi.fn().mockResolvedValueOnce(response),
     })
 
     const client = new EtherscanClient(
@@ -76,8 +75,8 @@ describe(EtherscanClient.name, () => {
     )
 
     const result = client.getContractDeploymentTx(ADDRESS)
-    await time.runAllAsync()
-    expect(await result).toEqual(Hash256.ZERO)
+    await vi.runAllTimersAsync()
+    expect(await result).toStrictEqual(Hash256.ZERO)
   })
 
   it('retries when etherscan response is unparseable', async () => {
@@ -95,7 +94,10 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce('randomrandom').resolvesToOnce(response),
+      fetch: vi
+        .fn()
+        .mockResolvedValueOnce('randomrandom')
+        .mockResolvedValueOnce(response),
     })
 
     const client = new EtherscanClient(
@@ -107,8 +109,8 @@ describe(EtherscanClient.name, () => {
     )
 
     const result = client.getContractDeploymentTx(ADDRESS)
-    await time.runAllAsync()
-    expect(await result).toEqual(TX_HASH)
+    await vi.runAllTimersAsync()
+    expect(await result).toStrictEqual(TX_HASH)
   })
 
   it('retries when etherscan response is NOK', async () => {
@@ -127,7 +129,10 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce(nokResponse).resolvesToOnce(response),
+      fetch: vi
+        .fn()
+        .mockResolvedValueOnce(nokResponse)
+        .mockResolvedValueOnce(response),
     })
 
     const client = new EtherscanClient(
@@ -139,8 +144,8 @@ describe(EtherscanClient.name, () => {
     )
 
     const result = client.getContractDeploymentTx(ADDRESS)
-    await time.runAllAsync()
-    expect(await result).toEqual(TX_HASH)
+    await vi.runAllTimersAsync()
+    expect(await result).toStrictEqual(TX_HASH)
   })
 
   it('retries when etherscan has all the issues', async () => {
@@ -159,11 +164,12 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn()
-        .rejectsWithOnce(new Error('error'))
-        .resolvesToOnce('randomrandom')
-        .resolvesToOnce(nokResponse)
-        .resolvesToOnce(response),
+      fetch: vi
+        .fn()
+        .mockRejectedValueOnce(new Error('error'))
+        .mockResolvedValueOnce('randomrandom')
+        .mockResolvedValueOnce(nokResponse)
+        .mockResolvedValueOnce(response),
     })
 
     const client = new EtherscanClient(
@@ -175,7 +181,7 @@ describe(EtherscanClient.name, () => {
     )
 
     const result = client.getContractDeploymentTx(ADDRESS)
-    await time.runAllAsync()
-    expect(await result).toEqual(TX_HASH)
+    await vi.runAllTimersAsync()
+    expect(await result).toStrictEqual(TX_HASH)
   })
 })

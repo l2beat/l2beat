@@ -1,5 +1,6 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../provider/IProvider'
 import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 import type { ProxyDetails } from './types'
@@ -8,8 +9,8 @@ describe(ProxyDetector.name, () => {
   const address = ChainSpecificAddress.random()
   const implementation = ChainSpecificAddress.random()
   const provider = mockObject<IProvider>({
-    getBytecode: mockFn().returns(Bytes.fromHex('0xdeadbeeff4')),
-    getDeployment: mockFn().returns(undefined),
+    getBytecode: vi.fn().mockReturnValue(Bytes.fromHex('0xdeadbeeff4')),
+    getDeployment: vi.fn().mockReturnValue(undefined),
   })
 
   const FIRST_DETAILS: ProxyDetails = {
@@ -35,12 +36,12 @@ describe(ProxyDetector.name, () => {
     )
 
     const provider = mockObject<IProvider>({
-      getBytecode: mockFn().returns(Bytes.EMPTY),
-      getDeployment: mockFn().returns(undefined),
+      getBytecode: vi.fn().mockReturnValue(Bytes.EMPTY),
+      getDeployment: vi.fn().mockReturnValue(undefined),
     })
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'EOA',
       deployment: undefined,
       values: {},
@@ -56,18 +57,20 @@ describe(ProxyDetector.name, () => {
 
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
-      getBytecode: mockFn().returns(
-        Bytes.fromHex('0xef0100').concat(
-          Bytes.fromHex(
-            ChainSpecificAddress.address(implementation).toString(),
+      getBytecode: vi
+        .fn()
+        .mockReturnValue(
+          Bytes.fromHex('0xef0100').concat(
+            Bytes.fromHex(
+              ChainSpecificAddress.address(implementation).toString(),
+            ),
           ),
         ),
-      ),
-      getDeployment: mockFn().returns(undefined),
+      getDeployment: vi.fn().mockReturnValue(undefined),
     })
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'EIP7702 EOA',
       deployment: undefined,
       values: {
@@ -84,7 +87,7 @@ describe(ProxyDetector.name, () => {
     )
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'immutable',
       deployment: undefined,
       values: { $immutable: true },
@@ -100,7 +103,7 @@ describe(ProxyDetector.name, () => {
 
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       ...FIRST_DETAILS,
       deployment: undefined,
       addresses: [address, implementation],
@@ -118,7 +121,7 @@ describe(ProxyDetector.name, () => {
       'call implementation proxy',
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       ...FIRST_DETAILS,
       deployment: undefined,
       addresses: [address, implementation],

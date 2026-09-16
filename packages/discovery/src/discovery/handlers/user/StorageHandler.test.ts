@@ -1,6 +1,7 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
 import type { HandlerResult } from '../Handler'
 import { StorageHandler, type StorageHandlerDefinition } from './StorageHandler'
@@ -11,8 +12,8 @@ describe(StorageHandler.name, () => {
       const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         async getStorage(passedAddress, slot) {
-          expect(passedAddress).toEqual(address)
-          expect(slot).toEqual(1n)
+          expect(passedAddress).toStrictEqual(address)
+          expect(slot).toStrictEqual(1n)
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
@@ -25,10 +26,10 @@ describe(StorageHandler.name, () => {
         type: 'storage',
         slot: 1,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -53,10 +54,10 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'number',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value: 0x123,
         ignoreRelative: undefined,
@@ -85,10 +86,10 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'address',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value: ChainSpecificAddress.address(resultAddress).toString(),
         ignoreRelative: undefined,
@@ -112,10 +113,10 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'uint8',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value: 0x23,
         ignoreRelative: undefined,
@@ -130,7 +131,7 @@ describe(StorageHandler.name, () => {
         slot: 1,
       })
 
-      expect(handler.dependencies).toEqual([])
+      expect(handler.dependencies).toStrictEqual([])
     })
 
     it('detects no dependencies for a complex definition', () => {
@@ -140,7 +141,7 @@ describe(StorageHandler.name, () => {
         offset: 25,
       })
 
-      expect(handler.dependencies).toEqual([])
+      expect(handler.dependencies).toStrictEqual([])
     })
 
     it('detects dependency from the slot field', () => {
@@ -149,7 +150,7 @@ describe(StorageHandler.name, () => {
         slot: '{{ foo }}',
       })
 
-      expect(handler.dependencies).toEqual(['foo'])
+      expect(handler.dependencies).toStrictEqual(['foo'])
     })
 
     it('detects dependency from the offset field', () => {
@@ -159,7 +160,7 @@ describe(StorageHandler.name, () => {
         offset: '{{ foo }}',
       })
 
-      expect(handler.dependencies).toEqual(['foo'])
+      expect(handler.dependencies).toStrictEqual(['foo'])
     })
 
     it('detects dependency from the both fields at the same time', () => {
@@ -169,7 +170,7 @@ describe(StorageHandler.name, () => {
         offset: '{{ bar }}',
       })
 
-      expect(handler.dependencies).toEqual(['bar', 'foo'])
+      expect(handler.dependencies).toStrictEqual(['bar', 'foo'])
     })
 
     it('detects from a complex slot field', () => {
@@ -179,7 +180,7 @@ describe(StorageHandler.name, () => {
         offset: '{{ bar }}',
       })
 
-      expect(handler.dependencies).toEqual(['bar', 'foo', 'baz'])
+      expect(handler.dependencies).toStrictEqual(['bar', 'foo', 'baz'])
     })
 
     it('detects the base field of a nested reference', () => {
@@ -189,7 +190,7 @@ describe(StorageHandler.name, () => {
         offset: '{{ owner }}',
       })
 
-      expect(handler.dependencies).toEqual(['owner', 'constructorArgs'])
+      expect(handler.dependencies).toStrictEqual(['owner', 'constructorArgs'])
     })
   })
 
@@ -219,10 +220,10 @@ describe(StorageHandler.name, () => {
         options.previousResults ?? {},
       )
       if (options.expectedSlot !== undefined) {
-        expect(slot).toEqual(options.expectedSlot)
+        expect(slot).toStrictEqual(options.expectedSlot)
       }
       if (options.expectedError) {
-        expect(result.error).toEqual(options.expectedError)
+        expect(result.error).toStrictEqual(options.expectedError)
       }
     }
 
@@ -350,7 +351,7 @@ describe(StorageHandler.name, () => {
     })
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'someName',
       error: 'foo bar',
     })

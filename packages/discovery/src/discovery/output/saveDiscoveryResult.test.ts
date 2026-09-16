@@ -1,6 +1,6 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import map from 'lodash/map'
+import { describe, expect, it } from 'vitest'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
@@ -54,11 +54,11 @@ describe(getSourceOutputPath.name, () => {
       allContractNames,
     )
 
-    expect(pathA).toEqual(`${root}/A/a.sol`)
-    expect(pathB1).toEqual(
+    expect(pathA).toStrictEqual(`${root}/A/a.sol`)
+    expect(pathB1).toStrictEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB1.address).toString()}/b.sol`,
     )
-    expect(pathB2).toEqual(
+    expect(pathB2).toStrictEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB2.address).toString()}/b.sol`,
     )
   })
@@ -85,8 +85,8 @@ describe(getSourceOutputPath.name, () => {
       allContractNames,
     )
 
-    expect(pathA_proxy).toEqual(`${root}/A/proxy/a1.sol`)
-    expect(pathA_impl).toEqual(`${root}/A/implementation/a2.sol`)
+    expect(pathA_proxy).toStrictEqual(`${root}/A/proxy/a1.sol`)
+    expect(pathA_impl).toStrictEqual(`${root}/A/implementation/a2.sol`)
   })
 
   it('adds proxy and numbered implementation suffixes', () => {
@@ -121,9 +121,9 @@ describe(getSourceOutputPath.name, () => {
       allContractNames,
     )
 
-    expect(pathA_proxy).toEqual(`${root}/A/proxy/a1.sol`)
-    expect(pathA_impl1).toEqual(`${root}/A/implementation-1/a2.sol`)
-    expect(pathA_impl2).toEqual(`${root}/A/implementation-2/a3.sol`)
+    expect(pathA_proxy).toStrictEqual(`${root}/A/proxy/a1.sol`)
+    expect(pathA_impl1).toStrictEqual(`${root}/A/implementation-1/a2.sol`)
+    expect(pathA_impl2).toStrictEqual(`${root}/A/implementation-2/a3.sol`)
   })
 
   it('properly handles mix of name clashes and implementations', () => {
@@ -157,13 +157,13 @@ describe(getSourceOutputPath.name, () => {
       root,
       allContractNames,
     )
-    expect(pathB1_proxy).toEqual(
+    expect(pathB1_proxy).toStrictEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB1.address).toString()}/proxy/b11.sol`,
     )
-    expect(pathB1_impl1).toEqual(
+    expect(pathB1_impl1).toStrictEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB1.address).toString()}/implementation-1/b12.sol`,
     )
-    expect(pathB1_impl2).toEqual(
+    expect(pathB1_impl2).toStrictEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB1.address).toString()}/implementation-2/b13.sol`,
     )
   })

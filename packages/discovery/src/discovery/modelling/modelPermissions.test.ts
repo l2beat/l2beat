@@ -1,8 +1,8 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
+import { describe, expect, it } from 'vitest'
 import { TemplateService } from '../analysis/TemplateService'
 import { ConfigReader } from '../config/ConfigReader'
 import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
@@ -94,10 +94,9 @@ describe('cluster permission modelling', () => {
       // The committed module hashes are random here, so they are behind the
       // clingo their configs produce. Provenance must still name the version
       // that was fed to this run: the one each module gets when remodelled.
-      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([
-        'governance',
-        'shared',
-      ])
+      expect(
+        findStaleReferences(registry, model.modelledAgainst),
+      ).toStrictEqual(['governance', 'shared'])
       const templateService = new TemplateService(root)
       for (const name of ['governance', 'shared']) {
         const own = await modelPermissions(
@@ -108,28 +107,32 @@ describe('cluster permission modelling', () => {
           paths,
           { debug: false },
         )
-        expect(fresh.modelledAgainst[name]).toEqual(own.permissionsConfigHash)
+        expect(fresh.modelledAgainst[name]).toStrictEqual(
+          own.permissionsConfigHash,
+        )
         registry.get(name).discoveryOutput.permissionsConfigHash =
           own.permissionsConfigHash
       }
-      expect(Object.keys(fresh.modelledAgainst)).toEqual([
+      expect(Object.keys(fresh.modelledAgainst)).toStrictEqual([
         'governance',
         'shared',
       ])
-      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([])
+      expect(
+        findStaleReferences(registry, model.modelledAgainst),
+      ).toStrictEqual([])
 
       const upgrades = fresh.permissions?.[council]?.receivedPermissions ?? []
-      expect(upgrades.length).toEqual(1)
-      expect(upgrades[0]?.permission).toEqual('upgrade')
-      expect(upgrades[0]?.from).toEqual(diamond)
-      expect(upgrades[0]?.via?.map((step) => step.address)).toEqual([
+      expect(upgrades.length).toStrictEqual(1)
+      expect(upgrades[0]?.permission).toStrictEqual('upgrade')
+      expect(upgrades[0]?.from).toStrictEqual(diamond)
+      expect(upgrades[0]?.via?.map((step) => step.address)).toStrictEqual([
         admin,
         timelock,
       ])
-      expect(fresh.permissions?.[unrelatedOwner]).toEqual(undefined)
+      expect(fresh.permissions?.[unrelatedOwner]).toStrictEqual(undefined)
       expect(
         fresh.entries.every((entry) => entry.receivedPermissions === undefined),
-      ).toEqual(true)
+      ).toStrictEqual(true)
 
       const governance = registry.get('governance').discoveryOutput
       // A different, stale model on the referenced file must not contribute.
@@ -146,7 +149,7 @@ describe('cluster permission modelling', () => {
       expect(
         governance.entries.find((entry) => entry.address === council)
           ?.receivedPermissions,
-      ).toEqual(upgrades)
+      ).toStrictEqual(upgrades)
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
@@ -210,7 +213,7 @@ describe('cluster permission modelling', () => {
       )
       expect(
         generatePermissionConfigHash(inConsumerCluster.module!),
-      ).not.toEqual(ownHash)
+      ).not.toStrictEqual(ownHash)
 
       const model = await modelPermissions(
         'consumer',
@@ -228,19 +231,20 @@ describe('cluster permission modelling', () => {
         paths,
         { debug: false },
       )
-      expect(model.modelledAgainst.module).toEqual(ownHash)
-      expect(model.modelledAgainst.module).toEqual(
+      expect(model.modelledAgainst.module).toStrictEqual(ownHash)
+      expect(model.modelledAgainst.module).toStrictEqual(
         standalone.permissionsConfigHash,
       )
-      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([
-        'module',
-        'sibling',
-      ])
+      expect(
+        findStaleReferences(registry, model.modelledAgainst),
+      ).toStrictEqual(['module', 'sibling'])
       registry.get('module').discoveryOutput.permissionsConfigHash =
         standalone.permissionsConfigHash
       registry.get('sibling').discoveryOutput.permissionsConfigHash =
         model.modelledAgainst.sibling
-      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([])
+      expect(
+        findStaleReferences(registry, model.modelledAgainst),
+      ).toStrictEqual([])
     } finally {
       rmSync(root, { recursive: true, force: true })
     }

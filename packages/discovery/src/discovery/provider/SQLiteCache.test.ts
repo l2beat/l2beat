@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { existsSync, unlinkSync } from 'fs'
 import sqlite3 from 'sqlite3'
+import { describe, expect, it } from 'vitest'
 import { SQLiteCache } from './SQLiteCache'
 
 describe('SQLiteCache', () => {
@@ -23,11 +23,11 @@ describe('SQLiteCache', () => {
       assert(result)
 
       // Interface
-      expect(queriedValue).toEqual(value)
+      expect(queriedValue).toStrictEqual(value)
 
       // Raw
-      expect(result.key).toEqual(key)
-      expect(result.value).toEqual(value)
+      expect(result.key).toStrictEqual(key)
+      expect(result.value).toStrictEqual(value)
     }))
 
   it('replaces old value in case of conflict', () =>
@@ -50,9 +50,9 @@ describe('SQLiteCache', () => {
 
       assert(result)
 
-      expect(resultRaw.length).toEqual(1)
-      expect(result.key).toEqual(key)
-      expect(result.value).toEqual(newValue)
+      expect(resultRaw.length).toStrictEqual(1)
+      expect(result.key).toStrictEqual(key)
+      expect(result.value).toStrictEqual(newValue)
     }))
 })
 

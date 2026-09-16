@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
@@ -21,18 +22,18 @@ describe(LimitedArrayHandler.name, () => {
         _abi: string,
         data: unknown[],
       ) {
-        expect(a).toEqual(address)
+        expect(a).toStrictEqual(address)
         const index = data[0] as number
-        expect(data).toEqual([index])
+        expect(data).toStrictEqual([index])
         return owners[index]!.toString() as T
       },
     })
 
     const handler = new LimitedArrayHandler(method, 3)
-    expect(handler.field).toEqual('owners')
+    expect(handler.field).toStrictEqual('owners')
 
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()),
       error: 'Too many values. Update configuration to explore fully',
@@ -53,10 +54,10 @@ describe(LimitedArrayHandler.name, () => {
         _abi: string,
         data: unknown[],
       ) {
-        expect(a).toEqual(address)
+        expect(a).toStrictEqual(address)
 
         const index = data[0] as number
-        expect(data).toEqual([index])
+        expect(data).toStrictEqual([index])
         if (index === 2) {
           return undefined as T
         }
@@ -67,7 +68,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()).slice(0, 2),
     })
@@ -87,10 +88,10 @@ describe(LimitedArrayHandler.name, () => {
         _abi: string,
         data: unknown[],
       ) {
-        expect(a).toEqual(address)
+        expect(a).toStrictEqual(address)
 
         const index = data[0] as number
-        expect(data).toEqual([index])
+        expect(data).toStrictEqual([index])
         if (index === 2) {
           throw 'foo bar'
         }
@@ -101,7 +102,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'owners',
       error: 'foo bar',
     })
@@ -115,9 +116,9 @@ describe(LimitedArrayHandler.name, () => {
         _abi: string,
         data: unknown[],
       ) {
-        expect(a).toEqual(address)
+        expect(a).toStrictEqual(address)
         const index = data[0] as number
-        expect(data).toEqual([index])
+        expect(data).toStrictEqual([index])
         if (index === 1) {
           return undefined
         }
@@ -130,7 +131,7 @@ describe(LimitedArrayHandler.name, () => {
       2,
     )
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: '_$foo',
       value: [1],
     })

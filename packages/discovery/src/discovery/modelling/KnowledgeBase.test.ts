@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ClingoFact } from './clingoparser'
 import { KnowledgeBase } from './KnowledgeBase'
 
@@ -11,7 +11,7 @@ describe(KnowledgeBase.name, () => {
       undefined,
       undefined,
     ])
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       contract_0x1d62ffeb72e4c360ccbbacf7c965153b00260417,
       contract_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d,
     ])
@@ -27,14 +27,14 @@ describe(KnowledgeBase.name, () => {
           '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
           'Special EOA',
         ]),
-      ).toEqual(eoa_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)
+      ).toStrictEqual(eoa_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)
     })
 
     it('returns undefined when no facts are found', () => {
       const knowledgeBase = new KnowledgeBase(FACTS)
       expect(
         knowledgeBase.getFactOrUndefined('contract', ['abc', 'def']),
-      ).toEqual(undefined)
+      ).toStrictEqual(undefined)
     })
 
     it('throws when multiple facts are found', () => {

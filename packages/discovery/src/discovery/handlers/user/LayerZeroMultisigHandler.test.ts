@@ -1,6 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import type { ContractSource } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'
@@ -54,7 +55,7 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toEqual({
+    expect(response).toStrictEqual({
       field: 'layerZeroMultisig',
       value: {
         signers: [
@@ -115,7 +116,7 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toEqual({
+    expect(response).toStrictEqual({
       field: 'layerZeroMultisig',
       value: {
         signers: [

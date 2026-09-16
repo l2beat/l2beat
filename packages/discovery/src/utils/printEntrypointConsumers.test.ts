@@ -1,5 +1,6 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { ConfigReader } from '../discovery/config/ConfigReader'
 import type { StructureConfig } from '../discovery/config/StructureConfig'
 import type {
@@ -20,7 +21,7 @@ describe(ownsEntrypoints.name, () => {
       ownsEntrypoints(
         structure(PROVIDER, { [ChainSpecificAddress.random()]: PROVIDER }),
       ),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 
   it('is false when every entrypoint belongs to another project', () => {
@@ -31,11 +32,11 @@ describe(ownsEntrypoints.name, () => {
           [ChainSpecificAddress.random()]: OTHER_PROVIDER,
         }),
       ),
-    ).toEqual(false)
+    ).toStrictEqual(false)
   })
 
   it('is false when there are no entrypoints at all', () => {
-    expect(ownsEntrypoints(structure('abstract', {}))).toEqual(false)
+    expect(ownsEntrypoints(structure('abstract', {}))).toStrictEqual(false)
   })
 })
 
@@ -47,7 +48,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery('zksync2', [reference(PROVIDER), reference(PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([
       { project: 'zksync2', addressCount: 2 },
       { project: 'abstract', addressCount: 1 },
     ])
@@ -59,7 +60,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery('abstract', [reference(OTHER_PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([])
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([])
   })
 
   // A provider discovers its own entrypoints as real contracts, so it must
@@ -69,7 +70,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery(PROVIDER, [reference(PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([])
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([])
   })
 })
 

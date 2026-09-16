@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ContractValue } from '../output/types'
 import { FormatSeconds } from './FormatSeconds'
 
@@ -26,7 +26,7 @@ describe('FormatSeconds', () => {
   for (const data of testData) {
     it(`casts ${data.incomingValue} to "${data.expected}"`, () => {
       const result = FormatSeconds.cast({}, data.incomingValue)
-      expect(result).toEqual(data.expected)
+      expect(result).toStrictEqual(data.expected)
     })
   }
 })

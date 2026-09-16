@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
 import type { MulticallClient } from './multicall/MulticallClient'
@@ -12,16 +13,19 @@ describe(BatchingAndCachingProvider.name, () => {
   describe(BatchingAndCachingProvider.prototype.getLogs.name, () => {
     it('divides on two calls', async () => {
       const cache = mockObject<ReorgAwareCache>({
-        entry: mockFn().returns({
+        entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
-        write: mockFn().returns(undefined),
+        write: vi.fn().mockReturnValue(undefined),
       })
       const provider = mockObject<LowLevelProvider>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .returnsOnce([])
-          .returnsOnce([]),
+        getLogs: vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw new Error('Log response size exceeded')
+          })
+          .mockReturnValueOnce([])
+          .mockReturnValueOnce([]),
       })
       const multicallClient = mockObject<MulticallClient>()
 
@@ -61,16 +65,19 @@ describe(BatchingAndCachingProvider.name, () => {
 
     it('correctly divides range of two', async () => {
       const cache = mockObject<ReorgAwareCache>({
-        entry: mockFn().returns({
+        entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
-        write: mockFn().returns(undefined),
+        write: vi.fn().mockReturnValue(undefined),
       })
       const provider = mockObject<LowLevelProvider>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .returnsOnce([])
-          .returnsOnce([]),
+        getLogs: vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw new Error('Log response size exceeded')
+          })
+          .mockReturnValueOnce([])
+          .mockReturnValueOnce([]),
       })
       const multicallClient = mockObject<MulticallClient>()
 
@@ -110,16 +117,19 @@ describe(BatchingAndCachingProvider.name, () => {
 
     it('fromBlock === toBlock', async () => {
       const cache = mockObject<ReorgAwareCache>({
-        entry: mockFn().returns({
+        entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
-        write: mockFn().returns(undefined),
+        write: vi.fn().mockReturnValue(undefined),
       })
       const provider = mockObject<LowLevelProvider>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .returnsOnce([])
-          .returnsOnce([]),
+        getLogs: vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw new Error('Log response size exceeded')
+          })
+          .mockReturnValueOnce([])
+          .mockReturnValueOnce([]),
       })
       const multicallClient = mockObject<MulticallClient>()
 
@@ -135,7 +145,7 @@ describe(BatchingAndCachingProvider.name, () => {
 
       await expect(
         batchingProvider.getLogs(address, [topic], 1, 1),
-      ).toBeRejected()
+      ).rejects.toThrow()
 
       expect(provider.getLogs).toHaveBeenNthCalledWith(
         1,

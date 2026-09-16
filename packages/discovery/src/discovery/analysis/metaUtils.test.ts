@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
@@ -21,7 +21,7 @@ describe('metaUtils', () => {
 
       const result = interpolateString(description, analysis)
 
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         'Contract with address eth:0x1234567890123456789012345678901234567890 and value 42',
       )
     })

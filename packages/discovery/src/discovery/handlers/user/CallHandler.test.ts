@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
@@ -19,7 +20,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual([])
+      expect(handler.dependencies).toStrictEqual([])
     })
 
     it('detects dependencies in args', () => {
@@ -34,7 +35,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual(['foo', 'bar'])
+      expect(handler.dependencies).toStrictEqual(['foo', 'bar'])
     })
 
     it('detects dependencies in inAddress', () => {
@@ -50,7 +51,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual(['quax'])
+      expect(handler.dependencies).toStrictEqual(['quax'])
     })
 
     // Only the base field is ever a field name, so only the base field can be
@@ -66,7 +67,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual(['constructorArgs', 'bar'])
+      expect(handler.dependencies).toStrictEqual(['constructorArgs', 'bar'])
     })
 
     it('detects the base field of a nested reference in inAddress', () => {
@@ -81,7 +82,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual(['constructorArgs'])
+      expect(handler.dependencies).toStrictEqual(['constructorArgs'])
     })
 
     it('detects the base field of a deeply nested reference', () => {
@@ -95,7 +96,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual(['foo'])
+      expect(handler.dependencies).toStrictEqual(['foo'])
     })
   })
 
@@ -111,7 +112,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toStrictEqual(
         'function foo(uint256 i) view returns (uint256)',
       )
     })
@@ -154,7 +155,7 @@ describe(CallHandler.name, () => {
         'function someName() view returns (uint256)',
       ])
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toStrictEqual(
         'function someName() view returns (uint256)',
       )
     })
@@ -171,7 +172,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toStrictEqual(
         'function someName(uint256 a, uint256 b) view returns (uint256)',
       )
     })
@@ -202,7 +203,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toStrictEqual(
         'function bar() view returns (uint256)',
       )
     })
@@ -240,8 +241,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(address)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(address)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -253,7 +254,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -271,8 +272,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(inAddress)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(inAddress)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -289,7 +290,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -306,8 +307,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(address)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(address)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -322,7 +323,7 @@ describe(CallHandler.name, () => {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -340,8 +341,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(inAddress)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(inAddress)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -363,7 +364,7 @@ describe(CallHandler.name, () => {
           value: inAddress.toString(),
         },
       })
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -380,8 +381,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(address)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(address)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -397,7 +398,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toEqual([
+      expect(handler.dependencies).toStrictEqual([
         'constructorArgs',
         'constructorArgs',
       ])
@@ -408,7 +409,7 @@ describe(CallHandler.name, () => {
           value: { _a: 1, _b: 2 },
         },
       })
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -426,8 +427,8 @@ describe(CallHandler.name, () => {
           _abi: string,
           data: unknown[],
         ) {
-          expect(passedAddress).toEqual(inAddress)
-          expect(data).toEqual([1, 2])
+          expect(passedAddress).toStrictEqual(inAddress)
+          expect(data).toStrictEqual([1, 2])
 
           return 3 as T
         },
@@ -449,7 +450,7 @@ describe(CallHandler.name, () => {
           value: { _addressesRegistry: inAddress.toString() },
         },
       })
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -472,7 +473,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         error: 'oops',
@@ -495,7 +496,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -518,7 +519,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         value: 'EXPECT_REVERT',
         ignoreRelative: undefined,
@@ -540,7 +541,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'add',
         error: EXEC_REVERT_MSG,
         fragment: methodFragment,

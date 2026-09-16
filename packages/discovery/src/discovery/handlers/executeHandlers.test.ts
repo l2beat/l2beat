@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../provider/IProvider'
 import { executeHandlers } from './executeHandlers'
 import type { Handler, HandlerResult } from './Handler'
@@ -44,7 +45,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toEqual([
+    expect<unknown[]>(values).toStrictEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
       { field: 'bar', value: 456, ignoreRelative: undefined },
     ])
@@ -83,7 +84,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toEqual([
+    expect<unknown[]>(values).toStrictEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
       { field: 'bar', value: 456, ignoreRelative: undefined },
       { field: 'xxx', value: 1001, ignoreRelative: undefined },
@@ -140,7 +141,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toEqual([
+    expect<unknown[]>(values).toStrictEqual([
       { field: 'a', value: 100, ignoreRelative: undefined },
       { field: 'b', value: 200, ignoreRelative: undefined },
       { field: 'ab', value: 30000, ignoreRelative: undefined },
@@ -157,7 +158,7 @@ describe(executeHandlers.name, () => {
       [new StorageHandler('a', { type: 'storage', slot: '{{ a }}' })],
       ChainSpecificAddress.random(),
     )
-    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
+    await expect(promise).rejects.toThrow('Impossible to resolve dependencies')
   })
 
   it('unresolvable unknown', async () => {
@@ -167,7 +168,7 @@ describe(executeHandlers.name, () => {
       [new StorageHandler('a', { type: 'storage', slot: '{{ foo }}' })],
       ChainSpecificAddress.random(),
     )
-    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
+    await expect(promise).rejects.toThrow('Impossible to resolve dependencies')
   })
 
   it('unresolvable cycle', async () => {
@@ -180,7 +181,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
+    await expect(promise).rejects.toThrow('Impossible to resolve dependencies')
   })
 
   it('handles handlers with errors', async () => {
@@ -199,7 +200,7 @@ describe(executeHandlers.name, () => {
       [new FunkyHandler()],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
+    expect<unknown[]>(values).toStrictEqual([{ field: 'foo', error: 'oops' }])
   })
 
   it('handles multicallable handlers', async () => {
@@ -207,8 +208,8 @@ describe(executeHandlers.name, () => {
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const provider = mockObject<IProvider>({
-      getStorage: mockFn().returnsOnce(123),
-      callMethod: mockFn().returns(0x12345678),
+      getStorage: vi.fn().mockReturnValueOnce(123),
+      callMethod: vi.fn().mockReturnValue(0x12345678),
       blockNumber: 123,
       chain: 'foo',
     })
@@ -236,7 +237,7 @@ describe(executeHandlers.name, () => {
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const provider = mockObject<IProvider>({
-      callMethod: mockFn().returnsOnce(3).returns(0x12345678),
+      callMethod: vi.fn().mockReturnValueOnce(3).mockReturnValue(0x12345678),
       blockNumber: 123,
       chain: 'foo',
     })
@@ -259,7 +260,7 @@ describe(executeHandlers.name, () => {
       ADDRESS,
     )
 
-    expect(values).toEqual([
+    expect(values).toStrictEqual([
       { field: 'foo', fragment, value: 3 },
       {
         field: 'bar',
@@ -279,7 +280,7 @@ describe(executeHandlers.name, () => {
       blockNumber: 123,
       chain: 'foo',
       async callMethod<T>(passedAddress: ChainSpecificAddress) {
-        expect(passedAddress).toEqual(REGISTRY)
+        expect(passedAddress).toStrictEqual(REGISTRY)
         return ADDRESS.toString() as T
       },
     })
@@ -312,7 +313,7 @@ describe(executeHandlers.name, () => {
       ADDRESS,
     )
 
-    expect(values).toEqual([
+    expect(values).toStrictEqual([
       {
         field: 'constructorArgs',
         value: { _addressesRegistry: REGISTRY.toString() },

@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { Entrypoint } from '../config/StructureConfig'
 import {
@@ -31,7 +31,7 @@ describe(generateEntrypoints.name, () => {
         [ChainSpecificAddress.from('eth', '0x01')]: entrypoint1,
       },
     }
-    const generator = mockFn().returns(generated)
+    const generator = vi.fn().mockReturnValue(generated)
     const result = generateEntrypoints(
       'testProject',
       undefined,
@@ -39,11 +39,11 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: false, keepLegacy: true },
     )
-    expect(result?.entrypoints).toEqual(generated.entrypoints)
+    expect(result?.entrypoints).toStrictEqual(generated.entrypoints)
   })
 
   it('skips generating entrypoints when updateOnly is true', () => {
-    const generator = mockFn().returns({ entrypoints: {} })
+    const generator = vi.fn().mockReturnValue({ entrypoints: {} })
     const result = generateEntrypoints(
       'testProject',
       undefined,
@@ -51,7 +51,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: true, keepLegacy: true },
     )
-    expect(result?.entrypoints).toEqual(undefined)
+    expect(result?.entrypoints).toStrictEqual(undefined)
   })
 
   it('overwrites entrypoints when updateOnly is true and file exists, but keepLegacy is false', () => {
@@ -65,7 +65,7 @@ describe(generateEntrypoints.name, () => {
         [ChainSpecificAddress.from('eth', '0x02')]: entrypoint2,
       },
     }
-    const generator = mockFn().returns(generated)
+    const generator = vi.fn().mockReturnValue(generated)
     const result = generateEntrypoints(
       'testProject',
       old,
@@ -73,7 +73,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: true, keepLegacy: false },
     )
-    expect(result?.entrypoints).toEqual(generated.entrypoints)
+    expect(result?.entrypoints).toStrictEqual(generated.entrypoints)
   })
 
   it('keeps legacy entrypoints when keepLegacy is true, overwrites existing', () => {
@@ -95,7 +95,7 @@ describe(generateEntrypoints.name, () => {
         [ChainSpecificAddress.from('eth', '0x03')]: entrypoint3,
       },
     }
-    const generator = mockFn().returns(generated)
+    const generator = vi.fn().mockReturnValue(generated)
     const result = generateEntrypoints(
       'testProject',
       old,
@@ -104,7 +104,7 @@ describe(generateEntrypoints.name, () => {
       { updateOnly: true, keepLegacy: true },
     )
 
-    expect(result?.entrypoints).toEqual({
+    expect(result?.entrypoints).toStrictEqual({
       [ChainSpecificAddress.from('eth', '0x02')]: {
         ...entrypoint2,
         project: 'new value',
@@ -124,7 +124,7 @@ describe(generateEntrypoints.name, () => {
         [ChainSpecificAddress.from('eth', '0x02')]: entrypoint2,
       },
     }
-    const generator = mockFn().returns({ entrypoints: {} })
+    const generator = vi.fn().mockReturnValue({ entrypoints: {} })
     const result = generateEntrypoints(
       'testProject',
       old,
@@ -133,7 +133,7 @@ describe(generateEntrypoints.name, () => {
       { updateOnly: true, keepLegacy: true },
     )
 
-    expect(result?.entrypoints).toEqual({
+    expect(result?.entrypoints).toStrictEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         ...entrypoint1,
         isLegacy: true,
@@ -170,8 +170,8 @@ describe(generateEntrypointsForProject.name, () => {
       ],
     }
     const configReader = {
-      readDiscovery: mockFn().returns(discovery),
-      readConfig: mockFn().returns({
+      readDiscovery: vi.fn().mockReturnValue(discovery),
+      readConfig: vi.fn().mockReturnValue({
         structure: {
           initialAddresses: [ChainSpecificAddress.from('eth', '0x04')],
         },
@@ -180,7 +180,7 @@ describe(generateEntrypointsForProject.name, () => {
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(result.entrypoints).toEqual({
+    expect(result.entrypoints).toStrictEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         name: 'Contract1',
         type: 'Contract',
@@ -235,13 +235,15 @@ describe(generateEntrypointsForProject.name, () => {
       ],
     }
     const configReader = {
-      readDiscovery: mockFn().returns(discovery),
-      readConfig: mockFn().returns({ structure: { initialAddresses: [] } }),
+      readDiscovery: vi.fn().mockReturnValue(discovery),
+      readConfig: vi
+        .fn()
+        .mockReturnValue({ structure: { initialAddresses: [] } }),
     } as unknown as ConfigReader
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(Object.keys(result.entrypoints)).toEqual([
+    expect(Object.keys(result.entrypoints)).toStrictEqual([
       ChainSpecificAddress.from('eth', '0x01'),
       ChainSpecificAddress.from('eth', '0x03'),
       ChainSpecificAddress.from('eth', '0x04'),
@@ -259,8 +261,8 @@ describe(generateEntrypointsForProject.name, () => {
       ],
     }
     const configReader = {
-      readDiscovery: mockFn().returns(discovery),
-      readConfig: mockFn().returns({
+      readDiscovery: vi.fn().mockReturnValue(discovery),
+      readConfig: vi.fn().mockReturnValue({
         structure: {
           initialAddresses: [ChainSpecificAddress.from('eth', '0x01')],
         },
@@ -269,7 +271,7 @@ describe(generateEntrypointsForProject.name, () => {
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(result.entrypoints).toEqual({
+    expect(result.entrypoints).toStrictEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         name: 'LoneVerifier',
         type: 'Contract',

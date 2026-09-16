@@ -3,7 +3,7 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -26,10 +26,10 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       { ...permissions([]), modelledAgainst: { shared: HASH } },
       [],
     )
-    expect(discovery.modelledAgainst).toEqual({ shared: HASH })
+    expect(discovery.modelledAgainst).toStrictEqual({ shared: HASH })
 
     combinePermissionsIntoDiscovery(discovery, permissions([]), [])
-    expect(discovery.modelledAgainst).toEqual({})
+    expect(discovery.modelledAgainst).toStrictEqual({})
   })
 
   it('stores a permission in the map, never on the entry', () => {
@@ -41,8 +41,10 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(discovery.entries.at(1)?.receivedPermissions).toEqual(undefined)
-    expect(discovery.permissions).toEqual({
+    expect(discovery.entries.at(1)?.receivedPermissions).toStrictEqual(
+      undefined,
+    )
+    expect(discovery.permissions).toStrictEqual({
       [PROXY_ADMIN]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
       },
@@ -58,7 +60,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       [...discovery.entries, contract(COUNCIL)],
     )
 
-    expect(discovery.permissions).toEqual({
+    expect(discovery.permissions).toStrictEqual({
       [COUNCIL]: {
         directlyReceivedPermissions: [
           { permission: 'upgrade', from: TIMELOCK },
@@ -76,7 +78,9 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
+    expect(Object.keys(discovery.permissions ?? {})).toStrictEqual([
+      PROXY_ADMIN,
+    ])
   })
 
   // Reading joins with Object.assign, so a key holding undefined would land on
@@ -91,7 +95,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     )
 
     const stored = discovery.permissions?.[PROXY_ADMIN]
-    expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
+    expect(Object.keys(stored ?? {})).toStrictEqual(['receivedPermissions'])
   })
 
   // The consumer's crawl stops at the entrypoint, so an actor inside a shared
@@ -106,7 +110,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       [...discovery.entries, contract(COUNCIL)],
     )
 
-    expect(discovery.permissions).toEqual({
+    expect(discovery.permissions).toStrictEqual({
       [COUNCIL]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
       },
@@ -125,7 +129,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       [...discovery.entries, contract(COUNCIL), contract(unrelated)],
     )
 
-    expect(discovery.permissions).toEqual(undefined)
+    expect(discovery.permissions).toStrictEqual(undefined)
   })
 
   it('clears a map left over by a previous run', () => {
@@ -142,7 +146,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(discovery.permissions).toEqual(undefined)
+    expect(discovery.permissions).toStrictEqual(undefined)
   })
 
   it('sorts the map by address', () => {
@@ -158,7 +162,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(Object.keys(discovery.permissions ?? {})).toEqual([
+    expect(Object.keys(discovery.permissions ?? {})).toStrictEqual([
       PROXY_ADMIN,
       COUNCIL,
     ])
@@ -181,9 +185,9 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       ],
     )
 
-    expect(discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions).toEqual(
-      undefined,
-    )
+    expect(
+      discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions,
+    ).toStrictEqual(undefined)
     expect(
       discovery.permissions?.[COUNCIL]?.receivedPermissions ?? [],
     ).toHaveLength(1)
@@ -210,9 +214,9 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     const stored = structuredClone(first.permissions)
     combinePermissionsIntoDiscovery(second, model, second.entries)
 
-    expect(model).toEqual(original)
-    expect(first.permissions).toEqual(stored)
-    expect(second.permissions).toEqual(stored)
+    expect(model).toStrictEqual(original)
+    expect(first.permissions).toStrictEqual(stored)
+    expect(second.permissions).toStrictEqual(stored)
   })
 })
 

@@ -4,8 +4,9 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
@@ -101,11 +102,11 @@ describe(ScrollAccessControlHandler.name, () => {
   it('no logs', async () => {
     const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
-      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-      getDeployment: mockFn().resolvesTo(undefined),
+      getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: vi.fn().mockResolvedValue(undefined),
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([
           [
             abi.getEventTopic('RoleGranted'),
             abi.getEventTopic('RoleRevoked'),
@@ -126,7 +127,7 @@ describe(ScrollAccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         roles: {
@@ -164,8 +165,8 @@ describe(ScrollAccessControlHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
-      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-      getDeployment: mockFn().resolvesTo(undefined),
+      getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: vi.fn().mockResolvedValue(undefined),
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -200,13 +201,13 @@ describe(ScrollAccessControlHandler.name, () => {
           RevokeAccess(GOBLIN_ROLE, ContractC, [FunctionSigA]),
         ]
       },
-      getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getStorageAsAddress: mockFn().resolvesTo(
-        ChainSpecificAddress.ZERO('ethereum'),
-      ),
+      getStorage: vi.fn().mockResolvedValue(Bytes.fromHex('0'.repeat(88))),
+      getStorageAsAddress: vi
+        .fn()
+        .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
       callMethod: callMethodStub,
-      call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getSource: mockFn().resolvesTo({
+      call: vi.fn().mockResolvedValue(Bytes.fromHex('0'.repeat(88))),
+      getSource: vi.fn().mockResolvedValue({
         name: 'name',
         isVerified: true,
         abi: [FunctionA, FunctionB],
@@ -226,7 +227,7 @@ describe(ScrollAccessControlHandler.name, () => {
       ],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         roles: {
@@ -280,7 +281,7 @@ describe(ScrollAccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         roles: {

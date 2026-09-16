@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
+import { describe, it } from 'vitest'
 import { generateAllSchemas } from './generate'
 
 describe('schemas', async () => {

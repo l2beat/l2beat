@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { type FileContent, ParsedFilesManager } from './ParsedFilesManager'
 
@@ -20,25 +20,25 @@ describe(ParsedFilesManager.name, () => {
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(manager.findDeclaration('Library1').declaration).toHaveSubset({
+      expect(manager.findDeclaration('Library1').declaration).toMatchObject({
         name: 'Library1',
         type: 'library',
         signatureReferences: [],
         implementationReferences: [],
       })
-      expect(manager.findDeclaration('Interface1').declaration).toHaveSubset({
+      expect(manager.findDeclaration('Interface1').declaration).toMatchObject({
         name: 'Interface1',
         type: 'interface',
         signatureReferences: [],
         implementationReferences: [],
       })
-      expect(manager.findDeclaration('Abstract1').declaration).toHaveSubset({
+      expect(manager.findDeclaration('Abstract1').declaration).toMatchObject({
         name: 'Abstract1',
         type: 'abstract',
         signatureReferences: [],
         implementationReferences: [],
       })
-      expect(manager.findDeclaration('Contract1').declaration).toHaveSubset({
+      expect(manager.findDeclaration('Contract1').declaration).toMatchObject({
         name: 'Contract1',
         type: 'contract',
         signatureReferences: [],
@@ -72,14 +72,14 @@ describe(ParsedFilesManager.name, () => {
       ]
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(manager.findDeclaration('Contract1')).toEqual({
-        declaration: expect.subset({
+      expect(manager.findDeclaration('Contract1')).toStrictEqual({
+        declaration: expect.objectContaining({
           name: 'Contract1',
           type: 'contract',
           signatureReferences: [],
           implementationReferences: [],
         }),
-        file: expect.subset({
+        file: expect.objectContaining({
           path: 'path1',
         }),
       })
@@ -98,9 +98,9 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(manager.tryFindDeclaration('NonExistent', root.file)).toEqual(
-        undefined,
-      )
+      expect(
+        manager.tryFindDeclaration('NonExistent', root.file),
+      ).toStrictEqual(undefined)
     })
 
     it('resolves imports', () => {
@@ -134,14 +134,16 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      ).toStrictEqual('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toStrictEqual(
+        undefined,
+      )
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toEqual('A1')
+      ).toStrictEqual('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toEqual('A2')
+      ).toStrictEqual('A2')
     })
 
     it('normalizes imports', () => {
@@ -175,14 +177,16 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      ).toStrictEqual('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toStrictEqual(
+        undefined,
+      )
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toEqual('A1')
+      ).toStrictEqual('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toEqual('A2')
+      ).toStrictEqual('A2')
     })
   })
 
@@ -224,13 +228,13 @@ describe(ParsedFilesManager.name, () => {
 
       const manager = ParsedFilesManager.parseFiles(files, remappings)
 
-      expect(manager.findDeclaration('C1').file).toHaveSubset({
+      expect(manager.findDeclaration('C1').file).toMatchObject({
         path: 'lib/openzeppelin-contracts-upgradeable/long/access/OwnableUpgradeable.sol',
       })
-      expect(manager.findDeclaration('C2').file).toHaveSubset({
+      expect(manager.findDeclaration('C2').file).toMatchObject({
         path: 'lib/openzeppelin-contracts/contracts/access/NonRenounceable.sol',
       })
-      expect(manager.findDeclaration('C3').file).toHaveSubset({
+      expect(manager.findDeclaration('C3').file).toMatchObject({
         path: 'lib/optimism/contracts/OptimismPortal.sol',
       })
     })
@@ -256,7 +260,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.signatureReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
         ['L1', 'L2'].sort(),
       )
     })
@@ -291,7 +295,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.signatureReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })
@@ -325,20 +329,22 @@ describe(ParsedFilesManager.name, () => {
       })
       const root = manager.findDeclaration('User')
 
-      expect(root.declaration.signatureReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
         ['CustomError', 'EventHappened', 'GLOBAL_VALUE'].sort(),
       )
-      expect(manager.findDeclaration('GLOBAL_VALUE').declaration).toHaveSubset({
-        name: 'GLOBAL_VALUE',
-        type: 'constant',
-      })
-      expect(manager.findDeclaration('EventHappened').declaration).toHaveSubset(
+      expect(manager.findDeclaration('GLOBAL_VALUE').declaration).toMatchObject(
         {
-          name: 'EventHappened',
-          type: 'event',
+          name: 'GLOBAL_VALUE',
+          type: 'constant',
         },
       )
-      expect(manager.findDeclaration('CustomError').declaration).toHaveSubset({
+      expect(
+        manager.findDeclaration('EventHappened').declaration,
+      ).toMatchObject({
+        name: 'EventHappened',
+        type: 'event',
+      })
+      expect(manager.findDeclaration('CustomError').declaration).toMatchObject({
         name: 'CustomError',
         type: 'error',
       })
@@ -361,8 +367,10 @@ contract MyContract { function f() public {} }`,
       const result = manager.findDeclaration('MyContract')
 
       // Content should start with 'contract', not comments
-      expect(result.declaration.content.startsWith('contract')).toEqual(true)
-      expect(result.declaration.content).not.toInclude('/// @title')
+      expect(result.declaration.content.startsWith('contract')).toStrictEqual(
+        true,
+      )
+      expect(result.declaration.content).not.toContain('/// @title')
     })
 
     it('includes leading single-line comments when includeAll is true', () => {
@@ -382,9 +390,9 @@ contract MyContract { function f() public {} }`,
       const result = manager.findDeclaration('MyContract')
 
       // Content should include the NatSpec comments
-      expect(result.declaration.content).toInclude('/// @title MyContract')
-      expect(result.declaration.content).toInclude('/// @notice')
-      expect(result.declaration.content).toInclude('contract MyContract')
+      expect(result.declaration.content).toContain('/// @title MyContract')
+      expect(result.declaration.content).toContain('/// @notice')
+      expect(result.declaration.content).toContain('contract MyContract')
     })
 
     it('includes leading block comments when includeAll is true', () => {
@@ -405,10 +413,10 @@ contract MyContract { function f() public {} }`,
       const result = manager.findDeclaration('MyContract')
 
       // Content should include the block comment
-      expect(result.declaration.content).toInclude('/**')
-      expect(result.declaration.content).toInclude('@title MyContract')
-      expect(result.declaration.content).toInclude('*/')
-      expect(result.declaration.content).toInclude('contract MyContract')
+      expect(result.declaration.content).toContain('/**')
+      expect(result.declaration.content).toContain('@title MyContract')
+      expect(result.declaration.content).toContain('*/')
+      expect(result.declaration.content).toContain('contract MyContract')
     })
 
     it('does NOT attach same-line trailing comments from previous declaration', () => {
@@ -426,10 +434,10 @@ contract Second { function f() public {} }`,
       const result = manager.findDeclaration('Second')
 
       // Second contract should NOT include the trailing comment from First
-      expect(result.declaration.content.startsWith('contract Second')).toEqual(
-        true,
-      )
-      expect(result.declaration.content).not.toInclude('trailing comment')
+      expect(
+        result.declaration.content.startsWith('contract Second'),
+      ).toStrictEqual(true)
+      expect(result.declaration.content).not.toContain('trailing comment')
     })
 
     it('preserves comments for multiple declarations in same file', () => {
@@ -451,11 +459,11 @@ contract Second { function f() public {} }`,
       const first = manager.findDeclaration('First')
       const second = manager.findDeclaration('Second')
 
-      expect(first.declaration.content).toInclude('/// @title First contract')
-      expect(first.declaration.content).not.toInclude('Second contract')
+      expect(first.declaration.content).toContain('/// @title First contract')
+      expect(first.declaration.content).not.toContain('Second contract')
 
-      expect(second.declaration.content).toInclude('/// @title Second contract')
-      expect(second.declaration.content).not.toInclude('First contract')
+      expect(second.declaration.content).toContain('/// @title Second contract')
+      expect(second.declaration.content).not.toContain('First contract')
     })
   })
 })

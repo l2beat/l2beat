@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { codeIsEOA } from './bytecode'
 
 describe(codeIsEOA.name, () => {

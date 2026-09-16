@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { neuterErrors } from './errors'
 
 describe(neuterErrors.name, () => {
@@ -9,7 +9,7 @@ describe(neuterErrors.name, () => {
       baz: 'This is an error with API KEY 26fd710b28d',
     }
 
-    expect(neuterErrors(entry)).toEqual({
+    expect(neuterErrors(entry)).toStrictEqual({
       foo: 'Processing error occurred.',
       bar: 'Processing error occurred.',
       baz: 'Processing error occurred.',
@@ -18,10 +18,12 @@ describe(neuterErrors.name, () => {
 
   it('single entry', () => {
     const entry = { key: 'This is an error' }
-    expect(neuterErrors(entry)).toEqual({ key: 'Processing error occurred.' })
+    expect(neuterErrors(entry)).toStrictEqual({
+      key: 'Processing error occurred.',
+    })
   })
 
   it('empty returns empty', () => {
-    expect(neuterErrors({})).toEqual({})
+    expect(neuterErrors({})).toStrictEqual({})
   })
 })

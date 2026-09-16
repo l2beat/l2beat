@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { diffDiscovery } from './diffDiscovery'
 import type { EntryParameters } from './types'
@@ -114,7 +114,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -167,7 +167,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -195,7 +195,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -233,7 +233,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         name: 'A',
         address: ADDRESS_A,

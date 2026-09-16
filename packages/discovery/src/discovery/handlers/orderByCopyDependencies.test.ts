@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { StructureContractField } from '../config/StructureConfig'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
 
@@ -9,7 +9,7 @@ describe('orderByCopyDependencies', () => {
   it('should return an empty array for empty fields', () => {
     const fields: TestFields = {}
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return an empty array for fields with no copy dependencies', () => {
@@ -18,7 +18,7 @@ describe('orderByCopyDependencies', () => {
       b: {},
     }
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should handle a simple dependency correctly', () => {
@@ -27,7 +27,7 @@ describe('orderByCopyDependencies', () => {
       b: { copy: 'a' }, // Depends on 'a'
     }
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([['b']]) // 'b' is added to the first batch once 'a' is known
+    expect(result).toStrictEqual([['b']]) // 'b' is added to the first batch once 'a' is known
   })
 
   it('should handle multiple dependencies at the same level', () => {
@@ -38,7 +38,7 @@ describe('orderByCopyDependencies', () => {
       d: { copy: 'b' }, // Depends on 'b', which depends on 'a'
     }
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([['b', 'c'], ['d']]) // 'b' and 'c' can be processed together, then 'd'
+    expect(result).toStrictEqual([['b', 'c'], ['d']]) // 'b' and 'c' can be processed together, then 'd'
   })
 
   it('should handle multiple levels of dependencies', () => {
@@ -49,7 +49,7 @@ describe('orderByCopyDependencies', () => {
       d: { copy: 'c' },
     }
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([['b'], ['c'], ['d']]) // Each is added in sequence as dependencies resolve
+    expect(result).toStrictEqual([['b'], ['c'], ['d']]) // Each is added in sequence as dependencies resolve
   })
 
   it('should throw an error for a cyclic dependency', () => {
@@ -89,6 +89,6 @@ describe('orderByCopyDependencies', () => {
       d: { copy: 'b' },
     }
     const result = orderByCopyDependencies(fields)
-    expect(result).toEqual([['b'], ['d']]) // Only dependent fields are in batches
+    expect(result).toStrictEqual([['b'], ['d']]) // Only dependent fields are in batches
   })
 })

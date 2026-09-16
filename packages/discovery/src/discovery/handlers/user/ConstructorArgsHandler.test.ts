@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { BigNumber, ethers, type providers } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import {
@@ -29,13 +30,13 @@ describe(ConstructorArgsHandler.name, () => {
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
       const provider = mockObject<IProvider>({
-        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
-        getTransaction: mockFn().resolvesTo(transaction),
+        getDeployment: vi.fn().mockResolvedValue({ transactionHash: txHash }),
+        getTransaction: vi.fn().mockResolvedValue(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toEqual({
+      expect(response).toStrictEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',
@@ -45,8 +46,10 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
-      expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
+      expect(provider.getDeployment).toHaveBeenCalledExactlyOnceWith(
+        contractAddress,
+      )
+      expect(provider.getTransaction).toHaveBeenCalledExactlyOnceWith(txHash)
     })
 
     it('names args', async () => {
@@ -61,13 +64,13 @@ describe(ConstructorArgsHandler.name, () => {
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
       const provider = mockObject<IProvider>({
-        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
-        getTransaction: mockFn().resolvesTo(transaction),
+        getDeployment: vi.fn().mockResolvedValue({ transactionHash: txHash }),
+        getTransaction: vi.fn().mockResolvedValue(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toEqual({
+      expect(response).toStrictEqual({
         field: 'constructorArgs',
         value: {
           name: 'Pi Day N00b Token',
@@ -78,8 +81,10 @@ describe(ConstructorArgsHandler.name, () => {
           someNumber: '0',
         },
       })
-      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
-      expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
+      expect(provider.getDeployment).toHaveBeenCalledExactlyOnceWith(
+        contractAddress,
+      )
+      expect(provider.getTransaction).toHaveBeenCalledExactlyOnceWith(txHash)
     })
 
     it('falls back to extraction with block explorer if heuristic fails', async () => {
@@ -113,15 +118,15 @@ describe(ConstructorArgsHandler.name, () => {
       const contractAddress = ChainSpecificAddress.random()
 
       const provider = mockObject<IProvider>({
-        getDeployment: mockFn().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
-        getSource: mockFn().resolvesTo({
+        getDeployment: vi.fn().mockRejectedValue('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
+        getSource: vi.fn().mockResolvedValue({
           constructorArguments: sampleCtorEncodedArgs,
         }),
       })
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toEqual({
+      expect(response).toStrictEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',
@@ -131,8 +136,12 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress) // Assert it tried to use heuristic
-      expect(provider.getSource).toHaveBeenOnlyCalledWith(contractAddress)
+      expect(provider.getDeployment).toHaveBeenCalledExactlyOnceWith(
+        contractAddress,
+      ) // Assert it tried to use heuristic
+      expect(provider.getSource).toHaveBeenCalledExactlyOnceWith(
+        contractAddress,
+      )
     })
   })
 })
@@ -144,7 +153,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor!, sampleTxData)
 
-    expect([...decoded]).toEqual([
+    expect([...decoded]).toStrictEqual([
       'Pi Day N00b Token',
       'PIE',
       18,
@@ -179,7 +188,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor!, txData)
 
-    expect([...decoded]).toEqual([
+    expect([...decoded]).toStrictEqual([
       [
         '0x696cC7615A50CF12d1d1B38bF18A5606e9708296',
         '0x81165b6504520416487E5b4935865b4D3eeaa6e5',
@@ -202,7 +211,7 @@ describe('serializeResult', () => {
 
     const serialized = serializeResult(results)
 
-    expect(serialized).toEqual([
+    expect(serialized).toStrictEqual([
       ['0x696cC7615A50CF12d1d1B38bF18A5606e9708296'],
       '3',
     ])

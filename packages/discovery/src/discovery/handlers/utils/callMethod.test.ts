@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { callMethod } from './callMethod'
@@ -35,7 +36,7 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toEqual([RESULT_VALUE, 1234, RESULT_VALUE, 5678])
+    expect(result.value).toStrictEqual([RESULT_VALUE, 1234, RESULT_VALUE, 5678])
   })
 
   it('decodes an array return value', async () => {
@@ -63,7 +64,7 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toEqual(RESULT_VALUES)
+    expect(result.value).toStrictEqual(RESULT_VALUES)
   })
 
   it('decodes a scalar return value', async () => {
@@ -87,6 +88,6 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toEqual(RETURN_VALUE.toString())
+    expect(result.value).toStrictEqual(RETURN_VALUE.toString())
   })
 })

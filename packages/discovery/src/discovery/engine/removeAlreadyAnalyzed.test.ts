@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import type {
   AddressesWithTemplates,
@@ -64,12 +64,12 @@ describe(removeAlreadyAnalyzed.name, () => {
       [H.toString()]: new Set([]),
     }
     removeAlreadyAnalyzed(toAnalyze, resolved)
-    expect(toAnalyze).toEqual({
+    expect(toAnalyze).toStrictEqual({
       [A.toString()]: new Set(['templateForA']),
       [G.toString()]: new Set(['newTemplateForG']),
       [H.toString()]: new Set([]),
     })
-    expect(resolved).toEqual([
+    expect(resolved).toStrictEqual([
       mockContract(A),
       mockContract(B, {
         template: 'templateForB',

@@ -1,5 +1,5 @@
 import { parse } from '@mradomski/fast-solidity-parser'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { getASTIdentifiers } from './getASTIdentifiers'
 
@@ -40,7 +40,7 @@ describe(getASTIdentifiers.name, () => {
   it('gets unique identifiers', () => {
     const ast = parse(soliditySource)
     const idents = ast.children.flatMap((c) => getASTIdentifiers(c))
-    expect(idents.sort()).toEqual(
+    expect(idents.sort()).toStrictEqual(
       [
         'DefinedLibrary1',
         'Buffer',
@@ -80,7 +80,7 @@ contract C {
     const ast = parse(source)
     const idents = ast.children.flatMap((c) => getASTIdentifiers(c))
     const result = new Set(idents)
-    expect([...result].sort()).toEqual(
+    expect([...result].sort()).toStrictEqual(
       ['MAX_VALUE', 'TYPED_CONST', 'SomeLib.SomeType', 'SomeLib', 'C'].sort(),
     )
   })

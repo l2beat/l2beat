@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { diffContracts } from './diffContracts'
 import type { EntryParameters } from './types'
@@ -52,7 +52,7 @@ describe(diffContracts.name, () => {
     const ignore = ['ignoreInWatchMode', ...ignoreInWatchMode]
     const result = diffContracts(committed, discovered, ignore)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         key: 'address',
         before: JSON.stringify(OLD_ADDRESS),

@@ -4,8 +4,9 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../provider/IProvider'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
@@ -35,18 +36,51 @@ describe(FunctionSelectorDecoder.name, () => {
     }
   }
 
+  /**
+   * The decoder walks targets and their implementations concurrently, so a stub
+   * that answered in call order would tie these tests to that order. These keep
+   * the answers keyed by what was asked for. Anything unstubbed reads as a
+   * plain, unverified contract.
+   */
+  const eip1967Stub =
+    (implementations: Record<string, ChainSpecificAddress>) =>
+    async (address: ChainSpecificAddress, slot: number | bigint | Bytes) =>
+      (slot.toString() === EIP1967_IMPLEMENTATION_SLOT.toString()
+        ? implementations[address]
+        : undefined) ?? ChainSpecificAddress.ZERO('ethereum')
+
+  const eip2535Stub = (facets: Record<string, EthereumAddress[]>) =>
+    vi
+      .fn()
+      .mockImplementation(
+        async (
+          address: ChainSpecificAddress,
+          abi: string | utils.FunctionFragment,
+        ) =>
+          (abi === EIP2535_METHOD ? facets[address] : undefined) ??
+          callMethodStub(address, abi),
+      )
+
+  const sourceStub = (abis: Record<string, string[]>) =>
+    vi.fn().mockImplementation(async (address: ChainSpecificAddress) => ({
+      name: 'name',
+      isVerified: true,
+      abi: abis[address] ?? [],
+      source: 'name',
+    }))
+
   describe(FunctionSelectorDecoder.prototype.fetchTargets.name, () => {
     it('can fetch a single target address that is not a proxy', async () => {
       const target = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
@@ -66,13 +100,13 @@ describe(FunctionSelectorDecoder.name, () => {
       const target2 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
@@ -93,15 +127,12 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn()
-          .given(target, EIP1967_IMPLEMENTATION_SLOT)
-          .returnsOnce(implementation)
-          .returns(ChainSpecificAddress.ZERO('ethereum')),
-        callMethod: mockFn().executes(callMethodStub),
-        getLogs: mockFn().returns([]),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi.fn(eip1967Stub({ [target]: implementation })),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getLogs: vi.fn().mockReturnValue([]),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
@@ -123,22 +154,21 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().returns(
-          ChainSpecificAddress.ZERO('ethereum'),
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockReturnValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn(
+          eip2535Stub({ [target]: [implementation1, implementation2] }),
         ),
-        callMethod: mockFn()
-          .given(target, EIP2535_METHOD, [])
-          .resolvesToOnce([implementation1, implementation2])
-          .executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
-        getLogs: mockFn().resolvesTo([]),
+        getLogs: vi.fn().mockResolvedValue([]),
       })
       const decoder = new FunctionSelectorDecoder(provider)
 
@@ -163,17 +193,17 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
-          .returnsOnce(implementation1)
-          .given(target2, EIP1967_IMPLEMENTATION_SLOT)
-          .returnsOnce(implementation2)
-          .resolvesTo(ChainSpecificAddress.ZERO('ethereum')),
-        callMethod: mockFn().executes(callMethodStub),
-        getLogs: mockFn().returns([]),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi.fn(
+          eip1967Stub({
+            [target1]: implementation1,
+            [target2]: implementation2,
+          }),
+        ),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getLogs: vi.fn().mockReturnValue([]),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
@@ -204,24 +234,24 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation4_r = ChainSpecificAddress.address(implementation4)
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().returns(
-          ChainSpecificAddress.ZERO('ethereum'),
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockReturnValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn(
+          eip2535Stub({
+            [target1]: [implementation1_r, implementation2_r],
+            [target2]: [implementation3_r, implementation4_r],
+          }),
         ),
-        callMethod: mockFn()
-          .given(target1, EIP2535_METHOD, [])
-          .resolvesToOnce([implementation1_r, implementation2_r])
-          .given(target2, EIP2535_METHOD, [])
-          .resolvesToOnce([implementation3_r, implementation4_r])
-          .executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
-        getLogs: mockFn().resolvesTo([]),
+        getLogs: vi.fn().mockResolvedValue([]),
       })
       const decoder = new FunctionSelectorDecoder(provider)
 
@@ -246,18 +276,14 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation3_r = ChainSpecificAddress.address(implementation3)
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
-          .returnsOnce(implementation1)
-          .returns(ChainSpecificAddress.ZERO('ethereum')),
-        callMethod: mockFn()
-          .given(target2, EIP2535_METHOD, [])
-          .resolvesToOnce([implementation2_r, implementation3_r])
-          .executes(callMethodStub),
-        getLogs: mockFn().returns([]),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi.fn(eip1967Stub({ [target1]: implementation1 })),
+        callMethod: vi.fn(
+          eip2535Stub({ [target2]: [implementation2_r, implementation3_r] }),
+        ),
+        getLogs: vi.fn().mockReturnValue([]),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [],
@@ -292,13 +318,13 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclA, FunctionDeclB],
@@ -310,7 +336,7 @@ describe(FunctionSelectorDecoder.name, () => {
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toEqual(FunctionA)
+      expect(result).toStrictEqual(FunctionA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -319,13 +345,13 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
@@ -337,7 +363,7 @@ describe(FunctionSelectorDecoder.name, () => {
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toEqual(FunctionSigA)
+      expect(result).toStrictEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -346,13 +372,13 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
@@ -363,7 +389,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toEqual(FunctionSigA)
+      expect(result).toStrictEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -372,13 +398,13 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn().resolvesTo(
-          ChainSpecificAddress.ZERO('ethereum'),
-        ),
-        callMethod: mockFn().executes(callMethodStub),
-        getSource: mockFn().resolvesTo({
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi
+          .fn()
+          .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
+        callMethod: vi.fn().mockImplementation(callMethodStub),
+        getSource: vi.fn().mockResolvedValue({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
@@ -389,7 +415,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toEqual(FunctionSigA)
+      expect(result).toStrictEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -404,59 +430,22 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation3_r = ChainSpecificAddress.address(implementation3)
       const provider = mockObject<IProvider>({
         chain: 'ethereum',
-        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-        getDeployment: mockFn().resolvesTo(undefined),
-        getStorageAsAddress: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
-          .returnsOnce(implementation1)
-          .returns(ChainSpecificAddress.ZERO('ethereum')),
-        callMethod: mockFn()
-          .given(target2, EIP2535_METHOD, [])
-          .resolvesToOnce([implementation2_r, implementation3_r])
-          .executes(callMethodStub),
-        getLogs: mockFn().returns([]),
-        getSource: mockFn()
-          .given(target1)
-          .resolvesToOnce({
-            name: 'name',
-            isVerified: true,
-            abi: [FunctionDeclA],
-            source: 'name',
-          })
-          .given(implementation1)
-          .resolvesToOnce({
-            name: 'name',
-            isVerified: true,
-            abi: [FunctionDeclB],
-            source: 'name',
-          })
-          .given(target2)
-          .resolvesToOnce({
-            name: 'name',
-            isVerified: true,
-            abi: [FunctionDeclA],
-            source: 'name',
-          })
-          .given(implementation2)
-          .resolvesToOnce({
-            name: 'name',
-            isVerified: true,
-            abi: [FunctionDeclB],
-            source: 'name',
-          })
-          .given(implementation3)
-          .resolvesToOnce({
-            name: 'name',
-            isVerified: true,
-            abi: [FunctionDeclC],
-            source: 'name',
-          })
-          .resolvesTo({
-            name: 'name',
-            isVerified: true,
-            abi: [],
-            source: 'name',
+        getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
+        getStorageAsAddress: vi.fn(eip1967Stub({ [target1]: implementation1 })),
+        callMethod: vi.fn(
+          eip2535Stub({ [target2]: [implementation2_r, implementation3_r] }),
+        ),
+        getLogs: vi.fn().mockReturnValue([]),
+        getSource: vi.fn(
+          sourceStub({
+            [target1]: [FunctionDeclA],
+            [implementation1]: [FunctionDeclB],
+            [target2]: [FunctionDeclA],
+            [implementation2]: [FunctionDeclB],
+            [implementation3]: [FunctionDeclC],
           }),
+        ),
       })
       const decoder = new FunctionSelectorDecoder(provider)
 
@@ -469,12 +458,12 @@ describe(FunctionSelectorDecoder.name, () => {
       const result5 = await decoder.decodeSelector(target2, FunctionSigB)
       const result6 = await decoder.decodeSelector(target2, FunctionSigC)
 
-      expect(result1).toEqual(FunctionA)
-      expect(result2).toEqual(FunctionB)
-      expect(result3).toEqual(FunctionSigC)
-      expect(result4).toEqual(FunctionA)
-      expect(result5).toEqual(FunctionB)
-      expect(result6).toEqual(FunctionC)
+      expect(result1).toStrictEqual(FunctionA)
+      expect(result2).toStrictEqual(FunctionB)
+      expect(result3).toStrictEqual(FunctionSigC)
+      expect(result4).toStrictEqual(FunctionA)
+      expect(result5).toStrictEqual(FunctionB)
+      expect(result6).toStrictEqual(FunctionC)
       expect(provider.getSource).toHaveBeenCalledTimes(5)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
       expect(provider.getSource).toHaveBeenNthCalledWith(2, implementation1)

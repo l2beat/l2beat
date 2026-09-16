@@ -673,9 +673,15 @@ importers:
         specifier: 5.1.7
         version: 5.1.7(supports-color@8.1.1)
     devDependencies:
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.17.13

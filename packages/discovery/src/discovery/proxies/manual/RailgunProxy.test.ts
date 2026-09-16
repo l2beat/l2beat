@@ -1,12 +1,14 @@
 import {
   assert,
+  type Bytes,
   ChainSpecificAddress,
   type EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
 import { ADMIN_SLOT, IMPLEMENTATION_SLOT } from '../auto/Eip1967Proxy'
 import { getRailgunProxy, PAUSED_SLOT } from './RailgunProxy'
@@ -63,23 +65,34 @@ describe(getRailgunProxy.name, () => {
     logs?: providers.Log[]
     owner?: EthereumAddress
   }): IProvider {
+    const slotStub =
+      <T>(values: [Bytes, T][]) =>
+      async (address: ChainSpecificAddress, slot: number | bigint | Bytes) => {
+        assert(address === ADDRESS, 'unexpected contract read')
+        const match = values.find(([s]) => s.toString() === slot.toString())
+        assert(match !== undefined, `unstubbed slot ${slot.toString()}`)
+        return match[1]
+      }
+
     return mockObject<IProvider>({
       chain: 'ethereum',
-      getStorageAsAddress: mockFn()
-        .given(ADDRESS, IMPLEMENTATION_SLOT)
-        .resolvesToOnce(opts.implementation)
-        .given(ADDRESS, ADMIN_SLOT)
-        .resolvesToOnce(opts.admin),
-      getStorageAsBigint: mockFn()
-        .given(ADDRESS, PAUSED_SLOT)
-        .resolvesToOnce(opts.paused),
+      getStorageAsAddress: slotStub([
+        [IMPLEMENTATION_SLOT, opts.implementation],
+        [ADMIN_SLOT, opts.admin],
+      ]),
+      getStorageAsBigint: slotStub([[PAUSED_SLOT, opts.paused]]),
       callMethod: opts.owner
-        ? mockFn()
-            .given(ADDRESS, 'function owner() view returns (address)', [])
-            .resolvesToOnce(opts.owner)
-        : mockFn().resolvesTo(undefined),
+        ? vi.fn(async (address, abi) => {
+            assert(
+              address === ADDRESS &&
+                abi === 'function owner() view returns (address)',
+              'unexpected method call',
+            )
+            return opts.owner
+          })
+        : vi.fn().mockResolvedValue(undefined),
       getLogs: getLogsStub(opts.logs ?? []),
-      getBlock: mockFn((blockNumber: number) =>
+      getBlock: vi.fn((blockNumber: number) =>
         Promise.resolve({
           number: blockNumber,
           timestamp: FIRST_BLOCK_TIMESTAMP + blockNumber,
@@ -96,7 +109,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('detects unpaused proxy with no upgrades', async () => {
@@ -107,7 +120,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'Railgun proxy',
       values: {
         $admin: ADMIN.toString(),
@@ -127,8 +140,8 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.type).toEqual('Railgun proxy')
-    expect(result?.values.$paused).toEqual(true)
+    expect(result?.type).toStrictEqual('Railgun proxy')
+    expect(result?.values.$paused).toStrictEqual(true)
   })
 
   it('falls back to owner() when admin slot is zero', async () => {
@@ -140,7 +153,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.values.$admin).toEqual(OWNER.toString())
+    expect(result?.values.$admin).toStrictEqual(OWNER.toString())
   })
 
   it('fetches past upgrades, ignoring unrelated events', async () => {
@@ -166,8 +179,8 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.values.$upgradeCount).toEqual(2)
-    expect(result?.values.$pastUpgrades).toEqual([
+    expect(result?.values.$upgradeCount).toStrictEqual(2)
+    expect(result?.values.$pastUpgrades).toStrictEqual([
       [blockDate(1), Hash256(logs[0]!.transactionHash), [OLD_IMPLEMENTATION]],
       [blockDate(3), Hash256(logs[2]!.transactionHash), [IMPLEMENTATION]],
     ])

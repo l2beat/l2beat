@@ -4,7 +4,8 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import { StructureContract } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
@@ -69,7 +70,7 @@ describe(AddressAnalyzer.name, () => {
       const address = ChainSpecificAddress.random()
       const result = await addressAnalyzer.analyze(provider, address, config)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         ...EMPTY_ANALYZED_EOA,
         type: 'EOA',
         name: undefined,
@@ -171,7 +172,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(provider, address, config)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',
@@ -289,7 +290,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(provider, address, config)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
         address,
@@ -369,7 +370,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
-        getDeployment: mockFn().resolvesTo(undefined),
+        getDeployment: vi.fn().mockResolvedValue(undefined),
         chain: 'ethereum',
       })
 
@@ -403,7 +404,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(provider, address, config)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',

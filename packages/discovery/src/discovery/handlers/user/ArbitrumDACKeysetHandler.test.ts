@@ -1,6 +1,7 @@
 import { Bytes, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
@@ -38,8 +39,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
         return [
           SetValidKeyset(1, 2),
           SetValidKeyset(2, 3),
@@ -55,7 +56,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     })
 
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         blsSignatures: ['qg==', 'qg==', 'qg==', 'qg==', 'qg==', 'qg==', 'qg=='],
@@ -69,8 +70,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
         return []
       },
     })
@@ -80,7 +81,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     })
 
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         blsSignatures: [],

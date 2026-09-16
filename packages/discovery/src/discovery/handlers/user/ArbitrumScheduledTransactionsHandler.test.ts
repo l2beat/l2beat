@@ -1,6 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
@@ -53,7 +54,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       contractAddress,
     )
 
-    expect(response).toEqual({
+    expect(response).toStrictEqual({
       field: 'scheduledTransactions',
       value: EXPECTED_DECODED_SCHEDULED_TRANSACTIONS as ContractValue,
       ignoreRelative: true,
@@ -73,7 +74,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
         'function adjustTotalDelegation(int256 amount)',
       ])
       const calldata = iface.encodeFunctionData('adjustTotalDelegation', [1])
-      expect(handler.decodeCalldata(iface, calldata)).toEqual({
+      expect(handler.decodeCalldata(iface, calldata)).toStrictEqual({
         function: 'adjustTotalDelegation',
         inputs: [{ name: 'amount', value: 1 }],
       })
@@ -85,7 +86,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       // and fails the entire scheduledTransactions field.
       const iface = new utils.Interface(['function unrelated()'])
       const calldata = `0xec20b526${'0'.repeat(63)}1`
-      expect(handler.decodeCalldata(iface, calldata)).toEqual({
+      expect(handler.decodeCalldata(iface, calldata)).toStrictEqual({
         function: '0xec20b526',
         inputs: [{ name: 'calldata', value: calldata }],
       })
@@ -118,14 +119,14 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       ChainSpecificAddress.random(),
     )
     const value = response.value as Record<string, unknown>[]
-    expect(value.length).toEqual(1)
+    expect(value.length).toStrictEqual(1)
     const entry = value[0]
-    expect(entry?.raw).not.toEqual(undefined)
-    expect(entry?.id).not.toEqual(undefined)
+    expect(entry?.raw).not.toStrictEqual(undefined)
+    expect(entry?.id).not.toStrictEqual(undefined)
     // Degraded: no decoded field, and the whole field did not error out.
-    expect(entry?.decoded).toEqual(undefined)
+    expect(entry?.decoded).toStrictEqual(undefined)
     // The degradation is marked so it is visible in the diff, not silent.
-    expect(entry?.decodingFailed).toEqual(true)
+    expect(entry?.decodingFailed).toStrictEqual(true)
   })
 })
 

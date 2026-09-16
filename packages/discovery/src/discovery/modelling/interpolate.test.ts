@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { EntryParameters } from '../output/types'
 import {
   contractValuesForInterpolation,
@@ -10,9 +10,9 @@ import {
 
 describe(normalizeId.name, () => {
   it('properly normalizes ids', () => {
-    expect(normalizeId('ContractA')).toEqual('contractA')
-    expect(normalizeId('tEST.eth-L2BEAT')).toEqual('tEST_eth_L2BEAT')
-    expect(normalizeId('One.two&Three')).toEqual('one_two_Three')
+    expect(normalizeId('ContractA')).toStrictEqual('contractA')
+    expect(normalizeId('tEST.eth-L2BEAT')).toStrictEqual('tEST_eth_L2BEAT')
+    expect(normalizeId('One.two&Three')).toStrictEqual('one_two_Three')
   })
 })
 
@@ -22,16 +22,18 @@ describe(tryCastingToName.name, () => {
       '0x123': 'ContractA',
       '0x456': 'ContractB',
     }
-    expect(tryCastingToName('0x123', addressToNameMap, false)).toEqual(
+    expect(tryCastingToName('0x123', addressToNameMap, false)).toStrictEqual(
       'contractA',
     )
-    expect(tryCastingToName('0x456', addressToNameMap, false)).toEqual(
+    expect(tryCastingToName('0x456', addressToNameMap, false)).toStrictEqual(
       'contractB',
     )
-    expect(tryCastingToName('0xlalala', addressToNameMap, false)).toEqual(
+    expect(tryCastingToName('0xlalala', addressToNameMap, false)).toStrictEqual(
       '0xlalala',
     )
-    expect(tryCastingToName('A&B', addressToNameMap, false)).toEqual('A&B')
+    expect(tryCastingToName('A&B', addressToNameMap, false)).toStrictEqual(
+      'A&B',
+    )
   })
 })
 
@@ -93,7 +95,7 @@ describe(interpolateModelTemplate.name, () => {
       values,
       addressToNameMap,
     )
-    expect(result).toEqual(`
+    expect(result).toStrictEqual(`
       msig(contactMsigA, 2).
       member(contactMsigA,
         (memberA; memberB; "eth:0x0000000000000000000000000000000000000abc")
@@ -120,7 +122,7 @@ describe(interpolateModelTemplate.name, () => {
 
     const values = contractValuesForInterpolation('ethereum', contract)
     const result = interpolateModelTemplate(modelTemplate, values, {})
-    expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
+    expect(result).toStrictEqual('msg1("hello, world!").msg2("hello, world!").')
   })
 
   it('fails for missing values', () => {
@@ -162,7 +164,7 @@ describe(contractValuesForInterpolation.name, () => {
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
-    expect(values).toEqual({
+    expect(values).toStrictEqual({
       '$.chain': 'ethereum',
       '$.address': 'eth:0x00000000000000000000000000000000deadbeef',
       '$.name': 'ContractA',

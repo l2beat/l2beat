@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryCache } from './InMemoryCache'
 
 describe('InMemoryCache', () => {
@@ -12,14 +12,14 @@ describe('InMemoryCache', () => {
     it('should store a key-value pair', async () => {
       await cache.set('foo', 'bar')
       const value = await cache.get('foo')
-      expect(value).toEqual('bar')
+      expect(value).toStrictEqual('bar')
     })
 
     it('should overwrite an existing key', async () => {
       await cache.set('foo', 'bar')
       await cache.set('foo', 'baz')
       const value = await cache.get('foo')
-      expect(value).toEqual('baz')
+      expect(value).toStrictEqual('baz')
     })
   })
 
@@ -27,12 +27,12 @@ describe('InMemoryCache', () => {
     it('should retrieve the correct value for a given key', async () => {
       await cache.set('hello', 'world')
       const value = await cache.get('hello')
-      expect(value).toEqual('world')
+      expect(value).toStrictEqual('world')
     })
 
     it('should return undefined for a non-existent key', async () => {
       const value = await cache.get('nonexistent')
-      expect(value).toEqual(undefined)
+      expect(value).toStrictEqual(undefined)
     })
   })
 
@@ -51,7 +51,7 @@ describe('InMemoryCache', () => {
       const results = await Promise.all(retrievals)
 
       for (let i = 0; i < 100; i++) {
-        expect(results[i]).toEqual(`value${i}`)
+        expect(results[i]).toStrictEqual(`value${i}`)
       }
     })
   })

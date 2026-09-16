@@ -1,9 +1,9 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { CCIPAllowedFinality } from './CCIPAllowedFinality'
 
 describe('CCIPAllowedFinality', () => {
   it('decodes finality-only configuration', () => {
-    expect(CCIPAllowedFinality.cast({}, '0x00000000')).toEqual({
+    expect(CCIPAllowedFinality.cast({}, '0x00000000')).toStrictEqual({
       raw: '0x00000000',
       fullFinalityAllowed: true,
       safeHeadAllowed: false,
@@ -14,7 +14,7 @@ describe('CCIPAllowedFinality', () => {
   })
 
   it('decodes a minimum block depth', () => {
-    expect(CCIPAllowedFinality.cast({}, '0x00000001')).toEqual({
+    expect(CCIPAllowedFinality.cast({}, '0x00000001')).toStrictEqual({
       raw: '0x00000001',
       fullFinalityAllowed: true,
       safeHeadAllowed: false,
@@ -25,7 +25,7 @@ describe('CCIPAllowedFinality', () => {
   })
 
   it('decodes safe-head plus block-depth configuration', () => {
-    expect(CCIPAllowedFinality.cast({}, '0x00010001')).toEqual({
+    expect(CCIPAllowedFinality.cast({}, '0x00010001')).toStrictEqual({
       raw: '0x00010001',
       fullFinalityAllowed: true,
       safeHeadAllowed: true,
@@ -36,7 +36,7 @@ describe('CCIPAllowedFinality', () => {
   })
 
   it('preserves unassigned flag bits', () => {
-    expect(CCIPAllowedFinality.cast({}, '0x8000000c')).toEqual({
+    expect(CCIPAllowedFinality.cast({}, '0x8000000c')).toStrictEqual({
       raw: '0x8000000c',
       fullFinalityAllowed: true,
       safeHeadAllowed: false,

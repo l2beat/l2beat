@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
@@ -20,7 +20,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       },
     ])
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(),
       [ADDRESS_B.toString()]: new Set(),
       [ADDRESS_C.toString()]: new Set(),
@@ -36,7 +36,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       { field: 'c', value: ADDRESS_B.toString() },
     ])
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(),
       [ADDRESS_B.toString()]: new Set(),
     })
@@ -49,7 +49,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       { field: 'c', value: ADDRESS_C.toString() },
     ])
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(),
       [ADDRESS_C.toString()]: new Set(),
     })
@@ -65,7 +65,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       true,
     )
 
-    expect(relatives).toEqual({})
+    expect(relatives).toStrictEqual({})
   })
 
   it('ignores fields in the ignoreFields array', () => {
@@ -78,7 +78,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       ['b'],
     )
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(),
       [ADDRESS_C.toString()]: new Set(),
     })
@@ -95,7 +95,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       [ADDRESS_B],
     )
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(),
       [ADDRESS_C.toString()]: new Set(),
     })
@@ -122,7 +122,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       },
     )
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(['template1', 'template3']),
       [ADDRESS_B.toString()]: new Set(['template2']),
       [ADDRESS_C.toString()]: new Set(['template2']),
@@ -149,7 +149,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       },
     )
 
-    expect(relatives).toEqual({
+    expect(relatives).toStrictEqual({
       [ADDRESS_A.toString()]: new Set(['template1', 'template2']),
       [ADDRESS_D.toString()]: new Set(),
     })

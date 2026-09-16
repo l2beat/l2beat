@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -14,7 +15,7 @@ describe(SimpleMethodHandler.name, () => {
         _abi: string,
         _data: unknown[],
       ) {
-        expect(a).toEqual(address)
+        expect(a).toStrictEqual(address)
         return 291 as T
       },
     })
@@ -22,10 +23,10 @@ describe(SimpleMethodHandler.name, () => {
     const method = 'function balanceOf() view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
-    expect(handler.field).toEqual('balanceOf')
+    expect(handler.field).toStrictEqual('balanceOf')
 
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'balanceOf',
       value: 0x123,
       fragment,
@@ -44,7 +45,7 @@ describe(SimpleMethodHandler.name, () => {
     })
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'balanceOf',
       error: 'Execution reverted',
       fragment,
@@ -63,7 +64,7 @@ describe(SimpleMethodHandler.name, () => {
     })
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'balanceOf',
       error: 'foo bar',
       fragment,
@@ -82,7 +83,7 @@ describe(SimpleMethodHandler.name, () => {
     })
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: '_$foo',
       fragment,
       value: 1,

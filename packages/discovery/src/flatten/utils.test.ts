@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ContractSources } from '../discovery/source/SourceCodeService'
 import { getHashForMatchingFromSources } from './utils'
 
@@ -17,7 +17,7 @@ const CORRECT_SUPERCHAIN_SOURCES_HASH = Hash256(
 describe(getHashForMatchingFromSources.name, () => {
   it('correctly hashes the first source', () => {
     const hash = getHashForMatchingFromSources(superchainConfigSources.sources)
-    expect(hash).toEqual(CORRECT_SUPERCHAIN_SOURCES_HASH)
+    expect(hash).toStrictEqual(CORRECT_SUPERCHAIN_SOURCES_HASH)
   })
 })
 

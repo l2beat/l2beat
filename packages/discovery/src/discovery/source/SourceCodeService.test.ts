@@ -1,5 +1,6 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import type { IProvider } from '../provider/IProvider'
@@ -47,14 +48,14 @@ describe(SourceCodeService.name, () => {
 
   it('single, unverified contract', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(FOO_METADATA)
+    provider.getSource.mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
     const result = await service.getSources(provider, [FOO_ADDRESS], {})
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: [],
       abis: {},
       isVerified: false,
@@ -72,14 +73,14 @@ describe(SourceCodeService.name, () => {
 
   it('single, verified contract', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(BAR_METADATA)
+    provider.getSource.mockResolvedValueOnce(BAR_METADATA)
 
     const service = new SourceCodeService()
 
     const result = await service.getSources(provider, [BAR_ADDRESS], {})
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -101,9 +102,11 @@ describe(SourceCodeService.name, () => {
 
   it('multiple verified contracts', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(BAR_METADATA).resolvesToOnce(BAZ_METADATA)
+    provider.getSource
+      .mockResolvedValueOnce(BAR_METADATA)
+      .mockResolvedValueOnce(BAZ_METADATA)
 
     const service = new SourceCodeService()
 
@@ -112,7 +115,7 @@ describe(SourceCodeService.name, () => {
       [BAR_ADDRESS, BAZ_ADDRESS],
       {},
     )
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: ['function bar()', 'function baz()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -143,9 +146,11 @@ describe(SourceCodeService.name, () => {
 
   it('unverified implementation', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(BAR_METADATA).resolvesToOnce(FOO_METADATA)
+    provider.getSource
+      .mockResolvedValueOnce(BAR_METADATA)
+      .mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
@@ -154,7 +159,7 @@ describe(SourceCodeService.name, () => {
       [BAR_ADDRESS, FOO_ADDRESS],
       {},
     )
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -182,9 +187,9 @@ describe(SourceCodeService.name, () => {
 
   it('single manually verified contract', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(FOO_METADATA)
+    provider.getSource.mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
@@ -192,7 +197,7 @@ describe(SourceCodeService.name, () => {
       [FOO_ADDRESS]: 'LINK_TO_SOURCE_CODE',
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: [],
       abis: {},
       isVerified: true,
@@ -210,9 +215,11 @@ describe(SourceCodeService.name, () => {
 
   it('manually verified implementation', async () => {
     const provider = mockObject<IProvider>({
-      getSource: mockFn(),
+      getSource: vi.fn(),
     })
-    provider.getSource.resolvesToOnce(BAR_METADATA).resolvesToOnce(FOO_METADATA)
+    provider.getSource
+      .mockResolvedValueOnce(BAR_METADATA)
+      .mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
@@ -224,7 +231,7 @@ describe(SourceCodeService.name, () => {
       },
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],

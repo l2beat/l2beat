@@ -1,5 +1,6 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { DynamicArrayHandler } from './DynamicArrayHandler'
@@ -11,15 +12,18 @@ describe(DynamicArrayHandler.name, () => {
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
-        getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
-          expect(passedAddress).toEqual(address)
-          expect(slot).toEqual(85n)
-          return 2n
-        }),
-        getStorage: mockFn()
-          .executesOnce((passedAddress, slot) => {
-            expect(passedAddress).toEqual(address)
-            expect(slot).toEqual(
+        getStorageAsBigint: vi
+          .fn()
+          .mockImplementationOnce((passedAddress, slot) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(slot).toStrictEqual(85n)
+            return 2n
+          }),
+        getStorage: vi
+          .fn()
+          .mockImplementationOnce((passedAddress, slot) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(slot).toStrictEqual(
               BigInt(
                 '0x71beda120aafdd3bb922b360a066d10b7ce81d7ac2ad9874daac46e2282f6b45',
               ),
@@ -28,9 +32,9 @@ describe(DynamicArrayHandler.name, () => {
               '0x000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             )
           })
-          .executesOnce((passedAddress, slot) => {
-            expect(passedAddress).toEqual(address)
-            expect(slot).toEqual(
+          .mockImplementationOnce((passedAddress, slot) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(slot).toStrictEqual(
               BigInt(
                 '0x71beda120aafdd3bb922b360a066d10b7ce81d7ac2ad9874daac46e2282f6b46',
               ),
@@ -45,10 +49,10 @@ describe(DynamicArrayHandler.name, () => {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value: [
           '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
@@ -63,21 +67,23 @@ describe(DynamicArrayHandler.name, () => {
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
-        getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
-          expect(passedAddress).toEqual(address)
-          expect(slot).toEqual(85n)
-          return 0n
-        }),
+        getStorageAsBigint: vi
+          .fn()
+          .mockImplementationOnce((passedAddress, slot) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(slot).toStrictEqual(85n)
+            return 0n
+          }),
       })
 
       const handler = new DynamicArrayHandler('someName', {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toStrictEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         field: 'someName',
         value: [],
         ignoreRelative: undefined,
@@ -92,7 +98,7 @@ describe(DynamicArrayHandler.name, () => {
         slot: 85,
       })
 
-      expect(handler.dependencies).toEqual([])
+      expect(handler.dependencies).toStrictEqual([])
     })
 
     it('detects dependency from the slot field', () => {
@@ -101,7 +107,7 @@ describe(DynamicArrayHandler.name, () => {
         slot: '{{ foo }}',
       })
 
-      expect(handler.dependencies).toEqual(['foo'])
+      expect(handler.dependencies).toStrictEqual(['foo'])
     })
   })
 
@@ -120,7 +126,7 @@ describe(DynamicArrayHandler.name, () => {
     })
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       field: 'someName',
       error: 'foo bar',
     })

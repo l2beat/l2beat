@@ -1,6 +1,6 @@
-import { expect } from 'earl'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
+import { describe, expect, it } from 'vitest'
 import { format } from './format'
 
 describe(format.name, () => {
@@ -11,6 +11,6 @@ describe(format.name, () => {
     ])
 
     const formatted = format(before)
-    expect(formatted).toEqual(after)
+    expect(formatted).toStrictEqual(after)
   })
 })

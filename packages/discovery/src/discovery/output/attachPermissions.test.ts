@@ -3,7 +3,7 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { attachPermissions } from './attachPermissions'
 import type { DiscoveryOutput, EntryParameters } from './types'
 
@@ -22,7 +22,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([discovery])
 
-    expect(discovery.entries.at(0)?.receivedPermissions).toEqual([
+    expect(discovery.entries.at(0)?.receivedPermissions).toStrictEqual([
       { permission: 'upgrade', from: TIMELOCK },
     ])
   })
@@ -39,7 +39,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([consumer, module])
 
-    expect(module.entries.at(0)?.receivedPermissions).toEqual([
+    expect(module.entries.at(0)?.receivedPermissions).toStrictEqual([
       { permission: 'upgrade', from: TIMELOCK },
     ])
   })
@@ -56,7 +56,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([consumer, module])
 
-    expect(module.entries.at(0)?.receivedPermissions).toEqual(undefined)
+    expect(module.entries.at(0)?.receivedPermissions).toStrictEqual(undefined)
   })
 
   it('leaves an address the map does not mention alone', () => {
@@ -66,7 +66,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([discovery])
 
-    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toEqual(
+    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toStrictEqual(
       undefined,
     )
   })

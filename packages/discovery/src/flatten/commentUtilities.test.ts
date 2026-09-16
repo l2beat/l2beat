@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { findLeadingCommentStart } from './commentUtilities'
 
@@ -6,13 +6,13 @@ describe(findLeadingCommentStart.name, () => {
   it('returns start when no comments precede', () => {
     const source = 'contract Foo {}'
     const start = 0
-    expect(findLeadingCommentStart(source, start)).toEqual(start)
+    expect(findLeadingCommentStart(source, start)).toStrictEqual(start)
   })
 
   it('returns start when only whitespace precedes (no comments)', () => {
     const source = '    contract Foo {}'
     const start = 4 // index of 'c' in 'contract'
-    expect(findLeadingCommentStart(source, start)).toEqual(start)
+    expect(findLeadingCommentStart(source, start)).toStrictEqual(start)
   })
 
   it('finds single-line comment start', () => {
@@ -20,7 +20,7 @@ describe(findLeadingCommentStart.name, () => {
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toStrictEqual(0)
   })
 
   it('finds multi-line NatSpec comment start', () => {
@@ -29,7 +29,7 @@ contract Foo {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toStrictEqual(0)
   })
 
   it('finds block comment start', () => {
@@ -39,7 +39,7 @@ contract Foo {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toStrictEqual(0)
   })
 
   it('does not include trailing comment from previous code', () => {
@@ -47,7 +47,7 @@ contract Foo {}`
 contract B {}`
     const start = source.indexOf('contract B')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(start)
+    expect(result).toStrictEqual(start)
   })
 
   it('handles mixed comments and blank lines', () => {
@@ -57,7 +57,7 @@ contract B {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toStrictEqual(0)
   })
 
   it('stops at code line before comments', () => {
@@ -66,7 +66,7 @@ contract Foo {}`
 contract B {}`
     const start = source.indexOf('contract B')
     const result = findLeadingCommentStart(source, start)
-    expect(source.slice(result, start)).toInclude('/// Comment for B')
-    expect(source.slice(result, start)).not.toInclude('contract A')
+    expect(source.slice(result, start)).toContain('/// Comment for B')
+    expect(source.slice(result, start)).not.toContain('contract A')
   })
 })

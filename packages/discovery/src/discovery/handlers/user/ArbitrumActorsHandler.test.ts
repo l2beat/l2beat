@@ -1,5 +1,6 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
 import type { IProvider } from '../../provider/IProvider'
@@ -25,7 +26,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toEqual({
+    expect(response).toStrictEqual({
       field: 'validators',
       value: [
         '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
@@ -53,7 +54,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toEqual({
+    expect(response).toStrictEqual({
       field: 'batchPosters',
       value: ['0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D'],
     })

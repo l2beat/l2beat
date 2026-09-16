@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { parseClingoFact } from './clingoparser'
 
 describe(parseClingoFact.name, () => {
@@ -22,7 +22,7 @@ complexFact(
 )
     `
     const parsed = parseClingoFact(clingoFact)
-    expect(parsed).toEqual({
+    expect(parsed).toStrictEqual({
       atom: 'complexFact',
       params: [
         'thisIs_simple_Atom_0x123abc',

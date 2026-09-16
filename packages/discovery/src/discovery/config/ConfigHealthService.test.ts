@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { ConfigHealthService } from './ConfigHealthService'
@@ -39,7 +39,7 @@ describe(ConfigHealthService.name, () => {
 
     expect(
       new ConfigHealthService().checkConfigHealth(CONFIG, discovery),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 
   it('reports nonexistent nested value paths in template health', () => {
@@ -59,7 +59,7 @@ describe(ConfigHealthService.name, () => {
         [discovery],
         TEMPLATE_ID,
       ),
-    ).toEqual([
+    ).toStrictEqual([
       {
         source: 'template',
         target: { templateId: TEMPLATE_ID },
@@ -84,7 +84,7 @@ describe(ConfigHealthService.name, () => {
         MISCONFIGURED_CONFIG,
         discovery,
       ),
-    ).toEqual([
+    ).toStrictEqual([
       {
         source: 'config',
         target: {

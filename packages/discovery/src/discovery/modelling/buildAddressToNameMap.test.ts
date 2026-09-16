@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { EntryParameters } from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 
@@ -10,7 +10,7 @@ describe(buildAddressToNameMap.name, () => {
   it('gives every discovered entry an id built from its address', () => {
     expect(
       buildAddressToNameMap([contract(ADDRESS, 'Diamond'), eoa(OTHER)]),
-    ).toEqual({
+    ).toStrictEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
       [OTHER.toLowerCase()]: id(OTHER),
     })
@@ -22,7 +22,7 @@ describe(buildAddressToNameMap.name, () => {
         reference(ADDRESS),
         contract(ADDRESS, 'ProxyAdmin'),
       ]),
-    ).toEqual({
+    ).toStrictEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
     })
   })
@@ -35,7 +35,7 @@ describe(buildAddressToNameMap.name, () => {
         contract(ADDRESS, 'OwnName'),
         contract(ADDRESS, 'SharedModuleName'),
       ]),
-    ).toEqual({
+    ).toStrictEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
     })
   })

@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { remapDiscoverySourceNames } from './remapDiscoverySourceNames'
@@ -57,7 +57,7 @@ describe(remapDiscoverySourceNames.name, () => {
       output,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { ...renamedContract, name: 'Remapped' },
       unnamedContract,
       eoa,

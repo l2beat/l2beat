@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import type { BlipEnv } from '../../blip/type'
 import type { StructureContract } from '../config/StructureConfig'
@@ -12,7 +12,7 @@ describe(decodeHandlerResults.name, () => {
   it('returns empty values and errors', () => {
     expect(
       decodeHandlerResults(longChain, [], emptyFieldOverrides, emptyTypes),
-    ).toEqual({
+    ).toStrictEqual({
       values: {},
       errors: {},
       usedTypes: [],
@@ -33,7 +33,7 @@ describe(decodeHandlerResults.name, () => {
         emptyFieldOverrides,
         emptyTypes,
       ),
-    ).toEqual({
+    ).toStrictEqual({
       values: {
         a: 1,
         b: 2,
@@ -58,7 +58,7 @@ describe(decodeHandlerResults.name, () => {
         emptyFieldOverrides,
         emptyTypes,
       ),
-    ).toEqual({
+    ).toStrictEqual({
       values: {},
       errors: {
         d: 'Error 1',
@@ -80,7 +80,7 @@ describe(decodeHandlerResults.name, () => {
         emptyFieldOverrides,
         emptyTypes,
       ),
-    ).toEqual({
+    ).toStrictEqual({
       values: {
         a: 1,
         b: 2,
@@ -113,7 +113,7 @@ describe(decodeHandlerResults.name, () => {
         env,
       )
 
-      expect(values?.foo).toEqual({ block: 21_000_000 })
+      expect(values?.foo).toStrictEqual({ block: 21_000_000 })
     })
 
     it('reads chainName inside an edit', () => {
@@ -130,7 +130,7 @@ describe(decodeHandlerResults.name, () => {
         env,
       )
 
-      expect(values?.foo).toEqual({ chain: 'ethereum' })
+      expect(values?.foo).toStrictEqual({ chain: 'ethereum' })
     })
 
     it('derives hasExpired by copying a field and comparing to env timestamp', () => {
@@ -153,7 +153,7 @@ describe(decodeHandlerResults.name, () => {
         emptyTypes,
         expiredEnv,
       )
-      expect(expired.values?.hasExpired).toEqual(true)
+      expect(expired.values?.hasExpired).toStrictEqual(true)
 
       const notExpired = decodeHandlerResults(
         longChain,
@@ -162,7 +162,7 @@ describe(decodeHandlerResults.name, () => {
         emptyTypes,
         notExpiredEnv,
       )
-      expect(notExpired.values?.hasExpired).toEqual(false)
+      expect(notExpired.values?.hasExpired).toStrictEqual(false)
     })
   })
 })

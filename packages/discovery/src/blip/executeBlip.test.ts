@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ContractValue } from '../discovery/output/types'
 import { executeBlip } from './executeBlip'
 
@@ -8,15 +8,15 @@ describe(executeBlip.name, () => {
     const contractValue = { a: 1, b: 'test' }
 
     it('can use contract values in comparisons', () => {
-      expect(executeBlip(contractValue, ['=', 1, contractValue.a])).toEqual(
-        true,
-      )
+      expect(
+        executeBlip(contractValue, ['=', 1, contractValue.a]),
+      ).toStrictEqual(true)
       expect(
         executeBlip(contractValue, ['=', 'test', contractValue.b]),
-      ).toEqual(true)
-      expect(executeBlip(contractValue, ['!=', 2, contractValue.a])).toEqual(
-        true,
-      )
+      ).toStrictEqual(true)
+      expect(
+        executeBlip(contractValue, ['!=', 2, contractValue.a]),
+      ).toStrictEqual(true)
     })
 
     it('handles complex contract value expressions', () => {
@@ -27,7 +27,7 @@ describe(executeBlip.name, () => {
           ['!=', contractValue.b, 'invalid'],
           ['=', contractValue.a, 1],
         ]),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
   })
 
@@ -40,77 +40,81 @@ describe(executeBlip.name, () => {
         ['!=', 1, 2],
         ['=', 1, 1],
       ]),
-    ).toEqual(true)
+    ).toStrictEqual(true)
 
     expect(
       executeBlip({}, ['and', ['not', true], 'test', ['=', 1, 1]]),
-    ).toEqual(false)
+    ).toStrictEqual(false)
   })
 
   it('returns true only if all arguments are truthy', () => {
-    expect(executeBlip({}, ['and', true, true, true])).toEqual(true)
-    expect(executeBlip({}, ['and', true, false, true])).toEqual(false)
-    expect(executeBlip({}, ['and', true, true, false])).toEqual(false)
-    expect(executeBlip({}, ['and', 1, 'hello', true])).toEqual(true)
-    expect(executeBlip({}, ['and', 1, '', true])).toEqual(false)
+    expect(executeBlip({}, ['and', true, true, true])).toStrictEqual(true)
+    expect(executeBlip({}, ['and', true, false, true])).toStrictEqual(false)
+    expect(executeBlip({}, ['and', true, true, false])).toStrictEqual(false)
+    expect(executeBlip({}, ['and', 1, 'hello', true])).toStrictEqual(true)
+    expect(executeBlip({}, ['and', 1, '', true])).toStrictEqual(false)
   })
 
   it('returns false when given a single falsy argument', () => {
-    expect(executeBlip({}, ['and', false])).toEqual(false)
-    expect(executeBlip({}, ['and', 0])).toEqual(false)
-    expect(executeBlip({}, ['and', ''])).toEqual(false)
-    expect(executeBlip({}, ['and', ['=', 1, 2]])).toEqual(false)
+    expect(executeBlip({}, ['and', false])).toStrictEqual(false)
+    expect(executeBlip({}, ['and', 0])).toStrictEqual(false)
+    expect(executeBlip({}, ['and', ''])).toStrictEqual(false)
+    expect(executeBlip({}, ['and', ['=', 1, 2]])).toStrictEqual(false)
   })
 
   it('handles multiple and nested expressions', () => {
-    expect(executeBlip({}, ['and', true, 1, ['not', false]])).toEqual(true)
-    expect(executeBlip({}, ['and', true, 0, ['not', false]])).toEqual(false)
+    expect(executeBlip({}, ['and', true, 1, ['not', false]])).toStrictEqual(
+      true,
+    )
+    expect(executeBlip({}, ['and', true, 0, ['not', false]])).toStrictEqual(
+      false,
+    )
   })
 
   describe('equality comparisons', () => {
     it('compares multiple values for equality', () => {
-      expect(executeBlip({}, ['=', 1, 1, 1])).toEqual(true)
-      expect(executeBlip({}, ['=', 1, 2, 1])).toEqual(false)
-      expect(executeBlip({}, ['=', 'a', 'a', 'a'])).toEqual(true)
-      expect(executeBlip({}, ['=', 'a', 'b', 'a'])).toEqual(false)
+      expect(executeBlip({}, ['=', 1, 1, 1])).toStrictEqual(true)
+      expect(executeBlip({}, ['=', 1, 2, 1])).toStrictEqual(false)
+      expect(executeBlip({}, ['=', 'a', 'a', 'a'])).toStrictEqual(true)
+      expect(executeBlip({}, ['=', 'a', 'b', 'a'])).toStrictEqual(false)
     })
 
     it('works with different types', () => {
-      expect(executeBlip({}, ['=', 1, '1'])).toEqual(false)
+      expect(executeBlip({}, ['=', 1, '1'])).toStrictEqual(false)
     })
   })
 
   describe('inequality comparisons', () => {
     it('compares multiple values for inequality', () => {
-      expect(executeBlip({}, ['!=', 1, 2, 3])).toEqual(true)
-      expect(executeBlip({}, ['!=', 1, 1, 2])).toEqual(true)
-      expect(executeBlip({}, ['!=', 1, 1, 1])).toEqual(false)
-      expect(executeBlip({}, ['!=', 'a', 'a', 'b'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 'a', 'b', 'c'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 'a', 'a', 'a'])).toEqual(false)
+      expect(executeBlip({}, ['!=', 1, 2, 3])).toStrictEqual(true)
+      expect(executeBlip({}, ['!=', 1, 1, 2])).toStrictEqual(true)
+      expect(executeBlip({}, ['!=', 1, 1, 1])).toStrictEqual(false)
+      expect(executeBlip({}, ['!=', 'a', 'a', 'b'])).toStrictEqual(true)
+      expect(executeBlip({}, ['!=', 'a', 'b', 'c'])).toStrictEqual(true)
+      expect(executeBlip({}, ['!=', 'a', 'a', 'a'])).toStrictEqual(false)
     })
 
     it('works with different types', () => {
-      expect(executeBlip({}, ['!=', 1, '1'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 0, false])).toEqual(true)
+      expect(executeBlip({}, ['!=', 1, '1'])).toStrictEqual(true)
+      expect(executeBlip({}, ['!=', 0, false])).toStrictEqual(true)
     })
   })
 
   describe('less-than comparisons', () => {
     it('compares the current value against a single argument', () => {
-      expect(executeBlip(1, ['<', 2])).toEqual(true)
-      expect(executeBlip(2, ['<', 2])).toEqual(false)
-      expect(executeBlip(3, ['<', 2])).toEqual(false)
+      expect(executeBlip(1, ['<', 2])).toStrictEqual(true)
+      expect(executeBlip(2, ['<', 2])).toStrictEqual(false)
+      expect(executeBlip(3, ['<', 2])).toStrictEqual(false)
     })
 
     it('checks that the first argument is less than the rest', () => {
-      expect(executeBlip({}, ['<', 1, 2, 3])).toEqual(true)
-      expect(executeBlip({}, ['<', 1, 2, 0])).toEqual(false)
+      expect(executeBlip({}, ['<', 1, 2, 3])).toStrictEqual(true)
+      expect(executeBlip({}, ['<', 1, 2, 0])).toStrictEqual(false)
     })
 
     it('compares strings lexicographically', () => {
-      expect(executeBlip('a', ['<', 'b'])).toEqual(true)
-      expect(executeBlip('b', ['<', 'a'])).toEqual(false)
+      expect(executeBlip('a', ['<', 'b'])).toStrictEqual(true)
+      expect(executeBlip('b', ['<', 'a'])).toStrictEqual(false)
     })
 
     it('throws when operands are not both numbers or both strings', () => {
@@ -122,54 +126,56 @@ describe(executeBlip.name, () => {
 
   describe('greater-than comparisons', () => {
     it('compares the current value against a single argument', () => {
-      expect(executeBlip(3, ['>', 2])).toEqual(true)
-      expect(executeBlip(2, ['>', 2])).toEqual(false)
-      expect(executeBlip(1, ['>', 2])).toEqual(false)
+      expect(executeBlip(3, ['>', 2])).toStrictEqual(true)
+      expect(executeBlip(2, ['>', 2])).toStrictEqual(false)
+      expect(executeBlip(1, ['>', 2])).toStrictEqual(false)
     })
 
     it('checks that the first argument is greater than the rest', () => {
-      expect(executeBlip({}, ['>', 3, 2, 1])).toEqual(true)
-      expect(executeBlip({}, ['>', 3, 2, 4])).toEqual(false)
+      expect(executeBlip({}, ['>', 3, 2, 1])).toStrictEqual(true)
+      expect(executeBlip({}, ['>', 3, 2, 4])).toStrictEqual(false)
     })
 
     it('works inside a pipe after get', () => {
-      expect(executeBlip({ n: 10 }, ['pipe', ['get', 'n'], ['>', 5]])).toEqual(
-        true,
-      )
+      expect(
+        executeBlip({ n: 10 }, ['pipe', ['get', 'n'], ['>', 5]]),
+      ).toStrictEqual(true)
     })
   })
 
   it('negates boolean values', () => {
-    expect(executeBlip({}, ['not', true])).toEqual(false)
-    expect(executeBlip({}, ['not', false])).toEqual(true)
+    expect(executeBlip({}, ['not', true])).toStrictEqual(false)
+    expect(executeBlip({}, ['not', false])).toStrictEqual(true)
   })
 
   it('handles nested not operations', () => {
-    expect(executeBlip({}, ['not', ['not', true]])).toEqual(true)
-    expect(executeBlip({}, ['not', ['not', false]])).toEqual(false)
+    expect(executeBlip({}, ['not', ['not', true]])).toStrictEqual(true)
+    expect(executeBlip({}, ['not', ['not', false]])).toStrictEqual(false)
   })
 
   it('executes simple values', () => {
-    expect(executeBlip({}, 'string')).toEqual('string')
-    expect(executeBlip({}, 123)).toEqual(123)
-    expect(executeBlip({}, 0)).toEqual(0)
-    expect(executeBlip({}, false)).toEqual(false)
-    expect(executeBlip({}, true)).toEqual(true)
+    expect(executeBlip({}, 'string')).toStrictEqual('string')
+    expect(executeBlip({}, 123)).toStrictEqual(123)
+    expect(executeBlip({}, 0)).toStrictEqual(0)
+    expect(executeBlip({}, false)).toStrictEqual(false)
+    expect(executeBlip({}, true)).toStrictEqual(true)
   })
 
   describe('get operations', () => {
     it('handles get operations for objects and arrays', () => {
-      expect(executeBlip({ foo: 'bar' }, ['get', 'foo'])).toEqual('bar')
-      expect(executeBlip({ a: 1, b: 2 }, ['get', 'b'])).toEqual(2)
-      expect(executeBlip([10, 20, 30], ['get', 0])).toEqual(10)
-      expect(executeBlip(['first', 'second'], ['get', 1])).toEqual('second')
+      expect(executeBlip({ foo: 'bar' }, ['get', 'foo'])).toStrictEqual('bar')
+      expect(executeBlip({ a: 1, b: 2 }, ['get', 'b'])).toStrictEqual(2)
+      expect(executeBlip([10, 20, 30], ['get', 0])).toStrictEqual(10)
+      expect(executeBlip(['first', 'second'], ['get', 1])).toStrictEqual(
+        'second',
+      )
 
       expect(
         executeBlip({ user: { name: 'Alice' } }, ['get', 'user', 'name']),
-      ).toEqual('Alice')
+      ).toStrictEqual('Alice')
 
       // Numeric string keys (should work for objects)
-      expect(executeBlip({ '1': 'numeric key' }, ['get', '1'])).toEqual(
+      expect(executeBlip({ '1': 'numeric key' }, ['get', '1'])).toStrictEqual(
         'numeric key',
       )
     })
@@ -223,25 +229,29 @@ describe(executeBlip.name, () => {
       }
 
       // Get array element then object property
-      expect(executeBlip(data, ['get', 'users', 1, 'name'])).toEqual('Bob')
+      expect(executeBlip(data, ['get', 'users', 1, 'name'])).toStrictEqual(
+        'Bob',
+      )
 
       // Get nested object property
-      expect(executeBlip(data, ['get', 'meta', 'timestamp'])).toEqual(
+      expect(executeBlip(data, ['get', 'meta', 'timestamp'])).toStrictEqual(
         1234567890,
       )
 
       // Chained gets
-      expect(executeBlip(data, ['get', 'users', 0, 'id'])).toEqual(1)
+      expect(executeBlip(data, ['get', 'users', 0, 'id'])).toStrictEqual(1)
     })
 
     it('handles edge cases for get operations', () => {
       // Empty string key
-      expect(executeBlip({ '': 'empty key' }, ['get', ''])).toEqual('empty key')
+      expect(executeBlip({ '': 'empty key' }, ['get', ''])).toStrictEqual(
+        'empty key',
+      )
 
       // Sparse arrays
       const sparse: string[] = []
       sparse[2] = 'item'
-      expect(executeBlip(sparse, ['get', 2])).toEqual('item')
+      expect(executeBlip(sparse, ['get', 2])).toStrictEqual('item')
       expect(() => executeBlip(sparse, ['get', 1])).toThrow(
         'Key not found in object',
       )
@@ -251,30 +261,30 @@ describe(executeBlip.name, () => {
       expect(() => executeBlip(arrayLike, ['get', 0])).toThrow(
         'Numeric keys only work on arrays',
       )
-      expect(executeBlip(arrayLike, ['get', '0'])).toEqual('a')
+      expect(executeBlip(arrayLike, ['get', '0'])).toStrictEqual('a')
     })
   })
 
   describe('set operations', () => {
     it('handles basic set operations for objects', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['set', 'a', 10])).toEqual({ a: 10, b: 2 })
-      expect(executeBlip(obj, ['set', 'b', 3])).toEqual({ a: 1, b: 3 })
+      expect(executeBlip(obj, ['set', 'a', 10])).toStrictEqual({ a: 10, b: 2 })
+      expect(executeBlip(obj, ['set', 'b', 3])).toStrictEqual({ a: 1, b: 3 })
     })
 
     it('handles basic set operations for arrays', () => {
       const arr = [1, 2, 3]
-      expect(executeBlip(arr, ['set', 0, 10])).toEqual([10, 2, 3])
-      expect(executeBlip(arr, ['set', 2, 30])).toEqual([1, 2, 30])
+      expect(executeBlip(arr, ['set', 0, 10])).toStrictEqual([10, 2, 3])
+      expect(executeBlip(arr, ['set', 2, 30])).toStrictEqual([1, 2, 30])
     })
 
     it('handles set operations with expressions', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['set', 'a', ['=', 2]])).toEqual({
+      expect(executeBlip(obj, ['set', 'a', ['=', 2]])).toStrictEqual({
         a: false,
         b: 2,
       })
-      expect(executeBlip(obj, ['set', 'b', ['not', true]])).toEqual({
+      expect(executeBlip(obj, ['set', 'b', ['not', true]])).toStrictEqual({
         a: 1,
         b: false,
       })
@@ -291,19 +301,21 @@ describe(executeBlip.name, () => {
         },
       }
 
-      expect(executeBlip(data, ['set', ['user', 'name'], 'Bob'])).toEqual({
-        user: {
-          name: 'Bob',
-          settings: {
-            theme: 'dark',
-            notifications: true,
+      expect(executeBlip(data, ['set', ['user', 'name'], 'Bob'])).toStrictEqual(
+        {
+          user: {
+            name: 'Bob',
+            settings: {
+              theme: 'dark',
+              notifications: true,
+            },
           },
         },
-      })
+      )
 
       expect(
         executeBlip(data, ['set', ['user', 'settings', 'theme'], 'light']),
-      ).toEqual({
+      ).toStrictEqual({
         user: {
           name: 'Alice',
           settings: {
@@ -359,7 +371,7 @@ describe(executeBlip.name, () => {
           ['users', 0, 'profile', 'preferences', 'colors', 1],
           'purple',
         ]),
-      ).toEqual({
+      ).toStrictEqual({
         users: [
           {
             id: 1,
@@ -403,7 +415,7 @@ describe(executeBlip.name, () => {
           ['system', 'defaultSettings', 'timeout'],
           60,
         ]),
-      ).toEqual({
+      ).toStrictEqual({
         users: [
           {
             id: 1,
@@ -465,13 +477,13 @@ describe(executeBlip.name, () => {
       const original = { a: 1, b: { c: 2 } }
       const result = executeBlip(original, ['set', 'a', 10])
 
-      expect(result).toEqual({ a: 10, b: { c: 2 } })
-      expect(original).toEqual({ a: 1, b: { c: 2 } })
+      expect(result).toStrictEqual({ a: 10, b: { c: 2 } })
+      expect(original).toStrictEqual({ a: 1, b: { c: 2 } })
 
       // Check deep cloning
       const nestedResult = executeBlip(original, ['set', 'b', ['set', 'c', 20]])
-      expect(nestedResult).toEqual({ a: 1, b: { c: 20 } })
-      expect(original).toEqual({ a: 1, b: { c: 2 } })
+      expect(nestedResult).toStrictEqual({ a: 1, b: { c: 20 } })
+      expect(original).toStrictEqual({ a: 1, b: { c: 2 } })
     })
 
     it('handles nested arrays within objects', () => {
@@ -482,7 +494,7 @@ describe(executeBlip.name, () => {
         ],
       }
 
-      expect(executeBlip(data, ['set', ['matrix', 0, 1], 99])).toEqual({
+      expect(executeBlip(data, ['set', ['matrix', 0, 1], 99])).toStrictEqual({
         matrix: [
           [1, 99],
           [3, 4],
@@ -496,7 +508,7 @@ describe(executeBlip.name, () => {
         { id: 2, value: 'b' },
       ]
 
-      expect(executeBlip(data, ['set', [0, 'value'], 'x'])).toEqual([
+      expect(executeBlip(data, ['set', [0, 'value'], 'x'])).toStrictEqual([
         { id: 1, value: 'x' },
         { id: 2, value: 'b' },
       ])
@@ -521,22 +533,22 @@ describe(executeBlip.name, () => {
   describe('pick operations', () => {
     it('picks specified keys from an object', () => {
       const obj = { a: 1, b: 2, c: 3, d: 4 }
-      expect(executeBlip(obj, ['pick', 'a', 'c'])).toEqual({ a: 1, c: 3 })
+      expect(executeBlip(obj, ['pick', 'a', 'c'])).toStrictEqual({ a: 1, c: 3 })
     })
 
     it('ignores keys that do not exist in the object', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['pick', 'a', 'z'])).toEqual({ a: 1 })
+      expect(executeBlip(obj, ['pick', 'a', 'z'])).toStrictEqual({ a: 1 })
     })
 
     it('returns an empty object when no keys match', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['pick', 'x', 'y'])).toEqual({})
+      expect(executeBlip(obj, ['pick', 'x', 'y'])).toStrictEqual({})
     })
 
     it('works with dynamic key expressions', () => {
       const obj = { a: 1, b: 2, key: 'a' }
-      expect(executeBlip(obj, ['pick', ['get', 'key']])).toEqual({ a: 1 })
+      expect(executeBlip(obj, ['pick', ['get', 'key']])).toStrictEqual({ a: 1 })
     })
 
     it('throws when input is not an object', () => {
@@ -564,7 +576,7 @@ describe(executeBlip.name, () => {
         b: { x: 10, y: 20 },
         c: 3,
       }
-      expect(executeBlip(obj, ['pick', 'a', 'b'])).toEqual({
+      expect(executeBlip(obj, ['pick', 'a', 'b'])).toStrictEqual({
         a: 1,
         b: { x: 10, y: 20 },
       })
@@ -572,31 +584,31 @@ describe(executeBlip.name, () => {
 
     it('works with empty key list', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['pick'])).toEqual({})
+      expect(executeBlip(obj, ['pick'])).toStrictEqual({})
     })
   })
 
   describe('filter operations', () => {
     it('filters an array based on a predicate', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['filter', ['=', 2]])).toEqual([2])
+      expect(executeBlip(arr, ['filter', ['=', 2]])).toStrictEqual([2])
     })
 
     it('returns an empty array when no elements match', () => {
       const arr = [1, 2, 3]
-      expect(executeBlip(arr, ['filter', ['=', 10]])).toEqual([])
+      expect(executeBlip(arr, ['filter', ['=', 10]])).toStrictEqual([])
     })
 
     it('returns the original array when all elements match', () => {
       const arr = [1, 2, 3]
-      expect(executeBlip(arr, ['filter', ['!=', 10]])).toEqual([1, 2, 3])
+      expect(executeBlip(arr, ['filter', ['!=', 10]])).toStrictEqual([1, 2, 3])
     })
 
     it('works with complex predicates', () => {
       const arr = [1, 2, 3, 4, 5]
       expect(
         executeBlip(arr, ['filter', ['and', ['!=', 2], ['!=', 4]]]),
-      ).toEqual([1, 3, 5])
+      ).toStrictEqual([1, 3, 5])
     })
 
     it('filters arrays of objects', () => {
@@ -605,7 +617,7 @@ describe(executeBlip.name, () => {
         { id: 2, name: 'Bob', active: false },
         { id: 3, name: 'Charlie', active: true },
       ]
-      expect(executeBlip(users, ['filter', ['get', 'active']])).toEqual([
+      expect(executeBlip(users, ['filter', ['get', 'active']])).toStrictEqual([
         { id: 1, name: 'Alice', active: true },
         { id: 3, name: 'Charlie', active: true },
       ])
@@ -629,7 +641,7 @@ describe(executeBlip.name, () => {
         [3, 4],
         [5, 6],
       ]
-      expect(executeBlip(arr, ['filter', ['=', 2, ['get', 1]]])).toEqual([
+      expect(executeBlip(arr, ['filter', ['=', 2, ['get', 1]]])).toStrictEqual([
         [1, 2],
       ])
     })
@@ -638,7 +650,7 @@ describe(executeBlip.name, () => {
   describe('find operations', () => {
     it('finds the first element matching a predicate', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['find', ['=', 3]])).toEqual(3)
+      expect(executeBlip(arr, ['find', ['=', 3]])).toStrictEqual(3)
     })
 
     it('throws when no elements match', () => {
@@ -650,7 +662,7 @@ describe(executeBlip.name, () => {
 
     it('returns the first matching element when multiple match', () => {
       const arr = [1, 2, 2, 3]
-      expect(executeBlip(arr, ['find', ['=', 2]])).toEqual(2)
+      expect(executeBlip(arr, ['find', ['=', 2]])).toStrictEqual(2)
     })
 
     it('finds objects in arrays', () => {
@@ -659,7 +671,7 @@ describe(executeBlip.name, () => {
         { id: 2, name: 'Bob', active: true },
         { id: 3, name: 'Charlie', active: true },
       ]
-      expect(executeBlip(users, ['find', ['get', 'active']])).toEqual({
+      expect(executeBlip(users, ['find', ['get', 'active']])).toStrictEqual({
         id: 2,
         name: 'Bob',
         active: true,
@@ -682,28 +694,32 @@ describe(executeBlip.name, () => {
   describe('map operations', () => {
     it('applies a function to each element of an array', () => {
       const arr = [1, 2, 3]
-      expect(executeBlip(arr, ['map', ['=', 2]])).toEqual([false, true, false])
+      expect(executeBlip(arr, ['map', ['=', 2]])).toStrictEqual([
+        false,
+        true,
+        false,
+      ])
     })
 
     it('works with complex expressions using implemented operations', () => {
       const arr = [1, 2, 3, 4]
       expect(
         executeBlip(arr, ['map', ['and', ['=', 3], ['not', false]]]),
-      ).toEqual([false, false, true, false])
+      ).toStrictEqual([false, false, true, false])
     })
 
     it('handles empty arrays', () => {
-      expect(executeBlip([], ['map', ['not', false]])).toEqual([])
+      expect(executeBlip([], ['map', ['not', false]])).toStrictEqual([])
     })
 
     it('works with arrays of objects', () => {
       const arr = [{ a: 1 }, { a: 2 }, { a: 3 }]
-      expect(executeBlip(arr, ['map', ['get', 'a']])).toEqual([1, 2, 3])
+      expect(executeBlip(arr, ['map', ['get', 'a']])).toStrictEqual([1, 2, 3])
     })
 
     it('preserves array length', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['map', ['=', 3]])).toEqual([
+      expect(executeBlip(arr, ['map', ['=', 3]])).toStrictEqual([
         false,
         false,
         true,
@@ -730,7 +746,7 @@ describe(executeBlip.name, () => {
         { id: 2, name: 'Bob' },
         { id: 3, name: 'Charlie' },
       ]
-      expect(executeBlip(users, ['map', ['pick', 'name']])).toEqual([
+      expect(executeBlip(users, ['map', ['pick', 'name']])).toStrictEqual([
         { name: 'Alice' },
         { name: 'Bob' },
         { name: 'Charlie' },
@@ -743,29 +759,33 @@ describe(executeBlip.name, () => {
         [3, 4],
         [5, 6],
       ]
-      expect(executeBlip(arr, ['map', ['get', 0]])).toEqual([1, 3, 5])
+      expect(executeBlip(arr, ['map', ['get', 0]])).toStrictEqual([1, 3, 5])
     })
 
     it('handles edge cases with boolean expressions', () => {
       const arr = [true, false, true]
-      expect(executeBlip(arr, ['map', ['not']])).toEqual([false, true, false])
+      expect(executeBlip(arr, ['map', ['not']])).toStrictEqual([
+        false,
+        true,
+        false,
+      ])
     })
 
     it('applies expressions that reference the element context', () => {
       const arr = [1, 2, 3]
       expect(
         executeBlip(arr, ['map', ['and', ['=', 1], ['not', false]]]),
-      ).toEqual([true, false, false])
+      ).toStrictEqual([true, false, false])
     })
   })
 
   describe('sort operations', () => {
     it('sorts numbers ascending', () => {
-      expect(executeBlip([3, 1, 2], ['sort'])).toEqual([1, 2, 3])
+      expect(executeBlip([3, 1, 2], ['sort'])).toStrictEqual([1, 2, 3])
     })
 
     it('sorts strings lexicographically', () => {
-      expect(executeBlip(['0x33', '0x11', '0x22'], ['sort'])).toEqual([
+      expect(executeBlip(['0x33', '0x11', '0x22'], ['sort'])).toStrictEqual([
         '0x11',
         '0x22',
         '0x33',
@@ -778,7 +798,7 @@ describe(executeBlip.name, () => {
           [{ id: 'b' }, { id: 'a' }, { id: 'c' }],
           ['sort', ['get', 'id']],
         ),
-      ).toEqual([{ id: 'a' }, { id: 'b' }, { id: 'c' }])
+      ).toStrictEqual([{ id: 'a' }, { id: 'b' }, { id: 'c' }])
     })
 
     it('sorts nested arrays by index (e.g. DON nodes by p2pId)', () => {
@@ -791,7 +811,7 @@ describe(executeBlip.name, () => {
           ],
           ['sort', ['get', 0]],
         ),
-      ).toEqual([
+      ).toStrictEqual([
         ['0x11', 'x'],
         ['0x22', 'y'],
         ['0x33', 'z'],
@@ -808,7 +828,7 @@ describe(executeBlip.name, () => {
           ],
           ['sort', ['get', 'k']],
         ),
-      ).toEqual([
+      ).toStrictEqual([
         { k: 0, v: 'c' },
         { k: 1, v: 'a' },
         { k: 1, v: 'b' },
@@ -816,7 +836,7 @@ describe(executeBlip.name, () => {
     })
 
     it('handles empty arrays', () => {
-      expect(executeBlip([], ['sort'])).toEqual([])
+      expect(executeBlip([], ['sort'])).toStrictEqual([])
     })
 
     it('throws when input is not an array', () => {
@@ -829,19 +849,21 @@ describe(executeBlip.name, () => {
   describe('pipe operations', () => {
     it('applies a sequence of operations to a value', () => {
       const data = { a: 1 }
-      expect(executeBlip(data, ['pipe', ['get', 'a'], ['=', 1]])).toEqual(true)
+      expect(executeBlip(data, ['pipe', ['get', 'a'], ['=', 1]])).toStrictEqual(
+        true,
+      )
     })
 
     it('passes the result of each operation to the next', () => {
       const data = { users: [{ name: 'Alice' }, { name: 'Bob' }] }
       expect(
         executeBlip(data, ['pipe', ['get', 'users'], ['map', ['get', 'name']]]),
-      ).toEqual(['Alice', 'Bob'])
+      ).toStrictEqual(['Alice', 'Bob'])
     })
 
     it('works with arrays', () => {
       const arr = [1, 2, 3]
-      expect(executeBlip(arr, ['pipe', ['map', ['=', 2]]])).toEqual([
+      expect(executeBlip(arr, ['pipe', ['map', ['=', 2]]])).toStrictEqual([
         false,
         true,
         false,
@@ -850,7 +872,7 @@ describe(executeBlip.name, () => {
 
     it('works with objects', () => {
       const obj = { a: 1, b: 2, c: 3 }
-      expect(executeBlip(obj, ['pipe', ['pick', 'a', 'b']])).toEqual({
+      expect(executeBlip(obj, ['pipe', ['pick', 'a', 'b']])).toStrictEqual({
         a: 1,
         b: 2,
       })
@@ -871,7 +893,7 @@ describe(executeBlip.name, () => {
           ['get', 'users'],
           ['map', ['pick', 'name', 'active']],
         ]),
-      ).toEqual([
+      ).toStrictEqual([
         { name: 'Alice', active: true },
         { name: 'Bob', active: false },
         { name: 'Charlie', active: true },
@@ -879,22 +901,22 @@ describe(executeBlip.name, () => {
     })
 
     it('returns the input value when no operations are provided', () => {
-      expect(executeBlip(42, ['pipe'])).toEqual(42)
+      expect(executeBlip(42, ['pipe'])).toStrictEqual(42)
     })
 
     it('handles single operation pipes', () => {
       const data = { a: 1 }
-      expect(executeBlip(data, ['pipe', ['get', 'a']])).toEqual(1)
+      expect(executeBlip(data, ['pipe', ['get', 'a']])).toStrictEqual(1)
     })
 
     it('works with boolean operations', () => {
-      expect(executeBlip(true, ['pipe', ['not'], ['not']])).toEqual(true)
-      expect(executeBlip(false, ['pipe', ['not']])).toEqual(true)
+      expect(executeBlip(true, ['pipe', ['not'], ['not']])).toStrictEqual(true)
+      expect(executeBlip(false, ['pipe', ['not']])).toStrictEqual(true)
     })
 
     it('can transform between different types', () => {
       const arr = [true, false, true]
-      expect(executeBlip(arr, ['pipe', ['map', ['not']]])).toEqual([
+      expect(executeBlip(arr, ['pipe', ['map', ['not']]])).toStrictEqual([
         false,
         true,
         false,
@@ -909,7 +931,7 @@ describe(executeBlip.name, () => {
           ['pick', 'a'],
           ['pipe', ['get', 'a'], ['=', 1]],
         ]),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
 
     it('handles edge cases with empty inputs', () => {
@@ -923,20 +945,30 @@ describe(executeBlip.name, () => {
   describe('delete operations', () => {
     it('deletes multiple keys from an object', () => {
       const obj = { a: 1, b: 2, c: 3, d: 4 }
-      expect(executeBlip(obj, ['delete', 'b', 'd'])).toEqual({ a: 1, c: 3 })
-      expect(executeBlip(obj, ['delete', 'a'])).toEqual({ b: 2, c: 3, d: 4 }) // Single key as array
+      expect(executeBlip(obj, ['delete', 'b', 'd'])).toStrictEqual({
+        a: 1,
+        c: 3,
+      })
+      expect(executeBlip(obj, ['delete', 'a'])).toStrictEqual({
+        b: 2,
+        c: 3,
+        d: 4,
+      }) // Single key as array
     })
 
     it('deletes multiple keys including non-existent ones from an object', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['delete', 'a', 'z', 'b'])).toEqual({}) // All deleted, including non-existent
-      expect(executeBlip(obj, ['delete', 'z', 'x'])).toEqual({ a: 1, b: 2 }) // Non-existent keys do nothing
+      expect(executeBlip(obj, ['delete', 'a', 'z', 'b'])).toStrictEqual({}) // All deleted, including non-existent
+      expect(executeBlip(obj, ['delete', 'z', 'x'])).toStrictEqual({
+        a: 1,
+        b: 2,
+      }) // Non-existent keys do nothing
     })
 
     it('deletes multiple indices from an array sequentially', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['delete', 0, 2])).toEqual([2, 4, 5]) // After deleting 0, array is [2,3,4,5], then delete index 2 (which is 4)
-      expect(executeBlip(arr, ['delete', 1])).toEqual([1, 3, 4, 5]) // Single index
+      expect(executeBlip(arr, ['delete', 0, 2])).toStrictEqual([2, 4, 5]) // After deleting 0, array is [2,3,4,5], then delete index 2 (which is 4)
+      expect(executeBlip(arr, ['delete', 1])).toStrictEqual([1, 3, 4, 5]) // Single index
     })
 
     it('throws when deleting with out-of-bounds indices in arrays', () => {
@@ -974,30 +1006,30 @@ describe(executeBlip.name, () => {
     it('does not modify the original object or array', () => {
       const originalObj = { a: 1, b: 2, c: 3 }
       const resultObj = executeBlip(originalObj, ['delete', 'b', 'c'])
-      expect(resultObj).toEqual({ a: 1 })
-      expect(originalObj).toEqual({ a: 1, b: 2, c: 3 })
+      expect(resultObj).toStrictEqual({ a: 1 })
+      expect(originalObj).toStrictEqual({ a: 1, b: 2, c: 3 })
 
       const originalArr = [1, 2, 3, 4]
       const resultArr = executeBlip(originalArr, ['delete', 0, 2])
-      expect(resultArr).toEqual([2, 4]) // After sequential deletion
-      expect(originalArr).toEqual([1, 2, 3, 4])
+      expect(resultArr).toStrictEqual([2, 4]) // After sequential deletion
+      expect(originalArr).toStrictEqual([1, 2, 3, 4])
     })
 
     it('handles edge cases for empty structures and key lists', () => {
       const emptyObj = {}
-      expect(executeBlip(emptyObj, ['delete'])).toEqual({}) // Empty keys array
-      expect(executeBlip(emptyObj, ['delete', 'key'])).toEqual({}) // Non-existent key
+      expect(executeBlip(emptyObj, ['delete'])).toStrictEqual({}) // Empty keys array
+      expect(executeBlip(emptyObj, ['delete', 'key'])).toStrictEqual({}) // Non-existent key
 
       const emptyArr: any[] = []
       expect(() => executeBlip(emptyArr, ['delete', 0])).toThrow(
         'Array index 0 out of bounds',
       )
-      expect(executeBlip(emptyArr, ['delete'])).toEqual([]) // Empty keys array on empty array
+      expect(executeBlip(emptyArr, ['delete'])).toStrictEqual([]) // Empty keys array on empty array
     })
 
     it('processes keys sequentially and handles mixed valid/invalid scenarios', () => {
       const obj = { a: 1, b: 2, c: 3 }
-      expect(executeBlip(obj, ['delete', 'a', 'b'])).toEqual({ c: 3 })
+      expect(executeBlip(obj, ['delete', 'a', 'b'])).toStrictEqual({ c: 3 })
 
       const arr = [1, 2, 3, 4]
       expect(() => executeBlip(arr, ['delete', 0, 5, 1])).toThrow(
@@ -1010,19 +1042,23 @@ describe(executeBlip.name, () => {
     it('reshapes an array into an object with specified keys', () => {
       const input = [1, 2, 3]
       const result = executeBlip(input, ['shape', 'a', 'b', 'c'])
-      expect(result).toEqual({ a: 1, b: 2, c: 3 })
+      expect(result).toStrictEqual({ a: 1, b: 2, c: 3 })
     })
 
     it('reshapes an object into another object using values in insertion order', () => {
       const input = { x: 'one', y: 'two', z: 'three' }
       const result = executeBlip(input, ['shape', 'first', 'second', 'third'])
-      expect(result).toEqual({ first: 'one', second: 'two', third: 'three' })
+      expect(result).toStrictEqual({
+        first: 'one',
+        second: 'two',
+        third: 'three',
+      })
     })
 
     it('ignores keys that are undefined or extra elements', () => {
       const input = [10, 20]
       const result = executeBlip(input, ['shape', 'x'])
-      expect(result).toEqual({ x: 10 })
+      expect(result).toStrictEqual({ x: 10 })
     })
 
     it('supports key filters in [key, filter] form', () => {
@@ -1032,14 +1068,14 @@ describe(executeBlip.name, () => {
         ['x', ['=', 10]],
         ['y', ['not', false]],
       ])
-      expect(result).toEqual({ x: true, y: true })
+      expect(result).toStrictEqual({ x: true, y: true })
     })
 
     it('reshapes sparse arrays correctly', () => {
       const input: any[] = []
       input[1] = 'hello'
       const result = executeBlip(input, ['shape', 'a', 'b'])
-      expect(result).toEqual({ b: 'hello' })
+      expect(result).toStrictEqual({ b: 'hello' })
     })
 
     it('reshapes object with nested filter expressions', () => {
@@ -1049,12 +1085,14 @@ describe(executeBlip.name, () => {
         ['sum', ['=', 1]],
         ['isTwo', ['=', 2]],
       ])
-      expect(result).toEqual({ sum: true, isTwo: true })
+      expect(result).toStrictEqual({ sum: true, isTwo: true })
     })
 
     it('handles simple shape on an array', () => {
       const inputArray = ['value1', 'value2', 'value3', 'value4']
-      expect(executeBlip(inputArray, ['shape', 'a', 'b', 'c', 'd'])).toEqual({
+      expect(
+        executeBlip(inputArray, ['shape', 'a', 'b', 'c', 'd']),
+      ).toStrictEqual({
         a: 'value1',
         b: 'value2',
         c: 'value3',
@@ -1064,7 +1102,7 @@ describe(executeBlip.name, () => {
 
     it('handles simple shape on an object', () => {
       const inputObject = { key1: 'value1', key2: 'value2', key3: 'value3' }
-      expect(executeBlip(inputObject, ['shape', 'a', 'b', 'c'])).toEqual({
+      expect(executeBlip(inputObject, ['shape', 'a', 'b', 'c'])).toStrictEqual({
         a: 'value1',
         b: 'value2',
         c: 'value3',
@@ -1086,7 +1124,7 @@ describe(executeBlip.name, () => {
           ['isActive', ['=', true]],
           ['profileData', ['get', 'profile']],
         ]),
-      ).toEqual({
+      ).toStrictEqual({
         name: 'Alice',
         ageValue: 30,
         isActive: true,
@@ -1109,7 +1147,7 @@ describe(executeBlip.name, () => {
           ['isActive', ['=', true]],
           ['profileData', ['get', 'profile']],
         ]),
-      ).toEqual({
+      ).toStrictEqual({
         name: 'Alice',
         ageValue: 30,
         isActive: true,
@@ -1130,7 +1168,7 @@ describe(executeBlip.name, () => {
       const inputArray = [1, 2]
 
       // 'c' will not be set due to no third element, as per the implementation
-      expect(executeBlip(inputArray, ['shape', 'a', 'b', 'c'])).toEqual({
+      expect(executeBlip(inputArray, ['shape', 'a', 'b', 'c'])).toStrictEqual({
         a: 1,
         b: 2,
       })
@@ -1144,7 +1182,7 @@ describe(executeBlip.name, () => {
           'test',
           ['outerKey', ['get', 'subKey']],
         ]),
-      ).toEqual({ test: 'test', outerKey: 'subValue' })
+      ).toStrictEqual({ test: 'test', outerKey: 'subValue' })
     })
   })
 
@@ -1152,7 +1190,7 @@ describe(executeBlip.name, () => {
     it('works with objects', () => {
       const input = { x: 'one', y: 'two', z: 'three' }
       const result = executeBlip(input, ['to_entries'])
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         ['x', 'one'],
         ['y', 'two'],
         ['z', 'three'],
@@ -1162,7 +1200,7 @@ describe(executeBlip.name, () => {
     it('works with arrays', () => {
       const input = [1, 2, 3]
       const result = executeBlip(input, ['to_entries'])
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         ['0', 1],
         ['1', 2],
         ['2', 3],
@@ -1172,20 +1210,20 @@ describe(executeBlip.name, () => {
     it('works with empty objects', () => {
       const input = {}
       const result = executeBlip(input, ['to_entries'])
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('works with empty arrays', () => {
       const input: ContractValue[] = []
       const result = executeBlip(input, ['to_entries'])
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
   describe('map_values operations', () => {
     it('applies filter to each value of an object', () => {
       const input = { a: 1, b: 2, c: 3 }
-      expect(executeBlip(input, ['map_values', ['=', 2]])).toEqual({
+      expect(executeBlip(input, ['map_values', ['=', 2]])).toStrictEqual({
         a: false,
         b: true,
         c: false,
@@ -1194,14 +1232,14 @@ describe(executeBlip.name, () => {
 
     it('works with complex filters', () => {
       const input = { x: { n: 1 }, y: { n: 2 } }
-      expect(executeBlip(input, ['map_values', ['get', 'n']])).toEqual({
+      expect(executeBlip(input, ['map_values', ['get', 'n']])).toStrictEqual({
         x: 1,
         y: 2,
       })
     })
 
     it('works with empty objects', () => {
-      expect(executeBlip({}, ['map_values', ['=', 1]])).toEqual({})
+      expect(executeBlip({}, ['map_values', ['=', 1]])).toStrictEqual({})
     })
 
     it('throws on non-object input', () => {
@@ -1217,7 +1255,7 @@ describe(executeBlip.name, () => {
       const input = { a: 10, b: 20 }
       expect(
         executeBlip(input, ['pipe', ['map_values', ['=', 10]], ['pick', 'a']]),
-      ).toEqual({ a: true })
+      ).toStrictEqual({ a: true })
     })
   })
 
@@ -1226,21 +1264,21 @@ describe(executeBlip.name, () => {
       const input = { a: 1, b: 2 }
       expect(
         executeBlip(input, ['map_keys', ['if', ['=', 'a'], 'first', 'second']]),
-      ).toEqual({ first: 1, second: 2 })
+      ).toStrictEqual({ first: 1, second: 2 })
     })
 
     it('works with format-like string transformations', () => {
       const input = { a: 1, b: 2 }
       expect(
         executeBlip(input, ['map_keys', ['if', ['=', 'a'], 'x', 'y']]),
-      ).toEqual({
+      ).toStrictEqual({
         x: 1,
         y: 2,
       })
     })
 
     it('works with empty objects', () => {
-      expect(executeBlip({}, ['map_keys', 'newkey'])).toEqual({})
+      expect(executeBlip({}, ['map_keys', 'newkey'])).toStrictEqual({})
     })
 
     it('throws on non-object input', () => {
@@ -1266,29 +1304,29 @@ describe(executeBlip.name, () => {
           ['map_keys', ['if', ['=', 'old'], 'new', 'other']],
           ['get', 'new'],
         ]),
-      ).toEqual(42)
+      ).toStrictEqual(42)
     })
   })
 
   describe('length operations', () => {
     it('returns length of arrays', () => {
-      expect(executeBlip([1, 2, 3], ['length'])).toEqual(3)
-      expect(executeBlip([], ['length'])).toEqual(0)
-      expect(executeBlip(['a', 'b', 'c', 'd'], ['length'])).toEqual(4)
+      expect(executeBlip([1, 2, 3], ['length'])).toStrictEqual(3)
+      expect(executeBlip([], ['length'])).toStrictEqual(0)
+      expect(executeBlip(['a', 'b', 'c', 'd'], ['length'])).toStrictEqual(4)
     })
 
     it('returns length of objects', () => {
-      expect(executeBlip({ a: 1, b: 2 }, ['length'])).toEqual(2)
-      expect(executeBlip({}, ['length'])).toEqual(0)
+      expect(executeBlip({ a: 1, b: 2 }, ['length'])).toStrictEqual(2)
+      expect(executeBlip({}, ['length'])).toStrictEqual(0)
       expect(
         executeBlip({ x: 'one', y: 'two', z: 'three' }, ['length']),
-      ).toEqual(3)
+      ).toStrictEqual(3)
     })
 
     it('returns length of strings', () => {
-      expect(executeBlip('hello', ['length'])).toEqual(5)
-      expect(executeBlip('', ['length'])).toEqual(0)
-      expect(executeBlip('test string', ['length'])).toEqual(11)
+      expect(executeBlip('hello', ['length'])).toStrictEqual(5)
+      expect(executeBlip('', ['length'])).toStrictEqual(0)
+      expect(executeBlip('test string', ['length'])).toStrictEqual(11)
     })
 
     it('throws on invalid inputs', () => {
@@ -1304,15 +1342,15 @@ describe(executeBlip.name, () => {
     })
 
     it('can be used in pipe operations', () => {
-      expect(executeBlip([1, 2, 3], ['pipe', ['length'], ['=', 3]])).toEqual(
-        true,
-      )
+      expect(
+        executeBlip([1, 2, 3], ['pipe', ['length'], ['=', 3]]),
+      ).toStrictEqual(true)
       expect(
         executeBlip({ a: 1, b: 2 }, ['pipe', ['length'], ['!=', 0]]),
-      ).toEqual(true)
-      expect(executeBlip('hello', ['pipe', ['length'], ['!=', 10]])).toEqual(
-        true,
-      )
+      ).toStrictEqual(true)
+      expect(
+        executeBlip('hello', ['pipe', ['length'], ['!=', 10]]),
+      ).toStrictEqual(true)
     })
   })
 })

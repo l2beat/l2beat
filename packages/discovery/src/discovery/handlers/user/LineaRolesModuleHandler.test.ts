@@ -4,8 +4,9 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import {
@@ -293,11 +294,11 @@ describe(LineaRolesModuleHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
-      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-      getDeployment: mockFn().resolvesTo(undefined),
+      getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: vi.fn().mockResolvedValue(undefined),
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([
           [
             abi.getEventTopic('AllowTarget'),
             abi.getEventTopic('RevokeTarget'),
@@ -323,7 +324,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         defaultRoles: {},
@@ -357,11 +358,11 @@ describe(LineaRolesModuleHandler.name, () => {
 
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
-      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
-      getDeployment: mockFn().resolvesTo(undefined),
+      getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: vi.fn().mockResolvedValue(undefined),
       async getLogs(providedAddress, topics) {
-        expect(providedAddress).toEqual(address)
-        expect(topics).toEqual([
+        expect(providedAddress).toStrictEqual(address)
+        expect(topics).toStrictEqual([
           [
             abi.getEventTopic('AllowTarget'),
             abi.getEventTopic('RevokeTarget'),
@@ -652,12 +653,12 @@ describe(LineaRolesModuleHandler.name, () => {
           ),
         ]
       },
-      getStorageAsAddress: mockFn().resolvesTo(
-        ChainSpecificAddress.ZERO('ethereum'),
-      ),
+      getStorageAsAddress: vi
+        .fn()
+        .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
       callMethod: callMethodStub,
-      call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getSource: mockFn().resolvesTo({
+      call: vi.fn().mockResolvedValue(Bytes.fromHex('0'.repeat(88))),
+      getSource: vi.fn().mockResolvedValue({
         name: 'name',
         isVerified: true,
         abi: [FunctionA, FunctionB],
@@ -671,7 +672,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         defaultRoles: {
@@ -872,7 +873,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toEqual({
+    expect(value).toStrictEqual({
       field: 'someName',
       value: {
         defaultRoles: {},

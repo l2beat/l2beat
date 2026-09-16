@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { Undecimal } from './Undecimal'
 
 interface TestData {
@@ -34,7 +34,7 @@ describe('Undecimal', () => {
         { decimals: data.decimals },
         data.incomingValue,
       )
-      expect(result).toEqual(data.expected)
+      expect(result).toStrictEqual(data.expected)
     })
   }
 })

@@ -1,15 +1,15 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { parseSemver } from './semver'
 
 describe(parseSemver.name, () => {
   it('should parse a version', () => {
-    expect(parseSemver('1.2.3')).toEqual({ major: 1, minor: 2, patch: 3 })
-    expect(parseSemver('0.0.0')).toEqual({ major: 0, minor: 0, patch: 0 })
-    expect(parseSemver('1.0.0')).toEqual({ major: 1, minor: 0, patch: 0 })
-    expect(parseSemver('0.1.0')).toEqual({ major: 0, minor: 1, patch: 0 })
-    expect(parseSemver('0.0.1')).toEqual({ major: 0, minor: 0, patch: 1 })
-    expect(parseSemver('999.999.999')).toEqual({
+    expect(parseSemver('1.2.3')).toStrictEqual({ major: 1, minor: 2, patch: 3 })
+    expect(parseSemver('0.0.0')).toStrictEqual({ major: 0, minor: 0, patch: 0 })
+    expect(parseSemver('1.0.0')).toStrictEqual({ major: 1, minor: 0, patch: 0 })
+    expect(parseSemver('0.1.0')).toStrictEqual({ major: 0, minor: 1, patch: 0 })
+    expect(parseSemver('0.0.1')).toStrictEqual({ major: 0, minor: 0, patch: 1 })
+    expect(parseSemver('999.999.999')).toStrictEqual({
       major: 999,
       minor: 999,
       patch: 999,
@@ -21,8 +21,16 @@ describe(parseSemver.name, () => {
   })
 
   it('should handle leading zeros in the version string', () => {
-    expect(parseSemver('1.02.03')).toEqual({ major: 1, minor: 2, patch: 3 })
-    expect(parseSemver('01.02.03')).toEqual({ major: 1, minor: 2, patch: 3 })
+    expect(parseSemver('1.02.03')).toStrictEqual({
+      major: 1,
+      minor: 2,
+      patch: 3,
+    })
+    expect(parseSemver('01.02.03')).toStrictEqual({
+      major: 1,
+      minor: 2,
+      patch: 3,
+    })
   })
 
   it('throws on invalid semantic version string', () => {

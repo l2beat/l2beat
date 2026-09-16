@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
@@ -92,7 +92,7 @@ describe(processAnalysis.name, () => {
       { ...baseEOA, type: 'EOA', address: ADDRESS_C },
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entries: [
         { ...emptyOutputMeta, address: ADDRESS_A },
         { ...emptyOutputMeta, address: ADDRESS_B },
@@ -105,7 +105,7 @@ describe(processAnalysis.name, () => {
   it('processes an unverified contract', () => {
     const result = processAnalysis([CONTRACT_A])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entries: [
         {
           type: 'Contract',
@@ -124,7 +124,7 @@ describe(processAnalysis.name, () => {
   it('processes a verified contract with values and errors', () => {
     const result = processAnalysis([CONTRACT_B])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entries: [
         {
           type: 'Contract',
@@ -147,7 +147,7 @@ describe(processAnalysis.name, () => {
       { ...baseEOA, type: 'EOA', address: ADDRESS_D },
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entries: [
         {
           type: 'Contract',
@@ -167,7 +167,7 @@ describe(processAnalysis.name, () => {
     })
   })
 
-  it('processes multiple contracts', function () {
+  it('processes multiple contracts', () => {
     const result = processAnalysis([
       CONTRACT_A,
       CONTRACT_B,
@@ -179,7 +179,7 @@ describe(processAnalysis.name, () => {
       },
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entries: [
         {
           type: 'Contract',
@@ -221,7 +221,7 @@ describe(processAnalysis.name, () => {
       },
     })
 
-    expect(JSON.stringify(result)).toMatchSnapshot(this)
+    expect(JSON.stringify(result)).toMatchSnapshot()
   })
 
   it('field order does not matter', () => {
@@ -241,7 +241,7 @@ describe(processAnalysis.name, () => {
       },
     ])
 
-    expect(JSON.stringify(result1)).toEqual(JSON.stringify(result2))
+    expect(JSON.stringify(result1)).toStrictEqual(JSON.stringify(result2))
   })
 })
 
@@ -252,7 +252,9 @@ describe(sortByKeys.name, () => {
       bar: 'bar',
     }
 
-    expect(JSON.stringify(obj)).toEqual('{"foo":"foo","bar":"bar"}')
-    expect(JSON.stringify(sortByKeys(obj))).toEqual('{"bar":"bar","foo":"foo"}')
+    expect(JSON.stringify(obj)).toStrictEqual('{"foo":"foo","bar":"bar"}')
+    expect(JSON.stringify(sortByKeys(obj))).toStrictEqual(
+      '{"bar":"bar","foo":"foo"}',
+    )
   })
 })

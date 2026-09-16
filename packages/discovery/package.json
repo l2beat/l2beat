@@ -16,7 +16,7 @@
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "generate-schemas": "tsx src/cli.ts generate-schemas"
   },
@@ -42,6 +42,8 @@
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "mock-fs": "^5.2.0",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }
