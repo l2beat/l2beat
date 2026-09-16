@@ -9,6 +9,7 @@ export const CTRL_KEY = 'Control'
 export const SHIFT_KEY = 'Shift'
 export const DELETE_KEY = 'Delete'
 export const BACKSPACE_KEY = 'Backspace'
+export const HAND_TOOL_KEY = 'h'
 
 export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 18

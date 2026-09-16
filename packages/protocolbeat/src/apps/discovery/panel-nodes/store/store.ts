@@ -20,6 +20,7 @@ import {
   hideUnreachable,
   layout,
   setPreferences,
+  setTool,
   showHidden,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
@@ -52,6 +53,7 @@ const INITIAL_STATE: State = {
   history: emptyHistoryState(),
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
   viewportContainer: undefined,
+  tool: 'select',
   input: {
     shiftPressed: false,
     spacePressed: false,
@@ -99,6 +101,7 @@ export const useStore = create<StoreState>()(
       selectAndFocus: wrapAction(set, selectAndFocus),
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
+      setTool: wrapAction(set, setTool),
 
       onKeyDown: wrapUndoableAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),

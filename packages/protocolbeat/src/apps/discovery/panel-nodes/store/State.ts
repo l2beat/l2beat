@@ -17,6 +17,7 @@ export interface State {
     readonly scale: number
   }
   readonly viewportContainer?: HTMLElement
+  readonly tool: Tool
   readonly input: {
     readonly shiftPressed: boolean
     readonly spacePressed: boolean
@@ -42,6 +43,11 @@ export interface State {
   >
   readonly loaded: boolean
 }
+
+// 'select' is the default pointer: a left drag moves nodes or draws a
+// selection box. 'hand' turns a left drag into panning, for mouse-only users
+// who have no trackpad gesture and don't know about space/middle-button drag.
+export type Tool = 'select' | 'hand'
 
 export interface Node {
   readonly id: string
