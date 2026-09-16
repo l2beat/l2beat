@@ -12,11 +12,6 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
-import {
-  getPersistedColumnAttributes,
-  getPersistedTableAttributes,
-  getPrePaintHideScript,
-} from './persistedColumnVisibility'
 import { ValueAndChangeSortingHeader } from './sorting/ValueAndChangeSortingHeader'
 import {
   Table,
@@ -108,51 +103,37 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
     props.rowSortingFn,
   )
 
-  const persistedColumns = props.table.options.meta?.persistedColumns
-
   return (
-    <>
-      {persistedColumns && (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: getPrePaintHideScript(persistedColumns.tableId),
-          }}
+    <Table tableWrapperClassName={props.tableWrapperClassName}>
+      {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
+      <TableHeader>
+        {groupedHeader && (
+          <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
+        )}
+        <BasicTableActualHeaderRow
+          actualHeader={actualHeader}
+          compact={props.compact}
         />
-      )}
-      <Table
-        tableWrapperClassName={props.tableWrapperClassName}
-        {...getPersistedTableAttributes(props.table)}
-      >
-        {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader>
-          {groupedHeader && (
-            <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
-          )}
-          <BasicTableActualHeaderRow
-            actualHeader={actualHeader}
-            compact={props.compact}
-          />
-          <BasicTableHeaderDividerRow />
-        </TableHeader>
-        <TableBody>
-          {rows.map((row) => (
-            <BasicTableRow row={row} key={row.id} {...props} />
-          ))}
-          {rows.length === 0 &&
-            props.isLoading &&
-            range(props.skeletonCount ?? 10).map((i) => {
-              return (
-                <TableRow highlightId={undefined} key={i}>
-                  <TableCell colSpan={100}>
-                    <Skeleton className="h-6 w-full md:h-8" />
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
-        </TableBody>
-      </Table>
-    </>
+        <BasicTableHeaderDividerRow />
+      </TableHeader>
+      <TableBody>
+        {rows.map((row) => (
+          <BasicTableRow row={row} key={row.id} {...props} />
+        ))}
+        {rows.length === 0 &&
+          props.isLoading &&
+          range(props.skeletonCount ?? 10).map((i) => {
+            return (
+              <TableRow highlightId={undefined} key={i}>
+                <TableCell colSpan={100}>
+                  <Skeleton className="h-6 w-full md:h-8" />
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
+      </TableBody>
+    </Table>
   )
 }
 
@@ -228,7 +209,6 @@ function BasicTableActualHeaderRow<T>({
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
                 style={getCommonPinningStyles(header.column)}
-                {...getPersistedColumnAttributes(header.column)}
               >
                 {header.isPlaceholder ? null : (
                   <ValueAndChangeSortingHeader header={header} />
@@ -293,7 +273,6 @@ export function BasicTableRow<T extends BasicTableRow>({
         compact: props.compact,
       }),
       style: getCommonPinningStyles(cellData.cell.column),
-      ...getPersistedColumnAttributes(cellData.cell.column),
     }
 
     cellDataMap.set(cellData.index, {

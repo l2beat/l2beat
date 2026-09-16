@@ -48,28 +48,25 @@ export function InteropTokenOnchainDeploymentsSection({
   deployments,
   ...sectionProps
 }: InteropTokenOnchainDeploymentsSectionProps) {
-  const table = useTable<DeploymentRow>(
-    'InteropTokenOnchainDeploymentsSection',
-    {
-      data: deployments,
-      columns: interopTokenOnchainDeploymentsColumns,
-      getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-      initialState: {
-        sorting: [
-          {
-            id: 'volume',
-            desc: true,
-          },
-        ],
-        pagination: {
-          pageSize: DEPLOYMENTS_PER_PAGE,
-          pageIndex: 0,
+  const table = useTable<DeploymentRow>({
+    data: deployments,
+    columns: interopTokenOnchainDeploymentsColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
         },
+      ],
+      pagination: {
+        pageSize: DEPLOYMENTS_PER_PAGE,
+        pageIndex: 0,
       },
     },
-  )
+  })
 
   const pageCount = table.getPageCount()
   const currentPage = table.getState().pagination.pageIndex

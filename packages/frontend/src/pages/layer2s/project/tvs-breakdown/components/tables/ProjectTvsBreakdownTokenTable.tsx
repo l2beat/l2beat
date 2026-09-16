@@ -37,7 +37,7 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
     [props.entries, filterEntries, excludeRwaRestrictedTokens],
   )
 
-  const table = useTable('ProjectTvsBreakdownTokenTable', {
+  const table = useTable({
     sortDescFirst: true,
     data: filteredEntries,
     columns,

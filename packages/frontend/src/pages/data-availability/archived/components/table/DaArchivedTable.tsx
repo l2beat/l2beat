@@ -12,7 +12,7 @@ export function DaArchivedTable({
   items: DaArchivedEntry[]
   excludeBridge?: boolean
 }) {
-  const table = useTable('DaArchivedTable', {
+  const table = useTable({
     columns: excludeBridge ? customColumns : publicColumns,
     data: items,
     getCoreRowModel: getCoreRowModel(),

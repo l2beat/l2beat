@@ -12,7 +12,7 @@ interface Props {
 
 export function L2RiskSequencingTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable('L2RiskSequencingTable', {
+  const table = useTable({
     data: entries,
     columns: l2SequencingColumns,
     getCoreRowModel: getCoreRowModel(),

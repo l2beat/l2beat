@@ -32,7 +32,7 @@ export function ProtocolsByVolumeTable({
     () => getProtocolsByVolumeColumns(apiSelection),
     [apiSelection],
   )
-  const table = useTable<ProtocolByVolumeRow>('ProtocolsByVolumeTable', {
+  const table = useTable<ProtocolByVolumeRow>({
     data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),

@@ -42,7 +42,7 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
 
   const columns = useMemo(() => getHomeTopChainsColumns(), [])
 
-  const table = useTable('HomeTopChainsCard', {
+  const table = useTable({
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),

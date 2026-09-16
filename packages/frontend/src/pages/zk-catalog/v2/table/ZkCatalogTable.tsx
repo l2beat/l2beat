@@ -16,7 +16,7 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
     [entries, filterEntries],
   )
 
-  const table = useTable('ZkCatalogTable', {
+  const table = useTable({
     columns: zkCatalogColumns,
     data: filteredEntries,
     getCoreRowModel: getCoreRowModel(),

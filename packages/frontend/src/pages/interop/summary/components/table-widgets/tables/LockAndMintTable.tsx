@@ -16,7 +16,7 @@ export function LockAndMintTable({
     () => getLockAndMintColumns(selectedChains),
     [selectedChains],
   )
-  const table = useTable<LockAndMintProtocolRow>('LockAndMintTable', {
+  const table = useTable<LockAndMintProtocolRow>({
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

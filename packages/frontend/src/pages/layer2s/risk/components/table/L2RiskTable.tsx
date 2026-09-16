@@ -8,7 +8,7 @@ import { l2RiskColumns } from './columns'
 
 export function L2RiskTable({ entries }: { entries: L2RiskEntry[] }) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable('L2RiskTable', {
+  const table = useTable({
     data: entries,
     columns: l2RiskColumns,
     getCoreRowModel: getCoreRowModel(),

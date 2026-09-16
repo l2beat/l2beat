@@ -16,7 +16,7 @@ export function NonMintingTable({
     () => getNonMintingColumns(selectedChains),
     [selectedChains],
   )
-  const table = useTable<NonMintingProtocolRow>('NonMintingTable', {
+  const table = useTable<NonMintingProtocolRow>({
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
