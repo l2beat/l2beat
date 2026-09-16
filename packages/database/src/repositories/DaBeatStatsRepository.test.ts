@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type DaBeatStatsRecord,
@@ -16,13 +16,13 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
     it('finds existing record', async () => {
       await repository.upsert(saved('A', 1n, 2n, 3))
       const records = await repository.findById('A')
-      expect(records).toEqual(saved('A', 1n, 2n, 3))
+      expect(records).toStrictEqual(saved('A', 1n, 2n, 3))
     })
 
     it('returns undefined for nonexistent records', async () => {
       await repository.upsert(saved('A', 1n, 2n, null))
       const records = await repository.findById('B')
-      expect(records).toEqual(undefined)
+      expect(records).toStrictEqual(undefined)
     })
   })
 
@@ -34,7 +34,10 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
       ])
 
       const records = await repository.getAll()
-      expect(records).toEqual([saved('A', 1n, 2n, 3), saved('B', 2n, 3n, null)])
+      expect(records).toStrictEqual([
+        saved('A', 1n, 2n, 3),
+        saved('B', 2n, 3n, null),
+      ])
     })
 
     it('updates conflicting records', async () => {
@@ -48,7 +51,7 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
       ])
 
       const records = await repository.getAll()
-      expect(records).toEqual([
+      expect(records).toStrictEqual([
         saved('A', 11n, 22n, 33),
         saved('B', 22n, 33n, null),
       ])

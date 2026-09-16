@@ -22,6 +22,14 @@ LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 ```
 
+## Running tests
+
+`pnpm test` runs the suites with Vitest. The database-backed ones need
+`TEST_DB_URL`; without it they are reported as skipped, and in CI they fail
+instead. Each Vitest worker gets its own schema inside that database
+(`database_test_1`, `database_test_2`, ...), migrated before the run, so that
+suites running in parallel cannot truncate each other's rows.
+
 ## Creating migrations
 
 1. Modify the db schema in `schema.prisma` file.

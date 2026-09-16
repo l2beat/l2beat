@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type InteropPluginSyncedRangeRecord,
@@ -20,7 +20,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       await repository.upsert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('updates record for the same plugin and chain', async () => {
@@ -45,7 +45,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       await repository.upsert(updated)
 
       const all = await repository.getAll()
-      expect(all).toEqual([updated])
+      expect(all).toStrictEqual([updated])
     })
   })
 
@@ -61,10 +61,10 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         await repository.upsert(b1)
 
         const deleted = await repository.deleteByPluginName('plugin-a')
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const all = await repository.getAll()
-        expect(all).toEqual([b1])
+        expect(all).toStrictEqual([b1])
       })
     },
   )
@@ -83,10 +83,10 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'ethereum',
         )
-        expect(deleted).toEqual(1)
+        expect(deleted).toStrictEqual(1)
 
         const all = await repository.getAll()
-        expect(all).toEqual([a2])
+        expect(all).toStrictEqual([a2])
       })
     },
   )
@@ -121,7 +121,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'arbitrum',
         )
-        expect(found).toEqual(a2)
+        expect(found).toStrictEqual(a2)
       })
 
       it('returns undefined when no matching range exists', async () => {
@@ -133,7 +133,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'arbitrum',
         )
-        expect(found).toEqual(undefined)
+        expect(found).toStrictEqual(undefined)
       })
     },
   )
@@ -164,13 +164,13 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           },
         )
 
-        expect(updated).toEqual(1)
+        expect(updated).toStrictEqual(1)
 
         const stored = await repository.findByPluginNameAndChain(
           'plugin-a',
           'ethereum',
         )
-        expect(stored).toEqual({
+        expect(stored).toStrictEqual({
           ...record,
           fromBlock: 10n,
           fromTimestamp: UnixTime(1000),
@@ -188,7 +188,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           },
         )
 
-        expect(updated).toEqual(0)
+        expect(updated).toStrictEqual(0)
       })
     },
   )
@@ -201,10 +201,10 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       )
 
       const deleted = await repository.deleteAll()
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const all = await repository.getAll()
-      expect(all).toEqual([])
+      expect(all).toStrictEqual([])
     })
   })
 
@@ -225,7 +225,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toEqual(1)
+        expect(deleted).toStrictEqual(1)
 
         const all = await repository.getAll()
         expect(all).toEqualUnsorted([a1, a2, b1])
@@ -240,15 +240,15 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInPluginNames([])
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
-        expect(all.length).toEqual(2)
+        expect(all.length).toStrictEqual(2)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteNotInPluginNames(['plugin-a'])
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -261,7 +261,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
         expect(all).toEqualUnsorted([a1, b1])
@@ -286,7 +286,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'ethereum',
           'arbitrum',
         ])
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const all = await repository.getAll()
         expect(all).toEqualUnsorted([a1, b1])
@@ -298,10 +298,10 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInChains([])
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
-        expect(all.length).toEqual(1)
+        expect(all.length).toStrictEqual(1)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -309,10 +309,10 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         await repository.upsert(a1)
 
         const deleted = await repository.deleteNotInChains(['ethereum'])
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
-        expect(all).toEqual([a1])
+        expect(all).toStrictEqual([a1])
       })
     },
   )

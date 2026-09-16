@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type InteropConfigRecord,
@@ -16,13 +16,13 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       const result = await repository.find('test-key')
 
-      expect(result).toEqual(record)
+      expect(result).toStrictEqual(record)
     })
 
     it('returns undefined when config does not exist', async () => {
       const result = await repository.find('non-existent-key')
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('returns latest record when multiple records exist for the same key', async () => {
@@ -38,7 +38,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       const result = await repository.find('test-key')
 
-      expect(result).toEqual(laterRecord)
+      expect(result).toStrictEqual(laterRecord)
     })
   })
 
@@ -49,7 +49,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       await repository.insert(record)
 
       const result = await repository.find('new-key')
-      expect(result).toEqual(record)
+      expect(result).toStrictEqual(record)
     })
 
     it('inserts config with array value', async () => {
@@ -59,7 +59,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       await repository.insert(record)
 
       const result = await repository.find('array-key')
-      expect(result).toEqual(record)
+      expect(result).toStrictEqual(record)
     })
 
     it('throws error when inserting duplicate key', async () => {
@@ -68,7 +68,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       await repository.insert(record1)
 
-      await expect(repository.insert(record2)).toBeRejected()
+      await expect(repository.insert(record2)).rejects.toThrow()
     })
   })
 
@@ -142,14 +142,14 @@ describeDatabase(InteropConfigRepository.name, (database) => {
             .map((r) => (r.value as { version: number }).version)
             .sort((a, b) => a - b)
 
-        expect(deleted).toEqual(3)
-        expect(versionsFor('a')).toEqual([3, 4])
-        expect(versionsFor('b')).toEqual([2, 3])
-        expect(versionsFor('c')).toEqual([1])
+        expect(deleted).toStrictEqual(3)
+        expect(versionsFor('a')).toStrictEqual([3, 4])
+        expect(versionsFor('b')).toStrictEqual([2, 3])
+        expect(versionsFor('c')).toStrictEqual([1])
       })
 
       it('throws for keepLatest < 1', async () => {
-        await expect(repository.deleteAllButLatestPerKey(0)).toBeRejected()
+        await expect(repository.deleteAllButLatestPerKey(0)).rejects.toThrow()
       })
     },
   )

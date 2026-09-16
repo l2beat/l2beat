@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type AggregatedLivenessRecord,
@@ -82,8 +82,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     },
   ] as const satisfies AggregatedLivenessRecord[]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.upsertMany(DATA)
   })
@@ -124,7 +123,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -132,13 +131,13 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     it('is true for a project and subtype with records', async () => {
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
 
     it('is false for a subtype the project has no records for', async () => {
       expect(
         await repository.checkIfExists(PROJECT_B, 'batchSubmissions'),
-      ).toEqual(false)
+      ).toStrictEqual(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
@@ -148,10 +147,10 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
           START + UnixTime.HOUR,
         ),
-      ).toEqual(false)
+      ).toStrictEqual(false)
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions', START),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
   })
 
@@ -249,7 +248,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 2 * UnixTime.HOUR, START],
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           {
             projectId: PROJECT_A,
             subtype: 'batchSubmissions',
@@ -287,7 +286,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [null, START - 1 * UnixTime.HOUR],
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           {
             projectId: PROJECT_A,
             subtype: 'batchSubmissions',
@@ -325,7 +324,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           {
             projectId: PROJECT_B,
             subtype: 'stateUpdates',
@@ -345,7 +344,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -399,7 +398,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -414,7 +413,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(result).toEqual(START - 3 * UnixTime.HOUR)
+        expect(result).toStrictEqual(START - 3 * UnixTime.HOUR)
       })
 
       it('is scoped to the given subtype', async () => {
@@ -423,7 +422,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'stateUpdates',
         )
 
-        expect(result).toEqual(START - 2 * UnixTime.HOUR)
+        expect(result).toStrictEqual(START - 2 * UnixTime.HOUR)
       })
 
       it('returns undefined when there are no matching records', async () => {
@@ -432,7 +431,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -443,7 +442,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 })

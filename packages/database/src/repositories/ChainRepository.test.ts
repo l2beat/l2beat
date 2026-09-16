@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import { type ChainRecord, ChainRepository } from './ChainRepository'
 
@@ -19,7 +19,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with aliases', async () => {
@@ -32,7 +32,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with null aliases', async () => {
@@ -45,7 +45,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with apis', async () => {
@@ -61,7 +61,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with all api types', async () => {
@@ -84,7 +84,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with null apis', async () => {
@@ -97,7 +97,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('inserts a chain record with all fields', async () => {
@@ -114,7 +114,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
+      expect(all).toStrictEqual([record])
     })
 
     it('throws error when inserting duplicate name', async () => {
@@ -123,7 +123,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
 
       await repository.insert(record1)
 
-      await expect(repository.insert(record2)).toBeRejected()
+      await expect(repository.insert(record2)).rejects.toThrow()
     })
 
     it('throws error when inserting duplicate chainId', async () => {
@@ -132,7 +132,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
 
       await repository.insert(record1)
 
-      await expect(repository.insert(record2)).toBeRejected()
+      await expect(repository.insert(record2)).rejects.toThrow()
     })
   })
 
@@ -182,7 +182,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany([])
 
       const all = await repository.getAll()
-      expect(all).toEqual([])
+      expect(all).toStrictEqual([])
     })
 
     it('throws error when inserting duplicate names', async () => {
@@ -191,7 +191,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         mockChain({ name: 'ethereum', chainId: 2 }),
       ]
 
-      await expect(repository.insertMany(records)).toBeRejected()
+      await expect(repository.insertMany(records)).rejects.toThrow()
     })
 
     it('throws error when inserting duplicate chainIds', async () => {
@@ -200,14 +200,14 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         mockChain({ name: 'mainnet', chainId: 1 }),
       ]
 
-      await expect(repository.insertMany(records)).toBeRejected()
+      await expect(repository.insertMany(records)).rejects.toThrow()
     })
   })
 
   describe(ChainRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const all = await repository.getAll()
-      expect(all).toEqual([])
+      expect(all).toStrictEqual([])
     })
 
     it('returns all inserted records', async () => {
@@ -237,9 +237,9 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const all = await repository.getAll()
-      expect(all).toEqual([record])
-      expect(all[0]?.aliases).toEqual(['eth', 'mainnet'])
-      expect(all[0]?.apis).toEqual([
+      expect(all).toStrictEqual([record])
+      expect(all[0]?.aliases).toStrictEqual(['eth', 'mainnet'])
+      expect(all[0]?.apis).toStrictEqual([
         { type: 'etherscan' },
         { type: 'rpc', url: 'https://rpc.example.com' },
       ])
@@ -249,7 +249,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
   describe(ChainRepository.prototype.findByName.name, () => {
     it('returns undefined when chain does not exist', async () => {
       const result = await repository.findByName('nonexistent')
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('finds a chain by name', async () => {
@@ -262,7 +262,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const result = await repository.findByName('polygon')
-      expect(result).toEqual(records[1])
+      expect(result).toStrictEqual(records[1])
     })
   })
 
@@ -275,11 +275,11 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         chainId: 2,
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.chainId).toEqual(2)
-      expect(result?.name).toEqual('ethereum')
+      expect(result?.chainId).toStrictEqual(2)
+      expect(result?.name).toStrictEqual('ethereum')
     })
 
     it('updates explorerUrl', async () => {
@@ -294,10 +294,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         explorerUrl: 'https://etherscan.io',
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.explorerUrl).toEqual('https://etherscan.io')
+      expect(result?.explorerUrl).toStrictEqual('https://etherscan.io')
     })
 
     it('updates explorerUrl to null', async () => {
@@ -312,10 +312,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         explorerUrl: null,
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.explorerUrl).toEqual(null)
+      expect(result?.explorerUrl).toStrictEqual(null)
     })
 
     it('updates aliases', async () => {
@@ -330,10 +330,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         aliases: ['eth', 'mainnet'],
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.aliases).toEqual(['eth', 'mainnet'])
+      expect(result?.aliases).toStrictEqual(['eth', 'mainnet'])
     })
 
     it('updates aliases to null', async () => {
@@ -348,10 +348,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         aliases: null,
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.aliases).toEqual(null)
+      expect(result?.aliases).toStrictEqual(null)
     })
 
     it('updates apis', async () => {
@@ -369,10 +369,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
           { type: 'rpc', url: 'https://rpc.example.com' },
         ],
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.apis).toEqual([
+      expect(result?.apis).toStrictEqual([
         { type: 'etherscan' },
         { type: 'rpc', url: 'https://rpc.example.com' },
       ])
@@ -390,10 +390,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         name: 'ethereum',
         apis: null,
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result?.apis).toEqual(null)
+      expect(result?.apis).toStrictEqual(null)
     })
 
     it('updates multiple fields at once', async () => {
@@ -413,10 +413,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
         aliases: ['eth'],
         apis: [{ type: 'etherscan' }],
       })
-      expect(updated).toEqual(1)
+      expect(updated).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         name: 'ethereum',
         chainId: 2,
         explorerUrl: 'https://etherscan.io',
@@ -436,7 +436,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const deleted = await repository.deleteByName('polygon')
-      expect(deleted).toEqual(1)
+      expect(deleted).toStrictEqual(1)
 
       const all = await repository.getAll()
       expect(all).toEqualUnsorted([records[0], records[2]])
@@ -444,7 +444,7 @@ describeTokenDatabase(ChainRepository.name, (db) => {
 
     it('returns 0 when chain does not exist', async () => {
       const deleted = await repository.deleteByName('nonexistent')
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
     })
 
     it('deletes chain with all fields populated', async () => {
@@ -461,10 +461,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insert(record)
 
       const deleted = await repository.deleteByName('ethereum')
-      expect(deleted).toEqual(1)
+      expect(deleted).toStrictEqual(1)
 
       const result = await repository.findByName('ethereum')
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('does not affect other chains', async () => {
@@ -475,10 +475,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const deleted = await repository.deleteByName('ethereum')
-      expect(deleted).toEqual(1)
+      expect(deleted).toStrictEqual(1)
 
       const all = await repository.getAll()
-      expect(all).toEqual([records[1]])
+      expect(all).toStrictEqual([records[1]])
     })
   })
 
@@ -490,15 +490,15 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteAll()
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const all = await repository.getAll()
-      expect(all).toEqual([])
+      expect(all).toStrictEqual([])
     })
 
     it('returns 0 when no records exist', async () => {
       const deleted = await repository.deleteAll()
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
     })
   })
 })

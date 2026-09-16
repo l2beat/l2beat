@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 
 import { describeDatabase } from '../test/database'
 import { IndexerStateRepository } from './IndexerStateRepository'
@@ -14,7 +14,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
   describe(IndexerStateRepository.prototype.findByIndexerId.name, () => {
     it('returns undefined if no record exists', async () => {
       const indexerState = await repository.findByIndexerId('indexer')
-      expect(indexerState).toEqual(undefined)
+      expect(indexerState).toStrictEqual(undefined)
     })
 
     it('returns the indexer state if a record exists', async () => {
@@ -26,7 +26,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       }
       await repository.upsert(newRecord)
       const indexerState = await repository.findByIndexerId('indexer1')
-      expect(indexerState).toEqual(newRecord)
+      expect(indexerState).toStrictEqual(newRecord)
     })
   })
 
@@ -55,14 +55,14 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       await repository.upsert(record3)
 
       const indexerState = await repository.getByIndexerIds(['a', 'b'])
-      expect(indexerState).toEqual([record, record2])
+      expect(indexerState).toStrictEqual([record, record2])
     })
   })
 
   describe(IndexerStateRepository.prototype.upsert.name, () => {
     it('adds a new record', async () => {
       const empty = await repository.getAll()
-      expect(empty).toEqual([])
+      expect(empty).toStrictEqual([])
 
       const newRecord = {
         indexerId: 'indexer1',
@@ -74,7 +74,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       await repository.upsert(newRecord)
 
       const result = await repository.getAll()
-      expect(result).toEqual([newRecord])
+      expect(result).toStrictEqual([newRecord])
     })
 
     it('minTimestamp is undefined', async () => {
@@ -87,7 +87,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([{ ...record, minTimestamp: undefined }])
+      expect(result).toStrictEqual([{ ...record, minTimestamp: undefined }])
     })
 
     it('configHash is undefined', async () => {
@@ -100,7 +100,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([{ ...record, configHash: undefined }])
+      expect(result).toStrictEqual([{ ...record, configHash: undefined }])
     })
   })
 
@@ -119,8 +119,8 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       const updated = await repository.updateSafeHeight('indexer1', AFTER)
       const indexerState = await repository.findByIndexerId('indexer1')
 
-      expect(updated).toEqual(1)
-      expect(indexerState).toEqual({ ...record, safeHeight: AFTER })
+      expect(updated).toStrictEqual(1)
+      expect(indexerState).toStrictEqual({ ...record, safeHeight: AFTER })
     })
 
     it('does not update if indexer not found', async () => {
@@ -137,8 +137,8 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       const updated = await repository.updateSafeHeight('indexer2', AFTER)
       const indexerState = await repository.findByIndexerId('indexer1')
 
-      expect(updated).toEqual(0)
-      expect(indexerState).toEqual({ ...record })
+      expect(updated).toStrictEqual(0)
+      expect(indexerState).toStrictEqual({ ...record })
     })
   })
 })

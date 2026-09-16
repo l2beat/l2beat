@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { AnomaliesRepository, type AnomalyRecord } from './AnomaliesRepository'
 
@@ -31,8 +31,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.upsertMany(DATA)
   })
@@ -78,7 +77,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -121,7 +120,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         START - 2 * UnixTime.HOUR,
       )
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -131,7 +130,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 })

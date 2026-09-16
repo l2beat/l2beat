@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type EcosystemTokenRecord,
@@ -29,7 +29,7 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
         'config-2',
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -43,7 +43,7 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -57,7 +57,7 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([

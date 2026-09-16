@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type PrivacyRelayerSampleRecord,
@@ -17,16 +17,16 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
   describe(PrivacyRelayerSampleRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const initial = sample(0, 10)
-      expect(await repository.upsertMany([initial])).toEqual(1)
+      expect(await repository.upsertMany([initial])).toStrictEqual(1)
 
       const updated = { ...initial, relayerCount: 15 }
-      expect(await repository.upsertMany([updated])).toEqual(1)
+      expect(await repository.upsertMany([updated])).toStrictEqual(1)
 
-      expect(await repository.getAll()).toEqual([updated])
+      expect(await repository.getAll()).toStrictEqual([updated])
     })
 
     it('handles an empty array', async () => {
-      expect(await repository.upsertMany([])).toEqual(0)
+      expect(await repository.upsertMany([])).toStrictEqual(0)
     })
   })
 
@@ -47,13 +47,13 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
             [configA, configB],
             day(0),
           ),
-        ).toEqual([configA])
+        ).toStrictEqual([configA])
       })
 
       it('handles an empty array', async () => {
         expect(
           await repository.getConfigurationIdsByTimestamp([], day(0)),
-        ).toEqual([])
+        ).toStrictEqual([])
       })
     },
   )
@@ -73,13 +73,13 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
 
         expect(
           await repository.getAverageRelayerCount('project', START, day(3)),
-        ).toEqual({ average: 20, observedDays: 3 })
+        ).toStrictEqual({ average: 20, observedDays: 3 })
       })
 
       it('returns undefined when there are no samples', async () => {
         expect(
           await repository.getAverageRelayerCount('project', START, day(1)),
-        ).toEqual(undefined)
+        ).toStrictEqual(undefined)
       })
     },
   )
@@ -100,7 +100,7 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
 
         expect(
           await repository.deleteByConfigInTimeRange(configA, day(1), day(2)),
-        ).toEqual(2)
+        ).toStrictEqual(2)
 
         expect(await repository.getAll()).toEqualUnsorted([
           records[0]!,
@@ -122,12 +122,12 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
         ]
         await repository.upsertMany(records)
 
-        expect(await repository.deleteByConfigIds([configA])).toEqual(1)
-        expect(await repository.getAll()).toEqual([records[1]!])
+        expect(await repository.deleteByConfigIds([configA])).toStrictEqual(1)
+        expect(await repository.getAll()).toStrictEqual([records[1]!])
       })
 
       it('handles an empty array', async () => {
-        expect(await repository.deleteByConfigIds([])).toEqual(0)
+        expect(await repository.deleteByConfigIds([])).toStrictEqual(0)
       })
     },
   )

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, beforeAll, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type DiscoveryCacheRecord,
@@ -8,14 +8,14 @@ import {
 describeDatabase(DiscoveryCacheRepository.name, (db) => {
   const repository = db.discoveryCache
 
-  before(() => repository.deleteAll())
+  beforeAll(() => repository.deleteAll())
   afterEach(() => repository.deleteAll())
 
   it('adds single record and queries it', async () => {
     const record = mockRecord()
     await repository.upsert(record)
     const actual = await repository.getAll()
-    expect(actual).toEqual([record])
+    expect(actual).toStrictEqual([record])
   })
 
   it('only allows single record per key and overwrites old record with fresh data', async () => {
@@ -25,7 +25,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
     await repository.upsert(record1)
     await repository.upsert(record2)
     const actual = await repository.getAll()
-    expect(actual).toEqual([record2])
+    expect(actual).toStrictEqual([record2])
   })
 
   it('finds by key', async () => {
@@ -39,7 +39,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       await repository.upsert(record)
     }
     const actual = await repository.findByKey('key1')
-    expect(actual).toEqual({ key: 'key1', value: 'value1' })
+    expect(actual).toStrictEqual({ key: 'key1', value: 'value1' })
   })
 
   it('allows keys with length > 255', async () => {

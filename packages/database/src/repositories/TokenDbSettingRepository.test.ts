@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import { TokenDbSettingRepository } from './TokenDbSettingRepository'
 
@@ -11,9 +11,9 @@ describeTokenDatabase(TokenDbSettingRepository.name, (db) => {
 
   describe(TokenDbSettingRepository.prototype.get.name, () => {
     it('returns undefined when setting is missing', async () => {
-      expect(await repository.get('interop-transfers:lastSerialId')).toEqual(
-        undefined,
-      )
+      expect(
+        await repository.get('interop-transfers:lastSerialId'),
+      ).toStrictEqual(undefined)
     })
   })
 
@@ -28,7 +28,9 @@ describeTokenDatabase(TokenDbSettingRepository.name, (db) => {
         value: '25',
       })
 
-      expect(await repository.get('interop-transfers:lastSerialId')).toEqual({
+      expect(
+        await repository.get('interop-transfers:lastSerialId'),
+      ).toStrictEqual({
         key: 'interop-transfers:lastSerialId',
         value: '25',
       })

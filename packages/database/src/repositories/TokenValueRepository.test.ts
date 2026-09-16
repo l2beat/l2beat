@@ -1,7 +1,7 @@
 import { assert, type TokenId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
-import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
+import { testDeletingArchivedRecords } from '../test/deleteArchivedRecords'
 import { TokenValueRepository } from './TokenValueRepository'
 
 describeDatabase(TokenValueRepository.name, (db) => {
@@ -15,7 +15,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
@@ -23,7 +23,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.upsertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toStrictEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -44,10 +44,10 @@ describeDatabase(TokenValueRepository.name, (db) => {
       }
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(1500)
+      expect(inserted).toStrictEqual(1500)
 
       const result = await repository.getAll()
-      expect(result.length).toEqual(1500)
+      expect(result.length).toStrictEqual(1500)
     })
 
     it('updates existing records on conflict', async () => {
@@ -64,7 +64,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(updatedRecords)
@@ -86,7 +86,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           ['ethereum', 'base'],
         )
 
-        expect(result).toEqual(UnixTime(200))
+        expect(result).toStrictEqual(UnixTime(200))
       })
 
       it('returns undefined for empty project list', async () => {
@@ -99,7 +99,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           [],
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -140,7 +140,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(400),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when project does not exist', async () => {
@@ -150,7 +150,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('handles single-point time range (from = to)', async () => {
@@ -215,7 +215,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(125),
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
@@ -231,7 +231,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         null,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
@@ -247,7 +247,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         null,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
         tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000, 10),
         tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500, 10),
@@ -261,7 +261,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(115),
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
@@ -275,7 +275,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(140),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when token does not exist', async () => {
@@ -285,7 +285,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(120),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('handles single-point time range (from = to)', async () => {
@@ -295,7 +295,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(115),
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
       ])
     })
@@ -367,7 +367,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(50),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns records up to the latest timestamp for each token', async () => {
@@ -438,7 +438,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         'b'.repeat(12),
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -452,7 +452,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -466,7 +466,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -516,7 +516,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           [],
         )
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -538,7 +538,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
@@ -558,7 +558,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
@@ -595,22 +595,22 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
     it('returns true when project exists', async () => {
       const exists = await repository.checkIfExists('ethereum')
-      expect(exists).toEqual(true)
+      expect(exists).toStrictEqual(true)
     })
 
     it('returns false when project does not exist', async () => {
       const exists = await repository.checkIfExists('non-existent')
-      expect(exists).toEqual(false)
+      expect(exists).toStrictEqual(false)
     })
 
     it('returns true when project has records from specified timestamp', async () => {
       const exists = await repository.checkIfExists('ethereum', UnixTime(200))
-      expect(exists).toEqual(true)
+      expect(exists).toStrictEqual(true)
     })
 
     it('returns false when project has no records from specified timestamp', async () => {
       const exists = await repository.checkIfExists('ethereum', UnixTime(250))
-      expect(exists).toEqual(false)
+      expect(exists).toStrictEqual(false)
     })
   })
 
@@ -627,17 +627,17 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
       it('returns the earliest timestamp for a token', async () => {
         const result = await repository.getFirstTimestampByTokenId('a')
-        expect(result).toEqual(UnixTime(50))
+        expect(result).toStrictEqual(UnixTime(50))
       })
 
       it('is scoped to the given token', async () => {
         const result = await repository.getFirstTimestampByTokenId('b')
-        expect(result).toEqual(UnixTime(30))
+        expect(result).toStrictEqual(UnixTime(30))
       })
 
       it('returns undefined when the token has no records', async () => {
         const result = await repository.getFirstTimestampByTokenId('missing')
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -658,24 +658,24 @@ describeDatabase(TokenValueRepository.name, (db) => {
           'ethereum',
           'arbitrum',
         ])
-        expect(result).toEqual(UnixTime(30))
+        expect(result).toStrictEqual(UnixTime(30))
       })
 
       it('is scoped to the given projects', async () => {
         const result = await repository.getFirstTimestampByProjects([
           'ethereum',
         ])
-        expect(result).toEqual(UnixTime(60))
+        expect(result).toStrictEqual(UnixTime(60))
       })
 
       it('returns undefined when there are no matching records', async () => {
         const result = await repository.getFirstTimestampByProjects(['missing'])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
 
       it('returns undefined for an empty project list', async () => {
         const result = await repository.getFirstTimestampByProjects([])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -1135,7 +1135,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('returns empty array when no matching projects', async () => {
@@ -1150,7 +1150,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('excludes rwaRestricted tokens when includeRwaRestrictedTokens is false', async () => {
@@ -1559,7 +1559,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('returns empty array when project ranges do not match any data', async () => {
@@ -1581,7 +1581,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('excludes associated tokens when excludeAssociated is true', async () => {
@@ -1643,7 +1643,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               a.timestamp - b.timestamp || a.project.localeCompare(b.project),
           )
 
-          expect(sorted).toEqual([
+          expect(sorted).toStrictEqual([
             {
               timestamp: UnixTime(100),
               project: 'arbitrum',
@@ -1753,7 +1753,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqual([
+          expect(result).toStrictEqual([
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
@@ -1784,7 +1784,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(associatedExcluded).toEqual([
+          expect(associatedExcluded).toStrictEqual([
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
@@ -1812,7 +1812,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(rwaExcluded).toEqual([
+          expect(rwaExcluded).toStrictEqual([
             {
               timestamp: UnixTime(200),
               project: 'arbitrum',
@@ -1841,7 +1841,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               excludeRwaRestrictedTokens: false,
             },
           )
-          expect(emptyIds).toEqual([])
+          expect(emptyIds).toStrictEqual([])
 
           const unknownProject = await repository.getSummedByProjectForRanges(
             ['non-existent'],
@@ -1851,7 +1851,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               excludeRwaRestrictedTokens: false,
             },
           )
-          expect(unknownProject).toEqual([])
+          expect(unknownProject).toStrictEqual([])
         })
 
         it('returns no rows when ranges array is empty', async () => {
@@ -1863,7 +1863,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               excludeRwaRestrictedTokens: false,
             },
           )
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('supports dual point-in-time ranges with associated and rwaRestricted exclusions (monthly TVS leaderboard)', async () => {
@@ -1884,7 +1884,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               a.timestamp - b.timestamp || a.project.localeCompare(b.project),
           )
 
-          expect(sorted).toEqual([
+          expect(sorted).toStrictEqual([
             {
               timestamp: UnixTime(100),
               project: 'arbitrum',
@@ -2094,7 +2094,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqual([])
+          expect(result).toStrictEqual([])
         })
 
         it('correctly categorizes tokens by source and category', async () => {
@@ -2113,17 +2113,17 @@ describeDatabase(TokenValueRepository.name, (db) => {
           assert(arbitrumResult)
 
           // Check source breakdown
-          expect(arbitrumResult.canonical).toEqual(0)
-          expect(arbitrumResult.external).toEqual(8000.5) // g (rwaRestricted)
-          expect(arbitrumResult.native).toEqual(6400.5) // h (rwaPublic)
+          expect(arbitrumResult.canonical).toStrictEqual(0)
+          expect(arbitrumResult.external).toStrictEqual(8000.5) // g (rwaRestricted)
+          expect(arbitrumResult.native).toStrictEqual(6400.5) // h (rwaPublic)
 
           // Check category breakdown
-          expect(arbitrumResult.rwaRestricted).toEqual(8000.5) // g
-          expect(arbitrumResult.rwaPublic).toEqual(6400.5) // h
-          expect(arbitrumResult.ether).toEqual(0)
-          expect(arbitrumResult.stablecoin).toEqual(0)
-          expect(arbitrumResult.btc).toEqual(0)
-          expect(arbitrumResult.other).toEqual(0)
+          expect(arbitrumResult.rwaRestricted).toStrictEqual(8000.5) // g
+          expect(arbitrumResult.rwaPublic).toStrictEqual(6400.5) // h
+          expect(arbitrumResult.ether).toStrictEqual(0)
+          expect(arbitrumResult.stablecoin).toStrictEqual(0)
+          expect(arbitrumResult.btc).toStrictEqual(0)
+          expect(arbitrumResult.other).toStrictEqual(0)
         })
 
         it('includes associated tokens in the associated field', async () => {
@@ -2140,7 +2140,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const ethereumResult = result.find((r) => r.project === 'ethereum')
           assert(ethereumResult)
 
-          expect(ethereumResult.associated).toEqual(800.25) // token e
+          expect(ethereumResult.associated).toStrictEqual(800.25) // token e
         })
 
         it('excludes rwaRestricted tokens when includeRwaRestrictedTokens is false', async () => {
@@ -2156,17 +2156,17 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           const ethereumResult = result.find((r) => r.project === 'ethereum')
           assert(ethereumResult)
-          expect(ethereumResult.value).toEqual(16000.25) // only token 'a'
+          expect(ethereumResult.value).toStrictEqual(16000.25) // only token 'a'
 
           const arbitrumResult = result.find((r) => r.project === 'arbitrum')
           assert(arbitrumResult)
 
           // Token 'g' (rwaRestricted) should be excluded, only 'h' (rwaPublic) should be included
-          expect(arbitrumResult.value).toEqual(6400.5) // only token 'h' (rwaPublic)
-          expect(arbitrumResult.external).toEqual(0) // token 'g' was external but excluded
-          expect(arbitrumResult.native).toEqual(6400.5) // token 'h' is native
-          expect(arbitrumResult.rwaRestricted).toEqual(0) // excluded
-          expect(arbitrumResult.rwaPublic).toEqual(6400.5) // token 'h'
+          expect(arbitrumResult.value).toStrictEqual(6400.5) // only token 'h' (rwaPublic)
+          expect(arbitrumResult.external).toStrictEqual(0) // token 'g' was external but excluded
+          expect(arbitrumResult.native).toStrictEqual(6400.5) // token 'h' is native
+          expect(arbitrumResult.rwaRestricted).toStrictEqual(0) // excluded
+          expect(arbitrumResult.rwaPublic).toStrictEqual(6400.5) // token 'h'
         })
       },
     )
@@ -2264,7 +2264,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-        expect(result.map((r) => [r.project, r.timestamp, r.value])).toEqual([
+        expect(
+          result.map((r) => [r.project, r.timestamp, r.value]),
+        ).toStrictEqual([
           ['arbitrum', T0 + 2 * UnixTime.HOUR - 7 * DAY, 30],
           ['base', T0 + UnixTime.HOUR, 500],
           ['arbitrum', T0 + 2 * UnixTime.HOUR, 350],
@@ -2288,8 +2290,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
           opts,
         )
 
-        expect(result.filter((r) => r.timestamp >= T0)).toEqual(reference)
-        expect(reference[0]?.value).toEqual(300)
+        expect(result.filter((r) => r.timestamp >= T0)).toStrictEqual(reference)
+        expect(reference[0]?.value).toStrictEqual(300)
       })
 
       it('picks the latest timestamp among tokens that pass the filters', async () => {
@@ -2337,7 +2339,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-        expect(result.map((r) => [r.timestamp, r.value])).toEqual([
+        expect(result.map((r) => [r.timestamp, r.value])).toStrictEqual([
           [T0 + UnixTime.HOUR - 7 * DAY, 5],
           [T0 + UnixTime.HOUR, 7],
         ])
@@ -2353,7 +2355,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               excludeRwaRestrictedTokens: false,
             },
           )
-        expect(result.map((r) => r.project)).toEqual(['base'])
+        expect(result.map((r) => r.project)).toStrictEqual(['base'])
       })
     },
   )

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import { TokenIngestionQueueRepository } from './TokenIngestionQueueRepository'
 
@@ -15,7 +15,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
 
       const all = await repository.getAll()
       expect(all).toHaveLength(1)
-      expect(all[0]!).toHaveSubset({
+      expect(all[0]!).toMatchObject({
         chain: 'ethereum',
         address: '0xabc',
         state: 'pending',
@@ -31,7 +31,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
 
       const all = await repository.getAll()
       expect(all).toHaveLength(1)
-      expect(all[0]!).toHaveSubset({
+      expect(all[0]!).toMatchObject({
         chain: 'ethereum',
         address: '0xabc',
         state: 'staged',
@@ -48,7 +48,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
 
       const all = await repository.getAll()
       expect(all).toHaveLength(1)
-      expect(all[0]!).toHaveSubset({
+      expect(all[0]!).toMatchObject({
         ...address,
         state: 'conflict',
         message: 'stored abstract token disagrees',
@@ -66,7 +66,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
 
       const next = await repository.findNextPending()
 
-      expect(next!).toHaveSubset({
+      expect(next!).toMatchObject({
         ...second,
         state: 'pending',
         message: null,
@@ -84,7 +84,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       await repository.enqueue(conflict)
       await repository.markConflict(conflict, 'needs review')
 
-      expect(await repository.countPending()).toEqual(1)
+      expect(await repository.countPending()).toStrictEqual(1)
     })
   })
 
@@ -126,7 +126,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       await repository.markError(address, 'RPC returned U\0SDC')
 
       const entries = await repository.getByStates(['error'])
-      expect(entries[0]?.message).toEqual('RPC returned U\\0SDC')
+      expect(entries[0]?.message).toStrictEqual('RPC returned U\\0SDC')
     })
   })
 
@@ -138,9 +138,9 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
 
       const page = await repository.getPage({ offset: 1, limit: 1 })
 
-      expect(page.totalCount).toEqual(3)
+      expect(page.totalCount).toStrictEqual(3)
       expect(page.entries).toHaveLength(1)
-      expect(page.entries[0]!).toHaveSubset({
+      expect(page.entries[0]!).toMatchObject({
         chain: 'base',
         address: '0x333',
       })
@@ -158,8 +158,8 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
         chains: ['ethereum', 'arbitrum'],
       })
 
-      expect(page.totalCount).toEqual(3)
-      expect(page.entries.map((e) => e.address)).toEqual([
+      expect(page.totalCount).toStrictEqual(3)
+      expect(page.entries.map((e) => e.address)).toStrictEqual([
         '0x333',
         '0x111',
         '0x222',
@@ -176,8 +176,8 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       await repository.markConflict(conflict, 'abstract token mismatch')
       await repository.markError(error, 'RPC failed')
 
-      expect(await repository.retry(conflict)).toEqual(1)
-      expect(await repository.retry(error)).toEqual(1)
+      expect(await repository.retry(conflict)).toStrictEqual(1)
+      expect(await repository.retry(error)).toStrictEqual(1)
 
       const entries = await repository.getAll()
       expect(
@@ -197,7 +197,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       const address = { chain: 'ethereum', address: '0x111' }
       await repository.enqueue(address)
 
-      expect(await repository.retry(address)).toEqual(0)
+      expect(await repository.retry(address)).toStrictEqual(0)
     })
   })
 
@@ -206,11 +206,11 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       const address = { chain: 'ethereum', address: '0x111' }
       await repository.enqueue(address, 'staged')
 
-      expect(await repository.approve(address)).toEqual(1)
+      expect(await repository.approve(address)).toStrictEqual(1)
 
       const entries = await repository.getAll()
       expect(entries).toHaveLength(1)
-      expect(entries[0]!).toHaveSubset({
+      expect(entries[0]!).toMatchObject({
         ...address,
         state: 'pending',
         message: null,
@@ -221,7 +221,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       const address = { chain: 'ethereum', address: '0x111' }
       await repository.enqueue(address)
 
-      expect(await repository.approve(address)).toEqual(0)
+      expect(await repository.approve(address)).toStrictEqual(0)
     })
   })
 
@@ -230,8 +230,8 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       const address = { chain: 'ethereum', address: '0x111' }
       await repository.enqueue(address)
 
-      expect(await repository.remove(address)).toEqual(1)
-      expect(await repository.getAll()).toEqual([])
+      expect(await repository.remove(address)).toStrictEqual(1)
+      expect(await repository.getAll()).toStrictEqual([])
     })
   })
 })

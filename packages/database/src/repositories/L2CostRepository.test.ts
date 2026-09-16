@@ -1,7 +1,6 @@
 import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
-import { describe } from 'mocha'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { type L2CostRecord, L2CostRepository } from './L2CostRepository'
 
@@ -54,8 +53,7 @@ describeDatabase(L2CostRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await configRepository.deleteAll()
     await configRepository.upsertMany(
       DATA.map((d, i) => ({
@@ -98,7 +96,7 @@ describeDatabase(L2CostRepository.name, (db) => {
     })
 
     it('empty array not to be rejected', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -118,7 +116,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         START + 6 * UnixTime.HOUR,
       ])
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -166,7 +164,7 @@ describeDatabase(L2CostRepository.name, (db) => {
           START,
         )
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -224,7 +222,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         txIdC.toString(),
       ])
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([DATA[1]!])
@@ -232,7 +230,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
     it('returns 0 for empty ids', async () => {
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted(DATA)
@@ -240,7 +238,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
     it('returns 0 when no matching config found', async () => {
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted(DATA)
@@ -253,7 +251,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -313,7 +311,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([records[0]!])
+      expect(result).toStrictEqual([records[0]!])
     })
   })
 })

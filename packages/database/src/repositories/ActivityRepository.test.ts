@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import omit from 'lodash/omit'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { type ActivityRecord, ActivityRepository } from './ActivityRepository'
 
@@ -47,27 +47,31 @@ describeDatabase(ActivityRepository.name, (db) => {
 
     it('is true when the project has a non-zero count', async () => {
       await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+      expect(await repository.checkIfExists(ProjectId('a'))).toStrictEqual(true)
     })
 
     it('ignores rows with a zero count, which draw an empty chart', async () => {
       await repository.upsertMany([record('a', START, 0)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('a'))).toStrictEqual(
+        false,
+      )
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('b'))).toStrictEqual(
+        false,
+      )
     })
 
     it('only counts rows at or after fromInclusive', async () => {
       await repository.upsertMany([record('a', START - UnixTime.DAY, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'), START)).toEqual(
-        false,
-      )
+      expect(
+        await repository.checkIfExists(ProjectId('a'), START),
+      ).toStrictEqual(false)
       expect(
         await repository.checkIfExists(ProjectId('a'), START - UnixTime.DAY),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
   })
 
@@ -77,7 +81,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -96,7 +100,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           ['a'],
         )
 
-        expect(result).toEqual(START + 1 * UnixTime.DAY)
+        expect(result).toStrictEqual(START + 1 * UnixTime.DAY)
       })
 
       it('returns undefined for empty project list', async () => {
@@ -107,7 +111,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           [],
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -151,7 +155,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         [START + 1 * UnixTime.DAY, START + 2 * UnixTime.DAY],
       )
 
-      expect(results).toEqual(records.slice(1, 3))
+      expect(results).toStrictEqual(records.slice(1, 3))
     })
   })
 
@@ -167,7 +171,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const result = await repository.getMaxCountsForProjects()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         [ProjectId('a')]: {
           uopsCount: 7,
           uopsTimestamp: START + 2 * UnixTime.DAY,
@@ -199,7 +203,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const result = await repository.getMaxCountsForProjects()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         [ProjectId('a')]: {
           uopsCount: 5,
           uopsTimestamp: START + 1 * UnixTime.DAY,
@@ -241,7 +245,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           ProjectId('c'),
         ])
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           [ProjectId('a')]: {
             count: 8,
             uopsCount: 13,
@@ -279,7 +283,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           ProjectId('without-uops'),
         ])
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           [ProjectId('complete')]: {
             count: 9,
             uopsCount: 11,
@@ -322,7 +326,7 @@ describeDatabase(ActivityRepository.name, (db) => {
             [START, START + 2 * UnixTime.DAY],
           )
 
-        expect(result).toEqual(11)
+        expect(result).toStrictEqual(11)
       })
     },
   )
@@ -340,7 +344,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         [START, START + 1 * UnixTime.DAY],
       )
 
-      expect(results).toEqual([
+      expect(results).toStrictEqual([
         record('a', START),
         record('a', START + 1 * UnixTime.DAY),
       ])
@@ -362,7 +366,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           15,
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           record('a', START + 1 * UnixTime.DAY, 1, 2, 11, 20),
         ])
       })
@@ -378,7 +382,7 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
 
       const result = await repository.getDailyCounts()
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         record('a', START, 1),
         record('a', START + 1 * UnixTime.DAY, 1),
         record('a', START + 2 * UnixTime.DAY, 1),
@@ -395,7 +399,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const result = await repository.getDailyCounts()
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         record('a', START, 1),
         record('b', START, 3),
         record('a', START + 1 * UnixTime.DAY, 1),
@@ -413,7 +417,7 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
 
       const result = await repository.getDailyCountsPerProject(ProjectId('a'))
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         record('a', START, 1),
         record('a', START + 1 * UnixTime.DAY, 1),
       ])
@@ -433,7 +437,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         const result = await repository.getProjectsAggregatedDailyCount([
           ProjectId('a'),
         ])
-        expect(result).toEqual(
+        expect(result).toStrictEqual(
           [record('a', START, 1), record('a', START + 1 * UnixTime.DAY, 1)].map(
             (i) => omit(i, ['projectId', 'start', 'end', 'uopsCount']),
           ),
@@ -455,7 +459,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           ProjectId('b'),
           ProjectId('c'),
         ])
-        expect(result).toEqual([
+        expect(result).toStrictEqual([
           { timestamp: START, count: 4 },
           { timestamp: START + 1 * UnixTime.DAY, count: 8 },
           { timestamp: START + 2 * UnixTime.DAY, count: 2 },
@@ -499,7 +503,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const latestBlock = await repository.getLatestProcessedBlock(projectId)
 
-      expect(latestBlock).toEqual(300)
+      expect(latestBlock).toStrictEqual(300)
     })
 
     it('should return undefined if no records exist for the project', async () => {
@@ -507,11 +511,11 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const latestBlock = await repository.getLatestProcessedBlock(projectId)
 
-      expect(latestBlock).toEqual(undefined)
+      expect(latestBlock).toStrictEqual(undefined)
     })
   })
 
-  afterEach(async function () {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 })

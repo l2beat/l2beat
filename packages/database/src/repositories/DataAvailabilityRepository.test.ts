@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type DataAvailabilityRecord,
@@ -73,12 +73,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-b', 'layer-a', 'config-id-2', START, 200n),
       ]
       const result = await repository.upsertMany(records)
-      expect(result).toEqual(2)
+      expect(result).toStrictEqual(2)
     })
 
     it('returns 0 for empty array', async () => {
       const result = await repository.upsertMany([])
-      expect(result).toEqual(0)
+      expect(result).toStrictEqual(0)
     })
   })
 
@@ -87,24 +87,26 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-a')).toEqual(true)
+      expect(await repository.checkIfExists('project-a')).toStrictEqual(true)
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-b')).toEqual(false)
+      expect(await repository.checkIfExists('project-b')).toStrictEqual(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START - UnixTime.DAY, 1n),
       ])
-      expect(await repository.checkIfExists('project-a', START)).toEqual(false)
+      expect(await repository.checkIfExists('project-a', START)).toStrictEqual(
+        false,
+      )
       expect(
         await repository.checkIfExists('project-a', START - UnixTime.DAY),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
   })
 
@@ -174,7 +176,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 1 * UnixTime.DAY,
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
 
       it('returns empty array when no records exist in time range', async () => {
@@ -195,7 +197,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 3 * UnixTime.DAY,
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
 
       it('handles empty database', async () => {
@@ -205,7 +207,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 1 * UnixTime.DAY,
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -366,7 +368,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [START, START + 1 * UnixTime.DAY],
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -414,7 +416,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [START, START + 2 * UnixTime.DAY],
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           record('project-b', 'layer-b', 'config-id', START, 200n),
           record(
             'project-b',
@@ -458,7 +460,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [null, START + 2 * UnixTime.DAY],
         )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           record(
             'project-a',
             'layer-a',
@@ -487,7 +489,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [START, START + 1 * UnixTime.DAY],
         )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -544,7 +546,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             [START, START + 2 * UnixTime.DAY],
           )
 
-        expect(results).toEqual([
+        expect(results).toStrictEqual([
           { daLayer: 'layer-a', timestamp: START, totalSize: 110n },
           {
             daLayer: 'layer-a',
@@ -565,7 +567,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             [START, START + 1 * UnixTime.DAY],
           )
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -638,7 +640,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const results = await repository.getMaxHistoricalRecordByDaLayer([])
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
 
       it('returns empty array when no records exist for specified layers', async () => {
@@ -652,7 +654,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'layer-d',
         ])
 
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -671,7 +673,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         'config-id-2',
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -685,7 +687,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -699,7 +701,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -726,7 +728,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START,
           START + 2,
         )
-        expect(deleted).toEqual(3)
+        expect(deleted).toStrictEqual(3)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
@@ -746,7 +748,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 1,
           START + 2,
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
       })
     },
   )
@@ -771,7 +773,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         const deletedCount =
           await repository.deleteByConfigurationId('config-id-1')
 
-        expect(deletedCount).toEqual(2)
+        expect(deletedCount).toStrictEqual(2)
 
         const remainingRecords = await repository.getAll()
         expect(remainingRecords).toEqualUnsorted([
@@ -848,7 +850,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'project-b',
         ])
 
-        expect(result).toEqual(START - 5 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 5 * UnixTime.DAY)
       })
 
       it('is scoped to the given projects', async () => {
@@ -867,7 +869,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'project-a',
         ])
 
-        expect(result).toEqual(START)
+        expect(result).toStrictEqual(START)
       })
 
       it('returns undefined when there are no matching records', async () => {
@@ -875,7 +877,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'missing',
         ])
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
 
       it('returns undefined for an empty project list', async () => {
@@ -885,7 +887,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByProjectIds([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -919,7 +921,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'missing',
         ])
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           'project-a': START - 2 * UnixTime.DAY,
           'project-b': START - 5 * UnixTime.DAY,
         })
@@ -932,7 +934,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampsByProjectIds([])
 
-        expect(result).toEqual({})
+        expect(result).toStrictEqual({})
       })
     },
   )
@@ -980,7 +982,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             'layer-a',
           ])
 
-        expect(result).toEqual(START - 3 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 3 * UnixTime.DAY)
       })
 
       it('respects excludedProjectIds', async () => {
@@ -1007,7 +1009,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             ['project-a'],
           )
 
-        expect(result).toEqual(START - 1 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 1 * UnixTime.DAY)
       })
 
       it('returns undefined for an empty daLayer list', async () => {
@@ -1018,7 +1020,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         const result =
           await repository.getFirstTimestampOfSummedProjectsByDaLayers([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -1060,7 +1062,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             'layer-a',
           ])
 
-        expect(result).toEqual(START - 1 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 1 * UnixTime.DAY)
       })
 
       it('respects excludedProjectIds', async () => {
@@ -1087,7 +1089,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             ['project-b'],
           )
 
-        expect(result).toEqual(START - 3 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 3 * UnixTime.DAY)
       })
 
       it('returns undefined when the layer has no project records', async () => {
@@ -1100,7 +1102,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             'layer-a',
           ])
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -1137,7 +1139,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByDaLayers(['layer-a'])
 
-        expect(result).toEqual(START - 10 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 10 * UnixTime.DAY)
       })
 
       it('respects excludedProjectIds', async () => {
@@ -1163,7 +1165,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           ['project-a'],
         )
 
-        expect(result).toEqual(START - 1 * UnixTime.DAY)
+        expect(result).toStrictEqual(START - 1 * UnixTime.DAY)
       })
 
       it('returns undefined for an empty daLayer list', async () => {
@@ -1173,7 +1175,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByDaLayers([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -1188,8 +1190,8 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       const deleteResult = await repository.deleteAll()
       const results = await repository.getAll()
 
-      expect(deleteResult).toEqual(2)
-      expect(results).toEqual([])
+      expect(deleteResult).toStrictEqual(2)
+      expect(results).toStrictEqual([])
     })
   })
 })

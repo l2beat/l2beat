@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import type { AggregatedInteropTransferRecord } from './AggregatedInteropTransferRepository'
 import { InteropAggregateStatusRepository } from './InteropAggregateStatusRepository'
@@ -19,22 +19,22 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         timestamp: UnixTime(100),
         status: 'promoted',
       })
-      expect(inserted).toEqual(true)
-      expect((await repository.getByTimestamp(UnixTime(100)))?.status).toEqual(
-        'promoted',
-      )
+      expect(inserted).toStrictEqual(true)
+      expect(
+        (await repository.getByTimestamp(UnixTime(100)))?.status,
+      ).toStrictEqual('promoted')
 
       const updated = await repository.upsertAuto({
         timestamp: UnixTime(100),
         status: 'blocked',
         reasons: [{ rule: 'maxLaneVolume' }],
       })
-      expect(updated).toEqual(true)
+      expect(updated).toStrictEqual(true)
 
       const row = await repository.getByTimestamp(UnixTime(100))
-      expect(row?.status).toEqual('blocked')
-      expect(row?.promotedBy).toEqual('auto')
-      expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
+      expect(row?.status).toStrictEqual('blocked')
+      expect(row?.promotedBy).toStrictEqual('auto')
+      expect(row?.reasons).toStrictEqual([{ rule: 'maxLaneVolume' }])
     })
 
     it('does NOT overwrite a manual (non-auto) verdict (sticky, returns false)', async () => {
@@ -50,10 +50,10 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
       })
 
       // the write was a no-op — the caller must not act on a verdict it didn't record
-      expect(applied).toEqual(false)
+      expect(applied).toStrictEqual(false)
       const row = await repository.getByTimestamp(UnixTime(100))
-      expect(row?.status).toEqual('promoted')
-      expect(row?.promotedBy).toEqual('ops@l2beat.com')
+      expect(row?.status).toStrictEqual('promoted')
+      expect(row?.promotedBy).toStrictEqual('ops@l2beat.com')
     })
   })
 
@@ -72,12 +72,12 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           'ops@l2beat.com',
         )
 
-        expect(applied).toEqual(true)
+        expect(applied).toStrictEqual(true)
         const row = await repository.getByTimestamp(UnixTime(100))
-        expect(row?.status).toEqual('promoted')
-        expect(row?.promotedBy).toEqual('ops@l2beat.com')
+        expect(row?.status).toStrictEqual('promoted')
+        expect(row?.promotedBy).toStrictEqual('ops@l2beat.com')
         // reasons kept as the audit trail of why it was blocked
-        expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
+        expect(row?.reasons).toStrictEqual([{ rule: 'maxLaneVolume' }])
       })
 
       it('does NOT manualize an already-promoted snapshot (returns false)', async () => {
@@ -92,10 +92,10 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         )
 
         // stays an auto verdict so the engine can still block it if the gate fails
-        expect(applied).toEqual(false)
+        expect(applied).toStrictEqual(false)
         const row = await repository.getByTimestamp(UnixTime(100))
-        expect(row?.status).toEqual('promoted')
-        expect(row?.promotedBy).toEqual('auto')
+        expect(row?.status).toStrictEqual('promoted')
+        expect(row?.promotedBy).toStrictEqual('auto')
       })
 
       it('is a no-op when no status row exists (returns false)', async () => {
@@ -104,8 +104,8 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           'ops@l2beat.com',
         )
 
-        expect(applied).toEqual(false)
-        expect(await repository.getByTimestamp(UnixTime(100))).toEqual(
+        expect(applied).toStrictEqual(false)
+        expect(await repository.getByTimestamp(UnixTime(100))).toStrictEqual(
           undefined,
         )
       })
@@ -129,7 +129,7 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           status: 'blocked',
         })
 
-        expect(await repository.getLatestPromotedTimestamp()).toEqual(
+        expect(await repository.getLatestPromotedTimestamp()).toStrictEqual(
           UnixTime(200),
         )
       })
@@ -140,7 +140,9 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           status: 'blocked',
         })
 
-        expect(await repository.getLatestPromotedTimestamp()).toEqual(undefined)
+        expect(await repository.getLatestPromotedTimestamp()).toStrictEqual(
+          undefined,
+        )
       })
     },
   )
@@ -163,7 +165,7 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
 
         expect(
           await repository.getEarliestPromotedTimestampForDay(dayLate),
-        ).toEqual(dayMid)
+        ).toStrictEqual(dayMid)
       })
 
       it('returns undefined for a day with no promoted snapshot', async () => {
@@ -172,7 +174,7 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
 
         expect(
           await repository.getEarliestPromotedTimestampForDay(day),
-        ).toEqual(undefined)
+        ).toStrictEqual(undefined)
       })
     },
   )
@@ -200,16 +202,16 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
 
         const deleted = await repository.deleteOrphaned()
 
-        expect(deleted).toEqual(1)
-        expect(await repository.getByTimestamp(UnixTime(100))).not.toEqual(
+        expect(deleted).toStrictEqual(1)
+        expect(
+          await repository.getByTimestamp(UnixTime(100)),
+        ).not.toStrictEqual(undefined)
+        expect(await repository.getByTimestamp(UnixTime(200))).toStrictEqual(
           undefined,
         )
-        expect(await repository.getByTimestamp(UnixTime(200))).toEqual(
-          undefined,
-        )
-        expect(await repository.getByTimestamp(UnixTime(300))).not.toEqual(
-          undefined,
-        )
+        expect(
+          await repository.getByTimestamp(UnixTime(300)),
+        ).not.toStrictEqual(undefined)
       })
     },
   )
@@ -230,7 +232,7 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
       })
 
       const recent = await repository.getRecent(2)
-      expect(recent.map((r) => r.timestamp)).toEqual([
+      expect(recent.map((r) => r.timestamp)).toStrictEqual([
         UnixTime(300),
         UnixTime(200),
       ])

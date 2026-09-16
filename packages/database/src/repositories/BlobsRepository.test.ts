@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { type BlobRecord, BlobsRepository } from './BlobsRepository'
 
@@ -40,8 +40,7 @@ describeDatabase(BlobsRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.insertMany(DATA)
   })
@@ -78,7 +77,7 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -186,7 +185,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
+      expect(results).toStrictEqual([{ from: '0xA', to: '0xB', count: 2 }])
     })
 
     it('should return empty array when no data matches', async () => {
@@ -199,7 +198,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -209,7 +208,7 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -219,7 +218,7 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual(DATA.slice(0, 2))
+      expect(results).toStrictEqual(DATA.slice(0, 2))
     })
   })
 })

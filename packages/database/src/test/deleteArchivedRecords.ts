@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, it } from 'vitest'
 
 interface TestedRepository<T> {
   deleteHourlyUntil: (dateRange: {
@@ -14,6 +14,12 @@ interface TestedRepository<T> {
   getAll: () => Promise<T[]>
 }
 
+/**
+ * Shared test bodies, not a suite of its own: every repository that archives
+ * rows gets the same cases. It lives here rather than next to the code under
+ * test because a `*.test.ts` file that declares no suite is a test runner
+ * failure.
+ */
 export function testDeletingArchivedRecords<T>(
   repository: TestedRepository<T>,
   fakeRecord: (timestamp: UnixTime) => T,

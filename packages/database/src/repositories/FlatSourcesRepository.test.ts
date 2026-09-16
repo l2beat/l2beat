@@ -1,5 +1,5 @@
 import { Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type FlatSourcesRecord,
@@ -30,7 +30,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       await repository.upsert(flatRecord)
 
       const latest = await repository.get(projectId)
-      expect(latest).toEqual(flatRecord)
+      expect(latest).toStrictEqual(flatRecord)
     })
 
     it('two inserts, update the timestamp but not the flat', async () => {
@@ -44,7 +44,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(flatRecord)
       let latest = await repository.get(projectId)
-      expect(latest).toEqual(flatRecord)
+      expect(latest).toStrictEqual(flatRecord)
 
       await repository.upsert({
         ...flatRecord,
@@ -53,7 +53,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       })
 
       latest = await repository.get(projectId)
-      expect(latest).toEqual({
+      expect(latest).toStrictEqual({
         ...flatRecord,
         timestamp: 2,
       })
@@ -72,7 +72,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(flatRecord)
       let latest = await repository.get(projectId)
-      expect(latest).toEqual(flatRecord)
+      expect(latest).toStrictEqual(flatRecord)
 
       const newRecord = {
         ...flatRecord,
@@ -83,7 +83,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(newRecord)
       latest = await repository.get(projectId)
-      expect(latest).toEqual(newRecord)
+      expect(latest).toStrictEqual(newRecord)
     })
   })
 })

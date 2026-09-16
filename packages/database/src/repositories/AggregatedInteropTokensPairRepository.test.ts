@@ -1,5 +1,5 @@
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type AggregatedInteropTokensPairRecord,
@@ -16,7 +16,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
   describe(AggregatedInteropTokensPairRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns all records', async () => {
@@ -150,7 +150,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toEqual(3)
+        expect(deleted).toStrictEqual(3)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([record1, record4])
@@ -160,7 +160,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
       })
     },
   )
@@ -207,7 +207,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([record1])
@@ -229,12 +229,12 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
       })
     },
   )
@@ -352,7 +352,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
           'lockAndMint',
         )
 
-        expect(result).toEqual([crossChain])
+        expect(result).toStrictEqual([crossChain])
       })
 
       it('includes same-chain transfers when includeSameChainTransfers is true', async () => {

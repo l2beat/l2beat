@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { PrivacyPriceRepository } from './PrivacyPriceRepository'
 
@@ -76,8 +76,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       )
 
       expect(result).toHaveLength(2)
-      expect(result[0]!.priceUsd).toEqual(1.5)
-      expect(result[1]!.priceUsd).toEqual(2.5)
+      expect(result[0]!.priceUsd).toStrictEqual(1.5)
+      expect(result[1]!.priceUsd).toStrictEqual(2.5)
     })
   })
 
@@ -115,8 +115,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result[0]!.priceUsd).toEqual(1.5)
-        expect(result[1]!.priceUsd).toEqual(2.5)
+        expect(result[0]!.priceUsd).toStrictEqual(1.5)
+        expect(result[1]!.priceUsd).toStrictEqual(2.5)
       })
     },
   )
@@ -185,7 +185,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
           UnixTime(2000),
         )
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -223,7 +223,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
         const result = await repository.getLatestPriceByPriceId('ethereum')
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(3000),
           priceUsd: 3.5,
@@ -243,7 +243,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
         const result = await repository.getLatestPriceByPriceId('bitcoin')
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -281,7 +281,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         },
       ])
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toEqualUnsorted([

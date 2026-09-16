@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type SyncMetadataRecord,
@@ -86,7 +86,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
 
       const results = await repository.getAll()
-      expect(results).toEqual([
+      expect(results).toStrictEqual([
         {
           feature: 'activity',
           id: 'arbitrum',
@@ -120,7 +120,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
 
     it('empty array not to be rejected', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -173,7 +173,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
 
       const result = await repository.getByFeature('activity')
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -200,7 +200,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const result = await repository.getByFeatureAndId('activity', 'arbitrum')
-      expect(result).toEqual(records[0])
+      expect(result).toStrictEqual(records[0])
     })
 
     it('should return undefined for non-existing feature and id', async () => {
@@ -208,7 +208,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'activity',
         'nonexistent',
       )
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('should return undefined for existing feature but non-existing id', async () => {
@@ -226,7 +226,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'activity',
         'nonexistent',
       )
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -282,7 +282,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'nonexistent1',
         'nonexistent2',
       ])
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
 
     it('should return empty array for empty ids array', async () => {
@@ -297,7 +297,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany([record])
 
       const results = await repository.getByFeatureAndIds('activity', [])
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -340,13 +340,13 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const maxTarget = await repository.getMaxTargetForFeature('activity')
-      expect(maxTarget).toEqual(roundedHour + 2 * UnixTime.HOUR)
+      expect(maxTarget).toStrictEqual(roundedHour + 2 * UnixTime.HOUR)
     })
 
     it('should throw error for non-existing feature', async () => {
       await expect(
         repository.getMaxTargetForFeature('nonexistent' as any),
-      ).toBeRejectedWith('Max target for feature not found')
+      ).rejects.toThrow('Max target for feature not found')
     })
   })
 
@@ -536,7 +536,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.updateSyncedUntil('activity', [], newSyncedUntil)
 
       const results = await repository.getAll()
-      expect(results).toEqual(records)
+      expect(results).toStrictEqual(records)
     })
   })
 })

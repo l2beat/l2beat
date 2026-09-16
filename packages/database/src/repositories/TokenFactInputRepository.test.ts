@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type TokenFactInputRecord,
@@ -29,7 +29,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(1)
       expect(result[0]!.id).toBeGreaterThan(0)
-      expect(withoutId(result[0]!)).toEqual(record)
+      expect(withoutId(result[0]!)).toStrictEqual(record)
     })
 
     it('accepts null context', async () => {
@@ -43,7 +43,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(1)
-      expect(withoutId(result[0]!)).toEqual(record)
+      expect(withoutId(result[0]!)).toStrictEqual(record)
     })
   })
 
@@ -80,7 +80,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -105,7 +105,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -147,8 +147,8 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const deleted = await repository.deleteAll()
 
-      expect(deleted).toEqual(2)
-      expect(await repository.getAll()).toEqual([])
+      expect(deleted).toStrictEqual(2)
+      expect(await repository.getAll()).toStrictEqual([])
     })
   })
 })

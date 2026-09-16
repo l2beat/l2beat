@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type AnomalyStatsRecord,
@@ -37,8 +37,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.upsertMany(DATA)
   })
@@ -88,7 +87,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -113,7 +112,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
           'proofSubmissions',
         )
 
-        expect(result).toEqual(DATA[1])
+        expect(result).toStrictEqual(DATA[1])
       })
     },
   )
@@ -122,7 +121,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     it('should return latest stats', async () => {
       const result = await repository.getLatestStats()
 
-      expect(result).toEqual([DATA[0]!, DATA[1]!])
+      expect(result).toStrictEqual([DATA[0]!, DATA[1]!])
     })
   })
 
@@ -132,7 +131,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 })

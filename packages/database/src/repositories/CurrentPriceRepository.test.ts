@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type CurrentPriceRecord,
@@ -47,7 +47,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds([])
-        expect(deletedCount).toEqual(0)
+        expect(deletedCount).toStrictEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([saved('A', 1), saved('B', 2)])
@@ -57,7 +57,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['A', 'B'])
-        expect(deletedCount).toEqual(2)
+        expect(deletedCount).toStrictEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([saved('C', 3)])
@@ -67,7 +67,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['X', 'Y'])
-        expect(deletedCount).toEqual(0)
+        expect(deletedCount).toStrictEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([saved('A', 1), saved('B', 2)])
@@ -84,5 +84,5 @@ function mock(
 }
 
 function saved(coingeckoId: string, priceUsd: number): CurrentPriceRecord {
-  return { coingeckoId, priceUsd, updatedAt: expect.a(Date) }
+  return { coingeckoId, priceUsd, updatedAt: expect.any(Date) }
 }

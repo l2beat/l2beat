@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type PrivacyAnonymitySetEventRecord,
@@ -19,8 +19,8 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     await repository.upsertMany([initial])
 
     const updated = { ...initial, sender: 'bob', amount: 20n }
-    expect(await repository.upsertMany([updated])).toEqual(1)
-    expect(await repository.getAll()).toEqual([updated])
+    expect(await repository.upsertMany([updated])).toStrictEqual(1)
+    expect(await repository.getAll()).toStrictEqual([updated])
   })
 
   it('groups to the maximum individual amount per sender and UTC day', async () => {
@@ -70,7 +70,7 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
         START,
         START + UnixTime.HOUR,
       ),
-    ).toEqual(2)
+    ).toStrictEqual(2)
 
     expect(await repository.getAll()).toEqualUnsorted([
       event('aaaaaaaaaaaa', 3, START + 2 * UnixTime.HOUR, 'carol', 1n),

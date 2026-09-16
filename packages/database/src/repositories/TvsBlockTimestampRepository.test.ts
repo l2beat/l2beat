@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
-import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
+import { testDeletingArchivedRecords } from '../test/deleteArchivedRecords'
 import { TvsBlockTimestampRepository } from './TvsBlockTimestampRepository'
 
 describeDatabase(TvsBlockTimestampRepository.name, (db) => {
@@ -22,7 +22,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.upsertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toStrictEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -32,7 +32,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       }
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(1500)
+      expect(inserted).toStrictEqual(1500)
     })
 
     it('updates existing records on conflict', async () => {
@@ -49,7 +49,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(updatedRecords)
@@ -72,7 +72,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(100),
         )
 
-        expect(result).toEqual(1000)
+        expect(result).toStrictEqual(1000)
       })
 
       it('returns undefined when no matching record exists', async () => {
@@ -85,7 +85,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(200),
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -104,7 +104,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
         'b'.repeat(12),
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -118,7 +118,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -132,7 +132,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -158,7 +158,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
@@ -178,7 +178,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([

@@ -1,5 +1,5 @@
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type AggregatedInteropDeployedTokenRecord,
@@ -32,7 +32,7 @@ describeDatabase(AggregatedInteropDeployedTokenRepository.name, (db) => {
           [],
         )
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
 
       it('sums stats per token across flows at the given timestamp', async () => {
@@ -107,7 +107,7 @@ describeDatabase(AggregatedInteropDeployedTokenRepository.name, (db) => {
         )
 
         result.sort((a, b) => a.tokenChain.localeCompare(b.tokenChain))
-        expect(result).toEqual([
+        expect(result).toStrictEqual([
           {
             tokenChain: 'arbitrum',
             tokenAddress: '0x2',

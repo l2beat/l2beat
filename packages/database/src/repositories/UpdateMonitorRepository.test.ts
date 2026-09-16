@@ -1,5 +1,5 @@
 import { Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type UpdateMonitorRecord,
@@ -24,7 +24,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
 
     const resultEth = await repository.findLatest(projectId)
 
-    expect(resultEth).toEqual(expectedEth)
+    expect(resultEth).toStrictEqual(expectedEth)
   })
 
   it(UpdateMonitorRepository.prototype.upsert.name, async () => {
@@ -57,7 +57,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     await repository.upsert(updated)
     const latest = await repository.findLatest(projectId)
 
-    expect(latest).toEqual(updated)
+    expect(latest).toStrictEqual(updated)
   })
 })
 

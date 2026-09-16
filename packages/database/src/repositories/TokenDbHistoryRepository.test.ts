@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import {
   type TokenDbHistoryEntryInsert,
@@ -21,8 +21,8 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const stored = await repository.getAll()
       expect(stored).toHaveLength(1)
-      expect(stored[0]!).toEqual({
-        id: expect.a(String),
+      expect(stored[0]!).toStrictEqual({
+        id: expect.any(String),
         timestamp: UnixTime(1000),
         source: 'manual',
         userEmail: 'someone@x.io',
@@ -46,7 +46,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       })
 
       const [stored] = await repository.getAll()
-      expect(stored!.intent).toEqual({
+      expect(stored!.intent).toStrictEqual({
         type: 'MergeAbstractTokenIntent',
         sourceId: 'SOURCE',
         targetId: 'TARGET',
@@ -68,7 +68,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       })
 
       const [stored] = await repository.getAll()
-      expect(stored!).toHaveSubset({
+      expect(stored!).toMatchObject({
         source: 'ingestion',
         userEmail: null,
         commandType: 'AddAbstractTokenCommand',
@@ -99,7 +99,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       })
 
       const [stored] = await repository.getAll()
-      expect(stored!.command).toEqual({
+      expect(stored!.command).toStrictEqual({
         type: 'UpdateDeployedTokenCommand',
         update: {
           abstractTokenAssignmentProof: {
@@ -121,7 +121,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const recent = await repository.getRecent(2)
 
-      expect(recent.map((e) => e.userEmail)).toEqual([
+      expect(recent.map((e) => e.userEmail)).toStrictEqual([
         'third@x.io',
         'second@x.io',
       ])
@@ -136,8 +136,10 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const page = await repository.getPage({ offset: 1, limit: 1 })
 
-      expect(page.totalCount).toEqual(3)
-      expect(page.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
+      expect(page.totalCount).toStrictEqual(3)
+      expect(page.entries.map((e) => e.userEmail)).toStrictEqual([
+        'second@x.io',
+      ])
     })
 
     it('filters entries by token data in the command via search', async () => {
@@ -165,24 +167,28 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         limit: 100,
         search: 'dai',
       })
-      expect(bySymbol.totalCount).toEqual(1)
-      expect(bySymbol.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
+      expect(bySymbol.totalCount).toStrictEqual(1)
+      expect(bySymbol.entries.map((e) => e.userEmail)).toStrictEqual([
+        'second@x.io',
+      ])
 
       const byChain = await repository.getPage({
         offset: 0,
         limit: 100,
         search: 'ethereum',
       })
-      expect(byChain.totalCount).toEqual(1)
-      expect(byChain.entries.map((e) => e.userEmail)).toEqual(['first@x.io'])
+      expect(byChain.totalCount).toStrictEqual(1)
+      expect(byChain.entries.map((e) => e.userEmail)).toStrictEqual([
+        'first@x.io',
+      ])
 
       const noMatch = await repository.getPage({
         offset: 0,
         limit: 100,
         search: 'nonexistent',
       })
-      expect(noMatch.totalCount).toEqual(0)
-      expect(noMatch.entries).toEqual([])
+      expect(noMatch.totalCount).toStrictEqual(0)
+      expect(noMatch.entries).toStrictEqual([])
     })
 
     it('filters entries by intent via search', async () => {
@@ -201,8 +207,8 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         search: 'MergeAbstractTokenIntent',
       })
 
-      expect(page.totalCount).toEqual(1)
-      expect(page.entries[0]!.intent).toEqual({
+      expect(page.totalCount).toStrictEqual(1)
+      expect(page.entries[0]!.intent).toStrictEqual({
         type: 'MergeAbstractTokenIntent',
         sourceId: 'SOURCE',
         targetId: 'TARGET',

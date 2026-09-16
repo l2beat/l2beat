@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type L2CostPriceRecord,
@@ -20,7 +20,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
     await repository.insertMany(records)
 
     const result = await repository.getAll()
-    expect(result).toEqual(records)
+    expect(result).toStrictEqual(records)
   })
 
   it(L2CostPriceRepository.prototype.getByTimestampRange.name, async () => {
@@ -37,7 +37,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
       NOW - 1 * UnixTime.HOUR,
       NOW + 1 * UnixTime.HOUR,
     )
-    expect(result).toEqual([records[1]!, records[2]!, records[3]!])
+    expect(result).toStrictEqual([records[1]!, records[2]!, records[3]!])
   })
 
   it(L2CostPriceRepository.prototype.deleteAfter.name, async () => {
@@ -51,7 +51,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
     await repository.deleteAfter(NOW)
 
     const result = await repository.getAll()
-    expect(result).toEqual([records[0]!, records[1]!])
+    expect(result).toStrictEqual([records[0]!, records[1]!])
   })
 })
 

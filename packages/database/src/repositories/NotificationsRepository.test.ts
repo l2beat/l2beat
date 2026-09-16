@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type NotificationRecord,
@@ -34,8 +34,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.insertMany(DATA)
   })
@@ -66,7 +65,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -96,7 +95,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 })

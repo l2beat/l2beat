@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import { AppStateRepository } from './AppStateRepository'
 
@@ -15,7 +15,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -31,10 +31,10 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         key: 'interopAggregatesTimestampOverride',
         value: 1234,
-        updatedAt: expect.a(Number),
+        updatedAt: expect.any(Number),
         updatedBy: 'test',
       })
     })
@@ -55,10 +55,10 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         key: 'interopAggregatesTimestampOverride',
         value: 5678,
-        updatedAt: expect.a(Number),
+        updatedAt: expect.any(Number),
         updatedBy: 'test-2',
       })
     })
@@ -78,7 +78,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -96,7 +96,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 })

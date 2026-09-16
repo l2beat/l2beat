@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
-import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
+import { testDeletingArchivedRecords } from '../test/deleteArchivedRecords'
 import { TvsPriceRepository } from './TvsPriceRepository'
 
 describeDatabase(TvsPriceRepository.name, (db) => {
@@ -19,7 +19,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
@@ -27,7 +27,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.upsertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toStrictEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -37,7 +37,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       }
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(1500)
+      expect(inserted).toStrictEqual(1500)
     })
 
     it('updates existing records on conflict', async () => {
@@ -54,7 +54,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(updatedRecords)
@@ -73,7 +73,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       const result = await repository.getPrice('a'.repeat(12), UnixTime(200))
 
-      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
+      expect(result).toStrictEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
     })
   })
 
@@ -120,7 +120,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when no matching configIds', async () => {
@@ -134,7 +134,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when configurationIds is empty', async () => {
@@ -146,7 +146,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -186,7 +186,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(275),
       )
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -205,7 +205,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(250),
       )
 
-      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
+      expect(result).toStrictEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
     })
 
     it('returns undefined when no prices exist for the configuration', async () => {
@@ -216,7 +216,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(250),
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -234,7 +234,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         'b'.repeat(12),
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsPrice('c', 'eth', UnixTime(1), 3000)])
@@ -244,7 +244,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(1), 1000)])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsPrice('a', 'eth', UnixTime(1), 1000)])
@@ -254,7 +254,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(1), 1000)])
 
       const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsPrice('a', 'eth', UnixTime(1), 1000)])
@@ -278,7 +278,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         },
       ])
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -298,7 +298,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         },
       ])
 
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsPrice('b', 'eth', UnixTime(1), 1000)])
@@ -306,7 +306,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
     it('returns 0 for empty configs', async () => {
       const deleted = await repository.deleteByConfigs([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
     })
   })
 

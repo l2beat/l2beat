@@ -1,6 +1,6 @@
 import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type LivenessRecord,
@@ -20,7 +20,7 @@ describe(toRecord.name, () => {
         configurationId: 'config-id',
         groupingKey: 'none',
       }),
-    ).toEqual({
+    ).toStrictEqual({
       timestamp,
       blockNumber: 1,
       txHash: '0x1234',
@@ -69,9 +69,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
-
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.insertMany(DATA)
   })
@@ -106,7 +104,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).resolves.not.toThrow()
     })
 
     it('keeps the earliest transaction for each grouping key', async () => {
@@ -196,7 +194,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         groupingKey: undefined,
       }
 
-      await expect(repository.insertMany([record, record])).toBeRejected()
+      await expect(repository.insertMany([record, record])).rejects.toThrow()
     })
 
     it('big query', async () => {
@@ -209,7 +207,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           configurationId: txIdA,
         })
       }
-      await expect(repository.insertMany(records)).not.toBeRejected()
+      await expect(repository.insertMany(records)).resolves.not.toThrow()
     })
   })
 
@@ -369,7 +367,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -380,7 +378,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         txIdB.toString(),
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([DATA[3]!])
@@ -388,7 +386,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
     it('returns 0 for empty ids', async () => {
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted(DATA)
@@ -396,7 +394,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
     it('returns 0 when no matching config found', async () => {
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted(DATA)
@@ -443,7 +441,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([records[0]!, records[3]!])
+      expect(result).toStrictEqual([records[0]!, records[3]!])
     })
   })
 })

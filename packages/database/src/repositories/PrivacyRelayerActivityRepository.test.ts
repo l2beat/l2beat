@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type PrivacyRelayerActivityRecord,
@@ -17,7 +17,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
   describe(PrivacyRelayerActivityRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const initial = activity(1, START)
-      expect(await repository.upsertMany([initial])).toEqual(1)
+      expect(await repository.upsertMany([initial])).toStrictEqual(1)
 
       const updated = {
         ...initial,
@@ -25,13 +25,13 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
           '0x4444444444444444444444444444444444444444',
         ),
       }
-      expect(await repository.upsertMany([updated])).toEqual(1)
+      expect(await repository.upsertMany([updated])).toStrictEqual(1)
 
-      expect(await repository.getAll()).toEqual([updated])
+      expect(await repository.getAll()).toStrictEqual([updated])
     })
 
     it('handles an empty array', async () => {
-      expect(await repository.upsertMany([])).toEqual(0)
+      expect(await repository.upsertMany([])).toStrictEqual(0)
     })
   })
 
@@ -57,7 +57,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
 
         expect(
           await repository.getActiveRelayerCount('project', START, to),
-        ).toEqual(2)
+        ).toStrictEqual(2)
       })
     },
   )
@@ -82,7 +82,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
             UnixTime(START + 1),
             UnixTime(START + 2),
           ),
-        ).toEqual(2)
+        ).toStrictEqual(2)
 
         expect(await repository.getAll()).toEqualUnsorted([
           records[0]!,
@@ -104,12 +104,12 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
         ]
         await repository.upsertMany(records)
 
-        expect(await repository.deleteByConfigIds([configA])).toEqual(1)
-        expect(await repository.getAll()).toEqual([records[1]!])
+        expect(await repository.deleteByConfigIds([configA])).toStrictEqual(1)
+        expect(await repository.getAll()).toStrictEqual([records[1]!])
       })
 
       it('handles an empty array', async () => {
-        expect(await repository.deleteByConfigIds([])).toEqual(0)
+        expect(await repository.deleteByConfigIds([])).toStrictEqual(0)
       })
     },
   )

@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   RealTimeAnomaliesRepository,
@@ -48,8 +48,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     },
   ] as const satisfies RealTimeAnomalyRecord[]
 
-  beforeEach(async function () {
-    this.timeout(10000)
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.upsertMany(DATA)
   })
@@ -88,7 +87,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
   })
 
@@ -123,7 +122,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       it('should return empty array if no project ids', async () => {
         const results = await repository.getApprovedAnomaliesByProjectIds([])
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -140,7 +139,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       it('should return empty array if no project ids', async () => {
         const results = await repository.getApprovedAnomaliesByProjectIds([])
-        expect(results).toEqual([])
+        expect(results).toStrictEqual([])
       })
     },
   )
@@ -168,7 +167,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 
@@ -178,7 +177,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([DATA[0]])
+      expect(results).toStrictEqual([DATA[0]])
     })
   })
 
@@ -192,7 +191,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(deleted).toEqual(1)
+        expect(deleted).toStrictEqual(1)
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([DATA[0], DATA[1], DATA[3]])
       })
@@ -203,7 +202,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'stateUpdates',
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
         const results = await repository.getAll()
         expect(results).toEqualUnsorted(DATA)
       })
@@ -214,7 +213,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'proofSubmissions',
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toStrictEqual(0)
         const results = await repository.getAll()
         expect(results).toEqualUnsorted(DATA)
       })

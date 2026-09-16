@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type { ChainRecord } from './ChainRepository'
 import type {
@@ -85,7 +85,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
 
       await repository.insert(relation)
 
-      expect(await repository.getAll()).toEqual([relation])
+      expect(await repository.getAll()).toStrictEqual([relation])
     })
 
     it('keeps two relations for the same pair with different bridge types', async () => {
@@ -129,10 +129,10 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
 
       // Both observations describe the same pair with the same locked endpoint.
-      expect(forward).toEqual(reversed)
+      expect(forward).toStrictEqual(reversed)
 
       await repository.insert(forward)
-      await expect(repository.insert(reversed)).toBeRejected()
+      await expect(repository.insert(reversed)).rejects.toThrow()
     })
   })
 
@@ -149,7 +149,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
           bridgeType: 'lockAndMint',
           lockedToken: 'A',
         }),
-      ).toEqual({
+      ).toStrictEqual({
         tokenAChain: arbitrumToken.chain,
         tokenAAddress: arbitrumToken.address,
         tokenBChain: ethereumToken.chain,
@@ -171,7 +171,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         lockedToken: null,
       }
 
-      expect(normalizeTokenRelation(ordered)).toEqual(ordered)
+      expect(normalizeTokenRelation(ordered)).toStrictEqual(ordered)
     })
   })
 
@@ -184,7 +184,9 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
       await repository.insert(relation)
 
-      expect(await repository.findByPrimaryKey(relation)).toEqual(relation)
+      expect(await repository.findByPrimaryKey(relation)).toStrictEqual(
+        relation,
+      )
     })
   })
 
@@ -203,7 +205,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(relationA)
       await repository.insert(relationB)
 
-      expect(await repository.getByPrimaryKeys([relationB])).toEqual([
+      expect(await repository.getByPrimaryKeys([relationB])).toStrictEqual([
         relationB,
       ])
     })
@@ -223,7 +225,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
 
       expect(
         await repository.getByPrimaryKeys([...missingRelations, relation]),
-      ).toEqual([relation])
+      ).toStrictEqual([relation])
     })
   })
 
@@ -237,7 +239,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
       await repository.insert(relation)
 
-      expect(await repository.getAllRoutes()).toEqual([
+      expect(await repository.getAllRoutes()).toStrictEqual([
         {
           tokenAChain: relation.tokenAChain,
           tokenAAddress: relation.tokenAAddress,
@@ -268,8 +270,8 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         transfer: updatedTransfer,
       })
 
-      expect(updatedRows).toEqual(1)
-      expect(await repository.findByPrimaryKey(relation)).toEqual({
+      expect(updatedRows).toStrictEqual(1)
+      expect(await repository.findByPrimaryKey(relation)).toStrictEqual({
         ...relation,
         transfer: updatedTransfer,
       })
@@ -290,8 +292,8 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         await repository.updateByPrimaryKey(relation, {
           lockedToken: 'A',
         }),
-      ).toEqual(1)
-      expect(await repository.findByPrimaryKey(relation)).toEqual({
+      ).toStrictEqual(1)
+      expect(await repository.findByPrimaryKey(relation)).toStrictEqual({
         ...relation,
         lockedToken: 'A',
       })
@@ -378,10 +380,9 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         await repository.insert(relation)
       }
 
-      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
-        'canonicalbridge',
-        'superbridge',
-      ])
+      expect(
+        await repository.getMintingPluginsFor(arbitrumToken),
+      ).toStrictEqual(['canonicalbridge', 'superbridge'])
     })
 
     it('finds the minted token on either endpoint slot', async () => {
@@ -406,10 +407,9 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(mintedAtA)
       await repository.insert(mintedAtB)
 
-      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
-        'slot-a-bridge',
-        'slot-b-bridge',
-      ])
+      expect(
+        await repository.getMintingPluginsFor(arbitrumToken),
+      ).toStrictEqual(['slot-a-bridge', 'slot-b-bridge'])
     })
 
     it('returns each plugin once even when several of its relations qualify', async () => {
@@ -426,9 +426,9 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(viaEthereum)
       await repository.insert(viaOptimism)
 
-      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
-        'superbridge',
-      ])
+      expect(
+        await repository.getMintingPluginsFor(arbitrumToken),
+      ).toStrictEqual(['superbridge'])
     })
 
     it('normalizes the queried address', async () => {
@@ -444,7 +444,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
           chain: arbitrumToken.chain,
           address: arbitrumToken.address.toUpperCase(),
         }),
-      ).toEqual(['superbridge'])
+      ).toStrictEqual(['superbridge'])
     })
   })
 
@@ -526,7 +526,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
 
       it('returns an empty list when no tokens are requested', async () => {
-        expect(await repository.getMintingPluginsForMany([])).toEqual([])
+        expect(await repository.getMintingPluginsForMany([])).toStrictEqual([])
       })
     },
   )
@@ -540,8 +540,8 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
       await repository.insert(relation)
 
-      expect(await repository.deleteByPrimaryKey(relation)).toEqual(1)
-      expect(await repository.getAll()).toEqual([])
+      expect(await repository.deleteByPrimaryKey(relation)).toStrictEqual(1)
+      expect(await repository.getAll()).toStrictEqual([])
     })
   })
 })

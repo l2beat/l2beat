@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type UpdateNotifierRecord,
@@ -26,7 +26,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
     const result = await repository.findLatestId()
 
-    expect(result).toEqual(latestId)
+    expect(result).toStrictEqual(latestId)
   })
 
   it(UpdateNotifierRepository.prototype.insert.name, async () => {
@@ -36,7 +36,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
     const latest = await repository.findLatestId()
 
-    expect(latest).toEqual(latestId)
+    expect(latest).toStrictEqual(latestId)
   })
 
   describe(UpdateNotifierRepository.prototype.getNewerThan.name, () => {
@@ -53,9 +53,9 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toEqual(2)
-      expect(result[0]!).toHaveSubset({ id: secondId, ...arbRecord1 })
-      expect(result[1]!).toHaveSubset({ id: thirdId, ...arbRecord2 })
+      expect(result.length).toStrictEqual(2)
+      expect(result[0]!).toMatchObject({ id: secondId, ...arbRecord1 })
+      expect(result[1]!).toMatchObject({ id: thirdId, ...arbRecord2 })
     })
 
     it('does not return if does not match the range', async () => {
@@ -67,7 +67,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toEqual(0)
+      expect(result.length).toStrictEqual(0)
     })
 
     it('does not return if does not match any projectId', async () => {
@@ -79,7 +79,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toEqual(0)
+      expect(result.length).toStrictEqual(0)
     })
   })
 })

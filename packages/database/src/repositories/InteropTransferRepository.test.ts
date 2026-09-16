@@ -1,6 +1,6 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import type { Selectable } from 'kysely'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { InteropTransfer } from '../kysely/generated/types'
 import { describeDatabase } from '../test/database'
 import {
@@ -27,7 +27,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       ]
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
@@ -35,7 +35,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.insertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toStrictEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -45,7 +45,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       }
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(1500)
+      expect(inserted).toStrictEqual(1500)
     })
 
     it('handles records with undefined optional fields', async () => {
@@ -86,10 +86,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       }
 
       const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result).toEqual([record])
+      expect(result).toStrictEqual([record])
     })
 
     it('handles records with ethereum token addresses', async () => {
@@ -106,11 +106,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       record.dstTokenAddress = EthereumAddress.random()
 
       const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result[0]?.srcTokenAddress).toEqual(record.srcTokenAddress)
-      expect(result[0]?.dstTokenAddress).toEqual(record.dstTokenAddress)
+      expect(result[0]?.srcTokenAddress).toStrictEqual(record.srcTokenAddress)
+      expect(result[0]?.dstTokenAddress).toStrictEqual(record.dstTokenAddress)
     })
 
     it('handles records with custom symbol fields', async () => {
@@ -127,11 +127,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       record.dstSymbol = 'USDC.e'
 
       const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result[0]?.srcSymbol).toEqual('USDC')
-      expect(result[0]?.dstSymbol).toEqual('USDC.e')
+      expect(result[0]?.srcSymbol).toStrictEqual('USDC')
+      expect(result[0]?.dstSymbol).toStrictEqual('USDC.e')
     })
 
     it('persists bridgeType field', async () => {
@@ -147,10 +147,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       record.bridgeType = 'lockAndMint'
 
       const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result[0]?.bridgeType).toEqual('lockAndMint')
+      expect(result[0]?.bridgeType).toStrictEqual('lockAndMint')
     })
 
     it('preserves symbol fields when they are undefined', async () => {
@@ -167,11 +167,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       record.dstSymbol = undefined
 
       const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result[0]?.srcSymbol).toEqual(undefined)
-      expect(result[0]?.dstSymbol).toEqual(undefined)
+      expect(result[0]?.srcSymbol).toStrictEqual(undefined)
+      expect(result[0]?.dstSymbol).toStrictEqual(undefined)
     })
   })
 
@@ -300,7 +300,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const routes = await repository.getTokenRoutes()
 
-      expect(routes).toEqual([
+      expect(routes).toStrictEqual([
         {
           plugin: 'plugin1',
           srcChain: 'ethereum',
@@ -324,8 +324,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const record = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
       await repository.insertMany([record])
 
-      expect(await repository.findByTransferId('transfer1')).toEqual(record)
-      expect(await repository.findByTransferId('missing')).toEqual(undefined)
+      expect(await repository.findByTransferId('transfer1')).toStrictEqual(
+        record,
+      )
+      expect(await repository.findByTransferId('missing')).toStrictEqual(
+        undefined,
+      )
     })
   })
 
@@ -385,7 +389,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('returns transfers ordered by timestamp descending', async () => {
       const result = await repository.getByType('deposit')
 
-      expect(result.map((r) => r.timestamp)).toEqual([300, 200, 100])
+      expect(result.map((r) => r.timestamp)).toStrictEqual([300, 200, 100])
     })
 
     it('filters by source chain when provided', async () => {
@@ -403,7 +407,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.transferId).toEqual('msg4')
+      expect(result[0]?.transferId).toStrictEqual('msg4')
     })
 
     it('filters by both source and destination chain when provided', async () => {
@@ -413,7 +417,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.transferId).toEqual('msg1')
+      expect(result[0]?.transferId).toStrictEqual('msg1')
     })
 
     it('filters by plugin when provided', async () => {
@@ -428,7 +432,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('returns empty array when no transfers match type', async () => {
       const result = await repository.getByType('nonexistent')
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when no transfers match chain filters', async () => {
@@ -436,7 +440,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         srcChain: 'nonexistent',
       })
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -542,16 +546,18 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           minimumSideValueUsdThreshold: 50,
         })
 
-        expect(result.map((x) => x.transferId)).toEqual([
+        expect(result.map((x) => x.transferId)).toStrictEqual([
           'msg4',
           'msg3',
           'msg1',
         ])
-        expect(result.map((x) => x.valueDifferencePercent)).toEqual([50, 40, 6])
+        expect(result.map((x) => x.valueDifferencePercent)).toStrictEqual([
+          50, 40, 6,
+        ])
       })
 
       it('throws for negative thresholds', async () => {
-        await expect(repository.getValueMismatchTransfers(-1)).toBeRejected()
+        await expect(repository.getValueMismatchTransfers(-1)).rejects.toThrow()
       })
 
       it('throws for negative value threshold', async () => {
@@ -559,7 +565,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           repository.getValueMismatchTransfers(5, {
             minimumSideValueUsdThreshold: -1,
           }),
-        ).toBeRejected()
+        ).rejects.toThrow()
       })
     },
   )
@@ -575,7 +581,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const deleted = await repository.deleteBefore(UnixTime(250))
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -596,12 +602,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const deleted = await repository.deleteForPlugin('plugin1')
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toStrictEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining[0]?.transferId).toEqual('msg2')
-      expect(remaining[0]?.plugin).toEqual('plugin2')
+      expect(remaining[0]?.transferId).toStrictEqual('msg2')
+      expect(remaining[0]?.plugin).toStrictEqual('plugin2')
     })
   })
 
@@ -637,7 +643,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       expect(result).toHaveLength(2)
       expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
-      expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+      expect(result.every((r) => r.isProcessed === false)).toStrictEqual(true)
     })
 
     it('returns empty array when no unprocessed transfers exist', async () => {
@@ -660,13 +666,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const result = await repository.getUnprocessed()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('returns empty array when no transfers exist', async () => {
       const result = await repository.getUnprocessed()
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('limits the number of returned transfers', async () => {
@@ -679,7 +685,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getUnprocessed(2)
 
       expect(result).toHaveLength(2)
-      expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+      expect(result.every((r) => r.isProcessed === false)).toStrictEqual(true)
     })
   })
 
@@ -703,7 +709,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const batch = await repository.getTokenAddressesAfterSerialId('0')
 
-        expect(batch.latestSerialId).not.toEqual(undefined)
+        expect(batch.latestSerialId).not.toStrictEqual(undefined)
         expect(batch.tokenAddresses).toEqualUnsorted([
           { chain: 'ethereum', address: '0xaaa' },
           { chain: 'arbitrum', address: '0xbbb' },
@@ -718,7 +724,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const cursor = (await repository.getTokenAddressesAfterSerialId('0'))
           .latestSerialId
-        expect(cursor).not.toEqual(undefined)
+        expect(cursor).not.toStrictEqual(undefined)
 
         const lateArrival = transfer(
           'plugin1',
@@ -748,24 +754,26 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       await repository.insertMany([first, second, third])
 
       const firstPage = await repository.getAfterSerialId('0', 2)
-      expect(firstPage.transfers.map((t) => t.transferId)).toEqual([
+      expect(firstPage.transfers.map((t) => t.transferId)).toStrictEqual([
         'msg1',
         'msg2',
       ])
-      expect(firstPage.latestSerialId).not.toEqual(undefined)
+      expect(firstPage.latestSerialId).not.toStrictEqual(undefined)
 
       const secondPage = await repository.getAfterSerialId(
         firstPage.latestSerialId ?? '',
         2,
       )
-      expect(secondPage.transfers.map((t) => t.transferId)).toEqual(['msg3'])
+      expect(secondPage.transfers.map((t) => t.transferId)).toStrictEqual([
+        'msg3',
+      ])
 
       const emptyPage = await repository.getAfterSerialId(
         secondPage.latestSerialId ?? '',
         2,
       )
-      expect(emptyPage.transfers).toEqual([])
-      expect(emptyPage.latestSerialId).toEqual(undefined)
+      expect(emptyPage.transfers).toStrictEqual([])
+      expect(emptyPage.latestSerialId).toStrictEqual(undefined)
     })
   })
 
@@ -828,23 +836,23 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const msg1 = result.find((r) => r.transferId === 'msg1')
         const msg2 = result.find((r) => r.transferId === 'msg2')
 
-        expect(msg1?.srcAbstractTokenId).toEqual('ethereum')
-        expect(msg1?.srcSymbol).toEqual('ETH')
-        expect(msg1?.srcPrice).toEqual(2000.0)
-        expect(msg1?.srcAmount).toEqual(1.5)
-        expect(msg1?.srcValueUsd).toEqual(3000.0)
-        expect(msg1?.dstAbstractTokenId).toEqual('arbitrum-one')
-        expect(msg1?.dstSymbol).toEqual('ETH')
-        expect(msg1?.dstPrice).toEqual(1999.0)
-        expect(msg1?.dstAmount).toEqual(1.4)
-        expect(msg1?.dstValueUsd).toEqual(2798.6)
-        expect(msg1?.isProcessed).toEqual(true)
+        expect(msg1?.srcAbstractTokenId).toStrictEqual('ethereum')
+        expect(msg1?.srcSymbol).toStrictEqual('ETH')
+        expect(msg1?.srcPrice).toStrictEqual(2000.0)
+        expect(msg1?.srcAmount).toStrictEqual(1.5)
+        expect(msg1?.srcValueUsd).toStrictEqual(3000.0)
+        expect(msg1?.dstAbstractTokenId).toStrictEqual('arbitrum-one')
+        expect(msg1?.dstSymbol).toStrictEqual('ETH')
+        expect(msg1?.dstPrice).toStrictEqual(1999.0)
+        expect(msg1?.dstAmount).toStrictEqual(1.4)
+        expect(msg1?.dstValueUsd).toStrictEqual(2798.6)
+        expect(msg1?.isProcessed).toStrictEqual(true)
 
-        expect(msg2?.srcSymbol).toEqual('USD "quoted", {escaped}')
-        expect(msg2?.srcPrice).toEqual(1.0)
-        expect(msg2?.dstAbstractTokenId).toEqual(undefined)
-        expect(msg2?.dstSymbol).toEqual(undefined)
-        expect(msg2?.isProcessed).toEqual(true)
+        expect(msg2?.srcSymbol).toStrictEqual('USD "quoted", {escaped}')
+        expect(msg2?.srcPrice).toStrictEqual(1.0)
+        expect(msg2?.dstAbstractTokenId).toStrictEqual(undefined)
+        expect(msg2?.dstSymbol).toStrictEqual(undefined)
+        expect(msg2?.isProcessed).toStrictEqual(true)
       })
 
       it('sets null fields to null', async () => {
@@ -869,17 +877,17 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const result = await repository.getAll()
         const updatedRecord = result[0]
 
-        expect(updatedRecord?.srcAbstractTokenId).toEqual(undefined)
-        expect(updatedRecord?.srcSymbol).toEqual(undefined)
-        expect(updatedRecord?.srcPrice).toEqual(undefined)
-        expect(updatedRecord?.srcAmount).toEqual(undefined)
-        expect(updatedRecord?.srcValueUsd).toEqual(undefined)
-        expect(updatedRecord?.dstAbstractTokenId).toEqual(undefined)
-        expect(updatedRecord?.dstSymbol).toEqual(undefined)
-        expect(updatedRecord?.dstPrice).toEqual(undefined)
-        expect(updatedRecord?.dstAmount).toEqual(undefined)
-        expect(updatedRecord?.dstValueUsd).toEqual(undefined)
-        expect(updatedRecord?.isProcessed).toEqual(true)
+        expect(updatedRecord?.srcAbstractTokenId).toStrictEqual(undefined)
+        expect(updatedRecord?.srcSymbol).toStrictEqual(undefined)
+        expect(updatedRecord?.srcPrice).toStrictEqual(undefined)
+        expect(updatedRecord?.srcAmount).toStrictEqual(undefined)
+        expect(updatedRecord?.srcValueUsd).toStrictEqual(undefined)
+        expect(updatedRecord?.dstAbstractTokenId).toStrictEqual(undefined)
+        expect(updatedRecord?.dstSymbol).toStrictEqual(undefined)
+        expect(updatedRecord?.dstPrice).toStrictEqual(undefined)
+        expect(updatedRecord?.dstAmount).toStrictEqual(undefined)
+        expect(updatedRecord?.dstValueUsd).toStrictEqual(undefined)
+        expect(updatedRecord?.isProcessed).toStrictEqual(true)
       })
 
       it('does not affect other transfers', async () => {
@@ -901,15 +909,15 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const msg2Record = result.find((r) => r.transferId === 'msg2')
         const msg3Record = result.find((r) => r.transferId === 'msg3')
 
-        expect(msg1Record?.isProcessed).toEqual(false)
-        expect(msg1Record?.srcPrice).not.toEqual(3000.0)
+        expect(msg1Record?.isProcessed).toStrictEqual(false)
+        expect(msg1Record?.srcPrice).not.toStrictEqual(3000.0)
 
-        expect(msg2Record?.isProcessed).toEqual(true)
-        expect(msg2Record?.srcPrice).toEqual(3000.0)
-        expect(msg2Record?.srcAmount).toEqual(2.0)
+        expect(msg2Record?.isProcessed).toStrictEqual(true)
+        expect(msg2Record?.srcPrice).toStrictEqual(3000.0)
+        expect(msg2Record?.srcAmount).toStrictEqual(2.0)
 
-        expect(msg3Record?.isProcessed).toEqual(false)
-        expect(msg3Record?.srcPrice).not.toEqual(3000.0)
+        expect(msg3Record?.isProcessed).toStrictEqual(false)
+        expect(msg3Record?.srcPrice).not.toStrictEqual(3000.0)
       })
 
       it('ignores non-existent transfer ids', async () => {
@@ -927,8 +935,8 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const result = await repository.getAll()
         expect(result).toHaveLength(1)
-        expect(result[0]?.isProcessed).toEqual(true)
-        expect(result[0]?.srcPrice).toEqual(4000.0)
+        expect(result[0]?.isProcessed).toStrictEqual(true)
+        expect(result[0]?.srcPrice).toStrictEqual(4000.0)
       })
 
       it('handles empty array', async () => {
@@ -939,7 +947,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         await repository.updateManyFinancials([])
 
         const result = await repository.getAll()
-        expect(result[0]?.isProcessed).toEqual(false)
+        expect(result[0]?.isProcessed).toStrictEqual(false)
       })
     },
   )
@@ -962,10 +970,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const updatedRows = await repository.markAllAsUnprocessed()
 
-        expect(updatedRows).toEqual(1)
+        expect(updatedRows).toStrictEqual(1)
 
         const result = await repository.getAll()
-        expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+        expect(result.every((r) => r.isProcessed === false)).toStrictEqual(true)
       })
     },
   )
@@ -1003,13 +1011,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('returns empty array when no transfers in range', async () => {
       const result = await repository.getByRange(UnixTime(600), UnixTime(700))
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('does not return transfer when range matches exactly', async () => {
       const result = await repository.getByRange(UnixTime(300), UnixTime(300))
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -1063,7 +1071,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         plugins: ['plugin1', 'plugin2'],
       })
 
-      expect(result.map((x) => x.transferId)).toEqual(['msg3', 'msg2', 'msg1'])
+      expect(result.map((x) => x.transferId)).toStrictEqual([
+        'msg3',
+        'msg2',
+        'msg1',
+      ])
     })
 
     it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
@@ -1107,9 +1119,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         plugins: ['plugin1'],
       })
 
-      expect(valid.map((x) => x.transferId)).toEqual(['msg2'])
-      expect(emptyPlugins).toEqual([])
-      expect(emptyChains).toEqual([])
+      expect(valid.map((x) => x.transferId)).toStrictEqual(['msg2'])
+      expect(emptyPlugins).toStrictEqual([])
+      expect(emptyChains).toStrictEqual([])
     })
   })
 
@@ -1166,7 +1178,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           limit: 2,
         })
 
-        expect(result.map((x) => x.transferId)).toEqual(['msg4', 'msg3'])
+        expect(result.map((x) => x.transferId)).toStrictEqual(['msg4', 'msg3'])
       })
 
       it('returns records after the timestamp and transferId cursor', async () => {
@@ -1221,7 +1233,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           limit: 10,
         })
 
-        expect(result.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
+        expect(result.map((x) => x.transferId)).toStrictEqual(['msg2', 'msg1'])
       })
 
       it('returns records after the transferId cursor when timestamps match', async () => {
@@ -1258,7 +1270,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           limit: 10,
         })
 
-        expect(result.map((x) => x.transferId)).toEqual(['msg1'])
+        expect(result.map((x) => x.transferId)).toStrictEqual(['msg1'])
       })
 
       it('filters by abstract token id on either side', async () => {
@@ -1313,7 +1325,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           limit: 10,
         })
 
-        expect(result.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
+        expect(result.map((x) => x.transferId)).toStrictEqual(['msg2', 'msg1'])
       })
 
       it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
@@ -1367,10 +1379,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           limit: 0,
         })
 
-        expect(valid.map((x) => x.transferId)).toEqual(['msg2'])
-        expect(emptyPlugins).toEqual([])
-        expect(emptyChains).toEqual([])
-        expect(emptyLimit).toEqual([])
+        expect(valid.map((x) => x.transferId)).toStrictEqual(['msg2'])
+        expect(emptyPlugins).toStrictEqual([])
+        expect(emptyChains).toStrictEqual([])
+        expect(emptyLimit).toStrictEqual([])
       })
     },
   )
@@ -1439,16 +1451,16 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         ])
         expect(
           result.find((r) => r.transferId === 'msg1')?.srcAbstractTokenId,
-        ).toEqual(undefined)
+        ).toStrictEqual(undefined)
         expect(
           result.find((r) => r.transferId === 'msg1')?.dstAbstractTokenId,
-        ).toEqual('token-1')
+        ).toStrictEqual('token-1')
         expect(
           result.find((r) => r.transferId === 'msg2')?.srcAbstractTokenId,
-        ).toEqual('token-2')
+        ).toStrictEqual('token-2')
         expect(
           result.find((r) => r.transferId === 'msg2')?.dstAbstractTokenId,
-        ).toEqual(undefined)
+        ).toStrictEqual(undefined)
       })
 
       it('returns results ordered by timestamp desc', async () => {
@@ -1478,7 +1490,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const result = await repository.getWithPartialAbstractTokenIds()
 
-        expect(result.map((r) => r.transferId)).toEqual(['msg2', 'msg1'])
+        expect(result.map((r) => r.transferId)).toStrictEqual(['msg2', 'msg1'])
       })
 
       it('returns empty array when no transfers have partial abstract token IDs', async () => {
@@ -1489,13 +1501,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const result = await repository.getWithPartialAbstractTokenIds()
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
 
       it('returns empty array when no transfers exist', async () => {
         const result = await repository.getWithPartialAbstractTokenIds()
 
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -1550,7 +1562,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           address: Address32.from('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
         })
 
-        expect(result.map((r) => r.transferId)).toEqual(['msg1'])
+        expect(result.map((r) => r.transferId)).toStrictEqual(['msg1'])
       })
     },
   )
@@ -1608,12 +1620,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         { srcTxHash: '0xABC', dstTxHash: '0xDEF' },
       ])
 
-      expect(result.map((r) => r.transferId)).toEqual(['msg1'])
+      expect(result.map((r) => r.transferId)).toStrictEqual(['msg1'])
     })
 
     it('returns empty array for empty input', async () => {
       const result = await repository.getExistingItems([])
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -1629,7 +1641,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           10,
         )
 
-        expect(result).toEqual([records[0] as InteropTransferRecord])
+        expect(result).toStrictEqual([records[0] as InteropTransferRecord])
       })
 
       it('filters by src and dst chain', async () => {
@@ -1656,7 +1668,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           { srcChain: 'ethereum', dstChain: 'arbitrum' },
           10,
         )
-        expect(byBoth.map((r) => r.transferId)).toEqual(['msg1'])
+        expect(byBoth.map((r) => r.transferId)).toStrictEqual(['msg1'])
       })
 
       it('filters token fields case-insensitively', async () => {
@@ -1684,7 +1696,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         ]
         for (const { filter, expected } of cases) {
           const result = await repository.getByFinancialsFilter(filter, 10)
-          expect(result.map((r) => r.transferId)).toEqual([expected])
+          expect(result.map((r) => r.transferId)).toStrictEqual([expected])
         }
       })
 
@@ -1720,11 +1732,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           2,
         )
 
-        expect(result.map((r) => r.transferId)).toEqual(['msgC', 'msgB'])
+        expect(result.map((r) => r.transferId)).toStrictEqual(['msgC', 'msgB'])
       })
 
       it('throws when no filter is provided', async () => {
-        await expect(repository.getByFinancialsFilter({}, 10)).toBeRejectedWith(
+        await expect(repository.getByFinancialsFilter({}, 10)).rejects.toThrow(
           'At least one filter is required',
         )
       })
@@ -1767,7 +1779,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           srcChain: 'ethereum',
         })
 
-        expect(stats).toEqual({
+        expect(stats).toStrictEqual({
           totalCount: 3,
           unprocessedCount: 1,
           missingSrcValueCount: 1,
@@ -1782,7 +1794,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           srcChain: 'ethereum',
         })
 
-        expect(stats).toEqual({
+        expect(stats).toStrictEqual({
           totalCount: 0,
           unprocessedCount: 0,
           missingSrcValueCount: 0,
@@ -1793,9 +1805,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       it('throws when no filter is provided', async () => {
-        await expect(
-          repository.getFinancialsStatsByFilter({}),
-        ).toBeRejectedWith('At least one filter is required')
+        await expect(repository.getFinancialsStatsByFilter({})).rejects.toThrow(
+          'At least one filter is required',
+        )
       })
     },
   )
@@ -1822,14 +1834,14 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           srcChain: 'ethereum',
         })
 
-        expect(updated).toEqual(1)
+        expect(updated).toStrictEqual(1)
         const all = await repository.getAll()
         const processedById = new Map(
           all.map((r) => [r.transferId, r.isProcessed]),
         )
-        expect(processedById.get('msg1')).toEqual(false)
-        expect(processedById.get('msg2')).toEqual(false)
-        expect(processedById.get('msg3')).toEqual(true)
+        expect(processedById.get('msg1')).toStrictEqual(false)
+        expect(processedById.get('msg2')).toStrictEqual(false)
+        expect(processedById.get('msg3')).toStrictEqual(true)
       })
 
       it('supports combined filters with a time range', async () => {
@@ -1858,15 +1870,15 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           to: UnixTime(200),
         })
 
-        expect(updated).toEqual(1)
+        expect(updated).toStrictEqual(1)
         const unprocessed = await repository.getUnprocessed()
-        expect(unprocessed.map((r) => r.transferId)).toEqual(['msg1'])
+        expect(unprocessed.map((r) => r.transferId)).toStrictEqual(['msg1'])
       })
 
       it('throws when no filter is provided', async () => {
         await expect(
           repository.markAsUnprocessedByFinancialsFilter({}),
-        ).toBeRejectedWith('At least one filter is required')
+        ).rejects.toThrow('At least one filter is required')
       })
     },
   )
@@ -1878,19 +1890,19 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
 describe(hasAnyInteropTransferFinancialsFilter.name, () => {
   it('returns false for an empty filter', () => {
-    expect(hasAnyInteropTransferFinancialsFilter({})).toEqual(false)
+    expect(hasAnyInteropTransferFinancialsFilter({})).toStrictEqual(false)
     expect(
       hasAnyInteropTransferFinancialsFilter({ transferId: undefined }),
-    ).toEqual(false)
+    ).toStrictEqual(false)
   })
 
   it('returns true when any filter is set', () => {
-    expect(hasAnyInteropTransferFinancialsFilter({ srcSymbol: 'ETH' })).toEqual(
-      true,
-    )
+    expect(
+      hasAnyInteropTransferFinancialsFilter({ srcSymbol: 'ETH' }),
+    ).toStrictEqual(true)
     expect(
       hasAnyInteropTransferFinancialsFilter({ from: UnixTime(100) }),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 })
 

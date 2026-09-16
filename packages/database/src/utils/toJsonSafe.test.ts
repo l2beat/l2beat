@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { toJsonSafe } from './toJsonSafe'
 
 describe(toJsonSafe.name, () => {
@@ -8,7 +8,7 @@ describe(toJsonSafe.name, () => {
       nested: [{ amount: 456n }],
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       amount: '123',
       nested: [{ amount: '456' }],
     })
@@ -20,7 +20,7 @@ describe(toJsonSafe.name, () => {
       date: new Date('2026-05-18T00:00:00Z'),
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       date: '2026-05-18T00:00:00.000Z',
     })
   })

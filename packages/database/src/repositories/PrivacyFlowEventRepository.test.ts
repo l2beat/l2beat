@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   type PrivacyFlowEventRecord,
@@ -23,7 +23,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
@@ -31,7 +31,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.upsertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toStrictEqual(0)
     })
 
     it('updates existing records on conflict', async () => {
@@ -48,7 +48,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
-      expect(inserted).toEqual(1)
+      expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(updatedRecords)
@@ -95,7 +95,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           START,
           START,
         )
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
 
       it('returns empty array when projectIds is empty', async () => {
@@ -103,7 +103,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
         ])
         const result = await repository.getDailyByProjectIds([], START, START)
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -127,7 +127,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           101,
         )
 
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const result = await repository.getAll()
         expect(result).toEqualUnsorted([records[2]!, records[3]!])
@@ -163,7 +163,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           UnixTime(START + 1),
         )
 
-        expect(deleted).toEqual(2)
+        expect(deleted).toStrictEqual(2)
 
         const result = await repository.getAll()
         expect(result).toEqualUnsorted([records[2]!, records[3]!])
@@ -224,7 +224,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
 
       it('returns empty array when projectIds is empty', async () => {
         const result = await repository.getBucketTotalsByProjectIds([])
-        expect(result).toEqual([])
+        expect(result).toStrictEqual([])
       })
     },
   )
@@ -244,19 +244,19 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           'proj-a',
         ])
 
-        expect(result).toEqual(UnixTime(START + 1))
+        expect(result).toStrictEqual(UnixTime(START + 1))
       })
 
       it('returns undefined when no data', async () => {
         const result = await repository.getLatestTimestampByProjectIds([
           'proj-a',
         ])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
 
       it('returns undefined when projectIds is empty', async () => {
         const result = await repository.getLatestTimestampByProjectIds([])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -274,7 +274,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           'proj-a',
         ])
 
-        expect(result).toEqual(START)
+        expect(result).toStrictEqual(START)
       })
 
       it('considers all given projects', async () => {
@@ -288,14 +288,14 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           'proj-b',
         ])
 
-        expect(result).toEqual(UnixTime(START - 5))
+        expect(result).toStrictEqual(UnixTime(START - 5))
       })
 
       it('returns undefined when no data', async () => {
         const result = await repository.getFirstTimestampByProjectIds([
           'proj-a',
         ])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
 
       it('returns undefined when projectIds is empty', async () => {
@@ -303,7 +303,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
         ])
         const result = await repository.getFirstTimestampByProjectIds([])
-        expect(result).toEqual(undefined)
+        expect(result).toStrictEqual(undefined)
       })
     },
   )
@@ -316,7 +316,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
       await repository.deleteAll()
 
       const result = await repository.getAll()
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 

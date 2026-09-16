@@ -1,6 +1,6 @@
 import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { describeDatabase } from '../test/database'
 import {
   RealTimeLivenessRepository,
@@ -19,7 +19,7 @@ describe(toRecord.name, () => {
         configurationId: 'config-id',
         groupingKey: null,
       }),
-    ).toEqual({
+    ).toStrictEqual({
       timestamp,
       blockNumber: 1,
       txHash: '0x1234',
@@ -68,9 +68,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     },
   ]
 
-  beforeEach(async function () {
-    this.timeout(10000)
-
+  beforeEach(async () => {
     await repository.deleteAll()
     await repository.upsertMany(DATA)
   })
@@ -128,7 +126,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).resolves.not.toThrow()
     })
 
     it('keeps the earliest transaction for each grouping key', async () => {
@@ -218,7 +216,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqual([])
+      expect(results).toStrictEqual([])
     })
   })
 })
