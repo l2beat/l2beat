@@ -21,12 +21,12 @@ import {
   CountWithAttesters,
   VERIFIER_STATUS_ORDER,
 } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
-import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import type { HomeTopZkProver } from '../toHomeTopZkProver'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
 interface Props {
-  entries: ZkCatalogEntry[]
+  entries: HomeTopZkProver[]
 }
 
 export function HomeTopZkProversCard({ entries }: Props) {
@@ -52,7 +52,7 @@ export function HomeTopZkProversCard({ entries }: Props) {
   )
 }
 
-const columnHelper = createColumnHelper<ZkCatalogEntry>()
+const columnHelper = createColumnHelper<HomeTopZkProver>()
 
 const [_index, ...commonColumns] = getCommonProjectColumns(
   columnHelper,
@@ -137,7 +137,7 @@ const RISK_ORDER = ['red', 'yellow', 'green', 'N/A'] as const
 function TrustedSetupsSummaryCell({
   trustedSetupsByProofSystem,
 }: {
-  trustedSetupsByProofSystem: ZkCatalogEntry['trustedSetupsByProofSystem']
+  trustedSetupsByProofSystem: HomeTopZkProver['trustedSetupsByProofSystem']
 }) {
   const groups = Object.entries(trustedSetupsByProofSystem).filter(
     ([, { trustedSetups }]) => trustedSetups.length > 0,
@@ -203,7 +203,7 @@ function TrustedSetupsSummaryCell({
 function VerificationSummaryCell({
   verifiers,
 }: {
-  verifiers: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['verifiers'][]
+  verifiers: HomeTopZkProver['trustedSetupsByProofSystem'][string]['verifiers'][]
 }) {
   const counts = { successful: 0, notVerified: 0, unsuccessful: 0 }
   for (const verifier of verifiers) {
