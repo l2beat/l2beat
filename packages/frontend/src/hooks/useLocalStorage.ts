@@ -1,6 +1,7 @@
 import type { VisibilityState } from '@tanstack/react-table'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
+import type { STORAGE_KEY_PREFIX } from '~/components/table/persistedColumnVisibility'
 
 import { useEventCallback } from './useEventCallback'
 import { useEventListener } from './useEventListener'
@@ -16,7 +17,7 @@ declare global {
  * together with the type of the value stored under it.
  */
 type LocalStorageSchema = {
-  [K in `table-column-visibility-${string}`]: VisibilityState
+  [K in `${typeof STORAGE_KEY_PREFIX}${string}`]: VisibilityState
 } & {
   [K in `whats-new-${string}`]: boolean
 } & {
