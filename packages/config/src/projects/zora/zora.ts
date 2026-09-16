@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('zora')
 export const zora: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
+    isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,

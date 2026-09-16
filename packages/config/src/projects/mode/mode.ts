@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('mode')
 export const mode: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
+    isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
