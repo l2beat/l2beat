@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { IconCursor } from '../../../../icons/IconCursor'
 import { IconHand } from '../../../../icons/IconHand'
-import { cn } from '../../../../utils/cn'
 import type { Tool } from '../store/State'
 import { useStore } from '../store/store'
 import { effectiveTool } from '../store/utils/tool'
@@ -36,12 +35,9 @@ export function ToolControls() {
           key={tool}
           title={title}
           aria-label={label}
-          aria-pressed={active === tool}
+          active={active === tool}
           onClick={() => setTool(tool)}
-          className={cn(
-            'px-3 py-2.5',
-            active === tool && 'border-autumn-300 bg-coffee-700',
-          )}
+          className="px-3 py-2.5"
         >
           <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
             {icon}
