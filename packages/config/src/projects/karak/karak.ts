@@ -57,6 +57,7 @@ export const karak: ScalingProject = opStackL2({
       daLayer: ProjectId('celestia'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
       namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+      untilBlock: 14058896, // 2026-09-15T01:22:04Z, Celestia height of the last batch
     },
   ],
   isNodeAvailable: true,

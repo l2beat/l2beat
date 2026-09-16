@@ -940,7 +940,8 @@
         "type": "celestia",
         "daLayer": "celestia",
         "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA="
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=",
+        "untilBlock": 14058896
       }
     }
   ],
