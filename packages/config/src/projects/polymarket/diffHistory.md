@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1bea035c8e12dcf122cceb309622a5984aa270c9
+Generated with discovered.json: 0xd340ccde1ea4138e5732ec77b31e4a6ee964a47d
 
-# Diff at Wed, 16 Sep 2026 14:03:15 GMT:
+# Diff at Wed, 16 Sep 2026 15:08:57 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1785484385
-- current timestamp: 1789567320
+- comparing to: main@704890475d4c89c204761682934cf7394154dae9 block: 1785484385
+- current timestamp: 1789571264
 
 ## Description
 
@@ -14,9 +14,9 @@ CollateralToken: `0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f` → `0xCe84E053301
 
 PositionManager: `0x30c038F0Dae8dcC3E6AD51D016F50821D32Cb87e` → `0xCc5De1e9D14a7AB75E872E23FC9D605518Bac2D0` ([diff](https://disco.l2beat.com/diff/matic:0x30c038F0Dae8dcC3E6AD51D016F50821D32Cb87e/matic:0xCc5De1e9D14a7AB75E872E23FC9D605518Bac2D0)). Contract logic unchanged apart from address masking in ERC1155 event emission. The id libraries now carry a `ResolutionChain` in bits 24-39 of condition and event ids (0 = Polygon); those bits were previously zero, so existing ids are unchanged.
 
-BinaryModule: `0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa` → `0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2` ([diff](https://disco.l2beat.com/diff/matic:0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa/matic:0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2)). New immutable `RESOLUTION_CHAIN` = 0. Resolver-role holders can no longer report on markets mirrored from the CTF (the result is copied from the CTF ledger) or overwrite a stored result, and a repeated report must match the stored one. Resolution pause is per event instead of per condition. Migration of already-resolved CTF positions redeems them in the same call.
+BinaryModule: `0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa` → `0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2` ([diff](https://disco.l2beat.com/diff/matic:0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa/matic:0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2)). New immutable `RESOLUTION_CHAIN` = 0. Resolver-role holders can no longer report on markets mirrored from the CTF (the result is copied from the CTF ledger) or overwrite a stored result, and a repeated report must match the stored one. Resolution pause is per event instead of per condition. Migration of already-resolved CTF positions redeems them in the same call, and `migratePositions` now requires the legacy condition ids to be sorted ascending; unsorted calls revert.
 
-NegRiskModule: `0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7` → `0x39a5B01a100edF811f2748aa37B1313715Ded70e` ([diff](https://disco.l2beat.com/diff/matic:0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7/matic:0x39a5B01a100edF811f2748aa37B1313715Ded70e)). Same changes as BinaryModule. Public `resolveConditionToNo()` removed: once a condition resolves YES the remaining conditions, and once all resolve NO the synthetic last condition, are derived in `getResult()` instead of being stored by an explicit call. Stored results must be exactly 0 or 1e6.
+NegRiskModule: `0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7` → `0x39a5B01a100edF811f2748aa37B1313715Ded70e` ([diff](https://disco.l2beat.com/diff/matic:0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7/matic:0x39a5B01a100edF811f2748aa37B1313715Ded70e)). Same changes as BinaryModule. Public `resolveConditionToNo()` removed: once a condition resolves YES the remaining conditions, and once all resolve NO the synthetic last condition, are derived in `getResult()` instead of being stored by an explicit call. Stored results must be exactly 0 or 1e6. `getResultForBridge()` refuses a migrated event until every one of its conditions has a stored result.
 
 CombinatorialModule: `0x03CC063e6F9552E3842136538092134EdC8962DE` → `0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2` on 2026-07-31 (tx `0x8d3af126155d4a85db8cb2a990a0eb9eb0909acbe36781c84674ccf5cd1ebb19`, [diff](https://disco.l2beat.com/diff/matic:0x03CC063e6F9552E3842136538092134EdC8962DE/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2)) → `0xf96968a44022B17240B42c557693E7C383d2d8a3` on 2026-09-08 ([diff](https://disco.l2beat.com/diff/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2/matic:0xf96968a44022B17240B42c557693E7C383d2d8a3)). July: leg sets are stored on first use and checked against the stored definition. September: the module-level `mintFromBridge`, `burnFromBridge`, `addBridge` and `removeBridge` overrides were removed in favour of the inherited BaseModule and OracleModule versions. The removed override required bridged ids to belong to this module with outcome index 0 or 1; the inherited one has no id check, and the ledger has `crossModuleAuth` set for this module, so a bridge-role holder could now mint or burn positions of any module. No address holds the bridge role on any module; admins can grant it with no delay. Events now include recipients.
 
@@ -175,7 +175,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 +++ description: Total supply of the wrapper token.
       values.totalSupply:
 -        "23510804711007571"
-+        "24266123776138698"
++        "24273536916931239"
     }
 ```
 
@@ -187,13 +187,17 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
       values.multisigThreshold:
 -        "3 of 6 (50%)"
 +        "3 of 7 (43%)"
+      receivedPermissions.0:
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"resolve any request to a result of their choosing, replace an open request's reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.","role":".admins"}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"can upgrade the resolution router implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
     }
 ```
 
 ```diff
     contract Timelock (matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C) [polymarket/Timelock] {
     +++ description: Timelock with enumerable roles: proposers queue batches with a delay of at least 12h and executors run them once it elapses. Role grants are not delayed, so an admin can install new proposers, executors or cancellers instantly.
-      receivedPermissions.9:
+      directlyReceivedPermissions.9:
 +        {"permission":"upgrade","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"can upgrade the resolution router implementation and manage all roles.","role":".owner"}
     }
 ```
@@ -503,6 +507,16 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 ```
 
 ```diff
+    contract OperationsAccount (matic:0xAC9930b2AE455a671b62dE86876A7e8587825294) [N/A] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"register requests and replace an open request's reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.","role":".operators"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"rewrite the resolution rules of an open request with no delay.","role":".ruleManagers"}
+    }
+```
+
+```diff
     contract CollateralToken (matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB) [polymarket/CollateralToken] {
     +++ description: Upgradeable ERC20 (pUSD) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance. The owner can transfer out any token balance held by the contract itself, which does not include the vault.
       sourceHashes.1:
@@ -519,7 +533,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 +++ description: Total supply of the collateral token.
       values.totalSupply:
 -        491543026531785
-+        467452379632150
++        464168602274003
       implementationNames.matic:0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f:
 -        "CollateralToken"
       implementationNames.matic:0xCe84E053301A82937F90ee2C2c1889cAb1db25dE:
@@ -560,7 +574,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 ```diff
 +   Status: CREATED
     contract OracleAggregator (matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87) [polymarket/OracleAggregator]
-    +++ description: Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most 7d. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly. Both can pause single markets or the whole oracle with no delay.
+    +++ description: Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most 7d. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly and pause the whole oracle; operators and admins can block finalization per market. None of this is delayed.
 ```
 
 ## Source code changes
@@ -633,6 +647,81 @@ discovery. Values are for block 1785484385 (main branch discovery), not current.
       description:
 -        "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing."
 +        "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint and burn positions without collateral backing, and the ids they pass are not restricted to this module."
+    }
+```
+
+```diff
+    contract AdminSafe (matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854","description":"grant and revoke the admin role, whose holders can immediately pause unwrapping of supported assets through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"cancel queued transactions.","role":".cancellers"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"grant and revoke the proposer, executor and canceller roles and change the minimum delay, with no delay.","role":".admins"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"propose transactions.","role":".proposers"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"matic:0x93070a847efEf7F70739046A929D47a521F5B8ee","description":"can grant and revoke the admin role that pauses wrapping through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"matic:0xADa100874d00e3331D00F2007a9c336a65009718","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"matic:0xAdA100Db00Ca00073811820692005400218FcE1f","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.15:
++        {"permission":"interact","from":"matic:0xAdA200001000ef00D07553cEE7006808F895c6F1","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.19:
++        {"permission":"interact","from":"matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08","description":"grant and revoke the admin and witness roles; admins can immediately pause wrapping and unwrapping through this contract, witnesses co-sign every operation.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07","description":"can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF","description":"can upgrade the implementation of the outcome-token ledger and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba","description":"can upgrade the module implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"matic:0x200000900045e3B6259600682756002200028933","description":"can upgrade the module implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"matic:0x30000034706C7d8e12009DAB006Be20000c031A8","description":"can upgrade the module implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a","description":"can replace the default implementation used by every caller without a pinned implementation.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"matic:0xa1200000d0002264C9a1698e001292D00E1b00af","description":"can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB","description":"can upgrade the token implementation, grant or revoke the minter and wrapper roles, and transfer out any token balance held by the token contract itself.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1","description":"can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.","role":".getNativeOwner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa","description":"can upgrade the exchange implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200,"role":".proposers"}
+    }
+```
+
+```diff
+    contract Timelock (matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C) [polymarket/Timelock] {
+    +++ description: Timelock with enumerable roles: proposers queue batches with a delay of at least 12h and executors run them once it elapses. Role grants are not delayed, so an admin can install new proposers, executors or cancellers instantly.
++++ severity: HIGH
+      values.admins:
++        ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"]
+      values.cancellers:
++        ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"]
++++ description: Addresses that can execute a proposal once its delay has elapsed.
+      values.executors:
++        ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"]
++++ severity: HIGH
+      values.proposers:
++        ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"]
+      fieldMeta.admins:
++        {"severity":"HIGH"}
+      fieldMeta.proposers:
++        {"severity":"HIGH"}
+      fieldMeta.executors:
++        {"description":"Addresses that can execute a proposal once its delay has elapsed."}
+      receivedPermissions:
+-        [{"permission":"interact","from":"matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854","description":"can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay.","role":".owner"},{"permission":"interact","from":"matic:0x93070a847efEf7F70739046A929D47a521F5B8ee","description":"can grant and revoke the admin role that pauses wrapping through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xADa100874d00e3331D00F2007a9c336a65009718","description":"can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.","role":".owner"},{"permission":"interact","from":"matic:0xAdA100Db00Ca00073811820692005400218FcE1f","description":"can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.","role":".owner"},{"permission":"interact","from":"matic:0xAdA200001000ef00D07553cEE7006808F895c6F1","description":"can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.","role":".owner"},{"permission":"interact","from":"matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab","description":"can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.","role":".owner"},{"permission":"interact","from":"matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08","description":"can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation.","role":".owner"},{"permission":"upgrade","from":"matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07","description":"can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.","role":".owner"},{"permission":"upgrade","from":"matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF","description":"can upgrade the implementation of the outcome-token ledger and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x200000900045e3B6259600682756002200028933","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x30000034706C7d8e12009DAB006Be20000c031A8","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a","description":"can replace the default implementation used by every caller without a pinned implementation.","role":".owner"},{"permission":"upgrade","from":"matic:0xa1200000d0002264C9a1698e001292D00E1b00af","description":"can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.","role":".owner"},{"permission":"upgrade","from":"matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB","description":"can upgrade the token implementation, and grant or revoke the minter and wrapper roles.","role":".owner"},{"permission":"upgrade","from":"matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1","description":"can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.","role":".getNativeOwner"},{"permission":"upgrade","from":"matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa","description":"can upgrade the exchange implementation and manage all roles.","role":".owner"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854","description":"grant and revoke the admin role, whose holders can immediately pause unwrapping of supported assets through this contract.","role":".owner"},{"permission":"interact","from":"matic:0x93070a847efEf7F70739046A929D47a521F5B8ee","description":"can grant and revoke the admin role that pauses wrapping through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xADa100874d00e3331D00F2007a9c336a65009718","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xAdA100Db00Ca00073811820692005400218FcE1f","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xAdA200001000ef00D07553cEE7006808F895c6F1","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab","description":"grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.","role":".owner"},{"permission":"interact","from":"matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08","description":"grant and revoke the admin and witness roles; admins can immediately pause wrapping and unwrapping through this contract, witnesses co-sign every operation.","role":".owner"},{"permission":"upgrade","from":"matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07","description":"can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.","role":".owner"},{"permission":"upgrade","from":"matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF","description":"can upgrade the implementation of the outcome-token ledger and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x200000900045e3B6259600682756002200028933","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x30000034706C7d8e12009DAB006Be20000c031A8","description":"can upgrade the module implementation and manage all roles.","role":".owner"},{"permission":"upgrade","from":"matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a","description":"can replace the default implementation used by every caller without a pinned implementation.","role":".owner"},{"permission":"upgrade","from":"matic:0xa1200000d0002264C9a1698e001292D00E1b00af","description":"can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.","role":".owner"},{"permission":"upgrade","from":"matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB","description":"can upgrade the token implementation, grant or revoke the minter and wrapper roles, and transfer out any token balance held by the token contract itself.","role":".owner"},{"permission":"upgrade","from":"matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1","description":"can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.","role":".getNativeOwner"},{"permission":"upgrade","from":"matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa","description":"can upgrade the exchange implementation and manage all roles.","role":".owner"}]
     }
 ```
 

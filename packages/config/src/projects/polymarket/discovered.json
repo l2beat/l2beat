@@ -1,6 +1,6 @@
 {
   "name": "polymarket",
-  "timestamp": 1789567320,
+  "timestamp": 1789571264,
   "configHash": "0x2393085a665c262d7cf5abd574e58a2630cf94de1b7cd151a1986f395223d0e4",
   "entries": [
     {
@@ -759,7 +759,7 @@
         "0x86de052a045afd778ff05583e08fcca66cac97072aac1c7fec6fc7267373912c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most 7d. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly. Both can pause single markets or the whole oracle with no delay.",
+      "description": "Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most 7d. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly and pause the whole oracle; operators and admins can block finalization per market. None of this is delayed.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1787854477,
       "sinceBlock": 92766300,
@@ -768,9 +768,11 @@
         "$implementation": "matic:0x822e8A97AF8005073F2f6E88435D692E33ab6082",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
+        "admins": ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
         "globalPaused": false,
         "MAX_LIVENESS_WINDOW": 604800,
         "maxLivenessWindowFormatted": "7d",
+        "operators": ["matic:0xAC9930b2AE455a671b62dE86876A7e8587825294"],
         "owner": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
         "POSITION_MANAGER": "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
         "roleHolders": [
@@ -786,12 +788,24 @@
             "user": "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294",
             "roles": 6
           }
-        ]
+        ],
+        "ruleManagers": ["matic:0xAC9930b2AE455a671b62dE86876A7e8587825294"]
       },
       "fieldMeta": {
         "roleHolders": {
           "severity": "HIGH",
           "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) rule manager."
+        },
+        "admins": {
+          "severity": "HIGH",
+          "description": "Addresses whose role bitmask includes the admin bit."
+        },
+        "operators": {
+          "severity": "HIGH",
+          "description": "Addresses whose role bitmask includes the operator bit."
+        },
+        "ruleManagers": {
+          "description": "Addresses whose role bitmask includes the rule-manager bit."
         },
         "owner": { "severity": "HIGH" },
         "globalPaused": {
@@ -1928,7 +1942,7 @@
         "name": "Wrapped Collateral",
         "owner": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
         "symbol": "WCOL",
-        "totalSupply": "24266123776138698",
+        "totalSupply": "24273536916931239",
         "underlying": "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
       },
       "fieldMeta": {
@@ -2024,7 +2038,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "matic:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 628279451369224,
+        "totalSupply": 631425003535543,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2118,13 +2132,17 @@
       "values": {
         "$immutable": true,
         "ADMIN_ROLE": 0,
+        "admins": ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
         "CANCELLER_ROLE": 3,
+        "cancellers": ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
         "EXECUTOR_ROLE": 2,
+        "executors": ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
         "MAX_ROLE": 3,
         "minDelay": 43200,
         "minDelayFormatted": "12h",
         "OPEN_ROLE_HOLDER": "matic:0x0303030303030303030303030303030303030303",
         "PROPOSER_ROLE": 1,
+        "proposers": ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
         "roleHolderCount": [1, 1, 1, 1],
         "roleHolders": [
           ["matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"],
@@ -2137,6 +2155,11 @@
         "roleHolders": {
           "severity": "HIGH",
           "description": "Holders of each role: 0 admin, 1 proposer, 2 executor, 3 canceller."
+        },
+        "admins": { "severity": "HIGH" },
+        "proposers": { "severity": "HIGH" },
+        "executors": {
+          "description": "Addresses that can execute a proposal once its delay has elapsed."
         }
       },
       "implementationNames": {
@@ -3490,7 +3513,7 @@
           }
         ],
         "symbol": "pUSD",
-        "totalSupply": 467452379632150,
+        "totalSupply": 464168602274003,
         "USDC": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
         "USDCE": "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
         "VAULT": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1"
@@ -20199,13 +20222,13 @@
     "polymarket/NegRiskFeeVault": "0xc2a3deaad8b40e03ca329ae31b37c2c16978c8ef34bdb7f7640c39fc2398c9d9",
     "polymarket/NegRiskModule": "0x2e9ef01703a6f7e897591f6ffe6d8488b358e97e23ea74549483fff3d6806428",
     "polymarket/NegRiskOperator": "0x9810aeffadfe8aefd122fa0eb963da95e9a86d52222574d32a129c1e8abb9237",
-    "polymarket/OracleAggregator": "0xcd097d3b50f5a1a758888acad5b29d368b05c27533ac2bf61ec6059b5d9ae022",
+    "polymarket/OracleAggregator": "0xee4e5aeb38cea2750bf2cc3844f5aa14ff2c41fa88c3799820349b82a2851b08",
     "polymarket/PermissionedRamp": "0xe53fa537ac54be6758294973222ff39271d3d8bf6b69adb78bf90b3d00726fbb",
     "polymarket/PositionManager": "0x756a41132abdf9768b97ac164272203daad5f779d3d1b8b0409c9bf3469adc51",
     "polymarket/ProxyWallet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polymarket/ProxyWalletFactory": "0xec953070100fa946fdd1595a83c5082d7e378f60baa4d24055e32aebfbf9aaec",
     "polymarket/SafeProxyFactory": "0x7a754736c407d853299dac9286d604ade9c58e51a3d3b473ec3d52134322254a",
-    "polymarket/Timelock": "0xd8d97a0af1ca24e169845f5c380a8ec4289acc92bdcc7a1f1de6c3fcb691cf41",
+    "polymarket/Timelock": "0xfae5d9b08945cd89df36a24e1a8cb3a115559ead317e0c66ac2da400868e1a7d",
     "polymarket/UmaAddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
     "polymarket/UmaCtfAdapter": "0xac924499b4f7945869a8b352fecbe36ebd681c0e92e98e66fdeb888864cb5fe8",
     "polymarket/UmaCtfAdapterLegacy": "0x04448403a97e5e8221d7377e2022864cecdcdb13c30b6cc77ad344500bf90a73",
@@ -20217,8 +20240,8 @@
     "uma/ManagedOptimisticOracleV2": "0xb95f621832be01c1bbe24a90c57c2cf223f611413d14eea831cfb34f18f891b2",
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
-  "usedBlockNumbers": { "polygonpos": 93908191 },
-  "permissionsConfigHash": "0xb7a97c8a5773125c690fba0cd268ce7f2a53ae3bb097e3517e95768800fabb3f",
+  "usedBlockNumbers": { "polygonpos": 93910820 },
+  "permissionsConfigHash": "0xf74bc6a10d72115bd2bbd4f5f279178006a52cbe6a3df9da16ddf8a8b087a445",
   "permissions": {
     "matic:0x0000000000000000000000000000000000000000": {
       "receivedPermissions": [
@@ -20264,9 +20287,27 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
+          "description": "resolve any request to a result of their choosing, replace an open request's reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
           "from": "matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6",
           "description": "manage the addresses on the whitelist.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
+          "description": "grant and revoke the admin role, whose holders can immediately pause unwrapping of supported assets through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -20282,6 +20323,24 @@
           "via": [
             { "address": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+          "description": "cancel queued transactions.",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+          "description": "grant and revoke the proposer, executor and canceller roles and change the minimum delay, with no delay.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+          "description": "propose transactions.",
+          "role": ".proposers"
         },
         {
           "permission": "interact",
@@ -20315,6 +20374,66 @@
         },
         {
           "permission": "interact",
+          "from": "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee",
+          "description": "can grant and revoke the admin role that pauses wrapping through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xAdA200001000ef00D07553cEE7006808F895c6F1",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "matic:0xE111180000d2663C0091e4f400237545B87B996B",
           "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
           "role": ".admin"
@@ -20324,9 +20443,159 @@
           "from": "matic:0xe2222d279d744050d28e00520010520000310F59",
           "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
           "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08",
+          "description": "grant and revoke the admin and witness roles; admins can immediately pause wrapping and unwrapping through this contract, witnesses co-sign every operation.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
+          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
+          "description": "can upgrade the implementation of the outcome-token ledger and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
+          "description": "can upgrade the resolution router implementation and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x200000900045e3B6259600682756002200028933",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x30000034706C7d8e12009DAB006Be20000c031A8",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
+          "description": "can replace the default implementation used by every caller without a pinned implementation.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xa1200000d0002264C9a1698e001292D00E1b00af",
+          "description": "can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+          "description": "can upgrade the token implementation, grant or revoke the minter and wrapper roles, and transfer out any token balance held by the token contract itself.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
+          "description": "can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
+          "role": ".getNativeOwner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa",
+          "description": "can upgrade the exchange implementation and manage all roles.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+              "delay": 43200
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
+          "delay": 43200,
+          "role": ".proposers"
+        },
         {
           "permission": "act",
           "from": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
@@ -20336,11 +20605,11 @@
       ]
     },
     "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C": {
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
-          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay.",
+          "description": "grant and revoke the admin role, whose holders can immediately pause unwrapping of supported assets through this contract.",
           "role": ".owner"
         },
         {
@@ -20352,31 +20621,31 @@
         {
           "permission": "interact",
           "from": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
-          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
-          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging and redeeming through this contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "matic:0xAdA200001000ef00D07553cEE7006808F895c6F1",
-          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
-          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
+          "description": "grant and revoke the admin role, whose holders can immediately pause splitting, merging, redeeming and converting through this contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08",
-          "description": "can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation.",
+          "description": "grant and revoke the admin and witness roles; admins can immediately pause wrapping and unwrapping through this contract, witnesses co-sign every operation.",
           "role": ".owner"
         },
         {
@@ -20430,7 +20699,7 @@
         {
           "permission": "upgrade",
           "from": "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
-          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles.",
+          "description": "can upgrade the token implementation, grant or revoke the minter and wrapper roles, and transfer out any token balance held by the token contract itself.",
           "role": ".owner"
         },
         {
@@ -20515,6 +20784,18 @@
     },
     "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
+          "description": "register requests and replace an open request's reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
+          "description": "rewrite the resolution rules of an open request with no delay.",
+          "role": ".ruleManagers"
+        },
         {
           "permission": "interact",
           "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",

@@ -18,7 +18,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles."
+          "description": "can upgrade the token implementation, grant or revoke the minter and wrapper roles, and transfer out any token balance held by the token contract itself."
         }
       ],
       "severity": "HIGH"
