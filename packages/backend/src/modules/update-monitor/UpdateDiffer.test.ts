@@ -8,7 +8,8 @@ import type {
   ReceivedPermission,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 
@@ -22,8 +23,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.deleted).toEqual([PROJECT_A])
-      expect(differ.inserted).toEqual([
+      expect(differ.deleted).toStrictEqual([PROJECT_A])
+      expect(differ.inserted).toStrictEqual([
         record(PROJECT_A, ADDRESS_A, 'implementationChange'),
       ])
     })
@@ -36,8 +37,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.deleted).toEqual([PROJECT_A])
-      expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toStrictEqual([PROJECT_A])
+      expect(differ.inserted).toStrictEqual([])
     })
 
     it('keeps the rows of a project whose on disk discovery is newer', async () => {
@@ -58,8 +59,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toEqual([])
-      expect(differ.deleted).toEqual([])
+      expect(differ.inserted).toStrictEqual([])
+      expect(differ.deleted).toStrictEqual([])
     })
 
     it('keeps the rows of a project that was not discovered', async () => {
@@ -70,8 +71,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toEqual([])
-      expect(differ.deleted).toEqual([])
+      expect(differ.inserted).toStrictEqual([])
+      expect(differ.deleted).toStrictEqual([])
     })
 
     it('attributes a change to every project referencing the address', async () => {
@@ -90,7 +91,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROVIDER, PROJECT_A, PROJECT_B], UnixTime.now())
 
-      expect(differ.inserted).toEqual([
+      expect(differ.inserted).toStrictEqual([
         record(PROVIDER, ADDRESS_A, 'implementationChange'),
         record(PROJECT_A, ADDRESS_A, 'implementationChange'),
         record(PROJECT_B, ADDRESS_A, 'implementationChange'),
@@ -119,7 +120,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROVIDER, PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toEqual([
+      expect(differ.inserted).toStrictEqual([
         record(PROVIDER, ADDRESS_B, 'implementationChange'),
       ])
     })
@@ -148,7 +149,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([SECOND_PROVIDER, PROVIDER, PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted.map((r) => r.projectId)).toEqual([
+      expect(differ.inserted.map((r) => r.projectId)).toStrictEqual([
         SECOND_PROVIDER,
         PROVIDER,
         PROJECT_A,
@@ -159,7 +160,7 @@ describe(UpdateDiffer.name, () => {
   describe(UpdateDiffer.prototype.getUpdateDiffs.name, () => {
     it('detects implementation changes', () => {
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns(mockProject),
+        readDiscovery: vi.fn().mockReturnValue(mockProject),
       })
 
       const updateDiffer = new UpdateDiffer(
@@ -189,7 +190,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           address: diff.address,
           type: 'implementationChange',
@@ -203,7 +204,7 @@ describe(UpdateDiffer.name, () => {
 
     it('detects high severity field changes', () => {
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns(mockProject),
+        readDiscovery: vi.fn().mockReturnValue(mockProject),
       })
 
       const updateDiffer = new UpdateDiffer(
@@ -234,7 +235,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           address: diff.address,
           type: 'highSeverityFieldChange',
@@ -366,7 +367,7 @@ describe(UpdateDiffer.name, () => {
       it(`grades an upgrader change: ${label}`, () => {
         const updateDiffer = new UpdateDiffer(
           mockObject<ConfigReader>({
-            readDiscovery: mockFn().returns(mockProject),
+            readDiscovery: vi.fn().mockReturnValue(mockProject),
           }),
           mockObject<Database>({}),
           mockObject<DiscoveryOutputCache>(),
@@ -393,15 +394,15 @@ describe(UpdateDiffer.name, () => {
           456,
         )
 
-        expect(result.some((r) => r.type === 'ultimateUpgraderChange')).toEqual(
-          expected,
-        )
+        expect(
+          result.some((r) => r.type === 'ultimateUpgraderChange'),
+        ).toStrictEqual(expected)
       })
     }
 
     it('detects upgrade changes', () => {
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns(mockProject),
+        readDiscovery: vi.fn().mockReturnValue(mockProject),
       })
 
       const updateDiffer = new UpdateDiffer(
@@ -451,7 +452,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           address,
           type: 'ultimateUpgraderChange',
@@ -467,7 +468,7 @@ describe(UpdateDiffer.name, () => {
   describe(UpdateDiffer.prototype.getOnDiskDiscovery.name, () => {
     it('should read config from disk', () => {
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns(undefined),
+        readDiscovery: vi.fn().mockReturnValue(undefined),
       })
 
       const updateDiffer = new UpdateDiffer(
@@ -549,9 +550,9 @@ function record(
     projectId,
     address,
     type,
-    timestamp: expect.a(Number) as unknown as UnixTime,
-    diffBaseTimestamp: expect.a(Number) as unknown as number,
-    diffHeadTimestamp: expect.a(Number) as unknown as number,
+    timestamp: expect.any(Number) as unknown as UnixTime,
+    diffBaseTimestamp: expect.any(Number) as unknown as number,
+    diffHeadTimestamp: expect.any(Number) as unknown as number,
   }
 }
 

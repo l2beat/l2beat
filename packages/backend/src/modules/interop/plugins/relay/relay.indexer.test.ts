@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
@@ -47,7 +48,7 @@ describe(RelayIndexer.name, () => {
         endTimestamp: FROM + BATCH_SIZE + 1,
         limit: 10_000,
       })
-      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
     })
 
     it('clamps the window to the target height', async () => {
@@ -61,7 +62,7 @@ describe(RelayIndexer.name, () => {
         endTimestamp: FROM + 6,
         limit: 10_000,
       })
-      expect(syncedTo).toEqual(FROM + 5)
+      expect(syncedTo).toStrictEqual(FROM + 5)
     })
 
     it('advances through a second holding more entries than one page', async () => {
@@ -72,7 +73,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
     })
 
     it('advances when the window holds no entries at all', async () => {
@@ -81,7 +82,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
     })
 
     it('throws when the window was not fully fetched', async () => {
@@ -91,7 +92,7 @@ describe(RelayIndexer.name, () => {
       })
       const indexer = createIndexer(relayApiClient)
 
-      await expect(indexer.update(FROM, FROM + 10_000)).toBeRejectedWith(
+      await expect(indexer.update(FROM, FROM + 10_000)).rejects.toThrow(
         'exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=10000',
       )
     })
@@ -105,7 +106,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
     })
 
     it('creates events from normalized v3 request fields', async () => {
@@ -139,8 +140,9 @@ describe(RelayIndexer.name, () => {
           },
         ],
       })
-      const saveNewEvents =
-        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const saveNewEvents = vi
+        .fn<InteropEventStore['saveNewEvents']>()
+        .mockResolvedValue(undefined)
       const indexer = createIndexer(relayApiClient, {
         chains: [
           { id: 1, name: 'ethereum' },
@@ -152,7 +154,7 @@ describe(RelayIndexer.name, () => {
 
       await indexer.update(FROM, FROM + BATCH_SIZE)
 
-      const events = saveNewEvents.calls[0]?.args[0] ?? []
+      const events = saveNewEvents.mock.calls[0][0] ?? []
       expect(
         events.map((event) => ({
           type: event.type,
@@ -160,7 +162,7 @@ describe(RelayIndexer.name, () => {
           chain: event.ctx.chain,
           txHash: event.ctx.txHash,
         })),
-      ).toEqual([
+      ).toStrictEqual([
         {
           type: TokenSent.type,
           args: {
@@ -190,7 +192,7 @@ describe(RelayIndexer.name, () => {
 
 function clientReturning(response: GetRequestsResponse) {
   return mockObject<RelayApiClient>({
-    getAllRequests: mockFn().resolvesTo(response),
+    getAllRequests: vi.fn().mockResolvedValue(response),
   })
 }
 
@@ -213,7 +215,7 @@ function createIndexer(
 ) {
   return new RelayIndexer(
     options.chains ?? [],
-    mockObject<InteropConfigStore>({ get: mockFn().returns(undefined) }),
+    mockObject<InteropConfigStore>({ get: vi.fn().mockReturnValue(undefined) }),
     options.trackedChains ?? ['ethereum'],
     {
       batchSize: BATCH_SIZE,

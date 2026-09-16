@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createTvsCleanerConfigurations } from '../../../config/features/tvs'
 import { mockDatabase } from '../../../test/database'
 import { Clock } from '../../../tools/Clock'
@@ -18,22 +19,22 @@ describe(TvsCleaner.name, () => {
   describe(TvsCleaner.prototype.update.name, () => {
     it('cleans all archived TVS records on the first run', async () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        deleteHourlyUntil: mockFn().resolvesTo(10),
-        deleteSixHourlyUntil: mockFn().resolvesTo(5),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(10),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(5),
       })
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        deleteHourlyUntil: mockFn().resolvesTo(4),
-        deleteSixHourlyUntil: mockFn().resolvesTo(2),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(4),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(2),
       })
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteHourlyUntil: mockFn().resolvesTo(7),
-        deleteSixHourlyUntil: mockFn().resolvesTo(3),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(7),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(3),
       })
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        deleteHourlyUntil: mockFn().resolvesTo(8),
-        deleteSixHourlyUntil: mockFn().resolvesTo(4),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(8),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(4),
       })
 
       const indexer = await createInitializedIndexer({
@@ -67,27 +68,27 @@ describe(TvsCleaner.name, () => {
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
       expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('always cleans from the beginning up to the current cutoff', async () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        deleteHourlyUntil: mockFn().resolvesTo(3),
-        deleteSixHourlyUntil: mockFn().resolvesTo(2),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(3),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(2),
       })
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        deleteHourlyUntil: mockFn().resolvesTo(1),
-        deleteSixHourlyUntil: mockFn().resolvesTo(1),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(1),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(1),
       })
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteHourlyUntil: mockFn().resolvesTo(6),
-        deleteSixHourlyUntil: mockFn().resolvesTo(4),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(6),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(4),
       })
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        deleteHourlyUntil: mockFn().resolvesTo(5),
-        deleteSixHourlyUntil: mockFn().resolvesTo(3),
+        deleteHourlyUntil: vi.fn().mockResolvedValue(5),
+        deleteSixHourlyUntil: vi.fn().mockResolvedValue(3),
       })
 
       const indexer = await createInitializedIndexer({
@@ -122,7 +123,7 @@ describe(TvsCleaner.name, () => {
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
       expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
   })
 
@@ -132,7 +133,7 @@ describe(TvsCleaner.name, () => {
 
       const result = await indexer.invalidate(123)
 
-      expect(result).toEqual(123)
+      expect(result).toStrictEqual(123)
     })
   })
 })
@@ -148,12 +149,12 @@ function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
     syncOptimizer: testSyncOptimizer(),
     parents: [],
     indexerService: mockObject<IndexerService>({
-      getSavedConfigurations: mockFn().resolvesTo([]),
-      insertConfigurations: mockFn().resolvesTo(undefined),
-      upsertConfigurations: mockFn().resolvesTo(undefined),
-      deleteConfigurations: mockFn().resolvesTo(undefined),
-      updateConfigurationsCurrentHeight: mockFn().resolvesTo(undefined),
-      setInitialState: mockFn().resolvesTo(undefined),
+      getSavedConfigurations: vi.fn().mockResolvedValue([]),
+      insertConfigurations: vi.fn().mockResolvedValue(undefined),
+      upsertConfigurations: vi.fn().mockResolvedValue(undefined),
+      deleteConfigurations: vi.fn().mockResolvedValue(undefined),
+      updateConfigurationsCurrentHeight: vi.fn().mockResolvedValue(undefined),
+      setInitialState: vi.fn().mockResolvedValue(undefined),
     }),
     configurations: createTvsCleanerConfigurations([
       'tvsTokenValue',
@@ -190,10 +191,10 @@ function expectDeleteCalls(
   hourlyRange: { from: UnixTime | undefined; to: UnixTime },
   sixHourlyRange: { from: UnixTime | undefined; to: UnixTime },
 ) {
-  expect(repository.deleteHourlyUntil as any).toHaveBeenOnlyCalledWith(
+  expect(repository.deleteHourlyUntil as any).toHaveBeenCalledExactlyOnceWith(
     hourlyRange,
   )
-  expect(repository.deleteSixHourlyUntil as any).toHaveBeenOnlyCalledWith(
-    sixHourlyRange,
-  )
+  expect(
+    repository.deleteSixHourlyUntil as any,
+  ).toHaveBeenCalledExactlyOnceWith(sixHourlyRange)
 }

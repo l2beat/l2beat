@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { describeDatabase, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
@@ -82,15 +83,17 @@ describe(ManagedMultiIndexer.name, () => {
 
       const newHeight = await indexer.initialize()
 
-      expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
-        INDEXER_ID,
-      )
-      expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
+      expect(
+        indexerService.getSavedConfigurations,
+      ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID)
+      expect(
+        indexerService.insertConfigurations,
+      ).toHaveBeenCalledExactlyOnceWith(
         INDEXER_ID,
         [actual('b', 100, null)],
         SERIALIZE,
       )
-      expect(newHeight).toEqual({ safeHeight: 99 })
+      expect(newHeight).toStrictEqual({ safeHeight: 99 })
     })
   })
 
@@ -123,12 +126,16 @@ describe(ManagedMultiIndexer.name, () => {
         toWipeData: [{ id: 'c'.repeat(12) }, { id: 'd'.repeat(12) }],
       })
 
-      expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
+      expect(
+        indexerService.insertConfigurations,
+      ).toHaveBeenCalledExactlyOnceWith(
         INDEXER_ID,
         [actual('a', 100, null)],
         SERIALIZE,
       )
-      expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
+      expect(
+        indexerService.upsertConfigurations,
+      ).toHaveBeenCalledExactlyOnceWith(
         INDEXER_ID,
         [
           saved('b', 100, 1000, 1000, 'props'),
@@ -136,15 +143,14 @@ describe(ManagedMultiIndexer.name, () => {
         ],
         SERIALIZE,
       )
-      expect(indexerService.deleteConfigurations).toHaveBeenOnlyCalledWith(
-        INDEXER_ID,
-        ['d'],
-      )
-      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+      expect(
+        indexerService.deleteConfigurations,
+      ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID, ['d'])
+      expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'b'.repeat(12), range: [50, 99] },
         { id: 'b'.repeat(12), range: [1001, 1500] },
       ])
-      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.wipeData).toHaveBeenCalledExactlyOnceWith([
         { id: 'c'.repeat(12) },
         { id: 'd'.repeat(12) },
       ])
@@ -173,7 +179,7 @@ describe(ManagedMultiIndexer.name, () => {
       const newHeight = await indexer.update(0, 50)
 
       expect(indexer.multiUpdate).not.toHaveBeenCalled()
-      expect(newHeight).toEqual(50)
+      expect(newHeight).toStrictEqual(50)
     })
 
     it('gets configurations from range, updates and saves the state', async () => {
@@ -198,15 +204,15 @@ describe(ManagedMultiIndexer.name, () => {
         },
         Logger.SILENT,
       )
-      const saveData = mockFn((targetHeight) => Promise.resolve(targetHeight))
-      indexer.multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
+      const saveData = vi.fn((targetHeight) => Promise.resolve(targetHeight))
+      indexer.multiUpdate = vi.fn<ManagedMultiIndexer<string>['multiUpdate']>(
         async (_, targetHeight) => () => saveData(targetHeight),
       )
 
       await indexer.initialize()
       const newHeight = await indexer.update(1001, 1100)
 
-      expect(indexer.multiUpdate).toHaveBeenOnlyCalledWith(1001, 1100, [
+      expect(indexer.multiUpdate).toHaveBeenCalledExactlyOnceWith(1001, 1100, [
         actual('a', 100, null),
         actual('b', 100, null),
       ])
@@ -215,9 +221,9 @@ describe(ManagedMultiIndexer.name, () => {
       expect(saveData).toHaveBeenCalledTimes(1)
       expect(
         indexerService.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(INDEXER_ID, 1100)
+      ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID, 1100)
 
-      expect(newHeight).toEqual(1100)
+      expect(newHeight).toStrictEqual(1100)
     })
 
     it('cannot return more than currentHeight', async () => {
@@ -225,13 +231,13 @@ describe(ManagedMultiIndexer.name, () => {
 
       await indexer.initialize()
 
-      indexer.multiUpdate.resolvesTo(() => Promise.resolve(50))
-      await expect(indexer.update(100, 500)).toBeRejectedWith(
+      indexer.multiUpdate.mockResolvedValue(() => Promise.resolve(50))
+      await expect(indexer.update(100, 500)).rejects.toThrow(
         /Returned height must be between from and to/,
       )
 
-      indexer.multiUpdate.resolvesTo(() => Promise.resolve(50_000))
-      await expect(indexer.update(100, 500)).toBeRejectedWith(
+      indexer.multiUpdate.mockResolvedValue(() => Promise.resolve(50_000))
+      await expect(indexer.update(100, 500)).rejects.toThrow(
         /Returned height must be between from and to/,
       )
     })
@@ -257,7 +263,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value before the start', () => {
       const fromBeforeStart = 10
-      expect(indexer.findRange(fromBeforeStart)).toEqual({
+      expect(indexer.findRange(fromBeforeStart)).toStrictEqual({
         from: Number.NEGATIVE_INFINITY,
         to: 99,
         configurations: [],
@@ -266,7 +272,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the start', () => {
       const fromAtStart = 100
-      expect(indexer.findRange(fromAtStart)).toEqual({
+      expect(indexer.findRange(fromAtStart)).toStrictEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -275,7 +281,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value between start and end', () => {
       const fromBetween = 150
-      expect(indexer.findRange(fromBetween)).toEqual({
+      expect(indexer.findRange(fromBetween)).toStrictEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -284,7 +290,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the end', () => {
       const fromAtEnd = 200
-      expect(indexer.findRange(fromAtEnd)).toEqual({
+      expect(indexer.findRange(fromAtEnd)).toStrictEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -293,7 +299,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value after the end', () => {
       const fromAfterStart = 250
-      expect(indexer.findRange(fromAfterStart)).toEqual({
+      expect(indexer.findRange(fromAfterStart)).toStrictEqual({
         from: 201,
         to: Number.POSITIVE_INFINITY,
         configurations: [],
@@ -318,7 +324,7 @@ describe(ManagedMultiIndexer.name, () => {
 
         expect(
           indexerService.updateConfigurationsCurrentHeight,
-        ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
+        ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID, 100)
       })
     },
   )
@@ -329,7 +335,7 @@ describe(ManagedMultiIndexer.name, () => {
 
       const targetHeight = await indexer.invalidate(100)
 
-      expect(targetHeight).toEqual(100)
+      expect(targetHeight).toStrictEqual(100)
     })
   })
 
@@ -344,7 +350,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     await indexer.setInitialState(100, 'config-hash')
 
-    expect(indexerService.setInitialState).toHaveBeenOnlyCalledWith(
+    expect(indexerService.setInitialState).toHaveBeenCalledExactlyOnceWith(
       INDEXER_ID,
       100,
       'config-hash',
@@ -361,7 +367,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     await indexer.setSafeHeight(100)
 
-    expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith(
+    expect(indexerService.setSafeHeight).toHaveBeenCalledExactlyOnceWith(
       INDEXER_ID,
       100,
     )
@@ -449,7 +455,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
 
-      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.wipeData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12) },
       ])
     })
@@ -476,7 +482,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 50, null, null)])
 
       // remove all data
-      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.wipeData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12) },
       ])
     })
@@ -503,7 +509,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 150, null, 550)])
 
       // remove part of data
-      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [100, 149] },
       ])
     })
@@ -529,7 +535,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
 
-      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [100, 999] },
       ])
     })
@@ -580,7 +586,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
 
-      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [201, 550] },
       ])
     })
@@ -624,13 +630,15 @@ class TestIndexer extends ManagedMultiIndexer<string> {
     this.options = options
   }
 
-  multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
+  multiUpdate = vi.fn<ManagedMultiIndexer<string>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
-  override trimData =
-    mockFn<ManagedMultiIndexer<string>['trimData']>().resolvesTo(undefined)
-  override wipeData =
-    mockFn<ManagedMultiIndexer<string>['wipeData']>().resolvesTo(undefined)
+  override trimData = vi
+    .fn<ManagedMultiIndexer<string>['trimData']>()
+    .mockResolvedValue(undefined)
+  override wipeData = vi
+    .fn<ManagedMultiIndexer<string>['wipeData']>()
+    .mockResolvedValue(undefined)
 }
 
 function actual(

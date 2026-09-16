@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { afterEach, describe, expect, it } from 'vitest'
 
 import type { IndexerService } from './IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from './ids'
@@ -48,7 +49,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toEqual({ safeHeight: 1, configHash: undefined })
+      expect(result).toStrictEqual({ safeHeight: 1, configHash: undefined })
     })
 
     it('returns minHeight - 1 if safeHeight not defined', async () => {
@@ -68,7 +69,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toEqual({ safeHeight: 99, configHash: undefined })
+      expect(result).toStrictEqual({ safeHeight: 99, configHash: undefined })
     })
 
     it('invalidates on config change', async () => {
@@ -94,7 +95,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         safeHeight: minHeight - 1,
         configHash: 'new-hash',
       })
@@ -118,7 +119,10 @@ describe(ManagedChildIndexer.name, () => {
 
     await indexer.setSafeHeight(1)
 
-    expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith('indexer', 1)
+    expect(indexerService.setSafeHeight).toHaveBeenCalledExactlyOnceWith(
+      'indexer',
+      1,
+    )
   })
 })
 

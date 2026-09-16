@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { SlotTimestampProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { SlotTargetIndexer } from './SlotTargetIndexer'
@@ -17,7 +18,7 @@ describe(SlotTargetIndexer.name, () => {
       })
 
       const slotTimestampProvider = mockObject<SlotTimestampProvider>({
-        getSlotNumberAtOrBefore: mockFn().resolvesTo(0),
+        getSlotNumberAtOrBefore: vi.fn().mockResolvedValue(0),
       })
 
       const indexer = new SlotTargetIndexer(
@@ -50,7 +51,7 @@ describe(SlotTargetIndexer.name, () => {
       const START_SLOT = 1
 
       const slotTimestampProvider = mockObject<SlotTimestampProvider>({
-        getSlotNumberAtOrBefore: mockFn().resolvesTo(SLOT_NUMBER),
+        getSlotNumberAtOrBefore: vi.fn().mockResolvedValue(SLOT_NUMBER),
       })
 
       const indexer = new SlotTargetIndexer(
@@ -69,7 +70,7 @@ describe(SlotTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toEqual(SLOT_NUMBER)
+      expect(result).toStrictEqual(SLOT_NUMBER)
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         slotTimestampProvider.getSlotNumberAtOrBefore,

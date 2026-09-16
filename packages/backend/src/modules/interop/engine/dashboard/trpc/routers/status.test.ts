@@ -1,5 +1,6 @@
 import type { Database } from '@l2beat/database'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { INDEXER_NAMES } from '../../../../../../tools/uif/indexerIdentity'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createStatusRouter } from './status'
@@ -24,7 +25,7 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.pluginSyncStatuses()
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         pluginName: 'plugin',
         chain: 'ethereum',
@@ -40,7 +41,7 @@ describe(createStatusRouter.name, () => {
   })
 
   it('returns the persisted Relay checkpoint', async () => {
-    const findByIndexerId = mockFn().resolvesTo({
+    const findByIndexerId = vi.fn().mockResolvedValue({
       indexerId: INDEXER_NAMES.INTEROP_RELAY,
       safeHeight: 1_700_000_000,
     })
@@ -50,26 +51,26 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.relay()
 
-    expect(findByIndexerId).toHaveBeenOnlyCalledWith(
+    expect(findByIndexerId).toHaveBeenCalledExactlyOnceWith(
       INDEXER_NAMES.INTEROP_RELAY,
     )
-    expect(result).toEqual({ syncedTo: 1_700_000_000 })
+    expect(result).toStrictEqual({ syncedTo: 1_700_000_000 })
   })
 
   it('returns no Relay checkpoint before the indexer initializes', async () => {
     const caller = createCaller(undefined, {
       indexerState: mockObject<Database['indexerState']>({
-        findByIndexerId: mockFn().resolvesTo(undefined),
+        findByIndexerId: vi.fn().mockResolvedValue(undefined),
       }),
     })
 
     const result = await caller.relay()
 
-    expect(result).toEqual({ syncedTo: undefined })
+    expect(result).toStrictEqual({ syncedTo: undefined })
   })
 
   it('applies wildcard resync values to unspecified chains', async () => {
-    const setResyncRequestedFrom = mockFn().resolvesTo(undefined)
+    const setResyncRequestedFrom = vi.fn().mockResolvedValue(undefined)
     const caller = createCaller(
       {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
@@ -101,11 +102,11 @@ describe(createStatusRouter.name, () => {
       'arbitrum',
       2_000,
     )
-    expect(result).toEqual({ updatedChains: ['ethereum', 'arbitrum'] })
+    expect(result).toStrictEqual({ updatedChains: ['ethereum', 'arbitrum'] })
   })
 
   it('marks all plugin chains for wipe on restart from now', async () => {
-    const upsert = mockFn().resolvesTo(undefined)
+    const upsert = vi.fn().mockResolvedValue(undefined)
     const caller = createCaller(
       {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
@@ -137,7 +138,7 @@ describe(createStatusRouter.name, () => {
       resyncRequestedFrom: null,
       wipeRequired: true,
     })
-    expect(result).toEqual({ updatedChains: ['ethereum', 'arbitrum'] })
+    expect(result).toStrictEqual({ updatedChains: ['ethereum', 'arbitrum'] })
   })
 
   it('returns processor statuses', async () => {
@@ -160,7 +161,7 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.processors()
 
-    expect(result).toEqual(statuses)
+    expect(result).toStrictEqual(statuses)
   })
 })
 

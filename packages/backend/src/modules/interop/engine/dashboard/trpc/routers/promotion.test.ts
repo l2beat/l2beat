@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createPromotionRouter } from './promotion'
 
@@ -19,7 +20,7 @@ describe(createPromotionRouter.name, () => {
 
   describe('listRecent', () => {
     it('maps recent snapshots to DTOs, normalizing reasons', async () => {
-      const getRecent = mockFn().resolvesTo([
+      const getRecent = vi.fn().mockResolvedValue([
         {
           timestamp: UnixTime(200),
           status: 'blocked',
@@ -52,7 +53,7 @@ describe(createPromotionRouter.name, () => {
       const result = await caller.listRecent()
 
       expect(getRecent).toHaveBeenCalledTimes(1)
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: 200,
           status: 'blocked',
@@ -83,7 +84,7 @@ describe(createPromotionRouter.name, () => {
 
   describe('promote', () => {
     it('promotes a blocked snapshot with the operator email', async () => {
-      const promoteIfBlocked = mockFn().resolvesTo(true)
+      const promoteIfBlocked = vi.fn().mockResolvedValue(true)
       const caller = createCaller(
         mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
       )
@@ -94,11 +95,11 @@ describe(createPromotionRouter.name, () => {
         UnixTime(100),
         'ops@l2beat.com',
       )
-      expect(result).toEqual({ timestamp: 100, promoted: true })
+      expect(result).toStrictEqual({ timestamp: 100, promoted: true })
     })
 
     it('reports promoted=false when the snapshot was not blocked (no-op)', async () => {
-      const promoteIfBlocked = mockFn().resolvesTo(false)
+      const promoteIfBlocked = vi.fn().mockResolvedValue(false)
       const caller = createCaller(
         mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
       )
@@ -109,7 +110,7 @@ describe(createPromotionRouter.name, () => {
         UnixTime(100),
         'ops@l2beat.com',
       )
-      expect(result).toEqual({ timestamp: 100, promoted: false })
+      expect(result).toStrictEqual({ timestamp: 100, promoted: false })
     })
   })
 })

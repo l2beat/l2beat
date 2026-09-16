@@ -12,7 +12,8 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Clock } from '../../tools/Clock'
 import type { WorkerPool } from './createWorkers'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -22,7 +23,7 @@ import { UpdateMonitor } from './UpdateMonitor'
 import type { UpdateNotifier } from './UpdateNotifier'
 
 const instantWorkerPool = mockObject<WorkerPool>({
-  runInPool: mockFn(async (tasks) => {
+  runInPool: vi.fn(async (tasks) => {
     const results = []
     const errors = []
 
@@ -135,18 +136,18 @@ describe(UpdateMonitor.name, () => {
 
   beforeEach(() => {
     updateNotifier = mockObject<UpdateNotifier>({
-      handleUpdate: mockFn().resolvesTo(undefined),
-      sendDailyReminder: mockFn().resolvesTo(undefined),
+      handleUpdate: vi.fn().mockResolvedValue(undefined),
+      sendDailyReminder: vi.fn().mockResolvedValue(undefined),
     })
     updateDiffer = mockObject<UpdateDiffer>({
-      run: mockFn().resolvesTo(undefined),
+      run: vi.fn().mockResolvedValue(undefined),
     })
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
     it('iterates over runners and dispatches updates', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesTo({
+        run: vi.fn().mockResolvedValue({
           discovery: DISCOVERY_RESULT,
           flatSources: {},
         }),
@@ -158,7 +159,7 @@ describe(UpdateMonitor.name, () => {
         }),
 
         readAllDiscoveredProjects: () => [PROJECT_A],
-        readConfig: mockFn().returns(mockConfig(PROJECT_A)),
+        readConfig: vi.fn().mockReturnValue(mockConfig(PROJECT_A)),
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -210,7 +211,7 @@ describe(UpdateMonitor.name, () => {
     it('does not process archived projects', async () => {
       const processedProjects: string[] = []
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn(async (config: ConfigRegistry) => {
+        run: vi.fn(async (config: ConfigRegistry) => {
           processedProjects.push(config.name)
           return {
             discovery: DISCOVERY_RESULT,
@@ -229,7 +230,7 @@ describe(UpdateMonitor.name, () => {
           entries: COMMITTED,
         }),
         readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
-        readConfig: mockFn((name: string) =>
+        readConfig: vi.fn((name: string) =>
           name === PROJECT_B ? archivedConfig : mockConfig(name),
         ),
       })
@@ -259,7 +260,7 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.update(timestamp)
 
-      expect(processedProjects).toEqual([PROJECT_A, PROJECT_A])
+      expect(processedProjects).toStrictEqual([PROJECT_A, PROJECT_A])
       expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
     })
 
@@ -267,13 +268,13 @@ describe(UpdateMonitor.name, () => {
     it('discovers every project before diffing any of them', async () => {
       const calls: string[] = []
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn(async () => {
+        run: vi.fn(async () => {
           calls.push('discover')
           return { discovery: DISCOVERY_RESULT, flatSources: {} }
         }),
       })
       updateDiffer = mockObject<UpdateDiffer>({
-        run: mockFn(async () => {
+        run: vi.fn(async () => {
           calls.push('diff')
         }),
       })
@@ -285,7 +286,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<ConfigReader>({
           readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
           readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
-          readConfig: mockFn((name: string) => mockConfig(name)),
+          readConfig: vi.fn((name: string) => mockConfig(name)),
         }),
         mockObject<Database>({
           updateMonitor: mockObject<Database['updateMonitor']>({
@@ -307,7 +308,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(0)
 
       expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
-      expect(calls.filter((c) => c === 'diff').length).toEqual(1)
+      expect(calls.filter((c) => c === 'diff').length).toStrictEqual(1)
     })
   })
 
@@ -323,9 +324,10 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn()
-          .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
-          .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
+        run: vi
+          .fn()
+          .mockResolvedValueOnce({ discovery: discoveryA, flatSources: {} })
+          .mockResolvedValueOnce({ discovery: discoveryB, flatSources: {} }),
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -356,8 +358,10 @@ describe(UpdateMonitor.name, () => {
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
       // reads committed file
-      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
-      expect(result).toEqual(discoveryB)
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyOnceWith(
+        PROJECT_A,
+      )
+      expect(result).toStrictEqual(discoveryB)
     })
 
     it('gets repository entry', async () => {
@@ -372,7 +376,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesToOnce({
+        run: vi.fn().mockResolvedValueOnce({
           discovery: dbEntry.discovery,
           flatSources: {},
         }),
@@ -405,7 +409,7 @@ describe(UpdateMonitor.name, () => {
 
       // calls repository
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
-      expect(result).toEqual(dbEntry.discovery)
+      expect(result).toStrictEqual(dbEntry.discovery)
     })
 
     it('takes config hash into consideration', async () => {
@@ -416,7 +420,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesToOnce({
+        run: vi.fn().mockResolvedValueOnce({
           discovery: committed,
           flatSources: {},
         }),
@@ -463,7 +467,7 @@ describe(UpdateMonitor.name, () => {
         }),
       )
 
-      expect(result).toEqual(committed)
+      expect(result).toStrictEqual(committed)
     })
 
     it('with version mismatch runs discovery with previous block number', async () => {
@@ -571,7 +575,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         [PROJECT_A]: {
           severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
         },
@@ -583,7 +587,7 @@ describe(UpdateMonitor.name, () => {
 
     it('generates the daily reminder for two different chains', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesTo({
+        run: vi.fn().mockResolvedValue({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
@@ -629,8 +633,8 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toEqual(1)
-      expect(result).toEqual({
+      expect(Object.entries(result).length).toStrictEqual(1)
+      expect(result).toStrictEqual({
         [PROJECT_A]: {
           severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
         },
@@ -639,7 +643,7 @@ describe(UpdateMonitor.name, () => {
 
     it('does nothing for an empty cache', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesTo({
+        run: vi.fn().mockResolvedValue({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
@@ -685,7 +689,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toEqual(1)
+      expect(Object.entries(result).length).toStrictEqual(1)
     })
   })
 })

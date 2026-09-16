@@ -1,6 +1,6 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { findRecordGaps } from './gaps'
 
 const HOUR = UnixTime.HOUR
@@ -32,7 +32,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toEqual([
+    expect(gaps).toStrictEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',
@@ -55,7 +55,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toEqual([
+    expect(gaps).toStrictEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',
@@ -78,7 +78,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toEqual([])
+    expect(gaps).toStrictEqual([])
   })
 
   it('distinguishes configurations of the same project', () => {
@@ -99,7 +99,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toEqual([
+    expect(gaps).toStrictEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',

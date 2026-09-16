@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import { getLivenessGroupingKey } from './getLivenessGroupingKey'
 
 describe(getLivenessGroupingKey.name, () => {
@@ -23,7 +23,7 @@ describe(getLivenessGroupingKey.name, () => {
       path: [0, 0],
     })
 
-    expect(result).toEqual('123')
+    expect(result).toStrictEqual('123')
   })
 
   it('rejects a path ending at a tuple', () => {

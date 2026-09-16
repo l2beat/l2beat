@@ -1,6 +1,7 @@
 import type { AmountFormula, TvsToken } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { setTokenSyncRange } from './setTokenSyncRange'
 
 describe(setTokenSyncRange.name, () => {
@@ -47,8 +48,8 @@ describe(setTokenSyncRange.name, () => {
     })
 
     assert(token.amount.type !== 'calculation')
-    expect(token.amount.sinceTimestamp).toEqual(20)
-    expect(token.amount.untilTimestamp).toEqual(30)
+    expect(token.amount.sinceTimestamp).toStrictEqual(20)
+    expect(token.amount.untilTimestamp).toStrictEqual(30)
     assert(
       token.valueForProject?.type === 'calculation' &&
         token.valueForSummary?.type === 'calculation',
@@ -65,14 +66,30 @@ describe(setTokenSyncRange.name, () => {
         token.valueForSummary.arguments[0].amount.type !== 'calculation' &&
         token.valueForSummary.arguments[1].amount.type !== 'calculation',
     )
-    expect(token.valueForProject.arguments[0].amount.sinceTimestamp).toEqual(10)
-    expect(token.valueForProject.arguments[0].amount.untilTimestamp).toEqual(20)
-    expect(token.valueForProject.arguments[1].amount.sinceTimestamp).toEqual(10)
-    expect(token.valueForProject.arguments[1].amount.untilTimestamp).toEqual(30)
-    expect(token.valueForSummary.arguments[0].amount.sinceTimestamp).toEqual(10)
-    expect(token.valueForSummary.arguments[0].amount.untilTimestamp).toEqual(30)
-    expect(token.valueForSummary.arguments[1].amount.sinceTimestamp).toEqual(10)
-    expect(token.valueForSummary.arguments[1].amount.untilTimestamp).toEqual(30)
+    expect(
+      token.valueForProject.arguments[0].amount.sinceTimestamp,
+    ).toStrictEqual(10)
+    expect(
+      token.valueForProject.arguments[0].amount.untilTimestamp,
+    ).toStrictEqual(20)
+    expect(
+      token.valueForProject.arguments[1].amount.sinceTimestamp,
+    ).toStrictEqual(10)
+    expect(
+      token.valueForProject.arguments[1].amount.untilTimestamp,
+    ).toStrictEqual(30)
+    expect(
+      token.valueForSummary.arguments[0].amount.sinceTimestamp,
+    ).toStrictEqual(10)
+    expect(
+      token.valueForSummary.arguments[0].amount.untilTimestamp,
+    ).toStrictEqual(30)
+    expect(
+      token.valueForSummary.arguments[1].amount.sinceTimestamp,
+    ).toStrictEqual(10)
+    expect(
+      token.valueForSummary.arguments[1].amount.untilTimestamp,
+    ).toStrictEqual(30)
   })
 })
 

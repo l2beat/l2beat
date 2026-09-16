@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -18,17 +19,17 @@ describe(BlockTimestampIndexer.name, () => {
       const to = 300
       const timestampToSync = UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestampToSync),
       })
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(666),
+        getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(666),
       })
 
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new BlockTimestampIndexer(
@@ -48,13 +49,17 @@ describe(BlockTimestampIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
+        from,
+      )
 
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenOnlyCalledWith(timestampToSync, 'ethereum')
+      ).toHaveBeenCalledExactlyOnceWith(timestampToSync, 'ethereum')
 
-      expect(tvsBlockTimestampRepository.upsertMany).toHaveBeenOnlyCalledWith([
+      expect(
+        tvsBlockTimestampRepository.upsertMany,
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: config('config-1', 'ethereum').id,
           chain: 'ethereum',
@@ -63,7 +68,7 @@ describe(BlockTimestampIndexer.name, () => {
         },
       ])
 
-      expect(safeHeight).toEqual(timestampToSync)
+      expect(safeHeight).toStrictEqual(timestampToSync)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -71,7 +76,7 @@ describe(BlockTimestampIndexer.name, () => {
       const to = 300
       const timestampToSync = UnixTime(400) // Greater than 'to'
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestampToSync),
       })
 
       const indexer = new BlockTimestampIndexer(
@@ -91,8 +96,10 @@ describe(BlockTimestampIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
-      expect(safeHeight).toEqual(to)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
+        from,
+      )
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
@@ -100,14 +107,15 @@ describe(BlockTimestampIndexer.name, () => {
       const to = 300
       const timestampToSync = UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returns(timestampToSync),
+        getTimestampToSync: vi.fn().mockReturnValue(timestampToSync),
       })
 
       const BLOCK_NUMBER = 123
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn()
-          .returnsOnce(BLOCK_NUMBER)
-          .returnsOnce(BLOCK_NUMBER - 1),
+        getBlockNumberAtOrBefore: vi
+          .fn()
+          .mockReturnValueOnce(BLOCK_NUMBER)
+          .mockReturnValueOnce(BLOCK_NUMBER - 1),
       })
 
       const indexer = new BlockTimestampIndexer(
@@ -126,7 +134,7 @@ describe(BlockTimestampIndexer.name, () => {
       await expect(
         async () =>
           await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')]),
-      ).toBeRejectedWith('Block number cannot be smaller')
+      ).rejects.toThrow('Block number cannot be smaller')
     })
   })
 
@@ -135,7 +143,10 @@ describe(BlockTimestampIndexer.name, () => {
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
+        deleteByConfigInTimeRange: vi
+          .fn()
+          .mockReturnValueOnce(3)
+          .mockReturnValueOnce(2),
       })
 
       const indexer = new BlockTimestampIndexer(

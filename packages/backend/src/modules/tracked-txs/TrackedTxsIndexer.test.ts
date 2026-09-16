@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
@@ -37,15 +38,15 @@ describe(TrackedTxsIndexer.name, () => {
       })
       const l2costsUpdater = mockObject<L2CostsUpdater>({
         type: 'l2costs',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
       const livenessUpdater = mockObject<LivenessUpdater>({
         type: 'liveness',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
 
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn(async () => {}),
+        updateSyncedUntil: vi.fn(async () => {}),
       })
 
       const indexer = getMockTrackedTxsIndexer({
@@ -112,7 +113,7 @@ describe(TrackedTxsIndexer.name, () => {
         ['test2'],
         UnixTime(to),
       )
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('deduplicates l2costs per transaction but passes all liveness results', async () => {
@@ -127,11 +128,11 @@ describe(TrackedTxsIndexer.name, () => {
       })
       const l2costsUpdater = mockObject<L2CostsUpdater>({
         type: 'l2costs',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
       const livenessUpdater = mockObject<LivenessUpdater>({
         type: 'liveness',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
 
       const indexer = getMockTrackedTxsIndexer({
@@ -199,7 +200,7 @@ describe(TrackedTxsIndexer.name, () => {
         from,
         expected,
       )
-      expect(safeHeight).toEqual(expected)
+      expect(safeHeight).toStrictEqual(expected)
     })
 
     it('filters out archived projects', async () => {
@@ -212,11 +213,11 @@ describe(TrackedTxsIndexer.name, () => {
       })
       const l2costsUpdater = mockObject<L2CostsUpdater>({
         type: 'l2costs',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
       const livenessUpdater = mockObject<LivenessUpdater>({
         type: 'liveness',
-        update: mockFn(async () => {}),
+        update: vi.fn(async () => {}),
       })
 
       const indexer = getMockTrackedTxsIndexer({
@@ -336,7 +337,7 @@ function getMockTrackedTxsIndexer(params: {
         syncMetadata:
           syncMetadataRepository ??
           mockObject<Database['syncMetadata']>({
-            updateSyncedUntil: mockFn(async () => {}),
+            updateSyncedUntil: vi.fn(async () => {}),
           }),
       }),
       indexerService: indexerService ?? mockObject<IndexerService>({}),

@@ -1,6 +1,7 @@
 import type { AztecBlockProvider, BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
 import {
   ActivityBlockProviders,
@@ -41,14 +42,14 @@ describe(StandardActivityBlockProvider.name, () => {
   it('maps normalized block transactions and uops to activity blocks', async () => {
     const blockProvider = mockObject<BlockProvider>({
       chain: 'ethereum',
-      getBlockWithTransactions: mockFn().resolvesToOnce({
+      getBlockWithTransactions: vi.fn().mockResolvedValueOnce({
         number: 10,
         timestamp: UnixTime(1_700_000_000),
         transactions: [{}, {}],
       }),
     })
     const uopsAnalyzer = mockObject<UopsAnalyzer>({
-      calculateUops: mockFn().returnsOnce(5),
+      calculateUops: vi.fn().mockReturnValueOnce(5),
     })
     const provider = new StandardActivityBlockProvider(
       blockProvider,
@@ -57,7 +58,7 @@ describe(StandardActivityBlockProvider.name, () => {
 
     const result = await provider.getBlocks(10, 10)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         number: 10,
         timestamp: UnixTime(1_700_000_000),
@@ -72,7 +73,7 @@ describe(AztecActivityBlockProvider.name, () => {
   it('maps transaction effects to activity blocks in one range request', async () => {
     const blockProvider = mockObject<AztecBlockProvider>({
       chain: 'aztecnetwork',
-      getBlocks: mockFn().resolvesToOnce([
+      getBlocks: vi.fn().mockResolvedValueOnce([
         { number: 10, timestamp: 1_700_000_000, txEffectsCount: 2 },
         { number: 11, timestamp: 1_700_003_600, txEffectsCount: 3 },
       ]),
@@ -81,8 +82,8 @@ describe(AztecActivityBlockProvider.name, () => {
 
     const result = await provider.getBlocks(10, 11)
 
-    expect(blockProvider.getBlocks).toHaveBeenOnlyCalledWith(10, 2)
-    expect(result).toEqual([
+    expect(blockProvider.getBlocks).toHaveBeenCalledExactlyOnceWith(10, 2)
+    expect(result).toStrictEqual([
       {
         number: 10,
         timestamp: 1_700_000_000,

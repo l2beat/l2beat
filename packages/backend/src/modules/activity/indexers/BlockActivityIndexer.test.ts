@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -18,7 +19,7 @@ describe(BlockActivityIndexer.name, () => {
   describe(BlockActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
+        getTxsCount: vi.fn().mockResolvedValue({
           records: [],
         }),
       })
@@ -31,24 +32,26 @@ describe(BlockActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
-      expect(newSafeHeight).toEqual(50)
+      expect(newSafeHeight).toStrictEqual(50)
     })
 
     it('gets blocks counts, sum with current counts, saves to db and updates sync metadata', async () => {
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 7, 7, 0, 8),
-          activityRecord('a', START + 1 * UnixTime.DAY, 3, 4, 11, 13),
-        ]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        getByProjectAndTimeRange: vi
+          .fn()
+          .mockResolvedValue([
+            activityRecord('a', START, 7, 7, 0, 8),
+            activityRecord('a', START + 1 * UnixTime.DAY, 3, 4, 11, 13),
+          ]),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn().resolvesTo(undefined),
+        updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
       })
 
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
+        getTxsCount: vi.fn().mockResolvedValue({
           records: [
             activityRecord('a', START, 5, 5, 9, 10),
             activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 15),
@@ -81,23 +84,23 @@ describe(BlockActivityIndexer.name, () => {
         START + 2 * UnixTime.DAY,
         10,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toStrictEqual(10)
     })
 
     it('handle cases with block with 0 txs', async () => {
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 7, 10, 0, 8),
-        ]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        getByProjectAndTimeRange: vi
+          .fn()
+          .mockResolvedValue([activityRecord('a', START, 7, 10, 0, 8)]),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn().resolvesTo(undefined),
+        updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
       })
 
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
+        getTxsCount: vi.fn().mockResolvedValue({
           records: [activityRecord('a', START, 0, 0, 9, 10)],
           latestTimestamp: START,
         }),
@@ -131,7 +134,7 @@ describe(BlockActivityIndexer.name, () => {
         START,
         10,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toStrictEqual(10)
     })
   })
 
@@ -141,7 +144,7 @@ describe(BlockActivityIndexer.name, () => {
 
       const entries = await indexer.getDatabaseEntries([])
 
-      expect(entries).toEqual(new Map())
+      expect(entries).toStrictEqual(new Map())
     })
 
     it('returns a map of timestamps to records', async () => {
@@ -152,7 +155,9 @@ describe(BlockActivityIndexer.name, () => {
       ]
 
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo(mockActivityRecords),
+        getByProjectAndTimeRange: vi
+          .fn()
+          .mockResolvedValue(mockActivityRecords),
       })
 
       const indexer = createIndexer({
@@ -175,7 +180,7 @@ describe(BlockActivityIndexer.name, () => {
       ])
 
       // returns a map of timestamps to counts
-      expect(entries).toEqual(
+      expect(entries).toStrictEqual(
         new Map([
           [START, mockActivityRecords[0]],
           [START + 1 * UnixTime.DAY, mockActivityRecords[1]],
@@ -188,7 +193,7 @@ describe(BlockActivityIndexer.name, () => {
   describe(BlockActivityIndexer.prototype.invalidate.name, () => {
     it('returns targetHeight if no rows found', async () => {
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectIncludingDataPoint: mockFn().resolvesTo([]),
+        getByProjectIncludingDataPoint: vi.fn().mockResolvedValue([]),
       })
 
       const indexer = createIndexer({
@@ -198,7 +203,7 @@ describe(BlockActivityIndexer.name, () => {
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
-      expect(newSafeHeight).toEqual(targetHeight)
+      expect(newSafeHeight).toStrictEqual(targetHeight)
     })
 
     it('throws assertion when more than one record found', async () => {
@@ -209,8 +214,9 @@ describe(BlockActivityIndexer.name, () => {
       ]
 
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectIncludingDataPoint:
-          mockFn().resolvesTo(mockActivityRecords),
+        getByProjectIncludingDataPoint: vi
+          .fn()
+          .mockResolvedValue(mockActivityRecords),
       })
 
       const indexer = createIndexer({
@@ -218,9 +224,9 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const targetHeight = 15
-      expect(
+      await expect(
         async () => await indexer.invalidate(targetHeight),
-      ).toBeRejectedWith(
+      ).rejects.toThrow(
         `There should be exactly one record that includes data point (projectId: ${mockProjectId}, dataPoint: ${targetHeight})`,
       )
     })
@@ -232,9 +238,10 @@ describe(BlockActivityIndexer.name, () => {
       ]
 
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectIncludingDataPoint:
-          mockFn().resolvesTo(mockActivityRecords),
-        deleteByProjectIdFrom: mockFn().resolvesTo(undefined),
+        getByProjectIncludingDataPoint: vi
+          .fn()
+          .mockResolvedValue(mockActivityRecords),
+        deleteByProjectIdFrom: vi.fn().mockResolvedValue(undefined),
       })
 
       const indexer = createIndexer({
@@ -256,7 +263,7 @@ describe(BlockActivityIndexer.name, () => {
         expectedTimestamp,
       )
 
-      expect(result).toEqual(expectedTargetHeight)
+      expect(result).toStrictEqual(expectedTargetHeight)
     })
   })
 })
@@ -286,15 +293,15 @@ function createIndexer(
     {
       parents: [],
       txsCountService: mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo([]),
+        getTxsCount: vi.fn().mockResolvedValue([]),
       }),
       db: mockDatabase({
         activity: mockObject<Database['activity']>({
-          getByProjectAndTimeRange: mockFn().resolvesTo([]),
-          upsertMany: mockFn().resolvesTo(undefined),
+          getByProjectAndTimeRange: vi.fn().mockResolvedValue([]),
+          upsertMany: vi.fn().mockResolvedValue(undefined),
         }),
         syncMetadata: mockObject<Database['syncMetadata']>({
-          updateSyncedUntil: mockFn().resolvesTo(undefined),
+          updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
         }),
       }),
       projectId: ProjectId('a'),

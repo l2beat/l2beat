@@ -1,6 +1,7 @@
 import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
@@ -69,13 +70,13 @@ describe(MulticallClient.name, () => {
       ],
       blockTag,
     )
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
       // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       { to: ADDRESS_A, data: Bytes.fromHex('0x123456'), blockTag },
       { to: ADDRESS_B, data: Bytes.fromHex('0x'), blockTag },
       { to: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef'), blockTag },
@@ -110,13 +111,13 @@ describe(MulticallClient.name, () => {
       ],
       blockTag,
     )
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: true, data: Bytes.fromHex('0x0f00') },
       // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       {
         to: ADDRESS_V1,
         data: encodeMulticallV1([
@@ -160,12 +161,12 @@ describe(MulticallClient.name, () => {
       ],
       blockTag,
     )
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: false, data: Bytes.fromHex('0x0f00') },
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       {
         to: ADDRESS_V2,
         data: encodeMulticallV2([
@@ -208,8 +209,8 @@ describe(MulticallClient.name, () => {
       })),
       blockTag,
     )
-    expect(result.length).toEqual(BATCH_SIZE * 2 + 1)
-    expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
+    expect(result.length).toStrictEqual(BATCH_SIZE * 2 + 1)
+    expect(calls).toStrictEqual([BATCH_SIZE, BATCH_SIZE, 1])
   })
 
   it('returns multicall address based on block number', () => {
@@ -221,7 +222,7 @@ describe(MulticallClient.name, () => {
     const address = multicallClient.getMulticallAddressAt(
       MULTICALL_V2_BLOCK + 1,
     )
-    expect(address).toEqual(ADDRESS_V2)
+    expect(address).toStrictEqual(ADDRESS_V2)
   })
 
   it('configs are correctly sorted in getMulticallAddressAt & isNativeBalanceSupported', () => {
@@ -246,8 +247,8 @@ describe(MulticallClient.name, () => {
     const address = multicallClient.getMulticallAddressAt(3)
     const isNativeBalanceSupported = multicallClient.isNativeBalanceSupported(3)
 
-    expect(address).toEqual(entries[2].address)
-    expect(isNativeBalanceSupported).toEqual(
+    expect(address).toStrictEqual(entries[2].address)
+    expect(isNativeBalanceSupported).toStrictEqual(
       entries[2].isNativeBalanceSupported,
     )
   })

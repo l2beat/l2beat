@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { evaluatePromotion } from './evaluatePromotion'
 import type { PromotionContext, PromotionRule } from './types'
 
@@ -23,7 +23,7 @@ describe(evaluatePromotion.name, () => {
     ]
     const { violations, ruleErrors } = evaluatePromotion(ctx, rules)
     expect(violations).toHaveLength(2)
-    expect(ruleErrors).toEqual([])
+    expect(ruleErrors).toStrictEqual([])
   })
 
   it('isolates a throwing rule into ruleErrors and keeps the rest', () => {
@@ -41,6 +41,6 @@ describe(evaluatePromotion.name, () => {
     ]
     const { violations, ruleErrors } = evaluatePromotion(ctx, rules)
     expect(violations).toHaveLength(1)
-    expect(ruleErrors).toEqual([{ rule: 'boom', error: 'kaboom' }])
+    expect(ruleErrors).toStrictEqual([{ rule: 'boom', error: 'kaboom' }])
   })
 })

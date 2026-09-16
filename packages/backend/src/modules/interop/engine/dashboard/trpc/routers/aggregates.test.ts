@@ -1,6 +1,7 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAggregatesRouter } from './aggregates'
 
@@ -46,10 +47,10 @@ describe(createAggregatesRouter.name, () => {
     const aggregatedInteropTransfer = mockObject<
       Database['aggregatedInteropTransfer']
     >({
-      getLatestTimestamp: mockFn().resolvesTo(latestTimestamp),
+      getLatestTimestamp: vi.fn().mockResolvedValue(latestTimestamp),
     })
     const interopTransfer = mockObject<Database['interopTransfer']>({
-      getByRange: mockFn().resolvesTo(transfers),
+      getByRange: vi.fn().mockResolvedValue(transfers),
     })
     const db = mockObject<Database>({
       aggregatedInteropTransfer,
@@ -83,12 +84,14 @@ describe(createAggregatesRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result.latestTimestamp).toEqual(latestTimestamp)
-    expect(result.latestTransfersCount).toEqual(4)
-    expect(result.includedTransfersCount).toEqual(3)
+    expect(result.latestTimestamp).toStrictEqual(latestTimestamp)
+    expect(result.latestTransfersCount).toStrictEqual(4)
+    expect(result.includedTransfersCount).toStrictEqual(3)
     expect(result.notIncludedTransfers).toHaveLength(1)
-    expect(result.notIncludedTransfers[0]?.transferId).toEqual('missing-relay')
-    expect(result.notIncludedByPlugin).toEqual([
+    expect(result.notIncludedTransfers[0]?.transferId).toStrictEqual(
+      'missing-relay',
+    )
+    expect(result.notIncludedByPlugin).toStrictEqual([
       {
         plugin: 'relay',
         bridgeType: 'lockAndMint',
@@ -96,7 +99,7 @@ describe(createAggregatesRouter.name, () => {
         totalValueUsd: 30,
       },
     ])
-    expect(result.durationSplitCoverage).toEqual([
+    expect(result.durationSplitCoverage).toStrictEqual([
       {
         projectId: 'across',
         projectName: 'across',
@@ -111,8 +114,8 @@ describe(createAggregatesRouter.name, () => {
         notIncludedTransferTypes: ['withdraw'],
       },
     ])
-    expect(result.aggregationConfigured).toEqual(true)
-    expect(result.aggregationConfigsCount).toEqual(1)
+    expect(result.aggregationConfigured).toStrictEqual(true)
+    expect(result.aggregationConfigsCount).toStrictEqual(1)
   })
 
   it('returns disabled state when aggregation configs are unavailable', async () => {
@@ -131,7 +134,7 @@ describe(createAggregatesRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       aggregationConfigured: false,
       aggregationConfigsCount: 0,
       latestTimestamp: null,

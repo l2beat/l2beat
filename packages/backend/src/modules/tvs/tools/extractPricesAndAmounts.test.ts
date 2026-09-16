@@ -1,6 +1,7 @@
 import type { TvsToken } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { AmountConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
@@ -31,7 +32,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     const result = extractPricesAndAmounts([token])
 
-    expect(result.amounts).toEqual([
+    expect(result.amounts).toStrictEqual([
       {
         id: '0bfc4b5a383e',
         type: 'balanceOfEscrows',
@@ -106,7 +107,7 @@ describe(extractPricesAndAmounts.name, () => {
     ]
 
     const result = extractPricesAndAmounts(tokens)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       amounts: [
         {
           id: 'de9829103265',
@@ -230,7 +231,7 @@ describe(extractPricesAndAmounts.name, () => {
     ]
 
     const result = extractPricesAndAmounts(tokens)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       amounts: [
         {
           id: '16ab02a2d2c7',
@@ -365,7 +366,7 @@ describe(extractPricesAndAmounts.name, () => {
     ]
 
     const result = extractPricesAndAmounts(tokens)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       amounts: [
         {
           id: 'ecd2a2018003',
@@ -426,7 +427,9 @@ describe(extractPricesAndAmounts.name, () => {
         }),
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'form').sinceTimestamp).toEqual(chainSince)
+      expect(getAmount(amounts, 'form').sinceTimestamp).toStrictEqual(
+        chainSince,
+      )
     })
 
     it('clamps untilTimestamp when token ends after chain', () => {
@@ -446,7 +449,9 @@ describe(extractPricesAndAmounts.name, () => {
         }),
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(chainUntil)
+      expect(getAmount(amounts, 'form').untilTimestamp).toStrictEqual(
+        chainUntil,
+      )
     })
 
     it('leaves token unchanged when within chain range', () => {
@@ -467,8 +472,8 @@ describe(extractPricesAndAmounts.name, () => {
         }),
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'form').sinceTimestamp).toEqual(1200)
-      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(1800)
+      expect(getAmount(amounts, 'form').sinceTimestamp).toStrictEqual(1200)
+      expect(getAmount(amounts, 'form').untilTimestamp).toStrictEqual(1800)
     })
 
     it('skips when chain not in config', () => {
@@ -487,7 +492,9 @@ describe(extractPricesAndAmounts.name, () => {
         }),
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toEqual(500)
+      expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toStrictEqual(
+        500,
+      )
     })
 
     it('sets untilTimestamp when token has none', () => {
@@ -506,7 +513,9 @@ describe(extractPricesAndAmounts.name, () => {
         }),
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(chainUntil)
+      expect(getAmount(amounts, 'form').untilTimestamp).toStrictEqual(
+        chainUntil,
+      )
     })
   })
 })

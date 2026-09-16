@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import type { InteropPluginName } from '@l2beat/config'
 import type { AbstractTokenRecord, Database } from '@l2beat/database'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { expect, mockFn, mockObject } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import {
   createInteropEventType,
   type InteropEvent,
@@ -32,7 +33,7 @@ describe(InteropMatchingLoop.name, () => {
   describe(buildTokenMap.name, () => {
     it('builds deployed to abstract token map and skips invalid deployed tokens', async () => {
       const validAddress = '0x1111111111111111111111111111111111111111'
-      const query = mockFn().resolvesTo({
+      const query = vi.fn().mockResolvedValue({
         abstractTokens: [
           {
             ...TOKEN_A,
@@ -56,15 +57,17 @@ describe(InteropMatchingLoop.name, () => {
       )
 
       expect(query).toHaveBeenCalledTimes(1)
-      expect(deployedToAbstractMap.size).toEqual(1)
-      expect(deployedToAbstractMap.get(chainSpecificAddress)).toEqual(TOKEN_A)
+      expect(deployedToAbstractMap.size).toStrictEqual(1)
+      expect(deployedToAbstractMap.get(chainSpecificAddress)).toStrictEqual(
+        TOKEN_A,
+      )
     })
   })
 
   describe(InteropMatchingLoop.prototype.run.name, () => {
     it('throws if loading abstract tokens fails', async () => {
       const queryError = new Error('Token DB unavailable')
-      const query = mockFn().rejectsWith(queryError)
+      const query = vi.fn().mockRejectedValue(queryError)
       const tokenDbClient = mockObject<TokenDbClient>({
         abstractTokens: { getAllWithDeployedTokens: { query } },
       } as any)
@@ -78,7 +81,7 @@ describe(InteropMatchingLoop.name, () => {
         Logger.SILENT,
       )
 
-      await expect(async () => await loop.run()).toBeRejectedWith(
+      await expect(async () => await loop.run()).rejects.toThrow(
         'Token DB unavailable for matching',
       )
       expect(query).toHaveBeenCalledTimes(1)
@@ -142,10 +145,10 @@ describe('match', () => {
       mockObject<TokenMap>({}),
     )
 
-    expect(sawEventC).toEqual(true)
-    expect(matchedLookup).toEqual(undefined)
-    expect(result.messages.length).toEqual(1)
-    expect(result.unsupported.length).toEqual(0)
+    expect(sawEventC).toStrictEqual(true)
+    expect(matchedLookup).toStrictEqual(undefined)
+    expect(result.messages.length).toStrictEqual(1)
+    expect(result.unsupported.length).toStrictEqual(0)
   })
 
   it('passes deployed-to-abstract map to plugins', async () => {
@@ -189,7 +192,7 @@ describe('match', () => {
       deployedToAbstractMap,
     )
 
-    expect(seen).toEqual(TOKEN_A)
+    expect(seen).toStrictEqual(TOKEN_A)
   })
 
   it('keeps transfers with explicit chain on the missing side', async () => {
@@ -234,12 +237,12 @@ describe('match', () => {
       mockObject<TokenMap>({}),
     )
 
-    expect(result.transfers.length).toEqual(1)
-    expect(result.unsupported.length).toEqual(0)
+    expect(result.transfers.length).toStrictEqual(1)
+    expect(result.unsupported.length).toStrictEqual(0)
 
     const transfer = result.transfers[0]
-    expect(transfer.src.event?.ctx.chain).toEqual('ethereum')
-    expect(transfer.dst.event).toEqual(undefined)
-    expect(transfer.dst.chain).toEqual('solana')
+    expect(transfer.src.event?.ctx.chain).toStrictEqual('ethereum')
+    expect(transfer.dst.event).toStrictEqual(undefined)
+    expect(transfer.dst.chain).toStrictEqual('solana')
   })
 })

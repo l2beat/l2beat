@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { toRanges } from './toRanges'
 import type { Configuration, SavedConfiguration } from './types'
@@ -6,7 +6,7 @@ import type { Configuration, SavedConfiguration } from './types'
 describe(toRanges.name, () => {
   it('empty', () => {
     const ranges = toRanges([])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       {
         from: Number.NEGATIVE_INFINITY,
         to: Number.POSITIVE_INFINITY,
@@ -17,7 +17,7 @@ describe(toRanges.name, () => {
 
   it('single infinite configuration', () => {
     const ranges = toRanges([saved('a', 100, null)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       {
         from: 100,
@@ -29,7 +29,7 @@ describe(toRanges.name, () => {
 
   it('single finite configuration', () => {
     const ranges = toRanges([saved('a', 100, 300)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 300, configurations: [actual('a', 100, 300)] },
       { from: 301, to: Number.POSITIVE_INFINITY, configurations: [] },
@@ -38,7 +38,7 @@ describe(toRanges.name, () => {
 
   it('multiple overlapping configurations on the edges', () => {
     const ranges = toRanges([saved('a', 100, 300), saved('b', 300, 500)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 299, configurations: [actual('a', 100, 300)] },
       {
@@ -57,7 +57,7 @@ describe(toRanges.name, () => {
       saved('b', 200, 400),
       saved('c', 300, 500),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 199, configurations: [actual('a', 100, 300)] },
       {
@@ -90,7 +90,7 @@ describe(toRanges.name, () => {
       saved('b', 300, 400),
       saved('c', 500, 600),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 200, configurations: [actual('a', 100, 200)] },
       { from: 201, to: 299, configurations: [] },
@@ -108,7 +108,7 @@ describe(toRanges.name, () => {
       saved('c', 400, 600),
       saved('d', 700, 800),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 200, configurations: [actual('a', 100, 200)] },
       { from: 201, to: 299, configurations: [] },
@@ -127,7 +127,7 @@ describe(toRanges.name, () => {
 
   it('adjacent: one configuration start where other ends', () => {
     const ranges = toRanges([saved('a', 100, 200), saved('b', 200, 300)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 199, configurations: [actual('a', 100, 200)] },
       {
@@ -150,7 +150,7 @@ describe(toRanges.name, () => {
 
   it('identical: two configurations with exactly the same boundaries', () => {
     const ranges = toRanges([saved('a', 100, 200), saved('b', 100, 200)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       {
         from: 100,
@@ -167,7 +167,7 @@ describe(toRanges.name, () => {
 
   it('single point: configuration starts and ends in the same time', () => {
     const ranges = toRanges([saved('a', 100, 100)])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       {
         from: 100,
@@ -188,7 +188,7 @@ describe(toRanges.name, () => {
       saved('c', 500, 600),
       saved('a', 100, 200),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       { from: 100, to: 200, configurations: [actual('a', 100, 200)] },
       { from: 201, to: 299, configurations: [] },
@@ -205,7 +205,7 @@ describe(toRanges.name, () => {
       saved('b', 100, 300),
       saved('c', 100, 400),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       {
         from: 100,
@@ -236,7 +236,7 @@ describe(toRanges.name, () => {
       saved('b', 100, 300, 200),
       saved('c', 100, null, undefined),
     ])
-    expect(ranges).toEqual([
+    expect(ranges).toStrictEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
       {
         from: 100,

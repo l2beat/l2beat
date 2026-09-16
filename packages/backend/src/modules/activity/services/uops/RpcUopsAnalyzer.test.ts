@@ -15,7 +15,8 @@ import {
   EthereumAddress,
   type Transaction,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
 describe(RpcUopsAnalyzer.name, () => {
@@ -26,17 +27,18 @@ describe(RpcUopsAnalyzer.name, () => {
       const tx2 = mockObject<Transaction>()
       const tx3 = mockObject<Transaction>()
 
-      analyzer.mapTransaction = mockFn()
-        .returnsOnce(1)
-        .returnsOnce(2)
-        .returnsOnce(4)
+      analyzer.mapTransaction = vi
+        .fn()
+        .mockReturnValueOnce(1)
+        .mockReturnValueOnce(2)
+        .mockReturnValueOnce(4)
 
       const block = mockObject<Block>({
         transactions: [tx1, tx2, tx3],
       })
 
       const result = analyzer.calculateUops(block)
-      expect(result).toEqual(7)
+      expect(result).toStrictEqual(7)
     })
   })
 
@@ -49,10 +51,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle ERC-4337:EntryPoint0.7.0', () => {
@@ -63,10 +65,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle ERC-4337:EntryPoint0.8.0', () => {
@@ -77,10 +79,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle Safe:MultiSendCallOnly1.3.0', () => {
@@ -91,10 +93,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle Safe:Singleton1.3.0', () => {
@@ -105,10 +107,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle EIP-712', () => {
@@ -120,10 +122,10 @@ describe(RpcUopsAnalyzer.name, () => {
         type: EIP712_TX_TYPE,
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle Multicall v3', () => {
@@ -134,10 +136,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle ERC20Router', () => {
@@ -148,10 +150,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle EIP-7821', () => {
@@ -162,10 +164,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toStrictEqual(2)
     })
 
     it('should handle unrecognized tx', () => {
@@ -176,10 +178,10 @@ describe(RpcUopsAnalyzer.name, () => {
         hash: '0x0',
       }
 
-      analyzer.countUserOperations = mockFn().returns(2)
+      analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(1)
+      expect(count).toStrictEqual(1)
     })
   })
 
@@ -191,7 +193,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x1234abcd', mockMethods)
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
     })
 
     it('should correctly count recursive operations', () => {
@@ -211,7 +213,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x5678abcd', mockMethods)
-      expect(result).toEqual(2)
+      expect(result).toStrictEqual(2)
     })
 
     it('should handle unknown selectors', () => {
@@ -221,7 +223,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x5678abcd', mockMethods)
-      expect(result).toEqual(1)
+      expect(result).toStrictEqual(1)
     })
   })
 })

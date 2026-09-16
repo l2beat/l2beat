@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
@@ -40,11 +41,11 @@ describe(DaBeatPricesIndexer.name, () => {
       ])
 
       const priceProvider = mockObject<PriceProvider>({
-        getLatestPrices: mockFn().resolvesTo(pricesMap),
+        getLatestPrices: vi.fn().mockResolvedValue(pricesMap),
       })
 
       const currentPriceRepository = mockObject<Database['currentPrice']>({
-        upsertMany: mockFn().resolvesTo(undefined),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configuration = mockConfiguration(['ethereum', 'bitcoin'])
@@ -59,28 +60,30 @@ describe(DaBeatPricesIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
 
-      expect(priceProvider.getLatestPrices).toHaveBeenOnlyCalledWith([
+      expect(priceProvider.getLatestPrices).toHaveBeenCalledExactlyOnceWith([
         CoingeckoId('ethereum'),
         CoingeckoId('bitcoin'),
       ])
 
-      expect(currentPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
-        { coingeckoId: CoingeckoId('ethereum'), priceUsd: 2500.5 },
-        { coingeckoId: CoingeckoId('bitcoin'), priceUsd: 45000.75 },
-      ])
+      expect(currentPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        [
+          { coingeckoId: CoingeckoId('ethereum'), priceUsd: 2500.5 },
+          { coingeckoId: CoingeckoId('bitcoin'), priceUsd: 45000.75 },
+        ],
+      )
 
-      expect(result).toEqual(200)
+      expect(result).toStrictEqual(200)
     })
 
     it('returns early when no prices found', async () => {
       const emptyPricesMap = new Map()
 
       const priceProvider = mockObject<PriceProvider>({
-        getLatestPrices: mockFn().resolvesTo(emptyPricesMap),
+        getLatestPrices: vi.fn().mockResolvedValue(emptyPricesMap),
       })
 
       const currentPriceRepository = mockObject<Database['currentPrice']>({
-        upsertMany: mockFn().resolvesTo(undefined),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configuration = mockConfiguration(['ethereum'])
@@ -95,19 +98,19 @@ describe(DaBeatPricesIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
 
-      expect(priceProvider.getLatestPrices).toHaveBeenOnlyCalledWith([
+      expect(priceProvider.getLatestPrices).toHaveBeenCalledExactlyOnceWith([
         CoingeckoId('ethereum'),
       ])
 
       expect(currentPriceRepository.upsertMany).not.toHaveBeenCalled()
-      expect(result).toEqual(200)
+      expect(result).toStrictEqual(200)
     })
 
     it('handles price provider errors', async () => {
       const priceProvider = mockObject<PriceProvider>({
-        getLatestPrices: mockFn().rejectsWith(
-          new Error('Price provider error'),
-        ),
+        getLatestPrices: vi
+          .fn()
+          .mockRejectedValue(new Error('Price provider error')),
       })
 
       const configuration = mockConfiguration(['ethereum'])
@@ -120,14 +123,14 @@ describe(DaBeatPricesIndexer.name, () => {
 
       await expect(
         indexer.multiUpdate(100, 200, [configuration]),
-      ).toBeRejectedWith('Price provider error')
+      ).rejects.toThrow('Price provider error')
     })
   })
 
   describe(DaBeatPricesIndexer.prototype.wipeData.name, () => {
     it('deletes records by coingecko ids', async () => {
       const currentPriceRepository = mockObject<Database['currentPrice']>({
-        deleteByCoingeckoIds: mockFn().resolvesTo(5),
+        deleteByCoingeckoIds: vi.fn().mockResolvedValue(5),
       })
 
       const configuration = mockConfiguration(['ethereum', 'bitcoin'])
@@ -142,7 +145,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
       expect(
         currentPriceRepository.deleteByCoingeckoIds,
-      ).toHaveBeenOnlyCalledWith(['ethereum', 'bitcoin'])
+      ).toHaveBeenCalledExactlyOnceWith(['ethereum', 'bitcoin'])
     })
 
     it('throws error when multiple configurations provided', async () => {
@@ -154,7 +157,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
       await expect(
         indexer.wipeData([{ id: 'config1' }, { id: 'config2' }]),
-      ).toBeRejectedWith('Assertion Error')
+      ).rejects.toThrow('Assertion Error')
     })
   })
 })

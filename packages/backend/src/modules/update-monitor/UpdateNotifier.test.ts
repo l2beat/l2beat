@@ -9,7 +9,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
   type DailyReminderChainEntry,
@@ -21,7 +22,7 @@ const TIMESTAMP = UnixTime.now()
 
 describe(UpdateNotifier.name, () => {
   const projectService = mockObject<ProjectService>({
-    getProject: mockFn().resolvesTo(undefined),
+    getProject: vi.fn().mockResolvedValue(undefined),
   })
 
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
@@ -35,8 +36,8 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
-      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
         storeAndPrune: async () => {},
@@ -108,8 +109,8 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
-      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
 
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
@@ -187,8 +188,8 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
-      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
 
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
@@ -262,7 +263,7 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => 0,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
 
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
@@ -325,8 +326,8 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
-      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
         storeAndPrune: async () => {},
@@ -348,7 +349,7 @@ describe(UpdateNotifier.name, () => {
         ],
       }
       const mockProjectService = mockObject<ProjectService>({
-        getProject: mockFn().resolvesTo(mockProject),
+        getProject: vi.fn().mockResolvedValue(mockProject),
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -415,8 +416,8 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
-      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
-      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
         storeAndPrune: async () => {},
@@ -438,7 +439,7 @@ describe(UpdateNotifier.name, () => {
         ],
       }
       const mockProjectService = mockObject<ProjectService>({
-        getProject: mockFn().resolvesTo(mockProject),
+        getProject: vi.fn().mockResolvedValue(mockProject),
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -667,11 +668,9 @@ describe(UpdateNotifier.name, () => {
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
-      const message = discordClient.sendMessage.calls[0]?.args[0] as string
-      expect(message).toInclude(
-        ':warning: Disabled projects: `project-aaa`',
-        ':warning: Failed projects: `project-bbb`',
-      )
+      const message = discordClient.sendMessage.mock.calls[0][0] as string
+      expect(message).toContain(':warning: Disabled projects: `project-aaa`')
+      expect(message).toContain(':warning: Failed projects: `project-bbb`')
     })
   })
 })

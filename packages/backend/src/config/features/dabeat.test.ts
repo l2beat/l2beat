@@ -1,7 +1,8 @@
 import { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { FeatureFlags } from '../FeatureFlags'
 import { getDaBeatConfig } from './dabeat'
 
@@ -24,7 +25,7 @@ const projects = [
 
 function mockProjectService(): ProjectService {
   return mockObject<ProjectService>({
-    getProjects: mockFn().resolvesToOnce(projects),
+    getProjects: vi.fn().mockResolvedValueOnce(projects),
   })
 }
 
@@ -36,11 +37,11 @@ describe(getDaBeatConfig.name, () => {
       new FeatureFlags('da-beat'),
     )
 
-    expect(config.projectsForDaBeatStats).toEqual([
+    expect(config.projectsForDaBeatStats).toStrictEqual([
       ProjectId('avail'),
       ProjectId('celestia'),
     ])
-    expect(config.coingeckoIds).toEqual(['avail', 'celestia'])
+    expect(config.coingeckoIds).toStrictEqual(['avail', 'celestia'])
   })
 
   it('excludes a project disabled with !da-beat.<project>', async () => {
@@ -50,7 +51,7 @@ describe(getDaBeatConfig.name, () => {
       new FeatureFlags('da-beat,!da-beat.avail'),
     )
 
-    expect(config.projectsForDaBeatStats).toEqual([ProjectId('celestia')])
-    expect(config.coingeckoIds).toEqual(['celestia'])
+    expect(config.projectsForDaBeatStats).toStrictEqual([ProjectId('celestia')])
+    expect(config.coingeckoIds).toStrictEqual(['celestia'])
   })
 })

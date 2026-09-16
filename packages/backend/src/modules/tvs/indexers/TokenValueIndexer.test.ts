@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { Database, TokenValueRecord } from '@l2beat/database'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -26,16 +27,16 @@ describe(TokenValueIndexer.name, () => {
       const configs = [config(mockToken1), config(mockToken2)]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce(timestamps),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce(timestamps),
       })
 
       const dbStorage = mockObject<DBStorage>({
-        preloadPrices: mockFn().returnsOnce(undefined),
-        preloadAmounts: mockFn().returnsOnce(undefined),
+        preloadPrices: vi.fn().mockReturnValueOnce(undefined),
+        preloadAmounts: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const valueService = mockObject<ValueService>({
-        calculate: mockFn().returnsOnce([
+        calculate: vi.fn().mockReturnValueOnce([
           { ...value(timestamps[0], project, 'token-1', 100), priceUsd: 10 },
           { ...value(timestamps[0], project, 'token-2', 200), priceUsd: 20 },
           { ...value(timestamps[1], project, 'token-1', 150), priceUsd: 10 },
@@ -46,11 +47,11 @@ describe(TokenValueIndexer.name, () => {
       })
 
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn().returnsOnce(undefined),
+        updateSyncedUntil: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new TokenValueIndexer(
@@ -74,7 +75,7 @@ describe(TokenValueIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
+      expect(syncOptimizer.getTimestampsToSync).toHaveBeenCalledExactlyOnceWith(
         from,
         to,
         10,
@@ -83,7 +84,7 @@ describe(TokenValueIndexer.name, () => {
       expect(dbStorage.preloadPrices).toHaveBeenCalled()
       expect(dbStorage.preloadAmounts).toHaveBeenCalled()
 
-      expect(valueService.calculate).toHaveBeenOnlyCalledWith(
+      expect(valueService.calculate).toHaveBeenCalledExactlyOnceWith(
         {
           projectId: project,
           tokens: configs.map((c) => c.properties),
@@ -100,11 +101,13 @@ describe(TokenValueIndexer.name, () => {
         record(timestamps[2], mockToken2, project, 280, 20),
       ]
 
-      expect(tvsTokenValueRepository.upsertMany).toHaveBeenOnlyCalledWith(
-        expectedRecords,
-      )
-      expect(safeHeight).toEqual(timestamps[timestamps.length - 1])
-      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+      expect(
+        tvsTokenValueRepository.upsertMany,
+      ).toHaveBeenCalledExactlyOnceWith(expectedRecords)
+      expect(safeHeight).toStrictEqual(timestamps[timestamps.length - 1])
+      expect(
+        syncMetadataRepository.updateSyncedUntil,
+      ).toHaveBeenCalledExactlyOnceWith(
         'tvs',
         configs.map((c) => c.properties.id),
         timestamps[timestamps.length - 1],
@@ -121,7 +124,7 @@ describe(TokenValueIndexer.name, () => {
       const configs = [config(mockToken)]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce(timestamps),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce(timestamps),
       })
 
       const indexer = new TokenValueIndexer(
@@ -142,19 +145,19 @@ describe(TokenValueIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
+      expect(syncOptimizer.getTimestampsToSync).toHaveBeenCalledExactlyOnceWith(
         from,
         to,
         10,
       )
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
   })
 
   describe(TokenValueIndexer.prototype.trimData.name, () => {
     it('deletes records for configuration in time range', async () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        deleteByConfigInTimeRange: mockFn().returns(1),
+        deleteByConfigInTimeRange: vi.fn().mockReturnValue(1),
       })
 
       const mockToken = createMockToken('token-1')
@@ -272,7 +275,7 @@ describe(TokenValueIndexer.name, () => {
 
       const configId = TokenValueIndexer.idToConfigurationId(token)
 
-      expect(configId).toEqual('c4b862cc3e9e')
+      expect(configId).toStrictEqual('c4b862cc3e9e')
     })
   })
 

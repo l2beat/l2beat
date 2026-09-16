@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getWindowedLogZScore } from './zScore'
 
 describe(getWindowedLogZScore.name, () => {
@@ -8,8 +8,10 @@ describe(getWindowedLogZScore.name, () => {
       1_000_000,
     ])
 
-    expect(result.robust).toEqual(null)
-    expect(result.classic !== null ? result.classic > 7 : false).toEqual(true)
+    expect(result.robust).toStrictEqual(null)
+    expect(result.classic !== null ? result.classic > 7 : false).toStrictEqual(
+      true,
+    )
   })
 
   it('suppresses z-scores for sparse mostly-zero history', () => {
@@ -17,7 +19,7 @@ describe(getWindowedLogZScore.name, () => {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 100,
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       robust: null,
       classic: null,
     })

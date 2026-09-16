@@ -1,7 +1,7 @@
 import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
 import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
@@ -80,7 +80,7 @@ describe(extractPrivacyFlow.name, () => {
         1500n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual({
+      expect(extractPrivacyFlow(config, log)).toStrictEqual({
         count: 1,
         amount: 1500n,
       })
@@ -93,7 +93,7 @@ describe(extractPrivacyFlow.name, () => {
         0n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toStrictEqual(undefined)
     })
 
     it('ignores self transfers', () => {
@@ -103,7 +103,7 @@ describe(extractPrivacyFlow.name, () => {
         1500n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toStrictEqual(undefined)
     })
 
     it('ignores transfers whose recipient is not the configured `to`', () => {
@@ -113,7 +113,7 @@ describe(extractPrivacyFlow.name, () => {
         1500n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toStrictEqual(undefined)
     })
 
     it('ignores transfers whose sender is not the configured `from`', () => {
@@ -125,7 +125,7 @@ describe(extractPrivacyFlow.name, () => {
 
       expect(
         extractPrivacyFlow({ ...config, params: { from: ADDRESS } }, log),
-      ).toEqual(undefined)
+      ).toStrictEqual(undefined)
     })
   })
 
@@ -144,7 +144,10 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 1_000_000_000_000_000_000n })
+      expect(result).toStrictEqual({
+        count: 1,
+        amount: 1_000_000_000_000_000_000n,
+      })
     })
   })
 
@@ -166,7 +169,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 12_345n })
+      expect(result).toStrictEqual({ count: 1, amount: 12_345n })
     })
 
     it('extracts value from Withdrawn event', () => {
@@ -186,7 +189,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 9_999n })
+      expect(result).toStrictEqual({ count: 1, amount: 9_999n })
     })
   })
 
@@ -228,7 +231,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 2, amount: 350n })
+      expect(result).toStrictEqual({ count: 2, amount: 350n })
     })
 
     it('skips non-ERC20 commitments', () => {
@@ -261,7 +264,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 500n })
+      expect(result).toStrictEqual({ count: 1, amount: 500n })
     })
 
     it('skips commitments with mismatched token address', () => {
@@ -285,7 +288,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('returns undefined when no commitments match', () => {
@@ -293,7 +296,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -320,7 +323,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 777n })
+      expect(result).toStrictEqual({ count: 1, amount: 777n })
     })
 
     it('returns undefined for non-ERC20 token type', () => {
@@ -337,7 +340,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('returns undefined when token address does not match', () => {
@@ -354,7 +357,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -382,7 +385,7 @@ describe(extractPrivacyFlow.name, () => {
         announcement(TOKEN_ADDRESS, 42n),
       )
 
-      expect(result).toEqual({ count: 1, amount: 42n })
+      expect(result).toStrictEqual({ count: 1, amount: 42n })
     })
 
     it('returns undefined when the announced token does not match', () => {
@@ -391,7 +394,7 @@ describe(extractPrivacyFlow.name, () => {
         announcement(OTHER_TOKEN_ADDRESS, 42n),
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('extracts amount from matching TokenWithdrawal event', () => {
@@ -407,7 +410,7 @@ describe(extractPrivacyFlow.name, () => {
         log,
       )
 
-      expect(result).toEqual({ count: 1, amount: 555n })
+      expect(result).toStrictEqual({ count: 1, amount: 555n })
     })
 
     it('returns undefined when the withdrawn token does not match', () => {
@@ -423,7 +426,7 @@ describe(extractPrivacyFlow.name, () => {
         log,
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
 
     it('counts an ETH Announcement as both a deposit and a withdrawal', () => {
@@ -433,13 +436,13 @@ describe(extractPrivacyFlow.name, () => {
       }
       const log = announcement(ETH_TOKEN_PLACEHOLDER, 7n)
 
-      expect(extractPrivacyFlow(ethConfig, log)).toEqual({
+      expect(extractPrivacyFlow(ethConfig, log)).toStrictEqual({
         count: 1,
         amount: 7n,
       })
       expect(
         extractPrivacyFlow({ ...ethConfig, direction: 'withdrawal' }, log),
-      ).toEqual({ count: 1, amount: 7n })
+      ).toStrictEqual({ count: 1, amount: 7n })
     })
   })
 
@@ -459,7 +462,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 123_456n })
+      expect(result).toStrictEqual({ count: 1, amount: 123_456n })
     })
   })
 
@@ -481,7 +484,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 9_870n })
+      expect(result).toStrictEqual({ count: 1, amount: 9_870n })
     })
   })
 })
@@ -502,7 +505,7 @@ describe(extractPrivacyAnonymitySetDeposit.name, () => {
       4n,
     ])
 
-    expect(extractPrivacyAnonymitySetDeposit(source, log)).toEqual({
+    expect(extractPrivacyAnonymitySetDeposit(source, log)).toStrictEqual({
       amount: 12_345n,
       origin: { type: 'event', sender: depositor },
     })
@@ -539,6 +542,6 @@ describe(extractPrivacyAnonymitySetDeposit.name, () => {
         data: '0x',
         topics: [],
       }),
-    ).toEqual({ amount: 100n, origin: { type: 'transaction' } })
+    ).toStrictEqual({ amount: 100n, origin: { type: 'transaction' } })
   })
 })

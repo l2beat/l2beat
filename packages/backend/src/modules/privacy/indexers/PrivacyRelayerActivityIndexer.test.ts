@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import type { Configuration } from '../../../tools/uif/multi/types'
@@ -48,22 +49,23 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     }
 
     const logsProvider = mockObject<LogsProvider>({
-      getLogs: mockFn().returnsOnce([log]),
+      getLogs: vi.fn().mockReturnValueOnce([log]),
     })
     const blockProvider = mockObject<BlockProvider>({
-      getBlockTimestamps: mockFn(),
+      getBlockTimestamps: vi.fn(),
     })
     const privacyBlockTimestamp = mockObject<Database['privacyBlockTimestamp']>(
       {
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       },
     )
     const privacyRelayerActivity = mockObject<
       Database['privacyRelayerActivity']
     >({
-      upsertMany: mockFn().returnsOnce(undefined),
+      upsertMany: vi.fn().mockReturnValueOnce(undefined),
     })
 
     const indexer = new PrivacyRelayerActivityIndexer(
@@ -85,14 +87,14 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     const save = await indexer.multiUpdate(from, to, configurations)
     const safeHeight = await save()
 
-    expect(logsProvider.getLogs).toHaveBeenOnlyCalledWith(
+    expect(logsProvider.getLogs).toHaveBeenCalledExactlyOnceWith(
       50,
       150,
       [CONTRACT.toString()],
       [[EVENT]],
     )
     expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
-    expect(privacyRelayerActivity.upsertMany).toHaveBeenOnlyCalledWith([
+    expect(privacyRelayerActivity.upsertMany).toHaveBeenCalledExactlyOnceWith([
       {
         configurationId: 'config-1',
         projectId: 'privacy-pools',
@@ -104,7 +106,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
         relayerAddress: RELAYER,
       },
     ])
-    expect(safeHeight).toEqual(to)
+    expect(safeHeight).toStrictEqual(to)
   })
 
   describe(PrivacyRelayerActivityIndexer.idToConfigurationId.name, () => {
@@ -113,7 +115,9 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
 
       expect(
         PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      ).toEqual(PrivacyRelayerActivityIndexer.idToConfigurationId(properties))
+      ).toStrictEqual(
+        PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
+      )
     })
 
     it('differs by extractor', () => {
@@ -121,7 +125,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
 
       expect(
         PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      ).not.toEqual(
+      ).not.toStrictEqual(
         PrivacyRelayerActivityIndexer.idToConfigurationId({
           ...properties,
           event: getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,

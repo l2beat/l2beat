@@ -1,20 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EventTracker } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { TaskQueue } from './TaskQueue'
 
 describe(TaskQueue.name, () => {
-  let time: InstalledClock
-
   beforeEach(() => {
-    time = install()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   it('executes all jobs', async () => {
@@ -31,9 +29,9 @@ describe(TaskQueue.name, () => {
       queue.addToBack(i)
     }
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(completed).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
   it('can handle occasional failure', async () => {
@@ -58,14 +56,14 @@ describe(TaskQueue.name, () => {
       queue.addToBack(i)
     }
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(completed).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
   it('can stop on permanent failure', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
-      record: mockFn().returns(undefined),
+      record: vi.fn().mockReturnValue(undefined),
     })
 
     const completed: number[] = []
@@ -89,16 +87,16 @@ describe(TaskQueue.name, () => {
       queue.addToBack(i)
     }
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(queue.isStopped()).toEqual(true)
-    expect(completed).toEqual([0]) // everything after task '1' was dropped
+    expect(queue.isStopped()).toStrictEqual(true)
+    expect(completed).toStrictEqual([0]) // everything after task '1' was dropped
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
   it('notifies after configured threshold is reached', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
-      record: mockFn().returns(undefined),
+      record: vi.fn().mockReturnValue(undefined),
     })
 
     const error = new Error('oops')
@@ -126,7 +124,7 @@ describe(TaskQueue.name, () => {
     })
     queue.addToBack(0)
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
     // max attempts = 5
     // notify after attempts = 2
@@ -139,16 +137,16 @@ describe(TaskQueue.name, () => {
     // 3 notifications + 1 error when stopping queue
     expect(logger.error).toHaveBeenCalledTimes(3)
     expect(logger.error).toHaveBeenNthCalledWith(1, error, {
-      job: expect.a(Object),
+      job: expect.any(Object),
     })
     expect(logger.error).toHaveBeenNthCalledWith(2, error, {
-      job: expect.a(Object),
+      job: expect.any(Object),
     })
     expect(logger.error).toHaveBeenNthCalledWith(
       3,
       'Stopping queue because of error',
       {
-        job: expect.a(Object),
+        job: expect.any(Object),
         error,
       },
     )
@@ -169,9 +167,9 @@ describe(TaskQueue.name, () => {
       queue.addToFront(i)
     }
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(completed).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
+    expect(completed).toStrictEqual([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
   })
 
   it('can add jobs only if empty', async () => {
@@ -189,9 +187,9 @@ describe(TaskQueue.name, () => {
     }
     queue.addToBack(420)
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(completed).toEqual([0, 420])
+    expect(completed).toStrictEqual([0, 420])
   })
 
   it('can accept only positive integers for workers', async () => {
@@ -228,9 +226,9 @@ describe(TaskQueue.name, () => {
     queue.addToBack(1)
     queue.addToBack(2)
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
-    expect(completed).toEqual([1, 1, 3, 2, 5])
+    expect(completed).toStrictEqual([1, 1, 3, 2, 5])
   })
 
   it('can wait until it is empty', async () => {
@@ -252,11 +250,11 @@ describe(TaskQueue.name, () => {
     queue.addToBack(1)
     queue.addToBack(2)
 
-    await time.runAllAsync()
+    await vi.runAllTimersAsync()
 
     await queue.waitTillEmpty()
 
-    expect(queue.length).toEqual(0)
+    expect(queue.length).toStrictEqual(0)
   })
 })
 

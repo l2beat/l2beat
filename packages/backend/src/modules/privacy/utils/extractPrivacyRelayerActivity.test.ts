@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { utils } from 'ethers'
+import { describe, expect, it } from 'vitest'
 import type {
   PrivacyRelayerActivityIndexerConfig,
   PrivacyRpcLog,
@@ -26,10 +26,10 @@ describe(extractPrivacyRelayerActivity.name, () => {
   it('derives event topics from the extractor definitions', () => {
     expect(
       getPrivacyRelayerExtractor('privacyPoolsWithdrawalRelayed').event,
-    ).toEqual(privacyPoolsInterface.getEventTopic('WithdrawalRelayed'))
-    expect(getPrivacyRelayerExtractor('tornadoCashWithdrawal').event).toEqual(
-      tornadoCashInterface.getEventTopic('Withdrawal'),
-    )
+    ).toStrictEqual(privacyPoolsInterface.getEventTopic('WithdrawalRelayed'))
+    expect(
+      getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,
+    ).toStrictEqual(tornadoCashInterface.getEventTopic('Withdrawal'))
   })
 
   it('extracts Privacy Pools relayer', () => {
@@ -46,7 +46,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       relayerAddress: RELAYER,
     })
   })
@@ -64,7 +64,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       relayerAddress: RELAYER,
     })
   })
@@ -83,7 +83,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('ignores a Tornado Cash self-withdrawal with the zero relayer address', () => {
@@ -99,7 +99,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })
 

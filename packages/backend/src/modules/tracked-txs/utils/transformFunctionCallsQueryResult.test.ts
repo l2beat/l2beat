@@ -13,9 +13,10 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { readFileSync } from 'fs'
+import { describe, expect, it, vi } from 'vitest'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -68,7 +69,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
-    const warn = mockFn().returns(undefined)
+    const warn = vi.fn().mockReturnValue(undefined)
     const logger = mockObject<Logger>({ warn })
     const common = {
       projectId: ProjectId('project'),
@@ -155,7 +156,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const liveness = result.filter((entry) => entry.type === 'liveness')
     const costs = result.filter((entry) => entry.type === 'l2costs')
 
-    expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
+    expect(liveness.map((entry) => entry.groupingKey)).toStrictEqual([
+      '123',
+      '123',
+    ])
     expect(costs).toHaveLength(3)
     expect(warn).toHaveBeenCalledWith(
       'Failed to derive liveness grouping key',
@@ -318,7 +322,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       Logger.SILENT,
     )
 
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('throws when there is no matching configuration', () => {
@@ -430,7 +434,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       Logger.SILENT,
     )
 
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('includes only configurations where chain id matches', () => {
@@ -546,7 +550,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       Logger.SILENT,
     )
 
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('includes only configurations where chain address matches', () => {
@@ -622,7 +626,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       Logger.SILENT,
     )
 
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 
   it('should calculate calldata gas used correctly', () => {
@@ -765,7 +769,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       Logger.SILENT,
     )
 
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 })
 

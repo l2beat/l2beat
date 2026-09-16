@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { formatDuration } from './format'
 
 describe(formatDuration.name, () => {
@@ -12,16 +12,16 @@ describe(formatDuration.name, () => {
       formatDuration(
         days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds + 0.1234,
       ),
-    ).toEqual(`${days} days ${hours} hours`)
+    ).toStrictEqual(`${days} days ${hours} hours`)
 
     expect(
       formatDuration(hours * 60 * 60 + minutes * 60 + seconds + 0.1234),
-    ).toEqual(`${hours} hours ${minutes} minutes`)
+    ).toStrictEqual(`${hours} hours ${minutes} minutes`)
 
-    expect(formatDuration(minutes * 60 + seconds + 0.1234)).toEqual(
+    expect(formatDuration(minutes * 60 + seconds + 0.1234)).toStrictEqual(
       `${minutes} minutes ${seconds} seconds`,
     )
 
-    expect(formatDuration(seconds + 0.1234)).toEqual(`${seconds} seconds`)
+    expect(formatDuration(seconds + 0.1234)).toStrictEqual(`${seconds} seconds`)
   })
 })

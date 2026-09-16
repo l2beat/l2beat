@@ -3,7 +3,8 @@ import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -52,23 +53,24 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([log]),
+        getLogs: vi.fn().mockReturnValueOnce([log]),
       })
 
       const blockProvider = mockObject<BlockProvider>({
-        getBlockTimestamps: mockFn(),
+        getBlockTimestamps: vi.fn(),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
             timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
@@ -79,7 +81,7 @@ describe(PrivacyFlowIndexer.name, () => {
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -102,7 +104,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(logsProvider.getLogs).toHaveBeenOnlyCalledWith(
+      expect(logsProvider.getLogs).toHaveBeenCalledExactlyOnceWith(
         50,
         150,
         [ADDRESS_A.toString()],
@@ -111,7 +113,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
 
-      expect(privacyFlowEventRepo.upsertMany).toHaveBeenOnlyCalledWith([
+      expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'config-1',
           projectId: 'project-1',
@@ -131,7 +133,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       // adjustedTo = min(toNext(from, 'day'), to). For 5-hour window inside a day,
       // adjustedTo === to.
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('clamps update window to next day boundary', async () => {
@@ -151,19 +153,20 @@ describe(PrivacyFlowIndexer.name, () => {
       ]
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([]),
+        getLogs: vi.fn().mockReturnValueOnce([]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(10)
-          .returnsOnce(20),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(10)
+          .mockReturnValueOnce(20),
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -186,7 +189,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(safeHeight).toEqual(expectedTo)
+      expect(safeHeight).toStrictEqual(expectedTo)
     })
 
     it('skips log fetch when configurations slice is empty', async () => {
@@ -203,10 +206,10 @@ describe(PrivacyFlowIndexer.name, () => {
       })
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn(),
+        getLogs: vi.fn(),
       })
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -230,8 +233,10 @@ describe(PrivacyFlowIndexer.name, () => {
       const safeHeight = await updateFn()
 
       expect(logsProvider.getLogs).not.toHaveBeenCalled()
-      expect(privacyFlowEventRepo.upsertMany).toHaveBeenOnlyCalledWith([])
-      expect(safeHeight).toEqual(to)
+      expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        [],
+      )
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('throws when block timestamp mapping is missing', async () => {
@@ -252,7 +257,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn().returns(undefined),
+        findBlockNumberByChainAndTimestamp: vi.fn().mockReturnValue(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -274,7 +279,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       await expect(
         async () => await indexer.multiUpdate(from, to, configs),
-      ).toBeRejectedWith('Missing block timestamp mapping')
+      ).rejects.toThrow('Missing block timestamp mapping')
     })
 
     it('queries blockProvider for logs without blockTimestamp', async () => {
@@ -327,11 +332,11 @@ describe(PrivacyFlowIndexer.name, () => {
       ]
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce(logs),
+        getLogs: vi.fn().mockReturnValueOnce(logs),
       })
 
       const blockProvider = mockObject<BlockProvider>({
-        getBlockTimestamps: mockFn().returnsOnce(
+        getBlockTimestamps: vi.fn().mockReturnValueOnce(
           new Map<number, UnixTime>([
             [100, blockTimestamp],
             [200, blockTimestamp],
@@ -342,13 +347,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(250),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(250),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
             timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
@@ -359,7 +365,7 @@ describe(PrivacyFlowIndexer.name, () => {
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -382,7 +388,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       await updateFn()
 
-      expect(blockProvider.getBlockTimestamps).toHaveBeenOnlyCalledWith([
+      expect(blockProvider.getBlockTimestamps).toHaveBeenCalledExactlyOnceWith([
         100, 200,
       ])
       expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledTimes(1)
@@ -417,23 +423,24 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([mismatchedLog]),
+        getLogs: vi.fn().mockReturnValueOnce([mismatchedLog]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn(),
+        getPricesByPriceIdsInRange: vi.fn(),
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -457,7 +464,9 @@ describe(PrivacyFlowIndexer.name, () => {
       await updateFn()
 
       expect(privacyPriceRepo.getPricesByPriceIdsInRange).not.toHaveBeenCalled()
-      expect(privacyFlowEventRepo.upsertMany).toHaveBeenOnlyCalledWith([])
+      expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        [],
+      )
     })
 
     it('computes valueUsd using decimals and price', async () => {
@@ -488,19 +497,20 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([log]),
+        getLogs: vi.fn().mockReturnValueOnce([log]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'usdc',
             timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
@@ -511,7 +521,7 @@ describe(PrivacyFlowIndexer.name, () => {
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -534,11 +544,11 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       await updateFn()
 
-      const call = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
-      expect(call?.length).toEqual(1)
+      const call = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
+      expect(call?.length).toStrictEqual(1)
       // 2.5 USDC * $1.01
-      expect(call?.[0]?.valueUsd).toEqual(2.5 * 1.01)
-      expect(call?.[0]?.amount).toEqual(2_500_000n)
+      expect(call?.[0]?.valueUsd).toStrictEqual(2.5 * 1.01)
+      expect(call?.[0]?.amount).toStrictEqual(2_500_000n)
     })
 
     it('throws when price is missing for raw record', async () => {
@@ -569,19 +579,20 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([log]),
+        getLogs: vi.fn().mockReturnValueOnce([log]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([]),
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([]),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -604,7 +615,7 @@ describe(PrivacyFlowIndexer.name, () => {
       await expect(async () => {
         const updateFn = await indexer.multiUpdate(from, to, configs)
         await updateFn()
-      }).toBeRejectedWith('Missing price for ethereum')
+      }).rejects.toThrow('Missing price for ethereum')
     })
 
     it('throws when extractor fails on a single log', async () => {
@@ -646,15 +657,16 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([log]),
+        getLogs: vi.fn().mockReturnValueOnce([log]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -676,7 +688,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       await expect(
         async () => await indexer.multiUpdate(from, to, [badConfig]),
-      ).toBeRejected()
+      ).rejects.toThrow()
     })
 
     it('groups logs and configurations by address + topic', async () => {
@@ -723,19 +735,20 @@ describe(PrivacyFlowIndexer.name, () => {
       }
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([logA, logB]),
+        getLogs: vi.fn().mockReturnValueOnce([logA, logB]),
       })
 
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(200),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(200),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
             timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
@@ -746,7 +759,7 @@ describe(PrivacyFlowIndexer.name, () => {
       })
 
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -769,17 +782,17 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [configA, configB])
       await updateFn()
 
-      const getLogsCall = logsProvider.getLogs.calls[0]?.args
-      expect(new Set(getLogsCall?.[2])).toEqual(
+      const getLogsCall = logsProvider.getLogs.mock.calls[0]
+      expect(new Set(getLogsCall?.[2])).toStrictEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
-      expect(new Set(getLogsCall?.[3]?.[0])).toEqual(
+      expect(new Set(getLogsCall?.[3]?.[0])).toStrictEqual(
         new Set([TOPIC_A, TOPIC_B]),
       )
 
-      const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
-      expect(records?.length).toEqual(2)
-      expect(records?.map((r) => r.configurationId).sort()).toEqual([
+      const records = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
+      expect(records?.length).toStrictEqual(2)
+      expect(records?.map((r) => r.configurationId).sort()).toStrictEqual([
         'config-A',
         'config-B',
       ])
@@ -828,20 +841,22 @@ describe(PrivacyFlowIndexer.name, () => {
       const withdrawalLog = transferLog(POOL, USER, 7n, '0xtx3', blockTimestamp)
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn()
-          .returnsOnce([fixedLog])
-          .returnsOnce([depositLog])
-          .returnsOnce([withdrawalLog]),
+        getLogs: vi
+          .fn()
+          .mockReturnValueOnce([fixedLog])
+          .mockReturnValueOnce([depositLog])
+          .mockReturnValueOnce([withdrawalLog]),
       })
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
             timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
@@ -851,7 +866,7 @@ describe(PrivacyFlowIndexer.name, () => {
         ]),
       })
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyFlowIndexer(
@@ -896,10 +911,10 @@ describe(PrivacyFlowIndexer.name, () => {
         [[ERC20_TRANSFER_TOPIC], POOL_TOPIC],
       )
 
-      const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
+      const records = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
       expect(
         records?.map((r) => [r.configurationId, r.direction, r.amount]),
-      ).toEqual([
+      ).toStrictEqual([
         ['config-fixed', 'deposit', 1n],
         ['config-deposit', 'deposit', 10n],
         ['config-withdrawal', 'withdrawal', 7n],
@@ -910,7 +925,10 @@ describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.trimData.name, () => {
     it('deletes records for each configuration in the given time range', async () => {
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(0),
+        deleteByConfigInTimeRange: vi
+          .fn()
+          .mockReturnValueOnce(3)
+          .mockReturnValueOnce(0),
       })
 
       const placeholder = flowConfig({
@@ -958,7 +976,7 @@ describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        deleteByConfigIds: mockFn().returns(3),
+        deleteByConfigIds: vi.fn().mockReturnValue(3),
       })
       const placeholder = flowConfig({
         id: 'placeholder',
@@ -987,10 +1005,9 @@ describe(PrivacyFlowIndexer.name, () => {
 
       await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
 
-      expect(privacyFlowEventRepo.deleteByConfigIds).toHaveBeenOnlyCalledWith([
-        'config-1',
-        'config-2',
-      ])
+      expect(
+        privacyFlowEventRepo.deleteByConfigIds,
+      ).toHaveBeenCalledExactlyOnceWith(['config-1', 'config-2'])
     })
   })
 
@@ -1009,7 +1026,7 @@ describe(PrivacyFlowIndexer.name, () => {
         extractor: 'fixedAmount' as const,
         params: { amount: '1000' },
       }
-      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toEqual(
+      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toStrictEqual(
         '30b264b834f9',
       )
     })
@@ -1032,7 +1049,7 @@ describe(PrivacyFlowIndexer.name, () => {
           ...base,
           direction: 'deposit',
         }),
-      ).not.toEqual(
+      ).not.toStrictEqual(
         PrivacyFlowIndexer.idToConfigurationId({
           ...base,
           direction: 'withdrawal',
@@ -1058,7 +1075,7 @@ describe(PrivacyFlowIndexer.name, () => {
           ...base,
           params: { amount: '1000' },
         }),
-      ).not.toEqual(
+      ).not.toStrictEqual(
         PrivacyFlowIndexer.idToConfigurationId({
           ...base,
           params: { amount: '2000' },

@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
@@ -26,7 +27,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       const { indexer } = mockIndexer({ configurations, daLayer: DA_LAYER })
 
-      expect(indexer.daLayer).toEqual(DA_LAYER)
+      expect(indexer.daLayer).toStrictEqual(DA_LAYER)
     })
 
     it('should throw when configurations have mismatched daLayer', () => {
@@ -80,11 +81,11 @@ describe(EigenDaProjectsIndexer.name, () => {
       const safeHeight = await updateCallback()
 
       // should ask for start of the day
-      expect(eigenClient.getByProjectData).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getByProjectData).toHaveBeenCalledExactlyOnceWith(
         UnixTime.toStartOf(expectedAdjustedTo, 'day'),
       )
 
-      expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
+      expect(repository.upsertMany).toHaveBeenCalledExactlyOnceWith([
         {
           timestamp: mockProjectData[0].datetime,
           totalSize: BigInt(Math.round(100 * 1024 * 1024)),
@@ -94,13 +95,15 @@ describe(EigenDaProjectsIndexer.name, () => {
         },
       ])
 
-      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+      expect(
+        syncMetadataRepository.updateSyncedUntil,
+      ).toHaveBeenCalledExactlyOnceWith(
         'dataAvailability',
         configurations.map((c) => c.properties.projectId),
         expectedAdjustedTo,
       )
 
-      expect(safeHeight).toEqual(expectedAdjustedTo)
+      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
     })
 
     it('should skip update when not at 02:00:00', async () => {
@@ -127,7 +130,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       expect(eigenClient.getByProjectData).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toEqual(expectedAdjustedTo)
+      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
     })
 
     it('should handle empty data response', async () => {
@@ -154,7 +157,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       expect(eigenClient.getByProjectData).toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toEqual(expectedAdjustedTo)
+      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
     })
   })
 
@@ -193,7 +196,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: startOfDay + UnixTime.HOUR,
           totalSize: BigInt(Math.round(100 * 1024 * 1024)),
@@ -234,7 +237,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const result = await indexer.getByProjectData(to)
 
       // 09:00 is before since, 14:00 holds the until and 15:00 is after it
-      expect(result.map((r) => r.timestamp)).toEqual([
+      expect(result.map((r) => r.timestamp)).toStrictEqual([
         startOfDay + 10 * UnixTime.HOUR,
         startOfDay + 13 * UnixTime.HOUR,
       ])
@@ -273,7 +276,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: startOfDay + UnixTime.HOUR,
           totalSize: BigInt(Math.round(200 * 1024 * 1024)),
@@ -305,7 +308,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const firstFileDate = UnixTime.fromDate(
         new Date('2025-08-01T00:00:00.000Z'),
       )
-      expect(eigenClient.getByProjectData).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getByProjectData).toHaveBeenCalledExactlyOnceWith(
         firstFileDate,
       )
     })
@@ -350,7 +353,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: sameTimestamp,
           totalSize: BigInt(Math.round((100 + 50) * 1024 * 1024)),
@@ -387,7 +390,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       await indexer.wipeData(removalsConfigurations)
 
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         'config-1',
         'config-2',
       ])
@@ -462,7 +465,9 @@ describe(EigenDaProjectsIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         configuration.id,
         SINCE + 24 * UnixTime.HOUR,
         CURRENT - 1,
@@ -484,7 +489,9 @@ describe(EigenDaProjectsIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         configuration.id,
         SINCE,
         SINCE + 24 * UnixTime.HOUR - 1,
@@ -506,7 +513,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         configuration.id,
       ])
     })
@@ -524,33 +531,35 @@ function mockIndexer($: {
   }[]
 }) {
   const repository = mockObject<Database['dataAvailability']>({
-    deleteByConfigIds: mockFn().resolvesTo(10),
-    deleteByConfigurationId: mockFn().resolvesTo(10),
-    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
-    upsertMany: mockFn().resolvesTo(undefined),
+    deleteByConfigIds: vi.fn().mockResolvedValue(10),
+    deleteByConfigurationId: vi.fn().mockResolvedValue(10),
+    deleteByConfigInTimeRange: vi.fn().mockResolvedValue(10),
+    upsertMany: vi.fn().mockResolvedValue(undefined),
   })
 
   const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-    updateSyncedUntil: mockFn().resolvesTo(undefined),
+    updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
   })
 
   const eigenClient = mockObject<EigenApiClient>({
-    getByProjectData: mockFn().resolvesTo($.projectData ?? []),
+    getByProjectData: vi.fn().mockResolvedValue($.projectData ?? []),
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
-    insertConfigurations: mockFn().resolvesTo(undefined),
-    upsertConfigurations: mockFn().resolvesTo(undefined),
-    deleteConfigurations: mockFn().resolvesTo(undefined),
-    updateConfigurationsCurrentHeight: mockFn().resolvesTo(undefined),
-    setInitialState: mockFn().resolvesTo(undefined),
-    setSafeHeight: mockFn().resolvesTo(undefined),
-    getSafeHeight: mockFn().resolvesTo(0),
+    getSavedConfigurations: vi
+      .fn()
+      .mockResolvedValue($.savedConfigurations ?? []),
+    insertConfigurations: vi.fn().mockResolvedValue(undefined),
+    upsertConfigurations: vi.fn().mockResolvedValue(undefined),
+    deleteConfigurations: vi.fn().mockResolvedValue(undefined),
+    updateConfigurationsCurrentHeight: vi.fn().mockResolvedValue(undefined),
+    setInitialState: vi.fn().mockResolvedValue(undefined),
+    setSafeHeight: vi.fn().mockResolvedValue(undefined),
+    getSafeHeight: vi.fn().mockResolvedValue(0),
   })
 
   const db = mockDatabase({
-    transaction: mockFn(async (fun) => await fun()),
+    transaction: vi.fn(async (fun) => await fun()),
     dataAvailability: repository,
     syncMetadata: syncMetadataRepository,
   })

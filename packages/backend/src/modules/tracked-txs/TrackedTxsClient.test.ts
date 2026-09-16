@@ -8,8 +8,9 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { readFileSync } from 'fs'
+import { describe, expect, it, vi } from 'vitest'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -68,7 +69,7 @@ describe(TrackedTxsClient.name, () => {
       )
 
       // returns parsed data returned from internal methods
-      expect(data).toEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
+      expect(data).toStrictEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
     })
   })
 
@@ -414,11 +415,11 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
 
 function getMockDuneQueryService(responses: unknown[][]) {
   const service = mockObject<DuneQueryService>({
-    query: mockFn(),
+    query: vi.fn(),
   })
 
   for (const response of responses) {
-    service.query.resolvesToOnce(response)
+    service.query.mockResolvedValueOnce(response)
   }
 
   return service

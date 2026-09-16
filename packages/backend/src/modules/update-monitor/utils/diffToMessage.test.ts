@@ -1,6 +1,6 @@
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import {
   diffToMessage,
@@ -54,7 +54,7 @@ describe('Discord message formatting', () => {
         discoveryDiffToMarkdown(diff),
       ]
 
-      expect(result).toEqual(expected.join(''))
+      expect(result).toStrictEqual(expected.join(''))
     })
 
     it('adds dependence message', () => {
@@ -97,7 +97,7 @@ describe('Discord message formatting', () => {
         discoveryDiffToMarkdown(diff),
       ]
 
-      expect(result).toEqual(expected.join(''))
+      expect(result).toStrictEqual(expected.join(''))
     })
   })
 
@@ -107,7 +107,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0001')
+      expect(result).toStrictEqual('#0001')
     })
 
     it('two digit nonce', () => {
@@ -115,7 +115,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0010')
+      expect(result).toStrictEqual('#0010')
     })
 
     it('three digit nonce', () => {
@@ -123,7 +123,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0100')
+      expect(result).toStrictEqual('#0100')
     })
 
     it('four digit nonce', () => {
@@ -131,7 +131,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#1000')
+      expect(result).toStrictEqual('#1000')
     })
 
     it('five digit nonce', () => {
@@ -139,7 +139,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#10000')
+      expect(result).toStrictEqual('#10000')
     })
   })
 
@@ -151,7 +151,7 @@ describe('Discord message formatting', () => {
 
       const result = wrapDiffCodeBlock(messages)
 
-      expect(result).toEqual(expected)
+      expect(result).toStrictEqual(expected)
     })
   })
 
@@ -161,7 +161,7 @@ describe('Discord message formatting', () => {
 
       const result = wrapItalic(content)
 
-      expect(result).toEqual(`*${content}*`)
+      expect(result).toStrictEqual(`*${content}*`)
     })
   })
 
@@ -171,7 +171,7 @@ describe('Discord message formatting', () => {
 
       const result = wrapBoldAndItalic(content)
 
-      expect(result).toEqual(`***${content}***`)
+      expect(result).toStrictEqual(`***${content}***`)
     })
   })
 })

@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createActivityRouter } from './activity'
 
@@ -22,9 +23,11 @@ describe(createActivityRouter.name, () => {
       totalSrcValueUsd: 1_000_000,
       totalDstValueUsd: 1_000_000,
     })
-    const getDailySeries = mockFn().resolvesTo(
-      Array.from({ length: 14 }, (_, i) => flatHistoryDay(-13 + i)),
-    )
+    const getDailySeries = vi
+      .fn()
+      .mockResolvedValue(
+        Array.from({ length: 14 }, (_, i) => flatHistoryDay(-13 + i)),
+      )
     const db = mockObject<Database>({
       aggregatedInteropTransfer: mockObject<
         Database['aggregatedInteropTransfer']
@@ -46,17 +49,17 @@ describe(createActivityRouter.name, () => {
     expect(getDailySeries).toHaveBeenCalledTimes(1)
     expect(result.aggregatedItems).toHaveLength(1)
     const row = result.aggregatedItems[0]
-    expect(row?.id).toEqual('across')
-    expect(row?.bridgeType).toEqual('nonMinting')
-    expect(row?.srcChain).toEqual('ethereum')
-    expect(row?.dstChain).toEqual('arbitrum')
+    expect(row?.id).toStrictEqual('across')
+    expect(row?.bridgeType).toStrictEqual('nonMinting')
+    expect(row?.srcChain).toStrictEqual('ethereum')
+    expect(row?.dstChain).toStrictEqual('arbitrum')
     expect(row?.interpretation.length).toBeGreaterThan(0)
-    expect(result.aggregateSideMismatchDiffPercent).toEqual(50)
-    expect(result.aggregateSideMismatchMinVolumeUsd).toEqual(2_000_000)
+    expect(result.aggregateSideMismatchDiffPercent).toStrictEqual(50)
+    expect(result.aggregateSideMismatchMinVolumeUsd).toStrictEqual(2_000_000)
   })
 
   it('returns aggregate details for a selected route', async () => {
-    const getDailySeriesByGroup = mockFn().resolvesTo([
+    const getDailySeriesByGroup = vi.fn().mockResolvedValue([
       {
         timestamp: UnixTime(1_700_000_000),
         id: 'stargate',
@@ -100,9 +103,9 @@ describe(createActivityRouter.name, () => {
       'ethereum',
       'arbitrum',
     )
-    expect(result.id).toEqual('stargate')
-    expect(result.bridgeType).toEqual('nonMinting')
-    expect(result.items[0]?.avgDuration).toEqual(60)
-    expect(result.items[0]?.day).toEqual('2023-11-14')
+    expect(result.id).toStrictEqual('stargate')
+    expect(result.bridgeType).toStrictEqual('nonMinting')
+    expect(result.items[0]?.avgDuration).toStrictEqual(60)
+    expect(result.items[0]?.day).toStrictEqual('2023-11-14')
   })
 })

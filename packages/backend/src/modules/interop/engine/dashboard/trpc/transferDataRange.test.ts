@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { resolveInteropTransferTimeRange } from './transferDataRange'
 
 describe(resolveInteropTransferTimeRange.name, () => {
@@ -14,11 +15,13 @@ describe(resolveInteropTransferTimeRange.name, () => {
       throw new Error('Expected a default time range')
     }
 
-    expect(range.to - range.from).toEqual(UnixTime.DAY)
+    expect(range.to - range.from).toStrictEqual(UnixTime.DAY)
   })
 
   it('uses the latest promoted aggregate as the window end', async () => {
-    const getLatestPromotedTimestamp = mockFn().resolvesTo(UnixTime(500_000))
+    const getLatestPromotedTimestamp = vi
+      .fn()
+      .mockResolvedValue(UnixTime(500_000))
     const db = mockObject<Database>({
       interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
         getLatestPromotedTimestamp,
@@ -27,8 +30,8 @@ describe(resolveInteropTransferTimeRange.name, () => {
 
     const range = await resolveInteropTransferTimeRange(db, 'lastPromoted')
 
-    expect(getLatestPromotedTimestamp).toHaveBeenOnlyCalledWith()
-    expect(range).toEqual({
+    expect(getLatestPromotedTimestamp).toHaveBeenCalledExactlyOnceWith()
+    expect(range).toStrictEqual({
       from: UnixTime(500_000 - UnixTime.DAY),
       to: UnixTime(500_000),
     })
@@ -40,18 +43,18 @@ describe(resolveInteropTransferTimeRange.name, () => {
       'all',
     )
 
-    expect(range).toEqual(undefined)
+    expect(range).toStrictEqual(undefined)
   })
 
   it('does not turn a missing promoted aggregate into an unbounded query', async () => {
     const db = mockObject<Database>({
       interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
-        getLatestPromotedTimestamp: mockFn().resolvesTo(undefined),
+        getLatestPromotedTimestamp: vi.fn().mockResolvedValue(undefined),
       }),
     })
 
     await expect(
       resolveInteropTransferTimeRange(db, 'lastPromoted'),
-    ).toBeRejectedWith('No promoted aggregate snapshot is available.')
+    ).rejects.toThrow('No promoted aggregate snapshot is available.')
   })
 })

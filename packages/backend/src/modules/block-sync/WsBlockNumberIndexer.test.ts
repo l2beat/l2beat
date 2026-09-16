@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { MockWebSocket } from '../../tools/test/MockWebSocket'
 import { WsBlockNumberIndexer } from './WsBlockNumberIndexer'
 
@@ -27,17 +27,17 @@ describe(WsBlockNumberIndexer.prototype.start.name, () => {
         params: ['newHeads'],
         jsonrpc: '2.0',
       }),
-      expect.anything(),
+      undefined,
     )
 
     mockWebSocket.simulateMessage(createEventMessage(blockNumber))
     let result = await indexer.tick()
-    expect(result).toEqual(blockNumber)
+    expect(result).toStrictEqual(blockNumber)
 
     blockNumber++
     mockWebSocket.simulateMessage(createEventMessage(blockNumber))
     result = await indexer.tick()
-    expect(result).toEqual(blockNumber)
+    expect(result).toStrictEqual(blockNumber)
   })
 })
 

@@ -7,7 +7,8 @@ import type {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -50,39 +51,45 @@ describe(OnchainAmountIndexer.name, () => {
       ]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestamp),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
       })
 
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn().returnsOnce(blockNumber),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(blockNumber),
       })
 
       const balanceProvider = mockObject<BalanceProvider>({
-        getBalances: mockFn().returnsOnce([
-          BigInt(1000),
-          BigInt(2000),
-          BigInt(3000),
-          BigInt(4000),
-        ]),
+        getBalances: vi
+          .fn()
+          .mockReturnValueOnce([
+            BigInt(1000),
+            BigInt(2000),
+            BigInt(3000),
+            BigInt(4000),
+          ]),
       })
 
       const totalSupplyProvider = mockObject<TotalSupplyProvider>({
-        getTotalSupplies: mockFn().returnsOnce([BigInt(5000), BigInt(6000)]),
+        getTotalSupplies: vi
+          .fn()
+          .mockReturnValueOnce([BigInt(5000), BigInt(6000)]),
       })
 
       const starknetTotalSupplyProvider =
         mockObject<StarknetTotalSupplyProvider>({
-          getTotalSupplies: mockFn(),
+          getTotalSupplies: vi.fn(),
         })
 
       const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
-        getBalances: mockFn(),
+        getBalances: vi.fn(),
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new OnchainAmountIndexer(
@@ -107,13 +114,15 @@ describe(OnchainAmountIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
+        from,
+      )
 
       expect(
         tvsBlockTimestampRepository.findBlockNumberByChainAndTimestamp,
-      ).toHaveBeenOnlyCalledWith('ethereum', timestamp)
+      ).toHaveBeenCalledExactlyOnceWith('ethereum', timestamp)
 
-      expect(balanceProvider.getBalances).toHaveBeenOnlyCalledWith(
+      expect(balanceProvider.getBalances).toHaveBeenCalledExactlyOnceWith(
         [
           { token: token1, holder: escrow1 },
           { token: token2, holder: escrow2 },
@@ -124,7 +133,9 @@ describe(OnchainAmountIndexer.name, () => {
         'ethereum',
       )
 
-      expect(totalSupplyProvider.getTotalSupplies).toHaveBeenOnlyCalledWith(
+      expect(
+        totalSupplyProvider.getTotalSupplies,
+      ).toHaveBeenCalledExactlyOnceWith(
         [token1, token2],
         blockNumber,
         'ethereum',
@@ -143,10 +154,10 @@ describe(OnchainAmountIndexer.name, () => {
         record('supply-config-2', timestamp, 6000),
       ]
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(timestamp)
+      expect(safeHeight).toStrictEqual(timestamp)
     })
 
     it('fetches onchain amounts and saves them to DB (starknet)', async () => {
@@ -180,34 +191,38 @@ describe(OnchainAmountIndexer.name, () => {
       ]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestamp),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
       })
 
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn().returnsOnce(blockNumber),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(blockNumber),
       })
 
       const balanceProvider = mockObject<BalanceProvider>({
-        getBalances: mockFn(),
+        getBalances: vi.fn(),
       })
 
       const totalSupplyProvider = mockObject<TotalSupplyProvider>({
-        getTotalSupplies: mockFn(),
+        getTotalSupplies: vi.fn(),
       })
 
       const starknetTotalSupplyProvider =
         mockObject<StarknetTotalSupplyProvider>({
-          getTotalSupplies: mockFn().returnsOnce([BigInt(1000), BigInt(2000)]),
+          getTotalSupplies: vi
+            .fn()
+            .mockReturnValueOnce([BigInt(1000), BigInt(2000)]),
         })
 
       const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
-        getBalances: mockFn().returnsOnce([BigInt(3000)]),
+        getBalances: vi.fn().mockReturnValueOnce([BigInt(3000)]),
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new OnchainAmountIndexer(
@@ -232,11 +247,13 @@ describe(OnchainAmountIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
+        from,
+      )
 
       expect(
         tvsBlockTimestampRepository.findBlockNumberByChainAndTimestamp,
-      ).toHaveBeenOnlyCalledWith('starknet', timestamp)
+      ).toHaveBeenCalledExactlyOnceWith('starknet', timestamp)
 
       expect(balanceProvider.getBalances).not.toHaveBeenCalled()
 
@@ -244,8 +261,14 @@ describe(OnchainAmountIndexer.name, () => {
 
       expect(
         starknetTotalSupplyProvider.getTotalSupplies,
-      ).toHaveBeenOnlyCalledWith([token1, token2], blockNumber, 'starknet')
-      expect(starknetBalanceProvider.getBalances).toHaveBeenOnlyCalledWith(
+      ).toHaveBeenCalledExactlyOnceWith(
+        [token1, token2],
+        blockNumber,
+        'starknet',
+      )
+      expect(
+        starknetBalanceProvider.getBalances,
+      ).toHaveBeenCalledExactlyOnceWith(
         [{ token: token1, holder }],
         blockNumber,
         'starknet',
@@ -257,10 +280,10 @@ describe(OnchainAmountIndexer.name, () => {
         record('starknet-balance-config', timestamp, 3000),
       ]
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(timestamp)
+      expect(safeHeight).toStrictEqual(timestamp)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -275,7 +298,7 @@ describe(OnchainAmountIndexer.name, () => {
       )
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestamp),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
       })
 
       const indexer = new OnchainAmountIndexer(
@@ -299,8 +322,10 @@ describe(OnchainAmountIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [mockEscrowConfig])
       const safeHeight = await updateFn()
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
-      expect(safeHeight).toEqual(to)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
+        from,
+      )
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('throws an error if block number is not found', async () => {
@@ -315,13 +340,13 @@ describe(OnchainAmountIndexer.name, () => {
       )
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestamp),
+        getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
       })
 
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn().returnsOnce(null),
+        findBlockNumberByChainAndTimestamp: vi.fn().mockReturnValueOnce(null),
       })
 
       const indexer = new OnchainAmountIndexer(
@@ -346,14 +371,14 @@ describe(OnchainAmountIndexer.name, () => {
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [mockEscrowConfig])
-      }).toBeRejectedWith(`Block number not found for timestamp: ${timestamp}`)
+      }).rejects.toThrow(`Block number not found for timestamp: ${timestamp}`)
     })
   })
 
   describe(OnchainAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteByConfigs: mockFn().returns(5),
+        deleteByConfigs: vi.fn().mockReturnValue(5),
       })
 
       const mockEscrowConfig = escrow(
@@ -400,7 +425,9 @@ describe(OnchainAmountIndexer.name, () => {
 
       await indexer.trimData(removalConfigs)
 
-      expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+      expect(
+        tvsAmountRepository.deleteByConfigs,
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'escrow-config-1',
           fromInclusive: UnixTime(100),

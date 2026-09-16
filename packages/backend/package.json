@@ -38,8 +38,8 @@
     "start:dev": "pnpm build:dependencies && . ./.env && PRISMA_DB_URL=$LOCAL_DB_URL pnpm db:migrate && tsx watch src/index.ts",
     "start:dev-pure": "tsx watch src/index.ts",
     "start:profile": "tsx --inspect src/index.ts",
-    "test": "./scripts/run_tests.sh",
-    "test:config": "mocha --config .mocharc-smoke.json",
+    "test": "vitest run",
+    "test:config": "vitest run --config vitest.smoke.config.ts",
     "typecheck": "tsc --noEmit",
     "env:sync": "tsx ./scripts/env/sync.ts",
     "railgun-observe": "tsx scripts/railgunObserve.ts",
@@ -109,6 +109,8 @@
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.3.1",
     "supertest": "^6.2.3",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

@@ -1,6 +1,7 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createFinancialsRouter } from './financials'
 
@@ -32,7 +33,7 @@ describe(createFinancialsRouter.name, () => {
     it('rejects a query without any filter', async () => {
       const caller = createCaller(mockObject<Database>({}))
 
-      await expect(caller.transfers({ transferId: '  ' })).toBeRejectedWith(
+      await expect(caller.transfers({ transferId: '  ' })).rejects.toThrow(
         'At least one filter is required',
       )
     })
@@ -40,7 +41,7 @@ describe(createFinancialsRouter.name, () => {
     it('rejects an inverted time range', async () => {
       const caller = createCaller(mockObject<Database>({}))
 
-      await expect(caller.transfers({ from: 200, to: 100 })).toBeRejected()
+      await expect(caller.transfers({ from: 200, to: 100 })).rejects.toThrow()
     })
 
     it('queries transfers and stats with a normalized filter', async () => {
@@ -53,8 +54,8 @@ describe(createFinancialsRouter.name, () => {
         srcValueUsdSum: 1000,
         dstValueUsdSum: 900,
       }
-      const getByFilter = mockFn().resolvesTo([record])
-      const getStatsByFilter = mockFn().resolvesTo(stats)
+      const getByFilter = vi.fn().mockResolvedValue([record])
+      const getStatsByFilter = vi.fn().mockResolvedValue(stats)
       const db = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
           getByFinancialsFilter: getByFilter,
@@ -64,11 +65,11 @@ describe(createFinancialsRouter.name, () => {
 
       const result = await createCaller(db).transfers(FILTER_INPUT)
 
-      expect(getByFilter).toHaveBeenOnlyCalledWith(EXPECTED_FILTER, 1000)
-      expect(getStatsByFilter).toHaveBeenOnlyCalledWith(EXPECTED_FILTER)
-      expect(result.stats).toEqual(stats)
-      expect(result.limit).toEqual(1000)
-      expect(result.transfers).toEqual([
+      expect(getByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER, 1000)
+      expect(getStatsByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER)
+      expect(result.stats).toStrictEqual(stats)
+      expect(result.limit).toStrictEqual(1000)
+      expect(result.transfers).toStrictEqual([
         {
           transferId: 'msg1',
           plugin: 'plugin',
@@ -98,13 +99,13 @@ describe(createFinancialsRouter.name, () => {
     it('rejects a mutation without any filter', async () => {
       const caller = createCaller(mockObject<Database>({}))
 
-      await expect(caller.reprocess({})).toBeRejectedWith(
+      await expect(caller.reprocess({})).rejects.toThrow(
         'At least one filter is required',
       )
     })
 
     it('marks transfers matching the normalized filter as unprocessed', async () => {
-      const markAsUnprocessedByFilter = mockFn().resolvesTo(42)
+      const markAsUnprocessedByFilter = vi.fn().mockResolvedValue(42)
       const db = mockObject<Database>({
         interopTransfer: mockObject<Database['interopTransfer']>({
           markAsUnprocessedByFinancialsFilter: markAsUnprocessedByFilter,
@@ -113,16 +114,16 @@ describe(createFinancialsRouter.name, () => {
 
       const result = await createCaller(db).reprocess(FILTER_INPUT)
 
-      expect(markAsUnprocessedByFilter).toHaveBeenOnlyCalledWith(
+      expect(markAsUnprocessedByFilter).toHaveBeenCalledExactlyOnceWith(
         EXPECTED_FILTER,
       )
-      expect(result).toEqual({ updatedTransfers: 42 })
+      expect(result).toStrictEqual({ updatedTransfers: 42 })
     })
   })
 
   describe('refresh', () => {
     it('marks all transfers as unprocessed', async () => {
-      const markAllAsUnprocessed = mockFn().resolvesTo(42)
+      const markAllAsUnprocessed = vi.fn().mockResolvedValue(42)
       const interopTransfer = mockObject<Database['interopTransfer']>({
         markAllAsUnprocessed,
       })
@@ -133,7 +134,7 @@ describe(createFinancialsRouter.name, () => {
       const result = await createCaller(db).refresh()
 
       expect(markAllAsUnprocessed).toHaveBeenCalledTimes(1)
-      expect(result).toEqual({ updatedTransfers: 42 })
+      expect(result).toStrictEqual({ updatedTransfers: 42 })
     })
   })
 })

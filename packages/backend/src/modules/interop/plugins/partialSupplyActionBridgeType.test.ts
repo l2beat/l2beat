@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 
 describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
@@ -8,7 +8,7 @@ describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
       dstWasMinted: undefined,
     })
 
-    expect(result).toEqual('burnAndMint')
+    expect(result).toStrictEqual('burnAndMint')
   })
 
   it('returns lockAndMint when the source token was not burned', () => {
@@ -17,7 +17,7 @@ describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
       dstWasMinted: undefined,
     })
 
-    expect(result).toEqual('lockAndMint')
+    expect(result).toStrictEqual('lockAndMint')
   })
 
   it('returns burnAndMint when the destination token was minted', () => {
@@ -26,7 +26,7 @@ describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
       dstWasMinted: true,
     })
 
-    expect(result).toEqual('burnAndMint')
+    expect(result).toStrictEqual('burnAndMint')
   })
 
   it('returns lockAndMint when the destination token was not minted', () => {
@@ -35,7 +35,7 @@ describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
       dstWasMinted: false,
     })
 
-    expect(result).toEqual('lockAndMint')
+    expect(result).toStrictEqual('lockAndMint')
   })
 
   it('returns undefined when the supply action is unknown', () => {
@@ -44,6 +44,6 @@ describe(getBestEffortBridgeTypeFromPartialSupplyAction.name, () => {
       dstWasMinted: undefined,
     })
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })

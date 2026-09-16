@@ -14,8 +14,9 @@ import {
   type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -35,7 +36,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         mockObject<AnomalyNotifier>(),
       )
 
-      const mockDeleteForArchivedProjects = mockFn().resolvesTo(undefined)
+      const mockDeleteForArchivedProjects = vi.fn().mockResolvedValue(undefined)
       processor.deleteForArchivedProjects = mockDeleteForArchivedProjects
 
       await processor.start()
@@ -60,10 +61,10 @@ describe(RealTimeLivenessProcessor.name, () => {
         mockObject<AnomalyNotifier>(),
       )
 
-      const mockMatchLivenessTransactions = mockFn().resolvesTo(undefined)
+      const mockMatchLivenessTransactions = vi.fn().mockResolvedValue(undefined)
       processor.matchLivenessTransactions = mockMatchLivenessTransactions
 
-      const mockCheckForAnomalies = mockFn().resolvesTo(undefined)
+      const mockCheckForAnomalies = vi.fn().mockResolvedValue(undefined)
       processor.checkForAnomalies = mockCheckForAnomalies
 
       await processor.processBlock(block, [])
@@ -80,7 +81,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          upsertMany: vi.fn().mockResolvedValue(undefined),
         })
 
         const projectId = ProjectId('project-id')
@@ -194,7 +195,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          upsertMany: vi.fn().mockResolvedValue(undefined),
         })
         const projectId = ProjectId('project-id')
         const address = EthereumAddress.random()
@@ -251,19 +252,19 @@ describe(RealTimeLivenessProcessor.name, () => {
       })
 
       it('skips a grouped call when its input cannot be decoded', async () => {
-        const warn = mockFn().returns(undefined)
+        const warn = vi.fn().mockReturnValue(undefined)
         const logger = mockObject<Logger>({
-          for: mockFn().returns(
+          for: vi.fn().mockReturnValue(
             mockObject<Logger>({
               warn,
-              info: mockFn().returns(undefined),
+              info: vi.fn().mockReturnValue(undefined),
             }),
           ),
         })
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          upsertMany: vi.fn().mockResolvedValue(undefined),
         })
         const projectId = ProjectId('project-id')
         const address = EthereumAddress.random()
@@ -348,7 +349,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          upsertMany: vi.fn().mockResolvedValue(undefined),
         })
         const projectId = ProjectId('project-id')
         const address = EthereumAddress.random()
@@ -406,7 +407,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([
+        getLatestStats: vi.fn().mockResolvedValue([
           {
             timestamp: UnixTime.now(),
             projectId,
@@ -420,7 +421,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        getLatestRecords: mockFn().resolvesTo([
+        getLatestRecords: vi.fn().mockResolvedValue([
           {
             configurationId: configurationId1,
             txHash: '0x123',
@@ -439,8 +440,8 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        getOngoingAnomalies: vi.fn().mockResolvedValue([]),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configurations: TrackedTxConfigEntry[] = [
@@ -473,7 +474,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyDetected: mockFn().resolvesTo(undefined),
+        anomalyDetected: vi.fn().mockResolvedValue(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -519,7 +520,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([
+        getLatestStats: vi.fn().mockResolvedValue([
           {
             timestamp: UnixTime.now(),
             projectId,
@@ -533,7 +534,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        getLatestRecords: mockFn().resolvesTo([
+        getLatestRecords: vi.fn().mockResolvedValue([
           {
             configurationId,
             txHash: '0x123',
@@ -546,7 +547,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
+        getOngoingAnomalies: vi.fn().mockResolvedValue([
           {
             start: lastTxTimestamp,
             projectId: projectId,
@@ -555,7 +556,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             isApproved: false,
           },
         ] as RealTimeAnomalyRecord[]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configurations: TrackedTxConfigEntry[] = [
@@ -576,7 +577,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyOngoing: mockFn().resolvesTo(undefined),
+        anomalyOngoing: vi.fn().mockResolvedValue(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -615,7 +616,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.MINUTE
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([
+        getLatestStats: vi.fn().mockResolvedValue([
           {
             timestamp: UnixTime.now(),
             projectId,
@@ -636,7 +637,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        getLatestRecords: mockFn().resolvesTo([
+        getLatestRecords: vi.fn().mockResolvedValue([
           {
             configurationId,
             txHash: '0x123',
@@ -655,7 +656,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
+        getOngoingAnomalies: vi.fn().mockResolvedValue([
           {
             start: startTimestamp,
             projectId: projectId,
@@ -671,7 +672,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             isApproved: true,
           },
         ] as RealTimeAnomalyRecord[]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configurations: TrackedTxConfigEntry[] = [
@@ -704,7 +705,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyRecovered: mockFn().resolvesTo(undefined),
+        anomalyRecovered: vi.fn().mockResolvedValue(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -754,19 +755,19 @@ describe(RealTimeLivenessProcessor.name, () => {
 
     it('should remove ongoing anomalies for missing configurations', async () => {
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([] as AnomalyStatsRecord[]),
+        getLatestStats: vi.fn().mockResolvedValue([] as AnomalyStatsRecord[]),
       })
 
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        getLatestRecords: mockFn().resolvesTo([]),
+        getLatestRecords: vi.fn().mockResolvedValue([]),
       })
 
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
+        getOngoingAnomalies: vi.fn().mockResolvedValue([
           {
             start: UnixTime.now(),
             projectId: 'some-project-id',
@@ -775,8 +776,10 @@ describe(RealTimeLivenessProcessor.name, () => {
             isApproved: false,
           },
         ]),
-        deleteOngoingByProjectIdAndSubtype: mockFn().resolvesTo(undefined),
-        upsertMany: mockFn().resolvesTo(undefined),
+        deleteOngoingByProjectIdAndSubtype: vi
+          .fn()
+          .mockResolvedValue(undefined),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configurations: TrackedTxConfigEntry[] = []
@@ -787,7 +790,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       )
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyRecovered: mockFn().resolvesTo(undefined),
+        anomalyRecovered: vi.fn().mockResolvedValue(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -824,7 +827,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([
+        getLatestStats: vi.fn().mockResolvedValue([
           {
             timestamp: outdatedStatTimestamp,
             projectId,
@@ -838,7 +841,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        getLatestRecords: mockFn().resolvesTo([
+        getLatestRecords: vi.fn().mockResolvedValue([
           {
             configurationId,
             txHash: '0x123',
@@ -851,8 +854,8 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        getOngoingAnomalies: vi.fn().mockResolvedValue([]),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const configurations: TrackedTxConfigEntry[] = [
@@ -873,9 +876,9 @@ describe(RealTimeLivenessProcessor.name, () => {
       const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyDetected: mockFn().resolvesTo(undefined),
-        anomalyOngoing: mockFn().resolvesTo(undefined),
-        anomalyRecovered: mockFn().resolvesTo(undefined),
+        anomalyDetected: vi.fn().mockResolvedValue(undefined),
+        anomalyOngoing: vi.fn().mockResolvedValue(undefined),
+        anomalyRecovered: vi.fn().mockResolvedValue(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -923,12 +926,12 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([ongoingAnomaly]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        getOngoingAnomalies: vi.fn().mockResolvedValue([ongoingAnomaly]),
+        upsertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyAutoRecovered: mockFn().resolvesTo(undefined),
+        anomalyAutoRecovered: vi.fn().mockResolvedValue(undefined),
       })
 
       const config = createMockTrackedTxsConfig(projectId, [
@@ -951,7 +954,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         Logger.SILENT,
         mockDatabase({
           anomalyStats: mockObject<Database['anomalyStats']>({
-            getLatestStats: mockFn().resolvesTo([
+            getLatestStats: vi.fn().mockResolvedValue([
               {
                 timestamp: staleStatTimestamp,
                 projectId,
@@ -962,9 +965,11 @@ describe(RealTimeLivenessProcessor.name, () => {
             ]),
           }),
           realTimeLiveness: mockObject<Database['realTimeLiveness']>({
-            getLatestRecords: mockFn().resolvesTo([
-              { configurationId: 'config-1', timestamp: UnixTime.now() },
-            ]),
+            getLatestRecords: vi
+              .fn()
+              .mockResolvedValue([
+                { configurationId: 'config-1', timestamp: UnixTime.now() },
+              ]),
           }),
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
@@ -998,8 +1003,8 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeAnomaliesRepository = mockObject<
           Database['realTimeAnomalies']
         >({
-          getProjectIds: mockFn().resolvesTo([projectId]),
-          deleteByProjectId: mockFn().resolvesTo(undefined),
+          getProjectIds: vi.fn().mockResolvedValue([projectId]),
+          deleteByProjectId: vi.fn().mockResolvedValue(undefined),
         })
 
         const processor = new RealTimeLivenessProcessor(

@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { InteropCompareLoop } from './InteropCompareLoop'
 
 describe(InteropCompareLoop.name, () => {
@@ -18,20 +19,21 @@ describe(InteropCompareLoop.name, () => {
 
       const plugin = {
         name: 'plugin',
-        getExternalItems: mockFn()
+        getExternalItems: vi
+          .fn()
           // returns unknown in first run, which will get skipped
           // in next run will be reported as missing
-          .resolvesToOnce([known[0], unknown[0]])
+          .mockResolvedValueOnce([known[0], unknown[0]])
           // this unknown will be only skipped because we run two times
-          .resolvesToOnce([unknown[1]]),
+          .mockResolvedValueOnce([unknown[1]]),
       }
 
       const interopMessage = mockObject<Database['interopMessage']>({
-        getExistingItems: mockFn().resolvesTo([known[0]]),
+        getExistingItems: vi.fn().mockResolvedValue([known[0]]),
       })
 
       const interopTransfer = mockObject<Database['interopTransfer']>({
-        getExistingItems: mockFn().resolvesTo([known[1]]),
+        getExistingItems: vi.fn().mockResolvedValue([known[1]]),
       })
 
       const db = mockObject<Database>({
@@ -40,16 +42,16 @@ describe(InteropCompareLoop.name, () => {
       })
 
       const tagLogger = mockObject<Logger>({
-        debug: mockFn().returns(undefined),
-        info: mockFn().returns(undefined),
-        warn: mockFn().returns(undefined),
-        error: mockFn().returns(undefined),
+        debug: vi.fn().mockReturnValue(undefined),
+        info: vi.fn().mockReturnValue(undefined),
+        warn: vi.fn().mockReturnValue(undefined),
+        error: vi.fn().mockReturnValue(undefined),
       })
       const forLogger = mockObject<Logger>({
-        tag: mockFn().returns(tagLogger),
+        tag: vi.fn().mockReturnValue(tagLogger),
       })
       const logger = mockObject<Logger>({
-        for: mockFn().returns(forLogger),
+        for: vi.fn().mockReturnValue(forLogger),
       })
 
       const comparator = new InteropCompareLoop(db, plugin, logger)

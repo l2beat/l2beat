@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -22,22 +23,22 @@ describe(TvsPriceIndexer.name, () => {
       ]
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 2000 }]),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi
+          .fn()
+          .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }])
+          .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 2000 }]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([
-          UnixTime(150),
-          UnixTime(200),
-        ]),
-        shouldTimestampBeSynced: mockFn().returns(true),
+        getTimestampsToSync: vi
+          .fn()
+          .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
+        shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -74,10 +75,10 @@ describe(TvsPriceIndexer.name, () => {
         record('config-2', 'bitcoin', 200),
       ]
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('filters out timestamps that should not be synced', async () => {
@@ -86,22 +87,23 @@ describe(TvsPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().returnsOnce([
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 1500 },
           { timestamp: UnixTime(200), value: 2000 },
         ]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
-        shouldTimestampBeSynced: mockFn()
-          .returnsOnce(true) // For timestamp 150
-          .returnsOnce(false), // For timestamp 200
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
+        shouldTimestampBeSynced: vi
+          .fn()
+          .mockReturnValueOnce(true) // For timestamp 150
+          .mockReturnValueOnce(false), // For timestamp 200
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -125,10 +127,10 @@ describe(TvsPriceIndexer.name, () => {
         record('config-1', 'ethereum', 150),
       ]
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('returns to value if no timestamps to sync', async () => {
@@ -137,11 +139,11 @@ describe(TvsPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([]),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -161,13 +163,16 @@ describe(TvsPriceIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
-      expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
+      expect(priceProvider.getAdjustedTo).toHaveBeenCalledExactlyOnceWith(
+        from,
+        to,
+      )
+      expect(syncOptimizer.getTimestampsToSync).toHaveBeenCalledExactlyOnceWith(
         from,
         adjustedTo,
         1,
       )
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('handles insufficient data errors', async () => {
@@ -176,18 +181,18 @@ describe(TvsPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
-          new Error('Insufficient data in response for ethereum'),
-        ),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Insufficient data in response for ethereum')
+        }),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -207,14 +212,16 @@ describe(TvsPriceIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
+      expect(
+        priceProvider.getUsdPriceHistoryHourly,
+      ).toHaveBeenCalledExactlyOnceWith(
         CoingeckoId('ethereum'),
         UnixTime(from),
         adjustedTo,
       )
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([])
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith([])
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {
@@ -223,14 +230,14 @@ describe(TvsPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
-          new Error('Network error'),
-        ),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Network error')
+        }),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -247,14 +254,14 @@ describe(TvsPriceIndexer.name, () => {
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')])
-      }).toBeRejectedWith('Network error')
+      }).rejects.toThrow('Network error')
     })
   })
 
   describe(TvsPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        deleteByConfigs: mockFn().returns(5),
+        deleteByConfigs: vi.fn().mockReturnValue(5),
       })
 
       const indexer = new TvsPriceIndexer(
@@ -284,7 +291,9 @@ describe(TvsPriceIndexer.name, () => {
 
       await indexer.trimData(removalConfigs)
 
-      expect(tvsPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+      expect(
+        tvsPriceRepository.deleteByConfigs,
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'config-1',
           fromInclusive: UnixTime(100),

@@ -1,11 +1,12 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "types": ["node", "mocha"],
+    "types": ["node", "@l2beat/test-utils"],
     "jsx": "react",
     "noUncheckedIndexedAccess": false,
     "outDir": "build",
     "rootDir": "."
   },
-  "include": ["src", "scripts"]
+  "include": ["src", "scripts"],
+  "exclude": ["vitest.config.ts", "vitest.smoke.config.ts"]
 }

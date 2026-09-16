@@ -1,6 +1,7 @@
 import type { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -31,7 +32,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
 
     it('proveBatches', () => {
@@ -45,7 +46,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
 
     it('executeBatches', () => {
@@ -59,7 +60,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
   })
 
@@ -75,7 +76,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
   })
 
@@ -91,7 +92,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toStrictEqual(true)
     })
 
     it('executeBatches with incorrect chainAddress', () => {
@@ -105,7 +106,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(false)
+      expect(result).toStrictEqual(false)
     })
   })
 })

@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../trpc/init'
 import { createAppStateTrpcRouter } from './router'
 
@@ -12,19 +13,19 @@ describe(createAppStateTrpcRouter.name, () => {
       updatedAt: UnixTime(1_779_920_000),
       updatedBy: 'dev@l2beat.com',
     }
-    const findByKey = mockFn().resolvesTo(record)
+    const findByKey = vi.fn().mockResolvedValue(record)
     const caller = createCaller({ findByKey })
 
     const result = await caller.findByKey('interopAggregatesTimestampOverride')
 
-    expect(findByKey).toHaveBeenOnlyCalledWith(
+    expect(findByKey).toHaveBeenCalledExactlyOnceWith(
       'interopAggregatesTimestampOverride',
     )
-    expect(result).toEqual(record)
+    expect(result).toStrictEqual(record)
   })
 
   it('sets a value with the current user email', async () => {
-    const insert = mockFn().resolvesTo(undefined)
+    const insert = vi.fn().mockResolvedValue(undefined)
     const caller = createCaller({ insert }, { email: 'user@l2beat.com' })
 
     await caller.insert({
@@ -32,7 +33,7 @@ describe(createAppStateTrpcRouter.name, () => {
       value: 1779920000,
     })
 
-    expect(insert).toHaveBeenOnlyCalledWith({
+    expect(insert).toHaveBeenCalledExactlyOnceWith({
       key: 'interopAggregatesTimestampOverride',
       value: 1_779_920_000,
       updatedBy: 'user@l2beat.com',
@@ -40,12 +41,12 @@ describe(createAppStateTrpcRouter.name, () => {
   })
 
   it('unsets a value by key', async () => {
-    const deleteByKey = mockFn().resolvesTo(1)
+    const deleteByKey = vi.fn().mockResolvedValue(1)
     const caller = createCaller({ deleteByKey })
 
     await caller.deleteByKey('interopAggregatesTimestampOverride')
 
-    expect(deleteByKey).toHaveBeenOnlyCalledWith(
+    expect(deleteByKey).toHaveBeenCalledExactlyOnceWith(
       'interopAggregatesTimestampOverride',
     )
   })

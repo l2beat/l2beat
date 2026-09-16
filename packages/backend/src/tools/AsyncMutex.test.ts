@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { AsyncMutex } from './AsyncMutex'
 
 describe(AsyncMutex.name, () => {
@@ -18,12 +18,12 @@ describe(AsyncMutex.name, () => {
       calls.push('second:end')
     })
 
-    expect(calls).toEqual(['first:start'])
+    expect(calls).toStrictEqual(['first:start'])
 
     first.resolve()
     await Promise.all([firstRun, secondRun])
 
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       'first:start',
       'first:end',
       'second:start',
@@ -46,13 +46,13 @@ describe(AsyncMutex.name, () => {
       calls.push('second:start')
     })
 
-    expect(skipped).toEqual(undefined)
-    expect(calls).toEqual(['first:start'])
+    expect(skipped).toStrictEqual(undefined)
+    expect(calls).toStrictEqual(['first:start'])
 
     first.resolve()
     await firstRun
 
-    expect(calls).toEqual(['first:start', 'first:end'])
+    expect(calls).toStrictEqual(['first:start', 'first:end'])
   })
 
   it('allows tryRunExclusive after the lock is released', async () => {
@@ -68,8 +68,8 @@ describe(AsyncMutex.name, () => {
       return 'ok'
     })
 
-    expect(result).toEqual('ok')
-    expect(calls).toEqual(['first', 'second'])
+    expect(result).toStrictEqual('ok')
+    expect(calls).toStrictEqual(['first', 'second'])
   })
 })
 

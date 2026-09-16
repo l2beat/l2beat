@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { mockDatabase } from '../../../../test/database'
 import type { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
@@ -97,7 +98,9 @@ describe(LivenessUpdater.name, () => {
         },
       ]
 
-      expect(updater.transformTransactions(transactions)).toEqual(expected)
+      expect(updater.transformTransactions(transactions)).toStrictEqual(
+        expected,
+      )
     })
   })
 })

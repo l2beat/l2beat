@@ -1,7 +1,7 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { DaService } from './DaService'
 
@@ -78,7 +78,7 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           {
             configurationId: 'eth-1',
@@ -137,7 +137,7 @@ describe(DaService.name, () => {
         MOCK_CELESTIA_CONFIGS,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           {
             configurationId: 'cel-1',
@@ -195,7 +195,7 @@ describe(DaService.name, () => {
         MOCK_AVAIL_CONFIGS,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           {
             configurationId: 'av-1',
@@ -307,7 +307,7 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           {
             configurationId: 'eth-1',

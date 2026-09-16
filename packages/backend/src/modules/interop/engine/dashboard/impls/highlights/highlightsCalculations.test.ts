@@ -4,7 +4,7 @@ import type {
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   getLargestTokenVolumeIncrease,
   getLargestUopsCountIncrease,
@@ -57,7 +57,7 @@ describe('highlightsCalculations', () => {
         timestamp,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         timestamp,
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
@@ -129,7 +129,7 @@ describe('highlightsCalculations', () => {
         timestamp,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         timestamp,
         abstractTokenId: 'eth',
         currentVolumeUsd: 1_500,
@@ -162,7 +162,7 @@ describe('highlightsCalculations', () => {
         ['ethereum'],
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         timestamp,
         projectId: ProjectId('ethereum'),
         currentUopsCount: 50,

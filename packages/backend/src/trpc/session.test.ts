@@ -1,5 +1,6 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import type { jwtVerify } from 'jose'
+import { describe, expect, it } from 'vitest'
 import type {
   BackofficeAuthConfig,
   BackofficeZeroTrustAuthConfig,
@@ -24,7 +25,7 @@ describe(getSession.name, () => {
   it('works as expected when auth is disabled', async () => {
     const session = await getSession(new Headers(), false)
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -41,7 +42,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual(undefined)
+    expect(session).toStrictEqual(undefined)
   })
 
   it('returns a session if the jwt token is valid', async () => {
@@ -60,7 +61,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'someone@l2beat.com',
     })
   })
@@ -68,7 +69,7 @@ describe(getSession.name, () => {
   it('returns undefined if no token is provided', async () => {
     const session = await getSession(new Headers(), mockAuth)
 
-    expect(session).toEqual(undefined)
+    expect(session).toStrictEqual(undefined)
   })
 
   it('returns a session when the backoffice auth token matches (Authorization header)', async () => {
@@ -82,7 +83,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -99,7 +100,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -118,7 +119,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual({
+    expect(session).toStrictEqual({
       email: 'someone@l2beat.com',
     })
   })

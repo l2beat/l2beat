@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { InteropPlugins } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropCleanerLoop } from './InteropCleanerLoop'
@@ -9,15 +10,15 @@ import { InteropCleanerLoop } from './InteropCleanerLoop'
 describe(InteropCleanerLoop.name, () => {
   describe(InteropCleanerLoop.prototype.run.name, () => {
     it('cleans expired data, orphaned plugin entries, and removed chains', async () => {
-      const deleteExpired = mockFn().resolvesTo(5)
-      const deleteMessageBefore = mockFn().resolvesTo(10)
-      const deleteTransferBefore = mockFn().resolvesTo(15)
-      const deletePricesBefore = mockFn().resolvesTo(20)
-      const deleteConfigs = mockFn().resolvesTo(7)
-      const deleteSyncStateNotIn = mockFn().resolvesTo(2)
-      const deleteSyncedRangeNotIn = mockFn().resolvesTo(3)
-      const deleteSyncStateNotInChains = mockFn().resolvesTo(4)
-      const deleteSyncedRangeNotInChains = mockFn().resolvesTo(6)
+      const deleteExpired = vi.fn().mockResolvedValue(5)
+      const deleteMessageBefore = vi.fn().mockResolvedValue(10)
+      const deleteTransferBefore = vi.fn().mockResolvedValue(15)
+      const deletePricesBefore = vi.fn().mockResolvedValue(20)
+      const deleteConfigs = vi.fn().mockResolvedValue(7)
+      const deleteSyncStateNotIn = vi.fn().mockResolvedValue(2)
+      const deleteSyncedRangeNotIn = vi.fn().mockResolvedValue(3)
+      const deleteSyncStateNotInChains = vi.fn().mockResolvedValue(4)
+      const deleteSyncedRangeNotInChains = vi.fn().mockResolvedValue(6)
 
       const store = mockObject<InteropEventStore>({
         deleteExpired,
@@ -77,9 +78,9 @@ describe(InteropCleanerLoop.name, () => {
       expect(deleteTransferBefore).toHaveBeenCalledTimes(1)
       expect(deletePricesBefore).toHaveBeenCalledTimes(1)
 
-      const messageCutoff = deleteMessageBefore.calls[0]?.args[0] as number
-      const transferCutoff = deleteTransferBefore.calls[0]?.args[0] as number
-      expect(messageCutoff - transferCutoff).toEqual(6 * UnixTime.DAY)
+      const messageCutoff = deleteMessageBefore.mock.calls[0][0] as number
+      const transferCutoff = deleteTransferBefore.mock.calls[0][0] as number
+      expect(messageCutoff - transferCutoff).toStrictEqual(6 * UnixTime.DAY)
       expect(deleteConfigs).toHaveBeenCalledWith(KEEP_LATEST)
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
         'plugin-a',
@@ -94,25 +95,25 @@ describe(InteropCleanerLoop.name, () => {
     })
 
     it('passes empty lists to deleters when no plugins and no known chains', async () => {
-      const deleteSyncStateNotIn = mockFn().resolvesTo(0)
-      const deleteSyncedRangeNotIn = mockFn().resolvesTo(0)
-      const deleteSyncStateNotInChains = mockFn().resolvesTo(0)
-      const deleteSyncedRangeNotInChains = mockFn().resolvesTo(0)
+      const deleteSyncStateNotIn = vi.fn().mockResolvedValue(0)
+      const deleteSyncedRangeNotIn = vi.fn().mockResolvedValue(0)
+      const deleteSyncStateNotInChains = vi.fn().mockResolvedValue(0)
+      const deleteSyncedRangeNotInChains = vi.fn().mockResolvedValue(0)
 
       const store = mockObject<InteropEventStore>({
-        deleteExpired: mockFn().resolvesTo(0),
+        deleteExpired: vi.fn().mockResolvedValue(0),
       })
 
-      const deleteConfigs = mockFn().resolvesTo(0)
+      const deleteConfigs = vi.fn().mockResolvedValue(0)
       const db = mockObject<Database>({
         interopMessage: mockObject<Database['interopMessage']>({
-          deleteBefore: mockFn().resolvesTo(0),
+          deleteBefore: vi.fn().mockResolvedValue(0),
         }),
         interopTransfer: mockObject<Database['interopTransfer']>({
-          deleteBefore: mockFn().resolvesTo(0),
+          deleteBefore: vi.fn().mockResolvedValue(0),
         }),
         interopRecentPrices: mockObject<Database['interopRecentPrices']>({
-          deleteBefore: mockFn().resolvesTo(0),
+          deleteBefore: vi.fn().mockResolvedValue(0),
         }),
         interopConfig: mockObject<Database['interopConfig']>({
           deleteAllButLatestPerKey: deleteConfigs,

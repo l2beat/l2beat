@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropPluginSyncStateRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { InteropPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
@@ -12,11 +13,11 @@ import type {
 
 describe(InteropDataCleaner.name, () => {
   it('wipes data when all syncers are waiting and wipeRequired is set', async () => {
-    const deleteMessage = mockFn().resolvesTo(undefined)
-    const deleteTransfer = mockFn().resolvesTo(undefined)
-    const deleteEvents = mockFn().resolvesTo(undefined)
-    const updateByPluginName = mockFn().resolvesTo(2)
-    const transaction = mockFn().executes(async (cb) => await cb())
+    const deleteMessage = vi.fn().mockResolvedValue(undefined)
+    const deleteTransfer = vi.fn().mockResolvedValue(undefined)
+    const deleteEvents = vi.fn().mockResolvedValue(undefined)
+    const updateByPluginName = vi.fn().mockResolvedValue(2)
+    const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
     const db = mockObject<Database>({
       transaction,
@@ -27,10 +28,12 @@ describe(InteropDataCleaner.name, () => {
         deleteForPlugin: deleteTransfer,
       }),
       interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
-        findByPluginName: mockFn().resolvesTo([
-          makeSyncState('ethereum', true),
-          makeSyncState('arbitrum', true),
-        ]),
+        findByPluginName: vi
+          .fn()
+          .mockResolvedValue([
+            makeSyncState('ethereum', true),
+            makeSyncState('arbitrum', true),
+          ]),
         updateByPluginName,
       }),
     })
@@ -60,11 +63,11 @@ describe(InteropDataCleaner.name, () => {
   })
 
   it('does not wipe when some syncers are not waiting', async () => {
-    const deleteMessage = mockFn().resolvesTo(undefined)
-    const deleteTransfer = mockFn().resolvesTo(undefined)
-    const deleteEvents = mockFn().resolvesTo(undefined)
-    const updateByPluginName = mockFn().resolvesTo(0)
-    const transaction = mockFn().executes(async (cb) => await cb())
+    const deleteMessage = vi.fn().mockResolvedValue(undefined)
+    const deleteTransfer = vi.fn().mockResolvedValue(undefined)
+    const deleteEvents = vi.fn().mockResolvedValue(undefined)
+    const updateByPluginName = vi.fn().mockResolvedValue(0)
+    const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
     const db = mockObject<Database>({
       transaction,
@@ -75,10 +78,12 @@ describe(InteropDataCleaner.name, () => {
         deleteForPlugin: deleteTransfer,
       }),
       interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
-        findByPluginName: mockFn().resolvesTo([
-          makeSyncState('ethereum', true),
-          makeSyncState('arbitrum', true),
-        ]),
+        findByPluginName: vi
+          .fn()
+          .mockResolvedValue([
+            makeSyncState('ethereum', true),
+            makeSyncState('arbitrum', true),
+          ]),
         updateByPluginName,
       }),
     })
@@ -104,11 +109,11 @@ describe(InteropDataCleaner.name, () => {
   })
 
   it('does not wipe when wipeRequired is missing for any chain', async () => {
-    const deleteMessage = mockFn().resolvesTo(undefined)
-    const deleteTransfer = mockFn().resolvesTo(undefined)
-    const deleteEvents = mockFn().resolvesTo(undefined)
-    const updateByPluginName = mockFn().resolvesTo(0)
-    const transaction = mockFn().executes(async (cb) => await cb())
+    const deleteMessage = vi.fn().mockResolvedValue(undefined)
+    const deleteTransfer = vi.fn().mockResolvedValue(undefined)
+    const deleteEvents = vi.fn().mockResolvedValue(undefined)
+    const updateByPluginName = vi.fn().mockResolvedValue(0)
+    const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
     const db = mockObject<Database>({
       transaction,
@@ -119,10 +124,12 @@ describe(InteropDataCleaner.name, () => {
         deleteForPlugin: deleteTransfer,
       }),
       interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
-        findByPluginName: mockFn().resolvesTo([
-          makeSyncState('ethereum', true),
-          makeSyncState('arbitrum', false),
-        ]),
+        findByPluginName: vi
+          .fn()
+          .mockResolvedValue([
+            makeSyncState('ethereum', true),
+            makeSyncState('arbitrum', false),
+          ]),
         updateByPluginName,
       }),
     })

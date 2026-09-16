@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
 const ADDRESS_1 = EthereumAddress('0x67e002f3a410029501eae397b63ec5f2b1f9fc96')
@@ -91,7 +91,7 @@ const EXPECTED_SQL = `
 describe(getFunctionCallQuery.name, () => {
   it('returns valid SQL', () => {
     const query = getFunctionCallQuery(CONFIGURATIONS, FROM, TO)
-    expect(query).toEqual(EXPECTED_SQL)
+    expect(query).toStrictEqual(EXPECTED_SQL)
   })
 
   it('returns valid SQL with duplicate configurations', () => {
@@ -101,7 +101,7 @@ describe(getFunctionCallQuery.name, () => {
       TO,
     )
 
-    expect(query).toEqual(EXPECTED_SQL)
+    expect(query).toStrictEqual(EXPECTED_SQL)
   })
 
   it('merges duplicates to the widest input request', () => {
@@ -120,7 +120,7 @@ describe(getFunctionCallQuery.name, () => {
       TO,
     )
 
-    expect(query).toEqual(
+    expect(query).toStrictEqual(
       getFunctionCallQuery(
         [
           { address: ADDRESS_1, selector: SELECTOR_1, inputBytes: 68 },
@@ -139,7 +139,7 @@ describe(getFunctionCallQuery.name, () => {
   it('handles empty helper tables', () => {
     const query = getFunctionCallQuery([], FROM, TO)
 
-    expect(query).toInclude(
+    expect(query).toContain(
       '(CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint))',
     )
   })

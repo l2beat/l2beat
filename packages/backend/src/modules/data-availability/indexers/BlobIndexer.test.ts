@@ -5,7 +5,8 @@ import {
   ETHEREUM_BLOB_SIZE_BYTES,
   type EthereumBlob,
 } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { BlobService } from '../services/BlobService'
@@ -36,8 +37,12 @@ describe(BlobIndexer.name, () => {
 
       const safeHeight = await indexer.update(100, 200)
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(safeHeight).toEqual(200)
+      expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+        DA_LAYER,
+        100,
+        200,
+      )
+      expect(safeHeight).toStrictEqual(200)
 
       expect(blobService.save).toHaveBeenCalledWith(blobs)
     })
@@ -50,8 +55,12 @@ describe(BlobIndexer.name, () => {
 
         const safeHeight = await indexer.update(100, 200)
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-        expect(safeHeight).toEqual(150)
+        expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+          DA_LAYER,
+          100,
+          150,
+        )
+        expect(safeHeight).toStrictEqual(150)
       })
 
       it('from + batchSize < to', async () => {
@@ -61,8 +70,12 @@ describe(BlobIndexer.name, () => {
 
         const safeHeight = await indexer.update(100, 200)
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-        expect(safeHeight).toEqual(200)
+        expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+          DA_LAYER,
+          100,
+          200,
+        )
+        expect(safeHeight).toStrictEqual(200)
       })
     })
 
@@ -74,8 +87,12 @@ describe(BlobIndexer.name, () => {
 
       const safeHeight = await indexer.update(100, 200)
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(safeHeight).toEqual(200)
+      expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+        DA_LAYER,
+        100,
+        200,
+      )
+      expect(safeHeight).toStrictEqual(200)
 
       expect(blobService.save).not.toHaveBeenCalled()
     })
@@ -105,9 +122,9 @@ function mockIndexer($: {
   blobs?: DaBlob[]
 }) {
   const blobService = mockObject<BlobService>({
-    get: mockFn().resolvesTo($.blobs ?? []),
-    save: mockFn().resolvesTo(undefined),
-    deleteAfter: mockFn().resolvesTo({}),
+    get: vi.fn().mockResolvedValue($.blobs ?? []),
+    save: vi.fn().mockResolvedValue(undefined),
+    deleteAfter: vi.fn().mockResolvedValue({}),
   })
 
   const daProvider = mockObject<DaProvider>({

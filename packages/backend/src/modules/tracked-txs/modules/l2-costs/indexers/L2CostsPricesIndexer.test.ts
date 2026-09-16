@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
   ETHEREUM_COINGECKO_ID,
@@ -19,7 +20,7 @@ describe(L2CostsPricesIndexer.name, () => {
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
-        insertMany: mockFn().resolvesTo(1),
+        insertMany: vi.fn().mockResolvedValue(1),
       })
 
       const indexer = createIndexer({
@@ -29,7 +30,7 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
-      const fetchPricesMock = mockFn().resolvesTo(prices)
+      const fetchPricesMock = vi.fn().mockResolvedValue(prices)
       indexer.fetchPrices = fetchPricesMock
 
       const result = await indexer.update(from, to)
@@ -38,7 +39,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.insertMany).toHaveBeenCalledWith(prices)
 
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('does nothing if no prices to save', async () => {
@@ -46,7 +47,7 @@ describe(L2CostsPricesIndexer.name, () => {
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
-        insertMany: mockFn().resolvesTo(0),
+        insertMany: vi.fn().mockResolvedValue(0),
       })
 
       const indexer = createIndexer({
@@ -56,7 +57,7 @@ describe(L2CostsPricesIndexer.name, () => {
         }),
       })
 
-      const fetchPricesMock = mockFn().resolvesTo([])
+      const fetchPricesMock = vi.fn().mockResolvedValue([])
       indexer.fetchPrices = fetchPricesMock
 
       const result = await indexer.update(from, to)
@@ -65,7 +66,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.insertMany).not.toHaveBeenCalled()
 
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('shifts from if time range greater than MAX_DAYS_FOR_ONE_CALL', async () => {
@@ -78,7 +79,7 @@ describe(L2CostsPricesIndexer.name, () => {
         from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY
 
       const repository = mockObject<Database['l2CostPrice']>({
-        insertMany: mockFn().resolvesTo(1),
+        insertMany: vi.fn().mockResolvedValue(1),
       })
 
       const indexer = createIndexer({
@@ -89,14 +90,14 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
-      const fetchPricesMock = mockFn().resolvesTo(prices)
+      const fetchPricesMock = vi.fn().mockResolvedValue(prices)
       indexer.fetchPrices = fetchPricesMock
 
       const result = await indexer.update(from, to)
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, shiftedTo)
 
-      expect(result).toEqual(shiftedTo)
+      expect(result).toStrictEqual(shiftedTo)
     })
   })
 
@@ -107,7 +108,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       const prices = [{ timestamp: from, value: 3000 }]
       const coingeckoQueryServiceMock = mockObject<CoingeckoQueryService>({
-        getUsdPriceHistoryHourly: mockFn().resolvesTo(prices),
+        getUsdPriceHistoryHourly: vi.fn().mockResolvedValue(prices),
       })
 
       const indexer = createIndexer({
@@ -121,7 +122,7 @@ describe(L2CostsPricesIndexer.name, () => {
         coingeckoQueryServiceMock.getUsdPriceHistoryHourly,
       ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: from,
           priceUsd: 3000,
@@ -133,7 +134,7 @@ describe(L2CostsPricesIndexer.name, () => {
   describe(L2CostsPricesIndexer.prototype.invalidate.name, () => {
     it('deletes records', async () => {
       const repository = mockObject<Database['l2CostPrice']>({
-        deleteAfter: mockFn().resolvesTo(NOW),
+        deleteAfter: vi.fn().mockResolvedValue(NOW),
       })
 
       const indexer = createIndexer({
@@ -147,7 +148,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.deleteAfter).toHaveBeenCalledWith(NOW)
 
-      expect(result).toEqual(NOW)
+      expect(result).toStrictEqual(NOW)
     })
   })
 })
@@ -160,11 +161,11 @@ function createIndexer(deps?: Partial<L2CostsPricesIndexerDeps>) {
       parents: [],
       db: mockObject<Database>({
         l2CostPrice: mockObject<Database['l2CostPrice']>({
-          insertMany: mockFn().resolvesTo(1),
+          insertMany: vi.fn().mockResolvedValue(1),
         }),
       }),
       coingeckoQueryService: mockObject<CoingeckoQueryService>({
-        getUsdPriceHistoryHourly: mockFn().resolvesTo([]),
+        getUsdPriceHistoryHourly: vi.fn().mockResolvedValue([]),
       }),
       ...deps,
     },

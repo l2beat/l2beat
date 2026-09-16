@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
+import { describe, expect, it } from 'vitest'
 
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -19,7 +19,7 @@ describe(isProgramHashProven.name, () => {
       '3258367057337572248818716706664617507069572185152472699066582725377748079373',
     ])
 
-    expect(isStarknetProven).toEqual(true)
-    expect(isParadexProven).toEqual(true)
+    expect(isStarknetProven).toStrictEqual(true)
+    expect(isParadexProven).toStrictEqual(true)
   })
 })

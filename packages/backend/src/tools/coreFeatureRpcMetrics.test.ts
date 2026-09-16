@@ -1,5 +1,5 @@
 import { getRpcMetricsContext } from '@l2beat/shared'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   instrumentCoreFeatureRpcMetricsRun,
   withCoreFeatureRpcMetricsContext,
@@ -20,7 +20,7 @@ describe(withCoreFeatureRpcMetricsContext.name, () => {
       },
     )
 
-    expect(context).toEqual({
+    expect(context).toStrictEqual({
       coreFeature: 'interop.sync',
       chain: 'ethereum',
       pluginCluster: 'across',
@@ -43,7 +43,7 @@ describe(instrumentCoreFeatureRpcMetricsRun.name, () => {
 
     await target.run()
 
-    expect(context).toEqual({
+    expect(context).toStrictEqual({
       coreFeature: 'interop.config',
       plugin: 'across',
     })

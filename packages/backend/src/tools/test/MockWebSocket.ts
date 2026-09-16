@@ -1,4 +1,5 @@
-import { type MockObject, mockFn, mockObject } from 'earl'
+import { type MockObject, mockObject } from '@l2beat/test-utils'
+import { vi } from 'vitest'
 import type { WebSocket } from 'ws'
 
 type WebSocketEvent = 'open' | 'message' | 'close' | 'error'
@@ -9,7 +10,7 @@ export class MockWebSocket {
 
   constructor() {
     this.mock = mockObject<WebSocket>({
-      on: mockFn((...args: any): WebSocket => {
+      on: vi.fn((...args: any): WebSocket => {
         const event = args[0] as WebSocketEvent
         const callback = args[1] as (...args: any[]) => void
 
@@ -20,7 +21,7 @@ export class MockWebSocket {
         this.listeners[event]!.push(callback)
         return this.mock
       }),
-      send: mockFn(() => {}),
+      send: vi.fn(() => {}),
     })
   }
 

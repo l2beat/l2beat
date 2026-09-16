@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import {
   InteropPromotionService,
   type PromotionMode,
@@ -45,7 +46,11 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result).toEqual({ status: 'promoted', reasons: [], notify: false })
+      expect(result).toStrictEqual({
+        status: 'promoted',
+        reasons: [],
+        notify: false,
+      })
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -59,8 +64,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toStrictEqual('promoted')
+      expect(result.notify).toStrictEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -74,8 +79,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
+      expect(result.status).toStrictEqual('blocked')
+      expect(result.notify).toStrictEqual(true)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -96,8 +101,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toStrictEqual('blocked')
+      expect(result.notify).toStrictEqual(false)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -113,7 +118,11 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result).toEqual({ status: 'promoted', reasons: [], notify: false })
+      expect(result).toStrictEqual({
+        status: 'promoted',
+        reasons: [],
+        notify: false,
+      })
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -129,9 +138,9 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
-      expect(result.reasons[0]?.rule).toEqual('engineError')
+      expect(result.status).toStrictEqual('blocked')
+      expect(result.notify).toStrictEqual(true)
+      expect(result.reasons[0]?.rule).toStrictEqual('engineError')
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'blocked',
@@ -148,8 +157,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toStrictEqual('promoted')
+      expect(result.notify).toStrictEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -163,11 +172,11 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
+      expect(result.status).toStrictEqual('blocked')
+      expect(result.notify).toStrictEqual(true)
       expect(result.reasons).toHaveLength(1)
-      expect(result.reasons[0]?.rule).toEqual('brokenRule')
-      expect(result.reasons[0]?.message).toEqual(
+      expect(result.reasons[0]?.rule).toStrictEqual('brokenRule')
+      expect(result.reasons[0]?.message).toStrictEqual(
         'rule "brokenRule" failed to evaluate: kaboom',
       )
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
@@ -182,8 +191,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.reasons.map((r) => r.rule)).toEqual([
+      expect(result.status).toStrictEqual('blocked')
+      expect(result.reasons.map((r) => r.rule)).toStrictEqual([
         'brokenRule',
         'maxTotalVolume',
       ])
@@ -196,8 +205,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toStrictEqual('promoted')
+      expect(result.notify).toStrictEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -211,8 +220,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toStrictEqual('promoted')
+      expect(result.notify).toStrictEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -229,7 +238,7 @@ function setup(
   upsertAutoApplied = true,
 ) {
   const statusRepository = mockObject<Database['interopAggregateStatus']>({
-    upsertAuto: mockFn().resolvesTo(upsertAutoApplied),
+    upsertAuto: vi.fn().mockResolvedValue(upsertAutoApplied),
   })
   const service = new InteropPromotionService({
     statusRepository,

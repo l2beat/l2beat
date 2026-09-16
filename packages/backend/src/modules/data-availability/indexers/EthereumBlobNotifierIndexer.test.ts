@@ -3,7 +3,8 @@ import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { BlobPairCount, Database } from '@l2beat/database'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -23,7 +24,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, midnight)
 
-      expect(result).toEqual(midnight)
+      expect(result).toStrictEqual(midnight)
       expect(blobsRepository.getCountPerAddressInbox).not.toHaveBeenCalled()
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
@@ -42,7 +43,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, oneAm)
 
-      expect(result).toEqual(oneAm)
+      expect(result).toStrictEqual(oneAm)
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
 
@@ -60,7 +61,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, oneAm)
 
-      expect(result).toEqual(oneAm)
+      expect(result).toStrictEqual(oneAm)
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
     })
 
@@ -75,7 +76,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const oneAm =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
 
-      await expect(indexer.update(0, oneAm)).toBeRejectedWith(
+      await expect(indexer.update(0, oneAm)).rejects.toThrow(
         'Discord API error',
       )
     })
@@ -93,7 +94,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toEqual([{ from: '0xC', to: '0xD', count: 100 }])
+      expect(result).toStrictEqual([{ from: '0xC', to: '0xD', count: 100 }])
     })
 
     it('excludes pairs that match a config by inbox', async () => {
@@ -110,7 +111,9 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toEqual([{ from: '0xB', to: '0xUnmatched', count: 200 }])
+      expect(result).toStrictEqual([
+        { from: '0xB', to: '0xUnmatched', count: 200 },
+      ])
     })
 
     it('excludes pairs that match a config by inbox and sequencer', async () => {
@@ -127,7 +130,9 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toEqual([{ from: '0xSeq2', to: '0xInbox', count: 200 }])
+      expect(result).toStrictEqual([
+        { from: '0xSeq2', to: '0xInbox', count: 200 },
+      ])
     })
 
     it('returns empty when no pairs have 100+ blobs', async () => {
@@ -141,7 +146,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -161,9 +166,9 @@ describe(EthereumBlobNotifierIndexer.name, () => {
         const messages = indexer.formatDiscordMessages(pairs, oneAm)
 
         expect(messages).toHaveLength(1)
-        expect(messages[0]).toInclude('**Unmatched Ethereum Blob Pairs**')
-        expect(messages[0]).toInclude('`0xA` → `0xB` — **200** blobs')
-        expect(messages[0]).toInclude('`0xC` → `0xD` — **150** blobs')
+        expect(messages[0]).toContain('**Unmatched Ethereum Blob Pairs**')
+        expect(messages[0]).toContain('`0xA` → `0xB` — **200** blobs')
+        expect(messages[0]).toContain('`0xC` → `0xD` — **150** blobs')
       })
 
       it('splits messages when exceeding Discord limit', () => {
@@ -192,9 +197,9 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
         const messages = indexer.formatDiscordMessages(pairs, oneAm)
 
-        expect(messages[0]).toInclude('**Unmatched Ethereum Blob Pairs**')
+        expect(messages[0]).toContain('**Unmatched Ethereum Blob Pairs**')
         for (const msg of messages.slice(1)) {
-          expect(msg).not.toInclude('**Unmatched Ethereum Blob Pairs**')
+          expect(msg).not.toContain('**Unmatched Ethereum Blob Pairs**')
         }
       })
     },
@@ -218,15 +223,15 @@ function config(
 
 function mockBlobsRepository(pairs: BlobPairCount[]) {
   return mockObject<Database['blobs']>({
-    getCountPerAddressInbox: mockFn().resolvesTo(pairs),
+    getCountPerAddressInbox: vi.fn().mockResolvedValue(pairs),
   })
 }
 
 function mockDiscordClient(sendError?: Error) {
   return mockObject<DiscordClient>({
     sendMessage: sendError
-      ? mockFn().rejectsWith(sendError)
-      : mockFn().resolvesTo('msg-id'),
+      ? vi.fn().mockRejectedValue(sendError)
+      : vi.fn().mockResolvedValue('msg-id'),
   })
 }
 

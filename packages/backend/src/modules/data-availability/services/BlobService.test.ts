@@ -1,6 +1,7 @@
 import type { BlobRecord, Database } from '@l2beat/database'
 import { ETHEREUM_BLOB_SIZE_BYTES, type EthereumBlob } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import { BlobService } from './BlobService'
 
@@ -21,7 +22,7 @@ describe(BlobService.name, () => {
       ]
 
       const mockBlobRepository = mockObject<Database['blobs']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const mockDb = mockDatabase({
@@ -61,7 +62,7 @@ describe(BlobService.name, () => {
       ]
 
       const mockBlobRepository = mockObject<Database['blobs']>({
-        getByBlockRangeInclusive: mockFn().resolvesTo(records),
+        getByBlockRangeInclusive: vi.fn().mockResolvedValue(records),
       })
 
       const mockDb = mockDatabase({
@@ -96,7 +97,7 @@ describe(BlobService.name, () => {
     it('should delete blobs', async () => {
       const deletedRecords = 2
       const mockBlobRepository = mockObject<Database['blobs']>({
-        deleteAfter: mockFn().resolvesTo(deletedRecords),
+        deleteAfter: vi.fn().mockResolvedValue(deletedRecords),
       })
 
       const mockDb = mockDatabase({
@@ -106,7 +107,7 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       const result = await blobService.deleteAfter('ethereum', 100)
 
-      expect(result).toEqual(deletedRecords)
+      expect(result).toStrictEqual(deletedRecords)
 
       expect(mockBlobRepository.deleteAfter).toHaveBeenCalledWith(
         'ethereum',

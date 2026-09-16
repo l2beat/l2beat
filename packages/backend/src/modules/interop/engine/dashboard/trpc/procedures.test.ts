@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
+import { mockObject } from '@l2beat/test-utils'
 import { TRPCError } from '@trpc/server'
-import { expect, mockObject } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { createCallerFactory } from '../../../../../trpc/init'
 import { createChainsRouter } from './routers/chains'
 
@@ -26,7 +27,7 @@ describe('interop trpc auth', () => {
       error = caught
     }
 
-    expect(error).toBeA(TRPCError)
-    expect((error as TRPCError).code).toEqual('UNAUTHORIZED')
+    expect(error).toBeInstanceOf(TRPCError)
+    expect((error as TRPCError).code).toStrictEqual('UNAUTHORIZED')
   })
 })

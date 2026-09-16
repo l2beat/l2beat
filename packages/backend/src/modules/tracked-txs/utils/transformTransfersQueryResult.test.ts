@@ -9,7 +9,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
   DuneTransferResult,
@@ -182,7 +182,7 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
+    expect(transformTransfersQueryResult(config, queryResults)).toStrictEqual(
       expected,
     )
   })
@@ -319,7 +319,7 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
+    expect(transformTransfersQueryResult(config, queryResults)).toStrictEqual(
       expected,
     )
   })

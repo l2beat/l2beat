@@ -1,6 +1,7 @@
 import type { Database, IndexerStateRecord } from '@l2beat/database'
 import type { json } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'
 
@@ -20,10 +21,10 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getSafeHeight('indexer')
 
-    expect(result).toEqual(safeHeight)
-    expect(indexerStateRepository.findByIndexerId).toHaveBeenOnlyCalledWith(
-      'indexer',
-    )
+    expect(result).toStrictEqual(safeHeight)
+    expect(
+      indexerStateRepository.findByIndexerId,
+    ).toHaveBeenCalledExactlyOnceWith('indexer')
   })
 
   it(IndexerService.prototype.getIndexerState.name, async () => {
@@ -41,10 +42,10 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getIndexerState('indexer')
 
-    expect(result).toEqual(mock({ configHash }))
-    expect(indexerStateRepository.findByIndexerId).toHaveBeenOnlyCalledWith(
-      'indexer',
-    )
+    expect(result).toStrictEqual(mock({ configHash }))
+    expect(
+      indexerStateRepository.findByIndexerId,
+    ).toHaveBeenCalledExactlyOnceWith('indexer')
   })
 
   it(IndexerService.prototype.setSafeHeight.name, async () => {
@@ -60,10 +61,9 @@ describe(IndexerService.name, () => {
     )
 
     await indexerService.setSafeHeight('indexer', 123)
-    expect(indexerStateRepository.updateSafeHeight).toHaveBeenOnlyCalledWith(
-      'indexer',
-      123,
-    )
+    expect(
+      indexerStateRepository.updateSafeHeight,
+    ).toHaveBeenCalledExactlyOnceWith('indexer', 123)
   })
 
   it(IndexerService.prototype.setInitialState.name, async () => {
@@ -79,7 +79,7 @@ describe(IndexerService.name, () => {
     )
 
     await indexerService.setInitialState('indexer', 123, 'hash')
-    expect(indexerStateRepository.upsert).toHaveBeenOnlyCalledWith({
+    expect(indexerStateRepository.upsert).toHaveBeenCalledExactlyOnceWith({
       indexerId: 'indexer',
       safeHeight: 123,
       configHash: 'hash',
@@ -121,26 +121,26 @@ describe(IndexerService.name, () => {
       (properties: json) => JSON.stringify(properties),
     )
 
-    expect(indexerConfigurationsRepository.upsertMany).toHaveBeenOnlyCalledWith(
-      [
-        {
-          id: 'a',
-          currentHeight: null,
-          minHeight: 0,
-          maxHeight: null,
-          properties: JSON.stringify({ a: 1 }),
-          indexerId: 'indexer',
-        },
-        {
-          id: 'b',
-          currentHeight: null,
-          minHeight: 0,
-          maxHeight: null,
-          properties: JSON.stringify({ b: 1 }),
-          indexerId: 'indexer',
-        },
-      ],
-    )
+    expect(
+      indexerConfigurationsRepository.upsertMany,
+    ).toHaveBeenCalledExactlyOnceWith([
+      {
+        id: 'a',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: JSON.stringify({ a: 1 }),
+        indexerId: 'indexer',
+      },
+      {
+        id: 'b',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: JSON.stringify({ b: 1 }),
+        indexerId: 'indexer',
+      },
+    ])
   })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {
@@ -212,7 +212,7 @@ describe(IndexerService.name, () => {
 
       expect(
         indexerConfigurationsRepository.updateCurrentHeights,
-      ).toHaveBeenOnlyCalledWith('indexer', 123)
+      ).toHaveBeenCalledExactlyOnceWith('indexer', 123)
     },
   )
 
@@ -235,7 +235,7 @@ describe(IndexerService.name, () => {
 
     expect(
       indexerConfigurationsRepository.deleteConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
+    ).toHaveBeenCalledExactlyOnceWith('indexer', ['a', 'b'])
   })
 })
 

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { alignTimestamp } from './alignTimestamp'
 
 describe(alignTimestamp.name, () => {
@@ -52,7 +52,7 @@ describe(alignTimestamp.name, () => {
         c.sixHourlyCutoff,
       )
 
-      expect(result).toEqual(c.expected)
+      expect(result).toStrictEqual(c.expected)
     })
   }
 })

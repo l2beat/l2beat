@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { mockObject } from '@l2beat/test-utils'
 import { createHash } from 'crypto'
-import { expect, mockFn, mockObject } from 'earl'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type {
   BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
@@ -52,21 +53,29 @@ describe(DaIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-      expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+        DA_LAYER,
+        100,
+        150,
+      )
+      expect(
+        repository.getForDaLayerInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
         UnixTime.toEndOf(200, 'hour'),
       )
-      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
+      expect(daService.generateRecords).toHaveBeenCalledExactlyOnceWith(
         blobs,
         previousRecords,
         configurations,
       )
 
-      expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
+      expect(repository.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        generatedRecords,
+      )
 
-      expect(safeHeight).toEqual(150)
+      expect(safeHeight).toStrictEqual(150)
     })
 
     it('fetches blobs from cache, generates records, saves metrics to DB', async () => {
@@ -103,21 +112,31 @@ describe(DaIndexer.name, () => {
       const safeHeight = await updateCallback()
 
       expect(daProvider.getBlobs).not.toHaveBeenCalled()
-      expect(blobService!.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-      expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(blobService!.get).toHaveBeenCalledExactlyOnceWith(
+        DA_LAYER,
+        100,
+        150,
+      )
+      expect(
+        repository.getForDaLayerInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
         UnixTime.toEndOf(200, 'hour'),
       )
-      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
+      expect(daService.generateRecords).toHaveBeenCalledExactlyOnceWith(
         blobs,
         previousRecords,
         configurations,
       )
 
-      expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
+      expect(repository.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        generatedRecords,
+      )
 
-      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+      expect(
+        syncMetadataRepository.updateSyncedUntil,
+      ).toHaveBeenCalledExactlyOnceWith(
         'dataAvailability',
         configurations.map((c) => c.projectId),
         UnixTime.toEndOf(
@@ -127,7 +146,7 @@ describe(DaIndexer.name, () => {
         150,
       )
 
-      expect(safeHeight).toEqual(150)
+      expect(safeHeight).toStrictEqual(150)
     })
 
     describe('handles batch size', () => {
@@ -139,8 +158,12 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-        expect(safeHeight).toEqual(150)
+        expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+          DA_LAYER,
+          100,
+          150,
+        )
+        expect(safeHeight).toStrictEqual(150)
       })
 
       it('from + batchSize < to', async () => {
@@ -151,8 +174,12 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-        expect(safeHeight).toEqual(200)
+        expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+          DA_LAYER,
+          100,
+          200,
+        )
+        expect(safeHeight).toStrictEqual(200)
       })
     })
 
@@ -165,8 +192,12 @@ describe(DaIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(safeHeight).toEqual(200)
+      expect(daProvider.getBlobs).toHaveBeenCalledExactlyOnceWith(
+        DA_LAYER,
+        100,
+        200,
+      )
+      expect(safeHeight).toStrictEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
@@ -193,7 +224,9 @@ describe(DaIndexer.name, () => {
         199,
       )
       // the hours straddling the edges are deleted as well
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         createId('project-a'),
         3 * HOUR,
         7 * HOUR,
@@ -211,7 +244,9 @@ describe(DaIndexer.name, () => {
 
       await indexer.initialize()
 
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         createId('project-a'),
         10 * HOUR,
         12 * HOUR,
@@ -228,11 +263,9 @@ describe(DaIndexer.name, () => {
 
       await indexer.initialize()
 
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
-        createId('project-a'),
-        0,
-        2 * HOUR,
-      )
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(createId('project-a'), 0, 2 * HOUR)
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
     })
 
@@ -244,7 +277,7 @@ describe(DaIndexer.name, () => {
 
       await indexer.initialize()
 
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         createId('project-a'),
       ])
       expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
@@ -265,7 +298,7 @@ describe(DaIndexer.name, () => {
         { id: createId('project-b') },
       ])
 
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         createId('project-a'),
         createId('project-b'),
       ])
@@ -299,26 +332,30 @@ function mockIndexer($: {
   blockTimestamps?: Record<number, number>
 }) {
   const repository = mockObject<Database['dataAvailability']>({
-    deleteByConfigIds: mockFn().resolvesTo(10),
-    deleteByConfigurationId: mockFn().resolvesTo({}),
-    deleteByConfigInTimeRange: mockFn().resolvesTo(5),
-    upsertMany: mockFn().resolvesTo(undefined),
-    getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
+    deleteByConfigIds: vi.fn().mockResolvedValue(10),
+    deleteByConfigurationId: vi.fn().mockResolvedValue({}),
+    deleteByConfigInTimeRange: vi.fn().mockResolvedValue(5),
+    upsertMany: vi.fn().mockResolvedValue(undefined),
+    getForDaLayerInTimeRange: vi
+      .fn()
+      .mockResolvedValue($.previousRecords ?? []),
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
-    insertConfigurations: mockFn().resolvesTo(undefined),
-    upsertConfigurations: mockFn().resolvesTo(undefined),
-    deleteConfigurations: mockFn().resolvesTo(undefined),
+    getSavedConfigurations: vi
+      .fn()
+      .mockResolvedValue($.savedConfigurations ?? []),
+    insertConfigurations: vi.fn().mockResolvedValue(undefined),
+    upsertConfigurations: vi.fn().mockResolvedValue(undefined),
+    deleteConfigurations: vi.fn().mockResolvedValue(undefined),
   })
 
   const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-    updateSyncedUntil: mockFn().resolvesTo(undefined),
+    updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
   })
 
   const daService = mockObject<DaService>({
-    generateRecords: mockFn().returns({
+    generateRecords: vi.fn().mockReturnValue({
       records: $.generatedRecords ?? [],
       latestTimestamp:
         $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
@@ -327,7 +364,7 @@ function mockIndexer($: {
 
   const daProvider = mockObject<DaProvider>({
     getBlobs: async () => $.blobs ?? [], // Empty response
-    getBlockTimestamp: mockFn(async (_: string, blockNumber: number) => {
+    getBlockTimestamp: vi.fn(async (_: string, blockNumber: number) => {
       const timestamp = $.blockTimestamps?.[blockNumber]
       if (timestamp === undefined) {
         throw new Error(`No timestamp mocked for block ${blockNumber}`)
@@ -338,7 +375,7 @@ function mockIndexer($: {
 
   const blobService = $.useBlobService
     ? mockObject<BlobService>({
-        get: mockFn().resolvesTo($.blobs ?? []), // Empty response
+        get: vi.fn().mockResolvedValue($.blobs ?? []), // Empty response
       })
     : undefined
 

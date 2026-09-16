@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-import { activityRecord } from '../../utils/aggregatePerDay.test'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+import { activityRecord } from '../../test/activityRecord'
 import { BlockTxsCountService } from './BlockTxsCountService'
 import type { ActivityBlockProvider } from './types'
 
@@ -33,12 +34,12 @@ describe(BlockTxsCountService.name, () => {
           assessCount: (count) => count,
         },
         mockObject<Logger>({
-          for: mockFn().returns(mockObject<Logger>()),
+          for: vi.fn().mockReturnValue(mockObject<Logger>()),
         }),
       )
 
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
           activityRecord(
@@ -52,7 +53,7 @@ describe(BlockTxsCountService.name, () => {
         ],
         latestTimestamp: START + 2 * UnixTime.DAY,
       })
-      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 3)
+      expect(client.getBlocks).toHaveBeenCalledExactlyOnceWith(1, 3)
     })
 
     it('should return txs and uops count and use assessCount', async () => {
@@ -65,7 +66,7 @@ describe(BlockTxsCountService.name, () => {
           number: 2,
         },
       ])
-      const assessCount = mockFn((count) => count - 1)
+      const assessCount = vi.fn((count) => count - 1)
 
       const txsCountProvider = new BlockTxsCountService(
         {
@@ -74,22 +75,22 @@ describe(BlockTxsCountService.name, () => {
           assessCount,
         },
         mockObject<Logger>({
-          for: mockFn().returns(
+          for: vi.fn().mockReturnValue(
             mockObject<Logger>({
-              warn: mockFn(),
+              warn: vi.fn(),
             }),
           ),
         }),
       )
       const result = await txsCountProvider.getTxsCount(1, 2)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 3, 1, 2),
         ],
         latestTimestamp: START + 1 * UnixTime.HOUR,
       })
       expect(assessCount).toHaveBeenCalledTimes(4)
-      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 2)
+      expect(client.getBlocks).toHaveBeenCalledExactlyOnceWith(1, 2)
     })
 
     it('should handle negative count', async () => {
@@ -108,13 +109,13 @@ describe(BlockTxsCountService.name, () => {
           number: 3,
         },
       ])
-      const assessCount = mockFn((count) => count - 1)
+      const assessCount = vi.fn((count) => count - 1)
 
       const forLogger = mockObject<Logger>({
-        warn: mockFn().returns(undefined),
+        warn: vi.fn().mockReturnValue(undefined),
       })
       const logger = mockObject<Logger>({
-        for: mockFn().returns(forLogger),
+        for: vi.fn().mockReturnValue(forLogger),
       })
 
       const txsCountProvider = new BlockTxsCountService(
@@ -126,7 +127,7 @@ describe(BlockTxsCountService.name, () => {
         logger,
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 2, 1, 3),
         ],
@@ -152,7 +153,7 @@ describe(BlockTxsCountService.name, () => {
         },
       )
       expect(assessCount).toHaveBeenCalledTimes(6)
-      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 3)
+      expect(client.getBlocks).toHaveBeenCalledExactlyOnceWith(1, 3)
     })
   })
 })
@@ -166,7 +167,7 @@ function mockRpcClient(
   }[],
 ) {
   return mockObject<ActivityBlockProvider>({
-    getBlocks: mockFn().resolvesToOnce(
+    getBlocks: vi.fn().mockResolvedValueOnce(
       blocks.map(({ timestamp, count, uopsCount, number }) => ({
         timestamp,
         txsCount: count,

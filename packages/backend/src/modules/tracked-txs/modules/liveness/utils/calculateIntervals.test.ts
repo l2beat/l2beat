@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { calculateIntervals } from './calculateIntervals'
 import type { LivenessRecordWithConfig } from './mapToRecordWithConfig'
 
@@ -22,7 +23,7 @@ describe(calculateIntervals.name, () => {
     ]
     const result = calculateIntervals(records)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         record: records[1],
         duration: 2 * 60 * 60,
@@ -36,6 +37,6 @@ describe(calculateIntervals.name, () => {
 
   it('if no records return empty array', () => {
     const result = calculateIntervals([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 })

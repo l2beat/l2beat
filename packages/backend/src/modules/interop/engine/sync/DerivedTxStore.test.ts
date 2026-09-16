@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   createInteropEventType,
   type InteropPluginResyncable,
@@ -34,8 +34,8 @@ describe(DerivedTxStore.name, () => {
     const store = new DerivedTxStore([plugin])
     store.onEventCreated(creatorEvent)
 
-    expect(store.getCount()).toEqual(1)
-    expect(store.get('base', '0xabc')).toEqual([
+    expect(store.getCount()).toStrictEqual(1)
+    expect(store.get('base', '0xabc')).toStrictEqual([
       {
         chain: 'base',
         txHash: '0xabc',
@@ -43,9 +43,9 @@ describe(DerivedTxStore.name, () => {
         checkedInHistory: false,
       },
     ])
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
-      '0xabc',
-    ])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual(['0xabc'])
   })
 
   it('throws when a creator event type defines multiple derived tx requests', () => {
@@ -103,8 +103,8 @@ describe(DerivedTxStore.name, () => {
     store.onEventCreated(creatorEvent)
     store.onEventsRemoved([creatorEvent])
 
-    expect(store.getCount()).toEqual(0)
-    expect(store.get('base', '0xabc')).toEqual([])
+    expect(store.getCount()).toStrictEqual(0)
+    expect(store.get('base', '0xabc')).toStrictEqual([])
   })
 
   it('new creator event for same tx hash is pending even after first was checked', () => {
@@ -142,13 +142,15 @@ describe(DerivedTxStore.name, () => {
     store.onEventCreated(firstEvent)
     store.markCheckedInHistory('base', ['0xabc'], ['across'])
 
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual([])
 
     store.onEventCreated(secondEvent)
 
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
-      '0xabc',
-    ])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual(['0xabc'])
   })
 
   it('does not return checked entries as pending', () => {
@@ -178,8 +180,10 @@ describe(DerivedTxStore.name, () => {
     const store = new DerivedTxStore([plugin])
     store.onEventCreated(creatorEvent, true)
 
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
-    expect(store.getCount()).toEqual(1)
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual([])
+    expect(store.getCount()).toStrictEqual(1)
   })
 
   it('only returns hashes for the requested plugins', () => {
@@ -222,15 +226,15 @@ describe(DerivedTxStore.name, () => {
     store.onEventCreated(eventA)
     store.onEventCreated(eventB)
 
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
-      '0xaaa',
-    ])
-    expect(store.getHashesPendingHistoryCheck('base', ['wormhole'])).toEqual([
-      '0xbbb',
-    ])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual(['0xaaa'])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['wormhole']),
+    ).toStrictEqual(['0xbbb'])
     expect(
       store.getHashesPendingHistoryCheck('base', ['across', 'wormhole']),
-    ).toEqual(['0xaaa', '0xbbb'])
+    ).toStrictEqual(['0xaaa', '0xbbb'])
   })
 
   it('markCheckedInHistory returns affected creator events', () => {
@@ -259,7 +263,9 @@ describe(DerivedTxStore.name, () => {
 
     const marked = store.markCheckedInHistory('base', ['0xabc'], ['across'])
 
-    expect(marked).toEqual([creatorEvent])
-    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
+    expect(marked).toStrictEqual([creatorEvent])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across']),
+    ).toStrictEqual([])
   })
 })

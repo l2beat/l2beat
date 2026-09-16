@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -23,14 +24,15 @@ describe(PrivacyPriceIndexer.name, () => {
       ]
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 2000 }]),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi
+          .fn()
+          .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }])
+          .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 2000 }]),
       })
 
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -47,7 +49,10 @@ describe(PrivacyPriceIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
+      expect(priceProvider.getAdjustedTo).toHaveBeenCalledExactlyOnceWith(
+        from,
+        to,
+      )
       expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenNthCalledWith(
         1,
         CoingeckoId('ethereum'),
@@ -76,10 +81,10 @@ describe(PrivacyPriceIndexer.name, () => {
         },
       ]
 
-      expect(privacyPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(privacyPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('shares fetched prices across configurations with the same priceId', async () => {
@@ -93,14 +98,14 @@ describe(PrivacyPriceIndexer.name, () => {
       ]
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().returnsOnce([
-          { timestamp: UnixTime(150), value: 1500 },
-        ]),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi
+          .fn()
+          .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }]),
       })
 
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -118,20 +123,22 @@ describe(PrivacyPriceIndexer.name, () => {
       await updateFn()
 
       expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenCalledTimes(1)
-      expect(privacyPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
-        {
-          configurationId: 'config-1',
-          timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
-        },
-        {
-          configurationId: 'config-2',
-          timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
-        },
-      ])
+      expect(privacyPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        [
+          {
+            configurationId: 'config-1',
+            timestamp: UnixTime(150),
+            priceUsd: 1500,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'config-2',
+            timestamp: UnixTime(150),
+            priceUsd: 1500,
+            priceId: 'ethereum',
+          },
+        ],
+      )
     })
 
     it('swallows "Insufficient data" errors and continues', async () => {
@@ -140,14 +147,14 @@ describe(PrivacyPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
-          new Error('Insufficient data in response for ethereum'),
-        ),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Insufficient data in response for ethereum')
+        }),
       })
 
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -166,8 +173,10 @@ describe(PrivacyPriceIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(privacyPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([])
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(privacyPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
+        [],
+      )
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {
@@ -176,10 +185,10 @@ describe(PrivacyPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const priceProvider = mockObject<PriceProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
-          new Error('Network error'),
-        ),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Network error')
+        }),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -195,14 +204,14 @@ describe(PrivacyPriceIndexer.name, () => {
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')])
-      }).toBeRejectedWith('Network error')
+      }).rejects.toThrow('Network error')
     })
   })
 
   describe(PrivacyPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        deleteByConfigs: mockFn().returns(5),
+        deleteByConfigs: vi.fn().mockReturnValue(5),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -223,7 +232,9 @@ describe(PrivacyPriceIndexer.name, () => {
 
       await indexer.trimData(removalConfigs)
 
-      expect(privacyPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+      expect(
+        privacyPriceRepository.deleteByConfigs,
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'config-1',
           fromInclusive: UnixTime(100),
@@ -239,7 +250,7 @@ describe(PrivacyPriceIndexer.name, () => {
 
     it('skips DB call when no configurations are provided', async () => {
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        deleteByConfigs: mockFn(),
+        deleteByConfigs: vi.fn(),
       })
 
       const indexer = new PrivacyPriceIndexer(
@@ -262,7 +273,7 @@ describe(PrivacyPriceIndexer.name, () => {
   describe(PrivacyPriceIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
-        deleteByConfigIds: mockFn().returns(5),
+        deleteByConfigIds: vi.fn().mockReturnValue(5),
       })
       const indexer = new PrivacyPriceIndexer(
         {
@@ -277,9 +288,9 @@ describe(PrivacyPriceIndexer.name, () => {
 
       await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
 
-      expect(privacyPriceRepository.deleteByConfigIds).toHaveBeenOnlyCalledWith(
-        ['config-1', 'config-2'],
-      )
+      expect(
+        privacyPriceRepository.deleteByConfigIds,
+      ).toHaveBeenCalledExactlyOnceWith(['config-1', 'config-2'])
     })
   })
 
@@ -293,7 +304,7 @@ describe(PrivacyPriceIndexer.name, () => {
         priceId: 'bitcoin',
         sinceTimestamp: UnixTime(0),
       })
-      expect(id1).not.toEqual(id2)
+      expect(id1).not.toStrictEqual(id2)
     })
 
     it('is deterministic for the same priceId', () => {
@@ -305,8 +316,8 @@ describe(PrivacyPriceIndexer.name, () => {
         priceId: 'ethereum',
         sinceTimestamp: UnixTime(123),
       })
-      expect(id1).toEqual('3953373a477a')
-      expect(id1).toEqual(id2)
+      expect(id1).toStrictEqual('3953373a477a')
+      expect(id1).toStrictEqual(id2)
     })
   })
 

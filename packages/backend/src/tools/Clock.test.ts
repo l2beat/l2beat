@@ -1,18 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { Clock } from './Clock'
 
 describe(Clock.name, () => {
-  let time: InstalledClock
-
   beforeEach(() => {
-    time = install()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   const toTimestamp = (hhmmss: string) =>
@@ -20,18 +17,18 @@ describe(Clock.name, () => {
 
   function setTime(hhmmss: string) {
     const newTime = new Date(`2022-06-29T${hhmmss}.000Z`)
-    time.setSystemTime(newTime)
+    vi.setSystemTime(newTime)
     return newTime
   }
 
   describe(Clock.prototype.getFirstHour.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
-      time.setSystemTime(10_000_000_000_000)
+      vi.setSystemTime(10_000_000_000_000)
       const start = UnixTime(123456789)
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstHour()
-      expect(firstHour).toEqual(UnixTime.toNext(start, 'hour'))
+      expect(firstHour).toStrictEqual(UnixTime.toNext(start, 'hour'))
     })
 
     it('cannot get first hour with minTimestamp in the future', () => {
@@ -46,12 +43,12 @@ describe(Clock.name, () => {
 
   describe(Clock.prototype.getFirstDay.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
-      time.setSystemTime(10_000_000_000_000)
+      vi.setSystemTime(10_000_000_000_000)
       const start = UnixTime(123456789)
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstDay()
-      expect(firstHour).toEqual(UnixTime.toNext(start, 'day'))
+      expect(firstHour).toStrictEqual(UnixTime.toNext(start, 'day'))
     })
 
     it('cannot get first day with minTimestamp in the future', () => {
@@ -70,7 +67,7 @@ describe(Clock.name, () => {
       const clock = new Clock(0, 0)
 
       const lastHour = clock.getLastHour()
-      expect(lastHour).toEqual(toTimestamp('13:00:00'))
+      expect(lastHour).toStrictEqual(toTimestamp('13:00:00'))
     })
 
     it('uses the specified delay', () => {
@@ -78,7 +75,7 @@ describe(Clock.name, () => {
       const clock = new Clock(0, 10 * 60)
 
       const lastHour = clock.getLastHour()
-      expect(lastHour).toEqual(toTimestamp('12:00:00'))
+      expect(lastHour).toStrictEqual(toTimestamp('12:00:00'))
     })
   })
 
@@ -92,12 +89,15 @@ describe(Clock.name, () => {
       const calls: UnixTime[] = []
       const stop = clock.onNewHour((timestamp) => calls.push(timestamp))
 
-      expect(calls).toEqual([])
+      expect(calls).toStrictEqual([])
 
       // add two hours
-      time.tick(2 * 60 * 60 * 1000)
+      vi.advanceTimersByTime(2 * 60 * 60 * 1000)
 
-      expect(calls).toEqual([toTimestamp('14:00:00'), toTimestamp('15:00:00')])
+      expect(calls).toStrictEqual([
+        toTimestamp('14:00:00'),
+        toTimestamp('15:00:00'),
+      ])
       stop()
     })
   })

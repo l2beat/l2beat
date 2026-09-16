@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import {
   InteropTransferAnalyzer,
   type InteropTransferAnalyzerRecord,
@@ -9,7 +10,7 @@ import type { InteropNotifier } from './notifications/InteropNotifier'
 describe(InteropTransferAnalyzer.name, () => {
   it('notifies only extreme suspicious transfers from the processed batch', () => {
     const notifier = mockObject<InteropNotifier>({
-      notifySuspiciousTransfers: mockFn().returns(undefined),
+      notifySuspiciousTransfers: vi.fn().mockReturnValue(undefined),
     } as any)
     const analyzer = new InteropTransferAnalyzer(notifier)
 
@@ -36,12 +37,12 @@ describe(InteropTransferAnalyzer.name, () => {
 
     expect(notifier.notifySuspiciousTransfers).toHaveBeenCalledTimes(1)
     const suspiciousTransfers =
-      notifier.notifySuspiciousTransfers.calls[0]?.args[1]
+      notifier.notifySuspiciousTransfers.mock.calls[0][1]
 
     expect(suspiciousTransfers).toHaveLength(1)
-    expect(suspiciousTransfers?.[0]?.transferId).toEqual('msg1')
-    expect(suspiciousTransfers?.[0]?.valueRatio).toEqual(6)
-    expect(suspiciousTransfers?.[0]?.dominantSide).toEqual('src')
+    expect(suspiciousTransfers?.[0]?.transferId).toStrictEqual('msg1')
+    expect(suspiciousTransfers?.[0]?.valueRatio).toStrictEqual(6)
+    expect(suspiciousTransfers?.[0]?.dominantSide).toStrictEqual('src')
   })
 })
 

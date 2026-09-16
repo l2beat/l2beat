@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { Clock } from '../../../tools/Clock'
 import { DayTargetIndexer } from './DayTargetIndexer'
 
@@ -32,7 +33,7 @@ describe(DayTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         UnixTime.toDays(UnixTime.toStartOf(LAST_HOUR, 'day')),
       )
     })

@@ -1,4 +1,0 @@
-{
-  "spec": ["src/test/config-smoke-test.ts"],
-  "node-option": ["import=tsx"]
-}

@@ -1,6 +1,7 @@
 import type { InteropPluginName } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createSummaryRouter } from './summary'
 
@@ -68,7 +69,7 @@ describe(createSummaryRouter.name, () => {
 
     const result = await caller.config()
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       featureToggles: {
         capture: true,
         matching: true,

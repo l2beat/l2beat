@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
@@ -26,7 +27,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       const { indexer } = mockIndexer({ configurations, daLayer: DA_LAYER })
 
-      expect(indexer.daLayer).toEqual(DA_LAYER)
+      expect(indexer.daLayer).toStrictEqual(DA_LAYER)
     })
 
     it('should throw when configurations have mismatched daLayer', () => {
@@ -70,12 +71,12 @@ describe(EigenDaLayerIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetrics).toHaveBeenCalledExactlyOnceWith(
         expectedAdjustedFrom,
         expectedAdjustedTo - 1,
       )
 
-      expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
+      expect(repository.upsertMany).toHaveBeenCalledExactlyOnceWith([
         {
           timestamp: expectedAdjustedFrom,
           totalSize: BigInt(throughput),
@@ -85,13 +86,15 @@ describe(EigenDaLayerIndexer.name, () => {
         },
       ])
 
-      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+      expect(
+        syncMetadataRepository.updateSyncedUntil,
+      ).toHaveBeenCalledExactlyOnceWith(
         'dataAvailability',
         configurations.map((c) => c.properties.projectId),
         expectedAdjustedTo,
       )
 
-      expect(safeHeight).toEqual(expectedAdjustedTo)
+      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
     })
 
     it('should skip update within the sync disabled range', async () => {
@@ -114,7 +117,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       expect(eigenClient.getMetrics).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toEqual(expectedAdjustedTo)
+      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
     })
 
     it('should handle hour boundaries correctly', async () => {
@@ -134,7 +137,7 @@ describe(EigenDaLayerIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(from, to, configurations)
       await updateCallback()
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetrics).toHaveBeenCalledExactlyOnceWith(
         from, // Should remain the same since it's already at hour start
         from + UnixTime.HOUR - 1,
       )
@@ -156,9 +159,12 @@ describe(EigenDaLayerIndexer.name, () => {
 
       const result = await indexer.getDaLayerData(from, to)
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(from, to - 1)
+      expect(eigenClient.getMetrics).toHaveBeenCalledExactlyOnceWith(
+        from,
+        to - 1,
+      )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         timestamp: UnixTime.toStartOf(from, 'hour'),
         totalSize: BigInt(throughput),
         projectId: 'eigenda',
@@ -182,7 +188,7 @@ describe(EigenDaLayerIndexer.name, () => {
       const result = await indexer.getDaLayerData(from, to)
 
       const expectedTotalSize = BigInt(throughput)
-      expect(result.totalSize).toEqual(expectedTotalSize)
+      expect(result.totalSize).toStrictEqual(expectedTotalSize)
     })
   })
 
@@ -202,7 +208,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       await indexer.wipeData(removalsConfigurations)
 
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         'config-1',
         'config-2',
       ])
@@ -275,7 +281,9 @@ describe(EigenDaLayerIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         configuration.id,
         SINCE + 24 * UnixTime.HOUR,
         CURRENT - 1,
@@ -297,7 +305,9 @@ describe(EigenDaLayerIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+      expect(
+        repository.deleteByConfigInTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith(
         configuration.id,
         SINCE,
         SINCE + 24 * UnixTime.HOUR - 1,
@@ -319,7 +329,7 @@ describe(EigenDaLayerIndexer.name, () => {
       await indexer.initialize()
 
       expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
-      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(repository.deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         configuration.id,
       ])
     })
@@ -333,35 +343,37 @@ function mockIndexer($: {
   throughput?: number
 }) {
   const repository = mockObject<Database['dataAvailability']>({
-    deleteByConfigIds: mockFn().resolvesTo(10),
-    deleteByConfigurationId: mockFn().resolvesTo(10),
-    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
-    upsertMany: mockFn().resolvesTo(undefined),
+    deleteByConfigIds: vi.fn().mockResolvedValue(10),
+    deleteByConfigurationId: vi.fn().mockResolvedValue(10),
+    deleteByConfigInTimeRange: vi.fn().mockResolvedValue(10),
+    upsertMany: vi.fn().mockResolvedValue(undefined),
   })
 
   const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-    updateSyncedUntil: mockFn().resolvesTo(undefined),
+    updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
   })
 
   const eigenClient = mockObject<EigenApiClient>({
-    getMetrics: mockFn().resolvesTo({
+    getMetrics: vi.fn().mockResolvedValue({
       total_bytes_posted: $.throughput ?? 2000000,
     }),
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
-    insertConfigurations: mockFn().resolvesTo(undefined),
-    upsertConfigurations: mockFn().resolvesTo(undefined),
-    deleteConfigurations: mockFn().resolvesTo(undefined),
-    updateConfigurationsCurrentHeight: mockFn().resolvesTo(undefined),
-    setInitialState: mockFn().resolvesTo(undefined),
-    setSafeHeight: mockFn().resolvesTo(undefined),
-    getSafeHeight: mockFn().resolvesTo(0),
+    getSavedConfigurations: vi
+      .fn()
+      .mockResolvedValue($.savedConfigurations ?? []),
+    insertConfigurations: vi.fn().mockResolvedValue(undefined),
+    upsertConfigurations: vi.fn().mockResolvedValue(undefined),
+    deleteConfigurations: vi.fn().mockResolvedValue(undefined),
+    updateConfigurationsCurrentHeight: vi.fn().mockResolvedValue(undefined),
+    setInitialState: vi.fn().mockResolvedValue(undefined),
+    setSafeHeight: vi.fn().mockResolvedValue(undefined),
+    getSafeHeight: vi.fn().mockResolvedValue(0),
   })
 
   const db = mockDatabase({
-    transaction: mockFn(async (fun) => await fun()),
+    transaction: vi.fn(async (fun) => await fun()),
     dataAvailability: repository,
     syncMetadata: syncMetadataRepository,
   })

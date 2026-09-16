@@ -13,7 +13,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
@@ -108,17 +109,17 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ]
 
       const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
-        getByTimeRange: mockFn().resolvesTo(txs),
+        getByTimeRange: vi.fn().mockResolvedValue(txs),
       })
 
       const l2CostsPricesRepositoryMock = mockObject<Database['l2CostPrice']>({
-        getByTimestampRange: mockFn().resolvesTo(ethPrices),
+        getByTimestampRange: vi.fn().mockResolvedValue(ethPrices),
       })
 
       const indexerConfigurationRepositoryMock = mockObject<
         Database['indexerConfiguration']
       >({
-        getByConfigurationIds: mockFn().resolvesTo([
+        getByConfigurationIds: vi.fn().mockResolvedValue([
           mockObject<IndexerConfigurationRecord>({
             id: txs[0].configurationId,
             properties: JSON.stringify({
@@ -135,7 +136,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           l2CostPrice: l2CostsPricesRepositoryMock,
           indexerConfiguration: indexerConfigurationRepositoryMock,
           aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-            upsertMany: mockFn().resolvesTo(1),
+            upsertMany: vi.fn().mockResolvedValue(1),
           }),
         }),
       })
@@ -146,28 +147,27 @@ describe(L2CostsAggregatorIndexer.name, () => {
           factor: 1,
         },
       ]
-      indexer.findTxConfigsWithMultiplier = mockFn().returns(multipliers)
+      indexer.findTxConfigsWithMultiplier = vi.fn().mockReturnValue(multipliers)
 
       // 2023-05-02 23:59:59
       const endOfFirstDay = NOW + 1 * UnixTime.DAY - 1
-      indexer.shift = mockFn().returns([MIN, endOfFirstDay])
+      indexer.shift = vi.fn().mockReturnValue([MIN, endOfFirstDay])
 
       // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
       const to = await indexer.update(MIN, NOW)
 
       // should get records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
-      expect(l2CostsRepositoryMock.getByTimeRange).toHaveBeenOnlyCalledWith([
-        MIN,
-        endOfFirstDay,
-      ])
+      expect(
+        l2CostsRepositoryMock.getByTimeRange,
+      ).toHaveBeenCalledExactlyOnceWith([MIN, endOfFirstDay])
 
       // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
       expect(
         l2CostsPricesRepositoryMock.getByTimestampRange,
-      ).toHaveBeenOnlyCalledWith(MIN, endOfFirstDay)
+      ).toHaveBeenCalledExactlyOnceWith(MIN, endOfFirstDay)
 
       // 2023-05-02 00:00:00
-      expect(to).toEqual(endOfFirstDay + 1)
+      expect(to).toStrictEqual(endOfFirstDay + 1)
     })
 
     it('does nothing if range shorter than hour', async () => {
@@ -176,13 +176,13 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       const indexer = createIndexer({ tags: { tag: 'update-nothing' } })
 
-      indexer.shift = mockFn().returns([MIN, MIN])
+      indexer.shift = vi.fn().mockReturnValue([MIN, MIN])
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:30:00
       const result = await indexer.update(MIN, to)
 
       // 2023-05-01 00:30:00
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
   })
 
@@ -190,7 +190,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('aggregates correctly', () => {
       const indexer = createIndexer({ tags: { tag: 'aggregate' } })
 
-      const mockedCalculate = mockFn().returns({
+      const mockedCalculate = vi.fn().mockReturnValue({
         totalGas: 1,
         totalGasEth: 1,
         totalGasUsd: 1,
@@ -216,7 +216,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           factor: 1,
         },
       ]
-      indexer.findTxConfigsWithMultiplier = mockFn().returns(multipliers)
+      indexer.findTxConfigsWithMultiplier = vi.fn().mockReturnValue(multipliers)
 
       const txs = [
         tx(trackedTxId),
@@ -304,7 +304,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const trackedTxId = 'dwadad'
-      indexer.findTxConfigsWithMultiplier = mockFn().returns([])
+      indexer.findTxConfigsWithMultiplier = vi.fn().mockReturnValue([])
 
       const txs = [tx(trackedTxId)]
 
@@ -360,12 +360,12 @@ describe(L2CostsAggregatorIndexer.name, () => {
           }),
         ]
         const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
-          getByTimeRange: mockFn().resolvesTo(txs),
+          getByTimeRange: vi.fn().mockResolvedValue(txs),
         })
         const indexerConfigurationRepositoryMock = mockObject<
           Database['indexerConfiguration']
         >({
-          getByConfigurationIds: mockFn().resolvesTo([
+          getByConfigurationIds: vi.fn().mockResolvedValue([
             mockObject<IndexerConfigurationRecord>({
               id: id1,
               properties: JSON.stringify({
@@ -388,7 +388,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
             l2CostPrice: mockObject<Database['l2CostPrice']>(),
             indexerConfiguration: indexerConfigurationRepositoryMock,
             aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-              upsertMany: mockFn().resolvesTo(1),
+              upsertMany: vi.fn().mockResolvedValue(1),
             }),
           }),
         })
@@ -398,7 +398,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           UnixTime(4),
         ])
 
-        expect(result).toEqual([
+        expect(result).toStrictEqual([
           mockObject<ProjectL2Cost>({
             timestamp: UnixTime(1),
             projectId: project1,
@@ -426,7 +426,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const indexer = createIndexer()
         const result = indexer.findTxConfigsWithMultiplier()
 
-        expect(result).toEqual([
+        expect(result).toStrictEqual([
           { id: 'p2-t2', factor: 0.6 },
           { id: 'p3-t1', factor: 1 },
         ])
@@ -440,7 +440,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly for non blob tx', () => {
       const result = indexer.calculate(tx('dwada'), 2000, 1)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalGas: 601201,
         totalGasEth: 0.009797870728835058,
         totalGasUsd: 19.595741457670115,
@@ -462,7 +462,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly with multiplier', () => {
       const result = indexer.calculate(tx('dwadad'), 2000, 0.6)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalGas: 360721,
         totalGasEth: 0.00587872895616626,
         totalGasUsd: 11.75745791233252,
@@ -484,7 +484,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly for blob tx', () => {
       const result = indexer.calculate(txWithBlob(), 2000, 1)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalGas: 732273,
         totalGasEth: 0.00979787072896613,
         totalGasUsd: 19.59574145793226,
@@ -516,7 +516,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 23:59:59
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(from, 'hour') + 1 * UnixTime.DAY - 1,
       ])
@@ -531,7 +531,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:59:59
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(to, 'hour') - 1,
       ])
@@ -546,7 +546,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:00:00
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(from, 'hour'),
       ])
@@ -564,7 +564,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
         l2Cost: mockObject<Database['l2Cost']>(),
         l2CostPrice: mockObject<Database['l2CostPrice']>(),
         aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-          upsertMany: mockFn().resolvesTo(1),
+          upsertMany: vi.fn().mockResolvedValue(1),
         }),
         indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
       }),

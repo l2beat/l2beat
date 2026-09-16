@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { DaBeatStatsProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
@@ -22,11 +23,11 @@ describe(DaBeatStatsIndexer.name, () => {
       const to = UnixTime.fromDate(new Date('2023-01-01T10:45:00Z'))
 
       const statsProvider = mockObject<DaBeatStatsProvider>({
-        getStats: mockFn(),
+        getStats: vi.fn(),
       })
 
       const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
-        upsert: mockFn(),
+        upsert: vi.fn(),
       })
 
       const indexer = createIndexer({
@@ -38,7 +39,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       expect(statsProvider.getStats).not.toHaveBeenCalled()
       expect(daBeatStatsRepository.upsert).not.toHaveBeenCalled()
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('fetches stats and saves them to DB when from and to are in different hours', async () => {
@@ -53,11 +54,11 @@ describe(DaBeatStatsIndexer.name, () => {
       }
 
       const statsProvider = mockObject<DaBeatStatsProvider>({
-        getStats: mockFn().returnsOnce(mockStats),
+        getStats: vi.fn().mockReturnValueOnce(mockStats),
       })
 
       const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
-        upsert: mockFn().returnsOnce(undefined),
+        upsert: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = createIndexer({
@@ -68,12 +69,12 @@ describe(DaBeatStatsIndexer.name, () => {
 
       const result = await indexer.update(from, to)
 
-      expect(statsProvider.getStats).toHaveBeenOnlyCalledWith(projectId)
-      expect(daBeatStatsRepository.upsert).toHaveBeenOnlyCalledWith({
+      expect(statsProvider.getStats).toHaveBeenCalledExactlyOnceWith(projectId)
+      expect(daBeatStatsRepository.upsert).toHaveBeenCalledExactlyOnceWith({
         ...mockStats,
         id: projectId,
       })
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('skips update when no stats were found', async () => {
@@ -81,11 +82,11 @@ describe(DaBeatStatsIndexer.name, () => {
       const to = UnixTime.fromDate(new Date('2023-01-01T10:45:00Z'))
 
       const statsProvider = mockObject<DaBeatStatsProvider>({
-        getStats: mockFn().returnsOnce(undefined),
+        getStats: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
-        upsert: mockFn(),
+        upsert: vi.fn(),
       })
 
       const indexer = createIndexer({
@@ -97,7 +98,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       expect(statsProvider.getStats).not.toHaveBeenCalled()
       expect(daBeatStatsRepository.upsert).not.toHaveBeenCalled()
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
   })
 
@@ -108,7 +109,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       const result = await indexer.invalidate(targetHeight)
 
-      expect(result).toEqual(targetHeight)
+      expect(result).toStrictEqual(targetHeight)
     })
   })
 })

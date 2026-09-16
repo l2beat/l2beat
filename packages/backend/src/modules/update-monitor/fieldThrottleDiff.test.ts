@@ -1,7 +1,7 @@
 import type { UpdateNotifierRecord } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 
 describe(fieldThrottleDiff.name, () => {
@@ -84,7 +84,9 @@ describe(fieldThrottleDiff.name, () => {
       ]),
     ]
 
-    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual([
+    expect(
+      fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
+    ).toStrictEqual([
       {
         ...DIFF[0],
         diff: DIFF[0].diff?.slice(1),
@@ -98,23 +100,23 @@ describe(fieldThrottleDiff.name, () => {
 
   it('does nothing if database returned correct amount of empty diffs', async () => {
     const previousRecords = [mockRecord([]), mockRecord([])]
-    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
-      DIFF,
-    )
+    expect(
+      fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
+    ).toStrictEqual(DIFF)
   })
 
   it('does nothing if database returned less diffs than limit', async () => {
     const previousRecords = [mockRecord([])]
-    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
-      DIFF,
-    )
+    expect(
+      fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
+    ).toStrictEqual(DIFF)
   })
 
   it('does nothing if database is empty', async () => {
     const previousRecords: ReturnType<typeof mockRecord>[] = []
-    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
-      DIFF,
-    )
+    expect(
+      fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
+    ).toStrictEqual(DIFF)
   })
 })
 

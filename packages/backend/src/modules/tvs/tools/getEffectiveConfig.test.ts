@@ -1,5 +1,6 @@
 import type { AmountFormula, TvsToken } from '@l2beat/config'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getEffectiveConfig } from './getEffectiveConfig'
 
 describe(getEffectiveConfig.name, () => {
@@ -116,7 +117,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toEqual(expectedResult)
+    expect(result).toStrictEqual(expectedResult)
   })
 
   it('should remove tokens - amount not in range', async () => {
@@ -148,7 +149,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toEqual(expectedResult)
+    expect(result).toStrictEqual(expectedResult)
   })
 
   it('should remove tokens - calculation formula with argument(s) not in range', async () => {
@@ -205,7 +206,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toEqual(expectedResult)
+    expect(result).toStrictEqual(expectedResult)
   })
 })
 

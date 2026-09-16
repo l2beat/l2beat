@@ -6,7 +6,8 @@ import type {
   StarknetEvent,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import type { Configuration } from '../../../tools/uif/multi/types'
@@ -40,7 +41,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
       ]
 
       const starknetClient = mockObject<StarknetClient>({
-        getEvents: mockFn().returnsOnce([
+        getEvents: vi.fn().mockReturnValueOnce([
           event({
             block_number: 100,
             transaction_hash: '0xdeposit-tx',
@@ -65,7 +66,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
         ]),
       })
       const blockProvider = mockObject<BlockProvider>({
-        getBlockTimestamps: mockFn().returnsOnce(
+        getBlockTimestamps: vi.fn().mockReturnValueOnce(
           new Map([
             [100, timestamp],
             [101, timestamp],
@@ -76,12 +77,13 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
       const privacyBlockTimestampRepo = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        findBlockNumberByChainAndTimestamp: mockFn()
-          .returnsOnce(50)
-          .returnsOnce(150),
+        findBlockNumberByChainAndTimestamp: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       })
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
-        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+        getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'usd-coin',
             timestamp: UnixTime.toStartOf(timestamp, 'hour'),
@@ -91,7 +93,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
         ]),
       })
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new StarknetPrivacyFlowIndexer(
@@ -114,14 +116,16 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
       const update = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await update()
 
-      expect(starknetClient.getEvents).toHaveBeenOnlyCalledWith(50, 150, POOL, [
-        DEPOSIT,
-        WITHDRAWAL,
-      ])
-      expect(blockProvider.getBlockTimestamps).toHaveBeenOnlyCalledWith([
+      expect(starknetClient.getEvents).toHaveBeenCalledExactlyOnceWith(
+        50,
+        150,
+        POOL,
+        [DEPOSIT, WITHDRAWAL],
+      )
+      expect(blockProvider.getBlockTimestamps).toHaveBeenCalledExactlyOnceWith([
         100, 101, 102,
       ])
-      expect(privacyFlowEventRepo.upsertMany).toHaveBeenOnlyCalledWith([
+      expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'deposit-config',
           projectId: 'strk20',
@@ -153,7 +157,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           valueUsd: 1.01,
         },
       ])
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
   })
 
@@ -173,7 +177,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           extractor: 'strk20Deposit',
           params: { tokenAddress: TOKEN },
         }),
-      ).toEqual('3bf7f8ee2c73')
+      ).toStrictEqual('3bf7f8ee2c73')
     })
   })
 })

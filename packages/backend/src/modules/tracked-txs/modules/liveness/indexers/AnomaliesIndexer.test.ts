@@ -7,7 +7,8 @@ import type {
 } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
@@ -50,7 +51,7 @@ describe(AnomaliesIndexer.name, () => {
         tag: 'update-skip',
       })
 
-      const mockCalculateAnomalies = mockFn().resolvesTo([])
+      const mockCalculateAnomalies = vi.fn().mockResolvedValue([])
       indexer.getAnomalies = mockCalculateAnomalies
 
       const from = MIN
@@ -60,17 +61,17 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockCalculateAnomalies).not.toHaveBeenCalled()
 
-      expect(result).toEqual(to)
+      expect(result).toStrictEqual(to)
     })
 
     it('should update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
-        deleteAll: mockFn().resolvesTo(0),
-        upsertMany: mockFn().resolvesTo(1),
+        deleteAll: vi.fn().mockResolvedValue(0),
+        upsertMany: vi.fn().mockResolvedValue(1),
       })
 
       const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        upsertMany: mockFn().resolvesTo(1),
+        upsertMany: vi.fn().mockResolvedValue(1),
       })
 
       const indexer = createIndexer({
@@ -98,7 +99,7 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
-      const mockCalculateAnomalies = mockFn().resolvesTo({
+      const mockCalculateAnomalies = vi.fn().mockResolvedValue({
         anomalyRecords: mockAnomalies,
         anomalyStatsRecords: mockAnomalyStats,
       })
@@ -123,17 +124,17 @@ describe(AnomaliesIndexer.name, () => {
         mockAnomalyStats,
       )
 
-      expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
+      expect(result).toStrictEqual(UnixTime.toStartOf(NOW, 'day'))
     })
 
     it('should adjust and update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
-        deleteAll: mockFn().resolvesTo(0),
-        upsertMany: mockFn().resolvesTo(1),
+        deleteAll: vi.fn().mockResolvedValue(0),
+        upsertMany: vi.fn().mockResolvedValue(1),
       })
 
       const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        upsertMany: mockFn().resolvesTo(1),
+        upsertMany: vi.fn().mockResolvedValue(1),
       })
 
       const indexer = createIndexer({
@@ -161,7 +162,7 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
-      const mockCalculateAnomalies = mockFn().resolvesTo({
+      const mockCalculateAnomalies = vi.fn().mockResolvedValue({
         anomalyRecords: mockAnomalies,
         anomalyStatsRecords: mockAnomalyStats,
       })
@@ -186,14 +187,14 @@ describe(AnomaliesIndexer.name, () => {
         mockAnomalyStats,
       )
 
-      expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
+      expect(result).toStrictEqual(UnixTime.toStartOf(NOW, 'day'))
     })
   })
 
   describe(AnomaliesIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeight and not delete data', async () => {
       const livenessRepositoryMock = mockObject<Database['liveness']>({
-        deleteAll: mockFn().resolvesTo(1),
+        deleteAll: vi.fn().mockResolvedValue(1),
       })
 
       const targetHeight = UnixTime.now()
@@ -207,7 +208,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
 
-      expect(result).toEqual(targetHeight)
+      expect(result).toStrictEqual(targetHeight)
     })
   })
 
@@ -229,12 +230,13 @@ describe(AnomaliesIndexer.name, () => {
       ]
 
       const mockLivenessRepository = mockObject<Database['liveness']>({
-        getRecordsInRangeWithLatestBefore:
-          mockFn().resolvesTo(mockLivenessRecords),
+        getRecordsInRangeWithLatestBefore: vi
+          .fn()
+          .mockResolvedValue(mockLivenessRecords),
       })
 
       const mockIndexerService = mockObject<IndexerService>({
-        getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
+        getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
       })
 
       const indexer = createIndexer({
@@ -288,20 +290,21 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
-      const mockDetectAnomalies = mockFn()
-        .returnsOnce({
+      const mockDetectAnomalies = vi
+        .fn()
+        .mockReturnValueOnce({
           anomalies: mockAnomalies.filter(
             (a) => a.subtype === 'batchSubmissions',
           ),
           stats: mockStats[0],
         })
-        .returnsOnce({
+        .mockReturnValueOnce({
           anomalies: mockAnomalies.filter(
             (a) => a.subtype === 'proofSubmissions',
           ),
           stats: mockStats[1],
         })
-        .returnsOnce({
+        .mockReturnValueOnce({
           anomalies: mockAnomalies.filter((a) => a.subtype === 'stateUpdates'),
           stats: mockStats[2],
         })
@@ -344,7 +347,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         anomalyRecords: mockAnomalies,
         anomalyStatsRecords: mockStats,
       })
@@ -362,7 +365,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual({ anomalies: [], stats: undefined })
+      expect(result).toStrictEqual({ anomalies: [], stats: undefined })
     })
 
     it('should return empty if not enough liveness data', async () => {
@@ -386,7 +389,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         anomalies: [],
         stats: undefined,
       })
@@ -412,7 +415,7 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         anomalies: [],
         stats: {
           projectId: MOCK_PROJECTS[0].id,
@@ -445,7 +448,7 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         anomalies: [
           {
             projectId: MOCK_PROJECTS[0].id,
@@ -486,7 +489,7 @@ function createIndexer(options: {
         anomalies:
           options.anomaliesRepository ??
           mockObject<Database['anomalies']>({
-            upsertMany: mockFn().resolvesTo(1),
+            upsertMany: vi.fn().mockResolvedValue(1),
           }),
         anomalyStats:
           options.anomalyStatsRepository ??

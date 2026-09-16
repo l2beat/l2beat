@@ -6,7 +6,8 @@ import type {
 } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
@@ -61,7 +62,7 @@ describe(LivenessAggregatingIndexer.name, () => {
   describe(LivenessAggregatingIndexer.prototype.update.name, () => {
     it('use correct time range when backfilling (whole day), on midnight', async () => {
       const indexer = createIndexer({ tag: 'update-backfill-midnight' })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       // 00:00:00 someday
@@ -79,12 +80,12 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('use correct time range when backfilling (whole day), on middle of the day', async () => {
       const indexer = createIndexer({ tag: 'update-backfill-middle-of-day' })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       // 12:00:00 someday
@@ -103,14 +104,14 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('use correct time range when backfilling (few hours), on midnight', async () => {
       const indexer = createIndexer({
         tag: 'update-backfill-few-hours-midnight',
       })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       // 00:00:00 of current day
@@ -127,12 +128,12 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('use correct time range when fully synced (one hour), on middle of the day', async () => {
       const indexer = createIndexer({ tag: 'update-synced-middle-of-day' })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       // round hour
@@ -149,12 +150,12 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('use correct time range when fully synced (one hour), on midnight', async () => {
       const indexer = createIndexer({ tag: 'update-synced-midnight' })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       // 00:00:00 of current day
@@ -171,7 +172,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('handles time range with min height', async () => {
@@ -185,7 +186,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         tag: 'update-min-height',
         minHeight,
       })
-      const mockGenerateLiveness = mockFn().resolvesTo([])
+      const mockGenerateLiveness = vi.fn().mockResolvedValue([])
       indexer.generateLiveness = mockGenerateLiveness
 
       const parentSafeHeight = NOW
@@ -204,14 +205,14 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toEqual(expectedTo)
+      expect(result).toStrictEqual(expectedTo)
     })
 
     it('should save data to db', async () => {
       const mockAggregatedLivenessRepository = mockObject<
         Database['aggregatedLiveness']
       >({
-        upsertMany: mockFn().resolvesTo(1),
+        upsertMany: vi.fn().mockResolvedValue(1),
       })
       const indexer = createIndexer({
         tag: 'update-save-to-db',
@@ -231,7 +232,9 @@ describe(LivenessAggregatingIndexer.name, () => {
           timestamp: NOW,
         }),
       ]
-      indexer.generateLiveness = mockFn().resolvesTo(mockAggregatedLiveness)
+      indexer.generateLiveness = vi
+        .fn()
+        .mockResolvedValue(mockAggregatedLiveness)
 
       const parentSafeHeight = UnixTime.toStartOf(NOW, 'hour')
       const safeHeight = parentSafeHeight - 1 * UnixTime.HOUR
@@ -241,14 +244,14 @@ describe(LivenessAggregatingIndexer.name, () => {
       expect(mockAggregatedLivenessRepository.upsertMany).toHaveBeenCalledWith(
         mockAggregatedLiveness,
       )
-      expect(result).toEqual(parentSafeHeight)
+      expect(result).toStrictEqual(parentSafeHeight)
     })
   })
 
   describe(LivenessAggregatingIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeight and not delete data', async () => {
       const livenessRepositoryMock = mockObject<Database['liveness']>({
-        deleteAll: mockFn().resolvesTo(1),
+        deleteAll: vi.fn().mockResolvedValue(1),
       })
 
       const targetHeight = UnixTime.now()
@@ -262,18 +265,20 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
 
-      expect(result).toEqual(targetHeight)
+      expect(result).toStrictEqual(targetHeight)
     })
   })
 
   describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
       const mockLivenessRepository = mockObject<Database['liveness']>({
-        getRecordsInRangeWithLatestBefore: mockFn().resolvesTo(MOCK_LIVENESS),
+        getRecordsInRangeWithLatestBefore: vi
+          .fn()
+          .mockResolvedValue(MOCK_LIVENESS),
       })
 
       const mockIndexerService = mockObject<IndexerService>({
-        getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
+        getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
       })
 
       const indexer = createIndexer({
@@ -295,7 +300,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           avg: 4 * UnixTime.HOUR,
           max: 4 * UnixTime.HOUR,
@@ -319,11 +324,13 @@ describe(LivenessAggregatingIndexer.name, () => {
 
     it('split time range to hours and get liveness data for each hour', async () => {
       const mockLivenessRepository = mockObject<Database['liveness']>({
-        getRecordsInRangeWithLatestBefore: mockFn().resolvesTo(MOCK_LIVENESS),
+        getRecordsInRangeWithLatestBefore: vi
+          .fn()
+          .mockResolvedValue(MOCK_LIVENESS),
       })
 
       const mockIndexerService = mockObject<IndexerService>({
-        getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
+        getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
       })
 
       const indexer = createIndexer({
@@ -332,7 +339,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         indexerService: mockIndexerService,
       })
 
-      const mockAggregateRecords = mockFn().returns(undefined)
+      const mockAggregateRecords = vi.fn().mockReturnValue(undefined)
       indexer.aggregateRecords = mockAggregateRecords
 
       await indexer.generateLiveness(NOW - 3 * UnixTime.HOUR, NOW)
@@ -393,7 +400,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW - 7 * UnixTime.HOUR,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         avg: ((4 + 2) / 2) * UnixTime.HOUR,
         max: 4 * UnixTime.HOUR,
         min: 2 * UnixTime.HOUR,
@@ -437,7 +444,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         start,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         avg: 2 * UnixTime.HOUR,
         max: 3 * UnixTime.HOUR,
         min: 1 * UnixTime.HOUR,
@@ -473,7 +480,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         start,
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         avg: 2.5 * UnixTime.HOUR,
         max: 3 * UnixTime.HOUR,
         min: 2 * UnixTime.HOUR,
@@ -498,7 +505,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 })
@@ -534,7 +541,7 @@ function createIndexer(options: {
         aggregatedLiveness:
           options.aggregatedLivenessRepository ??
           mockObject<Database['aggregatedLiveness']>({
-            upsertMany: mockFn().resolvesTo(1),
+            upsertMany: vi.fn().mockResolvedValue(1),
           }),
       }),
       projects: MOCK_PROJECTS,

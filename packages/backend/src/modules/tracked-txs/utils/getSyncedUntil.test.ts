@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { SavedConfiguration } from '../../../tools/uif/multi/types'
 import { getSyncedUntil } from './getSyncedUntil'
 
@@ -14,7 +15,7 @@ type Configuration = Omit<
 describe(getSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
     const result = getSyncedUntil([])
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
@@ -25,7 +26,7 @@ describe(getSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
@@ -44,7 +45,7 @@ describe(getSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(FROM)
+    expect(result).toStrictEqual(FROM)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
@@ -67,6 +68,6 @@ describe(getSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(FROM + 1 * UnixTime.HOUR)
+    expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)
   })
 })

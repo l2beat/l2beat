@@ -11,7 +11,8 @@ import {
   type LongChainName,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { PluginCluster } from '../../plugins'
 import type {
@@ -50,7 +51,7 @@ describe(InteropSyncersManager.name, () => {
     })
 
     it('skips clusters without resyncable plugins', () => {
-      const cleanerStart = mockFn()
+      const cleanerStart = vi.fn()
       const originalCleanerStart = InteropDataCleaner.prototype.start
       InteropDataCleaner.prototype.start =
         cleanerStart as unknown as InteropDataCleaner['start']
@@ -77,7 +78,7 @@ describe(InteropSyncersManager.name, () => {
 
         manager.start()
 
-        expect(manager.getSyncer('non-resyncable', 'ethereum')).toEqual(
+        expect(manager.getSyncer('non-resyncable', 'ethereum')).toStrictEqual(
           undefined,
         )
         expect(cleanerStart).not.toHaveBeenCalled()
@@ -126,19 +127,19 @@ describe(InteropSyncersManager.name, () => {
         chains: ['ethereum', 'arbitrum'],
       })
 
-      expect(manager.getSyncer('cluster-a', 'ethereum')).toBeA(
+      expect(manager.getSyncer('cluster-a', 'ethereum')).toBeInstanceOf(
         InteropEventSyncer,
       )
-      expect(manager.getSyncer('cluster-a', 'arbitrum')).toBeA(
+      expect(manager.getSyncer('cluster-a', 'arbitrum')).toBeInstanceOf(
         InteropEventSyncer,
       )
-      expect(manager.getSyncer('cluster-b', 'ethereum')).toBeA(
+      expect(manager.getSyncer('cluster-b', 'ethereum')).toBeInstanceOf(
         InteropEventSyncer,
       )
-      expect(manager.getSyncer('cluster-b', 'arbitrum')).toBeA(
+      expect(manager.getSyncer('cluster-b', 'arbitrum')).toBeInstanceOf(
         InteropEventSyncer,
       )
-      expect(manager.getSyncer('missing', 'ethereum')).toEqual(undefined)
+      expect(manager.getSyncer('missing', 'ethereum')).toStrictEqual(undefined)
     })
 
     it('reuses rpc clients per chain across clusters', () => {
@@ -151,19 +152,19 @@ describe(InteropSyncersManager.name, () => {
       const bEth = manager.getSyncer('cluster-b', 'ethereum')
       const aArb = manager.getSyncer('cluster-a', 'arbitrum')
 
-      expect(aEth).toBeA(InteropEventSyncer)
-      expect(bEth).toBeA(InteropEventSyncer)
-      expect(aArb).toBeA(InteropEventSyncer)
+      expect(aEth).toBeInstanceOf(InteropEventSyncer)
+      expect(bEth).toBeInstanceOf(InteropEventSyncer)
+      expect(aArb).toBeInstanceOf(InteropEventSyncer)
 
-      expect(aEth?.rpcClient).toEqual(bEth?.rpcClient)
-      expect(aEth?.rpcClient).not.toEqual(aArb?.rpcClient)
+      expect(aEth?.rpcClient).toStrictEqual(bEth?.rpcClient)
+      expect(aEth?.rpcClient).not.toStrictEqual(aArb?.rpcClient)
     })
   })
 
   describe(InteropSyncersManager.prototype.start.name, () => {
     it('starts all syncers and data cleaners', () => {
-      const syncerStart = mockFn().returns(undefined)
-      const cleanerStart = mockFn().returns(undefined)
+      const syncerStart = vi.fn().mockReturnValue(undefined)
+      const cleanerStart = vi.fn().mockReturnValue(undefined)
 
       const originalSyncerStart = InteropEventSyncer.prototype.start
       const originalCleanerStart = InteropDataCleaner.prototype.start
@@ -181,8 +182,8 @@ describe(InteropSyncersManager.name, () => {
 
         manager.start()
 
-        expect(syncerStart.calls.length).toEqual(4)
-        expect(cleanerStart.calls.length).toEqual(2)
+        expect(syncerStart.mock.calls.length).toStrictEqual(4)
+        expect(cleanerStart.mock.calls.length).toStrictEqual(2)
       } finally {
         InteropEventSyncer.prototype.start = originalSyncerStart
         InteropDataCleaner.prototype.start = originalCleanerStart
@@ -204,9 +205,9 @@ describe(InteropSyncersManager.name, () => {
       const bEth = manager.getSyncer('cluster-b', 'ethereum')
       const aArb = manager.getSyncer('cluster-a', 'arbitrum')
 
-      const aEthProcess = mockFn().resolvesTo(undefined)
-      const bEthProcess = mockFn().resolvesTo(undefined)
-      const aArbProcess = mockFn().resolvesTo(undefined)
+      const aEthProcess = vi.fn().mockResolvedValue(undefined)
+      const bEthProcess = vi.fn().mockResolvedValue(undefined)
+      const aArbProcess = vi.fn().mockResolvedValue(undefined)
 
       if (aEth) aEth.processNewestBlock = aEthProcess
       if (bEth) bEth.processNewestBlock = bEthProcess
@@ -234,8 +235,12 @@ describe(InteropSyncersManager.name, () => {
       const aEth = manager.getSyncer('cluster-a', 'ethereum')
       const bEth = manager.getSyncer('cluster-b', 'ethereum')
 
-      const aEthProcess = mockFn().executes(async () => await aPending.promise)
-      const bEthProcess = mockFn().executes(async () => await bPending.promise)
+      const aEthProcess = vi
+        .fn()
+        .mockImplementation(async () => await aPending.promise)
+      const bEthProcess = vi
+        .fn()
+        .mockImplementation(async () => await bPending.promise)
 
       if (aEth) aEth.processNewestBlock = aEthProcess
       if (bEth) bEth.processNewestBlock = bEthProcess
@@ -260,11 +265,11 @@ describe(InteropSyncersManager.name, () => {
 
       await new Promise<void>((resolve) => setImmediate(resolve))
 
-      expect(settled).toEqual(false)
+      expect(settled).toStrictEqual(false)
 
       bPending.resolve(undefined)
 
-      await expect(promise).toBeRejectedWith('boom')
+      await expect(promise).rejects.toThrow('boom')
     })
   })
 
@@ -275,7 +280,7 @@ describe(InteropSyncersManager.name, () => {
         chains: ['ethereum'],
       })
 
-      const processNewestBlock = mockFn().resolvesTo(undefined)
+      const processNewestBlock = vi.fn().mockResolvedValue(undefined)
       manager.processNewestBlock = processNewestBlock
 
       const processor = manager.getBlockProcessor('ethereum')
@@ -284,7 +289,7 @@ describe(InteropSyncersManager.name, () => {
 
       await processor.processBlock(block, logs)
 
-      expect(processor.chain).toEqual('ethereum')
+      expect(processor.chain).toStrictEqual('ethereum')
       expect(processNewestBlock).toHaveBeenCalledWith('ethereum', block, logs)
     })
   })
@@ -306,9 +311,9 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        true,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(true)
     })
 
     it('ignores instantaneous syncer state when data is fresh', async () => {
@@ -333,9 +338,9 @@ describe(InteropSyncersManager.name, () => {
       }
       syncer.hasError = true
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        true,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(true)
     })
 
     it('returns false and warns when any syncer is synced before the threshold', async () => {
@@ -357,9 +362,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(false)
       expect(warn).toHaveBeenCalledWith(
         'Syncers are behind the aggregation threshold',
         {
@@ -391,9 +396,9 @@ describe(InteropSyncersManager.name, () => {
       })
 
       // arbitrum has never produced a synced range
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(false)
       expect(error).toHaveBeenCalledWith('Syncers have no synced range', {
         target,
         missing: ['cluster-a:arbitrum'],
@@ -424,9 +429,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(false)
       expect(warn).toHaveBeenCalledWith(
         'Syncers have a pending wipe or resync',
         {
@@ -458,9 +463,9 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(
+        await manager.areSyncersFreshEnough(target, tolerance),
+      ).toStrictEqual(false)
     })
   })
 
@@ -488,7 +493,7 @@ describe(InteropSyncersManager.name, () => {
 
       const result = await manager.getPluginSyncStatuses(target, tolerance)
 
-      expect(result.map((r) => `${r.pluginName}:${r.chain}`)).toEqual([
+      expect(result.map((r) => `${r.pluginName}:${r.chain}`)).toStrictEqual([
         'cluster-a:arbitrum',
         'cluster-a:ethereum',
         'cluster-b:arbitrum',
@@ -506,7 +511,7 @@ describe(InteropSyncersManager.name, () => {
         (r) => r.pluginName === 'cluster-c' && r.chain === 'ethereum',
       )
 
-      expect(aEth).toEqual({
+      expect(aEth).toStrictEqual({
         pluginName: 'cluster-a',
         chain: 'ethereum',
         chainStatus: 'active',
@@ -518,12 +523,12 @@ describe(InteropSyncersManager.name, () => {
         // pending resync
         blocksAggregation: true,
       })
-      expect(bEth?.syncMode).toEqual('following-starting')
-      expect(bEth?.toBlock).toEqual(undefined)
-      expect(cEth?.syncMode).toEqual(undefined)
-      expect(cEth?.lastError).toEqual('missing')
+      expect(bEth?.syncMode).toStrictEqual('following-starting')
+      expect(bEth?.toBlock).toStrictEqual(undefined)
+      expect(cEth?.syncMode).toStrictEqual(undefined)
+      expect(cEth?.lastError).toStrictEqual('missing')
       // cluster-c is not a registered plugin cluster
-      expect(cEth?.chainStatus).toEqual('stale')
+      expect(cEth?.chainStatus).toStrictEqual('stale')
     })
 
     it('classifies chains as active, disabled, or stale', async () => {
@@ -550,7 +555,7 @@ describe(InteropSyncersManager.name, () => {
         result.map((r) => [`${r.pluginName}:${r.chain}`, r.chainStatus]),
       )
 
-      expect(byKey).toEqual({
+      expect(byKey).toStrictEqual({
         'cluster-a:ethereum': 'active',
         'cluster-a:arbitrum': 'disabled',
         'cluster-a:forknet': 'stale',
@@ -585,7 +590,7 @@ describe(InteropSyncersManager.name, () => {
         result.map((r) => [`${r.pluginName}:${r.chain}`, r.blocksAggregation]),
       )
 
-      expect(byKey).toEqual({
+      expect(byKey).toStrictEqual({
         'cluster-a:ethereum': false, // fresh
         'cluster-a:arbitrum': true, // stale range
         'cluster-b:ethereum': true, // pending resync
@@ -618,11 +623,11 @@ function makeManager(params: {
 }
 
 function mockLogger() {
-  const error = mockFn().returns(undefined)
-  const warn = mockFn().returns(undefined)
+  const error = vi.fn().mockReturnValue(undefined)
+  const warn = vi.fn().mockReturnValue(undefined)
   const logger: Logger = mockObject<Logger>({
-    for: mockFn().executes(() => logger),
-    tag: mockFn().executes(() => logger),
+    for: vi.fn().mockImplementation(() => logger),
+    tag: vi.fn().mockImplementation(() => logger),
     error,
     warn,
   })
@@ -738,8 +743,8 @@ function makeSyncStateRecord(
 
 function mockStore() {
   return mockObject<InteropEventStore>({
-    saveNewEvents: mockFn().resolvesTo(undefined),
-    deleteAllForPlugin: mockFn().resolvesTo(undefined),
+    saveNewEvents: vi.fn().mockResolvedValue(undefined),
+    deleteAllForPlugin: vi.fn().mockResolvedValue(undefined),
   })
 }
 
@@ -748,27 +753,27 @@ function mockDb(params?: {
   syncStates?: InteropPluginSyncStateRecord[]
 }): Database {
   return mockObject<Database>({
-    transaction: mockFn().executes(async (cb) => await cb()),
+    transaction: vi.fn().mockImplementation(async (cb) => await cb()),
     interopPluginSyncedRange: mockObject<Database['interopPluginSyncedRange']>({
-      getAll: mockFn().resolvesTo(params?.syncedRanges ?? []),
-      upsert: mockFn().resolvesTo(undefined),
-      findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+      getAll: vi.fn().mockResolvedValue(params?.syncedRanges ?? []),
+      upsert: vi.fn().mockResolvedValue(undefined),
+      findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
     }),
     interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
-      getAll: mockFn().resolvesTo(params?.syncStates ?? []),
-      setLastError: mockFn().resolvesTo(undefined),
-      findByPluginName: mockFn().resolvesTo([]),
-      updateByPluginName: mockFn().resolvesTo(0),
-      findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+      getAll: vi.fn().mockResolvedValue(params?.syncStates ?? []),
+      setLastError: vi.fn().mockResolvedValue(undefined),
+      findByPluginName: vi.fn().mockResolvedValue([]),
+      updateByPluginName: vi.fn().mockResolvedValue(0),
+      findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
     }),
     interopEvent: mockObject<Database['interopEvent']>({
-      getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
+      getOldestEventForPluginAndChain: vi.fn().mockResolvedValue(undefined),
     }),
     interopMessage: mockObject<Database['interopMessage']>({
-      deleteForPlugin: mockFn().resolvesTo(undefined),
+      deleteForPlugin: vi.fn().mockResolvedValue(undefined),
     }),
     interopTransfer: mockObject<Database['interopTransfer']>({
-      deleteForPlugin: mockFn().resolvesTo(undefined),
+      deleteForPlugin: vi.fn().mockResolvedValue(undefined),
     }),
   })
 }

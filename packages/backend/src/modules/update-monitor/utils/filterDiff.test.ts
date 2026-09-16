@@ -1,6 +1,6 @@
 import type { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { filterDiff } from './filterDiff'
 
@@ -27,7 +27,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, unknownContracts)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -48,7 +48,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
   it('deleted', () => {
     const diff: DiscoveryDiff[] = [
@@ -62,7 +62,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
   it('errors', () => {
     const diff: DiscoveryDiff[] = [
@@ -76,6 +76,6 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 })

@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { DBStorage } from './DBStorage'
 
 describe(DBStorage.name, () => {
@@ -40,7 +41,7 @@ describe(DBStorage.name, () => {
       ]
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPricesInRange: mockFn().resolvesTo(mockPrices),
+        getPricesInRange: vi.fn().mockResolvedValue(mockPrices),
       })
 
       const storage = new DBStorage(
@@ -62,11 +63,11 @@ describe(DBStorage.name, () => {
       )
 
       const prices = (storage as any).prices
-      expect(prices.size).toEqual(2)
-      expect(prices.get(timestamp1)?.get(configId1)).toEqual(1000)
-      expect(prices.get(timestamp1)?.get(configId2)).toEqual(20000)
-      expect(prices.get(timestamp2)?.get(configId1)).toEqual(1100)
-      expect(prices.get(timestamp2)?.get(configId2)).toEqual(21000)
+      expect(prices.size).toStrictEqual(2)
+      expect(prices.get(timestamp1)?.get(configId1)).toStrictEqual(1000)
+      expect(prices.get(timestamp1)?.get(configId2)).toStrictEqual(20000)
+      expect(prices.get(timestamp2)?.get(configId1)).toStrictEqual(1100)
+      expect(prices.get(timestamp2)?.get(configId2)).toStrictEqual(21000)
     })
 
     it('handles empty result from database', async () => {
@@ -74,7 +75,7 @@ describe(DBStorage.name, () => {
       const configId = 'config1'.repeat(2)
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPricesInRange: mockFn().resolvesTo([]),
+        getPricesInRange: vi.fn().mockResolvedValue([]),
       })
 
       const storage = new DBStorage(
@@ -87,8 +88,8 @@ describe(DBStorage.name, () => {
       await storage.preloadPrices([configId], [timestamp])
 
       const prices = (storage as any).prices
-      expect(prices.size).toEqual(1)
-      expect(prices.get(timestamp)?.size).toEqual(0)
+      expect(prices.size).toStrictEqual(1)
+      expect(prices.get(timestamp)?.size).toStrictEqual(0)
     })
   })
 
@@ -127,7 +128,7 @@ describe(DBStorage.name, () => {
       ]
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getAmountsInRange: mockFn().resolvesTo(mockAmounts),
+        getAmountsInRange: vi.fn().mockResolvedValue(mockAmounts),
       })
 
       const storage = new DBStorage(
@@ -149,11 +150,11 @@ describe(DBStorage.name, () => {
       )
 
       const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(2)
-      expect(amounts.get(timestamp1)?.get(configId1)).toEqual(100n)
-      expect(amounts.get(timestamp1)?.get(configId2)).toEqual(200n)
-      expect(amounts.get(timestamp2)?.get(configId1)).toEqual(300n)
-      expect(amounts.get(timestamp2)?.get(configId2)).toEqual(400n)
+      expect(amounts.size).toStrictEqual(2)
+      expect(amounts.get(timestamp1)?.get(configId1)).toStrictEqual(100n)
+      expect(amounts.get(timestamp1)?.get(configId2)).toStrictEqual(200n)
+      expect(amounts.get(timestamp2)?.get(configId1)).toStrictEqual(300n)
+      expect(amounts.get(timestamp2)?.get(configId2)).toStrictEqual(400n)
     })
 
     it('handles empty result from database', async () => {
@@ -161,7 +162,7 @@ describe(DBStorage.name, () => {
       const configId = 'config1'.repeat(2)
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getAmountsInRange: mockFn().resolvesTo([]),
+        getAmountsInRange: vi.fn().mockResolvedValue([]),
       })
 
       const storage = new DBStorage(
@@ -174,8 +175,8 @@ describe(DBStorage.name, () => {
       await storage.preloadAmounts([configId], [timestamp])
 
       const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(1)
-      expect(amounts.get(timestamp)?.size).toEqual(0)
+      expect(amounts.size).toStrictEqual(1)
+      expect(amounts.get(timestamp)?.size).toStrictEqual(0)
     })
   })
 
@@ -191,7 +192,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(1000)
+      expect(result).toStrictEqual(1000)
     })
 
     it('fetches price from DB when not in memory', async () => {
@@ -207,7 +208,7 @@ describe(DBStorage.name, () => {
       }
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPrice: mockFn().resolvesTo(dbPrice),
+        getPrice: vi.fn().mockResolvedValue(dbPrice),
       })
 
       const storage = new DBStorage(
@@ -220,7 +221,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(900)
+      expect(result).toStrictEqual(900)
       expect(tvsPrice.getPrice).toHaveBeenCalledWith(configId, timestamp)
     })
 
@@ -229,7 +230,7 @@ describe(DBStorage.name, () => {
       const configId = 'config1'.repeat(2)
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPrice: mockFn().resolvesTo(undefined),
+        getPrice: vi.fn().mockResolvedValue(undefined),
       })
 
       const storage = new DBStorage(
@@ -243,7 +244,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
       expect(tvsPrice.getPrice).not.toHaveBeenCalled()
     })
 
@@ -260,8 +261,8 @@ describe(DBStorage.name, () => {
       }
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPrice: mockFn().resolvesTo(undefined),
-        getLatestPriceBefore: mockFn().resolvesTo(fallbackPrice),
+        getPrice: vi.fn().mockResolvedValue(undefined),
+        getLatestPriceBefore: vi.fn().mockResolvedValue(fallbackPrice),
       })
 
       const storage = new DBStorage(
@@ -274,7 +275,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(900)
+      expect(result).toStrictEqual(900)
       expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
         configId,
         timestamp,
@@ -294,7 +295,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(100n)
+      expect(result).toStrictEqual(100n)
     })
 
     it('fetches amount from DB when not in memory', async () => {
@@ -310,7 +311,7 @@ describe(DBStorage.name, () => {
       }
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getAmount: mockFn().resolvesTo(dbAmount),
+        getAmount: vi.fn().mockResolvedValue(dbAmount),
       })
 
       const storage = new DBStorage(
@@ -323,7 +324,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(200n)
+      expect(result).toStrictEqual(200n)
       expect(tvsAmount.getAmount).toHaveBeenCalledWith(configId, timestamp)
     })
 
@@ -340,8 +341,8 @@ describe(DBStorage.name, () => {
       }
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getAmount: mockFn().resolvesTo(undefined),
-        getLatestAmountBefore: mockFn().resolvesTo(fallbackAmount),
+        getAmount: vi.fn().mockResolvedValue(undefined),
+        getLatestAmountBefore: vi.fn().mockResolvedValue(fallbackAmount),
       })
 
       const storage = new DBStorage(
@@ -354,7 +355,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(200n)
+      expect(result).toStrictEqual(200n)
       expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
         configId,
         timestamp,

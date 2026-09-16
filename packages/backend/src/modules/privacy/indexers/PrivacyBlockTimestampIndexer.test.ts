@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -17,13 +18,13 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const to = from + 5 * UnixTime.HOUR
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(666),
+        getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(666),
       })
 
       const privacyBlockTimestampRepository = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyBlockTimestampIndexer(
@@ -46,11 +47,11 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
 
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenOnlyCalledWith(from, 'ethereum')
+      ).toHaveBeenCalledExactlyOnceWith(from, 'ethereum')
 
       expect(
         privacyBlockTimestampRepository.upsertMany,
-      ).toHaveBeenOnlyCalledWith([
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: config('config-1', 'ethereum').id,
           chain: 'ethereum',
@@ -59,7 +60,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         },
       ])
 
-      expect(safeHeight).toEqual(from)
+      expect(safeHeight).toStrictEqual(from)
     })
 
     it('rounds non-aligned from up to the next hour', async () => {
@@ -69,13 +70,13 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const expectedTimestamp = hourStart + UnixTime.HOUR
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(777),
+        getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(777),
       })
 
       const privacyBlockTimestampRepository = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new PrivacyBlockTimestampIndexer(
@@ -98,9 +99,9 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
 
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenOnlyCalledWith(expectedTimestamp, 'ethereum')
+      ).toHaveBeenCalledExactlyOnceWith(expectedTimestamp, 'ethereum')
 
-      expect(safeHeight).toEqual(expectedTimestamp)
+      expect(safeHeight).toStrictEqual(expectedTimestamp)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -126,7 +127,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
@@ -134,7 +135,10 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const to = from + 5 * UnixTime.HOUR
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(123).returnsOnce(122),
+        getBlockNumberAtOrBefore: vi
+          .fn()
+          .mockReturnValueOnce(123)
+          .mockReturnValueOnce(122),
       })
 
       const indexer = new PrivacyBlockTimestampIndexer(
@@ -145,7 +149,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
             privacyBlockTimestamp: mockObject<
               Database['privacyBlockTimestamp']
             >({
-              upsertMany: mockFn().returns(undefined),
+              upsertMany: vi.fn().mockReturnValue(undefined),
             }),
           }),
           parents: [],
@@ -162,7 +166,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       await expect(
         async () =>
           await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')]),
-      ).toBeRejectedWith('Block number cannot be smaller')
+      ).rejects.toThrow('Block number cannot be smaller')
     })
   })
 
@@ -171,7 +175,10 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const privacyBlockTimestampRepository = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
+        deleteByConfigInTimeRange: vi
+          .fn()
+          .mockReturnValueOnce(3)
+          .mockReturnValueOnce(2),
       })
 
       const indexer = new PrivacyBlockTimestampIndexer(
@@ -219,7 +226,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const privacyBlockTimestampRepository = mockObject<
         Database['privacyBlockTimestamp']
       >({
-        deleteByConfigIds: mockFn().returns(3),
+        deleteByConfigIds: vi.fn().mockReturnValue(3),
       })
       const indexer = new PrivacyBlockTimestampIndexer(
         {
@@ -238,7 +245,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
 
       expect(
         privacyBlockTimestampRepository.deleteByConfigIds,
-      ).toHaveBeenOnlyCalledWith(['config-1', 'config-2'])
+      ).toHaveBeenCalledExactlyOnceWith(['config-1', 'config-2'])
     })
   })
 
@@ -271,8 +278,8 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         chain: 'ethereum',
         sinceTimestamp: UnixTime(999),
       })
-      expect(id1).toEqual('0ceab271a1a3')
-      expect(id1).toEqual(id2)
+      expect(id1).toStrictEqual('0ceab271a1a3')
+      expect(id1).toStrictEqual(id2)
     })
 
     it('differs across chains', () => {
@@ -284,7 +291,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         chain: 'arbitrum',
         sinceTimestamp: UnixTime(0),
       })
-      expect(id1).not.toEqual(id2)
+      expect(id1).not.toStrictEqual(id2)
     })
   })
 

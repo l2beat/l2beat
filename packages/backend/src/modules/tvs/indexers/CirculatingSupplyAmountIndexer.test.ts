@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -22,22 +23,22 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       ]
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 120000000 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 19000000 }]),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getCirculatingSupplies: vi
+          .fn()
+          .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 120000000 }])
+          .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 19000000 }]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([
-          UnixTime(150),
-          UnixTime(200),
-        ]),
-        shouldTimestampBeSynced: mockFn().returns(true),
+        getTimestampsToSync: vi
+          .fn()
+          .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
+        shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -82,10 +83,10 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('filters out timestamps that should not be synced', async () => {
@@ -94,22 +95,23 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn().returnsOnce([
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getCirculatingSupplies: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 120000000 },
           { timestamp: UnixTime(200), value: 125000000 },
         ]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
-        shouldTimestampBeSynced: mockFn()
-          .returnsOnce(true) // For timestamp 150
-          .returnsOnce(false), // For timestamp 200
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
+        shouldTimestampBeSynced: vi
+          .fn()
+          .mockReturnValueOnce(true) // For timestamp 150
+          .mockReturnValueOnce(false), // For timestamp 200
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -137,10 +139,10 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('returns to value if no timestamps to sync', async () => {
@@ -149,11 +151,11 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([]),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -173,16 +175,15 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(circulatingSupplyProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(
-        from,
-        to,
-      )
-      expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
+      expect(
+        circulatingSupplyProvider.getAdjustedTo,
+      ).toHaveBeenCalledExactlyOnceWith(from, to)
+      expect(syncOptimizer.getTimestampsToSync).toHaveBeenCalledExactlyOnceWith(
         from,
         adjustedTo,
         1,
       )
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toStrictEqual(to)
     })
 
     it('drops invalid supply values and saves the rest', async () => {
@@ -191,23 +192,22 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn().returnsOnce([
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getCirculatingSupplies: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 120000000 },
           { timestamp: UnixTime(200), value: Number.NaN },
         ]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([
-          UnixTime(150),
-          UnixTime(200),
-        ]),
-        shouldTimestampBeSynced: mockFn().returns(true),
+        getTimestampsToSync: vi
+          .fn()
+          .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
+        shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -235,10 +235,10 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('handles insufficient data errors', async () => {
@@ -247,18 +247,18 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn().throwsOnce(
-          new Error('Insufficient data in response for ethereum'),
-        ),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getCirculatingSupplies: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Insufficient data in response for ethereum')
+        }),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
+        upsertMany: vi.fn().mockReturnValueOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -280,13 +280,13 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       expect(
         circulatingSupplyProvider.getCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(CoingeckoId('ethereum'), {
+      ).toHaveBeenCalledExactlyOnceWith(CoingeckoId('ethereum'), {
         from,
         to: adjustedTo,
       })
 
-      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith([])
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith([])
+      expect(safeHeight).toStrictEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {
@@ -295,12 +295,14 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn().throwsOnce(new Error('Network error')),
+        getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
+        getCirculatingSupplies: vi.fn().mockImplementationOnce(() => {
+          throw new Error('Network error')
+        }),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+        getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -319,14 +321,14 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         await indexer.multiUpdate(from, to, [
           config('config-1', 'ethereum', 18),
         ])
-      }).toBeRejectedWith('Network error')
+      }).rejects.toThrow('Network error')
     })
   })
 
   describe(CirculatingSupplyAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteByConfigs: mockFn().returns(5),
+        deleteByConfigs: vi.fn().mockReturnValue(5),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer(
@@ -356,7 +358,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       await indexer.trimData(removalConfigs)
 
-      expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+      expect(
+        tvsAmountRepository.deleteByConfigs,
+      ).toHaveBeenCalledExactlyOnceWith([
         {
           configurationId: 'config-1',
           fromInclusive: UnixTime(100),
@@ -373,7 +377,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
   describe('SOURCE', () => {
     it('returns the correct source identifier', () => {
-      expect(CirculatingSupplyAmountIndexer.SOURCE()).toEqual(
+      expect(CirculatingSupplyAmountIndexer.SOURCE()).toStrictEqual(
         'l2b-circulating-supply',
       )
     })

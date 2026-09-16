@@ -1,6 +1,7 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import {
   createInteropEventType,
   type InteropEvent,
@@ -14,18 +15,18 @@ describe(InteropEventStore.name, () => {
   it('indexes derived tx requests for newly saved events', async () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
-    const insertMany = mockFn().resolvesTo(undefined)
+    const insertMany = vi.fn().mockResolvedValue(undefined)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
         insertMany,
-        getUnmatched: mockFn().resolvesTo([]),
+        getUnmatched: vi.fn().mockResolvedValue([]),
       }),
     })
 
     await store.saveNewEvents([event])
 
     expect(insertMany).toHaveBeenCalled()
-    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([
+    expect(store.derivedTxStore.get('base', '0xabc')).toStrictEqual([
       {
         chain: 'base',
         txHash: '0xabc',
@@ -40,15 +41,15 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([toRecord(event)]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi.fn().mockResolvedValue([toRecord(event)]),
       }),
     })
 
     await store.start()
 
-    expect(store.getEvents(CreatorEvent.type)).toEqual([event])
-    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([
+    expect(store.getEvents(CreatorEvent.type)).toStrictEqual([event])
+    expect(store.derivedTxStore.get('base', '0xabc')).toStrictEqual([
       {
         chain: 'base',
         txHash: '0xabc',
@@ -63,16 +64,18 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([
-          toRecord(event, { derivedCheckedInHistory: true }),
-        ]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi
+          .fn()
+          .mockResolvedValue([
+            toRecord(event, { derivedCheckedInHistory: true }),
+          ]),
       }),
     })
 
     await store.start()
 
-    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([
+    expect(store.derivedTxStore.get('base', '0xabc')).toStrictEqual([
       {
         chain: 'base',
         txHash: '0xabc',
@@ -82,7 +85,7 @@ describe(InteropEventStore.name, () => {
     ])
     expect(
       store.derivedTxStore.getHashesPendingHistoryCheck('base', [plugin.name]),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 
   it('does not rebuild fulfilled derived tx requests on start', async () => {
@@ -90,29 +93,29 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([
-          toRecord(event, { derivedFulfilled: true }),
-        ]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi
+          .fn()
+          .mockResolvedValue([toRecord(event, { derivedFulfilled: true })]),
       }),
     })
 
     await store.start()
 
-    expect(store.getEvents(CreatorEvent.type)).toEqual([event])
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.getEvents(CreatorEvent.type)).toStrictEqual([event])
+    expect(store.derivedTxStore.getCount()).toStrictEqual(0)
   })
 
   it('removes derived tx requests for matched and unsupported events', async () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
-      transaction: mockFn().executes(async (cb) => await cb()),
+      transaction: vi.fn().mockImplementation(async (cb) => await cb()),
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([]),
-        updateMatched: mockFn().resolvesTo(undefined),
-        updateUnsupported: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi.fn().mockResolvedValue([]),
+        updateMatched: vi.fn().mockResolvedValue(undefined),
+        updateUnsupported: vi.fn().mockResolvedValue(undefined),
       }),
     })
 
@@ -122,7 +125,7 @@ describe(InteropEventStore.name, () => {
       unsupported: [],
     })
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toStrictEqual(0)
   })
 
   it('removes expired derived tx requests', async () => {
@@ -130,16 +133,16 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin, { expiresAt: UnixTime(5) })
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([]),
-        deleteExpired: mockFn().resolvesTo(1),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi.fn().mockResolvedValue([]),
+        deleteExpired: vi.fn().mockResolvedValue(1),
       }),
     })
 
     await store.saveNewEvents([event])
     await store.deleteExpired(UnixTime(10))
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toStrictEqual(0)
   })
 
   it('removes derived tx requests when deleting all events for a plugin', async () => {
@@ -147,16 +150,16 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([]),
-        deleteAllForPlugin: mockFn().resolvesTo(1),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi.fn().mockResolvedValue([]),
+        deleteAllForPlugin: vi.fn().mockResolvedValue(1),
       }),
     })
 
     await store.saveNewEvents([event])
     await store.deleteAllForPlugin(plugin.name)
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toStrictEqual(0)
   })
 
   it('removes evicted derived tx requests when the in-memory event cap is hit', async () => {
@@ -167,8 +170,8 @@ describe(InteropEventStore.name, () => {
       plugin,
       {
         interopEvent: mockObject<Database['interopEvent']>({
-          insertMany: mockFn().resolvesTo(undefined),
-          getUnmatched: mockFn().resolvesTo([]),
+          insertMany: vi.fn().mockResolvedValue(undefined),
+          getUnmatched: vi.fn().mockResolvedValue([]),
         }),
       },
       1,
@@ -176,8 +179,8 @@ describe(InteropEventStore.name, () => {
 
     await store.saveNewEvents([firstEvent, secondEvent])
 
-    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([])
-    expect(store.derivedTxStore.get('base', '0xdef')).toEqual([
+    expect(store.derivedTxStore.get('base', '0xabc')).toStrictEqual([])
+    expect(store.derivedTxStore.get('base', '0xdef')).toStrictEqual([
       {
         chain: 'base',
         txHash: '0xdef',
@@ -190,11 +193,11 @@ describe(InteropEventStore.name, () => {
   it('marks derived tx requests as fulfilled and removes them from memory', async () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
-    const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
+    const updateDerivedFulfilled = vi.fn().mockResolvedValue(undefined)
     const store = makeStore(plugin, {
       interopEvent: mockObject<Database['interopEvent']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getUnmatched: mockFn().resolvesTo([]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getUnmatched: vi.fn().mockResolvedValue([]),
         updateDerivedFulfilled,
       }),
     })
@@ -203,7 +206,7 @@ describe(InteropEventStore.name, () => {
     await store.updateDerivedFulfilled([event])
 
     expect(updateDerivedFulfilled).toHaveBeenCalledWith([event.eventId])
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toStrictEqual(0)
   })
 })
 

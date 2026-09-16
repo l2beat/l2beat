@@ -7,7 +7,8 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { LocalStorage } from '../LocalStorage'
 import { getLegacyConfig } from './getLegacyConfig'
 import { mapLegacyConfig } from './mapLegacyConfig'
@@ -29,7 +30,7 @@ describe(mapLegacyConfig.name, () => {
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
     const mockLocalStorage = mockObject<LocalStorage>({
-      getAddress: mockFn().resolvesTo(undefined),
+      getAddress: vi.fn().mockResolvedValue(undefined),
     })
 
     const tokens = await ps.getTokens()
@@ -43,12 +44,12 @@ describe(mapLegacyConfig.name, () => {
       mockLocalStorage,
     )
 
-    expect(result.projectId).toEqual(ProjectId('arbitrum'))
+    expect(result.projectId).toStrictEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(
       result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH'),
-    ).toEqual({
+    ).toStrictEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
@@ -113,7 +114,7 @@ describe(mapLegacyConfig.name, () => {
         (t: TvsToken) =>
           t.id === 'arbitrum-ARB-1' && t.amount.type === 'circulatingSupply',
       ),
-    ).toEqual({
+    ).toStrictEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ARB-1'),
       symbol: 'ARB',
@@ -137,7 +138,7 @@ describe(mapLegacyConfig.name, () => {
 
     expect(
       result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ATH'),
-    ).toEqual({
+    ).toStrictEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',

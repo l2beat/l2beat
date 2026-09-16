@@ -1,16 +1,15 @@
 import type { ConfigReader } from '@l2beat/discovery'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { findDependents } from './findDependents'
 
 describe(findDependents.name, () => {
   it('correctly returns dependent projects', () => {
     const mockConfigReader = mockObject<ConfigReader>({
-      readAllDiscoveredProjects: mockFn().returns([
-        'projectA',
-        'projectB',
-        'projectC',
-      ]),
-      readDiscovery: mockFn().executes((project: string) => {
+      readAllDiscoveredProjects: vi
+        .fn()
+        .mockReturnValue(['projectA', 'projectB', 'projectC']),
+      readDiscovery: vi.fn().mockImplementation((project: string) => {
         const mockDiscoveries = [
           {
             name: 'projectA',
@@ -27,6 +26,6 @@ describe(findDependents.name, () => {
     })
 
     const dependents = findDependents('sharedProject', mockConfigReader)
-    expect(dependents).toEqual(['projectB'])
+    expect(dependents).toStrictEqual(['projectB'])
   })
 })

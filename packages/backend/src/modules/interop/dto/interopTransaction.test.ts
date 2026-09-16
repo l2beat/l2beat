@@ -1,6 +1,7 @@
 import type { EVMTransaction, RpcTransaction } from '@l2beat/shared'
 import { assert, EthereumAddress, type Transaction } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import {
   getInteropTransactionDataCandidates,
   getInteropTransactionTargetCallValue,
@@ -19,7 +20,7 @@ describe('interopTransaction', () => {
         }),
       )
 
-      expect(tx).toEqual({
+      expect(tx).toStrictEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -48,8 +49,10 @@ describe('interopTransaction', () => {
       )
 
       assert(tx.kind === 'bundle')
-      expect(tx.type).toEqual('118')
-      expect(tx.calls).toEqual([{ to: ADDRESS_3, value: 7n, data: '0xbeef' }])
+      expect(tx.type).toStrictEqual('118')
+      expect(tx.calls).toStrictEqual([
+        { to: ADDRESS_3, value: 7n, data: '0xbeef' },
+      ])
     })
 
     it('rejects unsupported custom envelope types', () => {
@@ -69,7 +72,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toEqual({
+      expect(toInteropTransaction(upstream)).toStrictEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -87,7 +90,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toEqual({
+      expect(toInteropTransaction(upstream)).toStrictEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -105,7 +108,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toEqual({
+      expect(toInteropTransaction(upstream)).toStrictEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -140,7 +143,7 @@ describe('interopTransaction', () => {
         }),
       )
 
-      expect(getInteropTransactionDataCandidates(tx)).toEqual([
+      expect(getInteropTransactionDataCandidates(tx)).toStrictEqual([
         '0x1234',
         '0x5678',
       ])
@@ -171,7 +174,7 @@ describe('interopTransaction', () => {
           ),
           [ADDRESS_3],
         ),
-      ).toEqual(9n)
+      ).toStrictEqual(9n)
     })
   })
 })

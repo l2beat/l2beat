@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
@@ -18,7 +19,7 @@ describe(BlockTargetIndexer.name, () => {
       })
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().resolvesTo(0),
+        getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(0),
       })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
@@ -45,7 +46,7 @@ describe(BlockTargetIndexer.name, () => {
 
       const BLOCK_NUMBER = 123
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().resolvesTo(BLOCK_NUMBER),
+        getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(BLOCK_NUMBER),
       })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
@@ -60,7 +61,7 @@ describe(BlockTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toEqual(BLOCK_NUMBER)
+      expect(result).toStrictEqual(BLOCK_NUMBER)
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
@@ -74,9 +75,10 @@ describe(BlockTargetIndexer.name, () => {
 
       const BLOCK_NUMBER = 123
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn()
-          .resolvesToOnce(BLOCK_NUMBER)
-          .resolvesToOnce(BLOCK_NUMBER - 1),
+        getBlockNumberAtOrBefore: vi
+          .fn()
+          .mockResolvedValueOnce(BLOCK_NUMBER)
+          .mockResolvedValueOnce(BLOCK_NUMBER - 1),
       })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
@@ -90,7 +92,7 @@ describe(BlockTargetIndexer.name, () => {
       )
 
       await indexer.tick()
-      await expect(async () => await indexer.tick()).toBeRejectedWith(
+      await expect(async () => await indexer.tick()).rejects.toThrow(
         'Block number cannot be smaller',
       )
     })
@@ -102,9 +104,10 @@ describe(BlockTargetIndexer.name, () => {
 
       const BLOCK_NUMBER = 123
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn()
-          .resolvesToOnce(BLOCK_NUMBER)
-          .resolvesToOnce(BLOCK_NUMBER - 1),
+        getBlockNumberAtOrBefore: vi
+          .fn()
+          .mockResolvedValueOnce(BLOCK_NUMBER)
+          .mockResolvedValueOnce(BLOCK_NUMBER - 1),
       })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
@@ -118,7 +121,7 @@ describe(BlockTargetIndexer.name, () => {
       )
 
       await indexer.tick()
-      await expect(async () => await indexer.tick()).toBeRejectedWith(
+      await expect(async () => await indexer.tick()).rejects.toThrow(
         'Block number cannot be smaller',
       )
     })
@@ -126,7 +129,7 @@ describe(BlockTargetIndexer.name, () => {
     it('throws when first fetched is smaller than last processed before process restart', async () => {
       const clock = mockObject<Clock>({
         getLastHour: () => LAST_HOUR,
-        onNewHour: mockFn().returns(null),
+        onNewHour: vi.fn().mockReturnValue(null),
       })
 
       const BLOCK_NUMBER = 123
@@ -138,7 +141,7 @@ describe(BlockTargetIndexer.name, () => {
       })
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().resolvesTo(BLOCK_NUMBER - 1),
+        getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(BLOCK_NUMBER - 1),
       })
 
       const indexer = new BlockTargetIndexer(
@@ -152,7 +155,7 @@ describe(BlockTargetIndexer.name, () => {
         }),
       )
 
-      await expect(async () => await indexer.tick()).toBeRejectedWith(
+      await expect(async () => await indexer.tick()).rejects.toThrow(
         'Block number cannot be smaller',
       )
     })

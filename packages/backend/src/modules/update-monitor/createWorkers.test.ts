@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createWorkerPool } from './createWorkers'
 
 // Helper function since fake-timers don't work well with timers/promises
@@ -8,14 +7,12 @@ const wait = (delay: number) =>
   new Promise((resolve) => setTimeout(resolve, delay))
 
 describe('createWorkerPool', () => {
-  let time: InstalledClock
-
   beforeEach(() => {
-    time = install()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   describe('basic execution', () => {
@@ -43,18 +40,18 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(3)
-      expect(results[0].identity.id).toEqual('task1')
-      expect(results[0].result).toEqual('result1')
-      expect(results[1].identity.id).toEqual('task2')
-      expect(results[1].result).toEqual('result2')
-      expect(results[2].identity.id).toEqual('task3')
-      expect(results[2].result).toEqual('result3')
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(3)
+      expect(results[0].identity.id).toStrictEqual('task1')
+      expect(results[0].result).toStrictEqual('result1')
+      expect(results[1].identity.id).toStrictEqual('task2')
+      expect(results[1].result).toStrictEqual('result2')
+      expect(results[2].identity.id).toStrictEqual('task3')
+      expect(results[2].result).toStrictEqual('result3')
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('handles empty task array', async () => {
@@ -66,12 +63,12 @@ describe('createWorkerPool', () => {
       })
 
       const resultPromise = workerPool.runInPool([])
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results).toEqual([])
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results).toStrictEqual([])
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('executes tasks with correct concurrency', async () => {
@@ -93,11 +90,11 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       await resultPromise
 
       // First 2 tasks should start immediately (worker count = 2)
-      expect(executionOrder.slice(0, 2)).toEqual([0, 1])
+      expect(executionOrder.slice(0, 2)).toStrictEqual([0, 1])
     })
   })
 
@@ -128,20 +125,20 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(2)
-      expect(results[0].identity.id).toEqual('success1')
-      expect(results[0].result).toEqual('success1')
-      expect(results[1].identity.id).toEqual('success2')
-      expect(results[1].result).toEqual('success2')
+      expect(results.length).toStrictEqual(2)
+      expect(results[0].identity.id).toStrictEqual('success1')
+      expect(results[0].result).toStrictEqual('success1')
+      expect(results[1].identity.id).toStrictEqual('success2')
+      expect(results[1].result).toStrictEqual('success2')
 
-      expect(errors.length).toEqual(1)
-      expect(errors[0].identity.id).toEqual('failing')
-      expect(errors[0].error).toBeA(Error)
-      expect(errors[0].error.message).toEqual('Task failed')
-      expect(timedOut).toEqual(false)
+      expect(errors.length).toStrictEqual(1)
+      expect(errors[0].identity.id).toStrictEqual('failing')
+      expect(errors[0].error).toBeInstanceOf(Error)
+      expect(errors[0].error.message).toStrictEqual('Task failed')
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('handles non-Error throws', async () => {
@@ -162,15 +159,15 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results).toEqual([])
-      expect(errors.length).toEqual(1)
-      expect(errors[0].identity.id).toEqual('string-error')
-      expect(errors[0].error).toBeA(Error)
-      expect(errors[0].error.message).toEqual('string error')
-      expect(timedOut).toEqual(false)
+      expect(results).toStrictEqual([])
+      expect(errors.length).toStrictEqual(1)
+      expect(errors[0].identity.id).toStrictEqual('string-error')
+      expect(errors[0].error).toBeInstanceOf(Error)
+      expect(errors[0].error.message).toStrictEqual('string error')
+      expect(timedOut).toStrictEqual(false)
     })
   })
 
@@ -196,20 +193,20 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(2)
-      expect(results[0].identity.id).toEqual('fast')
-      expect(results[0].result).toEqual('fast')
-      expect(results[1].identity.id).toEqual('fast2')
-      expect(results[1].result).toEqual('fast2')
+      expect(results.length).toStrictEqual(2)
+      expect(results[0].identity.id).toStrictEqual('fast')
+      expect(results[0].result).toStrictEqual('fast')
+      expect(results[1].identity.id).toStrictEqual('fast2')
+      expect(results[1].result).toStrictEqual('fast2')
 
-      expect(errors.length).toEqual(1)
-      expect(errors[0].identity.id).toEqual('slow')
-      expect(errors[0].error).toBeA(Error)
-      expect(errors[0].error.message).toEqual('Task timeout')
-      expect(timedOut).toEqual(false)
+      expect(errors.length).toStrictEqual(1)
+      expect(errors[0].identity.id).toStrictEqual('slow')
+      expect(errors[0].error).toBeInstanceOf(Error)
+      expect(errors[0].error.message).toStrictEqual('Task timeout')
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('does not timeout tasks that finish just in time', async () => {
@@ -231,14 +228,14 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(1)
-      expect(results[0].identity.id).toEqual('just-in-time')
-      expect(results[0].result).toEqual('just-in-time')
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(1)
+      expect(results[0].identity.id).toStrictEqual('just-in-time')
+      expect(results[0].result).toStrictEqual('just-in-time')
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
   })
 
@@ -260,10 +257,10 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, timedOut } = await resultPromise
 
-      expect(timedOut).toEqual(true)
+      expect(timedOut).toStrictEqual(true)
       // Not all tasks should complete
       expect(results.length).toBeLessThan(10)
     })
@@ -285,12 +282,12 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, timedOut } = await resultPromise
 
-      expect(timedOut).toEqual(false)
-      expect(results.length).toEqual(5)
-      expect(results.map((r) => r.result)).toEqual([
+      expect(timedOut).toStrictEqual(false)
+      expect(results.length).toStrictEqual(5)
+      expect(results.map((r) => r.result)).toStrictEqual([
         'result0',
         'result1',
         'result2',
@@ -320,10 +317,10 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       await resultPromise
 
-      expect(executionOrder).toEqual([0, 1, 2, 3, 4])
+      expect(executionOrder).toStrictEqual([0, 1, 2, 3, 4])
     })
 
     it('processes tasks concurrently with multiple workers', async () => {
@@ -344,7 +341,7 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       await resultPromise
 
       // First 3 tasks should start at roughly the same time
@@ -376,10 +373,10 @@ describe('createWorkerPool', () => {
       }))
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       await resultPromise
 
-      expect(maxConcurrent).toEqual(2)
+      expect(maxConcurrent).toStrictEqual(2)
     })
   })
 
@@ -401,16 +398,16 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(2)
-      expect(results[0].identity.id).toEqual('undef')
-      expect(results[0].result).toEqual(undefined)
-      expect(results[1].identity.id).toEqual('value')
-      expect(results[1].result).toEqual('value')
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(2)
+      expect(results[0].identity.id).toStrictEqual('undef')
+      expect(results[0].result).toStrictEqual(undefined)
+      expect(results[1].identity.id).toStrictEqual('value')
+      expect(results[1].result).toStrictEqual('value')
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('handles tasks that return null', async () => {
@@ -426,14 +423,14 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(1)
-      expect(results[0].identity.id).toEqual('null')
-      expect(results[0].result).toEqual(null)
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(1)
+      expect(results[0].identity.id).toStrictEqual('null')
+      expect(results[0].result).toStrictEqual(null)
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('handles mix of success, error, and timeout', async () => {
@@ -469,26 +466,26 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(2)
-      expect(results[0].identity.id).toEqual('success')
-      expect(results[0].result).toEqual('success')
-      expect(results[1].identity.id).toEqual('success2')
-      expect(results[1].result).toEqual('success2')
+      expect(results.length).toStrictEqual(2)
+      expect(results[0].identity.id).toStrictEqual('success')
+      expect(results[0].result).toStrictEqual('success')
+      expect(results[1].identity.id).toStrictEqual('success2')
+      expect(results[1].result).toStrictEqual('success2')
 
-      expect(errors.length).toEqual(2)
+      expect(errors.length).toStrictEqual(2)
       const errorIds = errors.map((e) => e.identity.id).sort()
-      expect(errorIds).toEqual(['error', 'timeout'])
+      expect(errorIds).toStrictEqual(['error', 'timeout'])
 
       const errorError = errors.find((e) => e.identity.id === 'error')
-      expect(errorError?.error.message).toEqual('error')
+      expect(errorError?.error.message).toStrictEqual('error')
 
       const timeoutError = errors.find((e) => e.identity.id === 'timeout')
-      expect(timeoutError?.error.message).toEqual('Task timeout')
+      expect(timeoutError?.error.message).toStrictEqual('Task timeout')
 
-      expect(timedOut).toEqual(false)
+      expect(timedOut).toStrictEqual(false)
     })
   })
 
@@ -508,13 +505,13 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(numberTasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(3)
-      expect(results.map((r) => r.result)).toEqual([1, 2, 3])
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(3)
+      expect(results.map((r) => r.result)).toStrictEqual([1, 2, 3])
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
 
     it('handles complex object types', async () => {
@@ -537,14 +534,14 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors, timedOut } = await resultPromise
 
-      expect(results.length).toEqual(1)
-      expect(results[0].identity.id).toEqual('complex')
-      expect(results[0].result).toEqual({ id: 'test', data: [1, 2, 3] })
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
+      expect(results.length).toStrictEqual(1)
+      expect(results[0].identity.id).toStrictEqual('complex')
+      expect(results[0].result).toStrictEqual({ id: 'test', data: [1, 2, 3] })
+      expect(errors).toStrictEqual([])
+      expect(timedOut).toStrictEqual(false)
     })
   })
 
@@ -575,21 +572,24 @@ describe('createWorkerPool', () => {
       ]
 
       const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
+      await vi.runAllTimersAsync()
       const { results, errors } = await resultPromise
 
-      expect(results.length).toEqual(2)
-      expect(results[0].identity).toEqual({
+      expect(results.length).toStrictEqual(2)
+      expect(results[0].identity).toStrictEqual({
         id: 'project-a',
         name: 'Project A',
       })
-      expect(results[1].identity).toEqual({
+      expect(results[1].identity).toStrictEqual({
         id: 'project-b',
         name: 'Project B',
       })
 
-      expect(errors.length).toEqual(1)
-      expect(errors[0].identity).toEqual({ id: 'project-c', name: 'Project C' })
+      expect(errors.length).toStrictEqual(1)
+      expect(errors[0].identity).toStrictEqual({
+        id: 'project-c',
+        name: 'Project C',
+      })
     })
   })
 })

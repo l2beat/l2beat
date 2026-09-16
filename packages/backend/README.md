@@ -87,7 +87,10 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 ```
 
 If you used a different database setup modify those values accordingly. The `TEST_DB_URL` is used by
-only the test suite. Omitting this variable will cause the database tests to be skipped.
+only the test suite. Omitting this variable will cause the database tests to be skipped, and in CI it
+makes the run fail instead. Each Vitest worker gets its own schema inside that database
+(`backend_test_1`, `backend_test_2`, ...), migrated before the run, so that suites running in
+parallel cannot truncate each other's rows.
 
 ### Features
 
@@ -227,7 +230,8 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `pnpm lint` - check if the code satisfies the biome configuration
 - `pnpm start:dev` - run the backend server from source ts
 - `pnpm start` - run the backend server from built js
-- `pnpm test` - run tests
+- `pnpm test` - run tests with Vitest
+- `pnpm test:config` - run only the config smoke test against the loaded `.env`
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm db:migrate` - apply the latest migration
 - `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available

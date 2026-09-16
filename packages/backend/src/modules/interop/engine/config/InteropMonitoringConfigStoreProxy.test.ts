@@ -1,4 +1,5 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { defineConfig, InteropConfigStore } from './InteropConfigStore'
 import { InteropMonitoringConfigStoreProxy } from './InteropMonitoringConfigStoreProxy'
@@ -17,7 +18,7 @@ describe(InteropMonitoringConfigStoreProxy.name, () => {
 
     await proxy.set(ExampleConfig, { foo: 1 })
 
-    expect(proxy.get(ExampleConfig)).toEqual({ foo: 1 })
+    expect(proxy.get(ExampleConfig)).toStrictEqual({ foo: 1 })
     expect(notifier.handleConfigChange).toHaveBeenCalledTimes(1)
     expect(notifier.handleConfigChange).toHaveBeenCalledWith(
       ExampleConfig.key,

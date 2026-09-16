@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import type { BlockProcessor } from '../types'
@@ -25,7 +26,7 @@ describe(onlyConsistent.name, () => {
     const logC = { data: '0xc', blockHash: '0x3' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
       { block: block3, logs: [logB, logC] },
@@ -43,7 +44,7 @@ describe(onlyConsistent.name, () => {
     const logC = { data: '0xc', blockHash: '0x3' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
     ])
@@ -57,7 +58,7 @@ describe(onlyConsistent.name, () => {
     const logA = { data: '0xa', blockHash: '0x1' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA])
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
     ])
@@ -77,17 +78,18 @@ describe(BlockIndexer.name, () => {
       const log1 = makeLog(block1, 1)
       const log2 = makeLog(block2, 2)
       const log3 = makeLog(block3, 3)
-      const processBlock = mockFn().resolvesTo(undefined)
+      const processBlock = vi.fn().mockResolvedValue(undefined)
 
       const indexer = createIndexer({
         blockProvider: mockObject<BlockProvider>({
-          getBlockWithTransactions: mockFn()
-            .resolvesToOnce(block1)
-            .resolvesToOnce(block2)
-            .resolvesToOnce(block3),
+          getBlockWithTransactions: vi
+            .fn()
+            .mockResolvedValueOnce(block1)
+            .mockResolvedValueOnce(block2)
+            .mockResolvedValueOnce(block3),
         }),
         logsProvider: mockObject<LogsProvider>({
-          getLogs: mockFn().resolvesTo([log1, log2, log3]),
+          getLogs: vi.fn().mockResolvedValue([log1, log2, log3]),
         }),
         blockProcessors: [
           mockObject<BlockProcessor>({
@@ -100,7 +102,7 @@ describe(BlockIndexer.name, () => {
 
       const result = await indexer.update(10, 12)
 
-      expect(result).toEqual(11)
+      expect(result).toStrictEqual(11)
       expect(processBlock).toHaveBeenCalledTimes(2)
       expect(processBlock).toHaveBeenCalledWith(block1, [log1])
       expect(processBlock).toHaveBeenCalledWith(block2, [log2])
@@ -109,14 +111,14 @@ describe(BlockIndexer.name, () => {
     it('throws without processing when first block exceeds configured timestamp', async () => {
       const block = makeBlock(10, 3_000)
       const log = makeLog(block, 1)
-      const processBlock = mockFn().resolvesTo(undefined)
+      const processBlock = vi.fn().mockResolvedValue(undefined)
 
       const indexer = createIndexer({
         blockProvider: mockObject<BlockProvider>({
-          getBlockWithTransactions: mockFn().resolvesToOnce(block),
+          getBlockWithTransactions: vi.fn().mockResolvedValueOnce(block),
         }),
         logsProvider: mockObject<LogsProvider>({
-          getLogs: mockFn().resolvesTo([log]),
+          getLogs: vi.fn().mockResolvedValue([log]),
         }),
         blockProcessors: [
           mockObject<BlockProcessor>({
@@ -127,7 +129,7 @@ describe(BlockIndexer.name, () => {
         stopBlockIndexerAtTimestampMs: 2_000,
       })
 
-      await expect(indexer.update(10, 10)).toBeRejectedWith(
+      await expect(indexer.update(10, 10)).rejects.toThrow(
         /STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS/,
       )
       expect(processBlock).not.toHaveBeenCalled()
@@ -139,10 +141,10 @@ function createIndexer(overrides: Partial<BlockIndexerDeps> = {}) {
   const defaults: BlockIndexerDeps = {
     source: 'ethereum',
     blockProvider: mockObject<BlockProvider>({
-      getBlockWithTransactions: mockFn(),
+      getBlockWithTransactions: vi.fn(),
     }),
     logsProvider: mockObject<LogsProvider>({
-      getLogs: mockFn().resolvesTo([]),
+      getLogs: vi.fn().mockResolvedValue([]),
     }),
     blockProcessors: [],
     stopBlockIndexerAtTimestampMs: undefined,

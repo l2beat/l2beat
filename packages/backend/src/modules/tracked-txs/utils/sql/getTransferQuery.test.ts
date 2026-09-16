@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getTransferQuery } from './getTransferQuery'
 
 const ADDRESS_1 = EthereumAddress('0x67e002f3a410029501eae397b63ec5f2b1f9fc96')
@@ -19,7 +19,7 @@ const CONFIGURATIONS = [
 describe(getTransferQuery.name, () => {
   it('returns valid SQL', () => {
     const query = getTransferQuery(CONFIGURATIONS, FROM, TO)
-    expect(query).toEqual(`
+    expect(query).toStrictEqual(`
     WITH
       params AS (
         SELECT
@@ -88,7 +88,7 @@ describe(getTransferQuery.name, () => {
       TO,
     )
 
-    expect(query).toEqual(`
+    expect(query).toStrictEqual(`
     WITH
       params AS (
         SELECT
@@ -153,7 +153,7 @@ describe(getTransferQuery.name, () => {
   it('handles empty helper tables', () => {
     const query = getTransferQuery([], FROM, TO)
 
-    expect(query).toEqual(`
+    expect(query).toStrictEqual(`
     WITH
       params AS (
         SELECT

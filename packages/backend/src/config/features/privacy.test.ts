@@ -9,7 +9,8 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import { ERC20_TRANSFER_TOPIC } from '../../modules/privacy/utils/erc20'
 import { FeatureFlags } from '../FeatureFlags'
@@ -38,7 +39,7 @@ describe(getPrivacyConfig.name, () => {
       },
     }
     const projectService = mockObject<ProjectService>({
-      getProjects: mockFn().resolvesToOnce([untrackedProject]),
+      getProjects: vi.fn().mockResolvedValueOnce([untrackedProject]),
     })
 
     const config = await getPrivacyConfig(
@@ -48,7 +49,7 @@ describe(getPrivacyConfig.name, () => {
       [],
     )
 
-    expect(config).toEqual(false)
+    expect(config).toStrictEqual(false)
   })
 
   it('includes a project that only tracks relayers', async () => {
@@ -69,7 +70,7 @@ describe(getPrivacyConfig.name, () => {
       },
     }
     const projectService = mockObject<ProjectService>({
-      getProjects: mockFn().resolvesToOnce([relayerOnlyProject]),
+      getProjects: vi.fn().mockResolvedValueOnce([relayerOnlyProject]),
     })
 
     const config = await getPrivacyConfig(
@@ -105,7 +106,7 @@ describe(getPrivacyConfig.name, () => {
       },
     }
     const projectService = mockObject<ProjectService>({
-      getProjects: mockFn().resolvesToOnce([wakuOnlyProject]),
+      getProjects: vi.fn().mockResolvedValueOnce([wakuOnlyProject]),
     })
 
     const config = await getPrivacyConfig(
@@ -120,7 +121,7 @@ describe(getPrivacyConfig.name, () => {
     if (source?.type !== 'railgunWaku') {
       throw new Error('Railgun should declare railgunWaku relayer tracking')
     }
-    expect(config.relayerSampleConfigs).toEqual([
+    expect(config.relayerSampleConfigs).toStrictEqual([
       {
         id: PrivacyRelayerSampler.idToConfigurationId({
           projectId: 'railgun',
@@ -174,7 +175,7 @@ describe(getPrivacyConfig.name, () => {
         ],
       }
       const projectService = mockObject<ProjectService>({
-        getProjects: mockFn().resolvesToOnce([
+        getProjects: vi.fn().mockResolvedValueOnce([
           {
             ...project,
             privacyInfo: {
@@ -210,8 +211,8 @@ describe(getPrivacyConfig.name, () => {
         },
       )
 
-      expect(deposit).toEqual(
-        expect.subset({
+      expect(deposit).toStrictEqual(
+        expect.objectContaining({
           direction: 'deposit',
           chain: 'ethereum',
           address: TOKEN,
@@ -219,8 +220,8 @@ describe(getPrivacyConfig.name, () => {
           topics: [null, POOL_TOPIC],
         }),
       )
-      expect(withdrawal).toEqual(
-        expect.subset({
+      expect(withdrawal).toStrictEqual(
+        expect.objectContaining({
           direction: 'withdrawal',
           chain: 'ethereum',
           address: TOKEN,
@@ -228,7 +229,7 @@ describe(getPrivacyConfig.name, () => {
           topics: [POOL_TOPIC],
         }),
       )
-      expect(deposit.id).not.toEqual(withdrawal.id)
+      expect(deposit.id).not.toStrictEqual(withdrawal.id)
     })
 
     it('filters both ends when from and to are set', async () => {
@@ -245,7 +246,7 @@ describe(getPrivacyConfig.name, () => {
         },
       )
 
-      expect(deposit.topics).toEqual([
+      expect(deposit.topics).toStrictEqual([
         `0x${'00'.repeat(12)}${TOKEN.slice(2).toLowerCase()}`,
         POOL_TOPIC,
       ])
@@ -266,7 +267,7 @@ describe(getPrivacyConfig.name, () => {
             params: { from: POOL },
           },
         ),
-      ).toBeRejectedWith('erc20Transfer source needs a from or to filter')
+      ).rejects.toThrow('erc20Transfer source needs a from or to filter')
     })
   })
 
@@ -278,7 +279,7 @@ describe(getPrivacyConfig.name, () => {
           const priceSince = token.token.sinceTimestamp
           if (!token.token.priceId || !priceSince) continue
           for (const bucket of token.buckets) {
-            expect(priceSince <= bucket.sinceTimestamp).toEqual(true)
+            expect(priceSince <= bucket.sinceTimestamp).toStrictEqual(true)
           }
         }
       }
@@ -297,7 +298,7 @@ describe(getPrivacyConfig.name, () => {
     if (config === false) throw new Error('Privacy config should be enabled')
     expect(config.anonymitySetConfigs.length).toBeGreaterThan(0)
     for (const anonymitySetConfig of config.anonymitySetConfigs) {
-      expect(anonymitySetConfig.sinceTimestamp).toEqual(minTimestamp)
+      expect(anonymitySetConfig.sinceTimestamp).toStrictEqual(minTimestamp)
     }
   })
 })

@@ -1,7 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { DayProvider } from '../../../../providers/day/DayProviders'
-import { activityRecord } from '../../utils/aggregatePerDay.test'
+import { activityRecord } from '../../test/activityRecord'
 import { DayTxsCountService } from './DayTxsCountService'
 
 describe(DayTxsCountService.prototype.getTxsCount.name, () => {
@@ -21,7 +22,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       records: [
         activityRecord(
           'a',
@@ -34,8 +35,14 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
       ],
       latestTimestamp: start * UnixTime.DAY,
     })
-    expect(provider.getDailyTxsCount).toHaveBeenOnlyCalledWith(start, end)
-    expect(provider.getDailyUopsCount).toHaveBeenOnlyCalledWith(start, end)
+    expect(provider.getDailyTxsCount).toHaveBeenCalledExactlyOnceWith(
+      start,
+      end,
+    )
+    expect(provider.getDailyUopsCount).toHaveBeenCalledExactlyOnceWith(
+      start,
+      end,
+    )
   })
 
   it('should return txs count with uops', async () => {
@@ -54,7 +61,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       records: [
         activityRecord(
           'a',
@@ -85,7 +92,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       records: [
         activityRecord(
           'a',
@@ -132,7 +139,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       records: [
         activityRecord(
           'a',
@@ -169,7 +176,7 @@ function mockProvider(data: {
   uops: Record<number, number>
 }) {
   return mockObject<DayProvider>({
-    getDailyTxsCount: mockFn().resolvesTo(data.txs),
-    getDailyUopsCount: mockFn().resolvesTo(data.uops),
+    getDailyTxsCount: vi.fn().mockResolvedValue(data.txs),
+    getDailyUopsCount: vi.fn().mockResolvedValue(data.uops),
   })
 }

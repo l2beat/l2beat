@@ -9,7 +9,8 @@ import type {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { OnchainAmountConfig } from '../types'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import type { LocalStorage } from './LocalStorage'
@@ -67,15 +68,16 @@ describe(DataFormulaExecutor.name, () => {
       ])
 
       const localStorage = mockObject<LocalStorage>({
-        getBlockNumber: mockFn().resolvesTo(blockNumber),
-        getAmount: mockFn().resolvesTo(undefined),
-        writeAmounts: mockFn().resolvesTo(undefined),
+        getBlockNumber: vi.fn().mockResolvedValue(blockNumber),
+        getAmount: vi.fn().mockResolvedValue(undefined),
+        writeAmounts: vi.fn().mockResolvedValue(undefined),
       })
       const balanceProvider = mockObject<BalanceProvider>({
-        getBalances: mockFn<BalanceProvider['getBalances']>().executes(
-          (queries) =>
+        getBalances: vi
+          .fn<BalanceProvider['getBalances']>()
+          .mockImplementation((queries) =>
             Promise.resolve(queries.map((q) => balances.get(q.holder) ?? 0n)),
-        ),
+          ),
       })
 
       const executor = new DataFormulaExecutor(

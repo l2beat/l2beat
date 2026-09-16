@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { BlockProcessingStats } from './BlockProcessingStats'
 
 describe(BlockProcessingStats.name, () => {
@@ -8,7 +8,7 @@ describe(BlockProcessingStats.name, () => {
     stats.record(1.25, 0.5)
     stats.record(1.25, 0.75)
 
-    expect(stats.get()).toEqual({
+    expect(stats.get()).toStrictEqual({
       totalMs: 2.5,
       cpuMs: 1.25,
       count: 2,

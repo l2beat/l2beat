@@ -18,7 +18,8 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type {
   DataRequest,
   InteropEvent,
@@ -43,8 +44,8 @@ describe(InteropEventSyncer.name, () => {
     it('starts in following state', () => {
       const syncer = createSyncer()
 
-      expect(syncer.state).toBeA(FollowingState)
-      expect(syncer.state.type).toEqual('blockProcessor')
+      expect(syncer.state).toBeInstanceOf(FollowingState)
+      expect(syncer.state.type).toStrictEqual('blockProcessor')
     })
   })
 
@@ -75,14 +76,14 @@ describe(InteropEventSyncer.name, () => {
     })
 
     it('does not clear errors when checking blockProcessor status', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
             Database['interopPluginSyncState']
           >({
             setLastError,
-            findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+            findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
           }),
         }),
       })
@@ -104,7 +105,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(7), [])
 
-      expect(syncer.latestBlockNumber).toEqual(7n)
+      expect(syncer.latestBlockNumber).toStrictEqual(7n)
       expect(processNewestBlock).toHaveBeenCalled()
     })
 
@@ -115,7 +116,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(9), [])
 
-      expect(syncer.latestBlockNumber).toEqual(9n)
+      expect(syncer.latestBlockNumber).toStrictEqual(9n)
       expect(run).not.toHaveBeenCalled()
     })
 
@@ -128,7 +129,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(5), [])
 
-      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
     })
   })
 
@@ -137,7 +138,7 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer()
       const pending = deferred<SyncerState>()
       const { state: timeLoopState, run } = makeTimeLoopState()
-      run.executes(async () => await pending.promise)
+      run.mockImplementation(async () => await pending.promise)
       syncer.state = timeLoopState
 
       const runPromise = syncer.run()
@@ -150,8 +151,8 @@ describe(InteropEventSyncer.name, () => {
 
       await new Promise<void>((resolve) => setImmediate(resolve))
 
-      expect(finished).toEqual(true)
-      expect(syncer.latestBlockNumber).toEqual(7n)
+      expect(finished).toStrictEqual(true)
+      expect(syncer.latestBlockNumber).toStrictEqual(7n)
 
       pending.resolve(timeLoopState)
       await Promise.all([runPromise, blockPromise])
@@ -165,7 +166,7 @@ describe(InteropEventSyncer.name, () => {
         checkStatus,
         processNewestBlock,
       } = makeBlockProcessorState()
-      processNewestBlock.executes(async () => await pending.promise)
+      processNewestBlock.mockImplementation(async () => await pending.promise)
       syncer.state = blockProcessorState
 
       const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
@@ -185,7 +186,7 @@ describe(InteropEventSyncer.name, () => {
         checkStatus,
         processNewestBlock,
       } = makeBlockProcessorState()
-      checkStatus.executes(async () => await pending.promise)
+      checkStatus.mockImplementation(async () => await pending.promise)
       syncer.state = blockProcessorState
 
       const runPromise = syncer.run()
@@ -209,7 +210,7 @@ describe(InteropEventSyncer.name, () => {
         checkStatus,
       } = makeBlockProcessorState()
       const { state: timeLoopState } = makeTimeLoopState()
-      checkStatus.executes(async () => await pending.promise)
+      checkStatus.mockImplementation(async () => await pending.promise)
       syncer.state = blockProcessorState
 
       const runPromise = syncer.run()
@@ -218,14 +219,14 @@ describe(InteropEventSyncer.name, () => {
       pending.resolve(timeLoopState)
       await Promise.all([runPromise, blockPromise])
 
-      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
       expect(processNewestBlock).not.toHaveBeenCalled()
     })
   })
 
   describe('state error handling', () => {
     it('stores last error when state throws', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -235,7 +236,9 @@ describe(InteropEventSyncer.name, () => {
           }),
         }),
       })
-      const run = mockFn().throws(new Error('boom'))
+      const run = vi.fn().mockImplementation(() => {
+        throw new Error('boom')
+      })
       const timeLoopState: TimeloopState = {
         type: 'timeLoop',
         name: 'timeLoop',
@@ -246,12 +249,12 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.run()
 
-      expect(setLastError.calls.length).toEqual(1)
-      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
+      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
     it('clears a possibly stale stored error once on the first success', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -268,12 +271,12 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(2), [])
       await syncer.processNewestBlock(makeBlock(3), [])
 
-      expect(setLastError.calls.length).toEqual(1)
+      expect(setLastError.mock.calls.length).toStrictEqual(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
 
     it('clears the stored error once after recovering from a failure', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -288,22 +291,24 @@ describe(InteropEventSyncer.name, () => {
       syncer.state = blockProcessorState
 
       await syncer.processNewestBlock(makeBlock(1), []) // clears the stale error
-      processNewestBlock.throwsOnce(new Error('boom'))
+      processNewestBlock.mockImplementationOnce(() => {
+        throw new Error('boom')
+      })
       await syncer.processNewestBlock(makeBlock(2), [])
-      expect(syncer.hasError).toEqual(true)
+      expect(syncer.hasError).toStrictEqual(true)
       await syncer.processNewestBlock(makeBlock(3), [])
       await syncer.processNewestBlock(makeBlock(4), [])
 
-      expect(syncer.hasError).toEqual(false)
-      expect(setLastError.calls.map((c) => c.args[2])).toEqual([
+      expect(syncer.hasError).toStrictEqual(false)
+      expect(setLastError.mock.calls.map((c) => c[2])).toStrictEqual([
         null,
-        expect.includes('boom'),
+        expect.stringContaining('boom'),
         null,
       ])
     })
 
     it('keeps the stored error when a block processor switches to catching up', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -316,20 +321,22 @@ describe(InteropEventSyncer.name, () => {
       const { state: timeLoopState } = makeTimeLoopState()
       const { state: blockProcessorState, processNewestBlock } =
         makeBlockProcessorState(timeLoopState)
-      processNewestBlock.throwsOnce(new Error('boom'))
+      processNewestBlock.mockImplementationOnce(() => {
+        throw new Error('boom')
+      })
       syncer.state = blockProcessorState
 
       // the failed block is followed by the next one, which only detects the gap
       await syncer.processNewestBlock(makeBlock(1), [])
       await syncer.processNewestBlock(makeBlock(2), [])
 
-      expect(syncer.state as SyncerState).toEqual(timeLoopState)
-      expect(setLastError.calls.length).toEqual(1)
-      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
+      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
+      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
     it('clears the stored error only once catch-up returns to following', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -340,14 +347,16 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
       const { state: blockProcessorState } = makeBlockProcessorState()
-      const run = mockFn<[], Promise<SyncerState>>()
+      const run = vi.fn<() => Promise<SyncerState>>()
       const timeLoopState: TimeloopState = {
         type: 'timeLoop',
         name: 'catchingUp',
         status: 'idle',
         run,
       }
-      run.resolvesToOnce(timeLoopState).resolvesTo(blockProcessorState)
+      run
+        .mockResolvedValueOnce(timeLoopState)
+        .mockResolvedValue(blockProcessorState)
       syncer.state = timeLoopState
 
       await syncer.run() // still catching up
@@ -358,7 +367,7 @@ describe(InteropEventSyncer.name, () => {
     })
 
     it('keeps the stored error when a status check succeeds', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncState: mockObject<
@@ -370,21 +379,23 @@ describe(InteropEventSyncer.name, () => {
       })
       const { state: blockProcessorState, processNewestBlock } =
         makeBlockProcessorState()
-      processNewestBlock.throwsOnce(new Error('boom'))
+      processNewestBlock.mockImplementationOnce(() => {
+        throw new Error('boom')
+      })
       syncer.state = blockProcessorState
 
       await syncer.processNewestBlock(makeBlock(1), [])
       await syncer.run()
 
-      expect(setLastError.calls.length).toEqual(1)
-      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
+      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
   })
 
   describe(InteropEventSyncer.prototype.captureLog.name, () => {
     it('captures using the only plugin in the cluster', () => {
       const event = makeInteropEventNoPlugin()
-      const capture = mockFn().returns([event])
+      const capture = vi.fn().mockReturnValue([event])
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -395,13 +406,13 @@ describe(InteropEventSyncer.name, () => {
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(capture).toHaveBeenCalled()
-      expect(result).toEqual([{ ...event, plugin: 'across' }])
+      expect(result).toStrictEqual([{ ...event, plugin: 'across' }])
     })
 
     it('captures using first plugin in cluster that produces', () => {
       const event = makeInteropEventNoPlugin()
-      const firstCapture = mockFn().returns(undefined)
-      const secondCapture = mockFn().returns([event])
+      const firstCapture = vi.fn().mockReturnValue(undefined)
+      const secondCapture = vi.fn().mockReturnValue([event])
 
       const syncer = createSyncer({
         cluster: makeCluster({
@@ -417,7 +428,7 @@ describe(InteropEventSyncer.name, () => {
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
-      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
+      expect(result).toStrictEqual([{ ...event, plugin: 'wormhole' }])
     })
 
     it('returns undefined when no plugin produces', () => {
@@ -427,7 +438,7 @@ describe(InteropEventSyncer.name, () => {
           plugins: [
             makePlugin({
               name: 'across',
-              capture: mockFn().returns(undefined),
+              capture: vi.fn().mockReturnValue(undefined),
             }),
           ],
         }),
@@ -435,23 +446,24 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
   describe(InteropEventSyncer.prototype.captureTx.name, () => {
     it('preserves plugin order and passes only plugin-local creator events', () => {
       const event = makeInteropEventNoPlugin()
-      const firstCapture = mockFn().returns(undefined)
-      const secondCapture = mockFn().returns([event])
+      const firstCapture = vi.fn().mockReturnValue(undefined)
+      const secondCapture = vi.fn().mockReturnValue([event])
       const txToCapture = mockObject<TxToCapture>({
         chain: 'base',
         tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
       })
       const creatorEvent = { ...makeInteropEvent(), plugin: 'wormhole' }
-      const getCreatorEvents = mockFn()
-        .returnsOnce(undefined)
-        .returnsOnce([creatorEvent])
+      const getCreatorEvents = vi
+        .fn()
+        .mockReturnValueOnce(undefined)
+        .mockReturnValueOnce([creatorEvent])
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -483,7 +495,7 @@ describe(InteropEventSyncer.name, () => {
         txToCapture.tx.hash,
         'wormhole',
       )
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         events: [{ ...event, plugin: 'wormhole' }],
         fulfilledCreatorEvents: [creatorEvent],
       })
@@ -491,13 +503,13 @@ describe(InteropEventSyncer.name, () => {
 
     it('stops at the first plugin that captures even if a later plugin has creator events', () => {
       const event = makeInteropEventNoPlugin()
-      const firstCapture = mockFn().returns([event])
-      const secondCapture = mockFn().returns([event])
+      const firstCapture = vi.fn().mockReturnValue([event])
+      const secondCapture = vi.fn().mockReturnValue([event])
       const txToCapture = mockObject<TxToCapture>({
         chain: 'base',
         tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
       })
-      const getCreatorEvents = mockFn().returns(undefined)
+      const getCreatorEvents = vi.fn().mockReturnValue(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -518,14 +530,14 @@ describe(InteropEventSyncer.name, () => {
       expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
       expect(secondCapture).not.toHaveBeenCalled()
       expect(getCreatorEvents).toHaveBeenCalledTimes(1)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         events: [{ ...event, plugin: 'across' }],
         fulfilledCreatorEvents: [],
       })
     })
 
     it('returns early when no plugin has captureTx', () => {
-      const getCreatorEvents = mockFn().returns(undefined)
+      const getCreatorEvents = vi.fn().mockReturnValue(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -540,7 +552,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureTx(mockObject<TxToCapture>({}))
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
       expect(getCreatorEvents).not.toHaveBeenCalled()
     })
   })
@@ -550,7 +562,7 @@ describe(InteropEventSyncer.name, () => {
     () => {
       it('captures pending txs that are older than the current block', async () => {
         const event = makeInteropEventNoPlugin()
-        const captureTx = mockFn().returns([event])
+        const captureTx = vi.fn().mockReturnValue([event])
         const txHash = '0x123'
         const syncer = createSyncer({
           cluster: makeCluster({
@@ -559,24 +571,28 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              getHashesPendingHistoryCheck: mockFn().returns([txHash]),
-              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
+              getHashesPendingHistoryCheck: vi.fn().mockReturnValue([txHash]),
+              getCreatorEvents: vi.fn().mockReturnValue([makeInteropEvent()]),
+              markCheckedInHistory: vi
+                .fn()
+                .mockReturnValue([makeInteropEvent()]),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
-            getTransactionByHash: mockFn().resolvesTo(
-              makeRpcTransaction({ hash: txHash, blockNumber: 9n }),
-            ),
-            getTransactionReceipt: mockFn().resolvesTo(makeRpcReceipt()),
-            getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(9n)),
+            getTransactionByHash: vi
+              .fn()
+              .mockResolvedValue(
+                makeRpcTransaction({ hash: txHash, blockNumber: 9n }),
+              ),
+            getTransactionReceipt: vi.fn().mockResolvedValue(makeRpcReceipt()),
+            getBlockByNumber: vi.fn().mockResolvedValue(makeRpcBlock(9n)),
           }),
         })
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
         expect(captureTx).toHaveBeenCalled()
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           events: [{ ...event, plugin: 'across' }],
           fulfilledCreatorEvents: [makeInteropEvent()],
           checkedInHistoryEvents: [makeInteropEvent()],
@@ -584,9 +600,11 @@ describe(InteropEventSyncer.name, () => {
       })
 
       it('ignores pending txs from the current block or later', async () => {
-        const captureTx = mockFn().returns(undefined)
-        const getTransactionReceipt = mockFn().resolvesTo(makeRpcReceipt())
-        const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(10n))
+        const captureTx = vi.fn().mockReturnValue(undefined)
+        const getTransactionReceipt = vi
+          .fn()
+          .mockResolvedValue(makeRpcReceipt())
+        const getBlockByNumber = vi.fn().mockResolvedValue(makeRpcBlock(10n))
         const syncer = createSyncer({
           cluster: makeCluster({
             name: 'clusterName',
@@ -594,15 +612,19 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              getHashesPendingHistoryCheck: mockFn().returns(['0x123']),
-              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
+              getHashesPendingHistoryCheck: vi.fn().mockReturnValue(['0x123']),
+              getCreatorEvents: vi.fn().mockReturnValue([makeInteropEvent()]),
+              markCheckedInHistory: vi
+                .fn()
+                .mockReturnValue([makeInteropEvent()]),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
-            getTransactionByHash: mockFn().resolvesTo(
-              makeRpcTransaction({ hash: '0x123', blockNumber: 10n }),
-            ),
+            getTransactionByHash: vi
+              .fn()
+              .mockResolvedValue(
+                makeRpcTransaction({ hash: '0x123', blockNumber: 10n }),
+              ),
             getTransactionReceipt,
             getBlockByNumber,
           }),
@@ -610,7 +632,7 @@ describe(InteropEventSyncer.name, () => {
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           events: [],
           fulfilledCreatorEvents: [],
           checkedInHistoryEvents: [makeInteropEvent()],
@@ -624,11 +646,11 @@ describe(InteropEventSyncer.name, () => {
 
   describe(InteropEventSyncer.prototype.saveProducedInteropEvents.name, () => {
     it('saves events and updates synced range in a transaction', async () => {
-      const saveNewEvents = mockFn().resolvesTo(undefined)
-      const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
-      const updateDerivedCheckedInHistory = mockFn().resolvesTo(undefined)
-      const upsert = mockFn().resolvesTo(undefined)
-      const setLastError = mockFn().resolvesTo(undefined)
+      const saveNewEvents = vi.fn().mockResolvedValue(undefined)
+      const updateDerivedFulfilled = vi.fn().mockResolvedValue(undefined)
+      const updateDerivedCheckedInHistory = vi.fn().mockResolvedValue(undefined)
+      const upsert = vi.fn().mockResolvedValue(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const fulfilledCreatorEvent = makeInteropEvent()
       const syncer = createSyncer({
         cluster: makeCluster({
@@ -660,7 +682,7 @@ describe(InteropEventSyncer.name, () => {
         [fulfilledCreatorEvent],
       )
 
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toStrictEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
       expect(updateDerivedFulfilled).toHaveBeenCalledWith([
         fulfilledCreatorEvent,
@@ -675,9 +697,9 @@ describe(InteropEventSyncer.name, () => {
     })
 
     it('writes only the range, outside a transaction, when there is nothing else to write', async () => {
-      const saveNewEvents = mockFn().resolvesTo(undefined)
-      const upsert = mockFn().resolvesTo(undefined)
-      const setLastError = mockFn().resolvesTo(undefined)
+      const saveNewEvents = vi.fn().mockResolvedValue(undefined)
+      const upsert = vi.fn().mockResolvedValue(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -685,8 +707,8 @@ describe(InteropEventSyncer.name, () => {
         }),
         store: mockObject<InteropEventStore>({
           saveNewEvents,
-          updateDerivedFulfilled: mockFn().resolvesTo(undefined),
-          updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
+          updateDerivedFulfilled: vi.fn().mockResolvedValue(undefined),
+          updateDerivedCheckedInHistory: vi.fn().mockResolvedValue(undefined),
         }),
         db: mockObject<Database>({
           interopPluginSyncedRange: mockObject<
@@ -704,13 +726,13 @@ describe(InteropEventSyncer.name, () => {
 
       // a stored error may exist after start-up, so the first save clears it
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toStrictEqual(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
 
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
 
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toStrictEqual(1)
       expect(saveNewEvents).toHaveBeenCalledTimes(1)
       expect(setLastError).toHaveBeenCalledTimes(1)
       expect(upsert).toHaveBeenCalledTimes(3)
@@ -720,17 +742,17 @@ describe(InteropEventSyncer.name, () => {
         [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
       )
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toStrictEqual(2)
 
       // so does a stored error
       await syncer.saveChainSyncError(new Error('boom'))
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(3)
-      expect(setLastError.calls.at(-1)?.args[2]).toEqual(null)
+      expect(syncer.runInTransactionCalls).toStrictEqual(3)
+      expect(setLastError.mock.calls.at(-1)?.[2]).toStrictEqual(null)
     })
 
     it('still considers the error stored when the transaction rolls back after the clear', async () => {
-      const setLastError = mockFn().resolvesTo(undefined)
+      const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -740,7 +762,7 @@ describe(InteropEventSyncer.name, () => {
           interopPluginSyncedRange: mockObject<
             Database['interopPluginSyncedRange']
           >({
-            upsert: mockFn().resolvesTo(undefined),
+            upsert: vi.fn().mockResolvedValue(undefined),
           }),
           interopPluginSyncState: mockObject<
             Database['interopPluginSyncState']
@@ -753,18 +775,18 @@ describe(InteropEventSyncer.name, () => {
       syncer.failNextCommit = true
       await expect(
         syncer.saveProducedInteropEvents([], makeSyncedRange()),
-      ).toBeRejectedWith('commit failed')
+      ).rejects.toThrow('commit failed')
       expect(setLastError).toHaveBeenCalledTimes(1)
 
       // the clear was rolled back with the transaction, so it is written again
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toStrictEqual(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
-      expect(setLastError.calls[1]?.args[2]).toEqual(null)
+      expect(setLastError.mock.calls[1][2]).toStrictEqual(null)
 
       // and only now is it considered cleared
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toStrictEqual(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
     })
   })
@@ -776,14 +798,14 @@ describe(InteropEventSyncer.name, () => {
           interopPluginSyncState: mockObject<
             Database['interopPluginSyncState']
           >({
-            findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+            findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
           }),
         }),
       })
 
       const result = await syncer.getResyncState()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         resyncFrom: undefined,
         wipeRequired: false,
       })
@@ -795,7 +817,7 @@ describe(InteropEventSyncer.name, () => {
           interopPluginSyncState: mockObject<
             Database['interopPluginSyncState']
           >({
-            findByPluginNameAndChain: mockFn().resolvesTo({
+            findByPluginNameAndChain: vi.fn().mockResolvedValue({
               resyncRequestedFrom: UnixTime(123),
               wipeRequired: true,
             }),
@@ -805,7 +827,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = await syncer.getResyncState()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         resyncFrom: UnixTime(123),
         wipeRequired: true,
       })
@@ -847,17 +869,21 @@ describe(InteropEventSyncer.name, () => {
       }
       expect(
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
-      ).toEqual(true)
+      ).toStrictEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
-      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(Array.from(query.topic0s)).toStrictEqual([
+        toEventSelector(signature),
+      ])
       expect(
         Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
-      ).toEqual([
+      ).toStrictEqual([
         toEventSelector(extraSignature),
         toEventSelector(extraSignatureTwo),
       ])
-      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
-      expect(query.isEmpty()).toEqual(false)
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toStrictEqual(
+        true,
+      )
+      expect(query.isEmpty()).toStrictEqual(false)
     })
 
     it('includes topics without address filter when addresses are wildcard', () => {
@@ -877,9 +903,11 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
-      expect(query.addresses).toEqual('*')
-      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
-      expect(query.isEmpty()).toEqual(false)
+      expect(query.addresses).toStrictEqual('*')
+      expect(Array.from(query.topic0s)).toStrictEqual([
+        toEventSelector(signature),
+      ])
+      expect(query.isEmpty()).toStrictEqual(false)
     })
 
     it('is empty when no addresses match the chain', () => {
@@ -906,10 +934,10 @@ describe(InteropEventSyncer.name, () => {
       if (query.addresses === '*') {
         throw new Error('Expected address filter to be a set')
       }
-      expect(query.isEmpty()).toEqual(true)
+      expect(query.isEmpty()).toStrictEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
-      expect(query.topicToTxEvents.size).toEqual(0)
+      expect(query.topicToTxEvents.size).toStrictEqual(0)
     })
 
     it('throws when addresses list is empty', () => {
@@ -971,14 +999,16 @@ describe(InteropEventSyncer.name, () => {
       if (query.addresses === '*') {
         throw new Error('Expected address filter to be a set')
       }
-      expect(Array.from(query.addresses)).toEqual([
+      expect(Array.from(query.addresses)).toStrictEqual([
         ChainSpecificAddress.address(ethAddressA),
         ChainSpecificAddress.address(ethAddressB),
       ])
-      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(Array.from(query.topic0s)).toStrictEqual([
+        toEventSelector(signature),
+      ])
       expect(
         Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
-      ).toEqual([
+      ).toStrictEqual([
         toEventSelector(extraSignatureA),
         toEventSelector(extraSignatureB),
       ])
@@ -989,13 +1019,15 @@ describe(InteropEventSyncer.name, () => {
     it('returns last synced range and oldest event', async () => {
       const lastRange = makeSyncedRangeRecord()
       const oldestEvent = makeInteropEventRecord()
-      const getOldestEventForPluginAndChain = mockFn().resolvesTo(oldestEvent)
+      const getOldestEventForPluginAndChain = vi
+        .fn()
+        .mockResolvedValue(oldestEvent)
       const syncer = createSyncer({
         db: mockObject<Database>({
           interopPluginSyncedRange: mockObject<
             Database['interopPluginSyncedRange']
           >({
-            findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
+            findByPluginNameAndChain: vi.fn().mockResolvedValue(lastRange),
           }),
           interopEvent: mockObject<Database['interopEvent']>({
             getOldestEventForPluginAndChain,
@@ -1006,8 +1038,8 @@ describe(InteropEventSyncer.name, () => {
       const resultRange = await syncer.getLastSyncedRange()
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
 
-      expect(resultRange).toEqual(lastRange)
-      expect(resultEvent).toEqual(oldestEvent)
+      expect(resultRange).toStrictEqual(lastRange)
+      expect(resultEvent).toStrictEqual(oldestEvent)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
         ['across'],
@@ -1017,7 +1049,7 @@ describe(InteropEventSyncer.name, () => {
 
     it('returns the oldest event for cluster plugin names', async () => {
       const eventA = makeInteropEventRecord({ timestamp: UnixTime(5) })
-      const getOldestEventForPluginAndChain = mockFn().resolvesTo(eventA)
+      const getOldestEventForPluginAndChain = vi.fn().mockResolvedValue(eventA)
 
       const syncer = createSyncer({
         cluster: makeCluster({
@@ -1036,7 +1068,7 @@ describe(InteropEventSyncer.name, () => {
 
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
 
-      expect(resultEvent).toEqual(eventA)
+      expect(resultEvent).toStrictEqual(eventA)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
         ['across', 'wormhole'],
@@ -1047,13 +1079,13 @@ describe(InteropEventSyncer.name, () => {
 
   describe('rpc wrapper methods', () => {
     it('passes through getBlockByNumber, getLogs, getTransactionReceipt, and getTransactionByHash', async () => {
-      const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
+      const getBlockByNumber = vi.fn().mockResolvedValue(makeRpcBlock(5n))
       const log = makeRpcLog()
-      const getLogs = mockFn().resolvesTo([log])
+      const getLogs = vi.fn().mockResolvedValue([log])
       const receipt = makeRpcReceipt()
-      const getTransactionReceipt = mockFn().resolvesTo(receipt)
+      const getTransactionReceipt = vi.fn().mockResolvedValue(receipt)
       const transaction = makeRpcTransaction()
-      const getTransactionByHash = mockFn().resolvesTo(transaction)
+      const getTransactionByHash = vi.fn().mockResolvedValue(transaction)
       const syncer = createSyncer({
         rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
           getBlockByNumber,
@@ -1073,10 +1105,10 @@ describe(InteropEventSyncer.name, () => {
       const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
       const tx = await syncer.getTransactionByHash(ZERO_HASH)
 
-      expect(block).toEqual(makeRpcBlock(5n))
-      expect(logs).toEqual([log])
-      expect(txReceipt).toEqual(receipt)
-      expect(tx).toEqual(transaction)
+      expect(block).toStrictEqual(makeRpcBlock(5n))
+      expect(logs).toStrictEqual([log])
+      expect(txReceipt).toStrictEqual(receipt)
+      expect(tx).toStrictEqual(transaction)
     })
   })
 })
@@ -1144,7 +1176,7 @@ function makePlugin(
 ): InteropPluginResyncable {
   return {
     name: params.name ?? 'across',
-    capture: params.capture ?? mockFn().returns(undefined),
+    capture: params.capture ?? vi.fn().mockReturnValue(undefined),
     captureTx: params.captureTx,
     getDataRequests: () => params.dataRequests ?? [],
   }
@@ -1152,26 +1184,26 @@ function makePlugin(
 
 function makeTimeLoopState(): {
   state: TimeloopState
-  run: ReturnType<typeof mockFn>
+  run: ReturnType<typeof vi.fn>
 } {
-  const run = mockFn<[], Promise<SyncerState>>()
+  const run = vi.fn<() => Promise<SyncerState>>()
   const state: TimeloopState = {
     type: 'timeLoop',
     name: 'timeLoop',
     status: 'idle',
     run,
   }
-  run.resolvesTo(state)
+  run.mockResolvedValue(state)
   return { state, run }
 }
 
 function makeBlockProcessorState(resultState?: SyncerState): {
   state: BlockProcessorState
-  checkStatus: ReturnType<typeof mockFn>
-  processNewestBlock: ReturnType<typeof mockFn>
+  checkStatus: ReturnType<typeof vi.fn>
+  processNewestBlock: ReturnType<typeof vi.fn>
 } {
-  const checkStatus = mockFn<[], Promise<SyncerState>>()
-  const processNewestBlock = mockFn<[], Promise<SyncerState>>()
+  const checkStatus = vi.fn<() => Promise<SyncerState>>()
+  const processNewestBlock = vi.fn<() => Promise<SyncerState>>()
   const state: BlockProcessorState = {
     type: 'blockProcessor',
     name: 'blockProcessor',
@@ -1179,8 +1211,8 @@ function makeBlockProcessorState(resultState?: SyncerState): {
     checkStatus,
     processNewestBlock,
   }
-  checkStatus.resolvesTo(resultState ?? state)
-  processNewestBlock.resolvesTo(resultState ?? state)
+  checkStatus.mockResolvedValue(resultState ?? state)
+  processNewestBlock.mockResolvedValue(resultState ?? state)
   return { state, checkStatus, processNewestBlock }
 }
 
@@ -1326,48 +1358,50 @@ function makeRpcTransaction(
 
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
   return mockObject<InteropEventSyncer['rpcClient']>({
-    getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(1n)),
-    getLogs: mockFn().resolvesTo([]),
-    getTransactionReceipt: mockFn().resolvesTo(null),
-    getTransactionByHash: mockFn().resolvesTo(null),
+    getBlockByNumber: vi.fn().mockResolvedValue(makeRpcBlock(1n)),
+    getLogs: vi.fn().mockResolvedValue([]),
+    getTransactionReceipt: vi.fn().mockResolvedValue(null),
+    getTransactionByHash: vi.fn().mockResolvedValue(null),
   })
 }
 
 function mockStore() {
   return mockObject<InteropEventStore>({
-    saveNewEvents: mockFn().resolvesTo(undefined),
-    updateDerivedFulfilled: mockFn().resolvesTo(undefined),
-    updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
-    deleteAllForPlugin: mockFn().resolvesTo(undefined),
+    saveNewEvents: vi.fn().mockResolvedValue(undefined),
+    updateDerivedFulfilled: vi.fn().mockResolvedValue(undefined),
+    updateDerivedCheckedInHistory: vi.fn().mockResolvedValue(undefined),
+    deleteAllForPlugin: vi.fn().mockResolvedValue(undefined),
     derivedTxStore: mockObject<DerivedTxStore>({
-      getCreatorEvents: mockFn().returns(undefined),
-      getHashesPendingHistoryCheck: mockFn().returns([]),
-      markCheckedInHistory: mockFn().returns([]),
+      getCreatorEvents: vi.fn().mockReturnValue(undefined),
+      getHashesPendingHistoryCheck: vi.fn().mockReturnValue([]),
+      markCheckedInHistory: vi.fn().mockReturnValue([]),
     }),
   })
 }
 
 function mockDb(): Database {
   return mockObject<Database>({
-    transaction: mockFn().executes(async (cb) => await cb()),
+    transaction: vi.fn().mockImplementation(async (cb) => await cb()),
     interopPluginSyncedRange: mockObject<Database['interopPluginSyncedRange']>({
-      findByPluginNameAndChain: mockFn().resolvesTo(makeSyncedRangeRecord()),
-      upsert: mockFn().resolvesTo(undefined),
+      findByPluginNameAndChain: vi
+        .fn()
+        .mockResolvedValue(makeSyncedRangeRecord()),
+      upsert: vi.fn().mockResolvedValue(undefined),
     }),
     interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
-      setLastError: mockFn().resolvesTo(undefined),
-      findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+      setLastError: vi.fn().mockResolvedValue(undefined),
+      findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
     }),
     interopEvent: mockObject<Database['interopEvent']>({
-      getOldestEventForPluginAndChain: mockFn().resolvesTo(
-        makeInteropEventRecord(),
-      ),
+      getOldestEventForPluginAndChain: vi
+        .fn()
+        .mockResolvedValue(makeInteropEventRecord()),
     }),
     interopMessage: mockObject<Database['interopMessage']>({
-      deleteForPlugin: mockFn().resolvesTo(undefined),
+      deleteForPlugin: vi.fn().mockResolvedValue(undefined),
     }),
     interopTransfer: mockObject<Database['interopTransfer']>({
-      deleteForPlugin: mockFn().resolvesTo(undefined),
+      deleteForPlugin: vi.fn().mockResolvedValue(undefined),
     }),
   })
 }

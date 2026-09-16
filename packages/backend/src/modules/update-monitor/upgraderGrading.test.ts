@@ -14,7 +14,8 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 
@@ -87,7 +88,7 @@ describe('UpdateDiffer upgrader grading', () => {
       it(`${label}${reference ? ' with a Reference entry' : ''}`, () => {
         const differ = new UpdateDiffer(
           mockObject<ConfigReader>({
-            readDiscovery: mockFn().returns({ entries: [] }),
+            readDiscovery: vi.fn().mockReturnValue({ entries: [] }),
           }),
           mockObject<Database>({}),
           mockObject<DiscoveryOutputCache>({}),
@@ -110,7 +111,7 @@ describe('UpdateDiffer upgrader grading', () => {
 
         expect(
           records.some((r) => r.type === 'ultimateUpgraderChange'),
-        ).toEqual(expected)
+        ).toStrictEqual(expected)
       })
     }
   }

@@ -6,8 +6,9 @@ import type {
   TokenValueRecord,
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { expect, mockFn, mockObject } from 'earl'
+import { describe, expect, it, type Mock, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import {
   getLargestProtocolVolumeIncrease,
@@ -132,38 +133,45 @@ describe(createHighlightsRouter.name, () => {
     ]
     const olderTvs = [tvsRecord('optimism', olderTimestamp, 4_000_000_000)]
 
-    const getAbstractTokenById = mockFn().resolvesTo({
+    const getAbstractTokenById = vi.fn().mockResolvedValue({
       id: '9HN5PN',
       symbol: 'USDC',
       issuer: 'circle',
       iconUrl: 'https://example.com/usdc.png',
     })
-    const getTransferByTimestamp = mockFn()
-      .resolvesToOnce(currentTransfers)
-      .resolvesToOnce(previousTransfers)
-      .resolvesTo([])
-    const getTransferMaxTimestampAtOrBefore =
-      mockFn().resolvesTo(previousTimestamp)
-    const getTokenByTimestamp = mockFn()
-      .resolvesToOnce(currentTokens)
-      .resolvesToOnce(previousTokens)
-      .resolvesTo([])
-    const getActivityMaxTimestampAtOrBeforeForProjects =
-      mockFn().resolvesTo(latestTimestamp)
-    const getActivityByTimestamp = mockFn()
-      .resolvesToOnce(currentActivity)
-      .resolvesToOnce(previousActivity)
-      .resolvesToOnce(olderActivity)
-      .resolvesTo([])
-    const getTvsMaxTimestampAtOrBeforeForProjects = mockFn()
-      .resolvesToOnce(latestTimestamp)
-      .resolvesToOnce(previousTimestamp)
-      .resolvesToOnce(olderTimestamp)
-    const getTvsByTimestamp = mockFn()
-      .resolvesToOnce(currentTvs)
-      .resolvesToOnce(previousTvs)
-      .resolvesToOnce(olderTvs)
-      .resolvesTo([])
+    const getTransferByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTransfers)
+      .mockResolvedValueOnce(previousTransfers)
+      .mockResolvedValue([])
+    const getTransferMaxTimestampAtOrBefore = vi
+      .fn()
+      .mockResolvedValue(previousTimestamp)
+    const getTokenByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTokens)
+      .mockResolvedValueOnce(previousTokens)
+      .mockResolvedValue([])
+    const getActivityMaxTimestampAtOrBeforeForProjects = vi
+      .fn()
+      .mockResolvedValue(latestTimestamp)
+    const getActivityByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentActivity)
+      .mockResolvedValueOnce(previousActivity)
+      .mockResolvedValueOnce(olderActivity)
+      .mockResolvedValue([])
+    const getTvsMaxTimestampAtOrBeforeForProjects = vi
+      .fn()
+      .mockResolvedValueOnce(latestTimestamp)
+      .mockResolvedValueOnce(previousTimestamp)
+      .mockResolvedValueOnce(olderTimestamp)
+    const getTvsByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTvs)
+      .mockResolvedValueOnce(previousTvs)
+      .mockResolvedValueOnce(olderTvs)
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
@@ -242,7 +250,7 @@ describe(createHighlightsRouter.name, () => {
     expect(getActivityByTimestamp).toHaveBeenCalledWith(olderTimestamp)
     expect(getTvsByTimestamp).toHaveBeenCalledWith(latestTimestamp)
     expect(getAbstractTokenById).toHaveBeenCalledWith('9HN5PN')
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       topPathByVolume: topPath
         ? {
             windowStart: comparisonWindow.windowStart,
@@ -323,44 +331,54 @@ describe(createHighlightsRouter.name, () => {
     const previousTimestamp = latestTimestamp - UnixTime.DAY
     const olderTimestamp = previousTimestamp - UnixTime.DAY
 
-    const getActivityByTimestamp = mockFn()
-      .resolvesToOnce([
+    const getActivityByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
         activityRecord('optimism', latestTimestamp, 2000),
         activityRecord('ethereum', latestTimestamp, 50),
       ])
-      .resolvesToOnce([
+      .mockResolvedValueOnce([
         activityRecord('optimism', previousTimestamp, 1000),
         activityRecord('ethereum', previousTimestamp, 20),
       ])
-      .resolvesToOnce([
+      .mockResolvedValueOnce([
         activityRecord('optimism', olderTimestamp, 900),
         activityRecord('ethereum', olderTimestamp, 18),
       ])
-      .resolvesTo([])
-    const getTvsByTimestamp = mockFn()
-      .resolvesToOnce([tvsRecord('optimism', latestTimestamp, 9_000_000_000)])
-      .resolvesToOnce([tvsRecord('optimism', previousTimestamp, 1_000_000_000)])
-      .resolvesToOnce([tvsRecord('optimism', olderTimestamp, 900_000_000)])
-      .resolvesTo([])
+      .mockResolvedValue([])
+    const getTvsByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
+        tvsRecord('optimism', latestTimestamp, 9_000_000_000),
+      ])
+      .mockResolvedValueOnce([
+        tvsRecord('optimism', previousTimestamp, 1_000_000_000),
+      ])
+      .mockResolvedValueOnce([
+        tvsRecord('optimism', olderTimestamp, 900_000_000),
+      ])
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBeforeForProjects:
-        mockFn().resolvesTo(latestTimestamp),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
+      getActivityMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValue(latestTimestamp),
       getActivityByTimestamp,
-      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
-        .resolvesToOnce(latestTimestamp)
-        .resolvesToOnce(previousTimestamp)
-        .resolvesToOnce(olderTimestamp),
+      getTvsMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValueOnce(latestTimestamp)
+        .mockResolvedValueOnce(previousTimestamp)
+        .mockResolvedValueOnce(olderTimestamp),
       getTvsByTimestamp,
       chains: [{ id: 'ethereum', type: 'evm' }],
     })
 
     const result = await caller.latest()
 
-    expect(result.largestUopsIncreaseByChain).toEqual({
+    expect(result.largestUopsIncreaseByChain).toStrictEqual({
       windowStart: latestTimestamp,
       windowEnd: latestTimestamp + UnixTime.DAY,
       previousWindowStart: latestTimestamp - UnixTime.DAY,
@@ -371,7 +389,7 @@ describe(createHighlightsRouter.name, () => {
       increase: 30,
       increasePercent: 150,
     })
-    expect(result.largestTvsIncreaseByChain).toEqual(null)
+    expect(result.largestTvsIncreaseByChain).toStrictEqual(null)
   })
 
   it('uses configured interop projects when selecting UOPS timestamp', async () => {
@@ -395,7 +413,7 @@ describe(createHighlightsRouter.name, () => {
         [activityRecord('ethereum', olderActivityTimestamp, 18)],
       ],
     ])
-    const getActivityMaxTimestampAtOrBeforeForProjects = mockFn(
+    const getActivityMaxTimestampAtOrBeforeForProjects = vi.fn(
       (_timestamp: UnixTime, projectIds: readonly string[]) => {
         return Promise.resolve(
           projectIds.includes('ethereum')
@@ -404,14 +422,14 @@ describe(createHighlightsRouter.name, () => {
         )
       },
     )
-    const getActivityByTimestamp = mockFn((timestamp: UnixTime) =>
+    const getActivityByTimestamp = vi.fn((timestamp: UnixTime) =>
       Promise.resolve(activityByTimestamp.get(timestamp) ?? []),
     )
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
       getActivityMaxTimestampAtOrBeforeForProjects,
       getActivityByTimestamp,
       chains: [{ id: 'ethereum', type: 'evm' }],
@@ -423,7 +441,7 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       ['ethereum'],
     )
-    expect(result.largestUopsIncreaseByChain).toEqual({
+    expect(result.largestUopsIncreaseByChain).toStrictEqual({
       windowStart: currentActivityTimestamp,
       windowEnd: currentActivityTimestamp + UnixTime.DAY,
       previousWindowStart: previousActivityTimestamp,
@@ -457,7 +475,7 @@ describe(createHighlightsRouter.name, () => {
         [tvsRecord('ethereum', olderTvsTimestamp, 3_000_000_000)],
       ],
     ])
-    const getTvsMaxTimestampAtOrBeforeForProjects = mockFn(
+    const getTvsMaxTimestampAtOrBeforeForProjects = vi.fn(
       (timestamp: UnixTime, projectIds: readonly string[]) => {
         if (projectIds.includes('ethereum')) {
           if (timestamp >= currentTvsTimestamp) {
@@ -475,14 +493,14 @@ describe(createHighlightsRouter.name, () => {
         return Promise.resolve(undefined)
       },
     )
-    const getTvsByTimestamp = mockFn((timestamp: UnixTime) =>
+    const getTvsByTimestamp = vi.fn((timestamp: UnixTime) =>
       Promise.resolve(tvsByTimestamp.get(timestamp) ?? []),
     )
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
       getTvsMaxTimestampAtOrBeforeForProjects,
       getTvsByTimestamp,
       chains: [{ id: 'ethereum', type: 'evm' }],
@@ -502,7 +520,7 @@ describe(createHighlightsRouter.name, () => {
       previousTvsTimestamp - UnixTime.DAY,
       ['ethereum'],
     )
-    expect(result.largestTvsIncreaseByChain).toEqual({
+    expect(result.largestTvsIncreaseByChain).toStrictEqual({
       windowStart: currentTvsTimestamp - UnixTime.DAY,
       windowEnd: currentTvsTimestamp,
       previousWindowStart: previousTvsTimestamp - UnixTime.DAY,
@@ -520,21 +538,26 @@ describe(createHighlightsRouter.name, () => {
     const previousActivityTimestamp = today - 2 * UnixTime.DAY
     const olderActivityTimestamp = today - 3 * UnixTime.DAY
 
-    const getActivityByTimestamp = mockFn()
-      .resolvesToOnce([
+    const getActivityByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
         activityRecord('ethereum', currentActivityTimestamp, 50),
       ])
-      .resolvesToOnce([
+      .mockResolvedValueOnce([
         activityRecord('ethereum', previousActivityTimestamp, 20),
       ])
-      .resolvesToOnce([activityRecord('ethereum', olderActivityTimestamp, 18)])
-      .resolvesTo([])
+      .mockResolvedValueOnce([
+        activityRecord('ethereum', olderActivityTimestamp, 18),
+      ])
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp: today,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBeforeForProjects: mockFn().resolvesTo(today),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
+      getActivityMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValue(today),
       getActivityByTimestamp,
     })
 
@@ -548,7 +571,7 @@ describe(createHighlightsRouter.name, () => {
     )
     expect(getActivityByTimestamp).toHaveBeenCalledWith(olderActivityTimestamp)
     expect(getActivityByTimestamp).not.toHaveBeenCalledWith(today)
-    expect(result.largestUopsIncreaseByChain).toEqual({
+    expect(result.largestUopsIncreaseByChain).toStrictEqual({
       windowStart: currentActivityTimestamp,
       windowEnd: today,
       previousWindowStart: previousActivityTimestamp,
@@ -566,39 +589,51 @@ describe(createHighlightsRouter.name, () => {
     const previousTimestamp = latestTimestamp - UnixTime.DAY
     const olderTimestamp = previousTimestamp - UnixTime.DAY
 
-    const getActivityByTimestamp = mockFn()
-      .resolvesToOnce([activityRecord('polygon-pos', latestTimestamp, 90)])
-      .resolvesToOnce([activityRecord('polygon-pos', previousTimestamp, 30)])
-      .resolvesToOnce([activityRecord('polygon-pos', olderTimestamp, 20)])
-      .resolvesTo([])
-    const getTvsByTimestamp = mockFn()
-      .resolvesToOnce([
+    const getActivityByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
+        activityRecord('polygon-pos', latestTimestamp, 90),
+      ])
+      .mockResolvedValueOnce([
+        activityRecord('polygon-pos', previousTimestamp, 30),
+      ])
+      .mockResolvedValueOnce([
+        activityRecord('polygon-pos', olderTimestamp, 20),
+      ])
+      .mockResolvedValue([])
+    const getTvsByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
         tvsRecord('polygon-pos', latestTimestamp, 5_000_000_000),
       ])
-      .resolvesToOnce([
+      .mockResolvedValueOnce([
         tvsRecord('polygon-pos', previousTimestamp, 4_000_000_000),
       ])
-      .resolvesToOnce([tvsRecord('polygon-pos', olderTimestamp, 3_000_000_000)])
-      .resolvesTo([])
+      .mockResolvedValueOnce([
+        tvsRecord('polygon-pos', olderTimestamp, 3_000_000_000),
+      ])
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBeforeForProjects:
-        mockFn().resolvesTo(latestTimestamp),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
+      getActivityMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValue(latestTimestamp),
       getActivityByTimestamp,
-      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
-        .resolvesToOnce(latestTimestamp)
-        .resolvesToOnce(previousTimestamp)
-        .resolvesToOnce(olderTimestamp),
+      getTvsMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValueOnce(latestTimestamp)
+        .mockResolvedValueOnce(previousTimestamp)
+        .mockResolvedValueOnce(olderTimestamp),
       getTvsByTimestamp,
       chains: [{ id: 'polygonpos', type: 'evm' }],
     })
 
     const result = await caller.latest()
 
-    expect(result.largestUopsIncreaseByChain).toEqual({
+    expect(result.largestUopsIncreaseByChain).toStrictEqual({
       windowStart: latestTimestamp,
       windowEnd: latestTimestamp + UnixTime.DAY,
       previousWindowStart: latestTimestamp - UnixTime.DAY,
@@ -609,7 +644,7 @@ describe(createHighlightsRouter.name, () => {
       increase: 60,
       increasePercent: 200,
     })
-    expect(result.largestTvsIncreaseByChain).toEqual({
+    expect(result.largestTvsIncreaseByChain).toStrictEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
@@ -627,28 +662,34 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp - UnixTime.DAY - UnixTime.HOUR
     const olderTimestamp = fallbackPreviousTimestamp - UnixTime.DAY
 
-    const getTvsByTimestamp = mockFn()
-      .resolvesToOnce([tvsRecord('optimism', latestTimestamp, 5_000_000_000)])
-      .resolvesToOnce([
+    const getTvsByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce([
+        tvsRecord('optimism', latestTimestamp, 5_000_000_000),
+      ])
+      .mockResolvedValueOnce([
         tvsRecord('optimism', fallbackPreviousTimestamp, 4_000_000_000),
       ])
-      .resolvesToOnce([tvsRecord('optimism', olderTimestamp, 3_000_000_000)])
-      .resolvesTo([])
+      .mockResolvedValueOnce([
+        tvsRecord('optimism', olderTimestamp, 3_000_000_000),
+      ])
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferByTimestamp: mockFn().resolvesTo([]),
-      getTokenByTimestamp: mockFn().resolvesTo([]),
-      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
-        .resolvesToOnce(latestTimestamp)
-        .resolvesToOnce(fallbackPreviousTimestamp)
-        .resolvesToOnce(olderTimestamp),
+      getTransferByTimestamp: vi.fn().mockResolvedValue([]),
+      getTokenByTimestamp: vi.fn().mockResolvedValue([]),
+      getTvsMaxTimestampAtOrBeforeForProjects: vi
+        .fn()
+        .mockResolvedValueOnce(latestTimestamp)
+        .mockResolvedValueOnce(fallbackPreviousTimestamp)
+        .mockResolvedValueOnce(olderTimestamp),
       getTvsByTimestamp,
     })
 
     const result = await caller.latest()
 
-    expect(result.largestTvsIncreaseByChain).toEqual({
+    expect(result.largestTvsIncreaseByChain).toStrictEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -661,10 +702,10 @@ describe(createHighlightsRouter.name, () => {
   })
 
   it('returns empty metrics when no snapshots exist', async () => {
-    const getTransferByTimestamp = mockFn()
-    const getTokenByTimestamp = mockFn()
-    const getActivityByTimestamp = mockFn()
-    const getTvsByTimestamp = mockFn()
+    const getTransferByTimestamp = vi.fn()
+    const getTokenByTimestamp = vi.fn()
+    const getActivityByTimestamp = vi.fn()
+    const getTvsByTimestamp = vi.fn()
     const caller = createCaller({
       latestTimestamp: undefined,
       getTransferByTimestamp,
@@ -679,7 +720,7 @@ describe(createHighlightsRouter.name, () => {
     expect(getTokenByTimestamp).not.toHaveBeenCalled()
     expect(getActivityByTimestamp).not.toHaveBeenCalled()
     expect(getTvsByTimestamp).not.toHaveBeenCalled()
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       topPathByVolume: null,
       topChainByInflow: null,
       largestVolumeIncreaseByChain: null,
@@ -764,20 +805,22 @@ describe(createHighlightsRouter.name, () => {
       }),
     ]
 
-    const getTransferByTimestamp = mockFn()
-      .resolvesToOnce(currentTransfers)
-      .resolvesToOnce(previousTransfers)
-      .resolvesTo([])
-    const getTokenByTimestamp = mockFn()
-      .resolvesToOnce(currentTokens)
-      .resolvesToOnce(previousTokens)
-      .resolvesTo([])
+    const getTransferByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTransfers)
+      .mockResolvedValueOnce(previousTransfers)
+      .mockResolvedValue([])
+    const getTokenByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTokens)
+      .mockResolvedValueOnce(previousTokens)
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferMaxTimestampAtOrBefore: mockFn().resolvesTo(
-        fallbackPreviousTimestamp,
-      ),
+      getTransferMaxTimestampAtOrBefore: vi
+        .fn()
+        .mockResolvedValue(fallbackPreviousTimestamp),
       getTransferByTimestamp,
       getTokenByTimestamp,
     })
@@ -790,7 +833,7 @@ describe(createHighlightsRouter.name, () => {
     )
     expect(getTokenByTimestamp).toHaveBeenCalledWith(latestTimestamp)
     expect(getTokenByTimestamp).toHaveBeenCalledWith(fallbackPreviousTimestamp)
-    expect(result.largestVolumeIncreaseByChain).toEqual({
+    expect(result.largestVolumeIncreaseByChain).toStrictEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -800,7 +843,7 @@ describe(createHighlightsRouter.name, () => {
       previousVolumeUsd: 20,
       increaseUsd: 80,
     })
-    expect(result.largestVolumeIncreaseByToken).toEqual({
+    expect(result.largestVolumeIncreaseByToken).toStrictEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -815,7 +858,7 @@ describe(createHighlightsRouter.name, () => {
       previousVolumeUsd: 20,
       increaseUsd: 80,
     })
-    expect(result.largestVolumeIncreaseByProtocol).toEqual({
+    expect(result.largestVolumeIncreaseByProtocol).toStrictEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -848,16 +891,18 @@ describe(createHighlightsRouter.name, () => {
         volume: 100,
       }),
     ]
-    const getTransferByTimestamp = mockFn()
-      .resolvesToOnce(currentTransfers)
-      .resolvesTo([])
-    const getTokenByTimestamp = mockFn()
-      .resolvesToOnce(currentTokens)
-      .resolvesTo([])
+    const getTransferByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTransfers)
+      .mockResolvedValue([])
+    const getTokenByTimestamp = vi
+      .fn()
+      .mockResolvedValueOnce(currentTokens)
+      .mockResolvedValue([])
 
     const caller = createCaller({
       latestTimestamp,
-      getTransferMaxTimestampAtOrBefore: mockFn().resolvesTo(undefined),
+      getTransferMaxTimestampAtOrBefore: vi.fn().mockResolvedValue(undefined),
       getTransferByTimestamp,
       getTokenByTimestamp,
     })
@@ -866,22 +911,22 @@ describe(createHighlightsRouter.name, () => {
 
     expect(getTransferByTimestamp).not.toHaveBeenCalled()
     expect(getTokenByTimestamp).not.toHaveBeenCalled()
-    expect(result.largestVolumeIncreaseByChain).toEqual(null)
-    expect(result.largestVolumeIncreaseByToken).toEqual(null)
-    expect(result.largestVolumeIncreaseByProtocol).toEqual(null)
+    expect(result.largestVolumeIncreaseByChain).toStrictEqual(null)
+    expect(result.largestVolumeIncreaseByToken).toStrictEqual(null)
+    expect(result.largestVolumeIncreaseByProtocol).toStrictEqual(null)
   })
 })
 
 function createCaller(options: {
   latestTimestamp: UnixTime | undefined
-  getTransferMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
-  getTransferByTimestamp?: ReturnType<typeof mockFn>
-  getTokenByTimestamp?: ReturnType<typeof mockFn>
-  getActivityMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
-  getActivityByTimestamp?: ReturnType<typeof mockFn>
-  getTvsMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
-  getTvsByTimestamp?: ReturnType<typeof mockFn>
-  getAbstractTokenById?: ReturnType<typeof mockFn>
+  getTransferMaxTimestampAtOrBefore?: Mock
+  getTransferByTimestamp?: Mock
+  getTokenByTimestamp?: Mock
+  getActivityMaxTimestampAtOrBeforeForProjects?: Mock
+  getActivityByTimestamp?: Mock
+  getTvsMaxTimestampAtOrBeforeForProjects?: Mock
+  getTvsByTimestamp?: Mock
+  getAbstractTokenById?: Mock
   chains?: readonly { id: string; type: 'evm' }[]
 }) {
   const callerFactory = createCallerFactory(
@@ -891,7 +936,8 @@ function createCaller(options: {
         abstractTokens: mockObject<TokenDbClient['abstractTokens']>({
           getById: mockObject<TokenDbClient['abstractTokens']['getById']>({
             query:
-              options.getAbstractTokenById ?? mockFn().resolvesTo(undefined),
+              options.getAbstractTokenById ??
+              vi.fn().mockResolvedValue(undefined),
           }),
         }),
       }),
@@ -903,28 +949,30 @@ function createCaller(options: {
       aggregatedInteropTransfer: mockObject<
         Database['aggregatedInteropTransfer']
       >({
-        getLatestTimestamp: mockFn().resolvesTo(options.latestTimestamp),
+        getLatestTimestamp: vi.fn().mockResolvedValue(options.latestTimestamp),
         getMaxTimestampAtOrBefore:
           options.getTransferMaxTimestampAtOrBefore ??
-          mockFn().resolvesTo(undefined),
+          vi.fn().mockResolvedValue(undefined),
         getByTimestamp:
-          options.getTransferByTimestamp ?? mockFn().resolvesTo([]),
+          options.getTransferByTimestamp ?? vi.fn().mockResolvedValue([]),
       }),
       aggregatedInteropToken: mockObject<Database['aggregatedInteropToken']>({
-        getByTimestamp: options.getTokenByTimestamp ?? mockFn().resolvesTo([]),
+        getByTimestamp:
+          options.getTokenByTimestamp ?? vi.fn().mockResolvedValue([]),
       }),
       activity: mockObject<Database['activity']>({
         getMaxTimestampAtOrBeforeForProjects:
           options.getActivityMaxTimestampAtOrBeforeForProjects ??
-          mockFn().resolvesTo(undefined),
+          vi.fn().mockResolvedValue(undefined),
         getByTimestamp:
-          options.getActivityByTimestamp ?? mockFn().resolvesTo([]),
+          options.getActivityByTimestamp ?? vi.fn().mockResolvedValue([]),
       }),
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
         getMaxTimestampAtOrBeforeForProjects:
           options.getTvsMaxTimestampAtOrBeforeForProjects ??
-          mockFn().resolvesTo(undefined),
-        getByTimestamp: options.getTvsByTimestamp ?? mockFn().resolvesTo([]),
+          vi.fn().mockResolvedValue(undefined),
+        getByTimestamp:
+          options.getTvsByTimestamp ?? vi.fn().mockResolvedValue([]),
       }),
     }),
     session: { email: 'dev@l2beat.com' },

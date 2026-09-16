@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { INTEROP_ONE_SIDED_CHAINS, ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { expect, mockObject } from 'earl'
+import { beforeAll, describe, expect, it } from 'vitest'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createInteropPlugins,
@@ -27,7 +28,7 @@ describe('Interop Plugins', async () => {
     configIntervalMs: -1,
   })
 
-  before(async () => {
+  beforeAll(async () => {
     const ps = new ProjectService()
     const projects = await ps.getProjects({ select: ['chainConfig'] })
     for (const p of projects) {
@@ -98,7 +99,7 @@ describe('Interop Plugins', async () => {
       }
 
       const result = flattenClusters([pluginA, cluster])
-      expect(result).toEqual([pluginA, pluginB, pluginC])
+      expect(result).toStrictEqual([pluginA, pluginB, pluginC])
     })
   })
 
@@ -110,7 +111,10 @@ describe('Interop Plugins', async () => {
 
       const result = pluginsAsClusters([pluginA, cluster])
 
-      expect(result).toEqual([{ name: 'across', plugins: [pluginA] }, cluster])
+      expect(result).toStrictEqual([
+        { name: 'across', plugins: [pluginA] },
+        cluster,
+      ])
     })
   })
 })

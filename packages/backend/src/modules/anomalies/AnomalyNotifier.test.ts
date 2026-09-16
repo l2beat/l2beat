@@ -8,7 +8,8 @@ import type {
 } from '@l2beat/database'
 import type { DiscordClient } from '@l2beat/shared'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { Clock } from '../../tools/Clock'
@@ -18,10 +19,10 @@ describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyDetected.name, () => {
     it('notifies about new anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([]),
+        getAll: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -37,7 +38,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const projectId = 'project-1'
@@ -87,7 +88,7 @@ describe(AnomalyNotifier.name, () => {
 
     it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const notifier = new AnomalyNotifier(
@@ -101,7 +102,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const block = mockObject<Block>()
@@ -125,10 +126,10 @@ describe(AnomalyNotifier.name, () => {
 
     it('does notify if duration less than configured, but z-score is over 100', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([]),
+        getAll: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -144,7 +145,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const projectId = 'project-1'
@@ -194,12 +195,14 @@ describe(AnomalyNotifier.name, () => {
     it('includes warning when there are implementation changes for functionCall config', async () => {
       const address = EthereumAddress.random()
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([
-          mockUpdateDiff('project-1', `eth:${address.toString()}`),
-        ]),
+        getAll: vi
+          .fn()
+          .mockResolvedValue([
+            mockUpdateDiff('project-1', `eth:${address.toString()}`),
+          ]),
       })
 
       const projectId = 'project-1'
@@ -231,7 +234,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const block = mockObject<Block>({
@@ -265,7 +268,9 @@ describe(AnomalyNotifier.name, () => {
       )
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        expect.includes('⚠️ There are unhandled implementation changes. ⚠️'),
+        expect.stringContaining(
+          '⚠️ There are unhandled implementation changes. ⚠️',
+        ),
       )
     })
 
@@ -273,12 +278,14 @@ describe(AnomalyNotifier.name, () => {
       const fromAddress = EthereumAddress.random()
       const toAddress = EthereumAddress.random()
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([
-          mockUpdateDiff('project-1', `eth:${fromAddress.toString()}`),
-        ]),
+        getAll: vi
+          .fn()
+          .mockResolvedValue([
+            mockUpdateDiff('project-1', `eth:${fromAddress.toString()}`),
+          ]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -306,7 +313,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const newAnomaly: RealTimeAnomalyRecord = {
@@ -334,19 +341,23 @@ describe(AnomalyNotifier.name, () => {
       )
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        expect.includes('⚠️ There are unhandled implementation changes. ⚠️'),
+        expect.stringContaining(
+          '⚠️ There are unhandled implementation changes. ⚠️',
+        ),
       )
     })
 
     it('includes warning when there are implementation changes for transfer config (to)', async () => {
       const toAddress = EthereumAddress.random()
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([
-          mockUpdateDiff('project-1', `eth:${toAddress.toString()}`),
-        ]),
+        getAll: vi
+          .fn()
+          .mockResolvedValue([
+            mockUpdateDiff('project-1', `eth:${toAddress.toString()}`),
+          ]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -373,7 +384,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const newAnomaly: RealTimeAnomalyRecord = {
@@ -401,7 +412,9 @@ describe(AnomalyNotifier.name, () => {
       )
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        expect.includes('⚠️ There are unhandled implementation changes. ⚠️'),
+        expect.stringContaining(
+          '⚠️ There are unhandled implementation changes. ⚠️',
+        ),
       )
     })
   })
@@ -409,11 +422,11 @@ describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyOngoing.name, () => {
     it('notifies about ongoing anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([]),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([]),
+        getAll: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -429,7 +442,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const projectId = 'project-1'
@@ -479,7 +492,7 @@ describe(AnomalyNotifier.name, () => {
 
     it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
+        insertMany: vi.fn().mockResolvedValue(undefined),
       })
 
       const notifier = new AnomalyNotifier(
@@ -493,7 +506,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const block = mockObject<Block>()
@@ -524,8 +537,8 @@ describe(AnomalyNotifier.name, () => {
       })
 
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([
           {
             id: '123',
             channel: 'discord',
@@ -547,7 +560,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const lastRecord = mockObject<RealTimeLivenessRecord>()
@@ -570,11 +583,11 @@ describe(AnomalyNotifier.name, () => {
 
     it('does notify if duration less than configured, but z-score is over 100', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([]),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([]),
+        getAll: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -590,7 +603,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const projectId = 'project-1'
@@ -642,8 +655,8 @@ describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyRecovered.name, () => {
     it('notifies about recovered anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([
           {
             id: '123',
             type: 'anomaly-detected',
@@ -663,7 +676,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const projectId = 'project-1'
@@ -702,8 +715,8 @@ describe(AnomalyNotifier.name, () => {
 
     it('does not notify if we did not send a notification about the detected anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -717,7 +730,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const block = mockObject<Block>()
@@ -739,10 +752,10 @@ describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyAutoRecovered.name, () => {
     it('notifies about auto-recovered anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([
-          { id: '123', type: 'anomaly-detected' },
-        ]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi
+          .fn()
+          .mockResolvedValue([{ id: '123', type: 'anomaly-detected' }]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -755,7 +768,7 @@ describe(AnomalyNotifier.name, () => {
       )
 
       const messageId = '1234567890'
-      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(messageId)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const ongoingAnomaly: RealTimeAnomalyRecord = {
@@ -783,8 +796,8 @@ describe(AnomalyNotifier.name, () => {
 
     it('does not notify if we did not send a notification about the detected anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
-        insertMany: mockFn().resolvesTo(undefined),
-        getByRelatedEntityId: mockFn().resolvesTo([]),
+        insertMany: vi.fn().mockResolvedValue(undefined),
+        getByRelatedEntityId: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -796,7 +809,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
@@ -818,7 +831,7 @@ describe(AnomalyNotifier.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
+        getOngoingAnomalies: vi.fn().mockResolvedValue([
           {
             projectId: 'project-1',
             subtype: 'batchSubmissions',
@@ -829,7 +842,7 @@ describe(AnomalyNotifier.name, () => {
         ] as RealTimeAnomalyRecord[]),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([]),
+        getAll: vi.fn().mockResolvedValue([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -844,7 +857,7 @@ describe(AnomalyNotifier.name, () => {
         mockTrackedTxsConfig([]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       await notifier.dailyReport()
@@ -865,7 +878,7 @@ describe(AnomalyNotifier.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
+        getOngoingAnomalies: vi.fn().mockResolvedValue([
           {
             projectId: 'project-1',
             subtype: 'batchSubmissions',
@@ -876,9 +889,11 @@ describe(AnomalyNotifier.name, () => {
         ] as RealTimeAnomalyRecord[]),
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
-        getAll: mockFn().resolvesTo([
-          mockUpdateDiff('project-1', `eth:${address.toString()}`),
-        ]),
+        getAll: vi
+          .fn()
+          .mockResolvedValue([
+            mockUpdateDiff('project-1', `eth:${address.toString()}`),
+          ]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -906,7 +921,7 @@ describe(AnomalyNotifier.name, () => {
         ]),
       )
 
-      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      const mockSendDiscordNotification = vi.fn().mockResolvedValue(undefined)
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       await notifier.dailyReport()

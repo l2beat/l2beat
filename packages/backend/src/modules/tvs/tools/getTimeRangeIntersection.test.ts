@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getTimeRangeIntersection } from './getTimeRangeIntersection'
 
 describe(getTimeRangeIntersection.name, () => {
@@ -12,8 +12,8 @@ describe(getTimeRangeIntersection.name, () => {
       untilTimestamp: until,
     })
 
-    expect(result.sinceTimestamp).toEqual(since)
-    expect(result.untilTimestamp).toEqual(until)
+    expect(result.sinceTimestamp).toStrictEqual(since)
+    expect(result.untilTimestamp).toStrictEqual(until)
   })
 
   it('returns the correct range with multiple inputs', () => {
@@ -28,8 +28,8 @@ describe(getTimeRangeIntersection.name, () => {
       },
     )
 
-    expect(result.sinceTimestamp).toEqual(UnixTime(1500)) // max of since timestamps
-    expect(result.untilTimestamp).toEqual(UnixTime(2000)) // min of until timestamps
+    expect(result.sinceTimestamp).toStrictEqual(UnixTime(1500)) // max of since timestamps
+    expect(result.untilTimestamp).toStrictEqual(UnixTime(2000)) // min of until timestamps
   })
 
   it('handles undefined untilTimestamp', () => {
@@ -44,8 +44,8 @@ describe(getTimeRangeIntersection.name, () => {
       },
     )
 
-    expect(result.sinceTimestamp).toEqual(UnixTime(1500))
-    expect(result.untilTimestamp).toEqual(UnixTime(2000))
+    expect(result.sinceTimestamp).toStrictEqual(UnixTime(1500))
+    expect(result.untilTimestamp).toStrictEqual(UnixTime(2000))
   })
 
   it('returns undefined untilTimestamp when all are undefined', () => {
@@ -60,8 +60,8 @@ describe(getTimeRangeIntersection.name, () => {
       },
     )
 
-    expect(result.sinceTimestamp).toEqual(UnixTime(1500))
-    expect(result.untilTimestamp).toEqual(undefined)
+    expect(result.sinceTimestamp).toStrictEqual(UnixTime(1500))
+    expect(result.untilTimestamp).toStrictEqual(undefined)
   })
 
   it('throws when any sinceTimestamp is undefined', () => {

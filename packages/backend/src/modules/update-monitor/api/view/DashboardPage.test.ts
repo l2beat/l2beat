@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { renderDashboardPage } from './DashboardPage'
 
 describe(renderDashboardPage.name, () => {
@@ -13,10 +13,10 @@ describe(renderDashboardPage.name, () => {
 
     expect(
       html.includes(`Running since <time dateTime="${startedAt}">`),
-    ).toEqual(true)
-    expect(html.includes(commitSha)).toEqual(true)
+    ).toStrictEqual(true)
+    expect(html.includes(commitSha)).toStrictEqual(true)
     expect(
       html.includes(`https://github.com/l2beat/l2beat/commit/${commitSha}`),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 })

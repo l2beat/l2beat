@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
+import { activityRecord } from '../test/activityRecord'
 import { aggregatePerDay } from './aggregatePerDay'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
@@ -15,7 +16,7 @@ describe(aggregatePerDay.name, () => {
       block(START + 1 * UnixTime.DAY + 1 * UnixTime.HOUR, 6, 7, 5),
     ])
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       activityRecord(project, START, 8, 12, 1, 3),
       activityRecord(project, START + 1 * UnixTime.DAY, 8, 9, 4, 5),
     ])
@@ -33,23 +34,5 @@ function block(
     txsCount,
     uopsCount,
     number,
-  }
-}
-
-export function activityRecord(
-  projectId: string,
-  timestamp: UnixTime,
-  count: number,
-  uopsCount: number | null,
-  start = 0,
-  end = 10,
-) {
-  return {
-    projectId: ProjectId(projectId),
-    timestamp,
-    count,
-    uopsCount,
-    start,
-    end,
   }
 }

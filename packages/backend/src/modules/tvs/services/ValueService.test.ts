@@ -12,7 +12,8 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { DataStorage } from '../tools/DataStorage'
 import {
   createAmountConfig,
@@ -52,21 +53,19 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(10000n)
-          .resolvesToOnce(10000n),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200),
+        getAmount: answersById(mockTimestamp, {
+          [amountConfigId]: [10000n, 10000n],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [200, 200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -167,35 +166,27 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
+        getAmount: answersById(mockTimestamp, {
           // totalSupply of WBTC
-          .given(wBTCAmountConfigId, mockTimestamp)
-          .resolvesToOnce(10000n)
-          .resolvesToOnce(10000n)
+          [wBTCAmountConfigId]: [10000n, 10000n],
           // totalSupply of solvBTC
-          .given(solvBTCAmountConfigId, mockTimestamp)
-          .resolvesToOnce(8000n)
-          .resolvesToOnce(8000n)
-          .resolvesToOnce(8000n)
+          [solvBTCAmountConfigId]: [8000n, 8000n, 8000n],
           // balanceOfEscrow of WBTC in solvBTC escrow
-          .given(wBTCBalanceOfEscrowConfigId, mockTimestamp)
-          .resolvesToOnce(5000n),
-        getPrice: mockFn()
+          [wBTCBalanceOfEscrowConfigId]: [5000n],
+        }),
+        getPrice: answersById(mockTimestamp, {
           // price of WBTC
-          .given(wBTCPriceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200)
+          [wBTCPriceConfigId]: [200, 200],
           // price of solvBTC
-          .given(solvBTCPriceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200),
+          [solvBTCPriceConfigId]: [200, 200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -261,21 +252,19 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(10000n)
-          .resolvesToOnce(10000n),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200),
+        getAmount: answersById(mockTimestamp, {
+          [amountConfigId]: [10000n, 10000n],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [200, 200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -336,24 +325,20 @@ describe(ValueService.name, () => {
       })
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(amountInRangeConfigId, mockTimestamp)
-          .resolvesToOnce(10000n)
-          .resolvesToOnce(10000n)
-          .given(amountNotInRangeConfigId, mockTimestamp)
-          .resolvesToOnce(undefined)
-          .resolvesToOnce(undefined),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200),
+        getAmount: answersById(mockTimestamp, {
+          [amountInRangeConfigId]: [10000n, 10000n],
+          [amountNotInRangeConfigId]: [undefined, undefined],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [200, 200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -398,19 +383,19 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(10000n),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(undefined),
+        getAmount: answersById(mockTimestamp, {
+          [amountConfigId]: [10000n],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [undefined],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejected()
+      ).rejects.toThrow()
     })
 
     it('should throw if amount not found and it is within range', async () => {
@@ -443,21 +428,19 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime(200)
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(undefined)
-          .resolvesToOnce(undefined),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(100)
-          .resolvesToOnce(100),
+        getAmount: answersById(mockTimestamp, {
+          [amountConfigId]: [undefined, undefined],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [100, 100],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejectedWith(
+      ).rejects.toThrow(
         `Amount not found for ${amountConfigId} within configured range (timestamp: ${mockTimestamp}, since: ${amountFormula.sinceTimestamp}, until: ${amountFormula.untilTimestamp})`,
       )
     })
@@ -503,21 +486,19 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(totalSupplyConfigId, mockTimestamp)
-          .resolvesToOnce(0n)
-          .resolvesToOnce(0n),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(200)
-          .resolvesToOnce(200),
+        getAmount: answersById(mockTimestamp, {
+          [totalSupplyConfigId]: [0n, 0n],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [200, 200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -578,14 +559,13 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime(200) // Earlier than the sinceTimestamp
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmount: mockFn()
-          .given(totalSupplyConfigId1, mockTimestamp)
-          .resolvesToOnce(undefined)
-          .given(totalSupplyConfigId2, mockTimestamp)
-          .resolvesToOnce(undefined),
-        getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
-          .resolvesToOnce(200),
+        getAmount: answersById(mockTimestamp, {
+          [totalSupplyConfigId1]: [undefined],
+          [totalSupplyConfigId2]: [undefined],
+        }),
+        getPrice: answersById(mockTimestamp, {
+          [priceConfigId]: [200],
+        }),
       })
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
@@ -594,7 +574,30 @@ describe(ValueService.name, () => {
       // we expect the calculation to throw an error
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejected()
+      ).rejects.toThrow()
     })
   })
 })
+
+/**
+ * A stub that answers by the id it is called with rather than by call order:
+ * `calculate` interleaves the lookups of several tokens, so a plain queue of
+ * resolved values would hand one token another token's amount. Each id gets its
+ * own queue, and running one dry throws so that an unforeseen call fails here
+ * instead of turning into a silent `undefined` further down.
+ */
+function answersById<T>(
+  timestamp: UnixTime,
+  queues: Record<string, T[]>,
+): (id: string, calledAt: UnixTime) => Promise<T | undefined> {
+  const remaining = new Map(
+    Object.entries(queues).map(([id, values]) => [id, [...values]]),
+  )
+  return async (id, calledAt) => {
+    const queue = calledAt === timestamp ? remaining.get(id) : undefined
+    if (queue === undefined || queue.length === 0) {
+      throw new Error(`DataStorage has no answer left for (${id}, ${calledAt})`)
+    }
+    return queue.shift()
+  }
+}

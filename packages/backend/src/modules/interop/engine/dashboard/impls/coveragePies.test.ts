@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   buildInteropCoveragePieCharts,
   COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
@@ -22,11 +22,11 @@ describe(buildInteropCoveragePieCharts.name, () => {
       },
     ])
 
-    expect(chart).not.toBeNullish()
-    expect(chart?.totalCount).toEqual(93)
-    expect(chart?.supportedCount).toEqual(82)
-    expect(chart?.unsupportedCount).toEqual(11)
-    expect(chart?.slices.map((slice) => slice.label)).toEqual([
+    expect(chart == null).toBe(false)
+    expect(chart?.totalCount).toStrictEqual(93)
+    expect(chart?.supportedCount).toStrictEqual(82)
+    expect(chart?.unsupportedCount).toStrictEqual(11)
+    expect(chart?.slices.map((slice) => slice.label)).toStrictEqual([
       'monad',
       'ethereum',
       'monad (unsupported)',
@@ -39,7 +39,7 @@ describe(buildInteropCoveragePieCharts.name, () => {
         isSupported: slice.isSupported,
         rawChains: slice.rawChains,
       })),
-    ).toEqual([
+    ).toStrictEqual([
       {
         count: 50,
         isSupported: true,
@@ -82,9 +82,9 @@ describe(buildInteropCoveragePieCharts.name, () => {
       },
     ])
 
-    expect(chart?.totalCount).toEqual(100)
-    expect(chart?.supportedCount).toEqual(95)
-    expect(chart?.unsupportedCount).toEqual(5)
+    expect(chart?.totalCount).toStrictEqual(100)
+    expect(chart?.supportedCount).toStrictEqual(95)
+    expect(chart?.unsupportedCount).toStrictEqual(5)
     expect(
       chart?.slices.map((slice) => ({
         label: slice.label,
@@ -92,7 +92,7 @@ describe(buildInteropCoveragePieCharts.name, () => {
         isSupported: slice.isSupported,
         rawChains: slice.rawChains,
       })),
-    ).toEqual([
+    ).toStrictEqual([
       {
         label: 'solana',
         count: 95,

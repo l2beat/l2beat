@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   describeSideMismatch,
   describeSignal,
@@ -16,7 +16,7 @@ describe(describeSignal.name, () => {
         current: 300,
         changePercent: 200,
       }),
-    ).toEqual('Transfer count spiked (+200%, 100 → 300)')
+    ).toStrictEqual('Transfer count spiked (+200%, 100 → 300)')
   })
 
   it('describes a severe volume drop using compact dollars', () => {
@@ -29,7 +29,7 @@ describe(describeSignal.name, () => {
         current: 100_000,
         changePercent: -90,
       }),
-    ).toEqual('Source volume dropped (-90%, $1M → $100K)')
+    ).toStrictEqual('Source volume dropped (-90%, $1M → $100K)')
   })
 
   it('labels the action by the sign of the change, not the signal kind', () => {
@@ -44,7 +44,7 @@ describe(describeSignal.name, () => {
         current: 7_600,
         changePercent: -95,
       }),
-    ).toEqual('Source volume dropped (-95%, $143K → $7.6K)')
+    ).toStrictEqual('Source volume dropped (-95%, $143K → $7.6K)')
   })
 
   it('describes a flat line', () => {
@@ -57,7 +57,7 @@ describe(describeSignal.name, () => {
         current: 100,
         changePercent: 0,
       }),
-    ).toEqual('Transfer count was flat (100)')
+    ).toStrictEqual('Transfer count was flat (100)')
   })
 })
 
@@ -70,7 +70,7 @@ describe(describeSideMismatch.name, () => {
         dstValueUsd: 1_000_000,
         largerSideUsd: 2_000_000,
       }),
-    ).toEqual('Src/Dst volume mismatch (50%, $2M src vs $1M dst)')
+    ).toStrictEqual('Src/Dst volume mismatch (50%, $2M src vs $1M dst)')
   })
 })
 
@@ -104,9 +104,11 @@ describe(formatInteropChartReasons.name, () => {
     })
 
     expect(reasons).toHaveLength(3)
-    expect(reasons[0]).toEqual('Transfer count spiked (+200%, 100 → 300)')
-    expect(reasons[1]).toEqual('Source volume spiked (+4900%, $100K → $5M)')
-    expect(reasons[2]).toEqual(
+    expect(reasons[0]).toStrictEqual('Transfer count spiked (+200%, 100 → 300)')
+    expect(reasons[1]).toStrictEqual(
+      'Source volume spiked (+4900%, $100K → $5M)',
+    )
+    expect(reasons[2]).toStrictEqual(
       'Src/Dst volume mismatch (40%, $2M src vs $1.2M dst)',
     )
   })
@@ -134,7 +136,7 @@ describe(formatInteropChartReasons.name, () => {
       sideMismatch: null,
     })
 
-    expect(reasons).toEqual(['Volume spiked (+4900%, $100K → $5M)'])
+    expect(reasons).toStrictEqual(['Volume spiked (+4900%, $100K → $5M)'])
   })
 
   it('uses the larger collapsed side when merging paired drops', () => {
@@ -160,7 +162,7 @@ describe(formatInteropChartReasons.name, () => {
       sideMismatch: null,
     })
 
-    expect(reasons).toEqual(['Volume dropped (-100%, $10M → $0)'])
+    expect(reasons).toStrictEqual(['Volume dropped (-100%, $10M → $0)'])
   })
 
   it('keeps separate rows when src and dst have different signal kinds', () => {
@@ -187,8 +189,10 @@ describe(formatInteropChartReasons.name, () => {
     })
 
     expect(reasons).toHaveLength(2)
-    expect(reasons[0]).toEqual('Source volume spiked (+4900%, $100K → $5M)')
-    expect(reasons[1]).toEqual(
+    expect(reasons[0]).toStrictEqual(
+      'Source volume spiked (+4900%, $100K → $5M)',
+    )
+    expect(reasons[1]).toStrictEqual(
       'Destination volume dropped (-100%, $100K → $500)',
     )
   })
@@ -196,6 +200,6 @@ describe(formatInteropChartReasons.name, () => {
   it('returns empty when there are no signals or mismatch', () => {
     expect(
       formatInteropChartReasons({ signals: [], sideMismatch: null }),
-    ).toEqual([])
+    ).toStrictEqual([])
   })
 })

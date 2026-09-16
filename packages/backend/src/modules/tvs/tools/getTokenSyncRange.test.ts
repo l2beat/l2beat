@@ -1,5 +1,6 @@
 import type { AmountFormula, TvsToken } from '@l2beat/config'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getTokenSyncRange } from './getTokenSyncRange'
 
 describe(getTokenSyncRange.name, () => {
@@ -42,7 +43,7 @@ describe(getTokenSyncRange.name, () => {
 
     const result = getTokenSyncRange(token)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       sinceTimestamp: 5,
       untilTimestamp: undefined,
     })
@@ -87,7 +88,7 @@ describe(getTokenSyncRange.name, () => {
 
     const result = getTokenSyncRange(token)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       sinceTimestamp: 5,
       untilTimestamp: 50,
     })

@@ -1,6 +1,6 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { TrackedTxProject } from '../../../config/Config'
 import { getTrackedTxsStatusRows, STALE_AFTER_SECONDS } from './status'
 
@@ -44,7 +44,7 @@ describe(getTrackedTxsStatusRows.name, () => {
         row.projectId,
         row.subtype,
       ]),
-    ).toEqual([
+    ).toStrictEqual([
       ['active-costs', 'l2costs', 'project-a', 'stateUpdates'],
       ['active-liveness', 'liveness', 'project-a', 'stateUpdates'],
     ])
@@ -71,7 +71,7 @@ describe(getTrackedTxsStatusRows.name, () => {
       now,
     })
 
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('marks groups as missing, stale, or fresh and sorts urgent rows first', () => {
@@ -103,7 +103,7 @@ describe(getTrackedTxsStatusRows.name, () => {
       now,
     })
 
-    expect(result.map((row) => [row.projectId, row.status])).toEqual([
+    expect(result.map((row) => [row.projectId, row.status])).toStrictEqual([
       ['stale-project', 'stale'],
       ['missing-project', 'missing'],
       ['fresh-project', 'fresh'],
@@ -147,7 +147,7 @@ describe(getTrackedTxsStatusRows.name, () => {
         formula: row.formula,
         sinceTimestamp: row.sinceTimestamp,
       })),
-    ).toEqual([
+    ).toStrictEqual([
       {
         configId: 'stale',
         projectId: 'project-a',

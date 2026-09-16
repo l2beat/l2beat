@@ -1,23 +1,23 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { isNineAM } from './isNineAM'
 
 describe(isNineAM.name, () => {
   it('UTC', () => {
     const nineUTC = UnixTime.fromDate(new Date('2021-01-01T09:00:00.000+00:00'))
-    expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
+    expect(isNineAM(nineUTC, 'UTC')).toStrictEqual(true)
   })
 
   it('PL', () => {
     const sevenUTC = UnixTime.fromDate(
       new Date('2021-01-01T06:00:00.000+00:00'),
     )
-    expect(isNineAM(sevenUTC, 'CET')).toEqual(true)
+    expect(isNineAM(sevenUTC, 'CET')).toStrictEqual(true)
   })
 
   it('works for "uneven" hours', () => {
     const nineUTC = UnixTime.fromDate(new Date('2021-01-01T09:01:10.000+00:00'))
-    expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
+    expect(isNineAM(nineUTC, 'UTC')).toStrictEqual(true)
   })
 })

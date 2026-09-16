@@ -8,8 +8,9 @@ import type {
   LogsProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -42,13 +43,14 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       topics: [FIXED_TOPIC],
       timestamp,
     })
-    const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const upsertMany = vi
+      .fn<Database['privacyAnonymitySetEvent']['upsertMany']>()
+      .mockResolvedValue(1)
     const indexer = makeIndexer({
       configuration,
       logs: [log],
       timestamps: new Map([[log.blockNumber, timestamp]]),
-      getTransaction: mockFn<IRpcClient['getTransaction']>().resolvesTo({
+      getTransaction: vi.fn<IRpcClient['getTransaction']>().mockResolvedValue({
         hash: TRANSACTION_HASH,
         value: undefined,
         from: TRANSACTION_SENDER.toString(),
@@ -67,7 +69,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const save = await indexer.multiUpdate(from, to, [configuration])
     const safeHeight = await save()
 
-    expect(upsertMany).toHaveBeenOnlyCalledWith([
+    expect(upsertMany).toHaveBeenCalledExactlyOnceWith([
       {
         configurationId: 'config-1',
         projectId: 'project-1',
@@ -81,7 +83,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         amount: 10_000_000_000_000_000_000n,
       },
     ])
-    expect(safeHeight).toEqual(to)
+    expect(safeHeight).toStrictEqual(to)
   })
 
   it('uses the Privacy Pools depositor without fetching a transaction', async () => {
@@ -101,9 +103,10 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       data: encoded.data,
       timestamp,
     })
-    const getTransaction = mockFn<IRpcClient['getTransaction']>()
-    const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const getTransaction = vi.fn<IRpcClient['getTransaction']>()
+    const upsertMany = vi
+      .fn<Database['privacyAnonymitySetEvent']['upsertMany']>()
+      .mockResolvedValue(1)
     const indexer = makeIndexer({
       configuration,
       logs: [log],
@@ -118,7 +121,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     await save()
 
     expect(getTransaction).not.toHaveBeenCalled()
-    expect(upsertMany).toHaveBeenOnlyCalledWith([
+    expect(upsertMany).toHaveBeenCalledExactlyOnceWith([
       {
         configurationId: 'config-1',
         projectId: 'project-1',
@@ -137,13 +140,14 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
   it('clamps one update to the next UTC day', async () => {
     const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
     const configuration = fixedConfiguration('1')
-    const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(0)
+    const upsertMany = vi
+      .fn<Database['privacyAnonymitySetEvent']['upsertMany']>()
+      .mockResolvedValue(0)
     const indexer = makeIndexer({
       configuration,
       logs: [],
       timestamps: new Map(),
-      getTransaction: mockFn(),
+      getTransaction: vi.fn(),
       repository: mockObject<Database['privacyAnonymitySetEvent']>({
         upsertMany,
       }),
@@ -153,7 +157,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       configuration,
     ])
 
-    expect(await save()).toEqual(from + UnixTime.DAY)
+    expect(await save()).toStrictEqual(from + UnixTime.DAY)
   })
 
   it('does not fetch transaction senders for boundary logs outside the range', async () => {
@@ -162,9 +166,10 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const timestamp = from - 1
     const configuration = fixedConfiguration('1')
     const log = makeLog({ topics: [FIXED_TOPIC], timestamp })
-    const getTransaction = mockFn<IRpcClient['getTransaction']>()
-    const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(0)
+    const getTransaction = vi.fn<IRpcClient['getTransaction']>()
+    const upsertMany = vi
+      .fn<Database['privacyAnonymitySetEvent']['upsertMany']>()
+      .mockResolvedValue(0)
     const indexer = makeIndexer({
       configuration,
       logs: [log],
@@ -179,7 +184,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     await save()
 
     expect(getTransaction).not.toHaveBeenCalled()
-    expect(upsertMany).toHaveBeenOnlyCalledWith([])
+    expect(upsertMany).toHaveBeenCalledExactlyOnceWith([])
   })
 
   it('fetches transaction senders in batches of 25', async () => {
@@ -201,18 +206,17 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     )
     const firstBatch = deferred()
     const started: string[] = []
-    const getTransaction = mockFn<IRpcClient['getTransaction']>().executes(
-      async (hash) => {
+    const getTransaction = vi
+      .fn<IRpcClient['getTransaction']>()
+      .mockImplementation(async (hash) => {
         const waitsForFirstBatch = started.length < 25
         started.push(hash)
         if (waitsForFirstBatch) await firstBatch.promise
         return makeTransaction(hash)
-      },
-    )
-    const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(
-        26,
-      )
+      })
+    const upsertMany = vi
+      .fn<Database['privacyAnonymitySetEvent']['upsertMany']>()
+      .mockResolvedValue(26)
     const indexer = makeIndexer({
       configuration,
       logs,
@@ -233,15 +237,14 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     await save()
 
     expect(getTransaction).toHaveBeenCalledTimes(26)
-    expect(upsertMany.calls[0]?.args[0]).toHaveLength(26)
+    expect(upsertMany.mock.calls[0][0]).toHaveLength(26)
   })
 
   describe(PrivacyAnonymitySetIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
-      const deleteByConfigIds =
-        mockFn<
-          Database['privacyAnonymitySetEvent']['deleteByConfigIds']
-        >().resolvesTo(3)
+      const deleteByConfigIds = vi
+        .fn<Database['privacyAnonymitySetEvent']['deleteByConfigIds']>()
+        .mockResolvedValue(3)
       const indexer = makeIdleIndexer(
         mockObject<Database['privacyAnonymitySetEvent']>({
           deleteByConfigIds,
@@ -250,7 +253,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
 
       await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
 
-      expect(deleteByConfigIds).toHaveBeenOnlyCalledWith([
+      expect(deleteByConfigIds).toHaveBeenCalledExactlyOnceWith([
         'config-1',
         'config-2',
       ])
@@ -259,11 +262,10 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
 
   describe(PrivacyAnonymitySetIndexer.prototype.trimData.name, () => {
     it('deletes records for each configuration in the given time range', async () => {
-      const deleteByConfigInTimeRange = mockFn<
-        Database['privacyAnonymitySetEvent']['deleteByConfigInTimeRange']
-      >()
-        .resolvesToOnce(3)
-        .resolvesToOnce(0)
+      const deleteByConfigInTimeRange = vi
+        .fn<Database['privacyAnonymitySetEvent']['deleteByConfigInTimeRange']>()
+        .mockResolvedValueOnce(3)
+        .mockResolvedValueOnce(0)
       const indexer = makeIdleIndexer(
         mockObject<Database['privacyAnonymitySetEvent']>({
           deleteByConfigInTimeRange,
@@ -303,7 +305,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
           extractor: 'fixedAmount',
           params: { amount: '1000000000000000000' },
         }),
-      ).toEqual('c33ffb1b7442')
+      ).toStrictEqual('c33ffb1b7442')
     })
   })
 })
@@ -315,7 +317,7 @@ function makeIdleIndexer(
     configuration: fixedConfiguration('1'),
     logs: [],
     timestamps: new Map(),
-    getTransaction: mockFn(),
+    getTransaction: vi.fn(),
     repository,
   })
 }
@@ -340,13 +342,16 @@ function makeIndexer({
       parents: [],
       indexerService: mockObject<IndexerService>({}),
       blockTimestampProvider: mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(50).returnsOnce(150),
+        getBlockNumberAtOrBefore: vi
+          .fn()
+          .mockReturnValueOnce(50)
+          .mockReturnValueOnce(150),
       }),
       blockProvider: mockObject<BlockProvider>({
-        getBlockTimestamps: mockFn().returnsOnce(timestamps),
+        getBlockTimestamps: vi.fn().mockReturnValueOnce(timestamps),
       }),
       logsProvider: mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce(logs),
+        getLogs: vi.fn().mockReturnValueOnce(logs),
       }),
       rpcClient: mockObject<IRpcClient>({ getTransaction }),
       db: mockDatabase({

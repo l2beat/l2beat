@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxResult } from '../../types/model'
 import { ONE_BLOB_GAS } from '../../utils/const'
 import type { BlobPriceProvider } from './BlobPriceProvider'
@@ -44,11 +45,11 @@ describe(L2CostsUpdater.name, () => {
         1, 2,
       ])
       expect(repository.insertMany).toHaveBeenCalledTimes(1)
-      const insertedRecords = repository.insertMany.calls[0]?.args[0] as
+      const insertedRecords = repository.insertMany.mock.calls[0][0] as
         | L2CostRecord[]
         | undefined
-      expect(insertedRecords).not.toEqual(undefined)
-      expect(insertedRecords?.length).toEqual(2)
+      expect(insertedRecords).not.toStrictEqual(undefined)
+      expect(insertedRecords?.length).toStrictEqual(2)
     })
 
     it('handles transactions across multiple blocks', async () => {
@@ -94,7 +95,7 @@ describe(L2CostsUpdater.name, () => {
         blobPriceProvider,
       )
 
-      await expect(updater.update(transactions)).toBeRejectedWith(
+      await expect(updater.update(transactions)).rejects.toThrow(
         'Blob base fee not found for block 2',
       )
     })
@@ -181,8 +182,8 @@ describe(L2CostsUpdater.name, () => {
 
       const result = updater.transform(transactions, blobBaseFeeByBlock)
 
-      expect(result[0].blobGasUsed).toEqual(3 * ONE_BLOB_GAS)
-      expect(result[0].blobGasPrice).toEqual(10n)
+      expect(result[0].blobGasUsed).toStrictEqual(3 * ONE_BLOB_GAS)
+      expect(result[0].blobGasPrice).toStrictEqual(10n)
     })
 
     it('handles null blob price when transaction has no blob hashes', () => {
@@ -199,8 +200,8 @@ describe(L2CostsUpdater.name, () => {
 
       const result = updater.transform(transactions, blobBaseFeeByBlock)
 
-      expect(result[0].blobGasPrice).toEqual(null)
-      expect(result[0].blobGasUsed).toEqual(null)
+      expect(result[0].blobGasPrice).toStrictEqual(null)
+      expect(result[0].blobGasUsed).toStrictEqual(null)
     })
   })
 
@@ -230,9 +231,9 @@ function getMockBlobPriceProvider(
   blobPricesByBlockRange?: Map<number, bigint>,
 ) {
   return mockObject<BlobPriceProvider>({
-    getBlobPricesByBlockRange: mockFn().resolvesTo(
-      blobPricesByBlockRange ?? new Map(),
-    ),
+    getBlobPricesByBlockRange: vi
+      .fn()
+      .mockResolvedValue(blobPricesByBlockRange ?? new Map()),
   })
 }
 

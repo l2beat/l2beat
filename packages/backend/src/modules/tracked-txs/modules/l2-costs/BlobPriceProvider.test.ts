@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EVMFeeHistory, IRpcClient } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { BlobPriceProvider } from './BlobPriceProvider'
 
 describe(BlobPriceProvider.name, () => {
@@ -26,13 +27,13 @@ describe(BlobPriceProvider.name, () => {
   describe(BlobPriceProvider.prototype.getBlobPricesByBlockRange.name, () => {
     it('throws error when oldestBlock > newestBlock', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn(),
+        getFeeHistory: vi.fn(),
       })
       const provider = createProvider(mockRpcClient)
 
       await expect(
         provider.getBlobPricesByBlockRange([100, 50]),
-      ).toBeRejectedWith(
+      ).rejects.toThrow(
         'Invalid block range: oldestBlock (100) is greater than newestBlock (50)',
       )
       expect(mockRpcClient.getFeeHistory).not.toHaveBeenCalled()
@@ -40,39 +41,39 @@ describe(BlobPriceProvider.name, () => {
 
     it('returns empty map when oldestBlock equals newestBlock and no fees', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, [0n])),
+        getFeeHistory: vi.fn().mockResolvedValue(createFeeHistory(100, [0n])),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
 
-      expect(result).toEqual(new Map())
+      expect(result).toStrictEqual(new Map())
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1, 100, [])
     })
 
     it('returns blob prices for single block range', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, [10n])),
+        getFeeHistory: vi.fn().mockResolvedValue(createFeeHistory(100, [10n])),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
 
-      expect(result).toEqual(new Map([[100, 10n]]))
+      expect(result).toStrictEqual(new Map([[100, 10n]]))
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1, 100, [])
     })
 
     it('skips zero blob fees', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(
-          createFeeHistory(100, [0n, 10n, 0n, 20n]),
-        ),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValue(createFeeHistory(100, [0n, 10n, 0n, 20n])),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 103])
 
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         new Map([
           [101, 10n],
           [103, 20n],
@@ -85,7 +86,9 @@ describe(BlobPriceProvider.name, () => {
         i % 2 === 0 ? BigInt(i + 1) : 0n,
       )
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, blobFees)),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValue(createFeeHistory(100, blobFees)),
       })
       const provider = createProvider(mockRpcClient)
 
@@ -98,7 +101,7 @@ describe(BlobPriceProvider.name, () => {
         }
       }
 
-      expect(result).toEqual(expected)
+      expect(result).toStrictEqual(expected)
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(100, 199, [])
     })
 
@@ -111,19 +114,20 @@ describe(BlobPriceProvider.name, () => {
       )
 
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn()
-          .resolvesToOnce(createFeeHistory(100, firstChunkFees))
-          .resolvesToOnce(createFeeHistory(50, secondChunkFees)),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValueOnce(createFeeHistory(100, firstChunkFees))
+          .mockResolvedValueOnce(createFeeHistory(50, secondChunkFees)),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([50, 1099])
 
-      expect(result.size).toEqual(1050)
-      expect(result.get(100)).toEqual(1n)
-      expect(result.get(1099)).toEqual(1000n)
-      expect(result.get(50)).toEqual(1001n)
-      expect(result.get(549)).toEqual(450n)
+      expect(result.size).toStrictEqual(1050)
+      expect(result.get(100)).toStrictEqual(1n)
+      expect(result.get(1099)).toStrictEqual(1000n)
+      expect(result.get(50)).toStrictEqual(1001n)
+      expect(result.get(549)).toStrictEqual(450n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(2)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(
@@ -138,15 +142,17 @@ describe(BlobPriceProvider.name, () => {
     it('handles exactly 1000 blocks', async () => {
       const blobFees = Array.from({ length: 1000 }, (_, i) => BigInt(i + 1))
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, blobFees)),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValue(createFeeHistory(100, blobFees)),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 1099])
 
-      expect(result.size).toEqual(1000)
-      expect(result.get(100)).toEqual(1n)
-      expect(result.get(1099)).toEqual(1000n)
+      expect(result.size).toStrictEqual(1000)
+      expect(result.get(100)).toStrictEqual(1n)
+      expect(result.get(1099)).toStrictEqual(1000n)
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1000, 1099, [])
     })
 
@@ -156,22 +162,23 @@ describe(BlobPriceProvider.name, () => {
       const chunk3Fees = Array.from({ length: 500 }, () => 30n)
 
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn()
-          .resolvesToOnce(createFeeHistory(2000, chunk1Fees))
-          .resolvesToOnce(createFeeHistory(1000, chunk2Fees))
-          .resolvesToOnce(createFeeHistory(500, chunk3Fees)),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValueOnce(createFeeHistory(2000, chunk1Fees))
+          .mockResolvedValueOnce(createFeeHistory(1000, chunk2Fees))
+          .mockResolvedValueOnce(createFeeHistory(500, chunk3Fees)),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([500, 2999])
 
-      expect(result.size).toEqual(2500)
-      expect(result.get(2000)).toEqual(10n)
-      expect(result.get(2999)).toEqual(10n)
-      expect(result.get(1000)).toEqual(20n)
-      expect(result.get(1999)).toEqual(20n)
-      expect(result.get(500)).toEqual(30n)
-      expect(result.get(999)).toEqual(30n)
+      expect(result.size).toStrictEqual(2500)
+      expect(result.get(2000)).toStrictEqual(10n)
+      expect(result.get(2999)).toStrictEqual(10n)
+      expect(result.get(1000)).toStrictEqual(20n)
+      expect(result.get(1999)).toStrictEqual(20n)
+      expect(result.get(500)).toStrictEqual(30n)
+      expect(result.get(999)).toStrictEqual(30n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(3)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(
@@ -197,15 +204,17 @@ describe(BlobPriceProvider.name, () => {
     it('only includes blocks within requested range', async () => {
       // Request range [100, 105] but feeHistory returns more blocks
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(
-          createFeeHistory(98, [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]),
-        ),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValue(
+            createFeeHistory(98, [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]),
+          ),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 105])
 
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         new Map([
           [100, 3n],
           [101, 4n],
@@ -220,38 +229,41 @@ describe(BlobPriceProvider.name, () => {
     it('handles all zero fees in range', async () => {
       const blobFees = Array.from({ length: 10 }, () => 0n)
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, blobFees)),
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValue(createFeeHistory(100, blobFees)),
       })
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 109])
 
-      expect(result).toEqual(new Map())
+      expect(result).toStrictEqual(new Map())
     })
 
     it('propagates errors from RPC client', async () => {
       const error = new Error('RPC error')
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().rejectsWith(error),
+        getFeeHistory: vi.fn().mockRejectedValue(error),
       })
       const provider = createProvider(mockRpcClient)
 
       await expect(
         provider.getBlobPricesByBlockRange([100, 200]),
-      ).toBeRejectedWith('RPC error')
+      ).rejects.toThrow('RPC error')
     })
 
     it('throws error when block number is already set (overlapping ranges)', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn()
-          .resolvesToOnce(createFeeHistory(100, [10n, 20n]))
-          .resolvesToOnce(createFeeHistory(100, [30n, 40n])), // Overlaps with first response
+        getFeeHistory: vi
+          .fn()
+          .mockResolvedValueOnce(createFeeHistory(100, [10n, 20n]))
+          .mockResolvedValueOnce(createFeeHistory(100, [30n, 40n])), // Overlaps with first response
       })
       const provider = createProvider(mockRpcClient)
 
       await expect(
         provider.getBlobPricesByBlockRange([99, 1500]),
-      ).toBeRejectedWith(
+      ).rejects.toThrow(
         'Blob price for block 100 was already set. This indicates overlapping ranges or duplicate processing.',
       )
     })

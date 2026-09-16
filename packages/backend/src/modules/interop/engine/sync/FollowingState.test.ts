@@ -4,8 +4,8 @@ import type {
   InteropEventRecord,
 } from '@l2beat/database'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
-import { install } from '@sinonjs/fake-timers'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type {
   InteropEvent,
   LogToCapture,
@@ -24,7 +24,7 @@ describe(FollowingState.name, () => {
   describe(FollowingState.prototype.checkStatus.name, () => {
     it('switches to catching up when resync is requested', async () => {
       const syncer = createSyncer({
-        getResyncState: mockFn().resolvesTo({
+        getResyncState: vi.fn().mockResolvedValue({
           resyncFrom: UnixTime(1),
           wipeRequired: false,
         }),
@@ -33,13 +33,13 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.checkStatus()
 
-      expect(nextState).toBeA(CatchingUpState)
+      expect(nextState).toBeInstanceOf(CatchingUpState)
     })
 
     it('switches to catching up when wipe is required without new blocks', async () => {
-      const getLastSyncedRange = mockFn().resolvesTo(makeSyncedRange())
+      const getLastSyncedRange = vi.fn().mockResolvedValue(makeSyncedRange())
       const syncer = createSyncer({
-        getResyncState: mockFn().resolvesTo({
+        getResyncState: vi.fn().mockResolvedValue({
           resyncFrom: undefined,
           wipeRequired: true,
         }),
@@ -49,14 +49,14 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.checkStatus()
 
-      expect(nextState).toBeA(CatchingUpState)
+      expect(nextState).toBeInstanceOf(CatchingUpState)
       expect(getLastSyncedRange).not.toHaveBeenCalled()
     })
 
     it('returns itself when there is no resync request', async () => {
-      const getLastSyncedRange = mockFn().resolvesTo(makeSyncedRange())
+      const getLastSyncedRange = vi.fn().mockResolvedValue(makeSyncedRange())
       const syncer = createSyncer({
-        getResyncState: mockFn().resolvesTo({
+        getResyncState: vi.fn().mockResolvedValue({
           resyncFrom: undefined,
           wipeRequired: false,
         }),
@@ -66,21 +66,21 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.checkStatus()
 
-      expect(nextState).toEqual(state)
+      expect(nextState).toStrictEqual(state)
       expect(getLastSyncedRange).not.toHaveBeenCalled()
     })
   })
 
   describe(FollowingState.prototype.processNewestBlock.name, () => {
     it('switches to catching up when resync is requested', async () => {
-      const getLastSyncedRange = mockFn().resolvesTo(undefined)
-      const getItemsToCapture = mockFn().returns({
+      const getLastSyncedRange = vi.fn().mockResolvedValue(undefined)
+      const getItemsToCapture = vi.fn().mockReturnValue({
         logsToCapture: [],
         txsToCapture: [],
       })
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getResyncState: mockFn().resolvesTo({
+        getResyncState: vi.fn().mockResolvedValue({
           resyncFrom: UnixTime(1),
           wipeRequired: false,
         }),
@@ -92,22 +92,22 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toBeA(CatchingUpState)
+      expect(nextState).toBeInstanceOf(CatchingUpState)
       expect(getLastSyncedRange).not.toHaveBeenCalled()
       expect(getItemsToCapture).not.toHaveBeenCalled()
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
     it('switches to catching up when there is a gap larger than one block', async () => {
-      const getItemsToCapture = mockFn().returns({
+      const getItemsToCapture = vi.fn().mockReturnValue({
         logsToCapture: [],
         txsToCapture: [],
       })
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ toBlock: 98n }),
-        ),
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ toBlock: 98n })),
         getItemsToCapture,
         saveProducedInteropEvents,
       })
@@ -115,21 +115,21 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toBeA(CatchingUpState)
+      expect(nextState).toBeInstanceOf(CatchingUpState)
       expect(getItemsToCapture).not.toHaveBeenCalled()
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
     it('ignores block when already synced at or past it', async () => {
-      const getItemsToCapture = mockFn().returns({
+      const getItemsToCapture = vi.fn().mockReturnValue({
         logsToCapture: [],
         txsToCapture: [],
       })
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ toBlock: 100n }),
-        ),
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ toBlock: 100n })),
         getItemsToCapture,
         saveProducedInteropEvents,
       })
@@ -137,7 +137,7 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toEqual(state)
+      expect(nextState).toStrictEqual(state)
       expect(getItemsToCapture).not.toHaveBeenCalled()
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
@@ -148,15 +148,16 @@ describe(FollowingState.name, () => {
       const eventA = mockObject<InteropEvent>({})
       const eventB = mockObject<InteropEvent>({})
       const eventC = mockObject<InteropEvent>({})
-      const captureLog = mockFn()
-        .returnsOnce([eventA])
-        .returnsOnce([eventB, eventC])
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const captureLog = vi
+        .fn()
+        .mockReturnValueOnce([eventA])
+        .mockReturnValueOnce([eventB, eventC])
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-        ),
-        getItemsToCapture: mockFn().returns({
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n })),
+        getItemsToCapture: vi.fn().mockReturnValue({
           logsToCapture: [logA, logB],
           txsToCapture: [],
         }),
@@ -167,7 +168,7 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toEqual(state)
+      expect(nextState).toStrictEqual(state)
       expect(captureLog).toHaveBeenNthCalledWith(1, logA)
       expect(captureLog).toHaveBeenNthCalledWith(2, logB)
       expect(saveProducedInteropEvents).toHaveBeenCalledWith(
@@ -184,10 +185,10 @@ describe(FollowingState.name, () => {
     })
 
     it('bootstraps range from the oldest event when no synced range exists', async () => {
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(undefined),
-        getOldestEventForPluginAndChain: mockFn().resolvesTo(
+        getLastSyncedRange: vi.fn().mockResolvedValue(undefined),
+        getOldestEventForPluginAndChain: vi.fn().mockResolvedValue(
           makeInteropEventRecord({
             blockNumber: 7,
             timestamp: UnixTime(70),
@@ -213,10 +214,10 @@ describe(FollowingState.name, () => {
     })
 
     it('bootstraps range from the incoming block when no events exist', async () => {
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(undefined),
-        getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
+        getLastSyncedRange: vi.fn().mockResolvedValue(undefined),
+        getOldestEventForPluginAndChain: vi.fn().mockResolvedValue(undefined),
         saveProducedInteropEvents,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
@@ -238,16 +239,16 @@ describe(FollowingState.name, () => {
 
     it('saves an empty events list when nothing is captured', async () => {
       const logA = mockObject<LogToCapture>({})
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ toBlock: 99n }),
-        ),
-        getItemsToCapture: mockFn().returns({
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ toBlock: 99n })),
+        getItemsToCapture: vi.fn().mockReturnValue({
           logsToCapture: [logA],
           txsToCapture: [],
         }),
-        captureLog: mockFn().returnsOnce(undefined),
+        captureLog: vi.fn().mockReturnValueOnce(undefined),
         saveProducedInteropEvents,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
@@ -273,16 +274,16 @@ describe(FollowingState.name, () => {
         tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
       })
       const txEvent = mockObject<InteropEvent>({})
-      const captureTx = mockFn().returnsOnce({
+      const captureTx = vi.fn().mockReturnValueOnce({
         events: [txEvent],
         fulfilledCreatorEvents: [],
       })
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-        ),
-        getItemsToCapture: mockFn().returns({
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n })),
+        getItemsToCapture: vi.fn().mockReturnValue({
           logsToCapture: [],
           txsToCapture: [txToCapture],
         }),
@@ -308,14 +309,14 @@ describe(FollowingState.name, () => {
     })
 
     it('reads the resync state and synced range once for consecutive blocks', async () => {
-      const getResyncState = mockFn().resolvesTo({
+      const getResyncState = vi.fn().mockResolvedValue({
         resyncFrom: undefined,
         wipeRequired: false,
       })
-      const getLastSyncedRange = mockFn().resolvesTo(
-        makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-      )
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLastSyncedRange = vi
+        .fn()
+        .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n }))
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         getResyncState,
         getLastSyncedRange,
@@ -329,7 +330,7 @@ describe(FollowingState.name, () => {
       expect(getResyncState).toHaveBeenCalledTimes(1)
       expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
       expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
-      expect(saveProducedInteropEvents.calls[1]?.args[1]).toEqual({
+      expect(saveProducedInteropEvents.mock.calls[1][1]).toStrictEqual({
         fromBlock: 90n,
         fromTimestamp: UnixTime(0),
         toBlock: 101n,
@@ -338,75 +339,80 @@ describe(FollowingState.name, () => {
     })
 
     it('does not advance the cached range when saving fails', async () => {
-      const getLastSyncedRange = mockFn().resolvesTo(
-        makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-      )
-      const saveProducedInteropEvents = mockFn()
-        .rejectsWithOnce(new Error('db down'))
-        .resolvesTo(undefined)
+      const getLastSyncedRange = vi
+        .fn()
+        .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n }))
+      const saveProducedInteropEvents = vi
+        .fn()
+        .mockRejectedValueOnce(new Error('db down'))
+        .mockResolvedValue(undefined)
       const syncer = createSyncer({
         getLastSyncedRange,
         saveProducedInteropEvents,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
-      await expect(state.processNewestBlock(BLOCK, LOGS)).toBeRejectedWith(
+      await expect(state.processNewestBlock(BLOCK, LOGS)).rejects.toThrow(
         'db down',
       )
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toEqual(state)
+      expect(nextState).toStrictEqual(state)
       expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
       expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
-      expect(saveProducedInteropEvents.calls[1]?.args[1]).toEqual(
-        saveProducedInteropEvents.calls[0]?.args[1],
+      expect(saveProducedInteropEvents.mock.calls[1][1]).toStrictEqual(
+        saveProducedInteropEvents.mock.calls[0][1],
       )
     })
 
     it('checks for a resync request again after the interval', async () => {
-      const clock = install({ now: 1_000_000 })
+      vi.useFakeTimers()
+      vi.setSystemTime(1_000_000)
       try {
-        const getResyncState = mockFn()
-          .resolvesToOnce({ resyncFrom: undefined, wipeRequired: false })
-          .resolvesTo({ resyncFrom: UnixTime(1), wipeRequired: false })
+        const getResyncState = vi
+          .fn()
+          .mockResolvedValueOnce({ resyncFrom: undefined, wipeRequired: false })
+          .mockResolvedValue({ resyncFrom: UnixTime(1), wipeRequired: false })
         const syncer = createSyncer({
           getResyncState,
-          getLastSyncedRange: mockFn().resolvesTo(
-            makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-          ),
+          getLastSyncedRange: vi
+            .fn()
+            .mockResolvedValue(
+              makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+            ),
         })
         const state = new FollowingState(syncer, Logger.SILENT)
 
         await state.processNewestBlock(BLOCK, LOGS)
-        clock.tick(9_999)
+        vi.advanceTimersByTime(9_999)
         const sameState = await state.processNewestBlock(
           makeBlock(101, UnixTime(1_010)),
           LOGS,
         )
-        clock.tick(1)
+        vi.advanceTimersByTime(1)
         const nextState = await state.processNewestBlock(
           makeBlock(102, UnixTime(1_020)),
           LOGS,
         )
 
-        expect(sameState).toEqual(state)
-        expect(nextState).toBeA(CatchingUpState)
+        expect(sameState).toStrictEqual(state)
+        expect(nextState).toBeInstanceOf(CatchingUpState)
         expect(getResyncState).toHaveBeenCalledTimes(2)
       } finally {
-        clock.uninstall()
+        vi.useRealTimers()
       }
     })
 
     it('counts a status check as a resync check', async () => {
-      const getResyncState = mockFn().resolvesTo({
+      const getResyncState = vi.fn().mockResolvedValue({
         resyncFrom: undefined,
         wipeRequired: false,
       })
       const syncer = createSyncer({
         getResyncState,
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-        ),
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n })),
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
@@ -426,21 +432,21 @@ describe(FollowingState.name, () => {
       const historicalCreatorEvent = mockObject<InteropEvent>({})
       const historicalCheckedEvent = mockObject<InteropEvent>({})
       const txCreatorEvent = mockObject<InteropEvent>({})
-      const capturePendingHistoricalTxs = mockFn().resolvesTo({
+      const capturePendingHistoricalTxs = vi.fn().mockResolvedValue({
         events: [historicalEvent],
         fulfilledCreatorEvents: [historicalCreatorEvent],
         checkedInHistoryEvents: [historicalCheckedEvent],
       })
-      const captureTx = mockFn().returnsOnce({
+      const captureTx = vi.fn().mockReturnValueOnce({
         events: [txEvent],
         fulfilledCreatorEvents: [txCreatorEvent],
       })
-      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        getLastSyncedRange: mockFn().resolvesTo(
-          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
-        ),
-        getItemsToCapture: mockFn().returns({
+        getLastSyncedRange: vi
+          .fn()
+          .mockResolvedValue(makeSyncedRange({ fromBlock: 90n, toBlock: 99n })),
+        getItemsToCapture: vi.fn().mockReturnValue({
           logsToCapture: [],
           txsToCapture: [txToCapture],
         }),
@@ -479,32 +485,32 @@ function createSyncer(
     } as InteropEventSyncer['cluster'],
     store: mockObject<InteropEventStore>({
       derivedTxStore: mockObject<DerivedTxStore>({
-        get: mockFn().returns([]),
-        getCreatorEvents: mockFn().returns(undefined),
+        get: vi.fn().mockReturnValue([]),
+        getCreatorEvents: vi.fn().mockReturnValue(undefined),
       }),
     }),
-    getResyncState: mockFn().resolvesTo({
+    getResyncState: vi.fn().mockResolvedValue({
       resyncFrom: undefined,
       wipeRequired: false,
     }),
-    getLastSyncedRange: mockFn().resolvesTo(undefined),
-    getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
-    getItemsToCapture: mockFn().returns({
+    getLastSyncedRange: vi.fn().mockResolvedValue(undefined),
+    getOldestEventForPluginAndChain: vi.fn().mockResolvedValue(undefined),
+    getItemsToCapture: vi.fn().mockReturnValue({
       logsToCapture: [],
       txsToCapture: [],
     }),
-    captureLog: mockFn().returns(undefined),
-    capturePendingHistoricalTxs: mockFn().resolvesTo({
+    captureLog: vi.fn().mockReturnValue(undefined),
+    capturePendingHistoricalTxs: vi.fn().mockResolvedValue({
       events: [],
       fulfilledCreatorEvents: [],
       checkedInHistoryEvents: [],
     }),
-    captureTx: mockFn().returns(undefined),
-    saveProducedInteropEvents: mockFn().resolvesTo(undefined),
+    captureTx: vi.fn().mockReturnValue(undefined),
+    saveProducedInteropEvents: vi.fn().mockResolvedValue(undefined),
     blockProcessingStats: mockObject<
       InteropEventSyncer['blockProcessingStats']
     >({
-      record: mockFn().returns(undefined),
+      record: vi.fn().mockReturnValue(undefined),
     }),
     ...overrides,
   })

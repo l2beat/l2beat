@@ -1,4 +1,4 @@
-import { mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import type {
   Configuration,
   TrimRemovalConfiguration,

@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { SvmBlockProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-import { activityRecord } from '../../utils/aggregatePerDay.test'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+import { activityRecord } from '../../test/activityRecord'
 import { SlotTxsCountService } from './SlotTxsCountService'
 
 describe(SlotTxsCountService.name, () => {
@@ -11,19 +12,20 @@ describe(SlotTxsCountService.name, () => {
       const START = UnixTime.now()
       const mockProvider = mockObject<SvmBlockProvider>({
         chain: 'ethereum',
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(undefined)
-          .resolvesToOnce({
+        getBlockWithTransactions: vi
+          .fn()
+          .mockResolvedValueOnce(undefined)
+          .mockResolvedValueOnce({
             timestamp: START,
             transactionsCount: 1,
             number: 1,
           })
-          .resolvesToOnce({
+          .mockResolvedValueOnce({
             timestamp: UnixTime.toStartOf(START, 'day'),
             transactionsCount: 4,
             number: 2,
           })
-          .resolvesToOnce({
+          .mockResolvedValueOnce({
             timestamp: UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
             transactionsCount: 2,
             number: 3,
@@ -39,7 +41,7 @@ describe(SlotTxsCountService.name, () => {
       )
 
       const result = await service.getTxsCount(1, 4)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 5, 5, 1, 2),
           activityRecord(

@@ -4,7 +4,8 @@ import {
   type TrackedTxLivenessConfig,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getActiveConfigurations } from './getActiveConfigurations'
@@ -35,7 +36,7 @@ describe(getActiveConfigurations.name, () => {
     ]
 
     const result = getActiveConfigurations(mockedProject, mockConfigurations)
-    expect(result).toEqual(
+    expect(result).toStrictEqual(
       mockedProject.configurations as TrackedTxLivenessConfig[],
     )
   })

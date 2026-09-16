@@ -1,8 +1,9 @@
 import { type Env, Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { expect, mockObject } from 'earl'
 import { join } from 'path'
+import { describe, expect, it } from 'vitest'
 import { readExamples } from '../core'
 import { ExampleRunner } from '../runner'
 import { normalize } from '../snapshot/json'
@@ -31,7 +32,7 @@ describe('interop examples', () => {
         const manifestEntry = manifest.examples[example]
         const sealedHash = manifestEntry.definitionHash
 
-        expect(sealedHash).toEqual(currentHash)
+        expect(sealedHash).toStrictEqual(currentHash)
       })
     }
   })
@@ -65,7 +66,7 @@ describe('interop examples', () => {
 
         const result = await runner.run()
 
-        expect(normalize(result)).toEqual(normalize(outputs))
+        expect(normalize(result)).toStrictEqual(normalize(outputs))
       })
     }
   })

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   diffInteropConfig,
   diffInteropConfigValues,
@@ -12,7 +12,7 @@ describe('InteropConfigDiff', () => {
   it('returns a change when a primitive value changed', () => {
     const entries = diffInteropConfigValues({ version: 1 }, { version: 2 })
 
-    expect(entries).toEqual([
+    expect(entries).toStrictEqual([
       {
         kind: 'change',
         path: ['version'],
@@ -28,7 +28,7 @@ describe('InteropConfigDiff', () => {
 
     const entries = diffInteropConfigValues(previous, current)
 
-    expect(entries.length).toEqual(0)
+    expect(entries.length).toStrictEqual(0)
   })
 
   it('ignores order-only changes in arrays of objects', () => {
@@ -56,7 +56,7 @@ describe('InteropConfigDiff', () => {
 
     const interopDiff = diffInteropConfig('cctp-v2', previous, current)
 
-    expect(interopDiff.entries.length).toEqual(0)
+    expect(interopDiff.entries.length).toStrictEqual(0)
   })
 
   it('formats a readable markdown diff', () => {
@@ -73,11 +73,15 @@ describe('InteropConfigDiff', () => {
 
     const markdown = interopConfigDiffToMarkdown(interopDiff)
 
-    expect(markdown.startsWith('```diff')).toEqual(true)
-    expect(markdown.includes('+ $.networks[0].onRamp: "0xabc"')).toEqual(true)
-    expect(markdown.includes('- $.networks[1].offRamp: "0xdef"')).toEqual(true)
-    expect(markdown.includes('~ $.version')).toEqual(true)
-    expect(markdown.endsWith('```')).toEqual(true)
+    expect(markdown.startsWith('```diff')).toStrictEqual(true)
+    expect(markdown.includes('+ $.networks[0].onRamp: "0xabc"')).toStrictEqual(
+      true,
+    )
+    expect(markdown.includes('- $.networks[1].offRamp: "0xdef"')).toStrictEqual(
+      true,
+    )
+    expect(markdown.includes('~ $.version')).toStrictEqual(true)
+    expect(markdown.endsWith('```')).toStrictEqual(true)
   })
 
   it('removes muted entries for selected config keys', () => {
@@ -107,7 +111,7 @@ describe('InteropConfigDiff', () => {
       testFilters,
     )
 
-    expect(filtered.entries).toEqual([
+    expect(filtered.entries).toStrictEqual([
       {
         kind: 'change',
         path: ['predicates', 0],

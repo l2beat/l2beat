@@ -1,6 +1,6 @@
 import { bech32m } from '@scure/base'
 import { generateKeyPairSync, type KeyObject, sign } from 'crypto'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { isEligibleFeeAd, parseRailgunFeeAd } from './parseRailgunFeeMessage'
 
 describe(parseRailgunFeeAd.name, () => {
@@ -13,7 +13,7 @@ describe(parseRailgunFeeAd.name, () => {
       availableWallets: 3,
     })
 
-    expect(parseRailgunFeeAd(payload)).toEqual({
+    expect(parseRailgunFeeAd(payload)).toStrictEqual({
       railgunAddress: broadcaster.railgunAddress,
       feeExpiration: NOW_MS + 300_000,
       availableWallets: 3,
@@ -28,7 +28,9 @@ describe(parseRailgunFeeAd.name, () => {
       availableWallets: 1,
     })
 
-    expect(parseRailgunFeeAd(payload)?.feeExpiration).toEqual(999_999_999_999)
+    expect(parseRailgunFeeAd(payload)?.feeExpiration).toStrictEqual(
+      999_999_999_999,
+    )
   })
 
   it('rejects a tampered signature', () => {
@@ -42,7 +44,7 @@ describe(parseRailgunFeeAd.name, () => {
 
     expect(
       parseRailgunFeeAd(Buffer.from(JSON.stringify(envelope), 'utf8')),
-    ).toEqual(undefined)
+    ).toStrictEqual(undefined)
   })
 
   it('rejects an ad claiming an address the signer does not control', () => {
@@ -53,7 +55,7 @@ describe(parseRailgunFeeAd.name, () => {
       railgunAddress: broadcaster.railgunAddress,
     })
 
-    expect(parseRailgunFeeAd(payload)).toEqual(undefined)
+    expect(parseRailgunFeeAd(payload)).toStrictEqual(undefined)
   })
 
   it('rejects malformed payloads', () => {
@@ -77,7 +79,7 @@ describe(parseRailgunFeeAd.name, () => {
     ]
 
     for (const payload of cases) {
-      expect(parseRailgunFeeAd(payload)).toEqual(undefined)
+      expect(parseRailgunFeeAd(payload)).toStrictEqual(undefined)
     }
   })
 
@@ -88,7 +90,7 @@ describe(parseRailgunFeeAd.name, () => {
       railgunAddress: 'zs1invalidaddress',
     })
 
-    expect(parseRailgunFeeAd(payload)).toEqual(undefined)
+    expect(parseRailgunFeeAd(payload)).toStrictEqual(undefined)
   })
 })
 
@@ -102,28 +104,28 @@ describe(isEligibleFeeAd.name, () => {
   }
 
   it('accepts an unexpired ad with fees and available wallets', () => {
-    expect(isEligibleFeeAd(base, NOW_MS)).toEqual(true)
+    expect(isEligibleFeeAd(base, NOW_MS)).toStrictEqual(true)
   })
 
   it('rejects an expired ad', () => {
-    expect(isEligibleFeeAd({ ...base, feeExpiration: NOW_MS }, NOW_MS)).toEqual(
-      false,
-    )
+    expect(
+      isEligibleFeeAd({ ...base, feeExpiration: NOW_MS }, NOW_MS),
+    ).toStrictEqual(false)
     expect(
       isEligibleFeeAd({ ...base, feeExpiration: NOW_MS + 1 }, NOW_MS),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 
   it('rejects an ad without available wallets', () => {
-    expect(isEligibleFeeAd({ ...base, availableWallets: 0 }, NOW_MS)).toEqual(
-      false,
-    )
+    expect(
+      isEligibleFeeAd({ ...base, availableWallets: 0 }, NOW_MS),
+    ).toStrictEqual(false)
   })
 
   it('rejects an ad without any fee entries', () => {
-    expect(isEligibleFeeAd({ ...base, feeTokenCount: 0 }, NOW_MS)).toEqual(
-      false,
-    )
+    expect(
+      isEligibleFeeAd({ ...base, feeTokenCount: 0 }, NOW_MS),
+    ).toStrictEqual(false)
   })
 })
 
