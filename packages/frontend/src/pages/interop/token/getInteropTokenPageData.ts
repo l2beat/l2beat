@@ -1,18 +1,14 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import {
-  getInteropTokenOnchainDeployments,
-  type InteropTokenOnchainDeployment,
-} from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
+import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
 import { getInteropTokenPairStats } from '~/server/features/layer2s/interop/token/getInteropTokenPairStats'
-import {
-  getInteropTokenRelationsGraph,
-  type InteropTokenRelations,
-} from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { getInteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -110,29 +106,31 @@ async function getCachedData({
   activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
+  // Everything below reads the same snapshot, and the slow per-pair transfer
+  // query needs nothing but the token id, so it starts alongside the rest.
+  const [
+    abstractTokens,
+    snapshotTimestamp,
+    projectsWithChains,
+    interopProjects,
+  ] = await Promise.all([
+    getInteropAbstractTokens(activeInteropChainIds),
+    env.MOCK ? undefined : getAggregatedInteropSnapshotTimestamp(),
+    ps.getProjects({ select: ['chainConfig'] }),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
   const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const [
-    tokenData,
-    { deployments, relations },
-    projectsWithChains,
-    interopProjects,
-  ] = await Promise.all([
-    getInteropTokenData({
-      tokenId: token.id,
-      ...apiSelection,
-    }),
-    getDeploymentsAndRelations(token.id, activeInteropChainIds),
-    ps.getProjects({
-      select: ['chainConfig'],
-    }),
-    ps.getProjects({
-      select: ['interopConfig'],
-    }),
+  const [tokenData, { deployments, routes }, pairStats] = await Promise.all([
+    getInteropTokenData(
+      { tokenId: token.id, ...apiSelection },
+      { snapshotTimestamp, interopProjects },
+    ),
+    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
+    getInteropTokenPairStats(token.id, snapshotTimestamp, interopProjects),
   ])
 
   const relationsGraph =
@@ -140,7 +138,7 @@ async function getCachedData({
       ? getInteropTokenRelationsGraph(
           token.id,
           deployments,
-          relations,
+          { routes, pairStats },
           projectsWithChains,
           interopProjects,
         )
@@ -160,20 +158,4 @@ async function getCachedData({
     tokenData,
     apiSelection,
   }
-}
-
-async function getDeploymentsAndRelations(
-  tokenId: string,
-  chainIds: string[],
-): Promise<{
-  deployments: InteropTokenOnchainDeployment[]
-  relations: InteropTokenRelations
-}> {
-  const { deployments, routes } = await getInteropTokenOnchainDeployments(
-    tokenId,
-    chainIds,
-  )
-  const pairStats =
-    deployments.length > 0 ? await getInteropTokenPairStats(tokenId) : undefined
-  return { deployments, relations: { routes, pairStats } }
 }
