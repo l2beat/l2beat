@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OracleAggregator",
+  "description": "Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most {{ maxLivenessWindowFormatted }}. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly. Both can pause single markets or the whole oracle with no delay.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) rule manager."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the resolution router implementation and manage all roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "maxLivenessWindowFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_LIVENESS_WINDOW() view returns (uint32)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "globalPaused": {
+      "description": "Whether reporting, disputing, resolving and finalizing are paused for every request.",
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger whose registered modules receive the final results."
+    }
+  }
+}

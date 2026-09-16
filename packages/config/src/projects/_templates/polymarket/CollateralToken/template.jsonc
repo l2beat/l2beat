@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CollateralToken",
-  "description": "Upgradeable ERC20 ({{ symbol }}) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance.",
+  "description": "Upgradeable ERC20 ({{ symbol }}) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance. The owner can transfer out any token balance held by the contract itself, which does not include the vault.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
