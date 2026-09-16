@@ -8,6 +8,7 @@ import { toViewCoordinates } from '../utils/coordinates'
 import { buildRenderGraph, headerAt } from '../utils/renderGraph'
 import { reverseIter } from '../utils/reverseIter'
 import { getRowLayout } from '../utils/rows'
+import { effectiveTool } from '../utils/tool'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function onMouseDown(
@@ -16,7 +17,7 @@ export function onMouseDown(
   container: HTMLElement,
 ): Partial<State> {
   if (event.button === CLICKED_LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
-    if (state.input.spacePressed || state.tool === 'hand') {
+    if (effectiveTool(state) === 'hand') {
       const [x, y] = [event.clientX, event.clientY]
       return {
         input: {

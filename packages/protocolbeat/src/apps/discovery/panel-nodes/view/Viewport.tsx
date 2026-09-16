@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
+import { effectiveTool } from '../store/utils/tool'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
@@ -31,9 +32,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
     (state) => state.registerViewportContainer,
   )
   const isPanning = useStore((state) => state.mouseMoveAction === 'pan')
-  const isHandCursor = useStore(
-    (state) => state.tool === 'hand' || state.input.spacePressed,
-  )
+  const isHandCursor = useStore((state) => effectiveTool(state) === 'hand')
 
   const desktopControls = useDesktopControls({
     containerRef,
