@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectDetails } from '../ProjectDetails'
 import { ProjectSection } from './ProjectSection'
@@ -7,11 +8,13 @@ export interface GroupSectionProps extends ProjectSectionProps {
   // This is a circular ref, but it's fine
   description?: string
   items: ProjectDetailsSection[]
+  milestones?: Milestone[]
 }
 
 export function GroupSection({
   description,
   items,
+  milestones,
   as = 'section',
   ...sectionProps
 }: GroupSectionProps) {
@@ -26,6 +29,7 @@ export function GroupSection({
         <ProjectDetails
           nested
           items={items}
+          milestones={milestones}
           parentSection={sectionProps.sectionOrder}
         />
       </div>

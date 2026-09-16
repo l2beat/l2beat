@@ -42,6 +42,5 @@ export async function getDaThroughputSection(
     customColors: Object.fromEntries(
       projectsWithColors.map((p) => [p.name, p.colors.primary.light]),
     ),
-    milestones: project.milestones ?? [],
   }
 }

@@ -1,4 +1,5 @@
 import type {
+  Milestone,
   Project,
   ProjectAssociatedToken,
   ProjectCustomColors,
@@ -46,6 +47,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getL2RiskSummarySection } from '~/utils/project/risk-summary/getL2RiskSummary'
+import { sortMilestonesNewestFirst } from '~/utils/project/sortMilestonesNewestFirst'
 import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAvailabilitySection'
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
@@ -139,6 +141,7 @@ export interface ProjectL2Entry {
   }
   rosette: L2Rosette
   sections: ProjectDetailsSection[]
+  milestones: Milestone[]
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
@@ -347,10 +350,7 @@ export async function getL2ProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const sortedMilestones =
-    project.milestones?.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    ) ?? []
+  const milestones = sortMilestonesNewestFirst(project.milestones)
 
   const hostChain =
     project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
@@ -407,7 +407,6 @@ export async function getL2ProjectEntry(
         title: 'Value Secured',
         tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
         compareUrl: getProjectCompareUrl(project, 'tvs'),
-        milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
         project: chartProject,
@@ -437,7 +436,6 @@ export async function getL2ProjectEntry(
       props: {
         id: 'activity',
         title: 'Activity',
-        milestones: sortedMilestones,
         category: project.scalingInfo.type,
         project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'activity'),
@@ -452,7 +450,6 @@ export async function getL2ProjectEntry(
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
-        milestones: sortedMilestones,
         project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'costs'),
         ...costsSection,
@@ -466,7 +463,6 @@ export async function getL2ProjectEntry(
       props: {
         id: 'data-posted',
         title: 'Data posted',
-        milestones: sortedMilestones,
         project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'data-posted'),
         ...dataPostedSection,
@@ -485,7 +481,6 @@ export async function getL2ProjectEntry(
       props: {
         id: 'liveness',
         title: 'Liveness',
-        milestones: sortedMilestones,
         project: chartProject,
         ...livenessSection,
       },
@@ -498,7 +493,6 @@ export async function getL2ProjectEntry(
       props: {
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
-        milestones: sortedMilestones,
       },
     })
   }
@@ -801,7 +795,7 @@ export async function getL2ProjectEntry(
     })
   }
 
-  return { ...common, sections }
+  return { ...common, sections, milestones }
 }
 
 /**

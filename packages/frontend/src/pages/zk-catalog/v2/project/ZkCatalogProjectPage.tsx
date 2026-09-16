@@ -68,7 +68,10 @@ export function ZkCatalogProjectPage({
                 <div className="row-start-2">
                   <ProjectZkCatalogSummary project={projectEntry} />
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={projectEntry.sections} />
+                    <ProjectDetails
+                      items={projectEntry.sections}
+                      milestones={projectEntry.milestones}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
                 {!isNavigationEmpty && (

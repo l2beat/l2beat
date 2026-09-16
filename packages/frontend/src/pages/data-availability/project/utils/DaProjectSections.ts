@@ -141,8 +141,8 @@ export async function getRegularDaProjectSections({
   if (livenessSection && bridge) {
     daBridgeItems.push({
       type: 'LivenessSection',
+      hideMilestones: true,
       props: {
-        milestones: [],
         project: toChartProject(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
@@ -230,15 +230,11 @@ export async function getRegularDaProjectSections({
   }
 
   if (layer.milestones && layer.milestones.length > 0) {
-    const sortedMilestones = layer.milestones.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    )
     items.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
-        milestones: sortedMilestones,
       },
     })
   }
@@ -347,7 +343,6 @@ export async function getEthereumDaProjectSections({
       dataSource: undefined,
       defaultRange: optionToRange('1y'),
       project: toChartProject(layer),
-      milestones: layer.milestones ?? [],
     },
   })
 

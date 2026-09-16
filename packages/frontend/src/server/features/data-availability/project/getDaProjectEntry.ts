@@ -1,4 +1,4 @@
-import type { Project, ProjectCustomColors } from '@l2beat/config'
+import type { Milestone, Project, ProjectCustomColors } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -15,6 +15,7 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { sortMilestonesNewestFirst } from '~/utils/project/sortMilestonesNewestFirst'
 import { getProjectInteropData } from '../../layer2s/interop/getProjectInteropData'
 import { getLiveness } from '../../layer2s/liveness/getLiveness'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
@@ -35,6 +36,7 @@ interface CommonDaProjectPageEntry {
   isUnderReview: boolean
   archivedAt: number | undefined
   colors: ProjectCustomColors | undefined
+  milestones: Milestone[]
   projectVariants?: {
     title: string
     href: string
@@ -170,6 +172,7 @@ export async function getDaProjectEntry(
 
   const result: DaProjectPageEntry = {
     entryType: 'common',
+    milestones: sortMilestonesNewestFirst(layer.milestones),
     name: layer.name,
     slug: layer.slug,
     icon: manifest.getUrl(`/icons/${layer.slug}.png`),
@@ -320,6 +323,7 @@ export async function getEthereumDaProjectEntry(
 
   return {
     entryType: 'ethereum',
+    milestones: sortMilestonesNewestFirst(layer.milestones),
     name: layer.name,
     slug: layer.slug,
     icon: manifest.getUrl(`/icons/${layer.slug}.png`),

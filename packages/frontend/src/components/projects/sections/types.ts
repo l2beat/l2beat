@@ -93,29 +93,37 @@ export type ProjectSectionProps = Omit<
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
+// Milestones are shared by every chart on a project page, so the entry carries
+// them once and ProjectDetails hands them out instead of each section
+// serializing its own copy.
+type ProjectDetailsPropsWithoutMilestones<T> = Omit<
+  T,
+  'sectionOrder' | 'milestones'
+>
+
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
-  props: ProjectDetailsProps<CostsSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<CostsSectionProps>
 }
 
 interface ProjectDetailsLivenessSection {
   type: 'LivenessSection'
-  props: ProjectDetailsProps<LivenessSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<LivenessSectionProps>
 }
 
 interface ProjectDetailsThroughputSection {
   type: 'ThroughputSection'
-  props: ProjectDetailsProps<ThroughputSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<ThroughputSectionProps>
 }
 
 interface ProjectDetailsL2TvsSection {
   type: 'L2TvsSection'
-  props: ProjectDetailsProps<L2TvsSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<L2TvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
   type: 'ActivitySection'
-  props: ProjectDetailsProps<ActivitySectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<ActivitySectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -125,7 +133,7 @@ interface ProjectDetailsDetailedDescriptionSection {
 
 interface ProjectDetailsMilestonesAndIncidentsSection {
   type: 'MilestonesAndIncidentsSection'
-  props: ProjectDetailsProps<MilestonesAndIncidentsSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<MilestonesAndIncidentsSectionProps>
 }
 
 interface ProjectDetailsRiskSummarySection {
@@ -205,7 +213,7 @@ interface ProjectDetailsContractsSection {
 
 interface ProjectDetailsDataPostedSection {
   type: 'DataPostedSection'
-  props: ProjectDetailsProps<DataPostedSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<DataPostedSectionProps>
 }
 
 interface ProjectDetailsInteropVolumeSection {
@@ -250,7 +258,7 @@ interface ProjectDetailsInteropTokenTransfersSection {
 
 interface ProjectDetailsGroup {
   type: 'Group'
-  props: ProjectDetailsProps<GroupSectionProps>
+  props: ProjectDetailsPropsWithoutMilestones<GroupSectionProps>
 }
 
 interface ProjectDetailsGardenCropsSection {
@@ -301,6 +309,7 @@ interface ProjectDetailsExternalDependenciesSection {
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
+  hideMilestones?: boolean
 } & (
   | ProjectDetailsCostsSection
   | ProjectDetailsLivenessSection

@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { LazyHydrate } from '~/components/LazyHydrate'
 import { ActivitySection } from './sections/ActivitySection'
@@ -47,6 +48,7 @@ interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
+  milestones?: Milestone[]
   selectedUpdateId?: string
 }
 
@@ -78,6 +80,7 @@ function renderSection(
   const sectionOrder = props.parentSection
     ? `${props.parentSection}.${index + 1}`
     : `${index + 1}`
+  const milestones = item.hideMilestones ? [] : (props.milestones ?? [])
 
   switch (item.type) {
     case 'L2TvsSection':
@@ -86,6 +89,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'ZkCatalogTvsSection':
@@ -102,6 +106,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'CostsSection':
@@ -110,6 +115,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'DataPostedSection':
@@ -118,6 +124,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'LivenessSection':
@@ -126,6 +133,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'ThroughputSection':
@@ -134,6 +142,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'DetailedDescriptionSection':
@@ -150,6 +159,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={milestones}
         />
       )
     case 'RiskSummarySection':
@@ -342,6 +352,7 @@ function renderSection(
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
+          milestones={props.milestones}
         />
       )
     case 'GardenCropsSection':

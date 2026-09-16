@@ -1,4 +1,5 @@
 import type {
+  Milestone,
   Project,
   ProjectRedWarning,
   ProjectZkCatalogInfo,
@@ -14,6 +15,7 @@ import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
+import { sortMilestonesNewestFirst } from '~/utils/project/sortMilestonesNewestFirst'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -50,6 +52,7 @@ export interface ProjectZkCatalogEntry {
     }
   }
   sections: ProjectDetailsSection[]
+  milestones: Milestone[]
 }
 
 export async function getZkCatalogProjectEntry(
@@ -89,10 +92,7 @@ export async function getZkCatalogProjectEntry(
     changePeriod,
   } = getZkCatalogProjectTvs(project, allProjects, tvs)
 
-  const sortedMilestones =
-    project.milestones?.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    ) ?? []
+  const milestones = sortMilestonesNewestFirst(project.milestones)
 
   const header: ProjectZkCatalogEntry['header'] = {
     description: project.display.description,
@@ -155,7 +155,6 @@ export async function getZkCatalogProjectEntry(
       props: {
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
-        milestones: sortedMilestones,
       },
     })
   }
@@ -203,5 +202,5 @@ export async function getZkCatalogProjectEntry(
     })
   }
 
-  return { ...common, sections }
+  return { ...common, sections, milestones }
 }

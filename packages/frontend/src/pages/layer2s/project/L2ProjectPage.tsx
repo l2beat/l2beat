@@ -125,6 +125,7 @@ export function L2ProjectPage({
                   <HighlightableLinkContextProvider>
                     <ProjectDetails
                       items={projectEntry.sections}
+                      milestones={projectEntry.milestones}
                       selectedUpdateId={selectedUpdateId}
                     />
                   </HighlightableLinkContextProvider>

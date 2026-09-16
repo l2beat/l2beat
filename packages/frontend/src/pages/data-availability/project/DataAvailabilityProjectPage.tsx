@@ -90,7 +90,10 @@ export function DataAvailabilityProjectPage({
                     <RegularDaProjectSummary project={entry} />
                   )}
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      items={entry.sections}
+                      milestones={entry.milestones}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
 
