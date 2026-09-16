@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb46f39f0246149d84f4a27f518f4b6af964090cb
 
 ## Description
 
-Exited Superchain governance, executed by the SuperchainProxyAdminOwner: ProxyAdmin and DisputeGameFactory `owner` and the `guardian` role moved to the Conduit Multisig 1, and `superchainConfig` was repointed from the shared Superchain instance to the Conduit-operated fork (pauses expire after 3mo 1d). Same change on metal, mode and zora.
+Exited Superchain governance ([Maintenance Upgrade Proposal](https://vote.optimism.io/proposals/4304410266089046490387351551487953598976707777337874544366097374448296807206)), executed by the SuperchainProxyAdminOwner: ProxyAdmin and DisputeGameFactory `owner` and the `guardian` role moved to the Conduit Multisig 1, and `superchainConfig` was repointed from the shared Superchain instance to the Conduit-operated fork (pauses expire after 3mo 1d). Same change on metal, mode and zora.
 
 ## Watched changes
 
