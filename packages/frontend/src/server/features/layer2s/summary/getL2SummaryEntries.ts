@@ -106,7 +106,6 @@ export interface L2SummaryEntry extends CommonL2Entry {
     | undefined
   tvsOrder: number
   risks: RosetteValue[]
-  baseLayerRisks: RosetteValue[] | undefined
 }
 
 export function getL2SummaryEntry(
@@ -156,8 +155,5 @@ export function getL2SummaryEntry(
     risks: getL2Risks(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),
-    baseLayerRisks: project.scalingRisks.host
-      ? getL2Risks(project.scalingRisks.host)
-      : undefined,
   }
 }
