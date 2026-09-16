@@ -22,7 +22,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "set merkleRoot and, after the recovery timestamp while claims are paused, withdraw all tokens and ETH."
+          "description": "set merkleRoot, sweep the bridge's ETH into the OptimismPortal while claims are paused, and after the recovery timestamp withdraw all tokens and ETH."
         }
       ]
     },

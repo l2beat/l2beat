@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x21136cb841ace4f94b557cbafa7212cdebcec53e
+Generated with discovered.json: 0x5736134efe463c56b6b1ef9524d76dc5a2465f3d
 
-# Diff at Wed, 16 Sep 2026 14:23:46 GMT:
+# Diff at Wed, 16 Sep 2026 14:50:15 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1783591047
-- current timestamp: 1789568562
+- current timestamp: 1789570151
 
 ## Description
 
@@ -13,10 +13,10 @@ K2 core bridge contracts replaced with a Merkle-claim exit mechanism; batch post
 OptimismPortal implementation `0x3fe449Ef47228F03f979F9D955196494243cdf7E` (v1.10.0) → `0xB1762246367681e5b335968950e8A17b0c56021D` (v2.3.0), upgraded and paused by the KarakMultisig on 2026-09-15 04:45 UTC (tx `0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd`). `depositTransaction()`, `receive()`, `proveWithdrawalTransaction()` and `finalizeWithdrawalTransaction()` now revert. Escrowed ETH (1876 ETH) is claimable via `claimETH(amount, proof)` against `merkleRootETH` = `0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9`, set on 2026-09-16 04:03 UTC (tx `0x2080dbdfa4798b9003dfe3e8b5bf8ea1772143eaf44acac1217002904eef87ec`, which also unpaused the portal); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, amount))))`, claims are cumulative per address. The Guardian can pause/unpause claims and, while paused and after `RECOVERY_TIMESTAMP` = 1820707200 (2027-09-12), call `recoverETH(recipient)` for the full balance.
 https://disco.l2beat.com/diff/eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E/eth:0xB1762246367681e5b335968950e8A17b0c56021D
 
-L1StandardBridge implementation `0xC4De51792746960FC0ac78360b8e9c6E103F3B13` (v1.4.0) → `0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A` (v2.3.0) in the same tx. All deposit entrypoints and `finalizeBridgeETH()`/`finalizeBridgeERC20()` now revert. Escrowed ERC20s are claimable via `claimTokens(tokens[], amounts[], proof[])` against `merkleRoot` = `0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840` (set 2026-09-16 04:03 UTC); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, tokens, amounts))))`, cumulative per claimer and token. The Guardian (read from the portal) can call `recoverTokens(recipient, tokens[])` and `sweepETH()` under the same paused + `RECOVERY_TIMESTAMP` conditions.
+L1StandardBridge implementation `0xC4De51792746960FC0ac78360b8e9c6E103F3B13` (v1.4.0) → `0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A` (v2.3.0) in the same tx. All deposit entrypoints and `finalizeBridgeETH()`/`finalizeBridgeERC20()` now revert. Escrowed ERC20s are claimable via `claimTokens(tokens[], amounts[], proof[])` against `merkleRoot` = `0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840` (set 2026-09-16 04:03 UTC); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, tokens, amounts))))`, cumulative per claimer and token. The Guardian (read from the portal) can call `recoverTokens(recipient, tokens[])` under the same paused + `RECOVERY_TIMESTAMP` conditions, and `sweepETH()` while claims are paused to forward the bridge's ETH balance to the OptimismPortal.
 https://disco.l2beat.com/diff/eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13/eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A
 
-Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on 2026-09-15 01:22:59 UTC; L2 blocks since then are empty sequencer-window blocks. Proposer `0x4179f43f3b994e97090557363b09F403138a729e` keeps posting output roots every 7200 blocks (last 2026-09-16 09:46 UTC, L2 block 43056000). Last withdrawal initiated on L2 2026-09-13 18:51 UTC; withdrawals not finalized before the upgrade cannot be finalized. No claims executed yet; no public Merkle tree or announcement found.
+Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on 2026-09-15 01:22:59 UTC; L2 blocks since then are empty sequencer-window blocks. Proposer `0x4179f43f3b994e97090557363b09F403138a729e` keeps posting output roots for them every 7200 blocks (last 2026-09-16 13:49 UTC, L2 block 43063200). Last withdrawal initiated on L2 2026-09-13 18:51 UTC; withdrawals not finalized before the upgrade cannot be finalized. No claims executed yet; no public Merkle tree or announcement of the claim mechanism found.
 
 ## Watched changes
 
@@ -24,7 +24,7 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
     contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
     +++ description: None
       receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","description":"set merkleRoot and, after the recovery timestamp while claims are paused, withdraw all tokens and ETH.","role":".guardian"}
++        {"permission":"interact","from":"eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","description":"set merkleRoot, sweep the bridge's ETH into the OptimismPortal while claims are paused, and after the recovery timestamp withdraw all tokens and ETH.","role":".guardian"}
       receivedPermissions.3.description:
 -        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
 +        "set merkleRootETH, pause and unpause claims, and after RECOVERY_TIMESTAMP (while paused) withdraw the whole ETH balance."
