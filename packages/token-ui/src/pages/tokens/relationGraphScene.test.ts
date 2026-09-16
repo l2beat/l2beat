@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   type RelationGraph,
   type RelationGraphNode,
@@ -34,19 +34,15 @@ describe(buildRelationGraphScene.name, () => {
   it('positions every node and connects links to the shared node objects', () => {
     const scene = buildRelationGraphScene(graph)
 
-    expect(scene.nodes.length).toEqual(3)
+    expect(scene.nodes.length).toStrictEqual(3)
     for (const node of scene.nodes) {
-      expect(Number.isFinite(node.x)).toEqual(true)
-      expect(Number.isFinite(node.y)).toEqual(true)
+      expect(Number.isFinite(node.x)).toStrictEqual(true)
+      expect(Number.isFinite(node.y)).toStrictEqual(true)
     }
     for (const link of scene.links) {
       // Reference equality matters: dragging a node must move its links.
-      expect(found(scene.nodeById.get(link.source.data.id))).toExactlyEqual(
-        link.source,
-      )
-      expect(found(scene.nodeById.get(link.target.data.id))).toExactlyEqual(
-        link.target,
-      )
+      expect(found(scene.nodeById.get(link.source.data.id))).toBe(link.source)
+      expect(found(scene.nodeById.get(link.target.data.id))).toBe(link.target)
     }
   })
 
@@ -56,20 +52,22 @@ describe(buildRelationGraphScene.name, () => {
     const parallel = scene.links.filter(
       (link) => link.target.data.id === tokenId('base', '0xbbb'),
     )
-    expect(parallel.map((link) => link.curve).sort((a, b) => a - b)).toEqual([
-      -8, 8,
-    ])
+    expect(
+      parallel.map((link) => link.curve).sort((a, b) => a - b),
+    ).toStrictEqual([-8, 8])
     const single = scene.links.find(
       (link) => link.target.data.id === tokenId('optimism', '0xccc'),
     )
-    expect(single?.curve).toEqual(0)
+    expect(single?.curve).toStrictEqual(0)
   })
 
   it('labels the cluster with its most common deployed symbol', () => {
     const scene = buildRelationGraphScene(graph)
 
-    expect(scene.clusterLabels.map((label) => label.text)).toEqual(['USDC'])
-    expect(scene.clusterLabels[0]?.nodes.length).toEqual(3)
+    expect(scene.clusterLabels.map((label) => label.text)).toStrictEqual([
+      'USDC',
+    ])
+    expect(scene.clusterLabels[0]?.nodes.length).toStrictEqual(3)
   })
 
   it('attaches a node without relations to the cluster whose most common abstract token matches, without an edge', () => {
@@ -93,19 +91,19 @@ describe(buildRelationGraphScene.name, () => {
       ],
     })
 
-    expect(scene.clusterLabels.length).toEqual(1)
+    expect(scene.clusterLabels.length).toStrictEqual(1)
     expect(
       scene.clusterLabels[0]?.nodes.some(
         (node) => node.data.id === withoutRelations.id,
       ),
-    ).toEqual(true)
+    ).toStrictEqual(true)
     expect(
       scene.links.some(
         (link) =>
           link.source.data.id === withoutRelations.id ||
           link.target.data.id === withoutRelations.id,
       ),
-    ).toEqual(false)
+    ).toStrictEqual(false)
   })
 
   it('keeps a node without relations whose abstract token claims no cluster as its own cluster', () => {
@@ -121,11 +119,11 @@ describe(buildRelationGraphScene.name, () => {
       relations: [relation('ethereum', '0xaaa', 'base', '0xbbb', 'first')],
     })
 
-    expect(scene.clusterLabels.map((label) => label.text)).toEqual([
+    expect(scene.clusterLabels.map((label) => label.text)).toStrictEqual([
       'USDC',
       'DAI',
     ])
-    expect(scene.clusterLabels[1]?.nodes.length).toEqual(1)
+    expect(scene.clusterLabels[1]?.nodes.length).toStrictEqual(1)
   })
 
   it('prefers the largest cluster when several share the most common abstract token', () => {
@@ -159,7 +157,7 @@ describe(buildRelationGraphScene.name, () => {
       scene.clusterLabels.map((label) =>
         label.nodes.map((node) => node.data.id),
       ),
-    ).toEqual([
+    ).toStrictEqual([
       [
         tokenId('arbitrum', '0xccc'),
         tokenId('base', '0xbbb'),
@@ -177,12 +175,12 @@ describe(findNodeAt.name, () => {
   const scene = sceneWith([near, far], [])
 
   it('returns the nearest node within the radius', () => {
-    expect(found(findNodeAt(scene, 2, 1, 5))).toExactlyEqual(near)
-    expect(found(findNodeAt(scene, 7, 0, 5))).toExactlyEqual(far)
+    expect(found(findNodeAt(scene, 2, 1, 5))).toBe(near)
+    expect(found(findNodeAt(scene, 7, 0, 5))).toBe(far)
   })
 
   it('returns undefined when every node is out of reach', () => {
-    expect(findNodeAt(scene, 2, 1, 1)).toEqual(undefined)
+    expect(findNodeAt(scene, 2, 1, 1)).toStrictEqual(undefined)
   })
 })
 
@@ -196,21 +194,21 @@ describe(findLinkAt.name, () => {
   it('picks the closest link within the tolerance', () => {
     // The curved link's control point sits 16 world units off the straight
     // line, which puts its midpoint 8 units off it.
-    expect(found(findLinkAt(scene, 50, 0, 2))).toExactlyEqual(straight)
-    expect(found(findLinkAt(scene, 50, 8, 2))).toExactlyEqual(curved)
-    expect(findLinkAt(scene, 50, 20, 5)).toEqual(undefined)
+    expect(found(findLinkAt(scene, 50, 0, 2))).toBe(straight)
+    expect(found(findLinkAt(scene, 50, 8, 2))).toBe(curved)
+    expect(findLinkAt(scene, 50, 20, 5)).toStrictEqual(undefined)
   })
 
   it('ignores excluded links', () => {
     // Tolerance 10 reaches both links from the query point; exclusion is
     // what removes them, not distance.
-    expect(found(findLinkAt(scene, 50, 0, 10))).toExactlyEqual(straight)
-    expect(
-      found(findLinkAt(scene, 50, 0, 10, new Set([straight.id]))),
-    ).toExactlyEqual(curved)
+    expect(found(findLinkAt(scene, 50, 0, 10))).toBe(straight)
+    expect(found(findLinkAt(scene, 50, 0, 10, new Set([straight.id])))).toBe(
+      curved,
+    )
     expect(
       findLinkAt(scene, 50, 0, 10, new Set([straight.id, curved.id])),
-    ).toEqual(undefined)
+    ).toStrictEqual(undefined)
   })
 })
 
@@ -222,8 +220,8 @@ describe(distanceToLink.name, () => {
       'straight',
       0,
     )
-    expect(distanceToLink(linkGeometry(link), 50, 7)).toEqual(7)
-    expect(distanceToLink(linkGeometry(link), -3, 0)).toEqual(3)
+    expect(distanceToLink(linkGeometry(link), 50, 7)).toStrictEqual(7)
+    expect(distanceToLink(linkGeometry(link), -3, 0)).toStrictEqual(3)
   })
 })
 

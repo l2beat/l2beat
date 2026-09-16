@@ -1,9 +1,10 @@
 {
   "extends": "@l2beat/typescript-config/react",
   "compilerOptions": {
-    "types": ["node", "mocha"],
+    "types": ["node"],
     "paths": {
       "react": ["./node_modules/@types/react"]
     }
-  }
+  },
+  "exclude": ["vitest.config.ts"]
 }

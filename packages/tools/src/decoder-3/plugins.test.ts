@@ -1,6 +1,5 @@
-import { expect } from 'earl'
-import { describe } from 'mocha'
 import { encodeFunctionData, parseAbi } from 'viem'
+import { describe, expect, it } from 'vitest'
 import { decode } from './plugins'
 
 const SET_IMPLEMENTATION_ABI =
@@ -21,10 +20,12 @@ describe('packed argument plugin', () => {
     })
     const decoded = decode(calldata, [], 1, FACTORY)
 
-    expect(decoded?.functionName).toEqual('setImplementation')
+    expect(decoded?.functionName).toStrictEqual('setImplementation')
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('tuple')
-    expect(args?.members?.map(({ name, value }) => ({ name, value }))).toEqual([
+    expect(args?.type).toStrictEqual('tuple')
+    expect(
+      args?.members?.map(({ name, value }) => ({ name, value })),
+    ).toStrictEqual([
       {
         name: 'absolutePrestate',
         value:
@@ -60,8 +61,8 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('bytes')
-    expect(args?.value).toEqual(GAME_ARGS)
+    expect(args?.type).toStrictEqual('bytes')
+    expect(args?.value).toStrictEqual(GAME_ARGS)
   })
 
   it('does not apply the schema to malformed packed args', () => {
@@ -73,7 +74,7 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('bytes')
-    expect(args?.value).toEqual('0xdeadbeef')
+    expect(args?.type).toStrictEqual('bytes')
+    expect(args?.value).toStrictEqual('0xdeadbeef')
   })
 })

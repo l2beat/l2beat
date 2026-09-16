@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   drawRelationGraph,
   getLinkStyle,
@@ -30,7 +30,7 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), viewState())
 
-    expect(drawnText).toEqual([
+    expect(drawnText).toStrictEqual([
       { text: 'TOKEN', x: 50, y: 28 },
       { text: 'unichain', x: 50, y: 38 },
     ])
@@ -46,7 +46,7 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), view)
 
-    expect(drawnText).toEqual([])
+    expect(drawnText).toStrictEqual([])
   })
 
   it('keeps the cluster heading above a focused symbol when zoomed out', () => {
@@ -70,7 +70,7 @@ describe(drawRelationGraph.name, () => {
     if (symbol === undefined || cluster === undefined) {
       throw new Error('Expected both symbol and cluster labels to be drawn')
     }
-    expect(cluster.y <= symbol.y - 8).toEqual(true)
+    expect(cluster.y <= symbol.y - 8).toStrictEqual(true)
   })
 })
 
@@ -78,7 +78,7 @@ describe(getLinkStyle.name, () => {
   const link = sceneLink('lockAndMint', false)
 
   it('draws unremarkable links thin and semi-transparent', () => {
-    expect(getLinkStyle(link, styleInputs({}))).toEqual({
+    expect(getLinkStyle(link, styleInputs({}))).toStrictEqual({
       color: RELATION_COLORS.lockAndMint,
       opacity: 0.55,
       width: 1.4,
@@ -96,8 +96,8 @@ describe(getLinkStyle.name, () => {
     )
 
     for (const style of [hoveredDirectly, hoveredViaEndpoint]) {
-      expect(style.opacity).toEqual(0.95)
-      expect(style.width).toEqual(3)
+      expect(style.opacity).toStrictEqual(0.95)
+      expect(style.width).toStrictEqual(3)
     }
   })
 
@@ -107,7 +107,7 @@ describe(getLinkStyle.name, () => {
       relationIds: new Set([link.id]),
     }
 
-    expect(getLinkStyle(link, styleInputs({ focus }))).toEqual({
+    expect(getLinkStyle(link, styleInputs({ focus }))).toStrictEqual({
       color: RELATION_COLORS.lockAndMint,
       opacity: 0.95,
       width: 2.8,
@@ -117,7 +117,7 @@ describe(getLinkStyle.name, () => {
         link,
         styleInputs({ focus: { nodeIds: new Set(), relationIds: new Set() } }),
       ).opacity,
-    ).toEqual(0.08)
+    ).toStrictEqual(0.08)
   })
 
   it('recolors links by conflict state when anomalies are highlighted', () => {
@@ -126,10 +126,14 @@ describe(getLinkStyle.name, () => {
         sceneLink('lockAndMint', true),
         styleInputs({ highlightAnomalies: true }),
       ),
-    ).toEqual({ color: RELATION_COLORS.conflict, opacity: 0.95, width: 2.2 })
+    ).toStrictEqual({
+      color: RELATION_COLORS.conflict,
+      opacity: 0.95,
+      width: 2.2,
+    })
     expect(
       getLinkStyle(link, styleInputs({ highlightAnomalies: true })),
-    ).toEqual({ color: RELATION_COLORS.muted, opacity: 0.22, width: 1.4 })
+    ).toStrictEqual({ color: RELATION_COLORS.muted, opacity: 0.22, width: 1.4 })
   })
 })
 
@@ -142,13 +146,13 @@ describe(getNodeRingOpacity.name, () => {
         node,
         styleInputs({ hovered: { type: 'node', id: node.data.id } }),
       ),
-    ).toEqual(0.8)
+    ).toStrictEqual(0.8)
     expect(
       getNodeRingOpacity(
         node,
         styleInputs({ selection: { type: 'node', id: node.data.id } }),
       ),
-    ).toEqual(1)
+    ).toStrictEqual(1)
   })
 
   it('shows a softer ring on the endpoints of a selected relation', () => {
@@ -163,19 +167,19 @@ describe(getNodeRingOpacity.name, () => {
           },
         }),
       ),
-    ).toEqual(0.7)
+    ).toStrictEqual(0.7)
   })
 
   it('hides the ring otherwise', () => {
-    expect(getNodeRingOpacity(node, styleInputs({}))).toEqual(0)
+    expect(getNodeRingOpacity(node, styleInputs({}))).toStrictEqual(0)
   })
 })
 
 describe(nodeVisualScreenScale.name, () => {
   it('scales nodes with the world until they reach constant screen size', () => {
-    expect(nodeVisualScreenScale(0.5)).toEqual(0.5)
-    expect(nodeVisualScreenScale(1.2)).toEqual(1.2)
-    expect(nodeVisualScreenScale(4)).toEqual(1.2)
+    expect(nodeVisualScreenScale(0.5)).toStrictEqual(0.5)
+    expect(nodeVisualScreenScale(1.2)).toStrictEqual(1.2)
+    expect(nodeVisualScreenScale(4)).toStrictEqual(1.2)
   })
 })
 

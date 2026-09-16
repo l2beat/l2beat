@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { findDraggableNodeAt } from './relationGraphInteraction'
 import type { RelationGraphNode } from './relationGraphModel'
 import type { RelationGraphScene, SceneNode } from './relationGraphScene'
@@ -8,15 +8,13 @@ describe(findDraggableNodeAt.name, () => {
   const scene = sceneWith(node)
 
   it('returns undefined while node labels are hidden', () => {
-    expect(findDraggableNodeAt(scene, node.x, node.y, 10, 0.5)).toEqual(
+    expect(findDraggableNodeAt(scene, node.x, node.y, 10, 0.5)).toStrictEqual(
       undefined,
     )
   })
 
   it('returns the node once node labels are visible', () => {
-    expect(
-      found(findDraggableNodeAt(scene, node.x, node.y, 10, 1)),
-    ).toExactlyEqual(node)
+    expect(found(findDraggableNodeAt(scene, node.x, node.y, 10, 1))).toBe(node)
   })
 })
 
