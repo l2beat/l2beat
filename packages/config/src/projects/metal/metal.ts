@@ -45,6 +45,7 @@ export const metal: ScalingProject = opStackL2({
       ],
     },
   },
+  hasSuperchainScUpgrades: false,
   chainConfig: {
     name: 'metal',
     chainId: 1750,

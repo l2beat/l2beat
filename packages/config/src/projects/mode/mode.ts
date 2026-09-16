@@ -41,6 +41,7 @@ export const mode: ScalingProject = opStackL2({
       other: ['https://growthepie.com/chains/mode'],
     },
   },
+  hasSuperchainScUpgrades: false,
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
