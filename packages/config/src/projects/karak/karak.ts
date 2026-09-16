@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('karak')
 
 export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
+  archivedAt: UnixTime(1789568562), // 2026-09-16T14:22:42Z
   additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [
@@ -21,6 +22,8 @@ export const karak: ScalingProject = opStackL2({
     slug: 'k2',
     description:
       'K2 is a general-purpose L2, which rebranded to the OpenGDP Network to soon become an asset tokenization-focused L1.',
+    headerWarning:
+      'K2 has been shut down. The sequencer and batcher stopped on 2026-09-15 and the OptimismPortal and L1StandardBridge were replaced with claim-only contracts: escrowed ETH and ERC20s can only be claimed on L1 with a Merkle proof against roots set by the KarakMultisig, which can recover all remaining funds after 2027-09-12. No claim interface or Merkle tree has been published. The only public notice is a [Discord announcement from November 2025](https://farcaster.xyz/pranjal/0x030bd1ba) asking users to unstake and bridge out by 2025-12-31.',
     links: {
       websites: ['https://karak.network/'],
       bridges: ['https://k2bridge.karak.network/'],
@@ -45,6 +48,7 @@ export const karak: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1789435379), // 2026-09-15T01:22:59Z, last batch posted
   },
   genesisTimestamp: UnixTime(1703226695), //First sequencer transaction
   daTracking: [
@@ -57,6 +61,14 @@ export const karak: ScalingProject = opStackL2({
   ],
   isNodeAvailable: true,
   milestones: [
+    {
+      title: 'K2 shut down, bridge switched to claim-only',
+      url: 'https://etherscan.io/tx/0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd',
+      date: '2026-09-15T00:00:00Z',
+      description:
+        'Sequencer and batcher stopped; bridge contracts only allow Merkle-proof claims of escrowed funds.',
+      type: 'incident',
+    },
     {
       title: 'Karak rebrands to OpenGDP',
       url: 'https://x.com/OpenGDP/status/1990437951529226293',

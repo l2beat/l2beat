@@ -1,6 +1,6 @@
 {
   "name": "karak",
-  "timestamp": 1789567688,
+  "timestamp": 1789568562,
   "configHash": "0x8bad24510c03de28bb009a5dae1515f5c5ac9aa8a37a04f2a1a1a13eb130520c",
   "entries": [
     {
@@ -874,7 +874,7 @@
     "opstack/OptimismPortal_K2_claim": "0xd1314e340753c0385b972657a1befc155e3c80bb3ec8dcd61c40922d725ac187",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25990533 },
+  "usedBlockNumbers": { "ethereum": 25990606 },
   "permissionsConfigHash": "0x6255deed6241a9ba82c0877b409eee1252c264a60dd50482697300380d6cbec4",
   "permissions": {
     "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": {
