@@ -1,3 +1,317 @@
+Generated with discovered.json: 0xa742a853b5de0f76e8fe3603cfe7eebc6e577ff0
+
+# Diff at Wed, 16 Sep 2026 14:35:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1787669007
+- current timestamp: 1789569237
+
+## Description
+
+Upgrade to the BoLD dispute protocol and ArbOS v51 "Dia" (nitro-contracts v3.1.0). Executed 2026-09-08 by Conduit Multisig 1 via the UpgradeExecutor through Conduit's `BOLDUpgradeAction` `0x3ffd88b35a268bbabd7f24096746a12e16cc408b`, whose verified source matches the v3.1.0 tag. Same action contract as EDU Chain with identical timing parameters and a different stake amount, executed 30 minutes apart. Rollup logic, EdgeChallengeManager and OneStepProver implementations are the Conduit deployments already used by Corn, Plume, Lasernet, Galxe Gravity, Pepe Unchained and Powerloom; the bridge-side implementations are not used by any other tracked project.
+
+RollupProxy replaced with a new BoLD-enabled contract `0xB55002d2795217Fd3B91EcBb3385ba9A231E5327` (`isPostBoLD: true`). Assertion-based state management replaces the old node-based system. Validator whitelist remains enabled with the same single validator (`0x3ec947F2…`). Stake unchanged at 0.1 ETH, now held as WETH. `confirmPeriodBlocks` unchanged at 45818 (~6d 8h). `minimumAssertionPeriod` 10 → 75 blocks (2m → 15m). `validatorAfkBlocks` 45818 → 2^50, so the whitelist can no longer be dropped for validator inactivity. `challengeGracePeriodBlocks` 14400 (48h) introduced: after a challenge, the winning edge must have been confirmed for 48h before the assertion can be confirmed. `anyTrustFastConfirmer` not set (unchanged).
+
+ChallengeManager replaced with EdgeChallengeManager implementing the BoLD multi-level bisection protocol: `challengePeriodBlocks` 45818, block-level edges (height 67M), 1 big-step level (height 524K), small-step edges (height 8.4M), with 0.1 WETH stake for big-step and small-step edges. Only whitelisted validators can open layer-zero edges; bisection and edge confirmation are permissionless.
+
+All core contracts upgraded: Bridge, Inbox, Outbox, RollupEventInbox, SequencerInbox. SequencerInbox gains delay buffer support (`isDelayBufferable: true`, buffer max/threshold 2^50-1, i.e. disabled) and an unset `feeTokenPricer`. `delayBlocks` increased from 5760 to 7200 (`delaySeconds` unchanged at 86400); `reader4844` updated to `0xB1F1A77A…`.
+Implementation diffs: [Bridge](https://disco.l2beat.com/diff/eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F/eth:0x677ECf96DBFeE1deFbDe8D2E905A39f73Aa27B89), [Inbox](https://disco.l2beat.com/diff/eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C/eth:0x9C4ce5EF20F831F4e7fEcf58aAA0Cda8d3091c35), [Outbox](https://disco.l2beat.com/diff/eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC/eth:0x186267690cb723d72A7EDBC002476E23D694cB33), [RollupEventInbox](https://disco.l2beat.com/diff/eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494/eth:0x7b6784fbd233EDB47E11eA4e7205fC4229447662), [SequencerInbox](https://disco.l2beat.com/diff/eth:0x734B78823c4d979045EC23F38B54A070df7769FF/eth:0xE4bE5495054fE4fa4Ea5972219484984927681E3).
+
+All four OneStepProvers and OneStepProofEntry replaced with new versions. ValidatorUtils removed (no longer needed in BoLD).
+
+ArbOS wasmModuleRoot updated from v40 (`0xdb698a25…`) to v51 "Dia" (`0x8a7513bf…`, consensus-v51).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) [orbitstack/OneStepProverHostIo]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.from:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      directlyReceivedPermissions.2.from:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) [orbitstack/OneStepProverMemory]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) [orbitstack/ValidatorUtils]
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) [orbitstack/OneStepProver0]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Bridge (eth:0x383c03c4EfF819E73409DbC690755a9992393814) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0xee14083a0b352490f5722c13dd14921389ef859f1789815b19964e628a4d1bad"
++        "0x29acc2652c0eb213e1a10f1c211600303d26e856116587d65e6fb4d40f0e6bae"
+      values.$implementation:
+-        "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "eth:0x677ECf96DBFeE1deFbDe8D2E905A39f73Aa27B89"
+      values.$pastUpgrades.1:
++        ["2026-09-08T11:59:11.000Z","0x88bcfd3a7fa65b9ee0f95f9296c16a506511cad3cc6b03552d2548cebd8dd3eb",["eth:0x677ECf96DBFeE1deFbDe8D2E905A39f73Aa27B89"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      implementationNames.eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F:
+-        "Bridge"
+      implementationNames.eth:0x677ECf96DBFeE1deFbDe8D2E905A39f73Aa27B89:
++        "Bridge"
+    }
+```
+
+```diff
+    EOA (eth:0x3ec947F2A6690a4a82E0AC59Ff0837474572CEE5) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validators"
++        ".getValidators"
+      receivedPermissions.0.from:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      sourceHashes.1:
+-        "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
++        "0x9e054d18af00f58f7fa36e7a0fd5b04b9dacfb8c411d84c3591e57aa72faff9d"
+      values.$implementation:
+-        "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
++        "eth:0x186267690cb723d72A7EDBC002476E23D694cB33"
+      values.$pastUpgrades.1:
++        ["2026-09-08T11:59:11.000Z","0x88bcfd3a7fa65b9ee0f95f9296c16a506511cad3cc6b03552d2548cebd8dd3eb",["eth:0x186267690cb723d72A7EDBC002476E23D694cB33"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      implementationNames.eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC:
+-        "Outbox"
+      implementationNames.eth:0x186267690cb723d72A7EDBC002476E23D694cB33:
++        "Outbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) [orbitstack/RollupProxy_fastConfirm]
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A","role":"admin","via":[{"address":"eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327","role":"admin","via":[{"address":"eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"}]}
+      receivedPermissions.7.from:
+-        "eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
++        "eth:0xBA105c3F0FfAAF093614C1eFEcA0AEe7Bc1a0098"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x672109752635177ebcb17F2C7e04575A709014BD) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x079413b2ba56c63471a9435a6cbf3759e7d14eb942e6ce789b0b893ec3e6f947"
++        "0xa8ec42edee4ac983b2d5fed2ee80ff160072927ebae439c96414a1b729fd6455"
+      values.$implementation:
+-        "eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
++        "eth:0x9C4ce5EF20F831F4e7fEcf58aAA0Cda8d3091c35"
+      values.$pastUpgrades.2:
++        ["2026-09-08T11:59:11.000Z","0x88bcfd3a7fa65b9ee0f95f9296c16a506511cad3cc6b03552d2548cebd8dd3eb",["eth:0x9C4ce5EF20F831F4e7fEcf58aAA0Cda8d3091c35"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C:
+-        "Inbox"
+      implementationNames.eth:0x9C4ce5EF20F831F4e7fEcf58aAA0Cda8d3091c35:
++        "Inbox"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
++        "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
+      values.$implementation:
+-        "eth:0x734B78823c4d979045EC23F38B54A070df7769FF"
++        "eth:0xE4bE5495054fE4fa4Ea5972219484984927681E3"
+      values.$pastUpgrades.3:
++        ["2026-09-08T11:59:11.000Z","0x88bcfd3a7fa65b9ee0f95f9296c16a506511cad3cc6b03552d2548cebd8dd3eb",["eth:0xE4bE5495054fE4fa4Ea5972219484984927681E3"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        7200
+      values.reader4844:
+-        "eth:0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
++        "eth:0xB1F1A77AB63671a6355Fa5c8423f436118943411"
+      values.rollup:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      values.feeTokenPricer:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isDelayBufferable:
++        true
+      implementationNames.eth:0x734B78823c4d979045EC23F38B54A070df7769FF:
+-        "SequencerInbox"
+      implementationNames.eth:0xE4bE5495054fE4fa4Ea5972219484984927681E3:
++        "SequencerInbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5) [orbitstack/ChallengeManager]
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+    contract ProxyAdmin (eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.5.from:
+-        "eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
++        "eth:0xBA105c3F0FfAAF093614C1eFEcA0AEe7Bc1a0098"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) [orbitstack/OneStepProofEntry]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) [orbitstack/OneStepProverMath]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupEventInbox (eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sourceHashes.1:
+-        "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b"
++        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
+      values.$implementation:
+-        "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "eth:0x7b6784fbd233EDB47E11eA4e7205fC4229447662"
+      values.$pastUpgrades.1:
++        ["2026-09-08T11:59:11.000Z","0x88bcfd3a7fa65b9ee0f95f9296c16a506511cad3cc6b03552d2548cebd8dd3eb",["eth:0x7b6784fbd233EDB47E11eA4e7205fC4229447662"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327"
+      implementationNames.eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
+-        "RollupEventInbox"
+      implementationNames.eth:0x7b6784fbd233EDB47E11eA4e7205fC4229447662:
++        "RollupEventInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283) [orbitstack/OneStepProverMemory]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (eth:0x7368F782E109518fD3914e8b315eE45E51C15835) [orbitstack/OneStepProver0]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (eth:0x91cB57F200Bd5F897E41C164425Ab4DB0991A64f) [orbitstack/OneStepProofEntry]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327) [orbitstack/RollupProxyBoLD]
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
++   Status: CREATED
+    contract EdgeChallengeManager (eth:0xBA105c3F0FfAAF093614C1eFEcA0AEe7Bc1a0098) [orbitstack/EdgeChallengeManager]
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (eth:0xD1D75248ed95450B793d80F9fb418C2eD4c5F5e4) [orbitstack/OneStepProverMath]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (eth:0xDdaD5E59D056078A4E67a9d42e21Ce8057F22D60) [orbitstack/OneStepProverHostIo]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1787669007 => .flat}/Bridge/Bridge.sol  |  335 +-
+ .../ChallengeManager.sol => /dev/null              | 1389 ------
+ .../EdgeChallengeManager/EdgeChallengeManager.sol  | 3859 +++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |   18 +-
+ .../{.flat@1787669007 => .flat}/Inbox/Inbox.sol    |  935 +++--
+ .../OneStepProofEntry.sol                          |  679 +--
+ .../{.flat@1787669007 => .flat}/OneStepProver0.sol |  553 +--
+ .../OneStepProverHostIo.sol                        |  696 +--
+ .../OneStepProverMath.sol                          |  152 +-
+ .../OneStepProverMemory.sol                        |  472 ++-
+ .../{.flat@1787669007 => .flat}/Outbox/Outbox.sol  |  187 +-
+ .../RollupEventInbox/RollupEventInbox.sol          |  355 +-
+ .../RollupProxy/RollupAdminLogic.1.sol             | 4192 ++++++++++--------
+ .../RollupProxy/RollupProxy.p.sol                  | 1844 +++++---
+ .../RollupProxy/RollupUserLogic.2.sol              | 4432 +++++++++++---------
+ .../SequencerInbox/SequencerInbox.sol              | 1227 ++++--
+ .../ValidatorUtils.sol => /dev/null                | 1464 -------
+ 17 files changed, 13174 insertions(+), 9615 deletions(-)
+```
+
 Generated with discovered.json: 0x1387a018f4588c169fc2bad06dac770701cf08e7
 
 # Diff at Tue, 25 Aug 2026 14:44:31 GMT:

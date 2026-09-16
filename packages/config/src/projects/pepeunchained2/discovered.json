@@ -1496,12 +1496,12 @@
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxyBoLD": "0x2698d3d5c271b76e0481b26e00170b2cee6acdd8288354954fa73af2825ede23",
+    "orbitstack/RollupProxyBoLD": "0x5eef3df4ab14f8fd62a94f4859c72bc10faaaf8d77da9364574ed4bf9061ae4d",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "ethereum": 25832884 },
-  "permissionsConfigHash": "0xd59f5b5e278b7309b99492291cb49ccd042f5f8033cf68f0be7b3a5defedc914",
+  "permissionsConfigHash": "0xbc83f0899db228fa477f0fda0760c1f31af5e676bb10852048547246d5328b16",
   "permissions": {
     "eth:0x16a93209382236236e964b9C22853e34C3095028": {
       "directlyReceivedPermissions": [
@@ -1567,7 +1567,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x53E276D701Fc2338F6F015B0038Ce8ba3d5d01CC" }
@@ -1673,7 +1673,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {

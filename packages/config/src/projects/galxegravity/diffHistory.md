@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xc9e7aca6ef9e6b32ea1f3d85e9f9de7c75b5a7dd
+
+# Diff at Wed, 16 Sep 2026 14:36:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1787668976
+- current timestamp: 1787668976
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787668976 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xa5D23c69894241825dAffB570c3c742C0F52df96) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0xfa08a802c3b953264b6fd368fde0303d296ece1d
 
 # Diff at Tue, 25 Aug 2026 14:44:01 GMT:

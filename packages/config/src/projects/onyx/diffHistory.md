@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x11f604459baa61e083bd429167a2f4afb1311dc7
+
+# Diff at Wed, 16 Sep 2026 14:34:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1787132849
+- current timestamp: 1787132849
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission (the fast confirmer now shows it) and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787132849 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (base:0x133f066C470d044dB3889359fC5B542d016B5B92) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    EOA (base:0xe2fbeb5dBc2E08Ce410C3164924E3643F620B325) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"base:0x133f066C470d044dB3889359fC5B542d016B5B92"}]}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0xb0a9b755bc2ff6bac13ccfc8a31a93355bc50082
 
 # Diff at Wed, 19 Aug 2026 12:45:20 GMT:
