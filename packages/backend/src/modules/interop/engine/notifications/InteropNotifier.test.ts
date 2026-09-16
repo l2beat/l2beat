@@ -155,7 +155,7 @@ describe(InteropNotifier.name, () => {
     await notifier._TEST_ONLY_waitTillEmpty()
 
     const message = webhookClient.sendMessage.mock.calls[0][0] as string
-    expect(message.includes('backoffice.l2beat.com')).toStrictEqual(false)
+    expect(message).not.toContain('backoffice.l2beat.com')
   })
 
   it('adds a backoffice deep-link to a blocked snapshot when environment is set', async () => {
