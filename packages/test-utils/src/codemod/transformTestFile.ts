@@ -36,6 +36,7 @@ export function transformTestFile(
   const file = parse(fileName, text)
   const context: Context = {
     edits: [],
+    blockers: [],
     reviews: [],
     needed: new Set<string>(),
     mockVariables: collectMockVariables(file),
@@ -65,7 +66,7 @@ export function transformTestFile(
   const output = applyEdits(text, context.edits)
   return {
     text: output,
-    blockers: findLeftovers(output),
+    blockers: [...context.blockers, ...findLeftovers(output)],
     reviews: context.reviews,
     usesTestUtils:
       context.usesCustomMatchers || output.includes(TEST_UTILS_PACKAGE),
@@ -80,6 +81,7 @@ interface Edit {
 
 interface Context {
   edits: Edit[]
+  blockers: Finding[]
   reviews: Finding[]
   needed: Set<string>
   mockVariables: Set<string>
@@ -202,7 +204,22 @@ function rewriteRecordedCalls(
     context.edits.push(
       span(args.getExpression().getEnd(), args.getEnd(), optionality(args)),
     )
+    return
   }
+  if (!readsOnlyTheCount(node) && !isStoredInLocal(node)) {
+    context.blockers.push(
+      finding(
+        node,
+        'earl records a call as { args }, vitest as the argument array itself - drop the .args hop',
+      ),
+    )
+  }
+}
+
+/** `const calls = mock.calls` is handled later by rewriteHistoryArgs, so it is
+ * not a blocker on its own. */
+function isStoredInLocal(calls: PropertyAccessExpression): boolean {
+  return Node.isVariableDeclaration(calls.getParent())
 }
 
 /**
@@ -256,6 +273,15 @@ function collectCallHistoryVariables(
     }
   })
   return names
+}
+
+/** `calls.length` means the same thing either way; every other way of reaching
+ * into the history sees the shape difference. */
+function readsOnlyTheCount(calls: PropertyAccessExpression): boolean {
+  const parent = calls.getParent()
+  return (
+    Node.isPropertyAccessExpression(parent) && parent.getName() === 'length'
+  )
 }
 
 /** Matches the `.calls[i].args`, `.calls[i]?.args` and `.calls[i]!.args` that

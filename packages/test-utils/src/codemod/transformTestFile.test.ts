@@ -299,6 +299,29 @@ describe(transformTestFile.name, () => {
       expect(output).toContain('calls[calls.length - 1]?.[1]')
     })
 
+    it('flags a call record it cannot rewrite instead of breaking it quietly', () => {
+      const result = transform(`
+        import { expect, mockFn } from 'earl'
+        const send = mockFn()
+        expect(send.calls.map((call) => call.args[0])).toEqual([1])
+      `)
+
+      expect(result.text).toContain('send.mock.calls.map')
+      expect(result.blockers).toHaveLength(1)
+      expect(result.blockers[0]?.note).toContain('.args')
+    })
+
+    it('says nothing about a call count, which reads the same either way', () => {
+      const result = transform(`
+        import { expect, mockFn } from 'earl'
+        const send = mockFn()
+        expect(send.calls.length).toEqual(1)
+      `)
+
+      expect(result.text).toContain('send.mock.calls.length')
+      expect(result.blockers).toHaveLength(0)
+    })
+
     it('leaves calls on something that is not a mock', () => {
       const output = run(`
         import { expect } from 'earl'
@@ -346,7 +369,11 @@ describe(transformTestFile.name, () => {
 })
 
 function run(source: string): string {
-  return transformTestFile('a.ts', dedent(source)).text
+  return transform(source).text
+}
+
+function transform(source: string) {
+  return transformTestFile('a.ts', dedent(source))
 }
 
 function matcher(assertion: string): string {
