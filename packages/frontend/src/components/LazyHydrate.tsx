@@ -15,9 +15,8 @@ interface Props {
  * below-the-fold sections cost nothing on the hydration task.
  *
  * Not a Suspense boundary on purpose: React client-renders a boundary it has
- * not hydrated yet as soon as any context above it changes, and next-themes
- * does that right after mount. That would drop the server markup or force
- * every section to hydrate at once.
+ * not hydrated yet as soon as any context above it changes. That would drop
+ * the server markup or force every section to hydrate at once.
  */
 export function LazyHydrate({ children, eager = false, className }: Props) {
   const [ref, isNear] = useIsNearViewport()
