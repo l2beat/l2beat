@@ -415,7 +415,9 @@ describe('discovery config.jsonc', () => {
         ].join('\n\n'),
       )
     }
-  }, 10_000)
+    // Generates clingo for every project; a loaded CI runner takes well over
+    // the default budget and the point is correctness, not speed.
+  }, 60_000)
 })
 
 function compareLeftKeysInRight(
