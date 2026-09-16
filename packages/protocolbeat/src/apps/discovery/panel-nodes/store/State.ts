@@ -47,6 +47,7 @@ export interface State {
 // 'select' is the default pointer: a left drag moves nodes or draws a
 // selection box. 'hand' turns a left drag into panning, for mouse-only users
 // who have no trackpad gesture and don't know about space/middle-button drag.
+// Holding space borrows 'hand' temporarily, see effectiveTool.
 export type Tool = 'select' | 'hand'
 
 export interface Node {

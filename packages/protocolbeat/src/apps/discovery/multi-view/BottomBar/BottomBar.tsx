@@ -132,7 +132,10 @@ export function BottomBar() {
                 <Keys keys={[altKey, 'Shift', 'G']} /> - Ungroup nodes
               </li>
               <li>
-                <Keys keys={['H']} /> - Toggle hand tool (drag to pan)
+                <Keys keys={['V']} /> - Selection tool
+              </li>
+              <li>
+                <Keys keys={['H']} /> - Hand tool (drag to pan)
               </li>
               <li>
                 <Keys keys={['Space']} /> + drag or middle mouse drag - Pan view
