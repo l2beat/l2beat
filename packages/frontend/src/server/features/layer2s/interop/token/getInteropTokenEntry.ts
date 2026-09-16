@@ -10,6 +10,7 @@ export interface InteropTokenEntry {
 export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
+  deploymentsCount: number,
   /** Undefined when the token has no deployments. */
   relationsGraph: InteropTokenRelationsGraph | undefined,
 ): InteropTokenEntry {
@@ -53,12 +54,5 @@ export function getInteropTokenEntry(
     },
   })
 
-  return {
-    sections,
-    deploymentsCount:
-      relationsGraph?.nodes.reduce(
-        (sum, node) => sum + node.deployments.length,
-        0,
-      ) ?? 0,
-  }
+  return { sections, deploymentsCount }
 }
