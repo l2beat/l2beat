@@ -83,7 +83,10 @@ function convertPackageConfig(
   report: MigrationReport,
 ): void {
   const { packageDir, dryRun } = options
-  const testGlob = readMochaSpec(packageDir) ?? DEFAULT_TEST_GLOB
+  const mocha = readMochaConfig(packageDir)
+  const includes = (
+    mocha.specs.length > 0 ? mocha.specs : [DEFAULT_TEST_GLOB]
+  ).filter((glob) => !PRESET_INCLUDES.includes(glob))
 
   for (const name of readdirSync(packageDir)) {
     if (name.startsWith('.mocharc')) {
@@ -96,7 +99,10 @@ function convertPackageConfig(
 
   write(
     join(packageDir, 'vitest.config.ts'),
-    vitestConfig(testGlob, usesTestUtils),
+    vitestConfig(includes, [
+      ...(usesTestUtils ? [`${TEST_UTILS}/setup`] : []),
+      ...mocha.setupFiles,
+    ]),
     options,
     report,
   )
@@ -119,7 +125,7 @@ function convertPackageConfig(
         config.exclude = [...exclude, 'vitest.config.ts']
       }
       if (name === 'tsconfig.json') {
-        declareGlobals(config, usesTestUtils)
+        declareGlobals(config, usesTestUtils, report)
       }
     })
   }
@@ -135,9 +141,24 @@ function convertPackageConfig(
  * goes on the list so that its `declare module 'vitest'` augmentation is loaded
  * even in files that only use a custom matcher and import nothing from it.
  */
-// biome-ignore lint/suspicious/noExplicitAny: a config file is arbitrary JSON
-function declareGlobals(config: any, usesTestUtils: boolean): void {
-  const types: string[] = config.compilerOptions?.types ?? ['node']
+function declareGlobals(
+  // biome-ignore lint/suspicious/noExplicitAny: a config file is arbitrary JSON
+  config: any,
+  usesTestUtils: boolean,
+  report: MigrationReport,
+): void {
+  // Writing a `types` list where there was none narrows the package to exactly
+  // that list, dropping every `@types/*` it used to pick up automatically, so
+  // a package without one is left alone and flagged instead.
+  const types: string[] | undefined = config.compilerOptions?.types
+  if (types === undefined) {
+    if (usesTestUtils) {
+      report.manualSteps.push(
+        `tsconfig.json declares no "types", so ${TEST_UTILS}'s matcher types are not loaded - add the list by hand`,
+      )
+    }
+    return
+  }
   const kept = types.filter(
     (type: string) => type !== 'mocha' && type !== TEST_UTILS,
   )
@@ -147,10 +168,10 @@ function declareGlobals(config: any, usesTestUtils: boolean): void {
   }
 }
 
-function vitestConfig(testGlob: string, usesTestUtils: boolean): string {
+function vitestConfig(includes: string[], setupFiles: string[]): string {
   const overrides = [
-    ...(PRESET_INCLUDES.includes(testGlob) ? [] : [`include: ['${testGlob}']`]),
-    ...(usesTestUtils ? ["setupFiles: ['@l2beat/test-utils/setup']"] : []),
+    ...(includes.length > 0 ? [list('include', includes)] : []),
+    ...(setupFiles.length > 0 ? [list('setupFiles', setupFiles)] : []),
   ]
   const argument =
     overrides.length === 0
@@ -163,15 +184,45 @@ export default defineVitestConfig(${argument})
 `
 }
 
-function readMochaSpec(packageDir: string): string | undefined {
+function list(key: string, values: string[]): string {
+  return `${key}: [${values.map((it) => `'${it}'`).join(', ')}]`
+}
+
+interface MochaConfig {
+  specs: string[]
+  /** Mocha's `file`, which runs before the suites - vitest's `setupFiles`. */
+  setupFiles: string[]
+}
+
+function readMochaConfig(packageDir: string): MochaConfig {
   const name = readdirSync(packageDir).find((it) => it.startsWith('.mocharc'))
   if (!name) {
-    return undefined
+    return { specs: [], setupFiles: [] }
   }
-  const spec = /['"]?spec['"]?\s*:\s*['"]([^'"]+)['"]/.exec(
-    readFileSync(join(packageDir, name), 'utf8'),
+  const text = readFileSync(join(packageDir, name), 'utf8')
+  return {
+    specs: readStringList(text, 'spec'),
+    setupFiles: readStringList(text, 'file').map(asRelativePath),
+  }
+}
+
+/** A `.mocharc` is JSON or CommonJS and writes every key as either one string
+ * or an array of them, so both shapes are read as a list. */
+function readStringList(text: string, key: string): string[] {
+  const pattern = new RegExp(
+    `(?<![\\w$])['"]?${key}['"]?\\s*:\\s*(\\[[^\\]]*\\]|['"][^'"]*['"])`,
   )
-  return spec?.[1]
+  const value = pattern.exec(text)?.[1]
+  if (!value) {
+    return []
+  }
+  return [...value.matchAll(/['"]([^'"]+)['"]/g)].map((match) => match[1] ?? '')
+}
+
+/** Mocha resolves a `file` against the working directory; vitest resolves a
+ * bare specifier as a package, so the path has to say it is a path. */
+function asRelativePath(path: string): string {
+  return path.startsWith('.') ? path : `./${path}`
 }
 
 function withoutMochaAndEarl(

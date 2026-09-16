@@ -25,6 +25,21 @@ describe(transformTestFile.name, () => {
       expect(output).not.toContain('earl')
     })
 
+    it('folds an explicit mocha import into the vitest one', () => {
+      const output = run(`
+        import { expect } from 'earl'
+        import { describe } from 'mocha'
+        describe('x', () => {
+          it('y', () => {
+            expect(1).toEqual(1)
+          })
+        })
+      `)
+
+      expect(output).toContain("import { describe, expect, it } from 'vitest'")
+      expect(output).not.toContain("from 'mocha'")
+    })
+
     it('points mockObject at the shared helper', () => {
       const output = run(`
         import { expect, type MockObject, mockObject } from 'earl'

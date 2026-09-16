@@ -368,15 +368,12 @@ function rewriteAsymmetricMatcher(
 }
 
 function rewriteImports(file: SourceFile, needed: Set<string>): Edit[] {
-  const earlImport = file.getImportDeclaration(
-    (d) => d.getModuleSpecifierValue() === 'earl',
-  )
-  const vitestImport = file.getImportDeclaration(
-    (d) => d.getModuleSpecifierValue() === 'vitest',
-  )
-  const earlNames = earlImport
-    ? earlImport.getNamedImports().map((n) => n.getName())
-    : []
+  const superseded = file
+    .getImportDeclarations()
+    .filter((d) => SUPERSEDED_MODULES.has(d.getModuleSpecifierValue()))
+  const earlNames = superseded
+    .filter((d) => d.getModuleSpecifierValue() === 'earl')
+    .flatMap((d) => d.getNamedImports().map((n) => n.getName()))
   const lines: string[] = []
   const runnerApi = RUNNER_API.filter((name) => needed.has(name))
   if (runnerApi.length > 0) {
@@ -390,23 +387,18 @@ function rewriteImports(file: SourceFile, needed: Set<string>): Edit[] {
     lines.push(`import { ${helpers.join(', ')} } from '${TEST_UTILS_PACKAGE}'`)
   }
 
-  const anchor = earlImport ?? vitestImport ?? file.getStatements()[0]
-  if (!anchor || lines.length === 0) {
+  const [anchor, ...rest] = superseded
+  if (anchor) {
+    return [
+      ...rest.map((d) => span(d.getStart(), d.getEnd(), '')),
+      span(anchor.getStart(), anchor.getEnd(), lines.join('\n')),
+    ]
+  }
+  const first = file.getStatements()[0]
+  if (!first || lines.length === 0) {
     return []
   }
-  const edits: Edit[] = []
-  if (earlImport && vitestImport) {
-    edits.push(span(vitestImport.getStart(), vitestImport.getEnd(), ''))
-  }
-  const replacesAnchor = anchor === earlImport || anchor === vitestImport
-  edits.push(
-    span(
-      anchor.getStart(),
-      replacesAnchor ? anchor.getEnd() : anchor.getStart(),
-      replacesAnchor ? lines.join('\n') : `${lines.join('\n')}\n`,
-    ),
-  )
-  return edits
+  return [span(first.getStart(), first.getStart(), `${lines.join('\n')}\n`)]
 }
 
 function collectUsedRunnerApi(file: SourceFile, context: Context): void {
@@ -438,8 +430,7 @@ function collectShadowedNames(file: SourceFile): Set<string> {
     }
   })
   for (const declaration of file.getImportDeclarations()) {
-    const module = declaration.getModuleSpecifierValue()
-    if (module === 'earl' || module === 'vitest') {
+    if (SUPERSEDED_MODULES.has(declaration.getModuleSpecifierValue())) {
       continue
     }
     for (const specifier of declaration.getNamedImports()) {
@@ -618,6 +609,13 @@ const project = new Project({
 
 const TEST_UTILS_PACKAGE = '@l2beat/test-utils'
 
+/** Modules vitest replaces outright: whatever a file imported from these, it
+ * now imports from `vitest` or `@l2beat/test-utils`. Files that spell out
+ * `import { describe } from 'mocha'` are the reason this is not just `earl` -
+ * left alone, that import would shadow the vitest one and survive the
+ * migration. */
+const SUPERSEDED_MODULES = new Set(['earl', 'mocha', 'vitest'])
+
 const RUNNER_API = [
   'afterAll',
   'afterEach',
@@ -678,6 +676,11 @@ const PRIMITIVE_CONSTRUCTORS: Record<string, string> = {
 
 const LEFTOVERS: [RegExp, string][] = [
   [/from 'earl'/, 'earl import left in place'],
+  [/from 'mocha'/, 'mocha import left in place'],
+  [
+    /@sinonjs\/fake-timers/,
+    'sinon fake timers - use vi.useFakeTimers() and vi.advanceTimersByTime()',
+  ],
   [/\bmockFn\b/, 'earl mockFn - replace with vi.fn()'],
   [
     /\.given\(/,
