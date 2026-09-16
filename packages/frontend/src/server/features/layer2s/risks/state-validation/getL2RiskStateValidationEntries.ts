@@ -123,7 +123,10 @@ export interface L2RiskStateValidationValidityEntry extends CommonL2Entry {
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetups: TrustedSetupsByProofSystem[string][]
+  trustedSetups: Pick<
+    TrustedSetupsByProofSystem[string],
+    'trustedSetups' | 'verifiers'
+  >[]
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
   permissioned: boolean | undefined
@@ -167,7 +170,7 @@ function getL2RiskStateValidationValidityEntry(
         allProjects,
         { id: project.id, contracts: project.contracts },
       ),
-    ),
+    ).map(({ trustedSetups, verifiers }) => ({ trustedSetups, verifiers })),
   )
 
   const projectTvs = tvs.projects[project.id.toString()]
