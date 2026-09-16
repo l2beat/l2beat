@@ -4,9 +4,9 @@
   "category": "core",
   "description": "Holds node operators' collateral-token stake. Staking and unstaking are open to the operator or their designated collateral withdrawal address; unstaking is a two-step withdrawal with a {{ unstakingPeriod }} waiting period. The stake is not inert: any registered contract can lock, burn, or transfer it, and a legacy validator contract can slash it, so an operator's collateral is exposed to whatever code is registered at those names.",
   "ignoreInWatchMode": [
-    "getTotalRPLStake",
-    "getTotalMegapoolRPLStake",
-    "getTotalLegacyRPLStake"
+    "getTotalStakedRPL",
+    "getTotalMegapoolStakedRPL",
+    "getTotalLegacyStakedRPL"
   ],
   "fields": {
     "constructorArgs": {
