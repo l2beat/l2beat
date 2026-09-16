@@ -12,7 +12,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import {
   createAddressAnchors,
@@ -52,11 +53,11 @@ describe(createAddressAnchors.name, () => {
   it('creates an anchor only for the first occurrence of an address', () => {
     const getAddressAnchor = createAddressAnchors('contracts')
 
-    expect(getAddressAnchor(contractAddress)).toEqual(
+    expect(getAddressAnchor(contractAddress)).toStrictEqual(
       getContractAddressAnchor('contracts', contractAddress),
     )
-    expect(getAddressAnchor(contractAddress)).toEqual(undefined)
-    expect(getAddressAnchor(adminAddress)).toEqual(
+    expect(getAddressAnchor(contractAddress)).toStrictEqual(undefined)
+    expect(getAddressAnchor(adminAddress)).toStrictEqual(
       getContractAddressAnchor('contracts', adminAddress),
     )
   })
@@ -153,7 +154,7 @@ describe(createAddressAnchors.name, () => {
       permissionsSection,
     )
 
-    expect(entries).toEqual([
+    expect(entries).toStrictEqual([
       {
         address: contractAddress,
         target: {
@@ -184,8 +185,8 @@ describe(createAddressAnchors.name, () => {
         target: undefined,
       },
     ])
-    expect(contract.addresses[1]?.anchorId).toEqual(undefined)
-    expect(contract.admins[0]?.anchorId).toEqual(undefined)
+    expect(contract.addresses[1]?.anchorId).toStrictEqual(undefined)
+    expect(contract.admins[0]?.anchorId).toStrictEqual(undefined)
   })
 })
 

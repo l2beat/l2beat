@@ -1,6 +1,6 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { aggregateActivityRecords } from './aggregateActivityRecords'
 
@@ -18,7 +18,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       [NOW]: {
         timestamp: NOW,
         count: 150, // 100 + 50
@@ -45,7 +45,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('starts aggregating from the first non-Ethereum record with count > 0', () => {
@@ -58,7 +58,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       [NOW + 2 * UnixTime.DAY]: {
         timestamp: NOW + 2 * UnixTime.DAY,
         count: 100,
@@ -71,7 +71,7 @@ describe(aggregateActivityRecords.name, () => {
 
   it('handles empty input array', () => {
     const result = aggregateActivityRecords([])
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })
 

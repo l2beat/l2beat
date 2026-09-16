@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   getInitialInteropSelection,
   type InteropSelectionQuery,
@@ -13,7 +13,7 @@ describe(getInitialInteropSelection.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       from: [],
       to: [],
     })
@@ -30,7 +30,7 @@ describe(getInitialInteropSelection.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       from: ['ethereum', 'arbitrum'],
       to: ['ethereum', 'base'],
     })

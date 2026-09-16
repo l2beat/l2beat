@@ -1,5 +1,5 @@
 import type { ProjectDiscoveryUpdate } from '@l2beat/config'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { countRecentDiscoveryUpdates } from './discoveryUpdates'
 
 const DAY = 24 * 60 * 60
@@ -29,14 +29,14 @@ describe(countRecentDiscoveryUpdates.name, () => {
       NOW,
     )
 
-    expect(count).toEqual(2)
+    expect(count).toStrictEqual(2)
   })
 
   it('ignores updates without a timestamp', () => {
-    expect(countRecentDiscoveryUpdates([update(null)], NOW)).toEqual(0)
+    expect(countRecentDiscoveryUpdates([update(null)], NOW)).toStrictEqual(0)
   })
 
   it('returns zero for no updates', () => {
-    expect(countRecentDiscoveryUpdates([], NOW)).toEqual(0)
+    expect(countRecentDiscoveryUpdates([], NOW)).toStrictEqual(0)
   })
 })

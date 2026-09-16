@@ -1,19 +1,19 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 
 describe(getRelevantBridgeTypes.name, () => {
   it('returns the selected type when the view is filtered', () => {
     const result = getRelevantBridgeTypes(project(), 'nonMinting')
 
-    expect(result).toEqual(['nonMinting'])
+    expect(result).toStrictEqual(['nonMinting'])
   })
 
   it('returns all configured bridge types when the view is aggregated', () => {
     const result = getRelevantBridgeTypes(project(), undefined)
 
-    expect(result).toEqual(['lockAndMint', 'nonMinting'])
+    expect(result).toStrictEqual(['lockAndMint', 'nonMinting'])
   })
 })
 

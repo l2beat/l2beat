@@ -1,6 +1,6 @@
 import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { attachTrustedSetups } from './getPrivacyProjects'
 
 describe(attachTrustedSetups.name, () => {
@@ -29,7 +29,7 @@ describe(attachTrustedSetups.name, () => {
       ],
       [zkCatalogProject],
     )
-    expect(result?.trustedSetups).toEqual(own)
+    expect(result?.trustedSetups).toStrictEqual(own)
   })
 
   it('borrows trusted setups from the linked zk catalog project', () => {
@@ -37,11 +37,11 @@ describe(attachTrustedSetups.name, () => {
       [privacyProject({ zkCatalogId: ProjectId('zk') })],
       [zkCatalogProject],
     )
-    expect(result?.trustedSetups).toEqual(trustedSetups)
+    expect(result?.trustedSetups).toStrictEqual(trustedSetups)
   })
 
   it('returns no trusted setups when nothing is linked', () => {
     const [result] = attachTrustedSetups([privacyProject({})], [])
-    expect(result?.trustedSetups).toEqual([])
+    expect(result?.trustedSetups).toStrictEqual([])
   })
 })

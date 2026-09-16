@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getValidInteropSelection } from './getValidInteropSelection'
 
 const CHAINS = ['ethereum', 'arbitrum', 'base']
@@ -13,7 +13,7 @@ describe(getValidInteropSelection.name, () => {
       CHAINS,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       from: ['ethereum', 'base'],
       to: ['arbitrum'],
     })

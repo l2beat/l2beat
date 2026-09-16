@@ -1,6 +1,6 @@
 import type { ProjectContracts } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import {
   getPastUpgradesData,
@@ -50,8 +50,10 @@ describe(getProjectPastUpgrades.name, () => {
 
     const result = getPastUpgradesData(getProjectPastUpgrades(contracts))
 
-    expect(result?.upgrades.length).toEqual(2)
-    expect(result?.upgrades.map((x) => x.implementations[0]?.address)).toEqual([
+    expect(result?.upgrades.length).toStrictEqual(2)
+    expect(
+      result?.upgrades.map((x) => x.implementations[0]?.address),
+    ).toStrictEqual([
       '0x980D1F93FC5809c828539c46084801673FA6A859',
       '0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10',
     ])
@@ -87,6 +89,6 @@ describe(getProjectPastUpgrades.name, () => {
 
     const result = getPastUpgradesData(getProjectPastUpgrades(contracts))
 
-    expect(result?.upgrades.length).toEqual(1)
+    expect(result?.upgrades.length).toStrictEqual(1)
   })
 })

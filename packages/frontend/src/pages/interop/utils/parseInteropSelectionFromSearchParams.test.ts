@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 
 const CHAINS = ['ethereum', 'arbitrum', 'base']
@@ -12,7 +12,7 @@ describe(parseInteropSelectionFromSearchParams.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       from: ['ethereum', 'arbitrum'],
       to: ['ethereum', 'arbitrum'],
     })
@@ -24,7 +24,7 @@ describe(parseInteropSelectionFromSearchParams.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       from: [],
       to: [],
     })

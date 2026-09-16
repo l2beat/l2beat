@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { buildCompareUrl } from './buildCompareUrl'
 import {
   type CompareChartConfig,
@@ -39,7 +39,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       'projects=arbitrum,base&range=30d&charts=activity:unit=tps',
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       projects: ['arbitrum', 'base'],
       range: '30d',
       charts: [chart({ metric: 'activity', activity: { unit: 'tps' } })],
@@ -49,7 +49,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('returns defaults when params are missing', () => {
     const result = parse('')
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       projects: undefined,
       range: '1y',
       charts: [chart()],
@@ -59,13 +59,13 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('keeps an explicitly emptied selection empty', () => {
     const result = parse('projects=')
 
-    expect(result.projects).toEqual([])
+    expect(result.projects).toStrictEqual([])
   })
 
   it('parses multiple charts', () => {
     const result = parse('charts=tvs:filter=stablecoin,activity,costs:unit=gas')
 
-    expect(result.charts).toEqual([
+    expect(result.charts).toStrictEqual([
       chart({ tvs: { filter: 'stablecoin' } }),
       chart({ metric: 'activity' }),
       chart({ metric: 'costs', costs: { unit: 'gas' } }),
@@ -75,7 +75,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('parses duplicate metrics with independent controls', () => {
     const result = parse('charts=tvs,tvs:unit=eth:filter=ether')
 
-    expect(result.charts).toEqual([
+    expect(result.charts).toStrictEqual([
       chart(),
       chart({ tvs: { unit: 'eth', filter: 'ether' } }),
     ])
@@ -84,7 +84,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('caps the number of charts at four', () => {
     const result = parse('charts=tvs,activity,costs,data-posted,tvs,activity')
 
-    expect(result.charts.map((c) => c.metric)).toEqual([
+    expect(result.charts.map((c) => c.metric)).toStrictEqual([
       'tvs',
       'activity',
       'costs',
@@ -95,25 +95,25 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('drops chart tokens with an unknown metric', () => {
     const result = parse('charts=bogus,activity')
 
-    expect(result.charts).toEqual([chart({ metric: 'activity' })])
+    expect(result.charts).toStrictEqual([chart({ metric: 'activity' })])
   })
 
   it('falls back to the default chart when every token is invalid', () => {
     const result = parse('charts=bogus,nonsense')
 
-    expect(result.charts).toEqual([chart()])
+    expect(result.charts).toStrictEqual([chart()])
   })
 
   it('ignores unknown chart fields and invalid values', () => {
     const result = parse('charts=tvs:unit=beans:flavor=mint:filter=everything')
 
-    expect(result.charts).toEqual([chart()])
+    expect(result.charts).toStrictEqual([chart()])
   })
 
   it('applies the unit only to the token metric', () => {
     const result = parse('charts=costs:unit=eth')
 
-    expect(result.charts).toEqual([
+    expect(result.charts).toStrictEqual([
       chart({ metric: 'costs', costs: { unit: 'eth' } }),
     ])
   })
@@ -121,7 +121,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('parses the tvs token exclusion toggles', () => {
     const result = parse('charts=tvs:excludeAssociated=true:excludeRwa=false')
 
-    expect(result.charts).toEqual([
+    expect(result.charts).toStrictEqual([
       chart({
         tvs: {
           excludeAssociatedTokens: true,
@@ -134,7 +134,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('drops unknown slugs and deduplicates', () => {
     const result = parse('projects=arbitrum,ethereum,arbitrum,nonsense,base')
 
-    expect(result.projects).toEqual(['arbitrum', 'base'])
+    expect(result.projects).toStrictEqual(['arbitrum', 'base'])
   })
 
   it('does not cap the number of selected projects', () => {
@@ -144,19 +144,19 @@ describe(parseCompareStateFromSearchParams.name, () => {
       validSlugs: slugs,
     })
 
-    expect(result.projects).toEqual(slugs)
+    expect(result.projects).toStrictEqual(slugs)
   })
 
   it('parses a custom range', () => {
     const result = parse('range=1700000000-1710000000')
 
-    expect(result.range).toEqual({ from: 1700000000, to: 1710000000 })
+    expect(result.range).toStrictEqual({ from: 1700000000, to: 1710000000 })
   })
 
   it('falls back to defaults on garbage values', () => {
     const result = parse('metric=bogus&range=yesterday&unit=beans&charts=')
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       projects: undefined,
       range: '1y',
       charts: [chart()],
@@ -166,7 +166,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('falls back to the default range when custom bounds are inverted', () => {
     const result = parse('range=1710000000-1700000000')
 
-    expect(result.range).toEqual('1y')
+    expect(result.range).toStrictEqual('1y')
   })
 
   it('round-trips through buildCompareUrl', () => {
@@ -179,7 +179,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(parse(search)).toEqual(state)
+    expect(parse(search)).toStrictEqual(state)
   })
 
   it('round-trips an explicitly emptied selection through buildCompareUrl', () => {
@@ -192,7 +192,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(parse(search)).toEqual(state)
+    expect(parse(search)).toStrictEqual(state)
   })
 
   it('round-trips a custom range through buildCompareUrl', () => {
@@ -205,7 +205,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(parse(search)).toEqual(state)
+    expect(parse(search)).toStrictEqual(state)
   })
 
   it('round-trips multiple charts with all their controls through buildCompareUrl', () => {
@@ -230,7 +230,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(parse(search)).toEqual(state)
+    expect(parse(search)).toStrictEqual(state)
   })
 
   it('round-trips duplicate tvs charts with different filters through buildCompareUrl', () => {
@@ -246,7 +246,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(parse(search)).toEqual(state)
+    expect(parse(search)).toStrictEqual(state)
   })
 
   it('round-trips the restricted rwa filter through buildCompareUrl', () => {
@@ -268,7 +268,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs:filter=rwaRestricted')
-    expect(parse(search)).toEqual(state)
+    expect(url).toStrictEqual(
+      '/layer2s/compare?charts=tvs:filter=rwaRestricted',
+    )
+    expect(parse(search)).toStrictEqual(state)
   })
 })

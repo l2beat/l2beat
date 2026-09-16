@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from './getIsProjectVerified'
 
@@ -27,8 +28,8 @@ describe(getProjectVerification.name, () => {
 
     const result = getProjectVerification(project, changes)
 
-    expect(result.unverifiedContracts).toEqual([stillUnverified])
-    expect(result.warnings.contracts).toEqual(
+    expect(result.unverifiedContracts).toStrictEqual([stillUnverified])
+    expect(result.warnings.contracts).toStrictEqual(
       'This project includes unverified contracts.',
     )
   })
@@ -48,7 +49,7 @@ describe(getProjectVerification.name, () => {
 
     const result = getProjectVerification(project, changes)
 
-    expect(result.unverifiedContracts).toEqual([])
-    expect(result.warnings.contracts).toEqual(undefined)
+    expect(result.unverifiedContracts).toStrictEqual([])
+    expect(result.warnings.contracts).toStrictEqual(undefined)
   })
 })

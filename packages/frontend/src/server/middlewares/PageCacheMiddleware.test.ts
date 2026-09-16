@@ -1,6 +1,6 @@
 import type { AddressInfo } from 'node:net'
-import { expect } from 'earl'
 import express from 'express'
+import { describe, expect, it } from 'vitest'
 import {
   ClearPageCacheMiddleware,
   PageCacheMiddleware,
@@ -13,35 +13,39 @@ describe(PageCacheMiddleware.name, () => {
   it('sets the page cache header on GET', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`)
-      expect(response.headers.get('cache-control')).toEqual(PAGE_CACHE_CONTROL)
+      expect(response.headers.get('cache-control')).toStrictEqual(
+        PAGE_CACHE_CONTROL,
+      )
     })
   })
 
   it('sets the page cache header on HEAD', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`, { method: 'HEAD' })
-      expect(response.headers.get('cache-control')).toEqual(PAGE_CACHE_CONTROL)
+      expect(response.headers.get('cache-control')).toStrictEqual(
+        PAGE_CACHE_CONTROL,
+      )
     })
   })
 
   it('does not set the header on other methods', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`, { method: 'POST' })
-      expect(response.headers.get('cache-control')).toEqual(null)
+      expect(response.headers.get('cache-control')).toStrictEqual(null)
     })
   })
 
   it('lets a route override the header later in the chain', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/no-cache`)
-      expect(response.headers.get('cache-control')).toEqual('no-cache')
+      expect(response.headers.get('cache-control')).toStrictEqual('no-cache')
     })
   })
 
   it('clears the header for requests no page route handled', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/api/not-a-page`)
-      expect(response.headers.get('cache-control')).toEqual(null)
+      expect(response.headers.get('cache-control')).toStrictEqual(null)
     })
   })
 })

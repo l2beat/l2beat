@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ChangelogEntry } from './getChangelogEntries'
 import {
   selectActiveChangelogWhatsNewWidget,
@@ -13,7 +13,7 @@ describe('changelog whats new selection', () => {
 
     const result = sortChangelogEntries([older, newer])
 
-    expect(result.map((entry) => entry.id)).toEqual(['newer', 'older'])
+    expect(result.map((entry) => entry.id)).toStrictEqual(['newer', 'older'])
   })
 
   it('selects the most recent active widget when there are overlaps', () => {
@@ -34,8 +34,8 @@ describe('changelog whats new selection', () => {
       now,
     )
 
-    expect(result?.id).toEqual('changelog-new-active')
-    expect(result?.image).toEqual('/new.png')
+    expect(result?.id).toStrictEqual('changelog-new-active')
+    expect(result?.image).toStrictEqual('/new.png')
   })
 
   it('skips expired and future widgets', () => {
@@ -53,7 +53,7 @@ describe('changelog whats new selection', () => {
 
     const result = selectActiveChangelogWhatsNewWidget([expired, future], now)
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('selects an entry only within its active window', () => {
@@ -69,10 +69,10 @@ describe('changelog whats new selection', () => {
       expiresAt: '2026-03-01T00:00:00.000Z',
     })
 
-    expect(selectActiveWhatsNewEntry([expired, active], now)?.id).toEqual(
+    expect(selectActiveWhatsNewEntry([expired, active], now)?.id).toStrictEqual(
       'active',
     )
-    expect(selectActiveWhatsNewEntry([expired], now)).toEqual(undefined)
+    expect(selectActiveWhatsNewEntry([expired], now)).toStrictEqual(undefined)
   })
 
   it('falls back to changelog anchor link when href is missing', () => {
@@ -86,8 +86,8 @@ describe('changelog whats new selection', () => {
 
     const result = selectActiveChangelogWhatsNewWidget([active], now)
 
-    expect(result?.href).toEqual('/changelog#anchor-test')
-    expect(result?.disabledOnMatches).toEqual(['/interop', '/bridges'])
+    expect(result?.href).toStrictEqual('/changelog#anchor-test')
+    expect(result?.disabledOnMatches).toStrictEqual(['/interop', '/bridges'])
   })
 })
 

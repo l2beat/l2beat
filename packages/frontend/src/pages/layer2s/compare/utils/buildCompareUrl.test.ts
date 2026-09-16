@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { buildCompareUrl } from './buildCompareUrl'
 import {
   type CompareChartConfig,
@@ -41,19 +41,19 @@ describe(buildCompareUrl.name, () => {
   it('returns a bare path for the default state', () => {
     const url = buildCompareUrl(PATH, state())
 
-    expect(url).toEqual(PATH)
+    expect(url).toStrictEqual(PATH)
   })
 
   it('serializes projects as a comma-separated list', () => {
     const url = buildCompareUrl(PATH, state({ projects: ['arbitrum', 'base'] }))
 
-    expect(url).toEqual('/layer2s/compare?projects=arbitrum,base')
+    expect(url).toStrictEqual('/layer2s/compare?projects=arbitrum,base')
   })
 
   it('serializes an explicitly emptied selection as an empty param', () => {
     const url = buildCompareUrl(PATH, state({ projects: [] }))
 
-    expect(url).toEqual('/layer2s/compare?projects=')
+    expect(url).toStrictEqual('/layer2s/compare?projects=')
   })
 
   it('omits defaults and serializes a non-default range', () => {
@@ -62,7 +62,7 @@ describe(buildCompareUrl.name, () => {
       state({ projects: ['arbitrum'], range: '30d' }),
     )
 
-    expect(url).toEqual('/layer2s/compare?projects=arbitrum&range=30d')
+    expect(url).toStrictEqual('/layer2s/compare?projects=arbitrum&range=30d')
   })
 
   it('serializes a custom range as from-to', () => {
@@ -71,7 +71,7 @@ describe(buildCompareUrl.name, () => {
       state({ range: { from: 1700000000, to: 1710000000 } }),
     )
 
-    expect(url).toEqual('/layer2s/compare?range=1700000000-1710000000')
+    expect(url).toStrictEqual('/layer2s/compare?range=1700000000-1710000000')
   })
 
   it('serializes a non-default metric with its non-default unit', () => {
@@ -80,19 +80,19 @@ describe(buildCompareUrl.name, () => {
       state({}, { metric: 'activity', activity: { unit: 'tps' } }),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=activity:unit=tps')
+    expect(url).toStrictEqual('/layer2s/compare?charts=activity:unit=tps')
   })
 
   it('omits the default activity unit', () => {
     const url = buildCompareUrl(PATH, state({}, { metric: 'activity' }))
 
-    expect(url).toEqual('/layer2s/compare?charts=activity')
+    expect(url).toStrictEqual('/layer2s/compare?charts=activity')
   })
 
   it('omits the activity unit for other metrics', () => {
     const url = buildCompareUrl(PATH, state({}, { activity: { unit: 'tps' } }))
 
-    expect(url).toEqual(PATH)
+    expect(url).toStrictEqual(PATH)
   })
 
   it('serializes the costs metric with its non-default unit', () => {
@@ -101,7 +101,7 @@ describe(buildCompareUrl.name, () => {
       state({}, { metric: 'costs', costs: { unit: 'gas' } }),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=costs:unit=gas')
+    expect(url).toStrictEqual('/layer2s/compare?charts=costs:unit=gas')
   })
 
   it('serializes the data-posted metric without any unit', () => {
@@ -118,7 +118,7 @@ describe(buildCompareUrl.name, () => {
       ),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=data-posted')
+    expect(url).toStrictEqual('/layer2s/compare?charts=data-posted')
   })
 
   it('serializes the non-default tvs controls', () => {
@@ -136,7 +136,7 @@ describe(buildCompareUrl.name, () => {
       ),
     )
 
-    expect(url).toEqual(
+    expect(url).toStrictEqual(
       '/layer2s/compare?charts=tvs:unit=eth:excludeAssociated=true:excludeRwa=false',
     )
   })
@@ -147,7 +147,7 @@ describe(buildCompareUrl.name, () => {
       state({}, { tvs: { filter: 'stablecoin' } }),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs:filter=stablecoin')
+    expect(url).toStrictEqual('/layer2s/compare?charts=tvs:filter=stablecoin')
   })
 
   it('omits the overridden rwa toggle while the restricted rwa filter is active', () => {
@@ -159,7 +159,9 @@ describe(buildCompareUrl.name, () => {
       ),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs:filter=rwaRestricted')
+    expect(url).toStrictEqual(
+      '/layer2s/compare?charts=tvs:filter=rwaRestricted',
+    )
   })
 
   it('omits the tvs controls for other metrics', () => {
@@ -179,7 +181,7 @@ describe(buildCompareUrl.name, () => {
       ),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=activity')
+    expect(url).toStrictEqual('/layer2s/compare?charts=activity')
   })
 
   it('serializes multiple charts joined by commas', () => {
@@ -194,7 +196,7 @@ describe(buildCompareUrl.name, () => {
       }),
     )
 
-    expect(url).toEqual(
+    expect(url).toStrictEqual(
       '/layer2s/compare?projects=arbitrum&charts=tvs,activity:unit=tps',
     )
   })
@@ -207,7 +209,9 @@ describe(buildCompareUrl.name, () => {
       }),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs,tvs:filter=stablecoin')
+    expect(url).toStrictEqual(
+      '/layer2s/compare?charts=tvs,tvs:filter=stablecoin',
+    )
   })
 
   it('encodes a lone default tvs chart only when accompanied by another chart', () => {
@@ -218,6 +222,6 @@ describe(buildCompareUrl.name, () => {
       }),
     )
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs,data-posted')
+    expect(url).toStrictEqual('/layer2s/compare?charts=tvs,data-posted')
   })
 })

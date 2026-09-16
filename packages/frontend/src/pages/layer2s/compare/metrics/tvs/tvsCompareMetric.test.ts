@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ChartRange } from '~/utils/range/range'
 import { getTvsCompareChartParams } from './tvsCompareMetric'
 
@@ -17,7 +17,7 @@ describe(getTvsCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.excludeRwaRestrictedTokens).toEqual(true)
+    expect(params.excludeRwaRestrictedTokens).toStrictEqual(true)
   })
 
   it('overrides the rwa exclusion while the restricted rwa filter is active', () => {
@@ -29,6 +29,6 @@ describe(getTvsCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.excludeRwaRestrictedTokens).toEqual(false)
+    expect(params.excludeRwaRestrictedTokens).toStrictEqual(false)
   })
 })

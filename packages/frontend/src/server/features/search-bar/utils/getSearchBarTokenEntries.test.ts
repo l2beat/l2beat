@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -10,7 +10,7 @@ describe(getSearchBarTokenEntries.name, () => {
       token({ id: 'usdc01', symbol: 'USDC', issuer: 'circle' }),
     ])
 
-    expect(entries).toEqual([
+    expect(entries).toStrictEqual([
       {
         type: 'token',
         category: 'tokens',
@@ -28,8 +28,8 @@ describe(getSearchBarTokenEntries.name, () => {
       token({ id: 'eth001', symbol: 'ETH', issuer: null, iconUrl: null }),
     ])
 
-    expect(entries[0]?.href).toEqual('/interop/tokens/eth001/eth')
-    expect(entries[0]?.iconUrl).toEqual(TOKEN_PLACEHOLDER_ICON_URL)
+    expect(entries[0]?.href).toStrictEqual('/interop/tokens/eth001/eth')
+    expect(entries[0]?.iconUrl).toStrictEqual(TOKEN_PLACEHOLDER_ICON_URL)
   })
 
   it('omits the unknown abstract token', () => {
@@ -37,7 +37,7 @@ describe(getSearchBarTokenEntries.name, () => {
       token({ id: UNKNOWN_ABSTRACT_TOKEN_ID, symbol: 'UNKNOWN' }),
     ])
 
-    expect(entries).toEqual([])
+    expect(entries).toStrictEqual([])
   })
 })
 

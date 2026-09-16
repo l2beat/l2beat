@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import { getInteropTokenUrl } from './getInteropTokenUrl'
 
@@ -10,7 +10,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'UNKNOWN',
     })
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns undefined for synthetic unknown tokens', () => {
@@ -21,7 +21,7 @@ describe(getInteropTokenUrl.name, () => {
       isUnknown: true,
     })
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('builds token URL from the token id, issuer and symbol', () => {
@@ -31,7 +31,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USDC',
     })
 
-    expect(result).toEqual('/interop/tokens/usdc01/circle/usdc')
+    expect(result).toStrictEqual('/interop/tokens/usdc01/circle/usdc')
   })
 
   it('skips the issuer segment when the issuer is unknown', () => {
@@ -41,7 +41,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'ETH',
     })
 
-    expect(result).toEqual('/interop/tokens/eth001/eth')
+    expect(result).toStrictEqual('/interop/tokens/eth001/eth')
   })
 
   it('slugifies segments that are not URL friendly', () => {
@@ -51,7 +51,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USDC.e',
     })
 
-    expect(result).toEqual('/interop/tokens/usdce1/circle-co/usdc-e')
+    expect(result).toStrictEqual('/interop/tokens/usdce1/circle-co/usdc-e')
   })
 
   it('folds accented characters down to ASCII', () => {
@@ -61,7 +61,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USD₮ 0',
     })
 
-    expect(result).toEqual('/interop/tokens/usdt01/tether-to/usd-0')
+    expect(result).toStrictEqual('/interop/tokens/usdt01/tether-to/usd-0')
   })
 
   it('falls back to the id alone when no segment survives slugification', () => {
@@ -71,6 +71,6 @@ describe(getInteropTokenUrl.name, () => {
       symbol: '屎壳郎',
     })
 
-    expect(result).toEqual('/interop/tokens/bBIepa')
+    expect(result).toStrictEqual('/interop/tokens/bBIepa')
   })
 })

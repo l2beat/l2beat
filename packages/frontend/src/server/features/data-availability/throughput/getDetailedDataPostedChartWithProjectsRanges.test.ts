@@ -1,6 +1,7 @@
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getDataPostedChartData } from './getDetailedDataPostedChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -31,7 +32,7 @@ describe(getDataPostedChartData.name, () => {
       [T, T + 2 * DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [
         [T, { [ARBITRUM]: 175, [BASE]: 10 }],
         [T + DAY, { [ARBITRUM]: 200, [BASE]: 20 }],
@@ -61,7 +62,7 @@ describe(getDataPostedChartData.name, () => {
       [T, T + 3 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: 100, [BASE]: null }],
       [T + DAY, { [ARBITRUM]: 0, [BASE]: 10 }],
       [T + 2 * DAY, { [ARBITRUM]: 300, [BASE]: 20 }],
@@ -80,10 +81,10 @@ describe(getDataPostedChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: 100, [noDaTracking]: null }],
     ])
-    expect(result.projects).toEqual([
+    expect(result.projects).toStrictEqual([
       { projectId: ARBITRUM, sinceTimestamp: T },
     ])
   })
@@ -105,7 +106,7 @@ describe(getDataPostedChartData.name, () => {
       [T, T + 3 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: 100, [BASE]: 10 }],
       [T + DAY, { [ARBITRUM]: 200, [BASE]: 0 }],
       [T + 2 * DAY, { [ARBITRUM]: null, [BASE]: 20 }],
@@ -127,7 +128,7 @@ describe(getDataPostedChartData.name, () => {
       [null, T + 3 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T + DAY, { [ARBITRUM]: 100 }],
       [T + 2 * DAY, { [ARBITRUM]: 200 }],
     ])
@@ -142,7 +143,7 @@ describe(getDataPostedChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [],
       projects: [],
       syncedUntil: T + DAY,

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { buildActivityProjectChartStats } from './buildActivityProjectChartStats'
 
 describe(buildActivityProjectChartStats.name, () => {
@@ -26,7 +26,7 @@ describe(buildActivityProjectChartStats.name, () => {
       },
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       tps: {
         pastDayCount: 2,
         pastDayChange: 1,
@@ -61,8 +61,8 @@ describe(buildActivityProjectChartStats.name, () => {
       },
     })
 
-    expect(result.uops.totalCount).toEqual(undefined)
-    expect(result.tps.totalCount).toEqual({
+    expect(result.uops.totalCount).toStrictEqual(undefined)
+    expect(result.tps.totalCount).toStrictEqual({
       value: 100,
       sinceTimestamp: SINCE,
     })

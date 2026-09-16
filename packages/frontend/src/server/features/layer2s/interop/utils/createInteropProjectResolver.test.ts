@@ -1,7 +1,7 @@
 import type { InteropPlugin, Project } from '@l2beat/config'
 import type { InteropPluginObservation } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { createInteropProjectResolver } from './createInteropProjectResolver'
 
 describe(createInteropProjectResolver.name, () => {
@@ -21,7 +21,7 @@ describe(createInteropProjectResolver.name, () => {
           bridgeType: 'burnAndMint',
         }),
       ).map((p) => p.id),
-    ).toEqual([ProjectId('usdt0')])
+    ).toStrictEqual([ProjectId('usdt0')])
   })
 
   it('returns every surviving match', () => {
@@ -51,7 +51,7 @@ describe(createInteropProjectResolver.name, () => {
       }),
     ])
 
-    expect(resolve(observation({ plugin: 'unknown' }))).toEqual([])
+    expect(resolve(observation({ plugin: 'unknown' }))).toStrictEqual([])
   })
 })
 

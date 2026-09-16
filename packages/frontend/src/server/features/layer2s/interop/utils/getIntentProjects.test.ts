@@ -1,6 +1,6 @@
 import type { InteropIntentConfig, InteropType, Project } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getIntentProjects } from './getIntentProjects'
 
 describe(getIntentProjects.name, () => {
@@ -11,7 +11,10 @@ describe(getIntentProjects.name, () => {
       project({ id: 'a', name: 'Alpha', type: 'intent', intent: intentConfig }),
     ])
 
-    expect(result.map((project) => project.id.toString())).toEqual(['a', 'b'])
+    expect(result.map((project) => project.id.toString())).toStrictEqual([
+      'a',
+      'b',
+    ])
   })
 })
 

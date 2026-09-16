@@ -1,6 +1,7 @@
 import type { IndexerConfigurationRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getConfigurationsSyncedUntil } from './getConfigurationsSyncedUntil'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
@@ -8,7 +9,7 @@ const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 describe(getConfigurationsSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
     const result = getConfigurationsSyncedUntil([])
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
@@ -19,7 +20,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
@@ -38,7 +39,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(FROM)
+    expect(result).toStrictEqual(FROM)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
@@ -61,6 +62,6 @@ describe(getConfigurationsSyncedUntil.name, () => {
       }),
     ])
 
-    expect(result).toEqual(FROM + 1 * UnixTime.HOUR)
+    expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)
   })
 })

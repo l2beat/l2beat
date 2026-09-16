@@ -1,6 +1,6 @@
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import {
   aggregateTransferSize,
@@ -41,11 +41,11 @@ function record(
 
 describe(aggregateTransferSize.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferSize([])).toEqual(undefined)
+    expect(aggregateTransferSize([])).toStrictEqual(undefined)
   })
 
   it('returns undefined when no transfers fall into any bucket', () => {
-    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toEqual(
+    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toStrictEqual(
       undefined,
     )
   })
@@ -71,7 +71,7 @@ describe(aggregateTransferSize.name, () => {
       }),
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       countUnder100: 2,
       percentageUnder100: 50,
       count100To1K: 1,
@@ -92,19 +92,19 @@ describe(aggregateTransferSize.name, () => {
     const result = aggregateTransferSize([
       record({ countUnder100: 1, identifiedCount: 0, srcValueUsd: 50 }),
     ])
-    expect(result?.averageTransferSizeUsd).toEqual(undefined)
+    expect(result?.averageTransferSizeUsd).toStrictEqual(undefined)
   })
 })
 
 describe(aggregateTransferType.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferType([])).toEqual(undefined)
+    expect(aggregateTransferType([])).toStrictEqual(undefined)
   })
 
   it('returns undefined when total volume is zero', () => {
     expect(
       aggregateTransferType([record({ bridgeType: 'lockAndMint' })]),
-    ).toEqual(undefined)
+    ).toStrictEqual(undefined)
   })
 
   it('sums volume per bridge type', () => {
@@ -114,7 +114,7 @@ describe(aggregateTransferType.name, () => {
       record({ bridgeType: 'burnAndMint', srcValueUsd: 5000 }),
     ])
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       lockAndMint: 500,
       burnAndMint: 5000,
     })

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { createPagePreloads, type ViteManifest } from './PagePreloads'
 
 // A manifest shaped like Vite's: the entry statically imports `shared`, the
@@ -25,26 +25,26 @@ describe(createPagePreloads.name, () => {
 
   it('preloads the page chunk and its transitive static imports', () => {
     const tags = preloads('L2ProjectPage')
-    expect(tags).toInclude('href="/static/assets/L2ProjectPage-def.js"')
-    expect(tags).toInclude('href="/static/assets/chart-222.js"')
-    expect(tags).toInclude('href="/static/assets/paths-333.js"')
+    expect(tags).toContain('href="/static/assets/L2ProjectPage-def.js"')
+    expect(tags).toContain('href="/static/assets/chart-222.js"')
+    expect(tags).toContain('href="/static/assets/paths-333.js"')
   })
 
   it('skips chunks the entry script already loads', () => {
-    expect(preloads('L2ProjectPage')).not.toInclude('shared-111.js')
+    expect(preloads('L2ProjectPage')).not.toContain('shared-111.js')
   })
 
   it('does not preload lazily imported chunks', () => {
-    expect(preloads('L2ProjectPage')).not.toInclude('dialog-444.js')
+    expect(preloads('L2ProjectPage')).not.toContain('dialog-444.js')
   })
 
   it('links the page stylesheet', () => {
-    expect(preloads('L2ProjectPage')).toInclude(
+    expect(preloads('L2ProjectPage')).toContain(
       '<link rel="stylesheet" crossorigin href="/static/assets/L2ProjectPage-def.css">',
     )
   })
 
   it('emits nothing for a page missing from the manifest', () => {
-    expect(preloads('HomePage')).toEqual('')
+    expect(preloads('HomePage')).toStrictEqual('')
   })
 })

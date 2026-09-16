@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getChainFlowStatItems } from './getChainFlowStatItems'
 
 describe(getChainFlowStatItems.name, () => {
@@ -13,7 +13,7 @@ describe(getChainFlowStatItems.name, () => {
       tokenCount: 7,
     })
 
-    expect(result).toInclude({
+    expect(result).toContainEqual({
       label: 'Unique tokens',
       value: '7',
     })

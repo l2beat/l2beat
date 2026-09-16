@@ -3,7 +3,7 @@ import type {
   ProjectEthereumLikeInclusionDelayChart,
   ProjectSpanLikeInclusionDelayChart,
 } from '@l2beat/config'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import {
   calculateCommitteeLikeDelayDays,
@@ -24,15 +24,19 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectEthereumLikeInclusionDelayChart
 
     it('returns one slot when nobody censors', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 0)).toEqual(10 / 86_400)
+      expect(calculateEthereumLikeDelayDays(chart, 0)).toStrictEqual(
+        10 / 86_400,
+      )
     })
 
     it('uses the honest proposer probability', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 4)).toEqual(60 / 86_400)
+      expect(calculateEthereumLikeDelayDays(chart, 4)).toStrictEqual(
+        60 / 86_400,
+      )
     })
 
     it('returns no finite delay without honest majority', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 5)).toEqual(null)
+      expect(calculateEthereumLikeDelayDays(chart, 5)).toStrictEqual(null)
     })
   })
 
@@ -47,15 +51,15 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectSpanLikeInclusionDelayChart
 
     it('returns one block when nobody censors', () => {
-      expect(calculateSpanLikeDelayDays(chart, 0)).toEqual(2 / 86_400)
+      expect(calculateSpanLikeDelayDays(chart, 0)).toStrictEqual(2 / 86_400)
     })
 
     it('uses span-level proposer probability', () => {
-      expect(calculateSpanLikeDelayDays(chart, 1)).toEqual(62 / 86_400)
+      expect(calculateSpanLikeDelayDays(chart, 1)).toStrictEqual(62 / 86_400)
     })
 
     it('returns no finite delay below the attestation threshold', () => {
-      expect(calculateSpanLikeDelayDays(chart, 2)).toEqual(null)
+      expect(calculateSpanLikeDelayDays(chart, 2)).toStrictEqual(null)
     })
   })
 
@@ -72,11 +76,15 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectCommitteeLikeInclusionDelayChart
 
     it('returns one slot when nobody censors', () => {
-      expect(calculateCommitteeLikeDelayDays(chart, 0)).toEqual(10 / 86_400)
+      expect(calculateCommitteeLikeDelayDays(chart, 0)).toStrictEqual(
+        10 / 86_400,
+      )
     })
 
     it('combines committee blocking probability across epochs', () => {
-      expect(calculateCommitteeLikeDelayDays(chart, 1)).toEqual(30 / 86_400)
+      expect(calculateCommitteeLikeDelayDays(chart, 1)).toStrictEqual(
+        30 / 86_400,
+      )
     })
   })
 
@@ -88,12 +96,15 @@ describe('calculateInclusionDelay', () => {
       const at = (fraction: number) =>
         points.find((point) => point.censoringFraction === fraction)
 
-      expect(at(0)).toEqual({ censoringFraction: 0, delayDays: 12 / 86_400 })
-      expect(at(0.25)).toEqual({
+      expect(at(0)).toStrictEqual({
+        censoringFraction: 0,
+        delayDays: 12 / 86_400,
+      })
+      expect(at(0.25)).toStrictEqual({
         censoringFraction: 0.25,
         delayDays: 48 / 86_400,
       })
-      expect(at(0.5)).toEqual({ censoringFraction: 0.5, delayDays: null })
+      expect(at(0.5)).toStrictEqual({ censoringFraction: 0.5, delayDays: null })
     })
   })
 
@@ -113,12 +124,15 @@ describe('calculateInclusionDelay', () => {
       const at = (fraction: number) =>
         projectPoints.find((point) => point.censoringFraction === fraction)
 
-      expect(at(0)).toEqual({ censoringFraction: 0, delayDays: 5 / 86_400 })
-      expect(at(0.25)).toEqual({
+      expect(at(0)).toStrictEqual({
+        censoringFraction: 0,
+        delayDays: 5 / 86_400,
+      })
+      expect(at(0.25)).toStrictEqual({
         censoringFraction: 0.25,
         delayDays: 20 / 86_400,
       })
-      expect(at(0.5)).toEqual({ censoringFraction: 0.5, delayDays: null })
+      expect(at(0.5)).toStrictEqual({ censoringFraction: 0.5, delayDays: null })
     })
 
     it('includes the next cumulative entity that cannot be drawn on the chart', () => {
@@ -142,7 +156,7 @@ describe('calculateInclusionDelay', () => {
         },
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayData(chart).entityLegendEntries).toEqual([
+      expect(getInclusionDelayData(chart).entityLegendEntries).toStrictEqual([
         {
           id: '1-First',
           label: 'Top 1',
@@ -185,7 +199,7 @@ describe('calculateInclusionDelay', () => {
         },
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayData(chart).entityLegendEntries).toEqual([])
+      expect(getInclusionDelayData(chart).entityLegendEntries).toStrictEqual([])
     })
 
     it('snaps entity stake fractions to the sampling step', () => {
@@ -206,7 +220,7 @@ describe('calculateInclusionDelay', () => {
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
       const [entry] = getInclusionDelayData(chart).entityLegendEntries
-      expect(entry?.stakeFraction).toEqual(0.154)
+      expect(entry?.stakeFraction).toStrictEqual(0.154)
     })
 
     it('samples at a fixed 0.1% resolution regardless of validator count', () => {
@@ -220,11 +234,11 @@ describe('calculateInclusionDelay', () => {
 
       const { projectPoints } = getInclusionDelayData(chart)
       // 0 to 0.5 in 0.001 steps => 501 evenly-spaced samples.
-      expect(projectPoints.length).toEqual(501)
-      expect(projectPoints[0]?.censoringFraction).toEqual(0)
-      expect(projectPoints[1]?.censoringFraction).toEqual(0.001)
+      expect(projectPoints.length).toStrictEqual(501)
+      expect(projectPoints[0]?.censoringFraction).toStrictEqual(0)
+      expect(projectPoints[1]?.censoringFraction).toStrictEqual(0.001)
       const last = projectPoints[projectPoints.length - 1]
-      expect(last?.censoringFraction).toEqual(0.5)
+      expect(last?.censoringFraction).toStrictEqual(0.5)
     })
 
     it('produces a single sample when maxCensorFraction is 0', () => {
@@ -236,7 +250,7 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayData(chart).projectPoints).toEqual([
+      expect(getInclusionDelayData(chart).projectPoints).toStrictEqual([
         { censoringFraction: 0, delayDays: 10 / 86_400 },
       ])
     })
@@ -255,7 +269,7 @@ describe('calculateInclusionDelay', () => {
       expect(
         getInclusionDelayData(chart, [{ label: '20s', days: 20 / 86_400 }])
           .thresholdMarkers,
-      ).toEqual([
+      ).toStrictEqual([
         {
           id: 'delay-threshold-20s',
           label: '20s delay',
@@ -282,7 +296,7 @@ describe('calculateInclusionDelay', () => {
           { label: '7d', days: 7 },
           { label: '30d', days: 30 },
         ]).thresholdMarkers.map((m) => m.label),
-      ).toEqual(['1m delay'])
+      ).toStrictEqual(['1m delay'])
     })
 
     it('returns markers on exact delay thresholds', () => {
@@ -299,7 +313,7 @@ describe('calculateInclusionDelay', () => {
           { label: '50s', days: 50 / 86_400 },
           { label: '60s', days: 60 / 86_400 },
         ]).thresholdMarkers,
-      ).toEqual([
+      ).toStrictEqual([
         {
           id: 'delay-threshold-50s',
           label: '50s delay',
@@ -332,7 +346,7 @@ describe('calculateInclusionDelay', () => {
       expect(
         getInclusionDelayData(chart, [{ label: '10s', days: 10 / 86_400 }])
           .thresholdMarkers,
-      ).toEqual([
+      ).toStrictEqual([
         {
           id: 'delay-threshold-10s',
           label: '10s delay',
@@ -356,7 +370,7 @@ describe('calculateInclusionDelay', () => {
       expect(
         getInclusionDelayData(chart, [{ label: '25s', days: 25 / 86_400 }])
           .thresholdMarkers,
-      ).toEqual([
+      ).toStrictEqual([
         {
           id: 'delay-threshold-25s',
           label: '25s delay',

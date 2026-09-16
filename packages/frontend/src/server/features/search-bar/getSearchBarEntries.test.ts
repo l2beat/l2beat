@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getSearchBarEntries } from './getSearchBarEntries'
@@ -28,11 +28,11 @@ describe(getSearchBarEntries.name, () => {
 
     const result = await getSearchBarEntries('ethere')
 
-    expect(result.map((entry) => entry.name)).toEqual([
+    expect(result.map((entry) => entry.name)).toStrictEqual([
       'Ethereal',
       'Ethereum with Enshrined Bridge',
     ])
-    expect(result.map((entry) => entry.searchMatchKind)).toEqual([
+    expect(result.map((entry) => entry.searchMatchKind)).toStrictEqual([
       'direct',
       'direct',
     ])
@@ -44,8 +44,8 @@ describe(getSearchBarEntries.name, () => {
 
     const result = await getSearchBarEntries('jtsrm')
 
-    expect(result.map((entry) => entry.name)).toEqual(['Jetstream'])
-    expect(result[0]?.searchMatchKind).toEqual('fuzzy')
+    expect(result.map((entry) => entry.name)).toStrictEqual(['Jetstream'])
+    expect(result[0]?.searchMatchKind).toStrictEqual('fuzzy')
   })
 
   it('allows searching interop tokens by symbol', async () => {
@@ -54,10 +54,10 @@ describe(getSearchBarEntries.name, () => {
     const result = await getSearchBarEntries('usdc')
 
     expect(result).toHaveLength(1)
-    expect(result[0]?.type).toEqual('token')
-    expect(result[0]?.category).toEqual('tokens')
-    expect(result[0]?.name).toEqual('USDC')
-    expect(result[0]?.searchMatchKind).toEqual('direct')
+    expect(result[0]?.type).toStrictEqual('token')
+    expect(result[0]?.category).toStrictEqual('tokens')
+    expect(result[0]?.name).toStrictEqual('USDC')
+    expect(result[0]?.searchMatchKind).toStrictEqual('direct')
   })
 })
 

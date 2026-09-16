@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { afterEach, describe, expect, it } from 'vitest'
 import { env } from '~/env'
 import {
   buildDefiSummaryEntries,
@@ -33,14 +33,14 @@ describe(buildDefiSummaryEntries.name, () => {
       defiDependencyProjectsById(projects),
     )
 
-    expect(entries.map((entry) => entry.id)).toEqual([
+    expect(entries.map((entry) => entry.id)).toStrictEqual([
       'liquityv2',
       'chainlink',
       'uniswapv3',
     ])
-    expect(entries[0]?.totalValueLockedUsd).toEqual(1_000)
-    expect(entries[1]?.totalValueLockedUsd).toEqual(undefined)
-    expect(entries[2]?.totalValueLockedUsd).toEqual(undefined)
+    expect(entries[0]?.totalValueLockedUsd).toStrictEqual(1_000)
+    expect(entries[1]?.totalValueLockedUsd).toStrictEqual(undefined)
+    expect(entries[2]?.totalValueLockedUsd).toStrictEqual(undefined)
   })
 
   it('sorts by TVL descending and puts missing values last', () => {
@@ -77,7 +77,7 @@ describe(buildDefiSummaryEntries.name, () => {
       defiDependencyProjectsById(projects),
     )
 
-    expect(entries.map((entry) => entry.id)).toEqual([
+    expect(entries.map((entry) => entry.id)).toStrictEqual([
       'large',
       'small',
       'chainlink',
@@ -109,7 +109,7 @@ describe(buildDefiSummaryEntries.name, () => {
       defiDependencyProjectsById(projects),
     )
 
-    expect(entries.map((entry) => entry.id)).toEqual(['alpha', 'beta'])
+    expect(entries.map((entry) => entry.id)).toStrictEqual(['alpha', 'beta'])
   })
 
   it('resolves BOLD dependencies, Uniswap as none, and Chainlink as unknown', () => {
@@ -159,7 +159,7 @@ describe(buildDefiSummaryEntries.name, () => {
     const uni = entries.find((entry) => entry.id === 'uniswapv3')
     const link = entries.find((entry) => entry.id === 'chainlink')
 
-    expect(bold?.dependencies).toEqual([
+    expect(bold?.dependencies).toStrictEqual([
       {
         name: 'Chainlink',
         icon: '/icons/chainlink.png',
@@ -180,8 +180,8 @@ describe(buildDefiSummaryEntries.name, () => {
         reviewed: false,
       },
     ])
-    expect(uni?.dependencies).toEqual([])
-    expect(link?.dependencies).toEqual(undefined)
+    expect(uni?.dependencies).toStrictEqual([])
+    expect(link?.dependencies).toStrictEqual(undefined)
   })
 })
 
@@ -215,9 +215,11 @@ describe(getDefiSummaryEntries.name, () => {
     ])
 
     const byId = new Map(entries.map((entry) => [entry.id, entry]))
-    expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toEqual(undefined)
-    expect(byId.get('chainlink')?.totalValueLockedUsd).toEqual(undefined)
-    expect(byId.get('uniswapv3')?.totalValueLockedUsd).toEqual(undefined)
+    expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toStrictEqual(
+      undefined,
+    )
+    expect(byId.get('chainlink')?.totalValueLockedUsd).toStrictEqual(undefined)
+    expect(byId.get('uniswapv3')?.totalValueLockedUsd).toStrictEqual(undefined)
   })
 })
 

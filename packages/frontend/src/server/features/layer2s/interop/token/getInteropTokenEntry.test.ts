@@ -1,6 +1,6 @@
 import type { InteropPlugin, Project } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getInteropTokenEntry } from './getInteropTokenEntry'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 
@@ -50,7 +50,7 @@ describe(getInteropTokenEntry.name, () => {
 
     const minters = section.props.deployments[0]?.minters
     assert(minters)
-    expect(minters).toEqual([
+    expect(minters).toStrictEqual([
       {
         id: ProjectId('alpha'),
         name: 'Alpha bridge',
@@ -103,7 +103,7 @@ describe(getInteropTokenEntry.name, () => {
 
     const minters = section.props.deployments[0]?.minters
     assert(minters)
-    expect(minters).toEqual([
+    expect(minters).toStrictEqual([
       {
         id: ProjectId('zeta'),
         name: 'Zeta bridge',

@@ -1,7 +1,7 @@
 import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
-import { expect } from 'earl'
 import { readdirSync, readFileSync } from 'fs'
 import path from 'path'
+import { describe, expect, it } from 'vitest'
 import { getImageDimensions } from '~/utils/project/getImageParams'
 
 describe('icons', () => {
@@ -21,7 +21,7 @@ describe('icons', () => {
         .sort()
       const requiredIcons = icons.filter((x) => uniqueSlugs.includes(x))
 
-      expect(requiredIcons).toEqual(uniqueSlugs)
+      expect(requiredIcons).toStrictEqual(uniqueSlugs)
     })
   })
 
@@ -42,7 +42,7 @@ describe('icons', () => {
         })
         .filter((x, i, a) => a.indexOf(x) === i) // unique
       for (const slug of raasSlugs) {
-        expect(icons).toInclude(slug)
+        expect(icons).toContain(slug)
       }
     })
   })
@@ -54,7 +54,7 @@ describe('icons', () => {
       })
       for (const ecosystem of ecosystems) {
         const icons = getIcons(`../../static/partners/${ecosystem.slug}`)
-        expect(icons).toInclude('logo')
+        expect(icons).toContain('logo')
       }
     })
 
@@ -82,8 +82,12 @@ describe('icons', () => {
         )
         const lightIconDimensions = getImageDimensions(lightIconBuffer)
         const darkIconDimensions = getImageDimensions(darkIconBuffer)
-        expect(lightIconDimensions?.height).toEqual(darkIconDimensions?.height)
-        expect(lightIconDimensions?.width).toEqual(darkIconDimensions?.width)
+        expect(lightIconDimensions?.height).toStrictEqual(
+          darkIconDimensions?.height,
+        )
+        expect(lightIconDimensions?.width).toStrictEqual(
+          darkIconDimensions?.width,
+        )
       }
     })
   })
@@ -92,7 +96,7 @@ describe('icons', () => {
     it('every interop chain has an icon', async () => {
       const icons = getIcons('../../static/icons')
       for (const chain of INTEROP_CHAINS) {
-        expect(icons).toInclude(chain.iconSlug ?? chain.id)
+        expect(icons).toContain(chain.iconSlug ?? chain.id)
       }
     })
   })
@@ -115,7 +119,7 @@ describe('icons', () => {
       ].sort()
 
       for (const icon of requiredIcons) {
-        expect(icons).toInclude(icon)
+        expect(icons).toContain(icon)
       }
     })
   })

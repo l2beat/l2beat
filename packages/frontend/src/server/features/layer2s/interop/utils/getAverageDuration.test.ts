@@ -1,6 +1,6 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { CommonInteropData } from '../types'
 import { getAverageDuration, getDurationSplit } from './getAverageDuration'
 
@@ -28,7 +28,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 60 },
@@ -59,7 +59,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'single',
       duration: 160,
     })
@@ -76,7 +76,7 @@ describe(getAverageDuration.name, () => {
       undefined,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'single',
       duration: 160,
     })
@@ -105,7 +105,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -125,7 +125,7 @@ describe(getAverageDuration.name, () => {
       undefined,
     )
 
-    expect(result).toEqual(null)
+    expect(result).toStrictEqual(null)
   })
 
   it('keeps configured splits even when a subset has no matching transfers', () => {
@@ -149,7 +149,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: null },
@@ -177,7 +177,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: null },
@@ -212,7 +212,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -247,7 +247,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -282,7 +282,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       type: 'single',
       duration: 65,
     })

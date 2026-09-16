@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 describe(getTopProtocolDisplay.name, () => {
@@ -16,7 +16,7 @@ describe(getTopProtocolDisplay.name, () => {
       ]),
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       name: 'Wormhole',
       slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
@@ -29,7 +29,7 @@ describe(getTopProtocolDisplay.name, () => {
       new Map(),
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })
 

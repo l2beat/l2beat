@@ -1,6 +1,6 @@
-import { expect } from 'earl'
 import { createElement, type ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { describe, expect, it } from 'vitest'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { PrivacyProjectStats } from './PrivacyProjectStats'
 
@@ -20,23 +20,23 @@ describe(PrivacyProjectStats.name, () => {
   it('renders N/A when TVL is not configured', () => {
     const html = renderStats({ hasTvl: false, totalValueLockedUsd: undefined })
 
-    expect(html).toInclude('N/A')
-    expect(html).not.toInclude('No data')
+    expect(html).toContain('N/A')
+    expect(html).not.toContain('No data')
   })
 
   it('renders No data when TVL is configured but has no value', () => {
     const html = renderStats({ hasTvl: true, totalValueLockedUsd: undefined })
 
-    expect(html).toInclude('No data')
-    expect(html).not.toInclude('N/A')
+    expect(html).toContain('No data')
+    expect(html).not.toContain('N/A')
   })
 
   it('renders a measured zero', () => {
     const html = renderStats({ hasTvl: true, totalValueLockedUsd: 0 })
 
-    expect(html).toInclude('$0.00')
-    expect(html).not.toInclude('No data')
-    expect(html).not.toInclude('N/A')
+    expect(html).toContain('$0.00')
+    expect(html).not.toContain('No data')
+    expect(html).not.toContain('N/A')
   })
 
   it('shows the active relayer count when tracking is configured', () => {
@@ -47,8 +47,8 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Active Relayers 30D')
-    expect(html).toInclude('>12</span>')
+    expect(html).toContain('Active Relayers 30D')
+    expect(html).toContain('>12</span>')
   })
 
   it('shows a zero active relayer count', () => {
@@ -59,7 +59,7 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Active Relayers 30D')
+    expect(html).toContain('Active Relayers 30D')
   })
 
   it('shows the average daily relayer count for sampled tracking', () => {
@@ -70,15 +70,15 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Avg. Relayers 30D')
-    expect(html).toInclude('>46</span>')
-    expect(html).not.toInclude('Active Relayers 30D')
+    expect(html).toContain('Avg. Relayers 30D')
+    expect(html).toContain('>46</span>')
+    expect(html).not.toContain('Active Relayers 30D')
   })
 
   it('hides the metric when relayer tracking is not configured', () => {
     const html = render(createElement(PrivacyProjectStats, BASE_PROPS))
 
-    expect(html).not.toInclude('Active Relayers 30D')
+    expect(html).not.toContain('Active Relayers 30D')
   })
 
   it('shows relayers when flow tracking is not configured', () => {
@@ -91,10 +91,10 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Live asset metrics')
-    expect(html).toInclude('Not tracked')
-    expect(html).toInclude('Active Relayers 30D')
-    expect(html).toInclude('>3</span>')
+    expect(html).toContain('Live asset metrics')
+    expect(html).toContain('Not tracked')
+    expect(html).toContain('Active Relayers 30D')
+    expect(html).toContain('>3</span>')
   })
 })
 

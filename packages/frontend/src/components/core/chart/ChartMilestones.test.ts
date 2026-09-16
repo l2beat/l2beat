@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getTimestampedMilestones } from './ChartMilestones'
 
 function ts(iso: string): number {
@@ -32,8 +32,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
-    expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T00:00:00Z'))
+    expect(attached.length).toStrictEqual(1)
+    expect(attached[0]?.timestamp).toStrictEqual(ts('2024-05-26T00:00:00Z'))
   })
 
   it('snaps to the milestone hour on an hourly grid', () => {
@@ -47,8 +47,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
-    expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T21:00:00Z'))
+    expect(attached.length).toStrictEqual(1)
+    expect(attached[0]?.timestamp).toStrictEqual(ts('2024-05-26T21:00:00Z'))
   })
 
   it('drops milestones that fall before the first datapoint', () => {
@@ -60,7 +60,7 @@ describe('getTimestampedMilestones', () => {
       milestone('2024-05-24T12:00:00Z'),
     ])
 
-    expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
+    expect(result.every((p) => p.milestones.length === 0)).toStrictEqual(true)
   })
 
   it('drops milestones in a bucket after the last datapoint', () => {
@@ -72,7 +72,7 @@ describe('getTimestampedMilestones', () => {
       milestone('2024-05-28T06:00:00Z'),
     ])
 
-    expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
+    expect(result.every((p) => p.milestones.length === 0)).toStrictEqual(true)
   })
 
   it('keeps a milestone within the last bucket on the last datapoint', () => {
@@ -85,8 +85,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
-    expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T21:00:00Z'))
+    expect(attached.length).toStrictEqual(1)
+    expect(attached[0]?.timestamp).toStrictEqual(ts('2024-05-26T21:00:00Z'))
   })
 
   it('groups same-day milestones on a daily grid', () => {
@@ -100,8 +100,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
-    expect(attached[0]?.milestones.length).toEqual(2)
+    expect(attached.length).toStrictEqual(1)
+    expect(attached[0]?.milestones.length).toStrictEqual(2)
   })
 
   it('separates same-day milestones on an hourly grid', () => {
@@ -117,8 +117,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(2)
-    expect(attached.map((p) => p.timestamp)).toEqual([
+    expect(attached.length).toStrictEqual(2)
+    expect(attached.map((p) => p.timestamp)).toStrictEqual([
       ts('2024-05-26T03:00:00Z'),
       ts('2024-05-26T21:00:00Z'),
     ])

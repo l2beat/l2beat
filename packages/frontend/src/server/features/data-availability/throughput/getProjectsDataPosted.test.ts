@@ -1,7 +1,7 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
-import { describe, it } from 'mocha'
+import { describe, expect, it } from 'vitest'
+
 import { buildProjectsDataPosted } from './getProjectsDataPosted'
 
 describe(buildProjectsDataPosted.name, () => {
@@ -20,7 +20,7 @@ describe(buildProjectsDataPosted.name, () => {
       ),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toEqual({
+    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({
       'project-a': {
         pastDay: 300,
         change: 1,
@@ -39,7 +39,7 @@ describe(buildProjectsDataPosted.name, () => {
       ),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toEqual({})
+    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({})
   })
 
   it('includes records at the start and excludes records at the end', () => {
@@ -48,7 +48,7 @@ describe(buildProjectsDataPosted.name, () => {
       record('project-a', to, 200, 'ethereum'),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toEqual({
+    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({
       'project-a': {
         pastDay: 100,
         change: 0,

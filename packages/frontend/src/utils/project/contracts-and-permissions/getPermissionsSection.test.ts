@@ -4,7 +4,8 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { assert, ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { ContractUtils } from './getContractUtils'
 import { getPermissionsSection } from './getPermissionsSection'
@@ -29,10 +30,10 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toEqual(1)
-    expect(section.actors[0]?.groupCount).toEqual(2)
-    expect(section.actors[0]?.additionalAnchorIds).toEqual(['second'])
-    expect(section.actors[0]?.addresses.map((x) => x.address)).toEqual([
+    expect(section.actors.length).toStrictEqual(1)
+    expect(section.actors[0]?.groupCount).toStrictEqual(2)
+    expect(section.actors[0]?.additionalAnchorIds).toStrictEqual(['second'])
+    expect(section.actors[0]?.addresses.map((x) => x.address)).toStrictEqual([
       ChainSpecificAddress.address(ADDRESS_A),
       ChainSpecificAddress.address(ADDRESS_B),
     ])
@@ -63,7 +64,7 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toEqual(2)
+    expect(section.actors.length).toStrictEqual(2)
   })
 
   it('does not group EOAs', () => {
@@ -76,7 +77,7 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toEqual(2)
+    expect(section.actors.length).toStrictEqual(2)
   })
 
   it('does not group a permission that recently became verified', () => {
@@ -98,7 +99,7 @@ describe(getPermissionsSection.name, () => {
       changeReport,
     )
 
-    expect(section.actors.length).toEqual(2)
+    expect(section.actors.length).toStrictEqual(2)
   })
 })
 

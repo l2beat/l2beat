@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
 import type { ChartRange } from '~/utils/range/range'
 import { getActivityCompareChartParams } from './activityCompareMetric'
@@ -13,7 +13,7 @@ describe(getActivityCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.projects).toEqual([ProjectId('tracked')])
+    expect(params.projects).toStrictEqual([ProjectId('tracked')])
   })
 })
 

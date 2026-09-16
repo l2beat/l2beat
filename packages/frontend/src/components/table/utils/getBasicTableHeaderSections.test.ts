@@ -1,5 +1,5 @@
 import type { HeaderGroup } from '@tanstack/react-table'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getBasicTableHeaderSections } from './getBasicTableHeaderSections'
 
 describe(getBasicTableHeaderSections.name, () => {
@@ -8,8 +8,8 @@ describe(getBasicTableHeaderSections.name, () => {
 
     const result = getBasicTableHeaderSections([header])
 
-    expect(result.groupedHeader).toEqual(undefined)
-    expect(result.actualHeader).toEqual(header)
+    expect(result.groupedHeader).toStrictEqual(undefined)
+    expect(result.actualHeader).toStrictEqual(header)
   })
 
   it('returns grouped and actual headers for two-level headers', () => {
@@ -18,8 +18,8 @@ describe(getBasicTableHeaderSections.name, () => {
 
     const result = getBasicTableHeaderSections([groupedHeader, actualHeader])
 
-    expect(result.groupedHeader).toEqual(groupedHeader)
-    expect(result.actualHeader).toEqual(actualHeader)
+    expect(result.groupedHeader).toStrictEqual(groupedHeader)
+    expect(result.actualHeader).toStrictEqual(actualHeader)
   })
 
   it('throws for more than one grouping level', () => {

@@ -1,6 +1,7 @@
 import { existsSync } from 'fs'
 import partition from 'lodash/partition'
 import path from 'path'
+import { describe, it } from 'vitest'
 import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'
 import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'

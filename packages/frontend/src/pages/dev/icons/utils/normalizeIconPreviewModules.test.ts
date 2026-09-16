@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { normalizeIconPreviewModules } from './normalizeIconPreviewModules'
 
@@ -46,7 +46,7 @@ describe(normalizeIconPreviewModules.name, () => {
         exportName: entry.exportName,
         sourcePath: entry.sourcePath,
       })),
-    ).toEqual([
+    ).toStrictEqual([
       {
         category: 'Core',
         exportName: 'PolygonLogo',

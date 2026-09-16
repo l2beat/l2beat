@@ -1,6 +1,7 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getActivityChartData } from './getDetailedActivityChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -28,7 +29,7 @@ describe(getActivityChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [
         [T, { [ARBITRUM]: [100, 150], [BASE]: [10, 15] }],
         [T + DAY, { [ARBITRUM]: [200, 200], [BASE]: [20, 25] }],
@@ -58,7 +59,7 @@ describe(getActivityChartData.name, () => {
       [T, T + 2 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: [100, 150], [BASE]: null }],
       [T + DAY, { [ARBITRUM]: [0, 0], [BASE]: [10, 15] }],
       [T + 2 * DAY, { [ARBITRUM]: [300, 350], [BASE]: [20, 25] }],
@@ -77,10 +78,10 @@ describe(getActivityChartData.name, () => {
       [T, T],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: [100, 150], [noActivity]: null }],
     ])
-    expect(result.projects).toEqual([
+    expect(result.projects).toStrictEqual([
       { projectId: ARBITRUM, sinceTimestamp: T },
     ])
   })
@@ -100,7 +101,7 @@ describe(getActivityChartData.name, () => {
       [null, T + 2 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T + DAY, { [ARBITRUM]: [100, 150] }],
       [T + 2 * DAY, { [ARBITRUM]: [200, 250] }],
     ])
@@ -115,7 +116,7 @@ describe(getActivityChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [],
       projects: [],
       syncedUntil: T + DAY,

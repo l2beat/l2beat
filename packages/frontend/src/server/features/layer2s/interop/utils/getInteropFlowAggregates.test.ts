@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 import { getInteropFlowAggregates } from './getInteropFlowAggregates'
 
@@ -60,7 +60,7 @@ describe(getInteropFlowAggregates.name, () => {
       new Set([ProjectId('sub')]),
     )
 
-    expect(result.flows).toEqual([
+    expect(result.flows).toStrictEqual([
       {
         srcChain: 'chain-a',
         dstChain: 'chain-b',
@@ -75,22 +75,22 @@ describe(getInteropFlowAggregates.name, () => {
       },
     ])
 
-    expect(result.chainTopTokens.get('chain-a')).toEqual([
+    expect(result.chainTopTokens.get('chain-a')).toStrictEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainTopTokens.get('chain-b')).toEqual([
+    expect(result.chainTopTokens.get('chain-b')).toStrictEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainPairTopTokens.get('chain-a::chain-b')).toEqual([
+    expect(result.chainPairTopTokens.get('chain-a::chain-b')).toStrictEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainDurations.get('chain-a')).toEqual({
+    expect(result.chainDurations.get('chain-a')).toStrictEqual({
       totalDurationSum: 1100,
       transfersWithDurationCount: 5,
       transferTypeStats: {
@@ -98,7 +98,7 @@ describe(getInteropFlowAggregates.name, () => {
         withdrawal: { transferCount: 3, totalDurationSum: 900 },
       },
     })
-    expect(result.chainPairDurations.get('chain-a::chain-b')).toEqual({
+    expect(result.chainPairDurations.get('chain-a::chain-b')).toStrictEqual({
       totalDurationSum: 1100,
       transfersWithDurationCount: 5,
       transferTypeStats: {
@@ -106,9 +106,14 @@ describe(getInteropFlowAggregates.name, () => {
         withdrawal: { transferCount: 3, totalDurationSum: 900 },
       },
     })
-    expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
-    expect(result.topProtocol).toEqual({ id: 'main', volume: 150 })
-    expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
+    expect(result.topToken).toStrictEqual({ id: 'eth', volume: 30 })
+    expect(result.topProtocol).toStrictEqual({ id: 'main', volume: 150 })
+    expect(result.tokenIds.toSorted()).toStrictEqual([
+      'dai',
+      'eth',
+      'usdc',
+      'usdt',
+    ])
   })
 })
 

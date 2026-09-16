@@ -1,6 +1,6 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { resolveDefiDependencies } from './resolveDefiDependencies'
 
 describe(resolveDefiDependencies.name, () => {
@@ -32,7 +32,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
       {
         name: 'Chainlink',
         icon: '/icons/chainlink.png',
@@ -53,7 +53,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
       {
         name: 'Rocket Pool rETH',
         icon: '/icons/reth.png',
@@ -72,7 +72,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
       {
         name: 'Across',
         icon: '/icons/across.png',
@@ -92,7 +92,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
       {
         name: 'unknown-oracle',
         icon: '/images/token-placeholder.png',
@@ -103,6 +103,6 @@ describe(resolveDefiDependencies.name, () => {
   })
 
   it('returns an empty list when there are no dependencies', () => {
-    expect(resolveDefiDependencies([], projectsById)).toEqual([])
+    expect(resolveDefiDependencies([], projectsById)).toStrictEqual([])
   })
 })

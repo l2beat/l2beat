@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { CROP_COLUMNS, type CropKey } from './crops'
 
 describe('CROP_COLUMNS', () => {
@@ -9,7 +9,7 @@ describe('CROP_COLUMNS', () => {
       privacy: null,
       security: null,
     }
-    expect(CROP_COLUMNS.map((x) => x.key as string).sort()).toEqual(
+    expect(CROP_COLUMNS.map((x) => x.key as string).sort()).toStrictEqual(
       Object.keys(every).sort(),
     )
   })

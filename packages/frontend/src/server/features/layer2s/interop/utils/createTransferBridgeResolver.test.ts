@@ -1,7 +1,7 @@
 import type { InteropPlugin, Project } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { createTransferBridgeResolver } from './createTransferBridgeResolver'
 
 describe(createTransferBridgeResolver.name, () => {
@@ -18,7 +18,7 @@ describe(createTransferBridgeResolver.name, () => {
       }),
     ])
 
-    expect(resolve(transfer({ plugin: 'across' }))).toEqual({
+    expect(resolve(transfer({ plugin: 'across' }))).toStrictEqual({
       name: 'Across',
       href: '/interop/protocols/across',
     })
@@ -44,7 +44,7 @@ describe(createTransferBridgeResolver.name, () => {
 
     expect(
       resolve(transfer({ plugin: 'opstack', bridgeType: 'lockAndMint' })),
-    ).toEqual({
+    ).toStrictEqual({
       name: 'OP Canonical',
       href: '/interop/protocols/optimism',
     })
@@ -68,7 +68,7 @@ describe(createTransferBridgeResolver.name, () => {
       resolve(
         transfer({ plugin: 'layerzero-v2-ofts', bridgeType: 'lockAndMint' }),
       ),
-    ).toEqual({ name: 'USDT0', href: '/interop/protocols/usdt0' })
+    ).toStrictEqual({ name: 'USDT0', href: '/interop/protocols/usdt0' })
   })
 
   it('rejects ambiguous matches', () => {

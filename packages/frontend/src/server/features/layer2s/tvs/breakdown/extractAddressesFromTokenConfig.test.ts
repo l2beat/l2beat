@@ -6,14 +6,15 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 
 describe(extractAddressesFromTokenConfig.name, () => {
   it('returns empty array if no amount', () => {
     const token = mockToken()
     const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should handle calculation', () => {
@@ -116,7 +117,7 @@ describe(extractAddressesFromTokenConfig.name, () => {
       }),
     )
 
-    expect(result).toEqual([{ address: tokenAddress, chain: 'starknet' }])
+    expect(result).toStrictEqual([{ address: tokenAddress, chain: 'starknet' }])
   })
 
   it('collects only the token address of an aggregate escrow formula', () => {
@@ -134,7 +135,7 @@ describe(extractAddressesFromTokenConfig.name, () => {
       }),
     )
 
-    expect(result).toEqual([{ address: tokenAddress, chain: 'arbitrum' }])
+    expect(result).toStrictEqual([{ address: tokenAddress, chain: 'arbitrum' }])
   })
 
   it('should return empty array for types with no addresses', () => {
@@ -151,7 +152,7 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 })
 

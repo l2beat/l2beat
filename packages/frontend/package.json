@@ -17,7 +17,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "format": "biome check .",
     "format:fix": "biome check --write .",
-    "test": "mocha",
+    "test": "vitest run",
     "test:e2e": "pnpm build && playwright test",
     "test:e2e:all-pages": "pnpm build && playwright test e2e/all-pages/all-pages.e2e.ts",
     "typecheck": "tsc --noEmit"
@@ -97,7 +97,9 @@
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
     "tsx": "^4.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   },
   "overrides": {
     "react-is": "19.0.0",

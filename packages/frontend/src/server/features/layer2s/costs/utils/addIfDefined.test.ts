@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { addIfDefined } from './addIfDefined'
 
 type TestCase = {
@@ -70,7 +70,7 @@ const testCases: TestCase[] = [
 describe('addIfDefined', () => {
   for (const { a, b, expected, description } of testCases) {
     it(description, () => {
-      expect(addIfDefined(a, b)).toEqual(expected)
+      expect(addIfDefined(a, b)).toStrictEqual(expected)
     })
   }
 })

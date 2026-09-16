@@ -1,5 +1,5 @@
 import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   getPrivacyTrustedSetup,
   toTrustedSetupSummaryValue,
@@ -22,16 +22,16 @@ describe(getPrivacyTrustedSetup.name, () => {
       longDescription: 'Long trusted setup description.',
     }
 
-    expect(getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }])).toEqual(
-      trustedSetup,
-    )
+    expect(
+      getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }]),
+    ).toStrictEqual(trustedSetup)
   })
 
   it('falls back to No setup when there are no trusted setups', () => {
     const trustedSetup = getPrivacyTrustedSetup([])
-    expect(trustedSetup.id).toEqual('NoSetup')
-    expect(trustedSetup.name).toEqual('No setup')
-    expect(trustedSetup.risk).toEqual('None')
+    expect(trustedSetup.id).toStrictEqual('NoSetup')
+    expect(trustedSetup.name).toStrictEqual('No setup')
+    expect(trustedSetup.risk).toStrictEqual('None')
   })
 })
 
@@ -46,7 +46,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
   }
 
   it('formats the trusted setup as a privacy summary value', () => {
-    expect(toTrustedSetupSummaryValue(trustedSetup)).toEqual({
+    expect(toTrustedSetupSummaryValue(trustedSetup)).toStrictEqual({
       value: '123 participants',
       sentiment: 'good',
       description: 'Trusted setup name: Trusted setup description.',
@@ -60,7 +60,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
         ...trustedSetup,
         participantCount: undefined,
       }).value,
-    ).toEqual('Trusted setup name')
+    ).toStrictEqual('Trusted setup name')
   })
 
   for (const [risk, sentiment] of [
@@ -73,7 +73,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
     it(`maps ${risk} risk to ${sentiment} sentiment`, () => {
       expect(
         toTrustedSetupSummaryValue({ ...trustedSetup, risk }).sentiment,
-      ).toEqual(sentiment)
+      ).toStrictEqual(sentiment)
     })
   }
 })

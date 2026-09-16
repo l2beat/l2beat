@@ -3,7 +3,7 @@ import {
   createTable,
   getCoreRowModel,
 } from '@tanstack/react-table'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { withChangeSort } from './changeSortColumn'
 
@@ -27,12 +27,12 @@ describe(withChangeSort.name, () => {
       (row) => ({ change: row.change, period: row.changePeriod }),
     )
 
-    expect(valueColumn.meta?.changeSortColumnId).toEqual('totalChange')
-    expect(valueColumn.meta?.align).toEqual('right')
-    expect(changeColumn.id).toEqual('totalChange')
-    expect(typeof changeColumn.header).toEqual('function')
-    expect(changeColumn.enableHiding).toEqual(false)
-    expect(changeColumn.meta?.isChangeSortColumn).toEqual(true)
+    expect(valueColumn.meta?.changeSortColumnId).toStrictEqual('totalChange')
+    expect(valueColumn.meta?.align).toStrictEqual('right')
+    expect(changeColumn.id).toStrictEqual('totalChange')
+    expect(typeof changeColumn.header).toStrictEqual('function')
+    expect(changeColumn.enableHiding).toStrictEqual(false)
+    expect(changeColumn.meta?.isChangeSortColumn).toStrictEqual(true)
   })
 
   it('derives the header label from row changePeriod', () => {
@@ -57,10 +57,10 @@ describe(withChangeSort.name, () => {
     }))
 
     const header = table.getColumn('totalChange')?.columnDef.header
-    expect(typeof header).toEqual('function')
+    expect(typeof header).toStrictEqual('function')
     if (typeof header !== 'function') {
       throw new Error('expected a header function')
     }
-    expect(header({ table } as never)).toEqual('7D%')
+    expect(header({ table } as never)).toStrictEqual('7D%')
   })
 })

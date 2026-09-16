@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   buildBridgingTypeBreakdown,
   buildChainPaths,
@@ -29,7 +29,9 @@ describe('getTokenFrameworksData helpers', () => {
       ])
 
       assert(result[0])
-      expect(result[0].tokens.map((t) => t.abstractTokenId)).toEqual(['usdt0'])
+      expect(result[0].tokens.map((t) => t.abstractTokenId)).toStrictEqual([
+        'usdt0',
+      ])
     })
 
     it('keeps tokens with burnedValueUsd > 0 (reverse direction)', () => {
@@ -45,7 +47,9 @@ describe('getTokenFrameworksData helpers', () => {
       ])
 
       assert(result[0])
-      expect(result[0].tokens.map((t) => t.abstractTokenId)).toEqual(['usdt0'])
+      expect(result[0].tokens.map((t) => t.abstractTokenId)).toStrictEqual([
+        'usdt0',
+      ])
     })
 
     it('leaves non-lockAndMint records untouched', () => {
@@ -62,7 +66,7 @@ describe('getTokenFrameworksData helpers', () => {
       ])
 
       assert(result[0])
-      expect(result[0].tokens).toEqual(tokens)
+      expect(result[0].tokens).toStrictEqual(tokens)
     })
   })
 
@@ -88,11 +92,11 @@ describe('getTokenFrameworksData helpers', () => {
       ])
 
       const item = result.get('oft')
-      expect(item?.symbol).toEqual('Unknown')
-      expect(item?.frameworkId).toEqual('oft')
-      expect(item?.isUnknown).toEqual(true)
-      expect(item?.volume).toEqual(140)
-      expect(item?.transferCount).toEqual(8)
+      expect(item?.symbol).toStrictEqual('Unknown')
+      expect(item?.frameworkId).toStrictEqual('oft')
+      expect(item?.isUnknown).toStrictEqual(true)
+      expect(item?.volume).toStrictEqual(140)
+      expect(item?.transferCount).toStrictEqual(8)
     })
 
     it('ignores records that have at least one minted/burned token', () => {
@@ -110,7 +114,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toStrictEqual(0)
     })
 
     it('ignores non-lockAndMint records', () => {
@@ -125,7 +129,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toStrictEqual(0)
     })
 
     it('skips records with no volume and no transfers', () => {
@@ -140,7 +144,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toStrictEqual(0)
     })
   })
 
@@ -167,7 +171,7 @@ describe('getTokenFrameworksData helpers', () => {
         2,
       )
 
-      expect(result.map((t) => t.symbol)).toEqual(['ETH', 'USDC'])
+      expect(result.map((t) => t.symbol)).toStrictEqual(['ETH', 'USDC'])
     })
 
     it('maps the token framework via the protocol id of the source record', () => {
@@ -181,7 +185,7 @@ describe('getTokenFrameworksData helpers', () => {
         tokensDetailsMap,
       )
 
-      expect(result[0]?.frameworkId).toEqual('ntt')
+      expect(result[0]?.frameworkId).toStrictEqual('ntt')
     })
 
     it('skips tokens missing details metadata', () => {
@@ -198,7 +202,7 @@ describe('getTokenFrameworksData helpers', () => {
         tokensDetailsMap,
       )
 
-      expect(result.map((t) => t.symbol)).toEqual(['ETH'])
+      expect(result.map((t) => t.symbol)).toStrictEqual(['ETH'])
     })
 
     it('picks the top route by per-flow volume', () => {
@@ -220,8 +224,8 @@ describe('getTokenFrameworksData helpers', () => {
         tokensDetailsMap,
       )
 
-      expect(result[0]?.topRoute?.src.id).toEqual('c')
-      expect(result[0]?.topRoute?.dst.id).toEqual('d')
+      expect(result[0]?.topRoute?.src.id).toStrictEqual('c')
+      expect(result[0]?.topRoute?.dst.id).toStrictEqual('d')
     })
   })
 
@@ -251,7 +255,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           src: { id: 'a', iconUrl: undefined },
           dst: { id: 'b', iconUrl: undefined },
@@ -283,7 +287,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.map((p) => `${p.src.id}-${p.dst.id}`)).toEqual([
+      expect(result.map((p) => `${p.src.id}-${p.dst.id}`)).toStrictEqual([
         'c-d',
         'a-b',
       ])
@@ -313,7 +317,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         { type: 'lockAndMint', volume: 150, transferCount: 7 },
         { type: 'burnAndMint', volume: 30, transferCount: 3 },
       ])
@@ -334,7 +338,7 @@ describe('getTokenFrameworksData helpers', () => {
         transferCount: 5,
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         id: 'oft',
         volume: 0,
         transferCount: 0,
@@ -356,12 +360,12 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, undefined, undefined)
 
-      expect(result.volume).toEqual(1000)
-      expect(result.transferCount).toEqual(20)
-      expect(result.averageValue).toEqual(100)
-      expect(result.averageDurationSeconds).toEqual(250)
-      expect(result.previousVolume).toEqual(null)
-      expect(result.previousTransferCount).toEqual(null)
+      expect(result.volume).toStrictEqual(1000)
+      expect(result.transferCount).toStrictEqual(20)
+      expect(result.averageValue).toStrictEqual(100)
+      expect(result.averageDurationSeconds).toStrictEqual(250)
+      expect(result.previousVolume).toStrictEqual(null)
+      expect(result.previousTransferCount).toStrictEqual(null)
     })
 
     it('returns null averageDurationSeconds when the project marks transfer time as unknown', () => {
@@ -375,7 +379,7 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, project, undefined)
 
-      expect(result.averageDurationSeconds).toEqual(null)
+      expect(result.averageDurationSeconds).toStrictEqual(null)
     })
 
     it('returns null averageValue when identifiedTransferCount is zero', () => {
@@ -386,7 +390,7 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, undefined, undefined)
 
-      expect(result.averageValue).toEqual(null)
+      expect(result.averageValue).toStrictEqual(null)
     })
   })
 })

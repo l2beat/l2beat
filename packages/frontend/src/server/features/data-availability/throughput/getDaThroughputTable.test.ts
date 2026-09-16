@@ -1,6 +1,6 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getLatestTimestampByDaLayer } from './getDaThroughputTable'
 
 describe(getLatestTimestampByDaLayer.name, () => {
@@ -11,7 +11,9 @@ describe(getLatestTimestampByDaLayer.name, () => {
       record('avail', UnixTime(200)),
     ]
 
-    expect(getLatestTimestampByDaLayer(records, 'avail')).toEqual(UnixTime(200))
+    expect(getLatestTimestampByDaLayer(records, 'avail')).toStrictEqual(
+      UnixTime(200),
+    )
   })
 })
 

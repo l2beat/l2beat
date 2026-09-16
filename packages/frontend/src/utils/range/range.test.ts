@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { rangeToResolution } from './range'
 
 describe(rangeToResolution.name, () => {
@@ -20,7 +20,7 @@ describe(rangeToResolution.name, () => {
 
     const resolution = rangeToResolution([today - 7 * UnixTime.DAY, today])
 
-    expect(resolution).toEqual('hour')
+    expect(resolution).toStrictEqual('hour')
   })
 
   it('returns six hours for ranges older than 7d', () => {
@@ -31,7 +31,7 @@ describe(rangeToResolution.name, () => {
       today,
     ])
 
-    expect(resolution).toEqual('six hours')
+    expect(resolution).toStrictEqual('six hours')
   })
 
   it('returns six hours for the exact 90d boundary', () => {
@@ -39,7 +39,7 @@ describe(rangeToResolution.name, () => {
 
     const resolution = rangeToResolution([today - 90 * UnixTime.DAY, today])
 
-    expect(resolution).toEqual('six hours')
+    expect(resolution).toStrictEqual('six hours')
   })
 
   it('returns day for ranges older than 90d', () => {
@@ -50,6 +50,6 @@ describe(rangeToResolution.name, () => {
       today,
     ])
 
-    expect(resolution).toEqual('day')
+    expect(resolution).toStrictEqual('day')
   })
 })

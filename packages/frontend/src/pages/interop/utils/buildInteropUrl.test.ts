@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { buildInteropUrl } from './buildInteropUrl'
 
 describe(buildInteropUrl.name, () => {
@@ -8,7 +8,9 @@ describe(buildInteropUrl.name, () => {
       to: ['base'],
     })
 
-    expect(result).toEqual('/interop/summary?from=ethereum%2Carbitrum&to=base')
+    expect(result).toStrictEqual(
+      '/interop/summary?from=ethereum%2Carbitrum&to=base',
+    )
   })
 
   it('returns path without query when selection is empty', () => {
@@ -17,6 +19,6 @@ describe(buildInteropUrl.name, () => {
       to: [],
     })
 
-    expect(result).toEqual('/interop/summary')
+    expect(result).toStrictEqual('/interop/summary')
   })
 })

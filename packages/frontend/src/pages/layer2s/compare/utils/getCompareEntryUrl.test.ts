@@ -1,24 +1,26 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getCompareEntryUrl } from './getCompareEntryUrl'
 
 describe(getCompareEntryUrl.name, () => {
   it('returns the bare path for the default TVS entry', () => {
-    expect(getCompareEntryUrl()).toEqual('/layer2s/compare')
-    expect(getCompareEntryUrl({ metric: 'tvs' })).toEqual('/layer2s/compare')
+    expect(getCompareEntryUrl()).toStrictEqual('/layer2s/compare')
+    expect(getCompareEntryUrl({ metric: 'tvs' })).toStrictEqual(
+      '/layer2s/compare',
+    )
   })
 
   it('encodes a non-default metric', () => {
-    expect(getCompareEntryUrl({ metric: 'activity' })).toEqual(
+    expect(getCompareEntryUrl({ metric: 'activity' })).toStrictEqual(
       '/layer2s/compare?charts=activity',
     )
   })
 
   it('pre-selects a project', () => {
-    expect(getCompareEntryUrl({ projectSlug: 'arbitrum' })).toEqual(
+    expect(getCompareEntryUrl({ projectSlug: 'arbitrum' })).toStrictEqual(
       '/layer2s/compare?projects=arbitrum',
     )
     expect(
       getCompareEntryUrl({ metric: 'activity', projectSlug: 'arbitrum' }),
-    ).toEqual('/layer2s/compare?projects=arbitrum&charts=activity')
+    ).toStrictEqual('/layer2s/compare?projects=arbitrum&charts=activity')
   })
 })

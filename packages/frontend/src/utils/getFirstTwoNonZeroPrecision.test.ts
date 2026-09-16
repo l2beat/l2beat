@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { getFirstTwoNonZeroPrecision } from './getFirstTwoNonZeroPrecision'
 
@@ -18,13 +18,13 @@ describe(getFirstTwoNonZeroPrecision.name, () => {
     it(`should return ${testCase.expected} for ${testCase.value}`, () => {
       expect(
         getFirstTwoNonZeroPrecision(testCase.value, testCase.maxPrecision),
-      ).toEqual(testCase.expected)
+      ).toStrictEqual(testCase.expected)
     })
 
     it(`should return ${testCase.expected} for -${testCase.value}`, () => {
       expect(
         getFirstTwoNonZeroPrecision(-testCase.value, testCase.maxPrecision),
-      ).toEqual(testCase.expected)
+      ).toStrictEqual(testCase.expected)
     })
   }
 

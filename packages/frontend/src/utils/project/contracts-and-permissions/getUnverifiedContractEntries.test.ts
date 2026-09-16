@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -43,7 +44,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         address: contractAddress,
         target: {
@@ -78,7 +79,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         address: permissionAddress,
         target: {
@@ -103,7 +104,9 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toEqual([{ address: contractAddress, target: undefined }])
+    expect(result).toStrictEqual([
+      { address: contractAddress, target: undefined },
+    ])
   })
 
   it('keeps the same address on different chains distinct', () => {
@@ -117,7 +120,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       { address: contractAddress, target: undefined },
       { address: baseAddress, target: undefined },
     ])
@@ -136,7 +139,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         address: contractAddress,
         target: {
@@ -162,7 +165,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         address: permissionAddress,
         target: {
@@ -186,7 +189,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         address: contractAddress,
         target: {

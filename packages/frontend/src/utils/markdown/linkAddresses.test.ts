@@ -6,7 +6,8 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { linkAddresses } from './linkAddresses'
 
 describe(linkAddresses.name, () => {
@@ -36,7 +37,7 @@ describe(linkAddresses.name, () => {
     it('should replace known contract address with link', () => {
       const input = `The contract at ${mockContractAddress.toString()} is important.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         'The contract at [TestContract](#TestContract) is important.',
       )
     })
@@ -44,13 +45,13 @@ describe(linkAddresses.name, () => {
     it('should not replace unknown address', () => {
       const input = `The contract at ${unknownAddress.toString()} is unknown.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(input)
+      expect(output).toStrictEqual(input)
     })
 
     it('should replace multiple occurrences of the same address', () => {
       const input = `See ${mockContractAddress.toString()} and also ${mockContractAddress.toString()}.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         'See [TestContract](#TestContract) and also [TestContract](#TestContract).',
       )
     })
@@ -80,7 +81,7 @@ describe(linkAddresses.name, () => {
 
       const input = `First: ${mockContractAddress.toString()}, Second: ${secondAddress.toString()}.`
       const output = linkAddresses(input, contractsWithMultiple, undefined)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         'First: [Contract1](#Contract1), Second: [Contract2](#Contract2).',
       )
     })
@@ -100,7 +101,7 @@ describe(linkAddresses.name, () => {
 
       const input = `See ${mockContractAddress.toString()}.`
       const output = linkAddresses(input, contractsWithSpaces, undefined)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         `See [My Contract Name](#${encodeURIComponent('My Contract Name')}).`,
       )
     })
@@ -128,7 +129,7 @@ describe(linkAddresses.name, () => {
     it('should replace known permission address with link', () => {
       const input = `The permission at ${mockPermissionAddress.toString()} is important.`
       const output = linkAddresses(input, undefined, permissions)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         `The permission at [ADI Multisig 2](#${encodeURIComponent('ADI Multisig 2')}) is important.`,
       )
     })
@@ -136,10 +137,10 @@ describe(linkAddresses.name, () => {
     it('should handle permission ID with spaces', () => {
       const input = `See ${mockPermissionAddress.toString()}.`
       const output = linkAddresses(input, undefined, permissions)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         `See [ADI Multisig 2](#${encodeURIComponent('ADI Multisig 2')}).`,
       )
-      expect(output).toInclude('ADI%20Multisig%202')
+      expect(output).toContain('ADI%20Multisig%202')
     })
 
     it('should handle actors as well as roles', () => {
@@ -165,7 +166,7 @@ describe(linkAddresses.name, () => {
 
       const input = `See ${mockPermissionAddress.toString()}.`
       const output = linkAddresses(input, undefined, permissionsWithActors)
-      expect(output).toEqual('See [Test Actor](#actor-id).')
+      expect(output).toStrictEqual('See [Test Actor](#actor-id).')
     })
   })
 
@@ -177,7 +178,7 @@ describe(linkAddresses.name, () => {
       }
       const input = 'See eth:0x1234567890123456789012345678901234567890.'
       const output = linkAddresses(input, emptyContracts, undefined)
-      expect(output).toEqual(input)
+      expect(output).toStrictEqual(input)
     })
 
     it('should handle multiple chains', () => {
@@ -208,7 +209,7 @@ describe(linkAddresses.name, () => {
 
       const input = `ETH: ${ethAddress.toString()}, ARB: ${arbAddress.toString()}.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toStrictEqual(
         'ETH: [EthereumContract](#EthereumContract), ARB: [ArbitrumContract](#ArbitrumContract).',
       )
     })

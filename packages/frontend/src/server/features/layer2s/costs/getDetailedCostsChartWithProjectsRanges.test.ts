@@ -1,6 +1,7 @@
 import type { AggregatedL2CostRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getCostsChartData } from './getDetailedCostsChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -29,7 +30,7 @@ describe(getCostsChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [
         [T, { [ARBITRUM]: [100, 1, 1000], [BASE]: [10, 0.1, 100] }],
         [T + DAY, { [ARBITRUM]: [200, 2, 2000], [BASE]: [20, 0.2, 200] }],
@@ -54,7 +55,7 @@ describe(getCostsChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result.chart).toEqual([[T, { [ARBITRUM]: [150, 1.5, 1500] }]])
+    expect(result.chart).toStrictEqual([[T, { [ARBITRUM]: [150, 1.5, 1500] }]])
   })
 
   it('fills zeros after tracking start and nulls before', async () => {
@@ -73,7 +74,7 @@ describe(getCostsChartData.name, () => {
       [T, T + 2 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: [100, 1, 1000], [BASE]: null }],
       [T + DAY, { [ARBITRUM]: [0, 0, 0], [BASE]: [0, 0, 0] }],
       [T + 2 * DAY, { [ARBITRUM]: [300, 3, 3000], [BASE]: [20, 0.2, 200] }],
@@ -89,10 +90,10 @@ describe(getCostsChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result.projects).toEqual([
+    expect(result.projects).toStrictEqual([
       { projectId: ARBITRUM, sinceTimestamp: T },
     ])
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: [0, 0, 0] }],
       [T + DAY, { [ARBITRUM]: [100, 1, 1000] }],
     ])
@@ -107,11 +108,11 @@ describe(getCostsChartData.name, () => {
       [T, T + 2 * DAY],
     )
 
-    expect(result.chart).toEqual([
+    expect(result.chart).toStrictEqual([
       [T, { [ARBITRUM]: [100, 1, 1000] }],
       [T + DAY, { [ARBITRUM]: null }],
     ])
-    expect(result.syncedUntil).toEqual(T)
+    expect(result.syncedUntil).toStrictEqual(T)
   })
 
   it('returns an empty chart when there are no records', async () => {
@@ -123,7 +124,7 @@ describe(getCostsChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       chart: [],
       projects: [{ projectId: ARBITRUM, sinceTimestamp: T }],
       syncedUntil: 0,

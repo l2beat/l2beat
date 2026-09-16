@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId, type ProjectId as ProjectIdType } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 import { getTopToken } from './getTopToken'
 
@@ -38,7 +38,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       id: 'eth',
       symbol: 'ETH',
       issuer: null,
@@ -78,7 +78,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set([ProjectId('sub')]),
     })
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       id: 'usdc',
       symbol: 'USDC',
       issuer: null,
@@ -117,7 +117,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.topProtocol).toEqual({
+    expect(result?.topProtocol).toStrictEqual({
       name: 'Wormhole',
       slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
@@ -147,8 +147,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toEqual('USDC')
-    expect(result?.transferCount).toEqual(20)
+    expect(result?.symbol).toStrictEqual('USDC')
+    expect(result?.transferCount).toStrictEqual(20)
   })
 
   it('skips tokens missing metadata', () => {
@@ -173,7 +173,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toEqual('ETH')
+    expect(result?.symbol).toStrictEqual('ETH')
   })
 
   it('returns undefined for empty or fully invalid records', () => {
@@ -200,8 +200,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(emptyResult).toEqual(undefined)
-    expect(invalidResult).toEqual(undefined)
+    expect(emptyResult).toStrictEqual(undefined)
+    expect(invalidResult).toStrictEqual(undefined)
   })
 })
 

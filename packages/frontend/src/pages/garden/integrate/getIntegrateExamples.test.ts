@@ -1,6 +1,6 @@
 import type { ProjectScalingInfo } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { CROPS_API_URL } from './content'
 import { elided } from './exampleValue'
@@ -61,17 +61,19 @@ describe(buildIntegrateExamples.name, () => {
   const examples = buildIntegrateExamples(SAMPLE, META, 1787200000)
 
   it('points every request at the static host, with the address lowercased', () => {
-    expect(examples.address.request).toEqual(
+    expect(examples.address.request).toStrictEqual(
       `${CROPS_API_URL}/v1/address/1/${FACTORY.toLowerCase()}.json`,
     )
-    expect(examples.project.request).toEqual(
+    expect(examples.project.request).toStrictEqual(
       `${CROPS_API_URL}/v1/project/uniswap-v3.json`,
     )
-    expect(examples.crops.request).toEqual(`${CROPS_API_URL}/v1/crops.json`)
+    expect(examples.crops.request).toStrictEqual(
+      `${CROPS_API_URL}/v1/crops.json`,
+    )
   })
 
   it('shows the address match as crops-api writes it', () => {
-    expect(examples.address.response).toHaveSubset({
+    expect(examples.address.response).toMatchObject({
       chainId: 1,
       address: FACTORY.toLowerCase(),
       generatedAt: 1787200000,
@@ -95,7 +97,7 @@ describe(buildIntegrateExamples.name, () => {
   })
 
   it('shows the project file with its attestation, in the garden', () => {
-    expect(examples.project.response).toHaveSubset({
+    expect(examples.project.response).toMatchObject({
       id: 'uniswapv3',
       inGarden: true,
       attestation: {
@@ -108,20 +110,20 @@ describe(buildIntegrateExamples.name, () => {
   })
 
   it('shows the attestations in full only on the whole garden', () => {
-    expect(examples.crops.response).toHaveSubset({ attestations: META })
-    expect(examples.address.response).toHaveSubset({
+    expect(examples.crops.response).toMatchObject({ attestations: META })
+    expect(examples.address.response).toMatchObject({
       attestations: elided('object'),
     })
-    expect(examples.project.response).toHaveSubset({
+    expect(examples.project.response).toMatchObject({
       attestations: elided('object'),
     })
   })
 
   it('elides the commit and cuts a list of prose to its first entry', () => {
-    expect(examples.project.response).toHaveSubset({
+    expect(examples.project.response).toMatchObject({
       commit: elided('value'),
-      crops: expect.subset({
-        censorshipResistance: expect.subset({
+      crops: expect.objectContaining({
+        censorshipResistance: expect.objectContaining({
           points: ['One', elided('value')],
         }),
       }),

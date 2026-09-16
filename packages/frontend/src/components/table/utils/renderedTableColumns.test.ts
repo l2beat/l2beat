@@ -4,7 +4,7 @@ import {
   createTable,
   getCoreRowModel,
 } from '@tanstack/react-table'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { withChangeSort } from '../sorting/changeSortColumn'
 import { getBasicTableGroupParams } from './getBasicTableGroupParams'
 import { getBasicTableHeaderSections } from './getBasicTableHeaderSections'
@@ -63,17 +63,17 @@ describe('rendered table columns', () => {
     const row = table.getRowModel().rows[0]
     assert(row, 'expected a row')
 
-    expect(groupHeader.colSpan).toEqual(2)
-    expect(getRenderedColSpan(groupHeader)).toEqual(1)
+    expect(groupHeader.colSpan).toStrictEqual(2)
+    expect(getRenderedColSpan(groupHeader)).toStrictEqual(1)
     expect(
       getRenderedHeaders(actualHeader.headers).map(
         (header) => header.column.id,
       ),
-    ).toEqual(['total'])
+    ).toStrictEqual(['total'])
     expect(
       getRenderedCells(row.getVisibleCells()).map((cell) => cell.column.id),
-    ).toEqual(['total'])
-    expect(getBasicTableGroupParams(totalColumn)).toEqual({
+    ).toStrictEqual(['total'])
+    expect(getBasicTableGroupParams(totalColumn)).toStrictEqual({
       headerTitle: 'Data',
       isFirstInGroup: true,
       isLastInGroup: true,

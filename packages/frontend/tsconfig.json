@@ -5,7 +5,7 @@
     "target": "esnext",
     "allowJs": true,
     "resolveJsonModule": true,
-    "types": ["node", "mocha"],
+    "types": ["node", "@l2beat/test-utils"],
     "moduleDetection": "force",
     "isolatedModules": true,
 
