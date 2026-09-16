@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "build",
+    "node_modules",
+    "src/codemod",
+    "**/test/*",
+    "**/*test.ts",
+    "vitest.config.ts"
+  ]
+}
