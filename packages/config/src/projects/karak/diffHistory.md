@@ -8,7 +8,7 @@ Generated with discovered.json: 0x21136cb841ace4f94b557cbafa7212cdebcec53e
 
 ## Description
 
-K2 core bridge contracts replaced with a Merkle-claim exit mechanism; sequencer and batcher stopped.
+K2 core bridge contracts replaced with a Merkle-claim exit mechanism; batch posting stopped.
 
 OptimismPortal implementation `0x3fe449Ef47228F03f979F9D955196494243cdf7E` (v1.10.0) → `0xB1762246367681e5b335968950e8A17b0c56021D` (v2.3.0), upgraded and paused by the KarakMultisig on 2026-09-15 04:45 UTC (tx `0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd`). `depositTransaction()`, `receive()`, `proveWithdrawalTransaction()` and `finalizeWithdrawalTransaction()` now revert. Escrowed ETH (1876 ETH) is claimable via `claimETH(amount, proof)` against `merkleRootETH` = `0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9`, set on 2026-09-16 04:03 UTC (tx `0x2080dbdfa4798b9003dfe3e8b5bf8ea1772143eaf44acac1217002904eef87ec`, which also unpaused the portal); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, amount))))`, claims are cumulative per address. The Guardian can pause/unpause claims and, while paused and after `RECOVERY_TIMESTAMP` = 1820707200 (2027-09-12), call `recoverETH(recipient)` for the full balance.
 https://disco.l2beat.com/diff/eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E/eth:0xB1762246367681e5b335968950e8A17b0c56021D
