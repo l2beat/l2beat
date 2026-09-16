@@ -1,7 +1,7 @@
 import type { InteropConfig } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ProjectMetadata } from './getAverageTransferTime'
 import { getInteropProtocols } from './getInteropProtocols'
 
@@ -38,7 +38,7 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'stargate',
         slug: 'stargate',
@@ -96,8 +96,8 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result[0]?.avgTransferTime).toEqual({ type: 'unknown' })
-    expect(result[0]?.chainsBreakdown).toEqual([
+    expect(result[0]?.avgTransferTime).toStrictEqual({ type: 'unknown' })
+    expect(result[0]?.chainsBreakdown).toStrictEqual([
       {
         id: 'base',
         name: 'Base',
@@ -149,7 +149,7 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'layerzero',
         slug: 'layerzero',
@@ -210,7 +210,7 @@ describe('getInteropProtocols', () => {
   })
 
   it('returns an empty array when there is no data', () => {
-    expect(getInteropProtocols([], [])).toEqual([])
+    expect(getInteropProtocols([], [])).toStrictEqual([])
   })
 })
 

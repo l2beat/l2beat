@@ -1,7 +1,7 @@
 import type { InteropConfig } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ProjectMetadata } from './getAverageTransferTime'
 import { getInteropChains } from './getInteropChains'
 
@@ -36,7 +36,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -135,7 +135,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -209,7 +209,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -264,7 +264,7 @@ describe('getInteropChains', () => {
   })
 
   it('returns an empty array when there is no data', () => {
-    expect(getInteropChains([], [])).toEqual([])
+    expect(getInteropChains([], [])).toStrictEqual([])
   })
 })
 

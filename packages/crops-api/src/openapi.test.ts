@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { CROPS_API_ROUTES, getAttestationsMeta } from './api'
 import { buildOpenApiDocument, describeApi } from './openapi'
 
@@ -7,7 +7,7 @@ describe('OpenAPI document', () => {
   const document = buildOpenApiDocument(meta)
 
   it('lists every published route under paths, checked route by route', () => {
-    expect(Object.keys(document.paths).sort()).toEqual(
+    expect(Object.keys(document.paths).sort()).toStrictEqual(
       CROPS_API_ROUTES.map((x) => x.path).sort(),
     )
   })
@@ -17,16 +17,16 @@ describe('OpenAPI document', () => {
     for (const item of Object.values(document.paths)) {
       const ref = item.get.responses[200].content['application/json'].schema
       const name = ref.$ref.replace('#/components/schemas/', '')
-      expect(schemas[name]).not.toBeNullish()
+      expect(schemas[name] == null).toBe(false)
     }
-    expect(JSON.stringify(document)).not.toInclude('#/definitions/')
+    expect(JSON.stringify(document)).not.toContain('#/definitions/')
   })
 
   it('carries field descriptions into the component schemas, checked on a stamp field', () => {
     const response = document.components.schemas.ProjectResponse as {
       properties: Record<string, { description?: string }>
     }
-    expect(response.properties.generatedAt?.description).toEqual(
+    expect(response.properties.generatedAt?.description).toStrictEqual(
       'Unix seconds.',
     )
   })
@@ -35,12 +35,12 @@ describe('OpenAPI document', () => {
     for (const route of CROPS_API_ROUTES) {
       expect(
         document.paths[route.path]?.get.responses[404]?.description,
-      ).toEqual(route.notFound)
+      ).toStrictEqual(route.notFound)
     }
   })
 
   it('is OpenAPI 3.1', () => {
-    expect(document.openapi).toEqual('3.1.0')
+    expect(document.openapi).toStrictEqual('3.1.0')
   })
 
   it('names the ledger network and warns about a testnet only while on one', () => {
@@ -50,7 +50,7 @@ describe('OpenAPI document', () => {
       chainId: 11155111,
       isTestnet: true,
     })
-    expect(testnet).toInclude(
+    expect(testnet).toContain(
       'currently lives on the sepolia testnet (chain id 11155111)',
     )
     const mainnet = describeApi({
@@ -59,7 +59,7 @@ describe('OpenAPI document', () => {
       chainId: 1,
       isTestnet: false,
     })
-    expect(mainnet).toInclude('lives on ethereum (chain id 1)')
-    expect(mainnet).not.toInclude('testnet')
+    expect(mainnet).toContain('lives on ethereum (chain id 1)')
+    expect(mainnet).not.toContain('testnet')
   })
 })

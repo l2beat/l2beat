@@ -12,7 +12,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node build/index.js",
     "dev": "tsx watch src/index.ts",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,6 +30,8 @@
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.4",
     "@types/swagger-ui-express": "^4.1.8",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

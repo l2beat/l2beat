@@ -13,7 +13,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node build/index.js",
     "dev": "tsx watch src/index.ts",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

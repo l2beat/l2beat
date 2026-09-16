@@ -1,6 +1,7 @@
+import { mockObject } from '@l2beat/test-utils'
 import { v } from '@l2beat/validate'
-import { expect, mockFn, mockObject } from 'earl'
 import type { Application, Request, Response } from 'express'
+import { describe, expect, it, vi } from 'vitest'
 import { type BaseOpenApiSchema, OpenApi } from './OpenApi'
 import { InteropProtocolsResultSchema } from './routes/interop/types'
 
@@ -10,7 +11,7 @@ describe(OpenApi.name, () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
-      const handler = mockFn().returns(undefined)
+      const handler = vi.fn().mockReturnValue(undefined)
       openapi.get(
         '/test',
         {
@@ -27,8 +28,8 @@ describe(OpenApi.name, () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
-      openapi.get('/route1', { result: v.string() }, mockFn())
-      openapi.get('/route2', { result: v.number() }, mockFn())
+      openapi.get('/route1', { result: v.string() }, vi.fn())
+      openapi.get('/route2', { result: v.number() }, vi.fn())
 
       expect(app.get).toHaveBeenCalledTimes(2)
     })
@@ -38,7 +39,7 @@ describe(OpenApi.name, () => {
     it('passes valid query parameters to handler', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
-      const handler = mockFn().returns(undefined)
+      const handler = vi.fn().mockReturnValue(undefined)
 
       const querySchema = v.object({
         page: v.string(),
@@ -57,10 +58,10 @@ describe(OpenApi.name, () => {
       const req = mockRequest({ query: { page: '1' } })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn())
+      routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalledWith(req, res, expect.anything())
-      expect(req.params).toEqual({})
+      expect(req.params).toStrictEqual({})
     })
 
     it('returns 400 for invalid query parameters', () => {
@@ -77,14 +78,14 @@ describe(OpenApi.name, () => {
           result: v.string(),
           query: querySchema,
         },
-        mockFn().returns(undefined),
+        vi.fn().mockReturnValue(undefined),
       )
 
       const routeHandler = getRouteHandler(app)
       const req = mockRequest({ query: { page: 'invalid' } })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn().returns(undefined))
+      routeHandler(req, res, vi.fn().mockReturnValue(undefined))
 
       expect(res.status).toHaveBeenCalledWith(400)
     })
@@ -92,7 +93,7 @@ describe(OpenApi.name, () => {
     it('sanitizes empty string query parameters', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
-      const handler = mockFn().returns(undefined)
+      const handler = vi.fn().mockReturnValue(undefined)
 
       const querySchema = v.object({
         filter: v.string().optional(),
@@ -111,10 +112,10 @@ describe(OpenApi.name, () => {
       const req = mockRequest({ query: { filter: '' } })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn())
+      routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalled()
-      expect(req.query).toEqual({})
+      expect(req.query).toStrictEqual({})
     })
   })
 
@@ -122,7 +123,7 @@ describe(OpenApi.name, () => {
     it('passes valid path parameters to handler', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
-      const handler = mockFn().returns(undefined)
+      const handler = vi.fn().mockReturnValue(undefined)
 
       const paramsSchema = v.object({
         id: v.string(),
@@ -142,10 +143,10 @@ describe(OpenApi.name, () => {
       const req = mockRequest({ params: { id: 'test-id' } })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn())
+      routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalledWith(req, res, expect.anything())
-      expect(req.params).toEqual({ id: 'test-id' })
+      expect(req.params).toStrictEqual({ id: 'test-id' })
     })
 
     it('returns 400 for invalid path parameters', () => {
@@ -162,14 +163,14 @@ describe(OpenApi.name, () => {
           result: v.string(),
           params: paramsSchema,
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const routeHandler = getRouteHandler(app)
       const req = mockRequest({ params: { id: 'not-a-number' } })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn())
+      routeHandler(req, res, vi.fn())
 
       expect(res.status).toHaveBeenCalledWith(400)
     })
@@ -177,7 +178,7 @@ describe(OpenApi.name, () => {
     it('validates both params and query', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
-      const handler = mockFn().returns(undefined)
+      const handler = vi.fn().mockReturnValue(undefined)
 
       openapi.get(
         '/test/:id',
@@ -196,11 +197,11 @@ describe(OpenApi.name, () => {
       })
       const res = mockResponse()
 
-      routeHandler(req, res, mockFn())
+      routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalled()
-      expect(req.params).toEqual({ id: 'test-id' })
-      expect(req.query).toEqual({ page: '1' })
+      expect(req.params).toStrictEqual({ id: 'test-id' })
+      expect(req.query).toStrictEqual({ page: '1' })
     })
   })
 
@@ -211,7 +212,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema).toEqual({
+      expect(schema).toStrictEqual({
         openapi: '3.1.0',
         info: {
           title: 'L2BEAT API',
@@ -221,11 +222,11 @@ describe(OpenApi.name, () => {
         tags: [
           {
             name: 'projects',
-            description: expect.a(String),
+            description: expect.any(String),
           },
         ],
-        paths: expect.a(Object),
-        components: expect.a(Object),
+        paths: expect.any(Object),
+        components: expect.any(Object),
         security: [{ apiKeyAuth: [] }],
         externalDocs: {
           description: 'Changelog',
@@ -246,20 +247,20 @@ describe(OpenApi.name, () => {
           tags: ['projects'],
           result: v.string(),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.paths['/test']).toEqual({
+      expect(schema.paths['/test']).toStrictEqual({
         get: {
           summary: 'Test endpoint',
           description: 'A test endpoint',
           tags: ['projects'],
           parameters: [],
           responses: {
-            200: expect.a(Object),
-            401: expect.a(Object),
+            200: expect.any(Object),
+            401: expect.any(Object),
           },
         },
       })
@@ -278,12 +279,12 @@ describe(OpenApi.name, () => {
             postId: v.string(),
           }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(Object.keys(schema.paths)).toEqual([
+      expect(Object.keys(schema.paths)).toStrictEqual([
         '/users/{userId}/posts/{postId}',
       ])
     })
@@ -301,24 +302,24 @@ describe(OpenApi.name, () => {
             limit: v.number().optional(),
           }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
       const parameters = schema.paths['/test']?.get?.parameters
 
-      expect(parameters).toEqual([
+      expect(parameters).toStrictEqual([
         {
           name: 'page',
           in: 'query',
           required: true,
-          schema: expect.a(Object),
+          schema: expect.any(Object),
         },
         {
           name: 'limit',
           in: 'query',
           required: false,
-          schema: expect.a(Object),
+          schema: expect.any(Object),
         },
       ])
     })
@@ -335,18 +336,18 @@ describe(OpenApi.name, () => {
             id: v.string(),
           }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
       const parameters = schema.paths['/users/{id}']?.get?.parameters
 
-      expect(parameters).toEqual([
+      expect(parameters).toStrictEqual([
         {
           name: 'id',
           in: 'path',
           required: true,
-          schema: expect.a(Object),
+          schema: expect.any(Object),
         },
       ])
     })
@@ -361,20 +362,20 @@ describe(OpenApi.name, () => {
           result: v.string(),
           query: v.object({ page: v.string() }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test']?.get?.responses
 
-      expect(responses).toEqual({
-        200: expect.a(Object),
-        401: expect.a(Object),
+      expect(responses).toStrictEqual({
+        200: expect.any(Object),
+        401: expect.any(Object),
         400: {
-          description: expect.a(String),
+          description: expect.any(String),
           content: {
             'application/json': {
-              schema: expect.a(Object),
+              schema: expect.any(Object),
             },
           },
         },
@@ -399,18 +400,18 @@ describe(OpenApi.name, () => {
             404: NotFoundError,
           },
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test/{id}']?.get?.responses
 
-      expect(Object.keys(responses ?? {})).toEqual(['200', '401', '404'])
-      expect(responses?.[404]).toEqual({
-        description: expect.a(String),
+      expect(Object.keys(responses ?? {})).toStrictEqual(['200', '401', '404'])
+      expect(responses?.[404]).toStrictEqual({
+        description: expect.any(String),
         content: {
           'application/json': {
-            schema: expect.a(Object),
+            schema: expect.any(Object),
           },
         },
       })
@@ -429,15 +430,15 @@ describe(OpenApi.name, () => {
         })
         .describe('User')
 
-      openapi.get('/users', { result: UserSchema }, mockFn())
+      openapi.get('/users', { result: UserSchema }, vi.fn())
 
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/users']?.get?.responses?.[200]
 
-      expect(schema.components.schemas).toEqual({
-        User: expect.a(Object),
+      expect(schema.components.schemas).toStrictEqual({
+        User: expect.any(Object),
       })
-      expect(response?.content['application/json'].schema).toEqual({
+      expect(response?.content['application/json'].schema).toStrictEqual({
         $ref: '#/components/schemas/User',
       })
     })
@@ -452,19 +453,19 @@ describe(OpenApi.name, () => {
         })
         .describe('Item')
 
-      openapi.get('/items', { result: v.array(ItemSchema) }, mockFn())
+      openapi.get('/items', { result: v.array(ItemSchema) }, vi.fn())
 
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/items']?.get?.responses?.[200]
 
-      expect(response?.content['application/json'].schema).toEqual({
+      expect(response?.content['application/json'].schema).toStrictEqual({
         type: 'array',
         items: {
           $ref: '#/components/schemas/Item',
         },
       })
-      expect(schema.components.schemas).toEqual({
-        Item: expect.a(Object),
+      expect(schema.components.schemas).toStrictEqual({
+        Item: expect.any(Object),
       })
     })
 
@@ -478,13 +479,13 @@ describe(OpenApi.name, () => {
           result: v.string(),
           params: v.object({ id: v.string() }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).toEqual({
-        BadRequestResponse: expect.a(Object),
+      expect(schema.components.schemas).toStrictEqual({
+        BadRequestResponse: expect.any(Object),
       })
     })
 
@@ -492,12 +493,12 @@ describe(OpenApi.name, () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
-      openapi.get('/test', { result: v.string() }, mockFn())
+      openapi.get('/test', { result: v.string() }, vi.fn())
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).not.toEqual({
-        BadRequestResponse: expect.a(Object),
+      expect(schema.components.schemas).not.toStrictEqual({
+        BadRequestResponse: expect.any(Object),
       })
     })
 
@@ -520,13 +521,13 @@ describe(OpenApi.name, () => {
             500: CustomError,
           },
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).toEqual({
-        CustomError: expect.a(Object),
+      expect(schema.components.schemas).toStrictEqual({
+        CustomError: expect.any(Object),
       })
     })
 
@@ -537,14 +538,14 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/interop/protocols',
         { result: InteropProtocolsResultSchema },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
       const interopProtocolSchema = schema.components.schemas
         .InteropProtocol as { properties?: Record<string, unknown> }
 
-      expect(interopProtocolSchema.properties?.subgroupId).toEqual({
+      expect(interopProtocolSchema.properties?.subgroupId).toStrictEqual({
         anyOf: [{ type: 'string' }, { type: 'null' }],
         description:
           'ID of the aggregate/root interop protocol this protocol belongs to. Null for aggregate/root protocols.',
@@ -557,18 +558,18 @@ describe(OpenApi.name, () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
-      openapi.get('/minimal', { result: v.string() }, mockFn())
+      openapi.get('/minimal', { result: v.string() }, vi.fn())
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.paths['/minimal']?.get).toEqual({
+      expect(schema.paths['/minimal']?.get).toStrictEqual({
         tags: undefined,
         summary: undefined,
         description: undefined,
         parameters: [],
         responses: {
-          200: expect.a(Object),
-          401: expect.a(Object),
+          200: expect.any(Object),
+          401: expect.any(Object),
         },
       })
     })
@@ -584,7 +585,7 @@ describe(OpenApi.name, () => {
             value: v.string(),
           }),
         },
-        mockFn(),
+        vi.fn(),
       )
 
       const schema = openapi.getOpenApiSchema()
@@ -595,12 +596,12 @@ describe(OpenApi.name, () => {
         !Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('$ref'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
       expect(
         Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('type'),
-      ).toEqual(true)
+      ).toStrictEqual(true)
     })
   })
 })
@@ -608,7 +609,7 @@ describe(OpenApi.name, () => {
 // Helper functions
 function mockApp() {
   return mockObject<Application>({
-    get: mockFn().returns(undefined),
+    get: vi.fn().mockReturnValue(undefined),
   })
 }
 
@@ -624,17 +625,17 @@ function mockRequest(overrides?: {
 
 function mockResponse() {
   const res = mockObject<Response>({
-    status: mockFn().returns(
-      mockObject<Response>({ json: mockFn((json) => json) }),
-    ),
-    json: mockFn((json) => json),
+    status: vi
+      .fn()
+      .mockReturnValue(mockObject<Response>({ json: vi.fn((json) => json) })),
+    json: vi.fn((json) => json),
   })
   return res
 }
 
 function getRouteHandler(app: Application) {
-  const calls = (app.get as ReturnType<typeof mockFn>).calls
-  return calls[calls.length - 1]?.args[1]
+  const calls = (app.get as ReturnType<typeof vi.fn>).mock.calls
+  return calls[calls.length - 1]?.[1]
 }
 
 const baseSchema: BaseOpenApiSchema = {

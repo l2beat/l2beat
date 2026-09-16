@@ -1,6 +1,6 @@
 import type { ProjectCrops } from '@l2beat/config'
 import { OSI_LICENSES } from '@l2beat/config'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   qualifiesForGarden,
   resolveCropEvaluation,
@@ -10,7 +10,7 @@ import {
 describe('crops', () => {
   describe(resolveCropEvaluation.name, () => {
     it('defaults a missing status to reviewed', () => {
-      expect(resolveCropEvaluation({ sentiment: 'good' })).toEqual({
+      expect(resolveCropEvaluation({ sentiment: 'good' })).toStrictEqual({
         sentiment: 'good',
         status: 'reviewed',
         points: [],
@@ -23,10 +23,10 @@ describe('crops', () => {
     it('resolves an ungraded crop to neutral, since it declares no sentiment', () => {
       expect(
         resolveCropEvaluation({ status: 'notReviewed' }).sentiment,
-      ).toEqual('neutral')
+      ).toStrictEqual('neutral')
       expect(
         resolveCropEvaluation({ status: 'fullyTransparent' }).sentiment,
-      ).toEqual('neutral')
+      ).toStrictEqual('neutral')
     })
 
     it('keeps the sentiment of a partially reviewed crop', () => {
@@ -34,8 +34,8 @@ describe('crops', () => {
         sentiment: 'warning',
         status: 'partiallyReviewed',
       })
-      expect(resolved.sentiment).toEqual('warning')
-      expect(resolved.status).toEqual('partiallyReviewed')
+      expect(resolved.sentiment).toStrictEqual('warning')
+      expect(resolved.status).toStrictEqual('partiallyReviewed')
     })
 
     it('resolves a declared license id against the OSI list', () => {
@@ -43,7 +43,7 @@ describe('crops', () => {
         sentiment: 'good',
         license: 'MIT',
       })
-      expect(resolved.license).toEqual(OSI_LICENSES.MIT)
+      expect(resolved.license).toStrictEqual(OSI_LICENSES.MIT)
     })
 
     it('throws on a license the OSI has not approved', () => {
@@ -72,21 +72,21 @@ describe('crops', () => {
           security: { sentiment: 'warning', status: 'partiallyReviewed' },
         }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(true)
+      expect(qualifiesForGarden(resolved)).toStrictEqual(true)
     })
 
     it('keeps a project out when any crop is red', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad' } }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved)).toStrictEqual(false)
     })
 
     it('keeps it out even when the red crop is only partially reviewed', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad', status: 'partiallyReviewed' } }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved)).toStrictEqual(false)
     })
   })
 })

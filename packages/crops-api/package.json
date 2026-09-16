@@ -11,7 +11,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "generate": "tsx src/index.ts",
     "dev": "pnpm generate && wrangler dev",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/swagger-ui-dist": "^3.30.6",
     "tsx": "^4.9.3",
-    "wrangler": "^4.40.0"
+    "wrangler": "^4.40.0",
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

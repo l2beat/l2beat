@@ -1,13 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { expect } from 'earl'
-import { describe } from 'mocha'
 import {
   encodeAbiParameters,
   encodeFunctionData,
   parseAbi,
   toFunctionSelector,
 } from 'viem'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { getShortChainName } from '../../../config/address'
 import chainList from '../../../config/chains.json'
 import { type Address, Chain } from '../../../config/types'
@@ -124,7 +123,7 @@ describe(Decoder.name, () => {
       data: '0x',
       chain: ethereum,
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       data: {
         name: 'data',
         abi: 'bytes',
@@ -148,7 +147,7 @@ describe(Decoder.name, () => {
       data: selector,
       chain: ethereum,
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       data: {
         name: 'data',
         abi: 'bytes',
@@ -174,7 +173,7 @@ describe(Decoder.name, () => {
       data: data,
       chain: ethereum,
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       data: {
         name: 'data',
         abi: 'bytes',
@@ -215,7 +214,7 @@ describe(Decoder.name, () => {
       data: data,
       chain: ethereum,
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       data: {
         name: 'data',
         abi: 'bytes',
@@ -296,21 +295,21 @@ describe(Decoder.name, () => {
     const recipient0 = recipientsArg.decoded.values[0]
     const recipient1 = recipientsArg.decoded.values[1]
 
-    expect(recipient0?.decoded?.type).toEqual('address')
-    expect(recipient1?.decoded?.type).toEqual('address')
+    expect(recipient0?.decoded?.type).toStrictEqual('address')
+    expect(recipient1?.decoded?.type).toStrictEqual('address')
 
     assert(recipient0?.decoded?.type === 'address')
     assert(recipient1?.decoded?.type === 'address')
 
     // Check token address
-    expect(tokenArg?.decoded?.type).toEqual('address')
+    expect(tokenArg?.decoded?.type).toStrictEqual('address')
     assert(tokenArg?.decoded?.type === 'address')
-    expect(tokenArg?.decoded?.name).toEqual('FiatTokenV2_2')
+    expect(tokenArg?.decoded?.name).toStrictEqual('FiatTokenV2_2')
 
     // Check from address
-    expect(fromArg?.decoded?.type).toEqual('address')
+    expect(fromArg?.decoded?.type).toStrictEqual('address')
     assert(fromArg?.decoded?.type === 'address')
-    expect(fromArg.decoded.name).toEqual('FiatTokenV2_2')
+    expect(fromArg.decoded.name).toStrictEqual('FiatTokenV2_2')
   })
 
   it('decodes Taiko DAO execute actions', async () => {
@@ -374,7 +373,7 @@ describe(Decoder.name, () => {
       '((address target, uint256 value, bytes data)[])',
       actionsBytes,
     )
-    expect(preDecoded.decoded.type).toEqual('array')
+    expect(preDecoded.decoded.type).toStrictEqual('array')
 
     const data = encodeFunctionData({
       abi: parseAbi(['function execute(bytes _actions)']),
@@ -388,16 +387,16 @@ describe(Decoder.name, () => {
       chain: ethereum,
     })
 
-    expect(result.data.decoded?.type).toEqual('call')
+    expect(result.data.decoded?.type).toStrictEqual('call')
     assert(result.data.decoded?.type === 'call')
 
     const decodedCall = result.data.decoded
-    expect(decodedCall.selector).toEqual(executeSelector)
+    expect(decodedCall.selector).toStrictEqual(executeSelector)
 
     const actionsArg = decodedCall.arguments[0]
     assert(actionsArg?.decoded?.type === 'array')
-    expect(actionsArg.abi).toEqual('(address, uint256, bytes)[]')
-    expect(actionsArg.decoded.values.length).toEqual(2)
+    expect(actionsArg.abi).toStrictEqual('(address, uint256, bytes)[]')
+    expect(actionsArg.decoded.values.length).toStrictEqual(2)
 
     const [firstAction, secondAction] = actionsArg.decoded.values
     assert(firstAction?.decoded?.type === 'array')
@@ -408,12 +407,12 @@ describe(Decoder.name, () => {
     assert(firstValue?.decoded?.type === 'amount')
     assert(firstData?.decoded?.type === 'call')
 
-    expect(firstTarget.decoded.value).toEqual(targetA)
-    expect(firstValue.decoded.value).toEqual('123')
-    expect(firstValue.decoded.currency).toEqual('ETH')
-    expect(firstValue.decoded.decimals).toEqual(18)
-    expect(firstData.decoded.selector).toEqual(nestedSelector)
-    expect(firstData.decoded.arguments[0]?.decoded).toEqual({
+    expect(firstTarget.decoded.value).toStrictEqual(targetA)
+    expect(firstValue.decoded.value).toStrictEqual('123')
+    expect(firstValue.decoded.currency).toStrictEqual('ETH')
+    expect(firstValue.decoded.decimals).toStrictEqual(18)
+    expect(firstData.decoded.selector).toStrictEqual(nestedSelector)
+    expect(firstData.decoded.arguments[0]?.decoded).toStrictEqual({
       hint: 'e18',
       type: 'number',
       value: '123',
@@ -424,10 +423,10 @@ describe(Decoder.name, () => {
     assert(secondValue?.decoded?.type === 'amount')
     assert(secondData?.decoded?.type === 'call')
 
-    expect(secondTarget.decoded.value).toEqual(targetB)
-    expect(secondValue.decoded.value).toEqual('0')
-    expect(secondData.decoded.selector).toEqual(noopSelector)
-    expect(secondData.decoded.arguments).toEqual([])
+    expect(secondTarget.decoded.value).toStrictEqual(targetB)
+    expect(secondValue.decoded.value).toStrictEqual('0')
+    expect(secondData.decoded.selector).toStrictEqual(noopSelector)
+    expect(secondData.decoded.arguments).toStrictEqual([])
   })
 
   it('leaves unrelated execute bytes untouched', async () => {
@@ -451,12 +450,12 @@ describe(Decoder.name, () => {
       chain: ethereum,
     })
 
-    expect(result.data.decoded?.type).toEqual('call')
+    expect(result.data.decoded?.type).toStrictEqual('call')
     assert(result.data.decoded?.type === 'call')
-    expect(result.data.decoded.selector).toEqual(executeSelector)
+    expect(result.data.decoded.selector).toStrictEqual(executeSelector)
 
     const argument = result.data.decoded.arguments[0]
     assert(argument?.decoded?.type === 'bytes')
-    expect(argument.decoded.value).toEqual(payload)
+    expect(argument.decoded.value).toStrictEqual(payload)
   })
 })

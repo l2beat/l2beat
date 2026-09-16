@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   CROPS_API_ROUTES,
   CROPS_API_SCHEMAS,
@@ -39,7 +39,7 @@ describe(generateCropsApiFiles.name, () => {
   }
 
   it('writes the whole file set, checked by listing every path', () => {
-    expect(paths).toEqual(
+    expect(paths).toStrictEqual(
       [
         'v1/crops.json',
         'v1/project/uniswapv3.json',
@@ -70,21 +70,21 @@ describe(generateCropsApiFiles.name, () => {
   })
 
   it('exercises every route with the fixtures, checked by the set of route tags', () => {
-    expect([...new Set(files.map((x) => x.route))].sort()).toEqual(
+    expect([...new Set(files.map((x) => x.route))].sort()).toStrictEqual(
       CROPS_API_ROUTES.map((x) => x.key).sort(),
     )
   })
 
   it('writes a project once when its id equals its slug, checked by counting its files', () => {
-    expect(paths.filter((x) => x.includes('/project/other'))).toEqual([
+    expect(paths.filter((x) => x.includes('/project/other'))).toStrictEqual([
       'v1/project/other.json',
     ])
   })
 
   it('writes the same project body under id and slug, checked by deep equality', () => {
     const byId = read('project', 'v1/project/uniswapv3.json')
-    expect(byId).toEqual(read('project', 'v1/project/uniswap-v3.json'))
-    expect(byId).toHaveSubset({
+    expect(byId).toStrictEqual(read('project', 'v1/project/uniswap-v3.json'))
+    expect(byId).toMatchObject({
       id: 'uniswapv3',
       slug: 'uniswap-v3',
       inGarden: true,
@@ -99,12 +99,14 @@ describe(generateCropsApiFiles.name, () => {
 
   it('keys an address file by chain id and lowercase address, checked in path and body', () => {
     const file = read('address', addressPath(PROXY))
-    expect(file).toHaveSubset({ chainId: 1, address: lowerAddress(PROXY) })
+    expect(file).toMatchObject({ chainId: 1, address: lowerAddress(PROXY) })
   })
 
   it('lists each project once for a shared contract, with its own contract name', () => {
     const file = read('address', addressPath(FACTORY))
-    expect(file.matches.map((x) => [x.id, x.contractName]).sort()).toEqual([
+    expect(
+      file.matches.map((x) => [x.id, x.contractName]).sort(),
+    ).toStrictEqual([
       ['other', 'SharedFactory'],
       ['uniswapv3', 'UniswapV3Factory'],
     ])
@@ -112,18 +114,18 @@ describe(generateCropsApiFiles.name, () => {
 
   it('resolves an implementation and a permission holder to the project', () => {
     const implementation = read('address', addressPath(IMPLEMENTATION))
-    expect(implementation.matches).toEqual([
-      expect.subset({ id: 'uniswapv3', contractName: 'Router' }),
+    expect(implementation.matches).toStrictEqual([
+      expect.objectContaining({ id: 'uniswapv3', contractName: 'Router' }),
     ])
     const multisig = read('address', addressPath(MULTISIG))
-    expect(multisig.matches).toEqual([
-      expect.subset({ id: 'uniswapv3', contractName: 'Governance' }),
+    expect(multisig.matches).toStrictEqual([
+      expect.objectContaining({ id: 'uniswapv3', contractName: 'Governance' }),
     ])
   })
 
   it('gives a match the crops summary, page link and attestation, checked on the attested project', () => {
     const file = read('address', addressPath(MULTISIG))
-    expect(file.matches[0]).toEqual({
+    expect(file.matches[0]).toStrictEqual({
       id: 'uniswapv3',
       slug: 'uniswap-v3',
       name: 'Uniswap V3',
@@ -141,9 +143,9 @@ describe(generateCropsApiFiles.name, () => {
 
   it('marks a red-cropped, unattested project without a page, checked in crops.json', () => {
     const { projects } = read('crops', 'v1/crops.json')
-    expect(projects.map((x) => x.id)).toEqual(['other', 'uniswapv3'])
-    expect(projects[0]).toEqual(
-      expect.subset({
+    expect(projects.map((x) => x.id)).toStrictEqual(['other', 'uniswapv3'])
+    expect(projects[0]).toStrictEqual(
+      expect.objectContaining({
         id: 'other',
         href: null,
         inGarden: false,
@@ -154,7 +156,7 @@ describe(generateCropsApiFiles.name, () => {
 
   it('stamps every file with the attestation metadata, commit and time, checked file by file', () => {
     for (const file of files) {
-      expect(file.body).toHaveSubset({
+      expect(file.body).toMatchObject({
         attestations: LEDGER,
         generatedAt: 1_800_000_000,
         commit: 'abc123',
@@ -170,7 +172,7 @@ describe(generateCropsApiFiles.name, () => {
 
   it('sorts the output by path so a rerun produces a byte-identical site', () => {
     const again = generateCropsApiFiles(FIXTURE_INPUT)
-    expect(again.map((x: CropsApiFile) => x.path)).toEqual(
+    expect(again.map((x: CropsApiFile) => x.path)).toStrictEqual(
       files.map((x) => x.path),
     )
   })

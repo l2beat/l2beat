@@ -1,6 +1,6 @@
 import type { InteropConfig } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   getAverageTransferTime,
   getAverageTransferTimeSeconds,
@@ -20,7 +20,7 @@ describe('getAverageTransferTime', () => {
         },
         undefined,
       ),
-    ).toEqual(null)
+    ).toStrictEqual(null)
   })
 
   it('returns a single average when there is no duration split', () => {
@@ -33,7 +33,7 @@ describe('getAverageTransferTime', () => {
         },
         undefined,
       ),
-    ).toEqual({
+    ).toStrictEqual({
       type: 'single',
       duration: 123,
     })
@@ -55,7 +55,7 @@ describe('getAverageTransferTime', () => {
           { label: 'Taxi', transferTypes: ['taxi'] },
         ],
       ),
-    ).toEqual({
+    ).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 60 },
@@ -73,7 +73,7 @@ describe('getAverageTransferTimeSeconds', () => {
         totalDurationSum: 100,
         transferTypeStats: undefined,
       }),
-    ).toEqual(null)
+    ).toStrictEqual(null)
   })
 
   it('returns floored average duration in seconds', () => {
@@ -83,7 +83,7 @@ describe('getAverageTransferTimeSeconds', () => {
         totalDurationSum: 370,
         transferTypeStats: undefined,
       }),
-    ).toEqual(123)
+    ).toStrictEqual(123)
   })
 })
 
@@ -100,7 +100,7 @@ describe('getProtocolAverageTransferTime', () => {
           transfersTimeMode: 'unknown',
         }),
       }),
-    ).toEqual({ type: 'unknown' })
+    ).toStrictEqual({ type: 'unknown' })
   })
 
   it('uses the shared duration split when all bridge types match', () => {
@@ -131,7 +131,7 @@ describe('getProtocolAverageTransferTime', () => {
           ],
         }),
       }),
-    ).toEqual({
+    ).toStrictEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 60 },
@@ -165,7 +165,7 @@ describe('getProtocolAverageTransferTime', () => {
           ],
         }),
       }),
-    ).toEqual({
+    ).toStrictEqual({
       type: 'single',
       duration: 120,
     })
@@ -174,7 +174,7 @@ describe('getProtocolAverageTransferTime', () => {
 
 describe('hasUnknownTransferTime', () => {
   it('returns true only for projects configured as unknown', () => {
-    expect(hasUnknownTransferTime(undefined)).toEqual(false)
+    expect(hasUnknownTransferTime(undefined)).toStrictEqual(false)
     expect(
       hasUnknownTransferTime(
         interopProject('relay', {
@@ -183,7 +183,7 @@ describe('hasUnknownTransferTime', () => {
           transfersTimeMode: 'unknown',
         }),
       ),
-    ).toEqual(true)
+    ).toStrictEqual(true)
   })
 })
 
