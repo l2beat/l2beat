@@ -58,6 +58,8 @@ describe(runClingoForSingleModel.name, () => {
     ])
   })
 
+  // Twelve real solver runs take well over the default budget on a loaded CI
+  // runner, and the point of the test is recovery, not speed.
   it('recovers after twelve consecutive 100 KB failures', async () => {
     const failing = programOfSize(100 * 1024) + '\n' + SYNTAX_ERROR_PROGRAM
     for (let i = 0; i < 12; i++) {
@@ -67,7 +69,7 @@ describe(runClingoForSingleModel.name, () => {
       'a',
       'b',
     ])
-  })
+  }, 30_000)
 
   it('serves concurrent runs independently of each other', async () => {
     const results = await Promise.allSettled([
