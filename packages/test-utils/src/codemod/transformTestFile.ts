@@ -156,7 +156,37 @@ function rewriteMethodCall(
     rewriteMatcher(method, nameNode, receiver, args, callEnd, context)
     return
   }
+  if (method === 'timeout') {
+    rewriteTimeout(receiver, args, callEnd, context)
+    return
+  }
   rewriteMockChain(method, nameNode, receiver, args, context)
+}
+
+/**
+ * Mocha's `it('name', fn).timeout(ms)` becomes vitest's third argument to
+ * `it`. Only `it` and `test` are rewritten: `describe`'s timeout means
+ * something else in vitest, and anything else called `timeout` is not mocha's.
+ */
+function rewriteTimeout(
+  receiver: Node,
+  args: Node[],
+  callEnd: number,
+  context: Context,
+): void {
+  const milliseconds = args[0]
+  const runner = rootIdentifier(receiver)
+  if (!milliseconds || !Node.isCallExpression(receiver)) {
+    return
+  }
+  if (runner !== 'it' && runner !== 'test') {
+    return
+  }
+  const closingParen = receiver.getEnd() - 1
+  context.edits.push(
+    span(closingParen, closingParen, `, ${milliseconds.getText()}`),
+  )
+  context.edits.push(span(receiver.getEnd(), callEnd, ''))
 }
 
 function rewriteMockChain(
@@ -895,6 +925,10 @@ const LEFTOVERS: [RegExp, string][] = [
   [
     /(this|\))\.timeout\(/,
     'mocha timeout - use it(name, fn, timeout) or a testTimeout config',
+  ],
+  [
+    /\)\.timeout\(/,
+    'mocha timeout on something other than it/test - move it into the call',
   ],
   [/^\s*(before|after)\(/, 'mocha hook - use beforeAll/afterAll'],
 ]

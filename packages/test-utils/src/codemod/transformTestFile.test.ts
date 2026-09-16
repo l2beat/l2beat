@@ -70,6 +70,37 @@ describe(transformTestFile.name, () => {
     })
   })
 
+  describe('mocha timeouts', () => {
+    it("moves it(...).timeout(ms) into the call's third argument", () => {
+      const output = run(`
+        import { expect } from 'earl'
+        it('is slow', () => {
+          expect(1).toEqual(1)
+        }).timeout(10_000)
+      `)
+
+      expect(output).toContain('}, 10_000)')
+      expect(output).not.toContain('.timeout(')
+    })
+
+    it('flags a timeout on a runner it will not rewrite', () => {
+      const result = transformTestFile(
+        'x.test.ts',
+        [
+          "import { expect } from 'earl'",
+          "describe('slow', () => {",
+          '  expect(1).toEqual(1)',
+          '}).timeout(10_000)',
+          '',
+        ].join('\n'),
+      )
+
+      expect(result.blockers.map((it) => it.note)).toContain(
+        'mocha timeout on something other than it/test - move it into the call',
+      )
+    })
+  })
+
   describe('shadowed names', () => {
     it('does not import a runner global the file declares itself', () => {
       const output = run(`
