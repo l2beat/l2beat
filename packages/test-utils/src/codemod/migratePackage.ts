@@ -99,10 +99,11 @@ function convertPackageConfig(
 
   write(
     join(packageDir, 'vitest.config.ts'),
-    vitestConfig(includes, [
-      ...(usesTestUtils ? [`${TEST_UTILS}/setup`] : []),
-      ...mocha.setupFiles,
-    ]),
+    vitestConfig(
+      includes,
+      [...(usesTestUtils ? [`${TEST_UTILS}/setup`] : []), ...mocha.setupFiles],
+      readPathAliases(packageDir),
+    ),
     options,
     report,
   )
@@ -168,24 +169,88 @@ function declareGlobals(
   }
 }
 
-function vitestConfig(includes: string[], setupFiles: string[]): string {
-  const overrides = [
+function vitestConfig(
+  includes: string[],
+  setupFiles: string[],
+  aliases: Alias[],
+): string {
+  const testOverrides = [
     ...(includes.length > 0 ? [list('include', includes)] : []),
     ...(setupFiles.length > 0 ? [list('setupFiles', setupFiles)] : []),
   ]
-  const argument =
-    overrides.length === 0
-      ? ''
-      : `{\n  test: {\n${overrides.map((it) => `    ${it},\n`).join('')}  },\n}`
-  return `import { defineVitestConfig } from '${VITEST_CONFIG}'
+  const sections = [
+    ...(aliases.length > 0 ? [aliasSection(aliases)] : []),
+    ...(testOverrides.length > 0
+      ? [`  test: {\n${testOverrides.map((it) => `    ${it},\n`).join('')}  },`]
+      : []),
+  ]
+  const argument = sections.length === 0 ? '' : `{\n${sections.join('\n')}\n}`
+  const imports = [
+    ...(aliases.length > 0 ? ["import { fileURLToPath } from 'node:url'"] : []),
+    `import { defineVitestConfig } from '${VITEST_CONFIG}'`,
+  ]
+  return `${imports.join('\n')}
 
 // biome-ignore lint/style/noDefaultExport: Vitest config uses a default export.
 export default defineVitestConfig(${argument})
 `
 }
 
+function aliasSection(aliases: Alias[]): string {
+  const entries = aliases
+    .map(
+      ({ prefix, target }) =>
+        `      '${prefix}': fileURLToPath(new URL('${target}', import.meta.url)),\n`,
+    )
+    .join('')
+  return `  // Vitest does not read tsconfig \`paths\`, so they are restated here.
+  resolve: {
+    alias: {
+${entries}    },
+  },`
+}
+
 function list(key: string, values: string[]): string {
   return `${key}: [${values.map((it) => `'${it}'`).join(', ')}]`
+}
+
+interface Alias {
+  prefix: string
+  target: string
+}
+
+/**
+ * Only the wildcard mappings become aliases. An exact one such as
+ * `"react": ["./node_modules/@types/react"]` redirects a type declaration, and
+ * turning it into a module alias would point the runtime import at a `.d.ts`.
+ */
+function readPathAliases(packageDir: string): Alias[] {
+  const config = readJson(join(packageDir, 'tsconfig.json'))
+  const paths: Record<string, string[]> = config?.compilerOptions?.paths ?? {}
+  const aliases: Alias[] = []
+  for (const [pattern, targets] of Object.entries(paths)) {
+    const target = targets[0]
+    if (!pattern.endsWith('/*') || !target?.endsWith('/*')) {
+      continue
+    }
+    aliases.push({
+      prefix: pattern.slice(0, -2),
+      target: target.slice(0, -2),
+    })
+  }
+  return aliases
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: a config file is arbitrary JSON
+function readJson(path: string): any {
+  if (!existsSync(path)) {
+    return undefined
+  }
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'))
+  } catch {
+    return undefined
+  }
 }
 
 interface MochaConfig {

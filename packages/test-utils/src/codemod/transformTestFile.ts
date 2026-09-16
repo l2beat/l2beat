@@ -213,7 +213,7 @@ function rewriteMatcher(
       rewriteToBeNullish(receiver, callEnd, context)
       return
     case 'toInclude':
-      rewriteToInclude(nameNode, args, context)
+      rewriteToInclude(nameNode, args, callEnd, context)
       return
     case 'toThrow':
       if (args.length === 2) {
@@ -303,10 +303,30 @@ function rewriteToBeNullish(
 function rewriteToInclude(
   nameNode: Node,
   args: Node[],
+  callEnd: number,
   context: Context,
 ): void {
   const item = args[0]
-  if (args.length !== 1 || !item) {
+  if (!item) {
+    return
+  }
+  // earl takes a list of items; vitest has no matcher for "contains all of
+  // these", so the assertion moves onto the whole subject.
+  if (args.length > 1) {
+    const items = args.map((it) => it.getText()).join(', ')
+    context.edits.push(
+      span(
+        nameNode.getStart(),
+        callEnd,
+        `toEqual(expect.arrayContaining([${items}]))`,
+      ),
+    )
+    context.reviews.push(
+      finding(
+        nameNode,
+        'a multi-item toInclude only works on an array subject',
+      ),
+    )
     return
   }
   if (isPrimitiveLiteral(item)) {
@@ -487,10 +507,25 @@ function collectMockVariables(file: SourceFile): Set<string> {
 }
 
 function isMockReceiver(receiver: Node, context: Context): boolean {
+  if (isCastToMock(receiver)) {
+    return true
+  }
   const root = rootIdentifier(receiver)
   return (
     root === 'mockFn' || (root !== undefined && context.mockVariables.has(root))
   )
+}
+
+/** In `(app.get as ReturnType<typeof mockFn>).calls` the cast is the only
+ * place the file admits that `app.get` is a mock. */
+function isCastToMock(receiver: Node): boolean {
+  const inner = Node.isParenthesizedExpression(receiver)
+    ? receiver.getExpression()
+    : receiver
+  if (!Node.isAsExpression(inner)) {
+    return false
+  }
+  return MOCK_TYPES.test(inner.getTypeNode()?.getText() ?? '')
 }
 
 function rootIdentifier(node: Node): string | undefined {
@@ -616,6 +651,8 @@ const TEST_UTILS_PACKAGE = '@l2beat/test-utils'
  * migration. */
 const SUPERSEDED_MODULES = new Set(['earl', 'mocha', 'vitest'])
 
+const MOCK_TYPES = /\bmockFn\b|\bMockObject\b|\bMockFunction\b/
+
 const RUNNER_API = [
   'afterAll',
   'afterEach',
@@ -705,7 +742,7 @@ const LEFTOVERS: [RegExp, string][] = [
   ],
   [/\bexpect\.(a|subset|includes)\(/, 'earl-only asymmetric matcher'],
   [
-    /this\.timeout\(/,
+    /(this|\))\.timeout\(/,
     'mocha timeout - use it(name, fn, timeout) or a testTimeout config',
   ],
   [/^\s*(before|after)\(/, 'mocha hook - use beforeAll/afterAll'],

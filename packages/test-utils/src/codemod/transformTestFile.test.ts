@@ -181,6 +181,12 @@ describe(transformTestFile.name, () => {
       expect(run(matcher('toInclude(item)'))).toContain('toContainEqual(item)')
     })
 
+    it('asserts a multi-item toInclude against the whole subject', () => {
+      const output = run(matcher("toInclude('a', 'b')"))
+
+      expect(output).toContain("toEqual(expect.arrayContaining(['a', 'b']))")
+    })
+
     it('reports the toContainEqual guess for review', () => {
       const { reviews } = transformTestFile('a.ts', matcher('toInclude(item)'))
 
@@ -251,6 +257,18 @@ describe(transformTestFile.name, () => {
       expect(output).toContain('fn.mock.calls.length')
     })
 
+    it('trusts a cast when that is the only sign the receiver is a mock', () => {
+      const output = run(`
+        import { expect, mockFn } from 'earl'
+        const handler = (app.get as ReturnType<typeof mockFn>).calls[0].args[1]
+        expect(handler).toEqual(1)
+      `)
+
+      expect(output).toContain(
+        '(app.get as ReturnType<typeof vi.fn>).mock.calls[0][1]',
+      )
+    })
+
     it('leaves calls on something that is not a mock', () => {
       const output = run(`
         import { expect } from 'earl'
@@ -275,6 +293,18 @@ describe(transformTestFile.name, () => {
       expect(blockers.map((b) => b.line)).toEqual([2, 3])
       expect(blockers[0]?.note).toContain('given')
       expect(blockers[1]?.note).toContain('mocha timeout')
+    })
+
+    it('reports a timeout chained onto the test rather than on this', () => {
+      const { blockers } = transformTestFile(
+        'a.ts',
+        [
+          "import { expect } from 'earl'",
+          'it("slow", async () => { expect(1).toEqual(1) }).timeout(15_000)',
+        ].join('\n'),
+      )
+
+      expect(blockers[0]?.note).toContain('mocha timeout')
     })
 
     it('finds nothing in a file it fully understands', () => {
