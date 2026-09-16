@@ -2,18 +2,17 @@ import { useRef } from 'react'
 import { MoonIcon } from '~/icons/Moon'
 import { SunIcon } from '~/icons/Sun'
 import { cn } from '~/utils/cn'
-import { useTheme } from './ThemeProvider'
+import { getCurrentTheme, setTheme } from '~/utils/theme'
 
 interface DarkThemeToggleProps {
   className?: string
 }
 
 export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark'
     const button = buttonRef.current
 
     const prefersReducedMotion = matchMedia(

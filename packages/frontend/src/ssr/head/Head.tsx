@@ -3,7 +3,6 @@ import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 import type { Metadata } from './getMetadata'
-import { ThemeScript } from './ThemeScript'
 
 export interface HeadProps {
   manifest: Manifest
@@ -20,7 +19,6 @@ export function Head({ manifest, metadata }: HeadProps) {
     <>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <ThemeScript />
       <FontStyles fonts={fonts} manifest={manifest} />
       <link
         rel="icon"
