@@ -16,6 +16,7 @@ const examples = [
 ]
 const assets = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/reader.js': ['reader.js', 'text/javascript'], '/briefing.mjs': ['../src/briefing.mjs', 'text/javascript'], '/id-labels.js': ['id-labels.js', 'text/javascript'], '/ast-tree.js': ['ast-tree.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] }
 let busy = false
+let setupChecked = false
 
 function send(res, status, body, type = 'application/json') {
   res.writeHead(status, { 'Content-Type': `${type}; charset=utf-8`, 'Cache-Control': 'no-store' })
@@ -40,7 +41,7 @@ const server = createServer(async (req, res) => {
       }))
       return send(res, 200, items)
     }
-    if (req.method === 'GET' && path === '/api/ai-config') return send(res, 200, aiConfig())
+    if (req.method === 'GET' && path === '/api/ai-config') return send(res, 200, { ...aiConfig(), setupChecked })
     if (req.method === 'POST' && ['/api/run', '/api/ask'].includes(path)) {
       // This local teaching server accepts same-origin browser requests only.
       if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`) {
@@ -82,5 +83,8 @@ const server = createServer(async (req, res) => {
   }
 })
 
-server.listen(port, '127.0.0.1', () => console.log(`Queryable facts · Astra: http://localhost:${port}`))
-server.on('error', (error) => { console.error(error.message); process.exitCode = 1 })
+export function startServer(options = {}) {
+  setupChecked = options.setupChecked === true
+  server.listen(port, '127.0.0.1', () => console.log(`Queryable facts: http://localhost:${port}`))
+  server.on('error', (error) => { console.error(error.message); process.exitCode = 1 })
+}

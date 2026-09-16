@@ -5,7 +5,7 @@ import { root } from './pipeline.mjs'
 import { answerSchema, makeBriefing, inspect, checkAnswer } from './briefing.mjs'
 
 export function aiConfig() {
-  return { provider: 'Codex CLI', model: process.env.ASTRA_MODEL || 'gpt-5.6-sol' }
+  return { provider: 'Codex CLI', model: process.env.QUERYABLE_FACTS_MODEL || process.env.ASTRA_MODEL || 'gpt-5.6-sol' }
 }
 
 // A bounded retrieval loop. Every request and result is saved and emitted to the UI.

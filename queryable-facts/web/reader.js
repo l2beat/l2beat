@@ -134,11 +134,12 @@ export function createReader({ escape, highlight }) {
   $('download-answer').addEventListener('click', () => {
     if (!lastRecord) return
     const url = URL.createObjectURL(new Blob([JSON.stringify(lastRecord, null, 2)], { type: 'application/json' }))
-    const link = document.createElement('a'); link.href = url; link.download = 'astra-investigation.json'; link.click()
+    const link = document.createElement('a'); link.href = url; link.download = 'queryable-facts-investigation.json'; link.click()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
   })
   fetch('/api/ai-config').then((r) => { if (!r.ok) throw new Error(); return r.json() }).then((value) => {
-    config = value; $('ai-config').textContent = `${config.provider} · ${config.model}`
+    config = value; $('ai-config').textContent = `${config.provider} · ${config.model}${config.setupChecked ? ' · Local setup checked' : ''}`
+    $('ai-config').title = 'Startup checks the compiler, Soufflé and Codex sign-in. Model access, quota and network are checked when you ask AI.'
   }).catch(() => { $('ai-config').textContent = 'Codex CLI · configuration unavailable' })
   return {
     clear() { clearAnswer(); run = undefined; briefing = undefined; $('reader-section').hidden = true },

@@ -271,7 +271,7 @@ $('download').addEventListener('click', () => {
   const url = URL.createObjectURL(new Blob([JSON.stringify(currentRun, null, 2)], { type: 'application/json' }))
   const link = document.createElement('a')
   link.href = url
-  link.download = `astra-${currentRun.stage}.json`
+  link.download = `queryable-facts-${currentRun.stage}.json`
   link.click()
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 })

@@ -1,47 +1,6 @@
-# Queryable facts · Astra
+# Lessons and implementation
 
-An incremental teaching prototype for narrowing smart-contract analysis. Stage 01
-asks: **which functions contain bare-identifier assignments to state variables?**
-It runs the Solidity compiler and Soufflé, displaying actual inputs and outputs.
-Lesson 02 adds an optional AI explanation based on those observations and source
-reading. Lesson 03 adds optional internal-call propagation and an entry-point view. Lesson 04 adds external dependencies and an optional synthetic discovery snapshot. There is no live discovery integration or solver.
-
-## Run it
-
-Prerequisites: Node 22+ and `souffle` on PATH (tested with Soufflé 2.5).
-The compiler is pinned to solc-js 0.8.34, matching the examples' exact pragma.
-It rejects incompatible pragmas; automatic version selection is a later concern.
-
-From the repository root:
-
-```sh
-cd spike/queryable-facts-astra
-npm ci --workspaces=false --ignore-scripts
-pnpm dev
-```
-
-Open **http://localhost:5181**. Select an example and click **Run this stage**.
-Use **Edit source** to make changes, then **Done editing** to return to the highlighted view. Rerun or reset the example. Editing or switching examples
-clears old findings. Compiler failures show errors instead of results.
-
-```sh
-# Same pipeline, without the website:
-npm run pipeline
-npm run pipeline -- examples/02-unreachable.sol
-
-# Integration checks with the real compiler and Soufflé:
-npm test
-
-# Optional overrides:
-PORT=5182 pnpm dev
-SOUFFLE_BIN=/absolute/path/to/souffle npm run pipeline
-```
-
-The server binds to localhost. This folder owns its dependencies, npm lockfile,
-examples, rules, website, and ignored `out/` directory. It imports no code or cache
-from other prototypes. Use the commands inside this folder; no root workspace
-install or configuration change is required. The compiler and Soufflé stage works offline. Asking AI requires a signed-in
-Codex CLI and network access; it sends the displayed briefing to the model.
+Setup: [README.md](README.md).
 
 ## Present it in about five minutes
 
@@ -264,7 +223,7 @@ answer. Each question starts a fresh investigation.
 The default model is `gpt-5.6-sol`. To override the model or executable:
 
 ```sh
-ASTRA_MODEL=gpt-5.6-sol pnpm dev
+QUERYABLE_FACTS_MODEL=gpt-5.6-sol pnpm dev
 CODEX=/absolute/path/to/codex pnpm dev
 ```
 
