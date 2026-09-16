@@ -110,6 +110,10 @@ function convertPackageConfig(
 
   editJson(join(packageDir, 'package.json'), options, report, (manifest) => {
     manifest.scripts = { ...manifest.scripts, test: 'vitest run' }
+    manifest.scripts = rewriteScripts(manifest.scripts, report)
+    if (manifest.dependencies) {
+      manifest.dependencies = withoutMochaAndEarl(manifest.dependencies)
+    }
     manifest.devDependencies = withoutMochaAndEarl({
       ...manifest.devDependencies,
       [VITEST_CONFIG]: 'workspace:*',
@@ -288,6 +292,34 @@ function readStringList(text: string, key: string): string[] {
  * bare specifier as a package, so the path has to say it is a path. */
 function asRelativePath(path: string): string {
   return path.startsWith('.') ? path : `./${path}`
+}
+
+/** Whole commands that have an unambiguous vitest spelling. Anything else is
+ * reported rather than guessed at, because mocha's flags do not carry over. */
+const MOCHA_COMMANDS: Record<string, string> = {
+  mocha: 'vitest run',
+  'mocha --watch': 'vitest watch',
+}
+
+export function rewriteScripts(
+  scripts: Record<string, string> | undefined,
+  report: MigrationReport,
+): Record<string, string> {
+  const rewritten: Record<string, string> = { ...scripts, test: 'vitest run' }
+  for (const [name, command] of Object.entries(rewritten)) {
+    if (!/\bmocha\b/.test(command)) {
+      continue
+    }
+    const mapped = MOCHA_COMMANDS[command.trim()]
+    if (mapped) {
+      rewritten[name] = mapped
+    } else {
+      report.manualSteps.push(
+        `the "${name}" script still runs mocha, port it by hand: ${command}`,
+      )
+    }
+  }
+  return rewritten
 }
 
 function withoutMochaAndEarl(
