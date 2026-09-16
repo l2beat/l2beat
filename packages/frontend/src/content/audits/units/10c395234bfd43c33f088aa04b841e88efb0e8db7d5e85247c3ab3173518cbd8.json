@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "10c395234bfd43c33f088aa04b841e88efb0e8db7d5e85247c3ab3173518cbd8",
+  "name": "ERC1155HolderUpgradeable",
+  "kind": "contract",
+  "lines": 30,
+  "source": "contract ERC1155HolderUpgradeable is Initializable, ERC1155ReceiverUpgradeable {\n    function __ERC1155Holder_init() internal onlyInitializing {}\n\n    function __ERC1155Holder_init_unchained() internal onlyInitializing {}\n\n    function onERC1155Received(address, address, uint256, uint256, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155Received.selector;\n    }\n\n    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155BatchReceived.selector;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

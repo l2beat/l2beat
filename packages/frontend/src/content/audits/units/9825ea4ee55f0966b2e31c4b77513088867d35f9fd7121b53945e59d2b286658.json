@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9825ea4ee55f0966b2e31c4b77513088867d35f9fd7121b53945e59d2b286658",
+  "name": "Errors_2",
+  "kind": "library",
+  "lines": 21,
+  "source": "library Errors_2 {\n    /**\n     * @dev The ETH balance of the account is not enough to perform the operation.\n     */\n    error InsufficientBalance(uint256 balance, uint256 needed);\n\n    /**\n     * @dev A call to an address target failed. The target may have reverted.\n     */\n    error FailedCall();\n\n    /**\n     * @dev The deployment failed.\n     */\n    error FailedDeployment();\n\n    /**\n     * @dev A necessary precompile is missing.\n     */\n    error MissingPrecompile(address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

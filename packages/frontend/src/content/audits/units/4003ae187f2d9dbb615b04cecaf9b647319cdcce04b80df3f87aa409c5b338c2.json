@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4003ae187f2d9dbb615b04cecaf9b647319cdcce04b80df3f87aa409c5b338c2",
+  "name": "IEmpire",
+  "kind": "interface",
+  "lines": 13,
+  "source": "interface IEmpire {\n    event SignalCast(IPayload indexed payload, uint256 indexed round, address indexed signaler);\n    event PayloadSubmittable(IPayload indexed payload, uint256 indexed round);\n    event PayloadSubmitted(IPayload indexed payload, uint256 indexed round);\n\n    function signal(IPayload _payload) external returns (bool);\n    function signalWithSig(IPayload _payload, Signature memory _sig) external returns (bool);\n\n    function submitRoundWinner(uint256 _roundNumber) external returns (bool);\n    function signalCount(address _instance, uint256 _round, IPayload _payload) external view returns (uint256);\n    function computeRound(Slot _slot) external view returns (uint256);\n    function getInstance() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IEmpire",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/IEmpire.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/IEmpire.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

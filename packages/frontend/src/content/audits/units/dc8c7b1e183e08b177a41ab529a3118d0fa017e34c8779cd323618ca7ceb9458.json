@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc8c7b1e183e08b177a41ab529a3118d0fa017e34c8779cd323618ca7ceb9458",
+  "name": "IZkEvmVerifierV2",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface IZkEvmVerifierV2 {\n    /// @notice Verify bundle zk proof.\n    /// @param bundleProof The bundle recursion proof.\n    /// @param publicInput The public input.\n    function verify(bytes calldata bundleProof, bytes calldata publicInput) external view;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

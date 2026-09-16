@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b412ef906ea6fe69250bb55c1dcea0357f051fee058f4d95e07959357758f120",
+  "name": "Math",
+  "kind": "library",
+  "lines": 35,
+  "source": "library Math {\n    /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a >= b ? a : b;\n    }\n\n    /**\n     * @dev Returns the smallest of two numbers.\n     */\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a < b ? a : b;\n    }\n\n    /**\n     * @dev Returns the average of two numbers. The result is rounded towards\n     * zero.\n     */\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b) / 2 can overflow.\n        return (a & b) + (a ^ b) / 2;\n    }\n\n    /**\n     * @dev Returns the ceiling of the division of two numbers.\n     *\n     * This differs from standard division with `/` in that it rounds up instead\n     * of rounding down.\n     */\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b - 1) / b can overflow on addition, so we distribute.\n        return a / b + (a % b == 0 ? 0 : 1);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Math",
+        "similarity": 0.8,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/math/Math.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 4,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 14,
+            "oldLines": 12,
+            "newStart": 14,
+            "newLines": 22,
+            "lines": [
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "    }" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Calculates the average of two numbers. Since these are integers,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * averages of an even and odd number cannot be represented, and will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * @dev Returns the average of two numbers. The result is rounded towards",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 20,
+                "text": "    function average(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        // (a + b) / 2 can overflow, so we distribute",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        // (a + b) / 2 can overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        return (a & b) + (a ^ b) / 2;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 23, "text": "    }" },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * @dev Returns the ceiling of the division of two numbers.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 27, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * This differs from standard division with `/` in that it rounds up instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * of rounding down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        // (a + b - 1) / b can overflow on addition, so we distribute.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        return a / b + (a % b == 0 ? 0 : 1);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 25, "newLine": 35, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

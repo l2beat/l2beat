@@ -88,6 +88,421 @@
         ]
       },
       "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 0.989,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 0.989,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 0.989,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 0.989,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 0.989,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

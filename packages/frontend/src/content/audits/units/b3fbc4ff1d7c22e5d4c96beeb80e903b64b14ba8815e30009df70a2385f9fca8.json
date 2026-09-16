@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b3fbc4ff1d7c22e5d4c96beeb80e903b64b14ba8815e30009df70a2385f9fca8",
+  "name": "IHasContracts",
+  "kind": "interface",
+  "lines": 24,
+  "source": "interface IHasContracts {\n    /// @dev Error of invalid role.\n    error ErrContractTypeNotFound(ContractType contractType);\n\n    /// @dev Emitted when a contract is updated.\n    event ContractUpdated(ContractType indexed contractType, address indexed addr);\n\n    /**\n     * @dev Returns the address of a contract with a specific role.\n     * Throws an error if no contract is set for the specified role.\n     *\n     * @param contractType The role of the contract to retrieve.\n     * @return contract_ The address of the contract with the specified role.\n     */\n    function getContract(ContractType contractType) external view returns (address contract_);\n\n    /**\n     * @dev Sets the address of a contract with a specific role.\n     * Emits the event {ContractUpdated}.\n     * @param contractType The role of the contract to set.\n     * @param addr The address of the contract to set.\n     */\n    function setContract(ContractType contractType, address addr) external;\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

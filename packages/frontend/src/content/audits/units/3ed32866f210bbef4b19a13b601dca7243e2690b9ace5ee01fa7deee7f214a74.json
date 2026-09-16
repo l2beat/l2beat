@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3ed32866f210bbef4b19a13b601dca7243e2690b9ace5ee01fa7deee7f214a74",
+  "name": "IL2ETHGateway",
+  "kind": "interface",
+  "lines": 54,
+  "source": "interface IL2ETHGateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when someone withdraw ETH from L2 to L1.\n    /// @param from The address of sender in L2.\n    /// @param to The address of recipient in L1.\n    /// @param amount The amount of ETH will be deposited from L2 to L1.\n    /// @param data The optional calldata passed to recipient in L1.\n    event WithdrawETH(address indexed from, address indexed to, uint256 amount, bytes data);\n\n    /// @notice Emitted when ETH is deposited from L1 to L2 and transfer to recipient.\n    /// @param from The address of sender in L1.\n    /// @param to The address of recipient in L2.\n    /// @param amount The amount of ETH deposited from L1 to L2.\n    /// @param data The optional calldata passed to recipient in L2.\n    event FinalizeDepositETH(address indexed from, address indexed to, uint256 amount, bytes data);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Withdraw ETH to caller's account in L1.\n    /// @param amount The amount of ETH to be withdrawn.\n    /// @param gasLimit Optional, gas limit used to complete the withdraw on L1.\n    function withdrawETH(uint256 amount, uint256 gasLimit) external payable;\n\n    /// @notice Withdraw ETH to caller's account in L1.\n    /// @param to The address of recipient's account on L1.\n    /// @param amount The amount of ETH to be withdrawn.\n    /// @param gasLimit Optional, gas limit used to complete the withdraw on L1.\n    function withdrawETH(address to, uint256 amount, uint256 gasLimit) external payable;\n\n    /// @notice Withdraw ETH to caller's account in L1.\n    /// @param to The address of recipient's account on L1.\n    /// @param amount The amount of ETH to be withdrawn.\n    /// @param data Optional data to forward to recipient's account.\n    /// @param gasLimit Optional, gas limit used to complete the withdraw on L1.\n    function withdrawETHAndCall(address to, uint256 amount, bytes calldata data, uint256 gasLimit) external payable;\n\n    /// @notice Complete ETH deposit from L1 to L2 and send fund to recipient's account in L2.\n    /// @dev This function should only be called by L2ScrollMessenger.\n    ///      This function should also only be called by L1GatewayRouter in L1.\n    /// @param _from The address of account who deposit ETH in L1.\n    /// @param _to The address of recipient in L2 to receive ETH.\n    /// @param _amount The amount of ETH to deposit.\n    /// @param _data Optional data to forward to recipient's account.\n    function finalizeDepositETH(address _from, address _to, uint256 _amount, bytes calldata _data) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 54,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL2ETHGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/IL2ETHGateway.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L2/gateways/IL2ETHGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

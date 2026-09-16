@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bc101ddc9b949ace4c1c92008d9c9fd9bc752fcd952a142ab23e3a73b433d986",
+  "name": "RewardDistributor",
+  "kind": "contract",
+  "lines": 26,
+  "source": "contract RewardDistributor is IRewardDistributor {\n    using SafeERC20 for IERC20;\n\n    IERC20 public immutable ASSET;\n    IRegistry public immutable REGISTRY;\n\n    constructor(IERC20 _asset, IRegistry _registry) {\n        ASSET = _asset;\n        REGISTRY = _registry;\n    }\n\n    function claim(address _to, uint256 _amount) external override(IRewardDistributor) {\n        require(msg.sender == canonicalRollup(), Errors.RewardDistributor__InvalidCaller(msg.sender, canonicalRollup()));\n        ASSET.safeTransfer(_to, _amount);\n    }\n\n    function recover(address _asset, address _to, uint256 _amount) external override(IRewardDistributor) {\n        address owner = Ownable(address(REGISTRY)).owner();\n        require(msg.sender == owner, Errors.RewardDistributor__InvalidCaller(msg.sender, owner));\n        IERC20(_asset).safeTransfer(_to, _amount);\n    }\n\n    function canonicalRollup() public view override(IRewardDistributor) returns (address) {\n        return address(REGISTRY.getCanonicalRollup());\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 26,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "RewardDistributor",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/RewardDistributor.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/RewardDistributor.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

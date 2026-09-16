@@ -1,0 +1,612 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b1d05cbeadac44d6f82eb43ae79c0441d9df3c25218b2c1d7d69f82329999dab",
+  "name": "ISystemConfig",
+  "kind": "interface",
+  "lines": 103,
+  "source": "interface ISystemConfig is IProxyAdminOwnedBase {\n    enum UpdateType {\n        BATCHER,\n        FEE_SCALARS,\n        GAS_LIMIT,\n        UNSAFE_BLOCK_SIGNER,\n        EIP_1559_PARAMS,\n        OPERATOR_FEE_PARAMS,\n        MIN_BASE_FEE,\n        DA_FOOTPRINT_GAS_SCALAR\n    }\n\n    struct Addresses {\n        address l1CrossDomainMessenger;\n        address l1ERC721Bridge;\n        address l1StandardBridge;\n        address optimismPortal;\n        address optimismMintableERC20Factory;\n        address delayedWETH;\n    }\n\n    error ReinitializableBase_ZeroInitVersion();\n    error SystemConfig_InvalidFeatureState();\n\n    event ConfigUpdate(uint256 indexed version, UpdateType indexed updateType, bytes data);\n    event FeatureSet(bytes32 indexed feature, bool indexed enabled);\n    event Initialized(uint8 version);\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function BATCH_INBOX_SLOT() external view returns (bytes32);\n    function L1_CROSS_DOMAIN_MESSENGER_SLOT() external view returns (bytes32);\n    function L1_ERC_721_BRIDGE_SLOT() external view returns (bytes32);\n    function L1_STANDARD_BRIDGE_SLOT() external view returns (bytes32);\n    function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() external view returns (bytes32);\n    function OPTIMISM_PORTAL_SLOT() external view returns (bytes32);\n    function DELAYED_WETH_SLOT() external view returns (bytes32);\n    function START_BLOCK_SLOT() external view returns (bytes32);\n    function UNSAFE_BLOCK_SIGNER_SLOT() external view returns (bytes32);\n    function VERSION() external view returns (uint256);\n    function basefeeScalar() external view returns (uint32);\n    function batchInbox() external view returns (address addr_);\n    function batcherHash() external view returns (bytes32);\n    function blobbasefeeScalar() external view returns (uint32);\n    function disputeGameFactory() external view returns (address addr_);\n    function gasLimit() external view returns (uint64);\n    function eip1559Denominator() external view returns (uint32);\n    function eip1559Elasticity() external view returns (uint32);\n    function getAddresses() external view returns (Addresses memory);\n    function initialize(\n        address _owner,\n        uint32 _basefeeScalar,\n        uint32 _blobbasefeeScalar,\n        bytes32 _batcherHash,\n        uint64 _gasLimit,\n        address _unsafeBlockSigner,\n        IResourceMetering.ResourceConfig memory _config,\n        address _batchInbox,\n        Addresses memory _addresses,\n        uint256 _l2ChainId,\n        ISuperchainConfig _superchainConfig\n    ) external;\n    function initVersion() external view returns (uint8);\n    function l1CrossDomainMessenger() external view returns (address addr_);\n    function l1ERC721Bridge() external view returns (address addr_);\n    function l1StandardBridge() external view returns (address addr_);\n    function l2ChainId() external view returns (uint256);\n    function maximumGasLimit() external pure returns (uint64);\n    function minimumGasLimit() external view returns (uint64);\n    function operatorFeeConstant() external view returns (uint64);\n    function operatorFeeScalar() external view returns (uint32);\n    function minBaseFee() external view returns (uint64);\n    function daFootprintGasScalar() external view returns (uint16);\n    function optimismMintableERC20Factory() external view returns (address addr_);\n    function optimismPortal() external view returns (address addr_);\n    function delayedWETH() external view returns (address addr_);\n    function overhead() external view returns (uint256);\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function resourceConfig() external view returns (IResourceMetering.ResourceConfig memory);\n    function scalar() external view returns (uint256);\n    function setBatcherHash(address _batcher) external;\n    function setBatcherHash(bytes32 _batcherHash) external;\n    function setGasConfig(uint256 _overhead, uint256 _scalar) external;\n    function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) external;\n    function setGasLimit(uint64 _gasLimit) external;\n    function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant) external;\n    function setUnsafeBlockSigner(address _unsafeBlockSigner) external;\n    function setEIP1559Params(uint32 _denominator, uint32 _elasticity) external;\n    function setMinBaseFee(uint64 _minBaseFee) external;\n    function setDAFootprintGasScalar(uint16 _daFootprintGasScalar) external;\n    function startBlock() external view returns (uint256 startBlock_);\n    function transferOwnership(address newOwner) external; // nosemgrep\n    function unsafeBlockSigner() external view returns (address addr_);\n    function version() external pure returns (string memory);\n    function paused() external view returns (bool);\n    function superchainConfig() external view returns (ISuperchainConfig);\n    function guardian() external view returns (address);\n    function setFeature(bytes32 _feature, bool _enabled) external;\n    function isFeatureEnabled(bytes32) external view returns (bool);\n    function isCustomGasToken() external view returns (bool);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 98,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ISystemConfig",
+        "similarity": 0.974,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 5,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 98,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 16,
+            "oldLines": 6,
+            "newStart": 16,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        address l1StandardBridge;"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        address optimismPortal;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        address optimismMintableERC20Factory;"
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        address delayedWETH;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "    error ReinitializableBase_ZeroInitVersion();"
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 6,
+            "newStart": 33,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 33,
+                "text": "    function L1_STANDARD_BRIDGE_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 34,
+                "text": "    function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "    function OPTIMISM_PORTAL_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    function DELAYED_WETH_SLOT() external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "    function START_BLOCK_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "    function UNSAFE_BLOCK_SIGNER_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 39,
+                "text": "    function VERSION() external view returns (uint256);"
+              }
+            ]
+          },
+          {
+            "oldStart": 70,
+            "oldLines": 11,
+            "newStart": 72,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 72,
+                "text": "    function daFootprintGasScalar() external view returns (uint16);"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 73,
+                "text": "    function optimismMintableERC20Factory() external view returns (address addr_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "    function optimismPortal() external view returns (address addr_);"
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    function delayedWETH() external view returns (address addr_);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 76,
+                "text": "    function overhead() external view returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    function owner() external view returns (address);"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    function renounceOwnership() external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 79,
+                "text": "    function resourceConfig() external view returns (IResourceMetering.ResourceConfig memory);"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    function scalar() external view returns (uint256);"
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function setBatcherHash(address _batcher) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 82,
+                "text": "    function setBatcherHash(bytes32 _batcherHash) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 83,
+                "text": "    function setGasConfig(uint256 _overhead, uint256 _scalar) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 84,
+                "text": "    function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) external;"
+              }
+            ]
+          },
+          {
+            "oldStart": 93,
+            "oldLines": 6,
+            "newStart": 97,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 97,
+                "text": "    function guardian() external view returns (address);"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 98,
+                "text": "    function setFeature(bytes32 _feature, bool _enabled) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 99,
+                "text": "    function isFeatureEnabled(bytes32) external view returns (bool);"
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    function isCustomGasToken() external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 96, "newLine": 101, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 102,
+                "text": "    function __constructor__() external;"
+              },
+              { "type": " ", "oldLine": 98, "newLine": 103, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 99,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ISystemConfig",
+        "similarity": 0.959,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 99,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        address optimismPortal;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        address optimismMintableERC20Factory;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        address delayedWETH;"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        address opcm;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 22,
+                "text": "    error ReinitializableBase_ZeroInitVersion();"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 6,
+            "newStart": 27,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "    event Initialized(uint8 version);"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 28,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 29, "text": "" },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function BATCH_INBOX_SLOT() external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    function L1_CROSS_DOMAIN_MESSENGER_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function L1_ERC_721_BRIDGE_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    function L1_STANDARD_BRIDGE_SLOT() external view returns (bytes32);"
+              }
+            ]
+          },
+          {
+            "oldStart": 36,
+            "oldLines": 9,
+            "newStart": 36,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "    function DELAYED_WETH_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    function START_BLOCK_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    function UNSAFE_BLOCK_SIGNER_SLOT() external view returns (bytes32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    function OPCM_SLOT() external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 39,
+                "text": "    function VERSION() external view returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 40,
+                "text": "    function basefeeScalar() external view returns (uint32);"
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function batchInbox() external view returns (address addr_);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    function batcherHash() external view returns (bytes32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    function blobbasefeeScalar() external view returns (uint32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    function disputeGameFactory() external view returns (address addr_);"
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 6,
+            "newStart": 54,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "        uint64 _gasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "        address _unsafeBlockSigner,"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "        IResourceMetering.ResourceConfig memory _config,"
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        address _batchInbox,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 58,
+                "text": "        Addresses memory _addresses,"
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 59,
+                "text": "        uint256 _l2ChainId,"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 60,
+                "text": "        ISuperchainConfig _superchainConfig"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 8,
+            "newStart": 73,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 73,
+                "text": "    function optimismMintableERC20Factory() external view returns (address addr_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 74,
+                "text": "    function optimismPortal() external view returns (address addr_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 75,
+                "text": "    function delayedWETH() external view returns (address addr_);"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    function lastUsedOPCM() external view returns (address addr_);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    function lastUsedOPCMVersion() external view returns (string memory version_);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 76,
+                "text": "    function overhead() external view returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 77,
+                "text": "    function owner() external view returns (address);"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    function renounceOwnership() external;"
+              }
+            ]
+          },
+          {
+            "oldStart": 81,
+            "oldLines": 6,
+            "newStart": 80,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "    function scalar() external view returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 81,
+                "text": "    function setBatcherHash(address _batcher) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 82,
+                "text": "    function setBatcherHash(bytes32 _batcherHash) external;"
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    function setGasConfig(uint256 _overhead, uint256 _scalar) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "    function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "    function setGasLimit(uint64 _gasLimit) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "    function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant) external;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

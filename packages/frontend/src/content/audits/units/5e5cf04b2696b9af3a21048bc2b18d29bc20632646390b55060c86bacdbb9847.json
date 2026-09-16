@@ -1,0 +1,886 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5e5cf04b2696b9af3a21048bc2b18d29bc20632646390b55060c86bacdbb9847",
+  "name": "BlobLib",
+  "kind": "library",
+  "lines": 176,
+  "source": "library BlobLib {\n    uint256 internal constant VERSIONED_HASH_VERSION_KZG =\n        0x0100000000000000000000000000000000000000000000000000000000000000; // 0x01 << 248 to be used in blobHashCheck\n\n    /**\n     * @notice  Get the blob base fee\n     *\n     * @return uint256 - The blob base fee\n     */\n    function getBlobBaseFee() internal view returns (uint256) {\n        return block.blobbasefee;\n    }\n\n    /**\n     * @notice  Get the blob hash\n     *\n     * @return blobHash - The blob hash\n     */\n    function getBlobHash(uint256 _index) internal view returns (bytes32 blobHash) {\n        assembly {\n            blobHash := blobhash(_index)\n        }\n    }\n\n    /**\n     * @notice  Validate a checkpoint's blobs and return the blobHashes, the hashed blobHashes, and blob commitments.\n     *\n     *          We assume that the Aztec related blobs will be first in the propose transaction, additional blobs can be\n     *          at the end.\n     *\n     * Input bytes:\n     * input[0] - num blobs in checkpoint\n     * input[1:] - blob commitments (48 bytes * num blobs in checkpoint)\n     * @param _blobsInput - The above bytes to verify our input blob commitments match real blobs\n     * @param _checkBlob - Whether to skip blob related checks. Hardcoded to true (See RollupCore.sol -> checkBlob),\n     * exists only to be overridden in tests.\n     *\n     * Returns for proposal:\n     * @return blobHashes - All of the blob hashes included in this checkpoint, to be emitted in CheckpointProposed event.\n     * @return blobsHashesCommitment - A hash of all blob hashes in this checkpoint, to be included in the checkpoint\n     * header. See comment at the end of this fn for more info.\n     * @return blobCommitments - All of the blob commitments included in this checkpoint, to be stored then validated\n     * against those used in the rollup in epoch proof verification.\n     */\n    function validateBlobs(bytes calldata _blobsInput, bool _checkBlob)\n        internal\n        view\n        returns (bytes32[] memory blobHashes, bytes32 blobsHashesCommitment, bytes[] memory blobCommitments)\n    {\n        // We cannot input the incorrect number of blobs below, as the blobsHash\n        // and epoch proof verification will fail.\n        uint8 numBlobs = uint8(_blobsInput[0]);\n        require(numBlobs > 0, Errors_1.Rollup__NoBlobsInCheckpoint());\n        blobHashes = new bytes32[](numBlobs);\n        blobCommitments = new bytes[](numBlobs);\n        bytes32 blobHash;\n        // Add 1 for the numBlobs prefix\n        uint256 blobInputStart = 1;\n        for (uint256 i = 0; i < numBlobs; i++) {\n            // Commitments = arrays of bytes48 compressed points\n            blobCommitments[i] =\n                abi.encodePacked(_blobsInput[blobInputStart:blobInputStart + Constants.BLS12_POINT_COMPRESSED_BYTES]);\n            blobInputStart += Constants.BLS12_POINT_COMPRESSED_BYTES;\n\n            bytes32 blobHashCheck = calculateBlobHash(blobCommitments[i]);\n            if (_checkBlob) {\n                blobHash = getBlobHash(i);\n                // The below check ensures that our injected blobCommitments indeed match the real\n                // blobs submitted with this checkpoint. They are then used in the blobCommitmentsHash (see below).\n                require(blobHash == blobHashCheck, Errors_1.Rollup__InvalidBlobHash(blobHash, blobHashCheck));\n            } else {\n                blobHash = blobHashCheck;\n            }\n            blobHashes[i] = blobHash;\n        }\n        // Hash the EVM blob hashes for the checkpoint header\n        // TODO(#13430): The below blobsHashesCommitment known as blobsHash elsewhere in the code. The name\n        // blobsHashesCommitment is confusingly similar to blobCommitmentsHash\n        // which are different values:\n        // - blobsHash := sha256([blobhash_0, ..., blobhash_m]) = a hash of all blob hashes in a checkpoint with m+1 blobs\n        // inserted into the header, exists so a user can cross check blobs.\n        // - blobCommitmentsHash := sha256( ...sha256(sha256(C_0), C_1) ... C_n) = iteratively calculated hash of all blob\n        // commitments in an epoch with n+1 blobs (see calculateBlobCommitmentsHash()),\n        //   exists so we can validate injected commitments to the rollup circuits correspond to the correct real blobs.\n        // We may be able to combine these values e.g. blobCommitmentsHash := sha256( ...sha256(sha256(blobshash_0),\n        // blobshash_1) ... blobshash_l) for an epoch with l+1 checkpoints.\n        blobsHashesCommitment = Hash.sha256ToField(abi.encodePacked(blobHashes));\n    }\n\n    /**\n     * @notice  Validate a batched blob.\n     * Input bytes:\n     * input[:32]     - versioned_hash - NB for a batched blob, this is simply the versioned hash of the batched\n     * commitment\n     * input[32:64]   - z = poseidon2( ...poseidon2(poseidon2(z_0, z_1), z_2) ... z_n)\n     * input[64:96]   - y = y_0 + gamma * y_1 + gamma^2 * y_2 + ... + gamma^n * y_n\n     * input[96:144]  - commitment C = C_0 + gamma * C_1 + gamma^2 * C_2 + ... + gamma^n * C_n\n     * input[144:192] - proof (a commitment to the quotient polynomial q(X)) = Q_0 + gamma * Q_1 + gamma^2 * Q_2 + ... +\n     * gamma^n * Q_n\n     * @param _blobInput - The above bytes to verify a batched blob\n     *\n     * If this function passes where the values of z, y, and C are valid public inputs to the final epoch root proof, then\n     * we know that the data in each blob of the epoch corresponds to the tx effects of all our proven txs in the epoch.\n     *\n     * The rollup circuits calculate each z_i and y_i as above, so if this function passes but they do not match the\n     * values from the circuit, then proof verification will fail.\n     *\n     * Each commitment C_i is injected into the circuits and their correctness is validated using the blobCommitmentsHash,\n     * as explained below in calculateBlobCommitmentsHash().\n     *\n     */\n    function validateBatchedBlob(bytes calldata _blobInput) internal view returns (bool success) {\n        // Staticcall the point eval precompile https://eips.ethereum.org/EIPS/eip-4844#point-evaluation-precompile :\n        (success,) = address(0x0a).staticcall(_blobInput);\n        require(success, Errors_1.Rollup__InvalidBlobProof(bytes32(_blobInput[0:32])));\n    }\n\n    /**\n     * @notice  Calculate the current state of the blobCommitmentsHash. Called for each new proposed checkpoint.\n     * @param _previousBlobCommitmentsHash - The previous checkpoint's blobCommitmentsHash.\n     * @param _blobCommitments - The commitments corresponding to this checkpoint's blobs.\n     * @param _isFirstCheckpointOfEpoch - Whether this checkpoint is the first of an epoch (see below).\n     *\n     * The blobCommitmentsHash is an accumulated value calculated in the rollup circuits as:\n     *    blobCommitmentsHash_i := sha256(blobCommitmentsHash_(i - 1), C_i)\n     * for each blob commitment C_i in an epoch. For the first blob in the epoch (i = 0):\n     *    blobCommitmentsHash_i := sha256(C_0)\n     * which is why we require _isFirstCheckpointOfEpoch here.\n     *\n     * Each blob commitment is injected into the rollup circuits and we rely on the L1 contracts to validate\n     * these commitments correspond to real blobs. The input _blobCommitments below come from validateBlobs()\n     * so we know they are valid commitments here.\n     *\n     * We recalculate the same blobCommitmentsHash (which encompasses all claimed blobs in the epoch)\n     * as in the rollup circuits, then use the final value as a public input to the root rollup proof\n     * verification in EpochProofLib.sol.\n     *\n     * If the proof verifies, we know that the injected commitments used in the rollup circuits match\n     * the real commitments to L1 blobs.\n     *\n     */\n    function calculateBlobCommitmentsHash(\n        bytes32 _previousBlobCommitmentsHash,\n        bytes[] memory _blobCommitments,\n        bool _isFirstCheckpointOfEpoch\n    ) internal pure returns (bytes32 currentBlobCommitmentsHash) {\n        uint256 i = 0;\n        currentBlobCommitmentsHash = _previousBlobCommitmentsHash;\n        // If we are at the first checkpoint of an epoch, we reinitialize the blobCommitmentsHash.\n        // Blob commitments are collected and proven per root rollup proof => per epoch.\n        if (_isFirstCheckpointOfEpoch) {\n            // Initialize the blobCommitmentsHash\n            currentBlobCommitmentsHash = Hash.sha256ToField(abi.encodePacked(_blobCommitments[i++]));\n        }\n        for (i; i < _blobCommitments.length; i++) {\n            currentBlobCommitmentsHash =\n                Hash.sha256ToField(abi.encodePacked(currentBlobCommitmentsHash, _blobCommitments[i]));\n        }\n    }\n\n    /**\n     * @notice  Calculate the expected blob hash given a blob commitment\n     * @dev TODO(#14646): Use kzg_to_versioned_hash & VERSIONED_HASH_VERSION_KZG\n     * Until we use an external kzg_to_versioned_hash(), calculating it here:\n     * EIP-4844 spec blobhash is 32 bytes: [version, ...sha256(commitment)[1:32]]\n     * The version = VERSIONED_HASH_VERSION_KZG, currently 0x01.\n     * @param _blobCommitment - The 48 byte blob commitment\n     * @return bytes32 - The blob hash\n     */\n    function calculateBlobHash(bytes memory _blobCommitment) internal pure returns (bytes32) {\n        return bytes32(\n            (uint256(sha256(_blobCommitment)) & 0x00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)\n                | VERSIONED_HASH_VERSION_KZG\n        );\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 171,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "BlobLib",
+        "similarity": 0.853,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",
+        "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+        "commitTimestamp": "2025-08-15T14:49:10Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/270e2a58ae2a378472f9be791900bbd4342c7881/l1-contracts/src/core/libraries/rollup/BlobLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "repository-level review of aztec-packages rollup contracts; report declares no per-file scope, file identified from finding contexts",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 5,
+        "removed": 15,
+        "ignoredAdded": 19,
+        "ignoredRemoved": 28,
+        "unchanged": 171,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 66,
+            "newStart": 1,
+            "newLines": 46,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library BlobLib {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    address public constant VM_ADDRESS = address(uint160(uint256(keccak256(\"hevm cheat code\"))));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 2,
+                "text": "    uint256 internal constant VERSIONED_HASH_VERSION_KZG ="
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 3,
+                "text": "        0x0100000000000000000000000000000000000000000000000000000000000000; // 0x01 << 248 to be used in blobHashCheck"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 4, "text": "" },
+              { "type": " ", "oldLine": 6, "newLine": 5, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 6,
+                "text": "     * @notice  Get the blob base fee"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 7, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "     * @dev     If we are in a foundry test, we use the cheatcode to get the blob base fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     *          Otherwise, we use the `block.blobbasefee`",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 11, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 8,
+                "text": "     * @return uint256 - The blob base fee"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 10,
+                "text": "    function getBlobBaseFee() internal view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        if (VM_ADDRESS.code.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "            return Vm(VM_ADDRESS).getBlobBaseFee();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 11,
+                "text": "        return block.blobbasefee;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 13, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 14, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 15,
+                "text": "     * @notice  Get the blob hash"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 16, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * @dev     If we are in a foundry test, we use the cheatcode to get the blob hashes",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     *          Otherwise, we use the `blobhash` function in assembly",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 17,
+                "text": "     * @return blobHash - The blob hash"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 18, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 19,
+                "text": "    function getBlobHash(uint256 _index) internal view returns (bytes32 blobHash) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        if (VM_ADDRESS.code.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "            // We know that this one is ABHORRENT. But it should not exists, and only will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            // be hit in testing.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "            bytes32[] memory blobHashes = Vm(VM_ADDRESS).getBlobhashes();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "            if (_index < blobHashes.length) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "                return blobHashes[_index];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            return bytes32(0);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 39, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 20,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 21,
+                "text": "            blobHash := blobhash(_index)"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 22,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 23, "text": "    }" },
+              { "type": " ", "oldLine": 44, "newLine": 24, "text": "" },
+              { "type": " ", "oldLine": 45, "newLine": 25, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * @notice  Validate an L2 block's blobs and return the blobHashes, the hashed blobHashes, and blob commitments.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * @notice  Validate a checkpoint's blobs and return the blobHashes, the hashed blobHashes, and blob commitments.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 47, "newLine": 27, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 28,
+                "text": "     *          We assume that the Aztec related blobs will be first in the propose transaction, additional blobs can be"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 29,
+                "text": "     *          at the end."
+              },
+              { "type": " ", "oldLine": 50, "newLine": 30, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 31,
+                "text": "     * Input bytes:"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * input[0] - num blobs in block",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "     * input[1:] - blob commitments (48 bytes * num blobs in block)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * input[0] - num blobs in checkpoint",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * input[1:] - blob commitments (48 bytes * num blobs in checkpoint)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 34,
+                "text": "     * @param _blobsInput - The above bytes to verify our input blob commitments match real blobs"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 35,
+                "text": "     * @param _checkBlob - Whether to skip blob related checks. Hardcoded to true (See RollupCore.sol -> checkBlob),"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 36,
+                "text": "     * exists only to be overridden in tests."
+              },
+              { "type": " ", "oldLine": 57, "newLine": 37, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 38,
+                "text": "     * Returns for proposal:"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     * @return blobHashes - All of the blob hashes included in this block, to be emitted in L2BlockProposed event.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @return blobsHashesCommitment - A hash of all blob hashes in this block, to be included in the block header. See",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * comment at the end of this fn for more info.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * @return blobCommitments - All of the blob commitments included in this block, to be stored then validated against",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     * those used in the rollup in epoch proof verification.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @return blobHashes - All of the blob hashes included in this checkpoint, to be emitted in CheckpointProposed event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @return blobsHashesCommitment - A hash of all blob hashes in this checkpoint, to be included in the checkpoint",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * header. See comment at the end of this fn for more info.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @return blobCommitments - All of the blob commitments included in this checkpoint, to be stored then validated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     * against those used in the rollup in epoch proof verification.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 64, "newLine": 44, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 45,
+                "text": "    function validateBlobs(bytes calldata _blobsInput, bool _checkBlob)"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 46,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 70,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 50,
+                "text": "        // We cannot input the incorrect number of blobs below, as the blobsHash"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 51,
+                "text": "        // and epoch proof verification will fail."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 52,
+                "text": "        uint8 numBlobs = uint8(_blobsInput[0]);"
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        require(numBlobs > 0, Errors_1.Rollup__NoBlobsInCheckpoint());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 54,
+                "text": "        blobHashes = new bytes32[](numBlobs);"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 55,
+                "text": "        blobCommitments = new bytes[](numBlobs);"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 56,
+                "text": "        bytes32 blobHash;"
+              }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 24,
+            "newStart": 66,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 66,
+                "text": "            if (_checkBlob) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 67,
+                "text": "                blobHash = getBlobHash(i);"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 68,
+                "text": "                // The below check ensures that our injected blobCommitments indeed match the real"
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "                // blobs submitted with this block. They are then used in the blobCommitmentsHash (see below).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "                require(blobHash == blobHashCheck, Errors.Rollup__InvalidBlobHash(blobHash, blobHashCheck));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "                // blobs submitted with this checkpoint. They are then used in the blobCommitmentsHash (see below).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "                require(blobHash == blobHashCheck, Errors_1.Rollup__InvalidBlobHash(blobHash, blobHashCheck));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 71,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 72,
+                "text": "                blobHash = blobHashCheck;"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 73,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 74,
+                "text": "            blobHashes[i] = blobHash;"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 75,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "        // Hash the EVM blob hashes for the block header",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        // Hash the EVM blob hashes for the checkpoint header",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 77,
+                "text": "        // TODO(#13430): The below blobsHashesCommitment known as blobsHash elsewhere in the code. The name"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 78,
+                "text": "        // blobsHashesCommitment is confusingly similar to blobCommitmentsHash"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 79,
+                "text": "        // which are different values:"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        // - blobsHash := sha256([blobhash_0, ..., blobhash_m]) = a hash of all blob hashes in a block with m+1 blobs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        // - blobsHash := sha256([blobhash_0, ..., blobhash_m]) = a hash of all blob hashes in a checkpoint with m+1 blobs",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 81,
+                "text": "        // inserted into the header, exists so a user can cross check blobs."
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 82,
+                "text": "        // - blobCommitmentsHash := sha256( ...sha256(sha256(C_0), C_1) ... C_n) = iteratively calculated hash of all blob"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 83,
+                "text": "        // commitments in an epoch with n+1 blobs (see calculateBlobCommitmentsHash()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 84,
+                "text": "        //   exists so we can validate injected commitments to the rollup circuits correspond to the correct real blobs."
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 85,
+                "text": "        // We may be able to combine these values e.g. blobCommitmentsHash := sha256( ...sha256(sha256(blobshash_0),"
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        // blobshash_1) ... blobshash_l) for an epoch with l+1 blocks.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        // blobshash_1) ... blobshash_l) for an epoch with l+1 checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 87,
+                "text": "        blobsHashesCommitment = Hash.sha256ToField(abi.encodePacked(blobHashes));"
+              },
+              { "type": " ", "oldLine": 107, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 108, "newLine": 89, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 131,
+            "oldLines": 20,
+            "newStart": 112,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 112,
+                "text": "    function validateBatchedBlob(bytes calldata _blobInput) internal view returns (bool success) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 113,
+                "text": "        // Staticcall the point eval precompile https://eips.ethereum.org/EIPS/eip-4844#point-evaluation-precompile :"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 114,
+                "text": "        (success,) = address(0x0a).staticcall(_blobInput);"
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        require(success, Errors.Rollup__InvalidBlobProof(bytes32(_blobInput[0:32])));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        require(success, Errors_1.Rollup__InvalidBlobProof(bytes32(_blobInput[0:32])));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 135, "newLine": 116, "text": "    }" },
+              { "type": " ", "oldLine": 136, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 118,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "     * @notice  Calculate the current state of the blobCommitmentsHash. Called for each new proposed block.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "     * @param _previousBlobCommitmentsHash - The previous block's blobCommitmentsHash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "     * @param _blobCommitments - The commitments corresponding to this block's blobs.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "     * @param _isFirstBlockOfEpoch - Whether this block is the first of an epoch (see below).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     * @notice  Calculate the current state of the blobCommitmentsHash. Called for each new proposed checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "     * @param _previousBlobCommitmentsHash - The previous checkpoint's blobCommitmentsHash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "     * @param _blobCommitments - The commitments corresponding to this checkpoint's blobs.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "     * @param _isFirstCheckpointOfEpoch - Whether this checkpoint is the first of an epoch (see below).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 142, "newLine": 123, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 124,
+                "text": "     * The blobCommitmentsHash is an accumulated value calculated in the rollup circuits as:"
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 125,
+                "text": "     *    blobCommitmentsHash_i := sha256(blobCommitmentsHash_(i - 1), C_i)"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 126,
+                "text": "     * for each blob commitment C_i in an epoch. For the first blob in the epoch (i = 0):"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 127,
+                "text": "     *    blobCommitmentsHash_i := sha256(C_0)"
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "     * which is why we require _isFirstBlockOfEpoch here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "     * which is why we require _isFirstCheckpointOfEpoch here.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 148, "newLine": 129, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 130,
+                "text": "     * Each blob commitment is injected into the rollup circuits and we rely on the L1 contracts to validate"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 131,
+                "text": "     * these commitments correspond to real blobs. The input _blobCommitments below come from validateBlobs()"
+              }
+            ]
+          },
+          {
+            "oldStart": 161,
+            "oldLines": 14,
+            "newStart": 142,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 142,
+                "text": "    function calculateBlobCommitmentsHash("
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 143,
+                "text": "        bytes32 _previousBlobCommitmentsHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 144,
+                "text": "        bytes[] memory _blobCommitments,"
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "        bool _isFirstBlockOfEpoch",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        bool _isFirstCheckpointOfEpoch",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 146,
+                "text": "    ) internal pure returns (bytes32 currentBlobCommitmentsHash) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 147,
+                "text": "        uint256 i = 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 148,
+                "text": "        currentBlobCommitmentsHash = _previousBlobCommitmentsHash;"
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "        // If we are at the first block of an epoch, we reinitialise the blobCommitmentsHash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "        // If we are at the first checkpoint of an epoch, we reinitialize the blobCommitmentsHash.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 150,
+                "text": "        // Blob commitments are collected and proven per root rollup proof => per epoch."
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "        if (_isFirstBlockOfEpoch) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "            // Initialise the blobCommitmentsHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        if (_isFirstCheckpointOfEpoch) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "            // Initialize the blobCommitmentsHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 153,
+                "text": "            currentBlobCommitmentsHash = Hash.sha256ToField(abi.encodePacked(_blobCommitments[i++]));"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 154,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 155,
+                "text": "        for (i; i < _blobCommitments.length; i++) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

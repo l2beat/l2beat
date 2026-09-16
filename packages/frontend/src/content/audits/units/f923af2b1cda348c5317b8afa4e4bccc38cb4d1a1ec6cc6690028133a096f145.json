@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f923af2b1cda348c5317b8afa4e4bccc38cb4d1a1ec6cc6690028133a096f145",
+  "name": "public_data_tree.nr",
+  "kind": "program",
+  "lines": 27,
+  "source": "use types::{\n    abis::{append_only_tree_snapshot::AppendOnlyTreeSnapshot, public_data_write::PublicDataWrite},\n    constants::PUBLIC_DATA_TREE_HEIGHT,\n    data::{PublicDataTreeLeaf, PublicDataTreeLeafPreimage},\n    merkle_tree::{indexed_tree, MembershipWitness},\n    traits::Empty,\n};\n\npub(crate) fn public_data_tree_insert(\n    write: PublicDataWrite,\n    start_snapshot: AppendOnlyTreeSnapshot,\n    low_leaf_preimage: PublicDataTreeLeafPreimage,\n    low_leaf_membership_witness: MembershipWitness<PUBLIC_DATA_TREE_HEIGHT>,\n    sibling_path: [Field; PUBLIC_DATA_TREE_HEIGHT],\n) -> AppendOnlyTreeSnapshot {\n    if !write.is_empty() {\n        indexed_tree::insert::<_, _, PUBLIC_DATA_TREE_HEIGHT>(\n            start_snapshot,\n            PublicDataTreeLeaf { slot: write.leaf_slot, value: write.value },\n            low_leaf_preimage,\n            low_leaf_membership_witness,\n            sibling_path,\n        )\n    } else {\n        start_snapshot\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

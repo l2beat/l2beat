@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "875296776ac76d499a17dc9dd20050a96ae2a8f98337fd3b80b917282d61f0bd",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 6,
+  "source": "struct SchemaRecord {\n    bytes32 uid; // The unique identifier of the schema.\n    ISchemaResolver resolver; // Optional schema resolver.\n    bool revocable; // Whether the schema allows revocations explicitly.\n    string schema; // Custom specification of the schema (e.g., an ABI).\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

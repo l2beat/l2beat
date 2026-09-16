@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "968e3f75c80c058174ca3d32919759959d1a6be8a4dd45db83bfdc77980c867e",
+  "name": "utils.nr",
+  "kind": "program",
+  "lines": 59,
+  "source": "use types::{traits::{Deserialize, Empty}, utils::arrays::ClaimedLengthArray};\n\npub fn pad_end_with<T, let N: u32, let M: u32>(items: [T; N], padded_item: T) -> [T; M] {\n    let mut output = [padded_item; M];\n    for i in 0..N {\n        output[i] = items[i];\n    }\n    output\n}\n\npub fn pad_end<T, let N: u32, let M: u32>(items: [T; N]) -> [T; M]\nwhere\n    T: Empty,\n{\n    pad_end_with(items, T::empty())\n}\n\npub fn make_fixture<T>(seed: Field) -> T\nwhere\n    T: Deserialize,\n{\n    let mut fields = [0; <T as Deserialize>::N];\n    for i in 0..<T as Deserialize>::N {\n        fields[i] = seed + i as Field;\n    }\n    T::deserialize(fields)\n}\n\npub fn assert_array_eq<T, let N: u32, let M: u32>(array: [T; N], expected: [T; M])\nwhere\n    T: Empty,\n{\n    assert(expected.all(|elem: T| !elem.is_empty()), \"cannot expect empty element in the result\");\n    for i in 0..M {\n        assert_eq(array[i], expected[i], \"mismatch array elements\");\n    }\n    for i in M..N {\n        assert(array[i].is_empty(), \"unexpected non-empty element in the result\");\n    }\n}\n\npub fn assert_claimed_length_array_eq<T, let N: u32, let M: u32>(\n    array: ClaimedLengthArray<T, N>,\n    expected: [T; M],\n)\nwhere\n    T: Empty,\n{\n    assert_eq(array.length, M, \"incorrect claimed length\");\n    assert_array_eq(array.array, expected);\n}\n\n// Swap two items in a BoundedVec.\n// Useful when we want to shuffle side effects, which by default are ordered by counters when we add mock data to FixtureBuilder.\npub fn swap_items<T, let N: u32>(vec: &mut BoundedVec<T, N>, from_index: u32, to_index: u32) {\n    let tmp = vec.get(from_index);\n    vec.set(from_index, vec.get(to_index));\n    vec.set(to_index, tmp);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

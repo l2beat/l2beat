@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8d73a373055758cc2ea759793e2d8474e94db90508b2edddaed56be429de601",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 3,
+  "source": "pub(crate) mod split_bits;\npub(crate) mod msb;\npub(crate) mod map;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

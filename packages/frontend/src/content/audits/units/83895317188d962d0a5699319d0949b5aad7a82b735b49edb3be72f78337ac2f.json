@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "83895317188d962d0a5699319d0949b5aad7a82b735b49edb3be72f78337ac2f",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 1,
+  "source": "mod bigcurve_test;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

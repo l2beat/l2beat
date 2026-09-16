@@ -1,0 +1,649 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "383ff59c82419cced34c778bc7e438ef17a4db0a1f1230a0f979caa84a284f25",
+  "name": "CoreGovernance",
+  "kind": "abstract",
+  "lines": 300,
+  "source": "abstract contract CoreGovernance is Initializable, SignatureConsumer, VoteStatusConsumer, ChainTypeConsumer {\n    using Proposal for Proposal.ProposalDetail;\n\n    /**\n     * @dev Error thrown when attempting to interact with a finalized vote.\n     */\n    error ErrVoteIsFinalized();\n\n    /**\n     * @dev Error thrown when the current proposal is not completed.\n     */\n    error ErrCurrentProposalIsNotCompleted();\n\n    struct ProposalVote {\n        VoteStatus status;\n        bytes32 hash;\n        uint256 againstVoteWeight; // Total weight of against votes\n        uint256 forVoteWeight; // Total weight of for votes\n        address[] forVoteds; // Array of addresses voting for\n        address[] againstVoteds; // Array of addresses voting against\n        uint256 expiryTimestamp;\n        mapping(address => Signature) sig;\n        mapping(address => bool) voted;\n    }\n\n    /// @dev Emitted when a proposal is created\n    event ProposalCreated(\n        uint256 indexed chainId,\n        uint256 indexed round,\n        bytes32 indexed proposalHash,\n        Proposal.ProposalDetail proposal,\n        address creator\n    );\n    /// @dev Emitted when the proposal is voted\n    event ProposalVoted(bytes32 indexed proposalHash, address indexed voter, Ballot.VoteType support, uint256 weight);\n    /// @dev Emitted when the proposal is approved\n    event ProposalApproved(bytes32 indexed proposalHash);\n    /// @dev Emitted when the vote is reject\n    event ProposalRejected(bytes32 indexed proposalHash);\n    /// @dev Emitted when the vote is expired\n    event ProposalExpired(bytes32 indexed proposalHash);\n    /// @dev Emitted when the proposal is executed\n    event ProposalExecuted(bytes32 indexed proposalHash, bool[] successCalls, bytes[] returnDatas);\n    /// @dev Emitted when the proposal expiry duration is changed.\n    event ProposalExpiryDurationChanged(uint256 indexed duration);\n\n    /// @dev Mapping from chain id => vote round\n    /// @notice chain id = 0 for global proposal\n    mapping(uint256 => uint256) public round;\n    /// @dev Mapping from chain id => vote round => proposal vote\n    mapping(uint256 => mapping(uint256 => ProposalVote)) public vote;\n\n    uint256 internal _proposalExpiryDuration;\n\n    function __CoreGovernance_init(uint256 expiryDuration) internal onlyInitializing {\n        __CoreGovernance_init_unchained(expiryDuration);\n    }\n\n    function __CoreGovernance_init_unchained(uint256 expiryDuration) internal onlyInitializing {\n        _setProposalExpiryDuration(expiryDuration);\n    }\n\n    /**\n     * @dev Creates new voting round by calculating the `_round` number of chain `_chainId`.\n     * Increases the `_round` number if the previous one is not expired. Delete the previous proposal\n     * if it is expired and not increase the `_round`.\n     */\n    function _createVotingRound(uint256 _chainId) internal returns (uint256 _round) {\n        _round = round[_chainId];\n        // Skip checking for the first ever round\n        if (_round == 0) {\n            _round = round[_chainId] = 1;\n        } else {\n            ProposalVote storage _latestProposalVote = vote[_chainId][_round];\n            bool _isExpired = _tryDeleteExpiredVotingRound(_latestProposalVote);\n            // Skip increasing round number if the latest round is expired, allow the vote to be overridden\n            if (!_isExpired) {\n                if (_latestProposalVote.status == VoteStatus.Pending) {\n                    revert ErrCurrentProposalIsNotCompleted();\n                }\n                unchecked {\n                    _round = ++round[_chainId];\n                }\n            }\n        }\n    }\n\n    /**\n     * @dev Saves new round voting for the proposal `_proposalHash` of chain `_chainId`.\n     */\n    function _saveVotingRound(ProposalVote storage _vote, bytes32 _proposalHash, uint256 _expiryTimestamp) internal {\n        _vote.hash = _proposalHash;\n        _vote.expiryTimestamp = _expiryTimestamp;\n    }\n\n    /**\n     * @dev Proposes proposal struct.\n     *\n     * Requirements:\n     * - The chain id is not equal to 0.\n     * - The proposal nonce is equal to the new round.\n     *\n     * Emits the `ProposalCreated` event.\n     *\n     */\n    function _proposeProposalStruct(Proposal.ProposalDetail memory proposal, address creator)\n        internal\n        virtual\n        returns (uint256 round_)\n    {\n        uint256 chainId = proposal.chainId;\n        if (chainId == 0) {\n            revert ErrInvalidChainId(msg.sig, 0, block.chainid);\n        }\n        proposal.validate(_proposalExpiryDuration);\n\n        bytes32 proposalHash = proposal.hash();\n        round_ = _createVotingRound(chainId);\n        _saveVotingRound(vote[chainId][round_], proposalHash, proposal.expiryTimestamp);\n        if (round_ != proposal.nonce) {\n            revert ErrInvalidProposalNonce(msg.sig);\n        }\n        emit ProposalCreated(chainId, round_, proposalHash, proposal, creator);\n    }\n\n    /**\n     * @dev Casts vote for the proposal with data and returns whether the voting is done.\n     *\n     * Requirements:\n     * - The proposal nonce is equal to the round.\n     * - The vote is not finalized.\n     * - The voter has not voted for the round.\n     *\n     * Emits the `ProposalVoted` event. Emits the `ProposalApproved`, `ProposalExecuted` or `ProposalRejected` once the\n     * proposal is approved, executed or rejected.\n     *\n     */\n    function _castVote(\n        Proposal.ProposalDetail memory proposal,\n        Ballot.VoteType support,\n        uint256 minimumForVoteWeight,\n        uint256 minimumAgainstVoteWeight,\n        address voter,\n        Signature memory signature,\n        uint256 voterWeight\n    ) internal virtual returns (bool done) {\n        uint256 chainId = proposal.chainId;\n        uint256 round_ = proposal.nonce;\n        ProposalVote storage _vote = vote[chainId][round_];\n\n        if (_tryDeleteExpiredVotingRound(_vote)) {\n            return true;\n        }\n\n        if (round[proposal.chainId] != round_) {\n            revert ErrInvalidProposalNonce(msg.sig);\n        }\n        if (_vote.status != VoteStatus.Pending) {\n            revert ErrVoteIsFinalized();\n        }\n        if (_voted(_vote, voter)) {\n            revert ErrAlreadyVoted(voter);\n        }\n\n        _vote.voted[voter] = true;\n        // Stores the signature if it is not empty\n        if (signature.r > 0 || signature.s > 0 || signature.v > 0) {\n            _vote.sig[voter] = signature;\n        }\n        emit ProposalVoted(_vote.hash, voter, support, voterWeight);\n\n        uint256 _forVoteWeight;\n        uint256 _againstVoteWeight;\n        if (support == Ballot.VoteType.For) {\n            _vote.forVoteds.push(voter);\n            _forVoteWeight = _vote.forVoteWeight += voterWeight;\n        } else if (support == Ballot.VoteType.Against) {\n            _vote.againstVoteds.push(voter);\n            _againstVoteWeight = _vote.againstVoteWeight += voterWeight;\n        } else {\n            revert ErrUnsupportedVoteType(msg.sig);\n        }\n\n        if (_forVoteWeight >= minimumForVoteWeight) {\n            done = true;\n            _vote.status = VoteStatus.Approved;\n            emit ProposalApproved(_vote.hash);\n            if (proposal.isAutoExecute()) {\n                _tryExecute(_vote, proposal);\n            }\n        } else if (_againstVoteWeight >= minimumAgainstVoteWeight) {\n            done = true;\n            _vote.status = VoteStatus.Rejected;\n            emit ProposalRejected(_vote.hash);\n        }\n    }\n\n    /**\n     * @dev The specified executor executes the proposal on an approved proposal.\n     */\n    function _executeWithCaller(Proposal.ProposalDetail memory proposal, address caller) internal {\n        bytes32 proposalHash = proposal.hash();\n        ProposalVote storage _vote = vote[proposal.chainId][proposal.nonce];\n\n        if (_vote.hash != proposalHash) {\n            revert ErrInvalidProposal(proposalHash, _vote.hash);\n        }\n\n        if (_vote.status != VoteStatus.Approved) {\n            revert ErrProposalNotApproved();\n        }\n        if (caller != proposal.executor) {\n            revert ErrInvalidExecutor();\n        }\n\n        _tryExecute(_vote, proposal);\n    }\n\n    /**\n     * @dev When the contract is on Ronin chain, checks whether the proposal is expired and delete it if is expired.\n     *\n     * Emits the event `ProposalExpired` if the vote is expired.\n     *\n     * Note: This function assumes the vote `_proposalVote` is already created, consider verifying the vote's existence\n     * before or it will emit an unexpected event of `ProposalExpired`.\n     */\n    function _tryDeleteExpiredVotingRound(ProposalVote storage proposalVote) internal returns (bool isExpired) {\n        isExpired = _getChainType() == ChainType.RoninChain && proposalVote.status == VoteStatus.Pending\n            && proposalVote.expiryTimestamp <= block.timestamp;\n\n        if (isExpired) {\n            emit ProposalExpired(proposalVote.hash);\n\n            for (uint256 _i; _i < proposalVote.forVoteds.length;) {\n                delete proposalVote.voted[proposalVote.forVoteds[_i]];\n                delete proposalVote.sig[proposalVote.forVoteds[_i]];\n\n                unchecked {\n                    ++_i;\n                }\n            }\n            for (uint256 _i; _i < proposalVote.againstVoteds.length;) {\n                delete proposalVote.voted[proposalVote.againstVoteds[_i]];\n                delete proposalVote.sig[proposalVote.againstVoteds[_i]];\n\n                unchecked {\n                    ++_i;\n                }\n            }\n            delete proposalVote.status;\n            delete proposalVote.hash;\n            delete proposalVote.againstVoteWeight;\n            delete proposalVote.forVoteWeight;\n            delete proposalVote.forVoteds;\n            delete proposalVote.againstVoteds;\n            delete proposalVote.expiryTimestamp;\n        }\n    }\n\n    /**\n     * @dev Executes the proposal and update the vote status once the proposal is executable.\n     */\n    function _tryExecute(ProposalVote storage vote_, Proposal.ProposalDetail memory proposal) internal {\n        if (proposal.executable()) {\n            vote_.status = VoteStatus.Executed;\n            (bool[] memory _successCalls, bytes[] memory _returnDatas) = proposal.execute();\n            emit ProposalExecuted(vote_.hash, _successCalls, _returnDatas);\n        }\n    }\n\n    /**\n     * @dev Sets the expiry duration for a new proposal.\n     */\n    function _setProposalExpiryDuration(uint256 expiryDuration) internal {\n        _proposalExpiryDuration = expiryDuration;\n        emit ProposalExpiryDurationChanged(expiryDuration);\n    }\n\n    /**\n     * @dev Returns whether the voter casted for the proposal.\n     */\n    function _voted(ProposalVote storage vote_, address voter) internal view returns (bool) {\n        return vote_.voted[voter];\n    }\n\n    /**\n     * @dev Returns total weight from validators.\n     */\n    function _getTotalWeight() internal view virtual returns (uint256);\n\n    /**\n     * @dev Returns minimum vote to pass a proposal.\n     */\n    function _getMinimumVoteWeight() internal view virtual returns (uint256);\n\n    /**\n     * @dev Returns current context is running on whether Ronin chain or on mainchain.\n     */\n    function _getChainType() internal view virtual returns (ChainType);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 277,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "CoreGovernance",
+        "similarity": 0.871,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/sequential-governance/CoreGovernance.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/extensions/sequential-governance/CoreGovernance.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 23,
+        "removed": 26,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 17,
+        "unchanged": 277,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract CoreGovernance is SignatureConsumer, VoteStatusConsumer, ChainTypeConsumer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract CoreGovernance is Initializable, SignatureConsumer, VoteStatusConsumer, ChainTypeConsumer {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using Proposal for Proposal.ProposalDetail;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 10,
+            "newStart": 52,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "    uint256 internal _proposalExpiryDuration;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    constructor(uint256 _expiryDuration) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        _setProposalExpiryDuration(_expiryDuration);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function __CoreGovernance_init(uint256 expiryDuration) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        __CoreGovernance_init_unchained(expiryDuration);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "" },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    function __CoreGovernance_init_unchained(uint256 expiryDuration) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        _setProposalExpiryDuration(expiryDuration);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 61, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 62, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 59, "newLine": 63, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 64,
+                "text": "     * @dev Creates new voting round by calculating the `_round` number of chain `_chainId`."
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 65,
+                "text": "     * Increases the `_round` number if the previous one is not expired. Delete the previous proposal"
+              }
+            ]
+          },
+          {
+            "oldStart": 90,
+            "oldLines": 37,
+            "newStart": 94,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 90, "newLine": 94, "text": "    }" },
+              { "type": " ", "oldLine": 91, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 92, "newLine": 96, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "     * @dev Proposes for a new proposal.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 94, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "     * - The chain id is not equal to 0.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 97, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "     * Emits the `ProposalCreated` event.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 99, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    function _proposeProposal(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "        uint256 chainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        uint256 expiryTimestamp,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        address[] memory targets,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        uint256[] memory values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        bytes[] memory calldatas,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        uint256[] memory gasAmounts,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        address creator",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    ) internal virtual returns (Proposal.ProposalDetail memory proposal) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "        if (chainId == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "            revert ErrInvalidChainId(msg.sig, 0, block.chainid);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        uint256 round_ = _createVotingRound(chainId);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 114, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "        proposal = Proposal.ProposalDetail(round_, chainId, expiryTimestamp, targets, values, calldatas, gasAmounts);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        proposal.validate(_proposalExpiryDuration);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 117, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        bytes32 proposalHash = proposal.hash();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        _saveVotingRound(vote[chainId][round_], proposalHash, expiryTimestamp);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        emit ProposalCreated(chainId, round_, proposalHash, proposal, creator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 122, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 97,
+                "text": "     * @dev Proposes proposal struct."
+              },
+              { "type": " ", "oldLine": 125, "newLine": 98, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 99,
+                "text": "     * Requirements:"
+              }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 7,
+            "newStart": 185,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 185,
+                "text": "            done = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 186,
+                "text": "            _vote.status = VoteStatus.Approved;"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 187,
+                "text": "            emit ProposalApproved(_vote.hash);"
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "            _tryExecute(_vote, proposal);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "            if (proposal.isAutoExecute()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "                _tryExecute(_vote, proposal);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 191,
+                "text": "        } else if (_againstVoteWeight >= minimumAgainstVoteWeight) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 192,
+                "text": "            done = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 193,
+                "text": "            _vote.status = VoteStatus.Rejected;"
+              }
+            ]
+          },
+          {
+            "oldStart": 221,
+            "oldLines": 6,
+            "newStart": 196,
+            "newLines": 27,
+            "lines": [
+              { "type": " ", "oldLine": 221, "newLine": 196, "text": "    }" },
+              { "type": " ", "oldLine": 222, "newLine": 197, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 198,
+                "text": "    /**"
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "     * @dev The specified executor executes the proposal on an approved proposal.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "    function _executeWithCaller(Proposal.ProposalDetail memory proposal, address caller) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "        bytes32 proposalHash = proposal.hash();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        ProposalVote storage _vote = vote[proposal.chainId][proposal.nonce];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 204, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        if (_vote.hash != proposalHash) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "            revert ErrInvalidProposal(proposalHash, _vote.hash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 208, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "        if (_vote.status != VoteStatus.Approved) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "            revert ErrProposalNotApproved();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "        if (caller != proposal.executor) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "            revert ErrInvalidExecutor();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 215, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "        _tryExecute(_vote, proposal);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 218, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 220,
+                "text": "     * @dev When the contract is on Ronin chain, checks whether the proposal is expired and delete it if is expired."
+              },
+              { "type": " ", "oldLine": 225, "newLine": 221, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 222,
+                "text": "     * Emits the event `ProposalExpired` if the vote is expired."
+              }
+            ]
+          },
+          {
+            "oldStart": 281,
+            "oldLines": 13,
+            "newStart": 277,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 281, "newLine": 277, "text": "    }" },
+              { "type": " ", "oldLine": 282, "newLine": 278, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 279,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "     * @dev Returns the expiry duration for a new proposal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "    function _getProposalExpiryDuration() internal view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 287,
+                "text": "        return _proposalExpiryDuration;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 289, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 290,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 280,
+                "text": "     * @dev Returns whether the voter casted for the proposal."
+              },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 281,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 282,
+                "text": "    function _voted(ProposalVote storage vote_, address voter) internal view returns (bool) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 297,
+            "oldLines": 7,
+            "newStart": 286,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 297,
+                "newLine": 286,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 287,
+                "text": "     * @dev Returns total weight from validators."
+              },
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 288,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "    function _getTotalWeights() internal view virtual returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "    function _getTotalWeight() internal view virtual returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 301, "newLine": 290, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 291,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 292,
+                "text": "     * @dev Returns minimum vote to pass a proposal."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bedd77e0f08db70b159cb88500929a63517f969d608eee8a143218f00966238e",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 13,
+  "source": "#![feature(once_cell_try)]\n\nmod error;\npub use error::Error;\n\nmod prover;\npub use prover::{Prover, ProverConfig};\n\npub mod setup;\n\npub mod task;\n\npub mod utils;",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3fb68e875c8824c80c81db143f2d5fb54efcd7a42d6a061d675824b4f81d990d",
+  "name": "Constants",
+  "kind": "library",
+  "lines": 6,
+  "source": "library Constants {\n    uint256 constant SNARK_SCALAR_FIELD =\n        21_888_242_871_839_275_222_246_405_745_257_275_088_548_364_400_416_034_343_698_204_186_575_808_495_617;\n\n    address constant NATIVE_ASSET = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "identical",
+      "coveredLines": 6,
+      "match": {
+        "origin": "own",
+        "collection": "privacy-pools",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Constants",
+        "similarity": 1,
+        "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/contracts/lib/Constants.sol",
+        "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+        "commitTimestamp": "2025-03-14T12:57:01Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final commit",
+        "coverage": "Final audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

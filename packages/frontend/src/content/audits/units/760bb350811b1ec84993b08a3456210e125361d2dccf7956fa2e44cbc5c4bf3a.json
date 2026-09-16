@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "760bb350811b1ec84993b08a3456210e125361d2dccf7956fa2e44cbc5c4bf3a",
+  "name": "IProposalTypesConfigurator",
+  "kind": "interface",
+  "lines": 43,
+  "source": "interface IProposalTypesConfigurator {\n    /*//////////////////////////////////////////////////////////////\n                                 ERRORS\n    //////////////////////////////////////////////////////////////*/\n\n    error InvalidQuorum();\n    error InvalidApprovalThreshold();\n    error NotAdminOrTimelock();\n    error AlreadyInit();\n\n    /*//////////////////////////////////////////////////////////////\n                                 EVENTS\n    //////////////////////////////////////////////////////////////*/\n\n    event ProposalTypeSet(uint8 indexed proposalTypeId, uint16 quorum, uint16 approvalThreshold, string name);\n\n    /*//////////////////////////////////////////////////////////////\n                                STRUCTS\n    //////////////////////////////////////////////////////////////*/\n\n    struct ProposalType {\n        uint16 quorum;\n        uint16 approvalThreshold;\n        string name;\n        address module;\n    }\n\n    /*//////////////////////////////////////////////////////////////\n                               FUNCTIONS\n    //////////////////////////////////////////////////////////////*/\n\n    function initialize(address _governor, ProposalType[] calldata _proposalTypes) external;\n\n    function proposalTypes(uint8 proposalTypeId) external view returns (ProposalType memory);\n\n    function setProposalType(\n        uint8 proposalTypeId,\n        uint16 quorum,\n        uint16 approvalThreshold,\n        string memory name,\n        address module\n    ) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

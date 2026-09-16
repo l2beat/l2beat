@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "679e2ecc34f09dee698b07f9ddaf6103e5aec293cb0b892d24fdadef50261a73",
+  "name": "WETH9",
+  "kind": "contract",
+  "lines": 59,
+  "source": "contract WETH9 {\n    string public name = \"Wrapped Ether\";\n    string public symbol = \"WETH\";\n    uint8 public decimals = 18;\n\n    event Approval(address indexed src, address indexed guy, uint256 wad);\n    event Transfer(address indexed src, address indexed dst, uint256 wad);\n    event Deposit(address indexed dst, uint256 wad);\n    event Withdrawal(address indexed src, uint256 wad);\n\n    mapping(address => uint256) public balanceOf;\n    mapping(address => mapping(address => uint256)) public allowance;\n\n    function() public payable {\n        deposit();\n    }\n\n    function deposit() public payable {\n        balanceOf[msg.sender] += msg.value;\n        Deposit(msg.sender, msg.value);\n    }\n\n    function withdraw(uint256 wad) public {\n        require(balanceOf[msg.sender] >= wad);\n        balanceOf[msg.sender] -= wad;\n        msg.sender.transfer(wad);\n        Withdrawal(msg.sender, wad);\n    }\n\n    function totalSupply() public view returns (uint256) {\n        return this.balance;\n    }\n\n    function approve(address guy, uint256 wad) public returns (bool) {\n        allowance[msg.sender][guy] = wad;\n        Approval(msg.sender, guy, wad);\n        return true;\n    }\n\n    function transfer(address dst, uint256 wad) public returns (bool) {\n        return transferFrom(msg.sender, dst, wad);\n    }\n\n    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {\n        require(balanceOf[src] >= wad);\n\n        if (src != msg.sender && allowance[src][msg.sender] != uint256(-1)) {\n            require(allowance[src][msg.sender] >= wad);\n            allowance[src][msg.sender] -= wad;\n        }\n\n        balanceOf[src] -= wad;\n        balanceOf[dst] += wad;\n\n        Transfer(src, dst, wad);\n\n        return true;\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "other",
+        "collection": "scroll",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "WETH9",
+        "similarity": 0.76,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/predeploys/WETH9.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L2/predeploys/WETH9.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit; M-02 and M-04 (Medium) reported. File was later removed in PR #632 (85850f1) and replaced by WrappedEther.sol.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 8,
+        "removed": 16,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 12,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 11,
+            "oldLines": 39,
+            "newStart": 11,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    mapping(address => uint256) public balanceOf;"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    mapping(address => mapping(address => uint256)) public allowance;"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    receive() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function() public payable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        deposit();"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    function deposit() public payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            balanceOf[msg.sender] += msg.value;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 22, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        emit Deposit(msg.sender, msg.value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        balanceOf[msg.sender] += msg.value;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        Deposit(msg.sender, msg.value);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 21, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 22, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 23,
+                "text": "    function withdraw(uint256 wad) public {"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 24,
+                "text": "        require(balanceOf[msg.sender] >= wad);"
+              },
+              { "type": "-", "oldLine": 28, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "            balanceOf[msg.sender] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 32, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        payable(msg.sender).transfer(wad);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 34, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        emit Withdrawal(msg.sender, wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        balanceOf[msg.sender] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        msg.sender.transfer(wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        Withdrawal(msg.sender, wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 30,
+                "text": "    function totalSupply() public view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        return address(this).balance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        return this.balance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 32, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 33, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 34,
+                "text": "    function approve(address guy, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 35,
+                "text": "        allowance[msg.sender][guy] = wad;"
+              },
+              { "type": "-", "oldLine": 44, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        emit Approval(msg.sender, guy, wad);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        Approval(msg.sender, guy, wad);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 37,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 48, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 39, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 20,
+            "newStart": 44,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 44,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 45,
+                "text": "        require(balanceOf[src] >= wad);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != uint256(-1)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 48,
+                "text": "            require(allowance[src][msg.sender] >= wad);"
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "                allowance[src][msg.sender] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "            allowance[src][msg.sender] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 50,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "            balanceOf[src] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "            balanceOf[dst] += wad;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        balanceOf[src] -= wad;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        balanceOf[dst] += wad;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 69, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        emit Transfer(src, dst, wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        Transfer(src, dst, wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 71, "newLine": 56, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 57,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 58, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "914338fff8b8270702c2ac78cc62c23051e307cba546fa8a409350ba4346ff40",
+  "name": "AbstractFeeCurrency",
+  "kind": "abstract",
+  "lines": 37,
+  "source": "abstract contract AbstractFeeCurrency is ERC20 {\n    modifier onlyVm() {\n        require(msg.sender == address(0), \"Only VM can call\");\n        _;\n    }\n\n    function debitGasFees(address from, uint256 value) external onlyVm {\n        _burn(from, value);\n    }\n\n    // New function signature, will be used when all fee currencies have migrated\n    function creditGasFees(address[] calldata recipients, uint256[] calldata amounts) external onlyVm {\n        require(recipients.length == amounts.length, \"Recipients and amounts must be the same length.\");\n\n        for (uint256 i = 0; i < recipients.length; i++) {\n            _mint(recipients[i], amounts[i]);\n        }\n    }\n\n    // Old function signature for backwards compatibility\n    function creditGasFees(\n        address from,\n        address feeRecipient,\n        address, // gatewayFeeRecipient, unused\n        address communityFund,\n        uint256 refund,\n        uint256 tipTxFee,\n        uint256, // gatewayFee, unused\n        uint256 baseTxFee\n    ) external onlyVm {\n        // Calling the new creditGasFees would make sense here, but that is not\n        // possible due to its calldata arguments.\n        _mint(from, refund);\n        _mint(feeRecipient, tipTxFee);\n        _mint(communityFund, baseTxFee);\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

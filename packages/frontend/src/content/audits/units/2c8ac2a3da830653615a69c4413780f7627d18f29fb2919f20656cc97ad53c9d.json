@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2c8ac2a3da830653615a69c4413780f7627d18f29fb2919f20656cc97ad53c9d",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"parity_base\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nrollup_lib = { path = \"../rollup-lib\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9f23da9a78876fde697c60e7bc977589c3edb641f9f489914151953ca6c92fc6",
+  "name": "FeeConfigLib",
+  "kind": "library",
+  "lines": 36,
+  "source": "library FeeConfigLib {\n    using SafeCast for uint256;\n\n    uint256 private constant MASK_32_BITS = 0xFFFFFFFF;\n    uint256 private constant MASK_64_BITS = 0xFFFFFFFFFFFFFFFF;\n    uint256 private constant MASK_128_BITS = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;\n\n    function getManaTarget(CompressedFeeConfig _compressedFeeConfig) internal pure returns (uint256) {\n        return (CompressedFeeConfig.unwrap(_compressedFeeConfig) >> 192) & MASK_32_BITS;\n    }\n\n    function getCongestionUpdateFraction(CompressedFeeConfig _compressedFeeConfig) internal pure returns (uint256) {\n        return (CompressedFeeConfig.unwrap(_compressedFeeConfig) >> 64) & MASK_128_BITS;\n    }\n\n    function getProvingCostPerMana(CompressedFeeConfig _compressedFeeConfig) internal pure returns (EthValue) {\n        return EthValue.wrap(CompressedFeeConfig.unwrap(_compressedFeeConfig) & MASK_64_BITS);\n    }\n\n    function compress(FeeConfig memory _config) internal pure returns (CompressedFeeConfig) {\n        uint256 value = 0;\n        value |= uint256(EthValue.unwrap(_config.provingCostPerMana).toUint64());\n        value |= uint256(_config.congestionUpdateFraction.toUint128()) << 64;\n        value |= uint256(_config.manaTarget.toUint32()) << 192;\n\n        return CompressedFeeConfig.wrap(value);\n    }\n\n    function decompress(CompressedFeeConfig _compressedFeeConfig) internal pure returns (FeeConfig memory) {\n        return FeeConfig({\n            provingCostPerMana: getProvingCostPerMana(_compressedFeeConfig),\n            congestionUpdateFraction: getCongestionUpdateFraction(_compressedFeeConfig),\n            manaTarget: getManaTarget(_compressedFeeConfig)\n        });\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 36,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "FeeConfigLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
+        "commit": "c9cd1b9deb54ca43d3b4762eb73fd0dcf983e473",
+        "commitTimestamp": "2026-02-16T12:42:46Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/c9cd1b9deb54ca43d3b4762eb73fd0dcf983e473/l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified bit-width comment correction (PR 20423 commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

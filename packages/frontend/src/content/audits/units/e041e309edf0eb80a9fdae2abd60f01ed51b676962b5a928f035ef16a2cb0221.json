@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e041e309edf0eb80a9fdae2abd60f01ed51b676962b5a928f035ef16a2cb0221",
+  "name": "IERC5267Upgradeable",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface IERC5267Upgradeable {\n    /**\n     * @dev MAY be emitted to signal that the domain could have changed.\n     */\n    event EIP712DomainChanged();\n\n    /**\n     * @dev returns the fields and values that describe the domain separator used by this contract for EIP-712\n     * signature.\n     */\n    function eip712Domain()\n        external\n        view\n        returns (\n            bytes1 fields,\n            string memory name,\n            string memory version,\n            uint256 chainId,\n            address verifyingContract,\n            bytes32 salt,\n            uint256[] memory extensions\n        );\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

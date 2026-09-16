@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e2f4a2a98cb86f58690762912bb837bbf6c2c25cb4f9d1f58df054a7051c6388",
+  "name": "checkpoint_blob_data.nr",
+  "kind": "program",
+  "lines": 39,
+  "source": "use crate::constants::CHECKPOINT_END_PREFIX;\n\nglobal NUM_BLOB_FIELDS_BIT_SIZE: u32 = 32;\n\n/// Create the field that marks the end of a checkpoint. It's a concatenation of:\n/// `CHECKPOINT_END_PREFIX` | `num_blob_fields`\n///\n/// `CHECKPOINT_END_PREFIX` occupies the bytes up to the point where `num_blob_fields` begins.\n/// `num_blob_fields` occupies 4 bytes.\npub fn create_checkpoint_end_marker(num_blob_fields: u32) -> Field {\n    let num_blob_fields_field = num_blob_fields as Field;\n    num_blob_fields_field.assert_max_bit_size::<NUM_BLOB_FIELDS_BIT_SIZE>();\n    let mut marker = num_blob_fields_field;\n    let shift = (1 << NUM_BLOB_FIELDS_BIT_SIZE as u64) as Field;\n    marker += CHECKPOINT_END_PREFIX * shift;\n    marker\n}\n\n#[test]\nfn correct_checkpoint_end_marker() {\n    let num_blob_fields = 1234;\n    let marker = create_checkpoint_end_marker(num_blob_fields);\n\n    let checkpoint_end_marker_from_ts =\n        0x0000000000000000000000000000000000000000000000008c637443000004d2;\n\n    assert_eq(marker, checkpoint_end_marker_from_ts);\n}\n\n#[test]\nfn large_value_in_checkpoint_end_marker_does_not_get_truncated() {\n    let num_blob_fields = 0xffffffff;\n    let marker = create_checkpoint_end_marker(num_blob_fields);\n\n    let large_checkpoint_end_marker_from_ts =\n        0x0000000000000000000000000000000000000000000000008c637443ffffffff;\n\n    assert_eq(marker, large_checkpoint_end_marker_from_ts);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

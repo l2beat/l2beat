@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e0849b4850013f6c5946af84b3df64541146914de6f22e06716e4827a5304b0f",
+  "name": "lib.nr",
+  "kind": "program",
+  "lines": 9,
+  "source": "mod config;\npub mod utils;\npub mod abis;\nmod blob;\npub mod blob_batching;\npub mod mock_blob_oracle;\n\n// Re-export blob evaluation functions for use in checkpoint root rollup\npub use blob::{compute_factor, compute_fracs, validate_factor, validate_fracs, z_pow_d};",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

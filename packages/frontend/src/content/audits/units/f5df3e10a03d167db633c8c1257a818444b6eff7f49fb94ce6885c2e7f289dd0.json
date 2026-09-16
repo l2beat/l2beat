@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f5df3e10a03d167db633c8c1257a818444b6eff7f49fb94ce6885c2e7f289dd0",
+  "name": "PrivacyPool",
+  "kind": "abstract",
+  "lines": 173,
+  "source": "abstract contract PrivacyPool is State, IPrivacyPool {\n    using ProofLib for ProofLib.WithdrawProof;\n    using ProofLib for ProofLib.RagequitProof;\n\n    /**\n     * @notice Does a series of sanity checks on the proof public signals\n     * @param _withdrawal The withdrawal data structure containing withdrawal details\n     * @param _proof The withdrawal proof data structure containing proof details\n     */\n    modifier validWithdrawal(Withdrawal memory _withdrawal, ProofLib.WithdrawProof memory _proof) {\n        // Check caller is the allowed processooor\n        if (msg.sender != _withdrawal.processooor) {\n            revert InvalidProcessooor();\n        }\n\n        // Check the context matches to ensure its integrity\n        if (_proof.context() != uint256(keccak256(abi.encode(_withdrawal, SCOPE))) % Constants.SNARK_SCALAR_FIELD) {\n            revert ContextMismatch();\n        }\n\n        // Check the tree depth signals are less than the max tree depth\n        if (_proof.stateTreeDepth() > MAX_TREE_DEPTH || _proof.ASPTreeDepth() > MAX_TREE_DEPTH) {\n            revert InvalidTreeDepth();\n        }\n\n        // Check the state root is known\n        if (!_isKnownRoot(_proof.stateRoot())) {\n            revert UnknownStateRoot();\n        }\n\n        // Check the ASP root is the latest\n        if (_proof.ASPRoot() != ENTRYPOINT.latestRoot()) {\n            revert IncorrectASPRoot();\n        }\n        _;\n    }\n\n    /**\n     * @notice Initializes the contract state addresses\n     * @param _entrypoint Address of the Entrypoint that operates this pool\n     * @param _withdrawalVerifier Address of the Groth16 verifier for withdrawal proofs\n     * @param _ragequitVerifier Address of the Groth16 verifier for ragequit proofs\n     * @param _asset Address of the pool asset\n     */\n    constructor(address _entrypoint, address _withdrawalVerifier, address _ragequitVerifier, address _asset)\n        State(_asset, _entrypoint, _withdrawalVerifier, _ragequitVerifier)\n    {}\n\n    /*///////////////////////////////////////////////////////////////\n                             USER METHODS\n    //////////////////////////////////////////////////////////////*/\n\n    /// @inheritdoc IPrivacyPool\n    function deposit(address _depositor, uint256 _value, uint256 _precommitmentHash)\n        external\n        payable\n        onlyEntrypoint\n        returns (uint256 _commitment)\n    {\n        // Check deposits are enabled\n        if (dead) {\n            revert PoolIsDead();\n        }\n\n        if (_value >= type(uint128).max) {\n            revert InvalidDepositValue();\n        }\n\n        // Compute label\n        uint256 _label = uint256(keccak256(abi.encodePacked(SCOPE, ++nonce))) % Constants.SNARK_SCALAR_FIELD;\n        // Store depositor\n        depositors[_label] = _depositor;\n\n        // Compute commitment hash\n        _commitment = PoseidonT4.hash([_value, _label, _precommitmentHash]);\n\n        // Insert commitment in state (revert if already present)\n        _insert(_commitment);\n\n        // Pull funds from caller\n        _pull(msg.sender, _value);\n\n        emit Deposited(_depositor, _commitment, _label, _value, _precommitmentHash);\n    }\n\n    /// @inheritdoc IPrivacyPool\n    function withdraw(Withdrawal memory _withdrawal, ProofLib.WithdrawProof memory _proof)\n        external\n        validWithdrawal(_withdrawal, _proof)\n    {\n        // Verify proof with Groth16 verifier\n        if (!WITHDRAWAL_VERIFIER.verifyProof(_proof.pA, _proof.pB, _proof.pC, _proof.pubSignals)) {\n            revert InvalidProof();\n        }\n\n        // Mark existing commitment nullifier as spent\n        _spend(_proof.existingNullifierHash());\n\n        // Insert new commitment in state\n        _insert(_proof.newCommitmentHash());\n\n        // Transfer out funds to procesooor\n        _push(_withdrawal.processooor, _proof.withdrawnValue());\n\n        emit Withdrawn(\n            _withdrawal.processooor, _proof.withdrawnValue(), _proof.existingNullifierHash(), _proof.newCommitmentHash()\n        );\n    }\n\n    /// @inheritdoc IPrivacyPool\n    function ragequit(ProofLib.RagequitProof memory _proof) external {\n        // Check if caller is original depositor\n        uint256 _label = _proof.label();\n        if (depositors[_label] != msg.sender) {\n            revert OnlyOriginalDepositor();\n        }\n\n        // Verify proof with Groth16 verifier\n        if (!RAGEQUIT_VERIFIER.verifyProof(_proof.pA, _proof.pB, _proof.pC, _proof.pubSignals)) {\n            revert InvalidProof();\n        }\n\n        // Check commitment exists in state\n        if (!_isInState(_proof.commitmentHash())) {\n            revert InvalidCommitment();\n        }\n\n        // Mark existing commitment nullifier as spent\n        _spend(_proof.nullifierHash());\n\n        // Transfer out funds to ragequitter\n        _push(msg.sender, _proof.value());\n\n        emit Ragequit(msg.sender, _proof.commitmentHash(), _proof.label(), _proof.value());\n    }\n\n    /*///////////////////////////////////////////////////////////////\n                             WIND DOWN\n    //////////////////////////////////////////////////////////////*/\n\n    /// @inheritdoc IPrivacyPool\n    function windDown() external onlyEntrypoint {\n        // Check pool is still alive\n        if (dead) {\n            revert PoolIsDead();\n        }\n\n        // Die\n        dead = true;\n\n        emit PoolDied();\n    }\n\n    /*///////////////////////////////////////////////////////////////\n                          ASSET OVERRIDES\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Handle receiving an asset\n     * @dev To be implemented by an asset specific contract\n     * @param _sender The address of the user sending funds\n     * @param _value The amount of asset being received\n     */\n    function _pull(address _sender, uint256 _value) internal virtual;\n\n    /**\n     * @notice Handle sending an asset\n     * @dev To be implemented by an asset specific contract\n     * @param _recipient The address of the user receiving funds\n     * @param _value The amount of asset being sent\n     */\n    function _push(address _recipient, uint256 _value) internal virtual;\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "identical",
+      "coveredLines": 173,
+      "match": {
+        "origin": "own",
+        "collection": "privacy-pools",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "PrivacyPool",
+        "similarity": 1,
+        "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/contracts/PrivacyPool.sol",
+        "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+        "commitTimestamp": "2025-03-14T12:57:01Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/PrivacyPool.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "final commit",
+        "coverage": "Final audited commit; M-02 remains acknowledged.",
+        "majorFindings": 1,
+        "findingIds": ["M-02"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0e65120eb85f428e7f940edffae3714742f7b8cdc4b2e7e3fae6bbaaf71c311a",
+  "name": "IRewardDistributor",
+  "kind": "interface",
+  "lines": 24,
+  "source": "interface IRewardDistributor {\n    /// @notice Emitted when a funder earmarks ASSET for a specific recipient via `subsidizeAddress`.\n    event Subsidized(address indexed funder, address indexed recipient, uint256 amount);\n\n    /// @notice Emitted whenever `claim` or `recoverFrom` debits the distributor.\n    /// @dev `implicitAmountUsed` is the share drawn from the canonical-rollup implicit pool,\n    ///      `earmarkedAmountUsed` is the share drawn from `from`'s earmarked balance, and the two\n    ///      always sum to `amount`. Lets a log-only indexer reconstruct bucket-by-bucket history\n    ///      without polling storage at every block.\n    event Distributed(\n        address indexed from,\n        address indexed to,\n        uint256 amount,\n        uint256 implicitAmountUsed,\n        uint256 earmarkedAmountUsed\n    );\n\n    function claim(address _to, uint256 _amount) external;\n    function recoverFrom(address _from, address _to, uint256 _amount) external;\n    function recoverWrongAsset(address _asset, address _to, uint256 _amount) external;\n    function subsidizeAddress(address _recipient, uint256 _amount) external;\n    function canonicalRollup() external view returns (address);\n    function availableTo(address _recipient) external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 12,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRewardDistributor",
+        "similarity": 0.4,
+        "reportId": "aztecnetwork/cantina-governance-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
+        "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
+        "commitTimestamp": "2025-08-05T12:29:41Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 12,
+        "removed": 0,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 0,
+        "unchanged": 12,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IRewardDistributor {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Emitted when a funder earmarks ASSET for a specific recipient via `subsidizeAddress`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    event Subsidized(address indexed funder, address indexed recipient, uint256 amount);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Emitted whenever `claim` or `recoverFrom` debits the distributor.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @dev `implicitAmountUsed` is the share drawn from the canonical-rollup implicit pool,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    ///      `earmarkedAmountUsed` is the share drawn from `from`'s earmarked balance, and the two",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ///      always sum to `amount`. Lets a log-only indexer reconstruct bucket-by-bucket history",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    ///      without polling storage at every block.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    event Distributed(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        address indexed from,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        address indexed to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        uint256 amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        uint256 implicitAmountUsed,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        uint256 earmarkedAmountUsed",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 18,
+                "text": "    function claim(address _to, uint256 _amount) external;"
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function recoverFrom(address _from, address _to, uint256 _amount) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function recoverWrongAsset(address _asset, address _to, uint256 _amount) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function subsidizeAddress(address _recipient, uint256 _amount) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 22,
+                "text": "    function canonicalRollup() external view returns (address);"
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    function availableTo(address _recipient) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 24, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7f6698f3eeb655a2d8f4463ec159f901776ec30599fabde7e7fa7b6c862a744d",
+  "name": "IVotesPartialDelegation",
+  "kind": "interface",
+  "lines": 55,
+  "source": "interface IVotesPartialDelegation is IERC6372 {\n    /**\n     * @dev The signature used has expired.\n     */\n    error VotesExpiredSignature(uint256 expiry);\n\n    /**\n     * @dev Emitted when an account changes their delegate.\n     */\n    event DelegateChanged(\n        address indexed delegator, PartialDelegation[] oldDelegatees, PartialDelegation[] newDelegatees\n    );\n\n    /**\n     * @dev Emitted when a token transfer or delegate change results in changes to a delegate's number of voting units.\n     */\n    event DelegateVotesChanged(address indexed delegate, uint256 previousVotes, uint256 newVotes);\n\n    /**\n     * @dev Returns the current amount of votes that `account` has.\n     */\n    function getVotes(address account) external view returns (uint256);\n\n    /**\n     * @dev Returns the amount of votes that `account` had at a specific moment in the past. If the `clock()` is\n     * configured to use block numbers, this will return the value at the end of the corresponding block.\n     */\n    function getPastVotes(address account, uint256 timepoint) external view returns (uint256);\n\n    /**\n     * @dev Returns the total supply of votes available at a specific moment in the past. If the `clock()` is\n     * configured to use block numbers, this will return the value at the end of the corresponding block.\n     *\n     * NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.\n     * Votes that have not been delegated are still part of total supply, even though they would not participate in a\n     * vote.\n     */\n    function getPastTotalSupply(uint256 timepoint) external view returns (uint256);\n\n    /**\n     * @dev Returns the delegate that `account` has chosen.\n     * Removed: This function is incompatible with partial delegation, which allows for multiple delegates per account.\n     */\n    //   function delegates(address account) external view returns (address);\n\n    /**\n     * @dev Delegates votes from the sender to `delegatee`.\n     */\n    function delegate(address delegatee) external;\n\n    /**\n     * @dev Delegates votes from signer to `delegatee`.\n     */\n    function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "IVotes",
+        "similarity": 0.737,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/utils/IVotes.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/governance/utils/IVotes.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IVotes {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IVotesPartialDelegation is IERC6372 {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev The signature used has expired."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * @dev Emitted when an account changes their delegate."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    event DelegateChanged(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        address indexed delegator, PartialDelegation[] oldDelegatees, PartialDelegation[] newDelegatees",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 13, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 14, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "     * @dev Emitted when a token transfer or delegate change results in changes to a delegate's number of voting units."
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 8,
+            "newStart": 39,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 37, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 38, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 41,
+                "text": "     * @dev Returns the delegate that `account` has chosen."
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * Removed: This function is incompatible with partial delegation, which allows for multiple delegates per account.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 40, "newLine": 43, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    function delegates(address account) external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    //   function delegates(address account) external view returns (address);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 43, "newLine": 46, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 47,
+                "text": "     * @dev Delegates votes from the sender to `delegatee`."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

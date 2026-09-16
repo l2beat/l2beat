@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "10ec7b2e3548dbf31dfb782b84d39ef7640f08674f1a7887be0d35ed533285dc",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 13,
+  "source": "pub(crate) mod previous_kernel_for_tail_validator;\npub(crate) mod private_call_data_validator;\npub(crate) mod private_kernel_circuit_output_composer;\npub(crate) mod private_kernel_circuit_output_validator;\npub(crate) mod reset_output_composer;\npub(crate) mod reset_output_validator;\npub(crate) mod gas_meter;\npub(crate) mod tail_finalize;\npub(crate) mod tail_output_composer;\npub(crate) mod tail_output_validator;\npub(crate) mod tail_to_public_finalize;\npub(crate) mod tail_to_public_output_composer;\npub(crate) mod tail_to_public_output_validator;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ed395516d71d7ebeb05008edf554b61e005d7f04d4debd351290e3f414faa88c",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 30,
+  "source": "[package]\nname = \"range-celestia\"\nversion = \"0.1.0\"\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\n# general\nrkyv.workspace = true\n\n# kona\nkona-proof.workspace = true\n\n# sp1\nsp1-zkvm.workspace = true\n\n# op-succinct\nop-succinct-celestia-client-utils.workspace = true\nop-succinct-client-utils.workspace = true\nop-succinct-range-utils.workspace = true\n\n# `tracing-subscriber` feature dependencies\ntracing-subscriber = { workspace = true, optional = true }\n\n[features]\nembedded = [\"sp1-zkvm/embedded\"]\ntracing-subscriber = [\"dep:tracing-subscriber\"]",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

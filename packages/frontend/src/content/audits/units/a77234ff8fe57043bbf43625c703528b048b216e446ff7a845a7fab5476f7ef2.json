@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a77234ff8fe57043bbf43625c703528b048b216e446ff7a845a7fab5476f7ef2",
+  "name": "L1ETHGateway",
+  "kind": "contract",
+  "lines": 115,
+  "source": "contract L1ETHGateway is ScrollGatewayBase, IL1ETHGateway {\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1ETHGateway` implementation contract.\n    ///\n    /// @param _counterpart The address of `L2ETHGateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract in L1.\n    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.\n    constructor(address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L1ETHGateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of L2ETHGateway in L2.\n    /// @param _router The address of L1GatewayRouter in L1.\n    /// @param _messenger The address of L1ScrollMessenger in L1.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ETHGateway\n    function depositETH(uint256 _amount, uint256 _gasLimit) external payable override {\n        _deposit(_msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL1ETHGateway\n    function depositETH(address _to, uint256 _amount, uint256 _gasLimit) external payable override {\n        _deposit(_to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL1ETHGateway\n    function depositETHAndCall(address _to, uint256 _amount, bytes calldata _data, uint256 _gasLimit)\n        external\n        payable\n        override\n    {\n        _deposit(_to, _amount, _data, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ETHGateway\n    function finalizeWithdrawETH(address _from, address _to, uint256 _amount, bytes calldata _data)\n        external\n        payable\n        override\n        onlyCallByCounterpart\n        nonReentrant\n    {\n        require(msg.value == _amount, \"msg.value mismatch\");\n\n        // @note can possible trigger reentrant call to messenger,\n        // but it seems not a big problem.\n        // no reentrancy risk (nonReentrant modifier).\n        // slither-disable-next-line arbitrary-send-eth\n        (bool _success,) = _to.call{value: _amount}(\"\");\n        require(_success, \"ETH transfer failed\");\n\n        _doCallback(_to, _data);\n\n        emit FinalizeWithdrawETH(_from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev The internal ETH deposit implementation.\n    /// @param _to The address of recipient's account on L2.\n    /// @param _amount The amount of ETH to be deposited.\n    /// @param _data Optional data to forward to recipient's account.\n    /// @param _gasLimit Gas limit required to complete the deposit on L2.\n    function _deposit(address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        nonReentrant\n    {\n        require(_amount > 0, \"deposit zero eth\");\n\n        // 1. Extract real sender if this call is from L1GatewayRouter.\n        address _from = _msgSender();\n\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n\n        // @note no rate limit here, since ETH is limited in messenger\n\n        // 2. Generate message passed to L1ScrollMessenger.\n        bytes memory _message = abi.encodeCall(IL2ETHGateway.finalizeDepositETH, (_from, _to, _amount, _data));\n\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, _amount, _message, _gasLimit, _from);\n\n        emit DepositETH(_from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 114,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1ETHGateway",
+        "similarity": 0.912,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/L1ETHGateway.sol",
+        "commit": "888c3d26b34f217877628b1208ea3473d9836600",
+        "commitTimestamp": "2024-02-06T03:57:55Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/888c3d26b34f217877628b1208ea3473d9836600/contracts/src/L1/gateways/L1ETHGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of H-01 in pull request #1093: ETH deposits/withdrawals routed through the ETH gateways again instead of bypassing them.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 9,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 8,
+        "unchanged": 114,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1ETHGateway is ScrollGatewayBase, IL1ETHGateway, IMessageDropCallback {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract L1ETHGateway is ScrollGatewayBase, IL1ETHGateway {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Constructor *"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 6,
+            "newStart": 68,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "        // @note can possible trigger reentrant call to messenger,"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "        // but it seems not a big problem."
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        // no reentrancy risk (nonReentrant modifier).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        // slither-disable-next-line arbitrary-send-eth",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 73,
+                "text": "        (bool _success,) = _to.call{value: _amount}(\"\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "        require(_success, \"ETH transfer failed\");"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 76,
+            "oldLines": 22,
+            "newStart": 78,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 78,
+                "text": "        emit FinalizeWithdrawETH(_from, _to, _amount, _data);"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 78, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    /// @inheritdoc IMessageDropCallback",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    function onDropMessage(bytes calldata _message) external payable virtual onlyInDropContext nonReentrant {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        // _message should start with 0x232e8748  =>  finalizeDepositETH(address,address,uint256,bytes)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        require(bytes4(_message[0:4]) == IL2ETHGateway.finalizeDepositETH.selector, \"invalid selector\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        // decode (receiver, amount)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        (address _receiver,, uint256 _amount,) = abi.decode(_message[4:], (address, address, uint256, bytes));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 86, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        require(_amount == msg.value, \"msg.value mismatch\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 88, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        (bool _success,) = _receiver.call{value: _amount}(\"\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        require(_success, \"ETH transfer failed\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 91, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        emit RefundETH(_receiver, _amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 93, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 94, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 95, "newLine": 81, "text": "    /**" },
+              { "type": " ", "oldLine": 96, "newLine": 82, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 83,
+                "text": "     * Internal Functions *"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "70c1feef2613122d8c660989d3a9b1736d17de433adf3f7cde6552f72eeb9d90",
+  "name": "LibTokenOwner",
+  "kind": "library",
+  "lines": 19,
+  "source": "library LibTokenOwner {\n    // keccak256(\"TokenOwner(address addr,address tokenAddr,uint256 chainId)\");\n    bytes32 public constant OWNER_TYPE_HASH = 0x353bdd8d69b9e3185b3972e08b03845c0c14a21a390215302776a7a34b0e8764;\n\n    /**\n     * @dev Returns ownership struct hash.\n     */\n    function hash(TokenOwner memory owner) internal pure returns (bytes32 digest) {\n        // keccak256(abi.encode(OWNER_TYPE_HASH, owner.addr, owner.tokenAddr, owner.chainId))\n        assembly (\"memory-safe\") {\n            let ptr := mload(0x40)\n            mstore(ptr, OWNER_TYPE_HASH)\n            mstore(add(ptr, 0x20), mload(owner)) // owner.addr\n            mstore(add(ptr, 0x40), mload(add(owner, 0x20))) // owner.tokenAddr\n            mstore(add(ptr, 0x60), mload(add(owner, 0x40))) // owner.chainId\n            digest := keccak256(ptr, 0x80)\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

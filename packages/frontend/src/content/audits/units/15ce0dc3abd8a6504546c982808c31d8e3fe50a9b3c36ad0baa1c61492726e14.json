@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "15ce0dc3abd8a6504546c982808c31d8e3fe50a9b3c36ad0baa1c61492726e14",
+  "name": "consecutive_rollups_tests.nr",
+  "kind": "program",
+  "lines": 61,
+  "source": "use super::TestBuilder;\n\n// Note: We only test a few cases here to ensure the code path is triggered. More comprehensive tests for merging and\n// validating consecutive tx rollups can be found in `tx_merge/tests/consecutive_tx_rollups_tests.nr`.\n\nglobal IS_FIRST_BLOCK_ROOT: bool = true;\n// Only the block root that has 2 rollups will need to validate that the rollups are consecutive.\nglobal HAS_SINGLE_TX: bool = false;\n\n#[test]\nfn propagate_right_out_hash_when_left_is_zero() {\n    let mut builder = TestBuilder::default(IS_FIRST_BLOCK_ROOT, HAS_SINGLE_TX);\n\n    builder.left_rollup.out_hash = 0;\n    builder.right_rollup.out_hash = 123;\n\n    let pi = builder.execute();\n    builder.assert_expected_public_inputs(pi);\n\n    assert_eq(pi.out_hash, 123);\n}\n\n#[test(should_fail_with = \"Mismatched constants in tx rollups\")]\nfn first_mismatch_block_number() {\n    let mut builder = TestBuilder::default(IS_FIRST_BLOCK_ROOT, HAS_SINGLE_TX);\n\n    // Tweak the block number of the left rollup.\n    builder.left_rollup.constants.global_variables.block_number += 1;\n\n    builder.execute_and_fail();\n}\n\n#[test(should_fail_with = \"Mismatched note hash tree snapshots: expected right.start to match left.end\")]\nfn first_non_consecutive_note_hash_next_available_index() {\n    let mut builder = TestBuilder::default(IS_FIRST_BLOCK_ROOT, HAS_SINGLE_TX);\n\n    // Tweak the next_available_leaf_index in the note hash tree snapshot of the right rollup.\n    builder.right_rollup.start_tree_snapshots.note_hash_tree.next_available_leaf_index += 1;\n\n    builder.execute_and_fail();\n}\n\n#[test(should_fail_with = \"Mismatched constants in tx rollups\")]\nfn non_first_mismatch_block_number() {\n    let mut builder = TestBuilder::default(!IS_FIRST_BLOCK_ROOT, HAS_SINGLE_TX);\n\n    // Tweak the block number of the left rollup.\n    builder.left_rollup.constants.global_variables.block_number += 1;\n\n    builder.execute_and_fail();\n}\n\n#[test(should_fail_with = \"Mismatched note hash tree snapshots: expected right.start to match left.end\")]\nfn non_first_non_consecutive_note_hash_next_available_index() {\n    let mut builder = TestBuilder::default(!IS_FIRST_BLOCK_ROOT, HAS_SINGLE_TX);\n\n    // Tweak the next_available_leaf_index in the note hash tree snapshot of the right rollup.\n    builder.right_rollup.start_tree_snapshots.note_hash_tree.next_available_leaf_index += 1;\n\n    builder.execute_and_fail();\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

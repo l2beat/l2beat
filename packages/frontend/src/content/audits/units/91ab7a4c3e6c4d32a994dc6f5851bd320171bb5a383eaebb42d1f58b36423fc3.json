@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "91ab7a4c3e6c4d32a994dc6f5851bd320171bb5a383eaebb42d1f58b36423fc3",
+  "name": "IL1ETHGateway",
+  "kind": "interface",
+  "lines": 59,
+  "source": "interface IL1ETHGateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when ETH is withdrawn from L2 to L1 and transfer to recipient.\n    /// @param from The address of sender in L2.\n    /// @param to The address of recipient in L1.\n    /// @param amount The amount of ETH withdrawn from L2 to L1.\n    /// @param data The optional calldata passed to recipient in L1.\n    event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes data);\n\n    /// @notice Emitted when someone deposit ETH from L1 to L2.\n    /// @param from The address of sender in L1.\n    /// @param to The address of recipient in L2.\n    /// @param amount The amount of ETH will be deposited from L1 to L2.\n    /// @param data The optional calldata passed to recipient in L2.\n    event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data);\n\n    /// @notice Emitted when some ETH is refunded.\n    /// @param recipient The address of receiver in L1.\n    /// @param amount The amount of ETH refunded to receiver.\n    event RefundETH(address indexed recipient, uint256 amount);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Deposit ETH to caller's account in L2.\n    /// @param amount The amount of ETH to be deposited.\n    /// @param gasLimit Gas limit required to complete the deposit on L2.\n    function depositETH(uint256 amount, uint256 gasLimit) external payable;\n\n    /// @notice Deposit ETH to some recipient's account in L2.\n    /// @param to The address of recipient's account on L2.\n    /// @param amount The amount of ETH to be deposited.\n    /// @param gasLimit Gas limit required to complete the deposit on L2.\n    function depositETH(address to, uint256 amount, uint256 gasLimit) external payable;\n\n    /// @notice Deposit ETH to some recipient's account in L2 and call the target contract.\n    /// @param to The address of recipient's account on L2.\n    /// @param amount The amount of ETH to be deposited.\n    /// @param data Optional data to forward to recipient's account.\n    /// @param gasLimit Gas limit required to complete the deposit on L2.\n    function depositETHAndCall(address to, uint256 amount, bytes calldata data, uint256 gasLimit) external payable;\n\n    /// @notice Complete ETH withdraw from L2 to L1 and send fund to recipient's account in L1.\n    /// @dev This function should only be called by L1ScrollMessenger.\n    ///      This function should also only be called by L1ETHGateway in L2.\n    /// @param from The address of account who withdraw ETH in L2.\n    /// @param to The address of recipient in L1 to receive ETH.\n    /// @param amount The amount of ETH to withdraw.\n    /// @param data Optional data to forward to recipient's account.\n    function finalizeWithdrawETH(address from, address to, uint256 amount, bytes calldata data) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 58,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IL1ETHGateway",
+        "similarity": 0.941,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/IL1ETHGateway.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L1/gateways/IL1ETHGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 58,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 6,
+            "newStart": 19,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    /// @param data The optional calldata passed to recipient in L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data);"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @notice Emitted when some ETH is refunded.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param recipient The address of receiver in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @param amount The amount of ETH refunded to receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    event RefundETH(address indexed recipient, uint256 amount);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 26, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 22, "newLine": 27, "text": "    /**" },
+              { "type": " ", "oldLine": 23, "newLine": 28, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "     * Public Mutating Functions *"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

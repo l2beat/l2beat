@@ -465,6 +465,466 @@
         ]
       },
       "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 234,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "types.rs",
+        "similarity": 0.934,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/types.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/types.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 21,
+        "removed": 4,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 1,
+        "unchanged": 234,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 44,
+            "oldLines": 18,
+            "newStart": 44,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    /// Hash the key into a digest of BabyBear elements."
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "    fn hash_babybear(&self) -> [BabyBear; DIGEST_SIZE];"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// Hash the key into a digest of  u32 elements.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// Hash the key into a digest of u32 elements.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "    fn hash_u32(&self) -> [u32; DIGEST_SIZE];"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "" },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /// Hash the key into a Bn254Fr element.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 51,
+                "text": "    fn hash_bn254(&self) -> Bn254Fr {"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 52,
+                "text": "        babybears_to_bn254(&self.hash_babybear())"
+              },
+              { "type": " ", "oldLine": 52, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 53, "newLine": 54, "text": "" },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// Hash the key into a 32 byte hex string, prefixed with \"0x\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// This is ideal for generating a vkey hash for onchain verification.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 58,
+                "text": "    fn bytes32(&self) -> String {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 59,
+                "text": "        let vkey_digest_bn254 = self.hash_bn254();"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 60,
+                "text": "        format!(\"0x{:0>64}\", vkey_digest_bn254.as_canonical_biguint().to_str_radix(16))"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 61, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 62, "text": "" },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// Hash the key into a 32 byte array.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// This has the same value as `bytes32`, but as a raw byte array.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    fn bytes32_raw(&self) -> [u8; 32] {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        let vkey_digest_bn254 = self.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        let vkey_bytes = vkey_digest_bn254.as_canonical_biguint().to_bytes_be();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        let mut result = [0u8; 32];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        result[1..].copy_from_slice(&vkey_bytes);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        result",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 72, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 73, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 74,
+                "text": "    /// Hash the key into a digest of bytes elements."
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 75,
+                "text": "    fn hash_bytes(&self) -> [u8; DIGEST_SIZE * 4] {"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 76,
+                "text": "        words_to_bytes_be(&self.hash_u32())"
+              }
+            ]
+          },
+          {
+            "oldStart": 78,
+            "oldLines": 18,
+            "newStart": 93,
+            "newLines": 28,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 93,
+                "text": "    <SC::Pcs as Pcs<SC::Challenge, SC::Challenger>>::Commitment: AsRef<[BabyBear; DIGEST_SIZE]>,"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 94, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 95,
+                "text": "    fn hash_babybear(&self) -> [BabyBear; DIGEST_SIZE] {"
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        let prep_domains = self.chip_information.iter().map(|(_, domain, _)| domain);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        let num_inputs = DIGEST_SIZE + 1 + (4 * prep_domains.len());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        let mut num_inputs = DIGEST_SIZE + 1 + 14 + (7 * self.chip_information.len());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        for (name, _, _) in self.chip_information.iter() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            num_inputs += name.len();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 100,
+                "text": "        let mut inputs = Vec::with_capacity(num_inputs);"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 101,
+                "text": "        inputs.extend(self.commit.as_ref());"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 102,
+                "text": "        inputs.push(self.pc_start);"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        for domain in prep_domains {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        inputs.extend(self.initial_global_cumulative_sum.0.x.0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        inputs.extend(self.initial_global_cumulative_sum.0.y.0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        for (name, domain, dimension) in self.chip_information.iter() {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 106,
+                "text": "            inputs.push(BabyBear::from_canonical_usize(domain.log_n));"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 107,
+                "text": "            let size = 1 << domain.log_n;"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 108,
+                "text": "            inputs.push(BabyBear::from_canonical_usize(size));"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 109,
+                "text": "            let g = BabyBear::two_adic_generator(domain.log_n);"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 110,
+                "text": "            inputs.push(domain.shift);"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 111,
+                "text": "            inputs.push(g);"
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "            inputs.push(BabyBear::from_canonical_usize(dimension.width));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            inputs.push(BabyBear::from_canonical_usize(dimension.height));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            inputs.push(BabyBear::from_canonical_usize(name.len()));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            for byte in name.as_bytes() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "                inputs.push(BabyBear::from_canonical_u8(*byte));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 118,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 119, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 120,
+                "text": "        poseidon2_hash(inputs)"
+              }
+            ]
+          },
+          {
+            "oldStart": 184,
+            "oldLines": 13,
+            "newStart": 209,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 184, "newLine": 209, "text": "    }" },
+              { "type": " ", "oldLine": 185, "newLine": 210, "text": "}" },
+              { "type": " ", "oldLine": 186, "newLine": 211, "text": "" },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "/// The mode of the prover.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 213,
+                "text": "#[derive(Debug, Default, Clone, ValueEnum, PartialEq, Eq)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 214,
+                "text": "pub enum ProverMode {"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 215,
+                "text": "    #[default]"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 216,
+                "text": "    Cpu,"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 217,
+                "text": "    Cuda,"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 218,
+                "text": "    Network,"
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    #[value(skip)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 219,
+                "text": "    Mock,"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 220, "text": "}" },
+              { "type": " ", "oldLine": 196, "newLine": 221, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

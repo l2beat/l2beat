@@ -2221,6 +2221,2222 @@
         ]
       },
       "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 322,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "shapes.rs",
+        "similarity": 0.711,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/shapes.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/shapes.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 166,
+        "removed": 34,
+        "ignoredAdded": 33,
+        "ignoredRemoved": 5,
+        "unchanged": 322,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 27,
+            "newStart": 8,
+            "newLines": 32,
+            "lines": [
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "};" },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use eyre::Result;"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "use thiserror::Error;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 12, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 11,
+                "text": "use p3_baby_bear::BabyBear;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 12,
+                "text": "use p3_field::AbstractField;"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 13,
+                "text": "use serde::{Deserialize, Serialize};"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "use sp1_core_machine::riscv::CoreShapeConfig;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "use sp1_core_machine::shape::CoreShapeConfig;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "use sp1_recursion_circuit::machine::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    SP1CompressWithVKeyWitnessValues, SP1CompressWithVkeyShape, SP1DeferredShape,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    SP1DeferredWitnessValues, SP1RecursionShape, SP1RecursionWitnessValues,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    SP1CompressWithVKeyWitnessValues, SP1DeferredWitnessValues, SP1RecursionWitnessValues,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "};" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "use sp1_recursion_core::{shape::RecursionShapeConfig, RecursionProgram};",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "use sp1_stark::{MachineProver, ProofShape, DIGEST_SIZE};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "use sp1_recursion_core::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    shape::{RecursionShape, RecursionShapeConfig},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    RecursionProgram,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 21, "text": "};", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "use sp1_stark::{shape::OrderedShape, MachineProver, DIGEST_SIZE};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "use thiserror::Error;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 24, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "use crate::{components::SP1ProverComponents, CompressAir, HashableKey, SP1Prover};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "pub use sp1_recursion_circuit::machine::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    SP1CompressWithVkeyShape, SP1DeferredShape, SP1RecursionShape,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 27, "text": "};", "ignored": false },
+              { "type": " ", "oldLine": 25, "newLine": 28, "text": "" },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "use crate::{components::SP1ProverComponents, CompressAir, HashableKey, SP1Prover, ShrinkAir};",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 31,
+                "text": "#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 32,
+                "text": "pub enum SP1ProofShape {"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    Recursion(ProofShape),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    Compress(Vec<ProofShape>),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    Deferred(ProofShape),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    Shrink(ProofShape),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    Recursion(OrderedShape),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    Compress(Vec<OrderedShape>),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    Deferred(OrderedShape),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    Shrink(OrderedShape),",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 37, "text": "}" },
+              { "type": " ", "oldLine": 33, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 39,
+                "text": "#[derive(Debug, Clone, Hash)]"
+              }
+            ]
+          },
+          {
+            "oldStart": 55,
+            "oldLines": 22,
+            "newStart": 60,
+            "newLines": 104,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 60,
+                "text": "    Bincode(#[from] bincode::Error),"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 61, "text": "}" },
+              { "type": " ", "oldLine": 57, "newLine": 62, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "pub fn build_vk_map<C: SP1ProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "pub fn check_shapes<C: SP1ProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 64,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    no_precompiles: bool,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    num_compiler_workers: usize,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    prover: &mut SP1Prover<C>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    let (shape_tx, shape_rx) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        std::sync::mpsc::sync_channel::<SP1CompressProgramShape>(num_compiler_workers);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    let (panic_tx, panic_rx) = std::sync::mpsc::channel();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    let core_shape_config = prover.core_shape_config.as_ref().expect(\"core shape config not found\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    let recursion_shape_config =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        prover.compress_shape_config.as_ref().expect(\"recursion shape config not found\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 75, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    let shape_rx = Mutex::new(shape_rx);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 77, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    let all_maximal_shapes = SP1ProofShape::generate_maximal_shapes(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        core_shape_config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        recursion_shape_config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        reduce_batch_size,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        no_precompiles,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 83, "text": "    )", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    .collect::<BTreeSet<SP1ProofShape>>();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    let num_shapes = all_maximal_shapes.len();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    tracing::debug!(\"number of shapes: {}\", num_shapes);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 87, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    // The Merkle tree height.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    let height = num_shapes.next_power_of_two().ilog2() as usize;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 90, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    // Empty the join program map so that we recompute the join program.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    prover.join_programs_map.clear();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 93, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    let compress_ok = std::thread::scope(|s| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        // Initialize compiler workers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        for _ in 0..num_compiler_workers {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "            let shape_rx = &shape_rx;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            let prover = &prover;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            let panic_tx = panic_tx.clone();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            s.spawn(move || {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "                while let Ok(shape) = shape_rx.lock().unwrap().recv() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "                    tracing::debug!(\"shape is {:?}\", shape);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "                    let program = catch_unwind(AssertUnwindSafe(|| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "                        // Try to build the recursion program from the given shape.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "                        prover.program_from_shape(shape.clone(), None)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "                    }));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "                    match program {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "                        Ok(_) => {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "                        Err(e) => {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "                            tracing::warn!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "                                \"Program generation failed for shape {:?}, with error: {:?}\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "                                shape,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "                                e",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "                            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                            panic_tx.send(true).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "                        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 121, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        // Generate shapes and send them to the compiler workers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        all_maximal_shapes.into_iter().for_each(|program_shape| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            shape_tx",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "                .send(SP1CompressProgramShape::from_proof_shape(program_shape, height))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "                .unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        });",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 128, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        drop(shape_tx);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "        drop(panic_tx);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 131, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        // If the panic receiver has no panics, then the shape is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        panic_rx.iter().next().is_none()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "    });",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 135, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "    compress_ok",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 137, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 138, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "pub fn build_vk_map<C: SP1ProverComponents + 'static>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    reduce_batch_size: usize,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 141,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 142,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 143,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 144,
+                "text": "    indices: Option<Vec<usize>>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 145,
+                "text": ") -> (BTreeSet<[BabyBear; DIGEST_SIZE]>, Vec<usize>, usize) {"
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "    // Setup the prover.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 147,
+                "text": "    let mut prover = SP1Prover::<C>::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 148,
+                "text": "    prover.vk_verification = !dummy;"
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "    if !dummy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "        prover.join_programs_map.clear();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "    let prover = Arc::new(prover);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 153, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "    // Get the shape configs.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 155,
+                "text": "    let core_shape_config = prover.core_shape_config.as_ref().expect(\"core shape config not found\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 156,
+                "text": "    let recursion_shape_config ="
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        prover.recursion_shape_config.as_ref().expect(\"recursion shape config not found\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "        prover.compress_shape_config.as_ref().expect(\"recursion shape config not found\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 158, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    tracing::info!(\"building compress vk map\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 159,
+                "text": "    let (vk_set, panic_indices, height) = if dummy {"
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "        tracing::warn!(\"Making a dummy vk map\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "        tracing::warn!(\"building a dummy vk map\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 161,
+                "text": "        let dummy_set = SP1ProofShape::dummy_vk_map("
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 162,
+                "text": "            core_shape_config,"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 163,
+                "text": "            recursion_shape_config,"
+              }
+            ]
+          },
+          {
+            "oldStart": 81,
+            "oldLines": 21,
+            "newStart": 168,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 168,
+                "text": "        let height = dummy_set.len().next_power_of_two().ilog2() as usize;"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 169,
+                "text": "        (dummy_set, vec![], height)"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 170,
+                "text": "    } else {"
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "        tracing::debug!(\"building vk map\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 172, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        // Setup the channels.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 174,
+                "text": "        let (vk_tx, vk_rx) = std::sync::mpsc::channel();"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 175,
+                "text": "        let (shape_tx, shape_rx) ="
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 176,
+                "text": "            std::sync::mpsc::sync_channel::<(usize, SP1CompressProgramShape)>(num_compiler_workers);"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 177,
+                "text": "        let (program_tx, program_rx) = std::sync::mpsc::sync_channel(num_setup_workers);"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 178,
+                "text": "        let (panic_tx, panic_rx) = std::sync::mpsc::channel();"
+              },
+              { "type": " ", "oldLine": 89, "newLine": 179, "text": "" },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        // Setup the mutexes.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 181,
+                "text": "        let shape_rx = Mutex::new(shape_rx);"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 182,
+                "text": "        let program_rx = Mutex::new(program_rx);"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 183, "text": "" },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        // Generate all the possible shape inputs we encounter in recursion. This may span lift,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        // join, deferred, shrink, etc.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 186,
+                "text": "        let indices_set = indices.map(|indices| indices.into_iter().collect::<HashSet<_>>());"
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        let all_shapes =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "        let mut all_shapes = BTreeSet::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "        let start = std::time::Instant::now();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "        for shape in",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 190,
+                "text": "            SP1ProofShape::generate(core_shape_config, recursion_shape_config, reduce_batch_size)"
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "                .collect::<BTreeSet<_>>();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "            all_shapes.insert(shape);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 194, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 195,
+                "text": "        let num_shapes = all_shapes.len();"
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        tracing::info!(\"number of shapes: {}\", num_shapes);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "        tracing::debug!(\"number of shapes: {} in {:?}\", num_shapes, start.elapsed());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 99, "newLine": 197, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 198,
+                "text": "        let height = num_shapes.next_power_of_two().ilog2() as usize;"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 199,
+                "text": "        let chunk_size = indices_set.as_ref().map(|indices| indices.len()).unwrap_or(num_shapes);"
+              }
+            ]
+          },
+          {
+            "oldStart": 105,
+            "oldLines": 16,
+            "newStart": 203,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 203,
+                "text": "            for _ in 0..num_compiler_workers {"
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 204,
+                "text": "                let program_tx = program_tx.clone();"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 205,
+                "text": "                let shape_rx = &shape_rx;"
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "                let prover = &prover;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "                let prover = prover.clone();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 207,
+                "text": "                let panic_tx = panic_tx.clone();"
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 208,
+                "text": "                s.spawn(move || {"
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 209,
+                "text": "                    while let Ok((i, shape)) = shape_rx.lock().unwrap().recv() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "                        println!(\"shape {} is {:?}\", i, shape);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "                        let program = catch_unwind(AssertUnwindSafe(|| {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "                            prover.program_from_shape(shape.clone())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "                        }));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "                        eprintln!(\"shape: {:?}\", shape);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 211,
+                "text": "                        let is_shrink = matches!(shape, SP1CompressProgramShape::Shrink(_));"
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "                        match program {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "                        let prover = prover.clone();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "                        let shape_clone = shape.clone();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "                        // Spawn on another thread to handle panics.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "                        let program_thread = std::thread::spawn(move || {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "                            prover.program_from_shape(shape_clone, None)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "                        });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "                        match program_thread.join() {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 219,
+                "text": "                            Ok(program) => program_tx.send((i, program, is_shrink)).unwrap(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 220,
+                "text": "                            Err(e) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 221,
+                "text": "                                tracing::warn!("
+              }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 20,
+            "newStart": 236,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 236,
+                "text": "                let vk_tx = vk_tx.clone();"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 237,
+                "text": "                let program_rx = &program_rx;"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 238,
+                "text": "                let prover = &prover;"
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "                let panic_tx = panic_tx.clone();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 240,
+                "text": "                s.spawn(move || {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 241,
+                "text": "                    let mut done = 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 242,
+                "text": "                    while let Ok((i, program, is_shrink)) = program_rx.lock().unwrap().recv() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "                        let vk = tracing::debug_span!(\"setup for program {}\", i).in_scope(|| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "                        let prover = prover.clone();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "                        let vk_thread = std::thread::spawn(move || {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 245,
+                "text": "                            if is_shrink {"
+              },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 246,
+                "text": "                                prover.shrink_prover.setup(&program).1"
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 247,
+                "text": "                            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 248,
+                "text": "                                prover.compress_prover.setup(&program).1"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 249,
+                "text": "                            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 250,
+                "text": "                        });"
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "                        let vk = tracing::debug_span!(\"setup for program {}\", i)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "                            .in_scope(|| vk_thread.join());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 253,
+                "text": "                        done += 1;"
+              },
+              { "type": " ", "oldLine": 149, "newLine": 254, "text": "" },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "                        if let Err(e) = vk {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "                            tracing::error!(\"failed to setup program {}: {:?}\", i, e);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "                            panic_tx.send(i).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "                            continue;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "                        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "                        let vk = vk.unwrap();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 261, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 262,
+                "text": "                        let vk_digest = vk.hash_babybear();"
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "                        tracing::info!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "                        tracing::debug!(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 264,
+                "text": "                            \"program {} = {:?}, {}% done\","
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 265,
+                "text": "                            i,"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 266,
+                "text": "                            vk_digest,"
+              }
+            ]
+          },
+          {
+            "oldStart": 160,
+            "oldLines": 10,
+            "newStart": 272,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 272,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 161, "newLine": 273, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 274,
+                "text": "            // Generate shapes and send them to the compiler workers."
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "            all_shapes",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "            let subset_shapes = all_shapes",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 276,
+                "text": "                .into_iter()"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 277,
+                "text": "                .enumerate()"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 278,
+                "text": "                .filter(|(i, _)| indices_set.as_ref().map(|set| set.contains(i)).unwrap_or(true))"
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "                .collect::<Vec<_>>();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 280, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "            subset_shapes",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "                .clone()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "                .into_iter()",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 284,
+                "text": "                .map(|(i, shape)| (i, SP1CompressProgramShape::from_proof_shape(shape, height)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 285,
+                "text": "                .for_each(|(i, program_shape)| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 286,
+                "text": "                    shape_tx.send((i, program_shape)).unwrap();"
+              }
+            ]
+          },
+          {
+            "oldStart": 177,
+            "oldLines": 15,
+            "newStart": 294,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 294,
+                "text": "            let vk_set = vk_rx.iter().collect::<BTreeSet<_>>();"
+              },
+              { "type": " ", "oldLine": 178, "newLine": 295, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 296,
+                "text": "            let panic_indices = panic_rx.iter().collect::<Vec<_>>();"
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "            for (i, shape) in subset_shapes {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "                if panic_indices.contains(&i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "                    tracing::debug!(\"panic shape {}: {:?}\", i, shape);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 180, "newLine": 302, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 303,
+                "text": "            (vk_set, panic_indices, height)"
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 304,
+                "text": "        })"
+              },
+              { "type": " ", "oldLine": 183, "newLine": 305, "text": "    };" },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "    tracing::info!(\"compress vks generated, number of keys: {}\", vk_set.len());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "    tracing::debug!(\"compress vks generated, number of keys: {}\", vk_set.len());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 307,
+                "text": "    (vk_set, panic_indices, height)"
+              },
+              { "type": " ", "oldLine": 186, "newLine": 308, "text": "}" },
+              { "type": " ", "oldLine": 187, "newLine": 309, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "pub fn build_vk_map_to_file<C: SP1ProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "pub fn build_vk_map_to_file<C: SP1ProverComponents + 'static>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 311,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 312,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 313,
+                "text": "    dummy: bool,"
+              }
+            ]
+          },
+          {
+            "oldStart": 194,
+            "oldLines": 10,
+            "newStart": 316,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 316,
+                "text": "    range_start: Option<usize>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 317,
+                "text": "    range_end: Option<usize>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 318,
+                "text": ") -> Result<(), VkBuildError> {"
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "    // Create the build directory if it doesn't exist.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 320,
+                "text": "    std::fs::create_dir_all(&build_dir)?;"
+              },
+              { "type": " ", "oldLine": 198, "newLine": 321, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "    tracing::info!(\"Building vk set\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 200, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "    // Build the vk map.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 323,
+                "text": "    let (vk_set, _, _) = build_vk_map::<C>("
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 324,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 325,
+                "text": "        dummy,"
+              }
+            ]
+          },
+          {
+            "oldStart": 206,
+            "oldLines": 14,
+            "newStart": 328,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 328,
+                "text": "        range_start.and_then(|start| range_end.map(|end| (start..end).collect())),"
+              },
+              { "type": " ", "oldLine": 207, "newLine": 329, "text": "    );" },
+              { "type": " ", "oldLine": 208, "newLine": 330, "text": "" },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "    // Serialize the vk into an ordering.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 332,
+                "text": "    let vk_map = vk_set.into_iter().enumerate().map(|(i, vk)| (vk, i)).collect::<BTreeMap<_, _>>();"
+              },
+              { "type": " ", "oldLine": 210, "newLine": 333, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "    tracing::info!(\"Save the vk set to file\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "    // Create the file to store the vk map.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 335,
+                "text": "    let mut file = if dummy {"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 336,
+                "text": "        File::create(build_dir.join(\"dummy_vk_map.bin\"))?"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 337,
+                "text": "    } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 338,
+                "text": "        File::create(build_dir.join(\"vk_map.bin\"))?"
+              },
+              { "type": " ", "oldLine": 216, "newLine": 339, "text": "    };" },
+              { "type": "+", "newLine": 340, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 341,
+                "text": "    Ok(bincode::serialize_into(&mut file, &vk_map)?)"
+              },
+              { "type": " ", "oldLine": 218, "newLine": 342, "text": "}" },
+              { "type": " ", "oldLine": 219, "newLine": 343, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 224,
+            "oldLines": 7,
+            "newStart": 348,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 348,
+                "text": "        reduce_batch_size: usize,"
+              },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 349,
+                "text": "    ) -> impl Iterator<Item = Self> + 'a {"
+              },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 350,
+                "text": "        core_shape_config"
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "            .generate_all_allowed_shapes()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "            .all_shapes()",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 352,
+                "text": "            .map(Self::Recursion)"
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 353,
+                "text": "            .chain((1..=reduce_batch_size).flat_map(|batch_size| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 354,
+                "text": "                recursion_shape_config.get_all_shape_combinations(batch_size).map(Self::Compress)"
+              }
+            ]
+          },
+          {
+            "oldStart": 244,
+            "oldLines": 12,
+            "newStart": 368,
+            "newLines": 42,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 368,
+                "text": "    pub fn generate_compress_shapes("
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 369,
+                "text": "        recursion_shape_config: &'_ RecursionShapeConfig<BabyBear, CompressAir<BabyBear>>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 370,
+                "text": "        reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "    ) -> impl Iterator<Item = Self> + '_ {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "        (1..=reduce_batch_size).flat_map(|batch_size| {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "            recursion_shape_config.get_all_shape_combinations(batch_size).map(Self::Compress)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "        })",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "    ) -> impl Iterator<Item = Vec<OrderedShape>> + '_ {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "        recursion_shape_config.get_all_shape_combinations(reduce_batch_size)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 251, "newLine": 373, "text": "    }" },
+              { "type": " ", "oldLine": 252, "newLine": 374, "text": "" },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "    pub fn generate_maximal_shapes<'a>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "        core_shape_config: &'a CoreShapeConfig<BabyBear>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "        recursion_shape_config: &'a RecursionShapeConfig<BabyBear, CompressAir<BabyBear>>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "        reduce_batch_size: usize,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "        no_precompiles: bool,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 380,
+                "text": "    ) -> impl Iterator<Item = Self> + 'a {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "        let core_shape_iter = if no_precompiles {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 382,
+                "text": "            core_shape_config.maximal_core_shapes(21).into_iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 383,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 384,
+                "text": "            core_shape_config.maximal_core_plus_precompile_shapes(21).into_iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 385,
+                "text": "        };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 386,
+                "text": "        core_shape_iter",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "            .map(|core_shape| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 388,
+                "text": "                Self::Recursion(OrderedShape {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 389,
+                "text": "                    inner: core_shape.into_iter().map(|(k, v)| (k.to_string(), v)).collect(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 390,
+                "text": "                })",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 391,
+                "text": "            })",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 392,
+                "text": "            .chain((1..=reduce_batch_size).flat_map(|batch_size| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 393,
+                "text": "                recursion_shape_config.get_all_shape_combinations(batch_size).map(Self::Compress)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 394,
+                "text": "            }))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 395,
+                "text": "            .chain(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 396,
+                "text": "                recursion_shape_config",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 397,
+                "text": "                    .get_all_shape_combinations(1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 398,
+                "text": "                    .map(|mut x| Self::Deferred(x.pop().unwrap())),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 399,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 400,
+                "text": "            .chain(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 401,
+                "text": "                recursion_shape_config",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 402,
+                "text": "                    .get_all_shape_combinations(1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 403,
+                "text": "                    .map(|mut x| Self::Shrink(x.pop().unwrap())),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 404,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 405,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 406, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 407,
+                "text": "    pub fn dummy_vk_map<'a>("
+              },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 408,
+                "text": "        core_shape_config: &'a CoreShapeConfig<BabyBear>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 409,
+                "text": "        recursion_shape_config: &'a RecursionShapeConfig<BabyBear, CompressAir<BabyBear>>,"
+              }
+            ]
+          },
+          {
+            "oldStart": 285,
+            "oldLines": 6,
+            "newStart": 439,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 439,
+                "text": "    pub fn program_from_shape("
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 440,
+                "text": "        &self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 441,
+                "text": "        shape: SP1CompressProgramShape,"
+              },
+              {
+                "type": "+",
+                "newLine": 442,
+                "text": "        shrink_shape: Option<RecursionShape>,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 443,
+                "text": "    ) -> Arc<RecursionProgram<BabyBear>> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 444,
+                "text": "        match shape {"
+              },
+              {
+                "type": " ",
+                "oldLine": 290,
+                "newLine": 445,
+                "text": "            SP1CompressProgramShape::Recursion(shape) => {"
+              }
+            ]
+          },
+          {
+            "oldStart": 303,
+            "oldLines": 7,
+            "newStart": 458,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 458,
+                "text": "            SP1CompressProgramShape::Shrink(shape) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 459,
+                "text": "                let input ="
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 460,
+                "text": "                    SP1CompressWithVKeyWitnessValues::dummy(self.compress_prover.machine(), &shape);"
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "                self.shrink_program(&input)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 461,
+                "text": "                self.shrink_program(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 462,
+                "text": "                    shrink_shape.unwrap_or_else(ShrinkAir::<BabyBear>::shrink_shape),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 463,
+                "text": "                    &input,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 464,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 307,
+                "newLine": 465,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 308,
+                "newLine": 466,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 309, "newLine": 467, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 311,
+            "oldLines": 6,
+            "newStart": 469,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 311, "newLine": 469, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 312,
+                "newLine": 470,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 313,
+                "newLine": 471,
+                "text": "mod tests {"
+              },
+              {
+                "type": "+",
+                "newLine": 472,
+                "text": "    #![allow(clippy::print_stdout)]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 473, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 314,
+                "newLine": 474,
+                "text": "    use super::*;"
+              },
+              { "type": " ", "oldLine": 315, "newLine": 475, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 316,
+                "newLine": 476,
+                "text": "    #[test]"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

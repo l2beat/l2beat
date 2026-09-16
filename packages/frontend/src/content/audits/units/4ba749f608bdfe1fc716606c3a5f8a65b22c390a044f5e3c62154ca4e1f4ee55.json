@@ -1,0 +1,2513 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4ba749f608bdfe1fc716606c3a5f8a65b22c390a044f5e3c62154ca4e1f4ee55",
+  "name": "SafeTransferLib",
+  "kind": "library",
+  "lines": 354,
+  "source": "library SafeTransferLib {\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                       CUSTOM ERRORS                        */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev The ETH transfer has failed.\n    error ETHTransferFailed();\n\n    /// @dev The ERC20 `transferFrom` has failed.\n    error TransferFromFailed();\n\n    /// @dev The ERC20 `transfer` has failed.\n    error TransferFailed();\n\n    /// @dev The ERC20 `approve` has failed.\n    error ApproveFailed();\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                         CONSTANTS                          */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev Suggested gas stipend for contract receiving ETH that disallows any storage writes.\n    uint256 internal constant GAS_STIPEND_NO_STORAGE_WRITES = 2300;\n\n    /// @dev Suggested gas stipend for contract receiving ETH to perform a few\n    /// storage reads and writes, but low enough to prevent griefing.\n    uint256 internal constant GAS_STIPEND_NO_GRIEF = 100000;\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                       ETH OPERATIONS                       */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    // If the ETH transfer MUST succeed with a reasonable gas budget, use the force variants.\n    //\n    // The regular variants:\n    // - Forwards all remaining gas to the target.\n    // - Reverts if the target reverts.\n    // - Reverts if the current contract has insufficient balance.\n    //\n    // The force variants:\n    // - Forwards with an optional gas stipend\n    //   (defaults to `GAS_STIPEND_NO_GRIEF`, which is sufficient for most cases).\n    // - If the target reverts, or if the gas stipend is exhausted,\n    //   creates a temporary contract to force send the ETH via `SELFDESTRUCT`.\n    //   Future compatible with `SENDALL`: https://eips.ethereum.org/EIPS/eip-4758.\n    // - Reverts if the current contract has insufficient balance.\n    //\n    // The try variants:\n    // - Forwards with a mandatory gas stipend.\n    // - Instead of reverting, returns whether the transfer succeeded.\n\n    /// @dev Sends `amount` (in wei) ETH to `to`.\n    function safeTransferETH(address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            if iszero(call(gas(), to, amount, codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n        }\n    }\n\n    /// @dev Sends all the ETH in the current contract to `to`.\n    function safeTransferAllETH(address to) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Transfer all the ETH and check if it succeeded or not.\n            if iszero(call(gas(), to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n        }\n    }\n\n    /// @dev Force sends `amount` (in wei) ETH to `to`, with a `gasStipend`.\n    function forceSafeTransferETH(address to, uint256 amount, uint256 gasStipend) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            if lt(selfbalance(), amount) {\n                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n            if iszero(call(gasStipend, to, amount, codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, to) // Store the address in scratch space.\n                mstore8(0x0b, 0x73) // Opcode `PUSH20`.\n                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.\n                if iszero(create(amount, 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.\n            }\n        }\n    }\n\n    /// @dev Force sends all the ETH in the current contract to `to`, with a `gasStipend`.\n    function forceSafeTransferAllETH(address to, uint256 gasStipend) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            if iszero(call(gasStipend, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, to) // Store the address in scratch space.\n                mstore8(0x0b, 0x73) // Opcode `PUSH20`.\n                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.\n                if iszero(create(selfbalance(), 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.\n            }\n        }\n    }\n\n    /// @dev Force sends `amount` (in wei) ETH to `to`, with `GAS_STIPEND_NO_GRIEF`.\n    function forceSafeTransferETH(address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            if lt(selfbalance(), amount) {\n                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n            if iszero(call(GAS_STIPEND_NO_GRIEF, to, amount, codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, to) // Store the address in scratch space.\n                mstore8(0x0b, 0x73) // Opcode `PUSH20`.\n                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.\n                if iszero(create(amount, 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.\n            }\n        }\n    }\n\n    /// @dev Force sends all the ETH in the current contract to `to`, with `GAS_STIPEND_NO_GRIEF`.\n    function forceSafeTransferAllETH(address to) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            // forgefmt: disable-next-item\n            if iszero(call(GAS_STIPEND_NO_GRIEF, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {\n                mstore(0x00, to) // Store the address in scratch space.\n                mstore8(0x0b, 0x73) // Opcode `PUSH20`.\n                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.\n                if iszero(create(selfbalance(), 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.\n            }\n        }\n    }\n\n    /// @dev Sends `amount` (in wei) ETH to `to`, with a `gasStipend`.\n    function trySafeTransferETH(address to, uint256 amount, uint256 gasStipend) internal returns (bool success) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            success := call(gasStipend, to, amount, codesize(), 0x00, codesize(), 0x00)\n        }\n    }\n\n    /// @dev Sends all the ETH in the current contract to `to`, with a `gasStipend`.\n    function trySafeTransferAllETH(address to, uint256 gasStipend) internal returns (bool success) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            success := call(gasStipend, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)\n        }\n    }\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                      ERC20 OPERATIONS                      */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev Sends `amount` of ERC20 `token` from `from` to `to`.\n    /// Reverts upon failure.\n    ///\n    /// The `from` account must have at least `amount` approved for\n    /// the current contract to manage.\n    function safeTransferFrom(address token, address from, address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x60, amount) // Store the `amount` argument.\n            mstore(0x40, to) // Store the `to` argument.\n            mstore(0x2c, shl(96, from)) // Store the `from` argument.\n            mstore(0x0c, 0x23b872dd000000000000000000000000) // `transferFrom(address,address,uint256)`.\n            // Perform the transfer, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x1c, 0x64, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x60, 0) // Restore the zero slot to zero.\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /// @dev Sends all of ERC20 `token` from `from` to `to`.\n    /// Reverts upon failure.\n    ///\n    /// The `from` account must have their entire balance approved for\n    /// the current contract to manage.\n    function safeTransferAllFrom(address token, address from, address to) internal returns (uint256 amount) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x40, to) // Store the `to` argument.\n            mstore(0x2c, shl(96, from)) // Store the `from` argument.\n            mstore(0x0c, 0x70a08231000000000000000000000000) // `balanceOf(address)`.\n            // Read the balance, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    gt(returndatasize(), 0x1f), // At least 32 bytes returned.\n                    staticcall(gas(), token, 0x1c, 0x24, 0x60, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x00, 0x23b872dd) // `transferFrom(address,address,uint256)`.\n            amount := mload(0x60) // The `amount` is already at 0x60. We'll need to return it.\n            // Perform the transfer, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x1c, 0x64, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x60, 0) // Restore the zero slot to zero.\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /// @dev Sends `amount` of ERC20 `token` from the current contract to `to`.\n    /// Reverts upon failure.\n    function safeTransfer(address token, address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x14, to) // Store the `to` argument.\n            mstore(0x34, amount) // Store the `amount` argument.\n            mstore(0x00, 0xa9059cbb000000000000000000000000) // `transfer(address,uint256)`.\n            // Perform the transfer, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.\n        }\n    }\n\n    /// @dev Sends all of ERC20 `token` from the current contract to `to`.\n    /// Reverts upon failure.\n    function safeTransferAll(address token, address to) internal returns (uint256 amount) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x00, 0x70a08231) // Store the function selector of `balanceOf(address)`.\n            mstore(0x20, address()) // Store the address of the current contract.\n            // Read the balance, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    gt(returndatasize(), 0x1f), // At least 32 bytes returned.\n                    staticcall(gas(), token, 0x1c, 0x24, 0x34, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x14, to) // Store the `to` argument.\n            amount := mload(0x34) // The `amount` is already at 0x34. We'll need to return it.\n            mstore(0x00, 0xa9059cbb000000000000000000000000) // `transfer(address,uint256)`.\n            // Perform the transfer, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.\n        }\n    }\n\n    /// @dev Sets `amount` of ERC20 `token` for `to` to manage on behalf of the current contract.\n    /// Reverts upon failure.\n    function safeApprove(address token, address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x14, to) // Store the `to` argument.\n            mstore(0x34, amount) // Store the `amount` argument.\n            mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.\n            // Perform the approval, reverting upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x00, 0x3e3f8f73) // `ApproveFailed()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.\n        }\n    }\n\n    /// @dev Sets `amount` of ERC20 `token` for `to` to manage on behalf of the current contract.\n    /// If the initial attempt to approve fails, attempts to reset the approved amount to zero,\n    /// then retries the approval again (some tokens, e.g. USDT, requires this).\n    /// Reverts upon failure.\n    function safeApproveWithRetry(address token, address to, uint256 amount) internal {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x14, to) // Store the `to` argument.\n            mstore(0x34, amount) // Store the `amount` argument.\n            mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.\n            // Perform the approval, retrying upon failure.\n            if iszero(\n                and( // The arguments of `and` are evaluated from right to left.\n                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)\n                )\n            ) {\n                mstore(0x34, 0) // Store 0 for the `amount`.\n                mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.\n                pop(call(gas(), token, 0, 0x10, 0x44, codesize(), 0x00)) // Reset the approval.\n                mstore(0x34, amount) // Store back the original `amount`.\n                // Retry the approval, reverting upon failure.\n                if iszero(\n                    and(\n                        or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.\n                        call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)\n                    )\n                ) {\n                    mstore(0x00, 0x3e3f8f73) // `ApproveFailed()`.\n                    revert(0x1c, 0x04)\n                }\n            }\n            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.\n        }\n    }\n\n    /// @dev Returns the amount of ERC20 `token` owned by `account`.\n    /// Returns zero if the `token` does not exist.\n    function balanceOf(address token, address account) internal view returns (uint256 amount) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x14, account) // Store the `account` argument.\n            mstore(0x00, 0x70a08231000000000000000000000000) // `balanceOf(address)`.\n            amount :=\n                mul(\n                    mload(0x20),\n                    and( // The arguments of `and` are evaluated from right to left.\n                        gt(returndatasize(), 0x1f), // At least 32 bytes returned.\n                        staticcall(gas(), token, 0x10, 0x24, 0x20, 0x20)\n                    )\n                )\n        }\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 304,
+      "match": {
+        "origin": "library",
+        "collection": "solady",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "SafeTransferLib",
+        "similarity": 0.814,
+        "reportId": "solady/ackee-blockchain-solady-report",
+        "repository": "Vectorized/solady",
+        "path": "src/utils/SafeTransferLib.sol",
+        "commit": "37a79cebb0f12472cc339a726d6f385ec534d056",
+        "commitTimestamp": "2023-05-30T21:01:56Z",
+        "url": "https://github.com/Vectorized/solady/blob/37a79cebb0f12472cc339a726d6f385ec534d056/src/utils/SafeTransferLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Revision 1.1 (fix review)",
+        "coverage": "Fix review of the findings reported against this file in Revision 1.0; not a full re-audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 50,
+        "removed": 10,
+        "ignoredAdded": 97,
+        "ignoredRemoved": 123,
+        "unchanged": 304,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 118,
+            "newStart": 19,
+            "newLines": 136,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    /*                         CONSTANTS                          */"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @dev Suggested gas stipend for contract receiving ETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// that disallows any storage writes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    uint256 internal constant _GAS_STIPEND_NO_STORAGE_WRITES = 2300;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @dev Suggested gas stipend for contract receiving ETH that disallows any storage writes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    uint256 internal constant GAS_STIPEND_NO_STORAGE_WRITES = 2300;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 25,
+                "text": "    /// @dev Suggested gas stipend for contract receiving ETH to perform a few"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 26,
+                "text": "    /// storage reads and writes, but low enough to prevent griefing."
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// Multiply by a small constant (e.g. 2), if needed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    uint256 internal constant _GAS_STIPEND_NO_GRIEF = 100000;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    uint256 internal constant GAS_STIPEND_NO_GRIEF = 100000;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 28, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 29,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 30,
+                "text": "    /*                       ETH OPERATIONS                       */"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 31,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 32, "text": "" },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    // If the ETH transfer MUST succeed with a reasonable gas budget, use the force variants.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 34, "text": "    //", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    // The regular variants:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    // - Forwards all remaining gas to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    // - Reverts if the target reverts.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    // - Reverts if the current contract has insufficient balance.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 39, "text": "    //", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    // The force variants:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    // - Forwards with an optional gas stipend",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    //   (defaults to `GAS_STIPEND_NO_GRIEF`, which is sufficient for most cases).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    // - If the target reverts, or if the gas stipend is exhausted,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    //   creates a temporary contract to force send the ETH via `SELFDESTRUCT`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    //   Future compatible with `SENDALL`: https://eips.ethereum.org/EIPS/eip-4758.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    // - Reverts if the current contract has insufficient balance.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 47, "text": "    //", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    // The try variants:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    // - Forwards with a mandatory gas stipend.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    // - Instead of reverting, returns whether the transfer succeeded.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 51, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 52,
+                "text": "    /// @dev Sends `amount` (in wei) ETH to `to`."
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// Reverts upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 53,
+                "text": "    function safeTransferETH(address to, uint256 amount) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 54,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 55,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            // Transfer the ETH and check if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            if iszero(call(gas(), to, amount, 0, 0, 0, 0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "                // Store the function selector of `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "                mstore(0x00, 0xb12d13eb)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "            if iszero(call(gas(), to, amount, codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 58,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 59,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 60,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 48, "newLine": 61, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 62, "text": "" },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @dev Sends all the ETH in the current contract to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function safeTransferAllETH(address to) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "            // Transfer all the ETH and check if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            if iszero(call(gas(), to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "                revert(0x1c, 0x04)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 73, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 74, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 75,
+                "text": "    /// @dev Force sends `amount` (in wei) ETH to `to`, with a `gasStipend`."
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// The `gasStipend` can be set to a low enough value to prevent",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// storage writes or gas griefing.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /// If sending via the normal procedure fails, force sends the ETH by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// creating a temporary contract which uses `SELFDESTRUCT` to force send the ETH.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// Reverts if the current contract has insufficient balance.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 76,
+                "text": "    function forceSafeTransferETH(address to, uint256 amount, uint256 gasStipend) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 77,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 78,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            // If insufficient balance, revert.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 79,
+                "text": "            if lt(selfbalance(), amount) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "                // Store the function selector of `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "                mstore(0x00, 0xb12d13eb)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 81,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 82,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            // Transfer the ETH and check if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            if iszero(call(gasStipend, to, amount, 0, 0, 0, 0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            if iszero(call(gasStipend, to, amount, codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 84,
+                "text": "                mstore(0x00, to) // Store the address in scratch space."
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 85,
+                "text": "                mstore8(0x0b, 0x73) // Opcode `PUSH20`."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 86,
+                "text": "                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`."
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                // We can directly use `SELFDESTRUCT` in the contract creation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                // Compatible with `SENDALL`: https://eips.ethereum.org/EIPS/eip-4758",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                if iszero(create(amount, 0x0b, 0x16)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "                    // For better gas estimation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                    if iszero(gt(gas(), 1000000)) { revert(0, 0) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "                if iszero(create(amount, 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 88,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 89,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 90, "text": "    }" },
+              { "type": " ", "oldLine": 82, "newLine": 91, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @dev Force sends `amount` (in wei) ETH to `to`, with a gas stipend",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// equal to `_GAS_STIPEND_NO_GRIEF`. This gas stipend is a reasonable default",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    /// for 99% of cases and can be overriden with the three-argument version of this",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// function if necessary.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /// If sending via the normal procedure fails, force sends the ETH by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// creating a temporary contract which uses `SELFDESTRUCT` to force send the ETH.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// Reverts if the current contract has insufficient balance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @dev Force sends all the ETH in the current contract to `to`, with a `gasStipend`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function forceSafeTransferAllETH(address to, uint256 gasStipend) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            if iszero(call(gasStipend, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                mstore(0x00, to) // Store the address in scratch space.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "                mstore8(0x0b, 0x73) // Opcode `PUSH20`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "                if iszero(create(selfbalance(), 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 103, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 104, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @dev Force sends `amount` (in wei) ETH to `to`, with `GAS_STIPEND_NO_GRIEF`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 106,
+                "text": "    function forceSafeTransferETH(address to, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        // Manually inlined because the compiler doesn't inline functions with branches.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 107,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 108,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "            // If insufficient balance, revert.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 109,
+                "text": "            if lt(selfbalance(), amount) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "                // Store the function selector of `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "                mstore(0x00, 0xb12d13eb)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "                mstore(0x00, 0xb12d13eb) // `ETHTransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 111,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 112,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            // Transfer the ETH and check if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "            if iszero(call(_GAS_STIPEND_NO_GRIEF, to, amount, 0, 0, 0, 0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            if iszero(call(GAS_STIPEND_NO_GRIEF, to, amount, codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 114,
+                "text": "                mstore(0x00, to) // Store the address in scratch space."
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 115,
+                "text": "                mstore8(0x0b, 0x73) // Opcode `PUSH20`."
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 116,
+                "text": "                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`."
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "                // We can directly use `SELFDESTRUCT` in the contract creation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "                // Compatible with `SENDALL`: https://eips.ethereum.org/EIPS/eip-4758",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "                if iszero(create(amount, 0x0b, 0x16)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "                    // For better gas estimation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "                    if iszero(gt(gas(), 1000000)) { revert(0, 0) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                if iszero(create(amount, 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 118,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 119,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 116, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 117, "newLine": 121, "text": "" },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    /// @dev Force sends all the ETH in the current contract to `to`, with `GAS_STIPEND_NO_GRIEF`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    function forceSafeTransferAllETH(address to) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            if iszero(call(GAS_STIPEND_NO_GRIEF, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "                mstore(0x00, to) // Store the address in scratch space.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "                mstore8(0x0b, 0x73) // Opcode `PUSH20`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "                mstore8(0x20, 0xff) // Opcode `SELFDESTRUCT`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "                if iszero(create(selfbalance(), 0x0b, 0x16)) { revert(codesize(), codesize()) } // For gas estimation.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 134, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 135, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 136,
+                "text": "    /// @dev Sends `amount` (in wei) ETH to `to`, with a `gasStipend`."
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    /// The `gasStipend` can be set to a low enough value to prevent",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    /// storage writes or gas griefing.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /// Simply use `gasleft()` for `gasStipend` if you don't need a gas stipend.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// Note: Does NOT revert upon failure.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    /// Returns whether the transfer of ETH is successful instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 137,
+                "text": "    function trySafeTransferETH(address to, uint256 amount, uint256 gasStipend) internal returns (bool success) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 138,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 139,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            // Transfer the ETH and check if it succeeded or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "            success := call(gasStipend, to, amount, 0, 0, 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "            success := call(gasStipend, to, amount, codesize(), 0x00, codesize(), 0x00)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 141,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 132, "newLine": 142, "text": "    }" },
+              { "type": " ", "oldLine": 133, "newLine": 143, "text": "" },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "    /// @dev Sends all the ETH in the current contract to `to`, with a `gasStipend`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "    function trySafeTransferAllETH(address to, uint256 gasStipend) internal returns (bool success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "            success := call(gasStipend, to, selfbalance(), codesize(), 0x00, codesize(), 0x00)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 150, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 151, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 152,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 153,
+                "text": "    /*                      ERC20 OPERATIONS                      */"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 154,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              }
+            ]
+          },
+          {
+            "oldStart": 144,
+            "oldLines": 27,
+            "newStart": 162,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 162,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 163,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 164,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer."
+              },
+              { "type": "-", "oldLine": 147, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 165,
+                "text": "            mstore(0x60, amount) // Store the `amount` argument."
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 166,
+                "text": "            mstore(0x40, to) // Store the `to` argument."
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 167,
+                "text": "            mstore(0x2c, shl(96, from)) // Store the `from` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "            // Store the function selector of `transferFrom(address,address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "            mstore(0x0c, 0x23b872dd000000000000000000000000)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 153, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "            mstore(0x0c, 0x23b872dd000000000000000000000000) // `transferFrom(address,address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Perform the transfer, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 170,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 171,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "                    // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "                    // returned exactly 1 (can't just be non-zero data), or had no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 173,
+                "text": "                    call(gas(), token, 0, 0x1c, 0x64, 0x00, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 174,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 175,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "                // Store the function selector of `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "                mstore(0x00, 0x7939f424)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 177,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 178,
+                "text": "            }"
+              },
+              { "type": "-", "oldLine": 167, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 179,
+                "text": "            mstore(0x60, 0) // Restore the zero slot to zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 180,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer."
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 181,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 173,
+            "oldLines": 48,
+            "newStart": 184,
+            "newLines": 37,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 184,
+                "text": "    /// @dev Sends all of ERC20 `token` from `from` to `to`."
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 185,
+                "text": "    /// Reverts upon failure."
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 186,
+                "text": "    ///"
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "    /// The `from` account must have at least `amount` approved for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "    /// The `from` account must have their entire balance approved for",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 188,
+                "text": "    /// the current contract to manage."
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 189,
+                "text": "    function safeTransferAllFrom(address token, address from, address to) internal returns (uint256 amount) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 190,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 191,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 192,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer."
+              },
+              { "type": "-", "oldLine": 182, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 193,
+                "text": "            mstore(0x40, to) // Store the `to` argument."
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 194,
+                "text": "            mstore(0x2c, shl(96, from)) // Store the `from` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "            // Store the function selector of `balanceOf(address)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "            mstore(0x0c, 0x70a08231000000000000000000000000)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "            mstore(0x0c, 0x70a08231000000000000000000000000) // `balanceOf(address)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "            // Read the balance, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 197,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 198,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 199,
+                "text": "                    gt(returndatasize(), 0x1f), // At least 32 bytes returned."
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 200,
+                "text": "                    staticcall(gas(), token, 0x1c, 0x24, 0x60, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 201,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 202,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "                // Store the function selector of `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "                mstore(0x00, 0x7939f424)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 204,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 205,
+                "text": "            }"
+              },
+              { "type": "-", "oldLine": 198, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "            // Store the function selector of `transferFrom(address,address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "            mstore(0x00, 0x23b872dd)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "            // The `amount` argument is already written to the memory word at 0x6c.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            amount := mload(0x60)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 203, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "            mstore(0x00, 0x23b872dd) // `transferFrom(address,address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "            amount := mload(0x60) // The `amount` is already at 0x60. We'll need to return it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "            // Perform the transfer, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 209,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 210,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "                    // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "                    // returned exactly 1 (can't just be non-zero data), or had no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 212,
+                "text": "                    call(gas(), token, 0, 0x1c, 0x64, 0x00, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 213,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 214,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "                // Store the function selector of `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "                mstore(0x00, 0x7939f424)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "                mstore(0x00, 0x7939f424) // `TransferFromFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 216,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 217,
+                "text": "            }"
+              },
+              { "type": "-", "oldLine": 217, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 218,
+                "text": "            mstore(0x60, 0) // Restore the zero slot to zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 219,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer."
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 220,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 227,
+            "oldLines": 24,
+            "newStart": 227,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 227,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 228,
+                "text": "            mstore(0x14, to) // Store the `to` argument."
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 229,
+                "text": "            mstore(0x34, amount) // Store the `amount` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "            // Store the function selector of `transfer(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "            mstore(0x00, 0xa9059cbb000000000000000000000000)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 232, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "            mstore(0x00, 0xa9059cbb000000000000000000000000) // `transfer(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "            // Perform the transfer, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 232,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 233,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "                    // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "                    // returned exactly 1 (can't just be non-zero data), or had no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 235,
+                "text": "                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 236,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 237,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "                // Store the function selector of `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "                mstore(0x00, 0x90b8ec18)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 239,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 240,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "            // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "            mstore(0x34, 0)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 242,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 249, "newLine": 243, "text": "    }" },
+              { "type": " ", "oldLine": 250, "newLine": 244, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 255,
+            "oldLines": 39,
+            "newStart": 249,
+            "newLines": 30,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 249,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 250,
+                "text": "            mstore(0x00, 0x70a08231) // Store the function selector of `balanceOf(address)`."
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 251,
+                "text": "            mstore(0x20, address()) // Store the address of the current contract."
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "            // Read the balance, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 253,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 254,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 255,
+                "text": "                    gt(returndatasize(), 0x1f), // At least 32 bytes returned."
+              },
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 256,
+                "text": "                    staticcall(gas(), token, 0x1c, 0x24, 0x34, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 257,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 258,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "                // Store the function selector of `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "                mstore(0x00, 0x90b8ec18)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 260,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 261,
+                "text": "            }"
+              },
+              { "type": "-", "oldLine": 269, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 262,
+                "text": "            mstore(0x14, to) // Store the `to` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "            // The `amount` argument is already written to the memory word at 0x34.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "            amount := mload(0x34)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "            // Store the function selector of `transfer(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "            mstore(0x00, 0xa9059cbb000000000000000000000000)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 275, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "            amount := mload(0x34) // The `amount` is already at 0x34. We'll need to return it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "            mstore(0x00, 0xa9059cbb000000000000000000000000) // `transfer(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            // Perform the transfer, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 266,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 267,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "                    // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "                    // returned exactly 1 (can't just be non-zero data), or had no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 269,
+                "text": "                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 282,
+                "newLine": 270,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 271,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "                // Store the function selector of `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "                mstore(0x00, 0x90b8ec18)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "                mstore(0x00, 0x90b8ec18) // `TransferFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 273,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 274,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "            // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 290,
+                "text": "            mstore(0x34, 0)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 276,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 292, "newLine": 277, "text": "    }" },
+              { "type": " ", "oldLine": 293, "newLine": 278, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 298,
+            "oldLines": 35,
+            "newStart": 283,
+            "newLines": 64,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 283,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 284,
+                "text": "            mstore(0x14, to) // Store the `to` argument."
+              },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 285,
+                "text": "            mstore(0x34, amount) // Store the `amount` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "            // Store the function selector of `approve(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 302,
+                "text": "            mstore(0x00, 0x095ea7b3000000000000000000000000)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 303, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "            mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "            // Perform the approval, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 288,
+                "text": "            if iszero("
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 289,
+                "text": "                and( // The arguments of `and` are evaluated from right to left."
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "                    // Set success to whether the call reverted, if not we check it either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "                    // returned exactly 1 (can't just be non-zero data), or had no return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 309,
+                "newLine": 291,
+                "text": "                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)"
+              },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 292,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 311,
+                "newLine": 293,
+                "text": "            ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 312,
+                "text": "                // Store the function selector of `ApproveFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "                mstore(0x00, 0x3e3f8f73)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 314,
+                "text": "                // Revert with (offset, size).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "                mstore(0x00, 0x3e3f8f73) // `ApproveFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 315,
+                "newLine": 295,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 316,
+                "newLine": 296,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 317,
+                "text": "            // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 318,
+                "text": "            mstore(0x34, 0)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 298,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 320, "newLine": 299, "text": "    }" },
+              { "type": " ", "oldLine": 321, "newLine": 300, "text": "" },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "    /// @dev Sets `amount` of ERC20 `token` for `to` to manage on behalf of the current contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "    /// If the initial attempt to approve fails, attempts to reset the approved amount to zero,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "    /// then retries the approval again (some tokens, e.g. USDT, requires this).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "    /// Reverts upon failure.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "    function safeApproveWithRetry(address token, address to, uint256 amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 307,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "            mstore(0x14, to) // Store the `to` argument.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "            mstore(0x34, amount) // Store the `amount` argument.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "            mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "            // Perform the approval, retrying upon failure.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "            if iszero(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "                and( // The arguments of `and` are evaluated from right to left.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 314,
+                "text": "                    or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 315,
+                "text": "                    call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "            ) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "                mstore(0x34, 0) // Store 0 for the `amount`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "                mstore(0x00, 0x095ea7b3000000000000000000000000) // `approve(address,uint256)`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "                pop(call(gas(), token, 0, 0x10, 0x44, codesize(), 0x00)) // Reset the approval.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "                mstore(0x34, amount) // Store back the original `amount`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "                // Retry the approval, reverting upon failure.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "                if iszero(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "                    and(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "                        or(eq(mload(0x00), 1), iszero(returndatasize())), // Returned 1 or nothing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "                        call(gas(), token, 0, 0x10, 0x44, 0x00, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "                ) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "                    mstore(0x00, 0x3e3f8f73) // `ApproveFailed()`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "                    revert(0x1c, 0x04)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "            mstore(0x34, 0) // Restore the part of the free memory pointer that was overwritten.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 336, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 337,
+                "text": "    /// @dev Returns the amount of ERC20 `token` owned by `account`."
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 338,
+                "text": "    /// Returns zero if the `token` does not exist."
+              },
+              {
+                "type": " ",
+                "oldLine": 324,
+                "newLine": 339,
+                "text": "    function balanceOf(address token, address account) internal view returns (uint256 amount) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 340,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 341,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 342,
+                "text": "            mstore(0x14, account) // Store the `account` argument."
+              },
+              {
+                "type": "-",
+                "oldLine": 328,
+                "text": "            // Store the function selector of `balanceOf(address)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 329,
+                "text": "            mstore(0x00, 0x70a08231000000000000000000000000)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "            mstore(0x00, 0x70a08231000000000000000000000000) // `balanceOf(address)`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 344,
+                "text": "            amount :="
+              },
+              {
+                "type": " ",
+                "oldLine": 331,
+                "newLine": 345,
+                "text": "                mul("
+              },
+              {
+                "type": " ",
+                "oldLine": 332,
+                "newLine": 346,
+                "text": "                    mload(0x20),"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

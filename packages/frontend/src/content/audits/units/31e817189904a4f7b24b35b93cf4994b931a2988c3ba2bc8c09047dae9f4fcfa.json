@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "31e817189904a4f7b24b35b93cf4994b931a2988c3ba2bc8c09047dae9f4fcfa",
+  "name": "L1Escrow",
+  "kind": "contract",
+  "lines": 35,
+  "source": "contract L1Escrow {\n    // --- Auth ---\n    mapping(address => uint256) public wards;\n\n    function rely(address usr) external auth {\n        wards[usr] = 1;\n        emit Rely(usr);\n    }\n\n    function deny(address usr) external auth {\n        wards[usr] = 0;\n        emit Deny(usr);\n    }\n\n    modifier auth() {\n        require(wards[msg.sender] == 1, \"L1Escrow/not-authorized\");\n        _;\n    }\n\n    event Rely(address indexed usr);\n    event Deny(address indexed usr);\n\n    event Approve(address indexed token, address indexed spender, uint256 value);\n\n    constructor() {\n        wards[msg.sender] = 1;\n        emit Rely(msg.sender);\n    }\n\n    function approve(address token, address spender, uint256 value) external auth {\n        emit Approve(token, spender, value);\n\n        ApproveLike(token).approve(spender, value);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

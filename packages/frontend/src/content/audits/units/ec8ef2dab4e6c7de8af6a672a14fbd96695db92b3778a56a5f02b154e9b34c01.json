@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ec8ef2dab4e6c7de8af6a672a14fbd96695db92b3778a56a5f02b154e9b34c01",
+  "name": "note_hash.nr",
+  "kind": "program",
+  "lines": 9,
+  "source": "use crate::side_effect::Readable;\n\npub type NoteHash = Field;\n\nimpl Readable for NoteHash {\n    fn assert_match_read_request(self, read_request: Field) {\n        assert_eq(self, read_request, \"Value of the note hash does not match read request\");\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

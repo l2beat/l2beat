@@ -83,6 +83,396 @@
         ]
       },
       "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 431,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Safe",
+        "similarity": 0.996,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/Safe.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to the renamed Safe contract's fix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 431,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string public constant VERSION = \"1.4.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    string public constant VERSION = \"1.4.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    // keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    //     \"EIP712Domain(uint256 chainId,address verifyingContract)\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 431,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Safe",
+        "similarity": 0.996,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/Safe.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to the renamed Safe contract's fix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 431,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string public constant VERSION = \"1.4.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    string public constant VERSION = \"1.4.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    // keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    //     \"EIP712Domain(uint256 chainId,address verifyingContract)\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 431,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Safe",
+        "similarity": 0.996,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/Safe.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to the renamed Safe contract's fix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 431,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string public constant VERSION = \"1.4.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    string public constant VERSION = \"1.4.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    // keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    //     \"EIP712Domain(uint256 chainId,address verifyingContract)\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 431,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Safe",
+        "similarity": 0.996,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/Safe.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to the renamed Safe contract's fix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 431,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string public constant VERSION = \"1.4.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    string public constant VERSION = \"1.4.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    // keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    //     \"EIP712Domain(uint256 chainId,address verifyingContract)\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 431,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Safe",
+        "similarity": 0.996,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/Safe.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to the renamed Safe contract's fix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 431,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string public constant VERSION = \"1.4.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    string public constant VERSION = \"1.4.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    // keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    //     \"EIP712Domain(uint256 chainId,address verifyingContract)\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

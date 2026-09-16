@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "915db058eea1417c7be0538bb572de4c5a53f283d8e6c05227135b3a3e378062",
+  "name": "padded_side_effects.nr",
+  "kind": "program",
+  "lines": 23,
+  "source": "use types::{\n    abis::private_log::PrivateLog,\n    constants::{MAX_NOTE_HASHES_PER_TX, MAX_NULLIFIERS_PER_TX, MAX_PRIVATE_LOGS_PER_TX},\n    traits::Empty,\n};\n\n#[derive(Eq)]\npub struct PaddedSideEffects {\n    // [0, 0, 0, 0, 0 | p, p, p, p, 0, 0, 0] <-- empty until padding p, then empty thereafter\n    pub note_hashes: [Field; MAX_NOTE_HASHES_PER_TX],\n    pub nullifiers: [Field; MAX_NULLIFIERS_PER_TX],\n    pub private_logs: [PrivateLog; MAX_PRIVATE_LOGS_PER_TX],\n}\n\nimpl Empty for PaddedSideEffects {\n    fn empty() -> Self {\n        PaddedSideEffects {\n            note_hashes: [0; MAX_NOTE_HASHES_PER_TX],\n            nullifiers: [0; MAX_NULLIFIERS_PER_TX],\n            private_logs: [PrivateLog::empty(); MAX_PRIVATE_LOGS_PER_TX],\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4cd98b644c0947275e53ac5dd719fc461f0b16fc7030a27c17b30f72e55061c7",
+  "name": "MultipleVersionRollupVerifier",
+  "kind": "contract",
+  "lines": 184,
+  "source": "contract MultipleVersionRollupVerifier is IRollupVerifier, Ownable {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the address of verifier is updated.\n    /// @param version The version of the verifier.\n    /// @param startBatchIndex The start batch index when the verifier will be used.\n    /// @param verifier The address of new verifier.\n    event UpdateVerifier(uint256 version, uint256 startBatchIndex, address verifier);\n\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when the given address is `address(0)`.\n    error ErrorZeroAddress();\n\n    /// @dev Thrown when the given start batch index is smaller than `latestVerifier.startBatchIndex`.\n    error ErrorStartBatchIndexTooSmall();\n\n    /**\n     *\n     * Structs *\n     *\n     */\n    struct Verifier {\n        // The start batch index for the verifier.\n        uint64 startBatchIndex;\n        // The address of zkevm verifier.\n        address verifier;\n    }\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from verifier version to the list of legacy zkevm verifiers.\n    /// The verifiers are sorted by batchIndex in increasing order.\n    mapping(uint256 => Verifier[]) public legacyVerifiers;\n\n    /// @notice Mapping from verifier version to the latest used zkevm verifier.\n    mapping(uint256 => Verifier) public latestVerifier;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(uint256[] memory _versions, address[] memory _verifiers) {\n        for (uint256 i = 0; i < _versions.length; i++) {\n            if (_verifiers[i] == address(0)) {\n                revert ErrorZeroAddress();\n            }\n            latestVerifier[_versions[i]].verifier = _verifiers[i];\n\n            emit UpdateVerifier(_versions[i], 0, _verifiers[i]);\n        }\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the number of legacy verifiers.\n    /// @param _version The version of legacy verifiers.\n    /// @return The number of legacy verifiers.\n    function legacyVerifiersLength(uint256 _version) external view returns (uint256) {\n        return legacyVerifiers[_version].length;\n    }\n\n    /// @notice Compute the verifier should be used for specific batch.\n    /// @param _version The version of verifier to query.\n    /// @param _batchIndex The batch index to query.\n    /// @return The address of verifier.\n    function getVerifier(uint256 _version, uint256 _batchIndex) public view returns (address) {\n        // Normally, we will use the latest verifier.\n        Verifier memory _verifier = latestVerifier[_version];\n\n        if (_verifier.startBatchIndex > _batchIndex) {\n            uint256 _length = legacyVerifiers[_version].length;\n            // In most case, only last few verifier will be used by `ScrollChain`.\n            // So, we use linear search instead of binary search.\n            unchecked {\n                for (uint256 i = _length; i > 0; --i) {\n                    _verifier = legacyVerifiers[_version][i - 1];\n                    if (_verifier.startBatchIndex <= _batchIndex) {\n                        break;\n                    }\n                }\n            }\n        }\n\n        return _verifier.verifier;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IRollupVerifier\n    function verifyAggregateProof(uint256 _batchIndex, bytes calldata _aggrProof, bytes32 _publicInputHash)\n        external\n        view\n        override\n    {\n        address _verifier = getVerifier(0, _batchIndex);\n\n        IZkEvmVerifierV1(_verifier).verify(_aggrProof, _publicInputHash);\n    }\n\n    /// @inheritdoc IRollupVerifier\n    function verifyAggregateProof(\n        uint256 _version,\n        uint256 _batchIndex,\n        bytes calldata _aggrProof,\n        bytes32 _publicInputHash\n    ) external view override {\n        address _verifier = getVerifier(_version, _batchIndex);\n\n        IZkEvmVerifierV1(_verifier).verify(_aggrProof, _publicInputHash);\n    }\n\n    /// @inheritdoc IRollupVerifier\n    function verifyBundleProof(\n        uint256 _version,\n        uint256 _batchIndex,\n        bytes calldata _bundleProof,\n        bytes calldata _publicInput\n    ) external view override {\n        address _verifier = getVerifier(_version, _batchIndex);\n\n        IZkEvmVerifierV2(_verifier).verify(_bundleProof, _publicInput);\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update the address of zkevm verifier.\n    /// @param _version The version of the verifier.\n    /// @param _startBatchIndex The start batch index when the verifier will be used.\n    /// @param _verifier The address of new verifier.\n    function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier) external onlyOwner {\n        // We are using version to decide the verifier to use and also this function is\n        // controlled by 7 days TimeLock. It is hard to predict `lastFinalizedBatchIndex` after 7 days.\n        // So we decide to remove this check to make verifier updating more easier.\n        // if (_startBatchIndex <= IScrollChain(scrollChain).lastFinalizedBatchIndex())\n        //    revert ErrorStartBatchIndexFinalized();\n\n        Verifier memory _latestVerifier = latestVerifier[_version];\n        if (_startBatchIndex < _latestVerifier.startBatchIndex) {\n            revert ErrorStartBatchIndexTooSmall();\n        }\n        if (_verifier == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        if (_latestVerifier.startBatchIndex < _startBatchIndex) {\n            // don't push when it is the first update of the version.\n            if (_latestVerifier.verifier != address(0)) {\n                legacyVerifiers[_version].push(_latestVerifier);\n            }\n            _latestVerifier.startBatchIndex = _startBatchIndex;\n        }\n        _latestVerifier.verifier = _verifier;\n\n        latestVerifier[_version] = _latestVerifier;\n\n        emit UpdateVerifier(_version, _startBatchIndex, _verifier);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 172,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "MultipleVersionRollupVerifier",
+        "similarity": 0.854,
+        "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/rollup/MultipleVersionRollupVerifier.sol",
+        "commit": "5425ce725cc60d154e112610ee380d05e23689e5",
+        "commitTimestamp": "2024-04-10T03:56:26Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/5425ce725cc60d154e112610ee380d05e23689e5/contracts/src/L1/rollup/MultipleVersionRollupVerifier.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-02, L-03, N-02 and N-06 (docstrings, visibility, comments) in pull request #1256 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 12,
+        "removed": 12,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 11,
+        "unchanged": 172,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 23,
+            "newStart": 20,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    /// @dev Thrown when the given address is `address(0)`."
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    error ErrorZeroAddress();"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @dev Thrown when the given start batch index is finalized.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    error ErrorStartBatchIndexFinalized();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 25, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 23,
+                "text": "    /// @dev Thrown when the given start batch index is smaller than `latestVerifier.startBatchIndex`."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 24,
+                "text": "    error ErrorStartBatchIndexTooSmall();"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 25, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 26, "text": "    /**" },
+              { "type": " ", "oldLine": 30, "newLine": 27, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * Constants *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 32, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 34, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @notice The address of ScrollChain contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    address public immutable scrollChain;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 37, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 39, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 28,
+                "text": "     * Structs *"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 29, "text": "     *" },
+              { "type": " ", "oldLine": 42, "newLine": 30, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 12,
+            "newStart": 53,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 53,
+                "text": "     * Constructor *"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 54, "text": "     *" },
+              { "type": " ", "oldLine": 67, "newLine": 55, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    constructor(address _scrollChain, uint256[] memory _versions, address[] memory _verifiers) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        if (_scrollChain == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            revert ErrorZeroAddress();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        scrollChain = _scrollChain;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 73, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    constructor(uint256[] memory _versions, address[] memory _verifiers) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 57,
+                "text": "        for (uint256 i = 0; i < _versions.length; i++) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 58,
+                "text": "            if (_verifiers[i] == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 59,
+                "text": "                revert ErrorZeroAddress();"
+              }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 116,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 133, "newLine": 116, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 117,
+                "text": "        address _verifier = getVerifier(0, _batchIndex);"
+              },
+              { "type": " ", "oldLine": 135, "newLine": 118, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        IZkEvmVerifier(_verifier).verify(_aggrProof, _publicInputHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "        IZkEvmVerifierV1(_verifier).verify(_aggrProof, _publicInputHash);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 137, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 138, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 122,
+                "text": "    /// @inheritdoc IRollupVerifier"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 9,
+            "newStart": 128,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 128,
+                "text": "    ) external view override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 129,
+                "text": "        address _verifier = getVerifier(_version, _batchIndex);"
+              },
+              { "type": " ", "oldLine": 147, "newLine": 130, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "        IZkEvmVerifier(_verifier).verify(_aggrProof, _publicInputHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "        IZkEvmVerifierV1(_verifier).verify(_aggrProof, _publicInputHash);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 149, "newLine": 132, "text": "    }" },
+              { "type": " ", "oldLine": 150, "newLine": 133, "text": "" },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "    /// @inheritdoc IRollupVerifier",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "    function verifyBundleProof(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "        uint256 _version,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "        uint256 _batchIndex,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        bytes calldata _bundleProof,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        bytes calldata _publicInput",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    ) external view override {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "        address _verifier = getVerifier(_version, _batchIndex);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 142, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        IZkEvmVerifierV2(_verifier).verify(_bundleProof, _publicInput);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 145, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 146,
+                "text": "    /**"
+              },
+              { "type": " ", "oldLine": 152, "newLine": 147, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 148,
+                "text": "     * Restricted Functions *"
+              }
+            ]
+          },
+          {
+            "oldStart": 159,
+            "oldLines": 9,
+            "newStart": 154,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 154,
+                "text": "    /// @param _startBatchIndex The start batch index when the verifier will be used."
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 155,
+                "text": "    /// @param _verifier The address of new verifier."
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 156,
+                "text": "    function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier) external onlyOwner {"
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "        if (_startBatchIndex <= IScrollChain(scrollChain).lastFinalizedBatchIndex()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "            revert ErrorStartBatchIndexFinalized();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "        // We are using version to decide the verifier to use and also this function is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "        // controlled by 7 days TimeLock. It is hard to predict `lastFinalizedBatchIndex` after 7 days.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "        // So we decide to remove this check to make verifier updating more easier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "        // if (_startBatchIndex <= IScrollChain(scrollChain).lastFinalizedBatchIndex())",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "        //    revert ErrorStartBatchIndexFinalized();",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 165, "newLine": 162, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 163,
+                "text": "        Verifier memory _latestVerifier = latestVerifier[_version];"
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 164,
+                "text": "        if (_startBatchIndex < _latestVerifier.startBatchIndex) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

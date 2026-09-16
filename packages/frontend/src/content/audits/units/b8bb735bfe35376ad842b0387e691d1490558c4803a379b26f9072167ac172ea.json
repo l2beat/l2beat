@@ -233,6 +233,79 @@
         ]
       },
       "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 122,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 122,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 98,
+            "oldLines": 7,
+            "newStart": 98,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 98, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 100, "newLine": 100, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * - The `operator` cannot be the address zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     * - The `operator` cannot be the caller.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 102, "newLine": 102, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "     * Emits an {ApprovalForAll} event."
+              },
+              { "type": " ", "oldLine": 104, "newLine": 104, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

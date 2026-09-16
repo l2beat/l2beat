@@ -217,6 +217,218 @@
         ]
       },
       "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 634,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "KailuaTournament",
+        "similarity": 0.988,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaTournament.sol",
+        "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+        "commitTimestamp": "2026-02-06T13:05:10Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/ccf2771857721a9cda5f7943ed7ef1d236c20bbd/crates/contracts/foundry/src/KailuaTournament.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Veridise review on commit ccf2771 of boundless-xyz/kailua limited to the changes made to this file since commit 7eb9869 (fault proof permit system and its integration). No fixed findings located here; Warnings V-KLA-VUL-004/006 (locked bonds) acknowledged without fix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 6,
+        "removed": 3,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 634,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 10,
+            "newStart": 22,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    GameType public immutable GAME_TYPE;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @notice The OptimismPortal2 instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    OptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    IOptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    /// @notice The DisputeGameFactory instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    DisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    constructor("
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        IKailuaTreasury _kailuaTreasury,"
+              }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 7,
+            "newStart": 33,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        uint64 _proposalOutputCount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "        uint64 _outputBlockSpan,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        GameType _gameType,"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        OptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        IOptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "    ) {" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        KAILUA_TREASURY = _kailuaTreasury;"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        KAILUA_VERIFIER = _kailuaVerifier;"
+              }
+            ]
+          },
+          {
+            "oldStart": 252,
+            "oldLines": 6,
+            "newStart": 252,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 252, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 253, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 254,
+                "text": "    /// @inheritdoc IDisputeGame"
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        l2SequenceNumber_ = l2BlockNumber();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 258, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "    /// @inheritdoc IDisputeGame",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 260,
+                "text": "    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 261,
+                "text": "        gameType_ = GAME_TYPE;"
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 262,
+                "text": "        rootClaim_ = this.rootClaim();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

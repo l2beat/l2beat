@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "99fa8192a2bfeea7cb64bcda0c02cac1a9b97d60da24d6061b8072097c9bd41b",
+  "name": "IPauseTarget",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IPauseTarget {\n    function pause() external;\n\n    function unpause() external;\n\n    function paused() external returns (bool);\n\n    function restrict(bytes4 fnSig, uint8 enumBitmap) external;\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

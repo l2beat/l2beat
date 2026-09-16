@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9a9c2615eef9c1e4d8e5a89f886fdd102af4233f0dbb3eac2ffc33eec8616f32",
+  "name": "PriceLib",
+  "kind": "library",
+  "lines": 37,
+  "source": "library PriceLib {\n    /**\n     * @notice Converts a fee asset amount to its ETH equivalent.\n     * @dev ethValue = feeAssetAmount * ethPerFeeAsset / precision\n     * @param _feeAssetValue The amount in fee asset units\n     * @param _ethPerFeeAsset The current price (ETH per fee asset with 1e12 precision)\n     * @return The equivalent value in ETH (wei), rounded up\n     */\n    function toEth(FeeAssetValue _feeAssetValue, EthPerFeeAssetE12 _ethPerFeeAsset) internal pure returns (EthValue) {\n        return EthValue.wrap(\n            Math.mulDiv(\n                FeeAssetValue.unwrap(_feeAssetValue),\n                EthPerFeeAssetE12.unwrap(_ethPerFeeAsset),\n                ETH_PER_FEE_ASSET_PRECISION,\n                Math.Rounding.Ceil\n            )\n        );\n    }\n\n    /**\n     * @notice Converts an ETH amount to its fee asset equivalent.\n     * @dev feeAssetAmount = ethValue * precision / ethPerFeeAsset\n     * @param _ethValue The amount in ETH (wei)\n     * @param _ethPerFeeAsset The current price (ETH per fee asset with 1e12 precision)\n     * @return The equivalent value in fee asset units, rounded up\n     */\n    function toFeeAsset(EthValue _ethValue, EthPerFeeAssetE12 _ethPerFeeAsset) internal pure returns (FeeAssetValue) {\n        return FeeAssetValue.wrap(\n            Math.mulDiv(\n                EthValue.unwrap(_ethValue),\n                ETH_PER_FEE_ASSET_PRECISION,\n                EthPerFeeAssetE12.unwrap(_ethPerFeeAsset),\n                Math.Rounding.Ceil\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 37,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "PriceLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
+        "commit": "c9cd1b9deb54ca43d3b4762eb73fd0dcf983e473",
+        "commitTimestamp": "2026-02-16T12:42:46Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/c9cd1b9deb54ca43d3b4762eb73fd0dcf983e473/l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified bit-width comment correction (PR 20423 commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2e7fa90a8dbb6e78de1433014ea479dec7a2e8c31151163faaa70146c512aeb4",
+  "name": "L1LidoGateway",
+  "kind": "contract",
+  "lines": 153,
+  "source": "contract L1LidoGateway is L1ERC20Gateway, LidoBridgeableTokens, LidoGatewayManager {\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when deposit zero amount token.\n    error ErrorDepositZeroAmount();\n\n    /// @dev Thrown when deposit erc20 with calldata.\n    error DepositAndCallIsNotAllowed();\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @dev The initial version of `L1LidoGateway` use `L1CustomERC20Gateway`. We keep the storage\n    /// slot for `tokenMapping` for compatibility. It should no longer be used.\n    mapping(address => address) private __tokenMapping;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1LidoGateway` implementation contract.\n    ///\n    /// @param _l1Token The address of the bridged token in the L1 chain\n    /// @param _l2Token The address of the token minted on the L2 chain when token bridged\n    /// @param _counterpart The address of `L2LidoGateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract.\n    /// @param _messenger The address of `L1ScrollMessenger` contract.\n    constructor(address _l1Token, address _l2Token, address _counterpart, address _router, address _messenger)\n        LidoBridgeableTokens(_l1Token, _l2Token)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_l1Token == address(0) || _l2Token == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L1LidoGateway v1.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of `L2LidoGateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract.\n    /// @param _messenger The address of `L1ScrollMessenger` contract.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /// @notice Initialize the storage of L1LidoGateway v2.\n    /// @param _depositsEnabler The address of user who can enable deposits\n    /// @param _depositsEnabler The address of user who can disable deposits\n    /// @param _withdrawalsEnabler The address of user who can enable withdrawals\n    /// @param _withdrawalsDisabler The address of user who can disable withdrawals\n    function initializeV2(\n        address _depositsEnabler,\n        address _depositsDisabler,\n        address _withdrawalsEnabler,\n        address _withdrawalsDisabler\n    ) external reinitializer(2) {\n        __LidoGatewayManager_init(_depositsEnabler, _depositsDisabler, _withdrawalsEnabler, _withdrawalsDisabler);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC20Gateway\n    function getL2ERC20Address(address _l1Token)\n        external\n        view\n        override\n        onlySupportedL1Token(_l1Token)\n        returns (address)\n    {\n        return l2Token;\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L1ERC20Gateway\n    /// @dev The length of `_data` always be zero, which guarantee by `L2LidoGateway`.\n    function _beforeFinalizeWithdrawERC20(address _l1Token, address _l2Token, address, address, uint256, bytes calldata)\n        internal\n        virtual\n        override\n        onlySupportedL1Token(_l1Token)\n        onlySupportedL2Token(_l2Token)\n        whenWithdrawalsEnabled\n    {\n        if (msg.value != 0) {\n            revert ErrorNonZeroMsgValue();\n        }\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeDropMessage(address _token, address, uint256)\n        internal\n        virtual\n        override\n        onlySupportedL1Token(_token)\n    {\n        if (msg.value != 0) {\n            revert ErrorNonZeroMsgValue();\n        }\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _deposit(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n        onlySupportedL1Token(_token)\n        onlyNonZeroAccount(_to)\n        whenDepositsEnabled\n    {\n        if (_amount == 0) {\n            revert ErrorDepositZeroAmount();\n        }\n\n        // 1. Transfer token into this contract.\n        address _from;\n        (_from, _amount, _data) = _transferERC20In(_token, _amount, _data);\n        if (_data.length != 0) {\n            revert DepositAndCallIsNotAllowed();\n        }\n\n        // 2. Generate message passed to L2LidoGateway.\n        bytes memory _message =\n            abi.encodeCall(IL2ERC20Gateway.finalizeDepositERC20, (_token, l2Token, _from, _to, _amount, _data));\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit, _from);\n\n        emit DepositERC20(_token, l2Token, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 153,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L1LidoGateway",
+        "similarity": 1,
+        "reportId": "scroll/zellic-scroll-lido-gateway-audit",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/lido/L1LidoGateway.sol",
+        "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
+        "commitTimestamp": "2024-01-16T18:25:41Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/69224ebb935d499c055c7859c1c8ade57244249c/contracts/src/lido/L1LidoGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at the audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

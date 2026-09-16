@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "718d6045d63559c4b834e4b6269fb2c4d0708902fec371b845c6ab33f7eada79",
+  "name": "IRollup",
+  "kind": "interface",
+  "lines": 89,
+  "source": "interface IRollup is IRollupCore, IHaveVersion {\n    function validateHeaderWithAttestations(\n        ProposedHeader calldata _header,\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        Signature memory _attestationsAndSignersSignature,\n        bytes32 _digest,\n        bytes32 _blobsHash,\n        CheckpointHeaderValidationFlags memory _flags\n    ) external;\n\n    function canProposeAtTime(Timestamp _ts, bytes32 _archive, address _who) external returns (Slot, uint256);\n\n    function getTips() external view returns (ChainTips memory);\n\n    function status(uint256 _myHeaderCheckpointNumber)\n        external\n        view\n        returns (\n            uint256 provenCheckpointNumber,\n            bytes32 provenArchive,\n            uint256 pendingCheckpointNumber,\n            bytes32 pendingArchive,\n            bytes32 archiveOfMyCheckpoint,\n            Epoch provenEpochNumber\n        );\n\n    function getEpochProofPublicInputs(\n        uint256 _start,\n        uint256 _end,\n        PublicInputArgs calldata _args,\n        ProposedHeader[] calldata _headers,\n        bytes calldata _blobPublicInputs\n    ) external view returns (bytes32[] memory);\n\n    function validateBlobs(bytes calldata _blobsInputs)\n        external\n        view\n        returns (bytes32[] memory, bytes32, bytes[] memory);\n\n    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)\n        external\n        view\n        returns (ManaMinFeeComponents memory);\n    function getManaMinFeeAt(Timestamp _timestamp, bool _inFeeAsset) external view returns (uint256);\n    function getL1FeesAt(Timestamp _timestamp) external view returns (L1FeeData memory);\n    function getEthPerFeeAsset() external view returns (EthPerFeeAssetE12);\n\n    function getEpochForCheckpoint(uint256 _checkpointNumber) external view returns (Epoch);\n    function canPruneAtTime(Timestamp _ts) external view returns (bool);\n\n    function archive() external view returns (bytes32);\n    function archiveAt(uint256 _checkpointNumber) external view returns (bytes32);\n    function getProvenCheckpointNumber() external view returns (uint256);\n    function getPendingCheckpointNumber() external view returns (uint256);\n    function getCheckpoint(uint256 _checkpointNumber) external view returns (CheckpointLog memory);\n    function getFeeHeader(uint256 _checkpointNumber) external view returns (FeeHeader memory);\n    function getBlobCommitmentsHash(uint256 _checkpointNumber) external view returns (bytes32);\n    function getCurrentBlobCommitmentsHash() external view returns (bytes32);\n\n    function getSharesFor(address _prover) external view returns (uint256);\n    function getSequencerRewards(address _sequencer) external view returns (uint256);\n    function getCollectiveProverRewardsForEpoch(Epoch _epoch) external view returns (uint256);\n    function getSpecificProverRewardsForEpoch(Epoch _epoch, address _prover) external view returns (uint256);\n    function getHasSubmitted(Epoch _epoch, uint256 _length, address _prover) external view returns (bool);\n    function getHasClaimed(address _prover, Epoch _epoch) external view returns (bool);\n\n    function getProofSubmissionEpochs() external view returns (uint256);\n    function getManaTarget() external view returns (uint256);\n    function getManaLimit() external view returns (uint256);\n    function getProvingCostPerManaInEth() external view returns (EthValue);\n\n    function getProvingCostPerManaInFeeAsset() external view returns (FeeAssetValue);\n\n    function getFeeAsset() external view returns (IERC20);\n    function getFeeAssetPortal() external view returns (IFeeJuicePortal);\n    function getRewardDistributor() external view returns (IRewardDistributor);\n    function getBurnAddress() external view returns (address);\n\n    function getInbox() external view returns (IInbox);\n    function getOutbox() external view returns (IOutbox);\n\n    function getVkTreeRoot() external view returns (bytes32);\n    function getProtocolContractsHash() external view returns (bytes32);\n    function getEpochProofVerifier() external view returns (IVerifier);\n\n    function getRewardConfig() external view returns (RewardConfig memory);\n    function getCheckpointReward() external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRollup",
+        "similarity": 0.898,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IRollup.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IRollup.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 8,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 29,
+            "oldLines": 7,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        uint256 _start,"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "        uint256 _end,"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        PublicInputArgs calldata _args,"
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        bytes32[] calldata _fees,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        ProposedHeader[] calldata _headers,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        bytes calldata _blobPublicInputs"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "    ) external view returns (bytes32[] memory);"
+              },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 13,
+            "newStart": 38,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        returns (bytes32[] memory, bytes32, bytes[] memory);"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    function getManaBaseFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        view"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        returns (ManaBaseFeeComponents memory);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    function getManaBaseFeeAt(Timestamp _timestamp, bool _inFeeAsset) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        returns (ManaMinFeeComponents memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    function getManaMinFeeAt(Timestamp _timestamp, bool _inFeeAsset) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    function getL1FeesAt(Timestamp _timestamp) external view returns (L1FeeData memory);"
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function getFeeAssetPerEth() external view returns (FeeAssetPerEthE9);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    function getEthPerFeeAsset() external view returns (EthPerFeeAssetE12);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "    function getEpochForCheckpoint(uint256 _checkpointNumber) external view returns (Epoch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "    function canPruneAtTime(Timestamp _ts) external view returns (bool);"
+              }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 8,
+            "newStart": 80,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "    function getInbox() external view returns (IInbox);"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 81,
+                "text": "    function getOutbox() external view returns (IOutbox);"
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    function getVkTreeRoot() external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    function getProtocolContractsHash() external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function getEpochProofVerifier() external view returns (IVerifier);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 86, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 87,
+                "text": "    function getRewardConfig() external view returns (RewardConfig memory);"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 88,
+                "text": "    function getCheckpointReward() external view returns (uint256);"
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    function getEarliestRewardsClaimableTimestamp() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    function isRewardsClaimable() external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 87, "newLine": 89, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

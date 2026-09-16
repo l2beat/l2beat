@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "852f060c0295ba9aada7f8ffee71bcc45f9ffa343d230577fa57888d387727ec",
+  "name": "IValidatorSelection",
+  "kind": "interface",
+  "lines": 35,
+  "source": "interface IValidatorSelection is IValidatorSelectionCore, IEmperor {\n    function getProposerAt(Timestamp _ts) external returns (address);\n\n    // Non view as uses transient storage\n    function getCurrentEpochCommittee() external returns (address[] memory);\n    function getCommitteeAt(Timestamp _ts) external returns (address[] memory);\n    function getCommitteeCommitmentAt(Timestamp _ts) external returns (bytes32, uint256);\n    function getEpochCommittee(Epoch _epoch) external returns (address[] memory);\n    function getEpochCommitteeCommitment(Epoch _epoch) external returns (bytes32, uint256);\n\n    // Stable\n    function getCurrentEpoch() external view returns (Epoch);\n\n    // Consider removing below this point\n    function getTimestampForSlot(Slot _slotNumber) external view returns (Timestamp);\n    function getTimestampForEpoch(Epoch _epoch) external view returns (Timestamp);\n\n    function getSampleSeedAt(Timestamp _ts) external view returns (uint256);\n    function getSamplingSizeAt(Timestamp _ts) external view returns (uint256);\n    function getLagInEpochsForValidatorSet() external view returns (uint256);\n    function getLagInEpochsForRandao() external view returns (uint256);\n    function getCurrentSampleSeed() external view returns (uint256);\n\n    function getEpochAt(Timestamp _ts) external view returns (Epoch);\n    function getSlotAt(Timestamp _ts) external view returns (Slot);\n    function getEpochAtSlot(Slot _slotNumber) external view returns (Epoch);\n\n    function getGenesisTime() external view returns (Timestamp);\n    function getSlotDuration() external view returns (uint256);\n    function getEpochDuration() external view returns (uint256);\n    function getTargetCommitteeSize() external view returns (uint256);\n\n    function getEscapeHatch() external view returns (IEscapeHatch);\n    function getEscapeHatchForEpoch(Epoch _epoch) external view returns (IEscapeHatch);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IValidatorSelection",
+        "similarity": 0.98,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 31,
+            "oldLines": 4,
+            "newStart": 31,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    function getTargetCommitteeSize() external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    function getEscapeHatch() external view returns (IEscapeHatch);"
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    function getEscapeHatchForEpoch(Epoch _epoch) external view returns (IEscapeHatch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 35, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

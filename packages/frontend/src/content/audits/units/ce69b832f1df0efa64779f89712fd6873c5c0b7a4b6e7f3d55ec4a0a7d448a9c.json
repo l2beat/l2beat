@@ -1,0 +1,3244 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ce69b832f1df0efa64779f89712fd6873c5c0b7a4b6e7f3d55ec4a0a7d448a9c",
+  "name": "StandardBridge",
+  "kind": "abstract",
+  "lines": 488,
+  "source": "abstract contract StandardBridge {\n    using SafeERC20 for IERC20;\n\n    /**\n     * @notice The L2 gas limit set when eth is depoisited using the receive() function.\n     */\n    uint32 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 200_000;\n\n    /**\n     * @notice Messenger contract on this domain.\n     */\n    CrossDomainMessenger public immutable MESSENGER;\n\n    /**\n     * @notice Corresponding bridge on the other domain.\n     */\n    StandardBridge public immutable OTHER_BRIDGE;\n\n    /**\n     * @custom:legacy\n     * @custom:spacer messenger\n     * @notice Spacer for backwards compatibility.\n     */\n    address private spacer_0_0_20;\n\n    /**\n     * @custom:legacy\n     * @custom:spacer l2TokenBridge\n     * @notice Spacer for backwards compatibility.\n     */\n    address private spacer_1_0_20;\n\n    /**\n     * @notice Mapping that stores deposits for a given pair of local and remote tokens.\n     */\n    mapping(address => mapping(address => uint256)) public deposits;\n\n    /**\n     * @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.\n     *         A gap size of 47 was chosen here, so that the first slot used in a child contract\n     *         would be a multiple of 50.\n     */\n    uint256[47] private __gap;\n\n    /**\n     * @notice Emitted when an ETH bridge is initiated to the other chain.\n     *\n     * @param from      Address of the sender.\n     * @param to        Address of the receiver.\n     * @param amount    Amount of ETH sent.\n     * @param extraData Extra data sent with the transaction.\n     */\n    event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /**\n     * @notice Emitted when an ETH bridge is finalized on this chain.\n     *\n     * @param from      Address of the sender.\n     * @param to        Address of the receiver.\n     * @param amount    Amount of ETH sent.\n     * @param extraData Extra data sent with the transaction.\n     */\n    event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /**\n     * @notice Emitted when an ERC20 bridge is initiated to the other chain.\n     *\n     * @param localToken  Address of the ERC20 on this chain.\n     * @param remoteToken Address of the ERC20 on the remote chain.\n     * @param from        Address of the sender.\n     * @param to          Address of the receiver.\n     * @param amount      Amount of the ERC20 sent.\n     * @param extraData   Extra data sent with the transaction.\n     */\n    event ERC20BridgeInitiated(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /**\n     * @notice Emitted when an ERC20 bridge is finalized on this chain.\n     *\n     * @param localToken  Address of the ERC20 on this chain.\n     * @param remoteToken Address of the ERC20 on the remote chain.\n     * @param from        Address of the sender.\n     * @param to          Address of the receiver.\n     * @param amount      Amount of the ERC20 sent.\n     * @param extraData   Extra data sent with the transaction.\n     */\n    event ERC20BridgeFinalized(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /**\n     * @notice Only allow EOAs to call the functions. Note that this is not safe against contracts\n     *         calling code within their constructors, but also doesn't really matter since we're\n     *         just trying to prevent users accidentally depositing with smart contract wallets.\n     */\n    modifier onlyEOA() {\n        require(!Address.isContract(msg.sender), \"StandardBridge: function can only be called from an EOA\");\n        _;\n    }\n\n    /**\n     * @notice Ensures that the caller is a cross-chain message from the other bridge.\n     */\n    modifier onlyOtherBridge() {\n        require(\n            msg.sender == address(MESSENGER) && MESSENGER.xDomainMessageSender() == address(OTHER_BRIDGE),\n            \"StandardBridge: function can only be called from the other bridge\"\n        );\n        _;\n    }\n\n    /**\n     * @param _messenger   Address of CrossDomainMessenger on this network.\n     * @param _otherBridge Address of the other StandardBridge contract.\n     */\n    constructor(address payable _messenger, address payable _otherBridge) {\n        MESSENGER = CrossDomainMessenger(_messenger);\n        OTHER_BRIDGE = StandardBridge(_otherBridge);\n    }\n\n    /**\n     * @notice Allows EOAs to bridge ETH by sending directly to the bridge.\n     *         Must be implemented by contracts that inherit.\n     */\n    receive() external payable virtual;\n\n    /**\n     * @custom:legacy\n     * @notice Legacy getter for messenger contract.\n     *\n     * @return Messenger contract on this domain.\n     */\n    function messenger() external view returns (CrossDomainMessenger) {\n        return MESSENGER;\n    }\n\n    /**\n     * @notice Sends ETH to the sender's address on the other chain.\n     *\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function bridgeETH(uint32 _minGasLimit, bytes calldata _extraData) public payable onlyEOA {\n        _initiateBridgeETH(msg.sender, msg.sender, msg.value, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Sends ETH to a receiver's address on the other chain. Note that if ETH is sent to a\n     *         smart contract and the call fails, the ETH will be temporarily locked in the\n     *         StandardBridge on the other chain until the call is replayed. If the call cannot be\n     *         replayed with any amount of gas (call always reverts), then the ETH will be\n     *         permanently locked in the StandardBridge on the other chain. ETH will also\n     *         be locked if the receiver is the other bridge, because finalizeBridgeETH will revert\n     *         in that case.\n     *\n     * @param _to          Address of the receiver.\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function bridgeETHTo(address _to, uint32 _minGasLimit, bytes calldata _extraData) public payable {\n        _initiateBridgeETH(msg.sender, _to, msg.value, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Sends ERC20 tokens to the sender's address on the other chain. Note that if the\n     *         ERC20 token on the other chain does not recognize the local token as the correct\n     *         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on\n     *         this chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the corresponding token on the remote chain.\n     * @param _amount      Amount of local tokens to deposit.\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function bridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) public virtual onlyEOA {\n        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Sends ERC20 tokens to a receiver's address on the other chain. Note that if the\n     *         ERC20 token on the other chain does not recognize the local token as the correct\n     *         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on\n     *         this chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the corresponding token on the remote chain.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of local tokens to deposit.\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function bridgeERC20To(\n        address _localToken,\n        address _remoteToken,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) public virtual {\n        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Finalizes an ETH bridge on this chain. Can only be triggered by the other\n     *         StandardBridge contract on the remote chain.\n     *\n     * @param _from      Address of the sender.\n     * @param _to        Address of the receiver.\n     * @param _amount    Amount of ETH being bridged.\n     * @param _extraData Extra data to be sent with the transaction. Note that the recipient will\n     *                   not be triggered with this data, but it will be emitted and can be used\n     *                   to identify the transaction.\n     */\n    function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes calldata _extraData)\n        public\n        payable\n        onlyOtherBridge\n    {\n        require(msg.value == _amount, \"StandardBridge: amount sent does not match amount required\");\n        require(_to != address(this), \"StandardBridge: cannot send to self\");\n        require(_to != address(MESSENGER), \"StandardBridge: cannot send to messenger\");\n\n        // Emit the correct events. By default this will be _amount, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitETHBridgeFinalized(_from, _to, _amount, _extraData);\n\n        bool success = SafeCall.call(_to, gasleft(), _amount, hex\"\");\n        require(success, \"StandardBridge: ETH transfer failed\");\n    }\n\n    /**\n     * @notice Finalizes an ERC20 bridge on this chain. Can only be triggered by the other\n     *         StandardBridge contract on the remote chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the corresponding token on the remote chain.\n     * @param _from        Address of the sender.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of the ERC20 being bridged.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function finalizeBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _extraData\n    ) public onlyOtherBridge {\n        if (_isOptimismMintableERC20(_localToken)) {\n            require(\n                _isCorrectTokenPair(_localToken, _remoteToken),\n                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\"\n            );\n\n            OptimismMintableERC20(_localToken).mint(_to, _amount);\n        } else {\n            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] - _amount;\n            IERC20(_localToken).safeTransfer(_to, _amount);\n        }\n\n        // Emit the correct events. By default this will be ERC20BridgeFinalized, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /**\n     * @notice Initiates a bridge of ETH through the CrossDomainMessenger.\n     *\n     * @param _from        Address of the sender.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of ETH being bridged.\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function _initiateBridgeETH(\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        require(msg.value == _amount, \"StandardBridge: bridging ETH must include sufficient ETH value\");\n\n        // Emit the correct events. By default this will be _amount, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitETHBridgeInitiated(_from, _to, _amount, _extraData);\n\n        MESSENGER.sendMessage{value: _amount}(\n            address(OTHER_BRIDGE),\n            abi.encodeWithSelector(this.finalizeBridgeETH.selector, _from, _to, _amount, _extraData),\n            _minGasLimit\n        );\n    }\n\n    /**\n     * @notice Sends ERC20 tokens to a receiver's address on the other chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the corresponding token on the remote chain.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of local tokens to deposit.\n     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n     *                     not be triggered with this data, but it will be emitted and can be used\n     *                     to identify the transaction.\n     */\n    function _initiateBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        if (_isOptimismMintableERC20(_localToken)) {\n            require(\n                _isCorrectTokenPair(_localToken, _remoteToken),\n                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\"\n            );\n\n            OptimismMintableERC20(_localToken).burn(_from, _amount);\n        } else {\n            IERC20(_localToken).safeTransferFrom(_from, address(this), _amount);\n            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] + _amount;\n        }\n\n        // Emit the correct events. By default this will be ERC20BridgeInitiated, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n\n        MESSENGER.sendMessage(\n            address(OTHER_BRIDGE),\n            abi.encodeWithSelector(\n                this.finalizeBridgeERC20.selector,\n                // Because this call will be executed on the remote chain, we reverse the order of\n                // the remote and local token addresses relative to their order in the\n                // finalizeBridgeERC20 function.\n                _remoteToken,\n                _localToken,\n                _from,\n                _to,\n                _amount,\n                _extraData\n            ),\n            _minGasLimit\n        );\n    }\n\n    /**\n     * @notice Checks if a given address is an OptimismMintableERC20. Not perfect, but good enough.\n     *         Just the way we like it.\n     *\n     * @param _token Address of the token to check.\n     *\n     * @return True if the token is an OptimismMintableERC20.\n     */\n    function _isOptimismMintableERC20(address _token) internal view returns (bool) {\n        return ERC165Checker.supportsInterface(_token, type(ILegacyMintableERC20).interfaceId)\n            || ERC165Checker.supportsInterface(_token, type(IOptimismMintableERC20).interfaceId);\n    }\n\n    /**\n     * @notice Checks if the \"other token\" is the correct pair token for the OptimismMintableERC20.\n     *         Calls can be saved in the future by combining this logic with\n     *         `_isOptimismMintableERC20`.\n     *\n     * @param _mintableToken OptimismMintableERC20 to check against.\n     * @param _otherToken    Pair token to check.\n     *\n     * @return True if the other token is the correct pair token for the OptimismMintableERC20.\n     */\n    function _isCorrectTokenPair(address _mintableToken, address _otherToken) internal view returns (bool) {\n        if (ERC165Checker.supportsInterface(_mintableToken, type(ILegacyMintableERC20).interfaceId)) {\n            return _otherToken == ILegacyMintableERC20(_mintableToken).l1Token();\n        } else {\n            return _otherToken == IOptimismMintableERC20(_mintableToken).remoteToken();\n        }\n    }\n\n    /**\n     * @notice Emits the ETHBridgeInitiated event and if necessary the appropriate legacy event\n     *          when an ETH bridge is finalized on this chain.\n     *\n     * @param _from      Address of the sender.\n     * @param _to        Address of the receiver.\n     * @param _amount    Amount of ETH sent.\n     * @param _extraData Extra data sent with the transaction.\n     */\n    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        virtual\n    {\n        emit ETHBridgeInitiated(_from, _to, _amount, _extraData);\n    }\n\n    /**\n     * @notice Emits the ETHBridgeFinalized and if necessary the appropriate legacy event when an\n     *         ETH bridge is finalized on this chain.\n     *\n     * @param _from      Address of the sender.\n     * @param _to        Address of the receiver.\n     * @param _amount    Amount of ETH sent.\n     * @param _extraData Extra data sent with the transaction.\n     */\n    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        virtual\n    {\n        emit ETHBridgeFinalized(_from, _to, _amount, _extraData);\n    }\n\n    /**\n     * @notice Emits the ERC20BridgeInitiated event and if necessary the appropriate legacy\n     *         event when an ERC20 bridge is initiated to the other chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the ERC20 on the remote chain.\n     * @param _from        Address of the sender.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of the ERC20 sent.\n     * @param _extraData   Extra data sent with the transaction.\n     */\n    function _emitERC20BridgeInitiated(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal virtual {\n        emit ERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /**\n     * @notice Emits the ERC20BridgeFinalized event and if necessary the appropriate legacy\n     *         event when an ERC20 bridge is initiated to the other chain.\n     *\n     * @param _localToken  Address of the ERC20 on this chain.\n     * @param _remoteToken Address of the ERC20 on the remote chain.\n     * @param _from        Address of the sender.\n     * @param _to          Address of the receiver.\n     * @param _amount      Amount of the ERC20 sent.\n     * @param _extraData   Extra data sent with the transaction.\n     */\n    function _emitERC20BridgeFinalized(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal virtual {\n        emit ERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 486,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "StandardBridge",
+        "similarity": 0.97,
+        "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+        "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+        "commitTimestamp": "2024-01-08T19:01:54Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/StandardBridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Mitigation review commit named by the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 2,
+        "removed": 10,
+        "ignoredAdded": 242,
+        "ignoredRemoved": 168,
+        "unchanged": 486,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 54,
+            "newStart": 1,
+            "newLines": 77,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract StandardBridge is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract StandardBridge {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeERC20 for IERC20;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @notice The L2 gas limit set when eth is depoisited using the receive() function.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @notice The L2 gas limit set when eth is depoisited using the receive() function.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "    uint32 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 200_000;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @notice Messenger contract on this domain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     * @notice Messenger contract on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 12,
+                "text": "    CrossDomainMessenger public immutable MESSENGER;"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Corresponding bridge on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     * @notice Corresponding bridge on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 17,
+                "text": "    StandardBridge public immutable OTHER_BRIDGE;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @custom:spacer messenger",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    address private spacer_0_2_20;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @custom:spacer messenger",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    address private spacer_0_0_20;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @custom:spacer l2TokenBridge",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * @custom:spacer l2TokenBridge",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 31,
+                "text": "    address private spacer_1_0_20;"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @notice Mapping that stores deposits for a given pair of local and remote tokens.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * @notice Mapping that stores deposits for a given pair of local and remote tokens.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 36,
+                "text": "    mapping(address => mapping(address => uint256)) public deposits;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 37, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    ///         A gap size of 47 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    ///         would be a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     *         A gap size of 47 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     *         would be a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 43,
+                "text": "    uint256[47] private __gap;"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 44, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @notice Emitted when an ETH bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @param from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @param extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * @notice Emitted when an ETH bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 47, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * @param from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * @param to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     * @param amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * @param extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 53,
+                "text": "    event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData);"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @notice Emitted when an ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @param to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @param amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @param extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * @notice Emitted when an ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 57, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @param from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * @param to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @param amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * @param extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 63,
+                "text": "    event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData);"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    /// @notice Emitted when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @param localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// @param remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @param from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @param to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @param amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @param extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @notice Emitted when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 67, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * @param localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     * @param remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "     * @param from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     * @param to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     * @param amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "     * @param extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 75,
+                "text": "    event ERC20BridgeInitiated("
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 76,
+                "text": "        address indexed localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 77,
+                "text": "        address indexed remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 13,
+            "newStart": 81,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 81,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 82, "text": "    );" },
+              { "type": " ", "oldLine": 60, "newLine": 83, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @notice Emitted when an ERC20 bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /// @param localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    /// @param remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// @param from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    /// @param to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    /// @param amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    /// @param extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "     * @notice Emitted when an ERC20 bridge is finalized on this chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 86, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "     * @param localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "     * @param remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * @param from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "     * @param to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @param amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * @param extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 94,
+                "text": "    event ERC20BridgeFinalized("
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 95,
+                "text": "        address indexed localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 96,
+                "text": "        address indexed remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 15,
+            "newStart": 100,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 100,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 101, "text": "    );" },
+              { "type": " ", "oldLine": 76, "newLine": 102, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// @notice Only allow EOAs to call the functions. Note that this is not safe against contracts",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    ///         calling code within their constructors, but also doesn't really matter since we're",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    ///         just trying to prevent users accidentally depositing with smart contract wallets.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "     * @notice Only allow EOAs to call the functions. Note that this is not safe against contracts",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "     *         calling code within their constructors, but also doesn't really matter since we're",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "     *         just trying to prevent users accidentally depositing with smart contract wallets.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 108,
+                "text": "    modifier onlyEOA() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 109,
+                "text": "        require(!Address.isContract(msg.sender), \"StandardBridge: function can only be called from an EOA\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 110,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 83, "newLine": 111, "text": "    }" },
+              { "type": " ", "oldLine": 84, "newLine": 112, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    /// @notice Ensures that the caller is a cross-chain message from the other bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * @notice Ensures that the caller is a cross-chain message from the other bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 116,
+                "text": "    modifier onlyOtherBridge() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 117,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 118,
+                "text": "            msg.sender == address(MESSENGER) && MESSENGER.xDomainMessageSender() == address(OTHER_BRIDGE),"
+              }
+            ]
+          },
+          {
+            "oldStart": 91,
+            "oldLines": 73,
+            "newStart": 121,
+            "newLines": 76,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 121,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 122, "text": "    }" },
+              { "type": " ", "oldLine": 93, "newLine": 123, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @param _messenger   Address of CrossDomainMessenger on this network.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @param _otherBridge Address of the other StandardBridge contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @param _messenger   Address of CrossDomainMessenger on this network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * @param _otherBridge Address of the other StandardBridge contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 128,
+                "text": "    constructor(address payable _messenger, address payable _otherBridge) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 129,
+                "text": "        MESSENGER = CrossDomainMessenger(_messenger);"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 130,
+                "text": "        OTHER_BRIDGE = StandardBridge(_otherBridge);"
+              },
+              { "type": " ", "oldLine": 99, "newLine": 131, "text": "    }" },
+              { "type": " ", "oldLine": 100, "newLine": 132, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    /// @notice Allows EOAs to bridge ETH by sending directly to the bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    ///         Must be implemented by contracts that inherit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     * @notice Allows EOAs to bridge ETH by sending directly to the bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     *         Must be implemented by contracts that inherit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 137,
+                "text": "    receive() external payable virtual;"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 138, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// @notice Getter for messenger contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /// @return Messenger contract on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "     * @notice Legacy getter for messenger contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "     * @return Messenger contract on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 145,
+                "text": "    function messenger() external view returns (CrossDomainMessenger) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 146,
+                "text": "        return MESSENGER;"
+              },
+              { "type": " ", "oldLine": 109, "newLine": 147, "text": "    }" },
+              { "type": " ", "oldLine": 110, "newLine": 148, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @notice Getter for the other bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /// @return The bridge contract on the other network.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    function otherBridge() external view returns (StandardBridge) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        return OTHER_BRIDGE;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 116, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    /// @notice This function should return true if the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    ///         On L1 this function will check the SuperchainConfig for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    ///         On L2 this function should be a no-op.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    /// @return Whether or not the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        return false;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 124, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    /// @notice Sends ETH to the sender's address on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "     * @notice Sends ETH to the sender's address on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 157,
+                "text": "    function bridgeETH(uint32 _minGasLimit, bytes calldata _extraData) public payable onlyEOA {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 158,
+                "text": "        _initiateBridgeETH(msg.sender, msg.sender, msg.value, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 132, "newLine": 159, "text": "    }" },
+              { "type": " ", "oldLine": 133, "newLine": 160, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "    /// @notice Sends ETH to a receiver's address on the other chain. Note that if ETH is sent to a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "    ///         smart contract and the call fails, the ETH will be temporarily locked in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "    ///         StandardBridge on the other chain until the call is replayed. If the call cannot be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "    ///         replayed with any amount of gas (call always reverts), then the ETH will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "    ///         permanently locked in the StandardBridge on the other chain. ETH will also",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "    ///         be locked if the receiver is the other bridge, because finalizeBridgeETH will revert",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "    ///         in that case.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "     * @notice Sends ETH to a receiver's address on the other chain. Note that if ETH is sent to a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "     *         smart contract and the call fails, the ETH will be temporarily locked in the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "     *         StandardBridge on the other chain until the call is replayed. If the call cannot be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "     *         replayed with any amount of gas (call always reverts), then the ETH will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "     *         permanently locked in the StandardBridge on the other chain. ETH will also",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     *         be locked if the receiver is the other bridge, because finalizeBridgeETH will revert",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "     *         in that case.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 176,
+                "text": "    function bridgeETHTo(address _to, uint32 _minGasLimit, bytes calldata _extraData) public payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 177,
+                "text": "        _initiateBridgeETH(msg.sender, _to, msg.value, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 148, "newLine": 178, "text": "    }" },
+              { "type": " ", "oldLine": 149, "newLine": 179, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "    /// @notice Sends ERC20 tokens to the sender's address on the other chain. Note that if the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    ///         ERC20 token on the other chain does not recognize the local token as the correct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "    ///         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "    ///         this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    /// @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    /// @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "     * @notice Sends ERC20 tokens to the sender's address on the other chain. Note that if the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "     *         ERC20 token on the other chain does not recognize the local token as the correct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "     *         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "     *         this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "     * @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "     * @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 194,
+                "text": "    function bridgeERC20("
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 195,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 196,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 18,
+            "newStart": 201,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 201,
+                "text": "        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 169, "newLine": 202, "text": "    }" },
+              { "type": " ", "oldLine": 170, "newLine": 203, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    /// @notice Sends ERC20 tokens to a receiver's address on the other chain. Note that if the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "    ///         ERC20 token on the other chain does not recognize the local token as the correct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "    ///         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    ///         this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "    /// @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "    /// @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "     * @notice Sends ERC20 tokens to a receiver's address on the other chain. Note that if the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "     *         ERC20 token on the other chain does not recognize the local token as the correct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "     *         pair token, the ERC20 bridge will fail and the tokens will be returned to sender on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "     *         this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "     * @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "     * @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 219,
+                "text": "    function bridgeERC20To("
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 220,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 221,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 20,
+            "newStart": 227,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 227,
+                "text": "        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, _to, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 192, "newLine": 228, "text": "    }" },
+              { "type": " ", "oldLine": 193, "newLine": 229, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /// @notice Finalizes an ETH bridge on this chain. Can only be triggered by the other",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    ///         StandardBridge contract on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    /// @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    /// @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    /// @param _amount    Amount of ETH being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "    /// @param _extraData Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    ///                   not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "    ///                   to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "     * @notice Finalizes an ETH bridge on this chain. Can only be triggered by the other",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 232,
+                "text": "     *         StandardBridge contract on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "     * @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "     * @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "     * @param _amount    Amount of ETH being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "     * @param _extraData Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "     *                   not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "     *                   to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 241,
+                "text": "    function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes calldata _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 242,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 243,
+                "text": "        payable"
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 244,
+                "text": "        onlyOtherBridge"
+              },
+              { "type": " ", "oldLine": 206, "newLine": 245, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        require(paused() == false, \"StandardBridge: paused\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 246,
+                "text": "        require(msg.value == _amount, \"StandardBridge: amount sent does not match amount required\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 247,
+                "text": "        require(_to != address(this), \"StandardBridge: cannot send to self\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 248,
+                "text": "        require(_to != address(MESSENGER), \"StandardBridge: cannot send to messenger\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 217,
+            "oldLines": 16,
+            "newStart": 255,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 255,
+                "text": "        require(success, \"StandardBridge: ETH transfer failed\");"
+              },
+              { "type": " ", "oldLine": 218, "newLine": 256, "text": "    }" },
+              { "type": " ", "oldLine": 219, "newLine": 257, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "    /// @notice Finalizes an ERC20 bridge on this chain. Can only be triggered by the other",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "    ///         StandardBridge contract on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "    /// @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "    /// @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "    /// @param _amount      Amount of the ERC20 being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "     * @notice Finalizes an ERC20 bridge on this chain. Can only be triggered by the other",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "     *         StandardBridge contract on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "     * @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "     * @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "     * @param _amount      Amount of the ERC20 being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 271,
+                "text": "    function finalizeBridgeERC20("
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 272,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 273,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 235,
+            "oldLines": 7,
+            "newStart": 276,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 276,
+                "text": "        uint256 _amount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 277,
+                "text": "        bytes calldata _extraData"
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 278,
+                "text": "    ) public onlyOtherBridge {"
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "        require(paused() == false, \"StandardBridge: paused\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 279,
+                "text": "        if (_isOptimismMintableERC20(_localToken)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 280,
+                "text": "            require("
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 281,
+                "text": "                _isCorrectTokenPair(_localToken, _remoteToken),"
+              }
+            ]
+          },
+          {
+            "oldStart": 253,
+            "oldLines": 14,
+            "newStart": 293,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 293,
+                "text": "        _emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);"
+              },
+              { "type": " ", "oldLine": 254, "newLine": 294, "text": "    }" },
+              { "type": " ", "oldLine": 255, "newLine": 295, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "    /// @notice Initiates a bridge of ETH through the CrossDomainMessenger.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "    /// @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "    /// @param _amount      Amount of ETH being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "     * @notice Initiates a bridge of ETH through the CrossDomainMessenger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "     * @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "     * @param _amount      Amount of ETH being bridged.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 307,
+                "text": "    function _initiateBridgeETH("
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 308,
+                "text": "        address _from,"
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 309,
+                "text": "        address _to,"
+              }
+            ]
+          },
+          {
+            "oldStart": 281,
+            "oldLines": 15,
+            "newStart": 324,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 324,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 325, "text": "    }" },
+              { "type": " ", "oldLine": 283, "newLine": 326, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "    /// @notice Sends ERC20 tokens to a receiver's address on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "    /// @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 287,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "    /// @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 290,
+                "text": "    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 291,
+                "text": "    ///                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 292,
+                "text": "    ///                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "     * @notice Sends ERC20 tokens to a receiver's address on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "     * @param _remoteToken Address of the corresponding token on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "     * @param _amount      Amount of local tokens to deposit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "     * @param _extraData   Extra data to be sent with the transaction. Note that the recipient will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "     *                     not be triggered with this data, but it will be emitted and can be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "     *                     to identify the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 339,
+                "text": "    function _initiateBridgeERC20("
+              },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 340,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 341,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 333,
+            "oldLines": 21,
+            "newStart": 379,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 333,
+                "newLine": 379,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 334, "newLine": 380, "text": "    }" },
+              { "type": " ", "oldLine": 335, "newLine": 381, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 336,
+                "text": "    /// @notice Checks if a given address is an OptimismMintableERC20. Not perfect, but good enough.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 337,
+                "text": "    ///         Just the way we like it.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 338,
+                "text": "    /// @param _token Address of the token to check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 339,
+                "text": "    /// @return True if the token is an OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 382,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 383,
+                "text": "     * @notice Checks if a given address is an OptimismMintableERC20. Not perfect, but good enough.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 384,
+                "text": "     *         Just the way we like it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 385,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 386,
+                "text": "     * @param _token Address of the token to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 388,
+                "text": "     * @return True if the token is an OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 389,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 390,
+                "text": "    function _isOptimismMintableERC20(address _token) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 341,
+                "newLine": 391,
+                "text": "        return ERC165Checker.supportsInterface(_token, type(ILegacyMintableERC20).interfaceId)"
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 392,
+                "text": "            || ERC165Checker.supportsInterface(_token, type(IOptimismMintableERC20).interfaceId);"
+              },
+              { "type": " ", "oldLine": 343, "newLine": 393, "text": "    }" },
+              { "type": " ", "oldLine": 344, "newLine": 394, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 345,
+                "text": "    /// @notice Checks if the \"other token\" is the correct pair token for the OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 346,
+                "text": "    ///         Calls can be saved in the future by combining this logic with",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 347,
+                "text": "    ///         `_isOptimismMintableERC20`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 348,
+                "text": "    /// @param _mintableToken OptimismMintableERC20 to check against.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 349,
+                "text": "    /// @param _otherToken    Pair token to check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 350,
+                "text": "    /// @return True if the other token is the correct pair token for the OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 395,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 396,
+                "text": "     * @notice Checks if the \"other token\" is the correct pair token for the OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 397,
+                "text": "     *         Calls can be saved in the future by combining this logic with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 398,
+                "text": "     *         `_isOptimismMintableERC20`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 399,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 400,
+                "text": "     * @param _mintableToken OptimismMintableERC20 to check against.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 401,
+                "text": "     * @param _otherToken    Pair token to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 402,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 403,
+                "text": "     * @return True if the other token is the correct pair token for the OptimismMintableERC20.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 404,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 351,
+                "newLine": 405,
+                "text": "    function _isCorrectTokenPair(address _mintableToken, address _otherToken) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 406,
+                "text": "        if (ERC165Checker.supportsInterface(_mintableToken, type(ILegacyMintableERC20).interfaceId)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 353,
+                "newLine": 407,
+                "text": "            return _otherToken == ILegacyMintableERC20(_mintableToken).l1Token();"
+              }
+            ]
+          },
+          {
+            "oldStart": 356,
+            "oldLines": 12,
+            "newStart": 410,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 356,
+                "newLine": 410,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 357, "newLine": 411, "text": "    }" },
+              { "type": " ", "oldLine": 358, "newLine": 412, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 359,
+                "text": "    /// @notice Emits the ETHBridgeInitiated event and if necessary the appropriate legacy event",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 360,
+                "text": "    ///         when an ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 361,
+                "text": "    /// @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 362,
+                "text": "    /// @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 363,
+                "text": "    /// @param _amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 364,
+                "text": "    /// @param _extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 413,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "     * @notice Emits the ETHBridgeInitiated event and if necessary the appropriate legacy event",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "     *          when an ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "     * @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "     * @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "     * @param _amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 420,
+                "text": "     * @param _extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 421,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 365,
+                "newLine": 422,
+                "text": "    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 423,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 424,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 369,
+            "oldLines": 12,
+            "newStart": 426,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 426,
+                "text": "        emit ETHBridgeInitiated(_from, _to, _amount, _extraData);"
+              },
+              { "type": " ", "oldLine": 370, "newLine": 427, "text": "    }" },
+              { "type": " ", "oldLine": 371, "newLine": 428, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 372,
+                "text": "    /// @notice Emits the ETHBridgeFinalized and if necessary the appropriate legacy event when an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "    ///         ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 374,
+                "text": "    /// @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 375,
+                "text": "    /// @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "    /// @param _amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 377,
+                "text": "    /// @param _extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 429,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 430,
+                "text": "     * @notice Emits the ETHBridgeFinalized and if necessary the appropriate legacy event when an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 431,
+                "text": "     *         ETH bridge is finalized on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 432,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 433,
+                "text": "     * @param _from      Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 434,
+                "text": "     * @param _to        Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 435,
+                "text": "     * @param _amount    Amount of ETH sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 436,
+                "text": "     * @param _extraData Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 438,
+                "text": "    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)"
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 439,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 380,
+                "newLine": 440,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 382,
+            "oldLines": 14,
+            "newStart": 442,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 382,
+                "newLine": 442,
+                "text": "        emit ETHBridgeFinalized(_from, _to, _amount, _extraData);"
+              },
+              { "type": " ", "oldLine": 383, "newLine": 443, "text": "    }" },
+              { "type": " ", "oldLine": 384, "newLine": 444, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 385,
+                "text": "    /// @notice Emits the ERC20BridgeInitiated event and if necessary the appropriate legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 386,
+                "text": "    ///         event when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 387,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 388,
+                "text": "    /// @param _remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 389,
+                "text": "    /// @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 390,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 391,
+                "text": "    /// @param _amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 392,
+                "text": "    /// @param _extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 445,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 446,
+                "text": "     * @notice Emits the ERC20BridgeInitiated event and if necessary the appropriate legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "     *         event when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 448,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 449,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 450,
+                "text": "     * @param _remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 451,
+                "text": "     * @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 453,
+                "text": "     * @param _amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 454,
+                "text": "     * @param _extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 455,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 393,
+                "newLine": 456,
+                "text": "    function _emitERC20BridgeInitiated("
+              },
+              {
+                "type": " ",
+                "oldLine": 394,
+                "newLine": 457,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 458,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 401,
+            "oldLines": 14,
+            "newStart": 464,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 401,
+                "newLine": 464,
+                "text": "        emit ERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);"
+              },
+              { "type": " ", "oldLine": 402, "newLine": 465, "text": "    }" },
+              { "type": " ", "oldLine": 403, "newLine": 466, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 404,
+                "text": "    /// @notice Emits the ERC20BridgeFinalized event and if necessary the appropriate legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 405,
+                "text": "    ///         event when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 406,
+                "text": "    /// @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 407,
+                "text": "    /// @param _remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 408,
+                "text": "    /// @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 409,
+                "text": "    /// @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 410,
+                "text": "    /// @param _amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 411,
+                "text": "    /// @param _extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "     * @notice Emits the ERC20BridgeFinalized event and if necessary the appropriate legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 469,
+                "text": "     *         event when an ERC20 bridge is initiated to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 470,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 471,
+                "text": "     * @param _localToken  Address of the ERC20 on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 472,
+                "text": "     * @param _remoteToken Address of the ERC20 on the remote chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 473,
+                "text": "     * @param _from        Address of the sender.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 474,
+                "text": "     * @param _to          Address of the receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 475,
+                "text": "     * @param _amount      Amount of the ERC20 sent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "     * @param _extraData   Extra data sent with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 477,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 478,
+                "text": "    function _emitERC20BridgeFinalized("
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 479,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 480,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

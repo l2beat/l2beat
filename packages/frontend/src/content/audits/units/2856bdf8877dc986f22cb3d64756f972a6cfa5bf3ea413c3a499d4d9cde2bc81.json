@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2856bdf8877dc986f22cb3d64756f972a6cfa5bf3ea413c3a499d4d9cde2bc81",
+  "name": "validate_consecutive_checkpoint_rollups.nr",
+  "kind": "program",
+  "lines": 43,
+  "source": "use crate::{abis::CheckpointRollupPublicInputs, tx_merge::assert_rollups_filled_greedily};\n\npub fn validate_consecutive_checkpoint_rollups(\n    left: CheckpointRollupPublicInputs,\n    right: CheckpointRollupPublicInputs,\n) {\n    assert_rollups_filled_greedily(left.num_checkpoints(), right.num_checkpoints());\n    assert_equal_constants(left, right);\n    assert_rollups_follow_on_from_each_other(left, right);\n}\n\nfn assert_equal_constants(left: CheckpointRollupPublicInputs, right: CheckpointRollupPublicInputs) {\n    assert_eq(left.constants, right.constants, \"Mismatched constants in checkpoint rollups\");\n}\n\nfn assert_rollups_follow_on_from_each_other(\n    left: CheckpointRollupPublicInputs,\n    right: CheckpointRollupPublicInputs,\n) {\n    assert_eq(\n        left.new_archive,\n        right.previous_archive,\n        \"Mismatched archives: expected right.previous_archive to match left.new_archive\",\n    );\n\n    assert_eq(\n        left.new_out_hash,\n        right.previous_out_hash,\n        \"Mismatched out hashes: expected right.previous_out_hash to match left.new_out_hash\",\n    );\n\n    assert_eq(\n        left.end_blob_accumulator,\n        right.start_blob_accumulator,\n        \"Mismatched blob accumulators: expected right.start_blob_accumulator to match left.end_blob_accumulator\",\n    );\n\n    assert_eq(\n        left.final_blob_challenges,\n        right.final_blob_challenges,\n        \"Mismatched final blob challenges of an epoch in checkpoint rollups\",\n    );\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c121fe69bdbe21f000a0580d99dfbd51b9a0b65e8acb3ce8977a232ce700a234",
+  "name": "ERC1155ReceiverUpgradeable",
+  "kind": "abstract",
+  "lines": 25,
+  "source": "abstract contract ERC1155ReceiverUpgradeable is Initializable, ERC165Upgradeable, IERC1155ReceiverUpgradeable {\n    function __ERC1155Receiver_init() internal onlyInitializing {}\n\n    function __ERC1155Receiver_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n\n    function supportsInterface(bytes4 interfaceId)\n        public\n        view\n        virtual\n        override(ERC165Upgradeable, IERC165Upgradeable)\n        returns (bool)\n    {\n        return interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

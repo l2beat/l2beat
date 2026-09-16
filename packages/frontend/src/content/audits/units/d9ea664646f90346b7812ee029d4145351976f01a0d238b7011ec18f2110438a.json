@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d9ea664646f90346b7812ee029d4145351976f01a0d238b7011ec18f2110438a",
+  "name": "L2LidoGateway",
+  "kind": "contract",
+  "lines": 176,
+  "source": "contract L2LidoGateway is L2ERC20Gateway, LidoBridgeableTokens, LidoGatewayManager {\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when withdraw zero amount token.\n    error ErrorWithdrawZeroAmount();\n\n    /// @dev Thrown when withdraw erc20 with calldata.\n    error WithdrawAndCallIsNotAllowed();\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @dev The initial version of `L2LidoGateway` use `L2CustomERC20Gateway`. We keep the storage\n    /// slot for `tokenMapping` for compatibility. It should no longer be used.\n    mapping(address => address) private __tokenMapping;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L2LidoGateway` implementation contract.\n    ///\n    /// @param _l1Token The address of the bridged token in the L1 chain\n    /// @param _l2Token The address of the token minted on the L2 chain when token bridged\n    /// @param _counterpart The address of `L1LidoGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    constructor(address _l1Token, address _l2Token, address _counterpart, address _router, address _messenger)\n        LidoBridgeableTokens(_l1Token, _l2Token)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_l1Token == address(0) || _l2Token == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L2LidoGateway v1.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of `L1LidoGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /// @notice Initialize the storage of L2LidoGateway v2.\n    /// @param _depositsEnabler The address of user who can enable deposits\n    /// @param _depositsEnabler The address of user who can disable deposits\n    /// @param _withdrawalsEnabler The address of user who can enable withdrawals\n    /// @param _withdrawalsDisabler The address of user who can disable withdrawals\n    function initializeV2(\n        address _depositsEnabler,\n        address _depositsDisabler,\n        address _withdrawalsEnabler,\n        address _withdrawalsDisabler\n    ) external reinitializer(2) {\n        __LidoGatewayManager_init(_depositsEnabler, _depositsDisabler, _withdrawalsEnabler, _withdrawalsDisabler);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL1ERC20Address(address _l2Token)\n        external\n        view\n        override\n        onlySupportedL2Token(_l2Token)\n        returns (address)\n    {\n        return l1Token;\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL2ERC20Address(address _l1Token)\n        external\n        view\n        override\n        onlySupportedL1Token(_l1Token)\n        returns (address)\n    {\n        return l2Token;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    /// @dev The length of `_data` always be zero, which guarantee by `L1LidoGateway`.\n    function finalizeDepositERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    )\n        external\n        payable\n        override\n        onlyCallByCounterpart\n        nonReentrant\n        onlySupportedL1Token(_l1Token)\n        onlySupportedL2Token(_l2Token)\n        whenDepositsEnabled\n    {\n        if (msg.value != 0) {\n            revert ErrorNonZeroMsgValue();\n        }\n\n        IScrollERC20Upgradeable(_l2Token).mint(_to, _amount);\n\n        emit FinalizeDepositERC20(_l1Token, _l2Token, _from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L2ERC20Gateway\n    function _withdraw(address _l2Token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n        onlySupportedL2Token(_l2Token)\n        onlyNonZeroAccount(_to)\n        whenWithdrawalsEnabled\n    {\n        if (_amount == 0) {\n            revert ErrorWithdrawZeroAmount();\n        }\n\n        // 1. Extract real sender if this call is from L2GatewayRouter.\n        address _from = _msgSender();\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n        if (_data.length != 0) {\n            revert WithdrawAndCallIsNotAllowed();\n        }\n\n        // 2. Burn token.\n        IScrollERC20Upgradeable(_l2Token).burn(_from, _amount);\n\n        // 3. Generate message passed to L1LidoGateway.\n        bytes memory _message =\n            abi.encodeCall(IL1ERC20Gateway.finalizeWithdrawERC20, (l1Token, _l2Token, _from, _to, _amount, _data));\n\n        // 4. send message to L2ScrollMessenger\n        IL2ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit);\n\n        emit WithdrawERC20(l1Token, _l2Token, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 176,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2LidoGateway",
+        "similarity": 1,
+        "reportId": "scroll/zellic-scroll-lido-gateway-audit",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/lido/L2LidoGateway.sol",
+        "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
+        "commitTimestamp": "2024-01-16T18:25:41Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/69224ebb935d499c055c7859c1c8ade57244249c/contracts/src/lido/L2LidoGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at the audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

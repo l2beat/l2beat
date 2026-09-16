@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "58f44037e8fc8c1343317a04e973ec99d5b519b666d0cb13791e48a371e9bac8",
+  "name": "LidoBridgeableTokens",
+  "kind": "abstract",
+  "lines": 74,
+  "source": "abstract contract LidoBridgeableTokens {\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of bridged token in L1 chain.\n    address public immutable l1Token;\n\n    /// @notice The address of the token minted on the L2 chain when token bridged.\n    address public immutable l2Token;\n\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown the given `l1Token` is not supported.\n    error ErrorUnsupportedL1Token();\n\n    /// @dev Thrown the given `l2Token` is not supported.\n    error ErrorUnsupportedL2Token();\n\n    /// @dev Thrown the given account is zero address.\n    error ErrorAccountIsZeroAddress();\n\n    /// @dev Thrown the `msg.value` is not zero.\n    error ErrorNonZeroMsgValue();\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n\n    /// @dev Validates that passed `_l1Token` is supported by the bridge\n    modifier onlySupportedL1Token(address _l1Token) {\n        if (_l1Token != l1Token) {\n            revert ErrorUnsupportedL1Token();\n        }\n        _;\n    }\n\n    /// @dev Validates that passed `_l2Token` is supported by the bridge\n    modifier onlySupportedL2Token(address _l2Token) {\n        if (_l2Token != l2Token) {\n            revert ErrorUnsupportedL2Token();\n        }\n        _;\n    }\n\n    /// @dev validates that `_account` is not zero address\n    modifier onlyNonZeroAccount(address _account) {\n        if (_account == address(0)) {\n            revert ErrorAccountIsZeroAddress();\n        }\n        _;\n    }\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @param _l1Token The address of the bridged token in the L1 chain\n    /// @param _l2Token The address of the token minted on the L2 chain when token bridged\n    constructor(address _l1Token, address _l2Token) {\n        l1Token = _l1Token;\n        l2Token = _l2Token;\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 74,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LidoBridgeableTokens",
+        "similarity": 1,
+        "reportId": "scroll/zellic-scroll-lido-gateway-audit",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/lido/LidoBridgeableTokens.sol",
+        "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
+        "commitTimestamp": "2024-01-16T18:25:41Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/69224ebb935d499c055c7859c1c8ade57244249c/contracts/src/lido/LidoBridgeableTokens.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at the audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

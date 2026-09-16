@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "83bf8978161c27047cd7f7d65088393939d31c6ae85de910d4c2692e1cb05311",
+  "name": "Encoding",
+  "kind": "library",
+  "lines": 186,
+  "source": "library Encoding {\n    /// @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent\n    ///         to the L2 system. Useful for searching for a deposit in the L2 system. The\n    ///         transaction is prefixed with 0x7e to identify its EIP-2718 type.\n    /// @param _tx User deposit transaction to encode.\n    /// @return RLP encoded L2 deposit transaction.\n    function encodeDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes memory) {\n        bytes32 source = Hashing.hashDepositSource(_tx.l1BlockHash, _tx.logIndex);\n        bytes[] memory raw = new bytes[](8);\n        raw[0] = RLPWriter.writeBytes(abi.encodePacked(source));\n        raw[1] = RLPWriter.writeAddress(_tx.from);\n        raw[2] = _tx.isCreation ? RLPWriter.writeBytes(\"\") : RLPWriter.writeAddress(_tx.to);\n        raw[3] = RLPWriter.writeUint(_tx.mint);\n        raw[4] = RLPWriter.writeUint(_tx.value);\n        raw[5] = RLPWriter.writeUint(uint256(_tx.gasLimit));\n        raw[6] = RLPWriter.writeBool(false);\n        raw[7] = RLPWriter.writeBytes(_tx.data);\n        return abi.encodePacked(uint8(0x7e), RLPWriter.writeList(raw));\n    }\n\n    /// @notice Encodes the cross domain message based on the version that is encoded into the\n    ///         message nonce.\n    /// @param _nonce    Message nonce with version encoded into the first two bytes.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        (, uint16 version) = decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return encodeCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Encoding: unknown cross domain message version\");\n        }\n    }\n\n    /// @notice Encodes a cross domain message based on the V0 (legacy) encoding.\n    /// @param _target Address of the target of the message.\n    /// @param _sender Address of the sender of the message.\n    /// @param _data   Data to send with the message.\n    /// @param _nonce  Message nonce.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes memory)\n    {\n        return abi.encodeWithSignature(\"relayMessage(address,address,bytes,uint256)\", _target, _sender, _data, _nonce);\n    }\n\n    /// @notice Encodes a cross domain message based on the V1 (current) encoding.\n    /// @param _nonce    Message nonce.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Encoded cross domain message.\n    function encodeCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        return abi.encodeWithSignature(\n            \"relayMessage(uint256,address,address,uint256,uint256,bytes)\",\n            _nonce,\n            _sender,\n            _target,\n            _value,\n            _gasLimit,\n            _data\n        );\n    }\n\n    /// @notice Adds a version number into the first two bytes of a message nonce.\n    /// @param _nonce   Message nonce to encode into.\n    /// @param _version Version number to encode into the message nonce.\n    /// @return Message nonce with version encoded into the first two bytes.\n    function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {\n        uint256 nonce;\n        assembly {\n            nonce := or(shl(240, _version), _nonce)\n        }\n        return nonce;\n    }\n\n    /// @notice Pulls the version out of a version-encoded nonce.\n    /// @param _nonce Message nonce with version encoded into the first two bytes.\n    /// @return Nonce without encoded version.\n    /// @return Version of the message.\n    function decodeVersionedNonce(uint256 _nonce) internal pure returns (uint240, uint16) {\n        uint240 nonce;\n        uint16 version;\n        assembly {\n            nonce := and(_nonce, 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)\n            version := shr(240, _nonce)\n        }\n        return (nonce, version);\n    }\n\n    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesEcotone\n    /// @param baseFeeScalar       L1 base fee Scalar\n    /// @param blobBaseFeeScalar   L1 blob base fee Scalar\n    /// @param sequenceNumber      Number of L2 blocks since epoch start.\n    /// @param timestamp           L1 timestamp.\n    /// @param number              L1 blocknumber.\n    /// @param baseFee             L1 base fee.\n    /// @param blobBaseFee         L1 blob base fee.\n    /// @param hash                L1 blockhash.\n    /// @param batcherHash         Versioned hash to authenticate batcher by.\n    function encodeSetL1BlockValuesEcotone(\n        uint32 baseFeeScalar,\n        uint32 blobBaseFeeScalar,\n        uint64 sequenceNumber,\n        uint64 timestamp,\n        uint64 number,\n        uint256 baseFee,\n        uint256 blobBaseFee,\n        bytes32 hash,\n        bytes32 batcherHash\n    ) internal pure returns (bytes memory) {\n        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesEcotone()\"));\n        return abi.encodePacked(\n            functionSignature,\n            baseFeeScalar,\n            blobBaseFeeScalar,\n            sequenceNumber,\n            timestamp,\n            number,\n            baseFee,\n            blobBaseFee,\n            hash,\n            batcherHash\n        );\n    }\n\n    /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesInterop\n    /// @param _baseFeeScalar       L1 base fee Scalar\n    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar\n    /// @param _sequenceNumber      Number of L2 blocks since epoch start.\n    /// @param _timestamp           L1 timestamp.\n    /// @param _number              L1 blocknumber.\n    /// @param _baseFee             L1 base fee.\n    /// @param _blobBaseFee         L1 blob base fee.\n    /// @param _hash                L1 blockhash.\n    /// @param _batcherHash         Versioned hash to authenticate batcher by.\n    function encodeSetL1BlockValuesIsthmus(\n        uint32 _baseFeeScalar,\n        uint32 _blobBaseFeeScalar,\n        uint64 _sequenceNumber,\n        uint64 _timestamp,\n        uint64 _number,\n        uint256 _baseFee,\n        uint256 _blobBaseFee,\n        bytes32 _hash,\n        bytes32 _batcherHash\n    ) internal pure returns (bytes memory) {\n        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesIsthmus()\"));\n        return abi.encodePacked(\n            functionSignature,\n            _baseFeeScalar,\n            _blobBaseFeeScalar,\n            _sequenceNumber,\n            _timestamp,\n            _number,\n            _baseFee,\n            _blobBaseFee,\n            _hash,\n            _batcherHash\n        );\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 182,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Encoding",
+        "similarity": 0.948,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 182,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 158,
+            "oldLines": 8,
+            "newStart": 158,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 158,
+                "text": "    /// @param _blobBaseFee         L1 blob base fee."
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    /// @param _hash                L1 blockhash."
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 160,
+                "text": "    /// @param _batcherHash         Versioned hash to authenticate batcher by."
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    /// @param _dependencySet       Array of the chain IDs in the interop dependency set.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    function encodeSetL1BlockValuesInterop(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    function encodeSetL1BlockValuesIsthmus(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 162,
+                "text": "        uint32 _baseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 163,
+                "text": "        uint32 _blobBaseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 164,
+                "text": "        uint64 _sequenceNumber,"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 14,
+            "newStart": 167,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 167,
+                "text": "        uint256 _baseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 168,
+                "text": "        uint256 _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 169,
+                "text": "        bytes32 _hash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        bytes32 _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "        uint256[] memory _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "        bytes32 _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 171,
+                "text": "    ) internal pure returns (bytes memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "        require(_dependencySet.length <= type(uint8).max, \"Encoding: dependency set length is too large\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "        // Check that the batcher hash is just the address with 0 padding to the left for version 0.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "        require(uint160(uint256(_batcherHash)) == uint256(_batcherHash), \"Encoding: invalid batcher hash\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 177, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesInterop()\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesIsthmus()\"));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 173,
+                "text": "        return abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 174,
+                "text": "            functionSignature,"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 175,
+                "text": "            _baseFeeScalar,"
+              }
+            ]
+          },
+          {
+            "oldStart": 186,
+            "oldLines": 9,
+            "newStart": 180,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 180,
+                "text": "            _baseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 181,
+                "text": "            _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 182,
+                "text": "            _hash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "            _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            uint8(_dependencySet.length),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "            _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 184,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 185, "text": "    }" },
+              { "type": " ", "oldLine": 194, "newLine": 186, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

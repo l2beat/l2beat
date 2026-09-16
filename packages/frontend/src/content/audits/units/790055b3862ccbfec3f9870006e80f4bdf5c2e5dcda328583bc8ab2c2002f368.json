@@ -1,0 +1,1495 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "790055b3862ccbfec3f9870006e80f4bdf5c2e5dcda328583bc8ab2c2002f368",
+  "name": "RollupCore",
+  "kind": "contract",
+  "lines": 459,
+  "source": "contract RollupCore is EIP712(\"Aztec Rollup\", \"1\"), Ownable, IStakingCore, IValidatorSelectionCore, IRollupCore {\n    using TimeLib for Timestamp;\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using FeeConfigLib for CompressedFeeConfig;\n    using ChainTipsLib for CompressedChainTips;\n\n    /**\n     * @notice The L1 block number when this rollup was deployed\n     * @dev Used when synching the node as starting block for event watching\n     */\n    uint256 public immutable L1_BLOCK_AT_GENESIS;\n\n    /**\n     * @dev Storage gap to ensure checkBlob is in its own storage slot\n     */\n    uint256 private gap = 0;\n\n    /**\n     * @notice Flag to enable/disable blob verification during simulations\n     * @dev Always true, gets unset only via state overrides during offchain simulations or in tests\n     */\n    bool public checkBlob = true;\n\n    /**\n     * @notice Initializes the Aztec rollup with all required configurations\n     * @dev Sets up time parameters, deploys auxiliary contracts (slasher, reward booster),\n     *      initializes staking, validator selection, and creates inbox/outbox contracts\n     * @param _feeAsset The ERC20 token used for transaction fees\n     * @param _stakingAsset The ERC20 token used for validator staking\n     * @param _gse The Governance Staking Escrow contract\n     * @param _epochProofVerifier The honk verifier contract for root epoch proofs\n     * @param _governance The address with owner privileges\n     * @param _genesisState Initial state containing VK tree root, protocol contracts hash, and genesis archive\n     * @param _config Comprehensive configuration including timing, staking, slashing, reward parameters, and unlock\n     * timestamp\n     */\n    constructor(\n        IERC20 _feeAsset,\n        IERC20 _stakingAsset,\n        GSE _gse,\n        IVerifier _epochProofVerifier,\n        address _governance,\n        GenesisState memory _genesisState,\n        RollupConfigInput memory _config\n    ) Ownable(_governance) {\n        StakingLib.assertValidQueueConfig(_config.stakingQueueConfig);\n\n        // queueSetSlasher schedules the replacement slasher to land at `block.timestamp +\n        // SLASHER_EXECUTION_DELAY`. If a validator's exit delay is longer, an objecting validator\n        // cannot finish withdrawal before the new slasher takes over, so the rollup cannot honor\n        // its end of the replacement opt-out window for the configured exit delay.\n        require(\n            _config.exitDelaySeconds <= StakingLib.SLASHER_EXECUTION_DELAY,\n            Errors_1.Staking__ExitDelayAboveSlasherDelay(_config.exitDelaySeconds, StakingLib.SLASHER_EXECUTION_DELAY)\n        );\n\n        TimeLib.initialize(\n            block.timestamp, _config.aztecSlotDuration, _config.aztecEpochDuration, _config.aztecProofSubmissionEpochs\n        );\n\n        ISlasher slasher = _deploySlasher(_config, _governance);\n\n        StakingLib.initialize(\n            _stakingAsset,\n            _gse,\n            Timestamp.wrap(_config.exitDelaySeconds),\n            address(slasher),\n            _config.stakingQueueConfig,\n            _config.localEjectionThreshold\n        );\n        ValidatorOperationsExtLib.initializeValidatorSelection(\n            _config.targetCommitteeSize, _config.lagInEpochsForValidatorSet, _config.lagInEpochsForRandao\n        );\n\n        _initializeRewards(_config);\n\n        L1_BLOCK_AT_GENESIS = block.number;\n\n        _initializeStore(_feeAsset, _epochProofVerifier, _genesisState, _config);\n\n        FeeLib.initialize(_config.manaTarget, _config.provingCostPerMana, _config.initialEthPerFeeAsset);\n    }\n\n    /**\n     * @notice Updates the mutable reward configuration (sequencer/prover split and checkpoint reward).\n     * @dev Only callable by the contract owner. The `rewardDistributor` and `booster` addresses are\n     *      deliberately NOT exposed by this setter -- they are written exactly once at construction\n     *      by {_initializeRewards} and immutable thereafter. Rotating either address requires\n     *      redeploying the rollup via `Registry.addRollup`.\n     * @param _config The new mutable reward configuration\n     */\n    function setRewardConfig(MutableRewardConfig memory _config) external override(IRollupCore) onlyOwner {\n        RewardExtLib.updateConfig(_config);\n        emit RewardConfigUpdated(_config);\n    }\n\n    /**\n     * @notice Updates the target mana (computational units) per slot\n     * @dev Only callable by owner. The new target must be greater than or equal to the current target\n     *      to avoid the ability for governance to use it directly to kill an old rollup.\n     *      Mana is the unit of computational work in Aztec.\n     * @param _manaTarget The new target mana per slot\n     */\n    function updateManaTarget(uint256 _manaTarget) external override(IRollupCore) onlyOwner {\n        uint256 currentManaTarget = FeeLib.getStorage().config.getManaTarget();\n        require(_manaTarget >= currentManaTarget, Errors_1.Rollup__InvalidManaTarget(currentManaTarget, _manaTarget));\n        FeeLib.updateManaTarget(_manaTarget);\n\n        emit IRollupCore.ManaTargetUpdated(_manaTarget);\n    }\n\n    /**\n     * @notice Queues a slasher replacement. Takes effect only after a 60-day delay via\n     *         {finalizeSetSlasher}. Validators who object to the change have time to exit\n     *         before it lands. Overwrites any pending change, resetting the timer.\n     * @dev The zero address is permissible. Setting to this would imply that the rollup has\n     *      at least temporarily relinquished their ability to slash.\n     * @param _slasher The address of the new slasher contract\n     */\n    function queueSetSlasher(address _slasher) external override(IStakingCore) onlyOwner {\n        ValidatorOperationsExtLib.queueSetSlasher(_slasher);\n    }\n\n    /// @notice Cancels the pending slasher replacement. Reverts if nothing is pending.\n    function cancelSetSlasher() external override(IStakingCore) onlyOwner {\n        ValidatorOperationsExtLib.cancelSetSlasher();\n    }\n\n    /// @notice Applies the pending slasher replacement once the 60-day delay has elapsed.\n    /// @dev Permissionless: the queued payload and the elapsed delay are the authorization.\n    ///      Anyone may poke the transaction through.\n    function finalizeSetSlasher() external override(IStakingCore) {\n        ValidatorOperationsExtLib.finalizeSetSlasher();\n    }\n\n    /**\n     * @notice Updates the cost of proving per unit of mana\n     * @dev Only callable by owner. This affects how proving costs are calculated in the fee model.\n     * @param _provingCostPerMana The cost in ETH per unit of mana for proving\n     */\n    function setProvingCostPerMana(EthValue _provingCostPerMana) external override(IRollupCore) onlyOwner {\n        FeeLib.updateProvingCostPerMana(_provingCostPerMana);\n    }\n\n    /**\n     * @notice Updates the configuration for the staking entry queue\n     * @dev Only callable by owner. Controls how validators enter the active set.\n     * @param _config New configuration including queue size limits and timing parameters\n     */\n    function updateStakingQueueConfig(StakingQueueConfig memory _config) external override(IStakingCore) onlyOwner {\n        ValidatorOperationsExtLib.updateStakingQueueConfig(_config);\n    }\n\n    /**\n     * @notice Sets the escape hatch contract address. One-shot: callable at most once per rollup.\n     * @dev Only callable by owner. The escape hatch provides an alternative block production path\n     *      when the committee is unavailable. Once set, the address is immutable for the life of\n     *      the rollup -- there is no replacement path. To launch without an escape hatch, simply\n     *      never call this function.\n     * @param _escapeHatch The address of the EscapeHatch contract (must be non-zero)\n     */\n    function setEscapeHatch(address _escapeHatch) external override(IValidatorSelectionCore) onlyOwner {\n        ValidatorOperationsExtLib.setEscapeHatch(_escapeHatch);\n        emit IValidatorSelectionCore.EscapeHatchSet(_escapeHatch);\n    }\n\n    /**\n     * @notice Claims accumulated rewards for a sequencer (checkpoint proposer)\n     * @dev Transfers all accumulated rewards to the recipient.\n     * @param _coinbase The address that has accumulated the rewards - rewards are sent to this address\n     * @return The amount of rewards claimed\n     */\n    function claimSequencerRewards(address _coinbase) external override(IRollupCore) returns (uint256) {\n        return RewardExtLib.claimSequencerRewards(_coinbase);\n    }\n\n    /**\n     * @notice Claims prover rewards for specified epochs\n     * @dev Provers earn rewards for successfully proving epoch transitions. Each epoch can only be claimed once per\n     *      prover.\n     * @param _coinbase The address that has accumulated the rewards - rewards are sent to this address\n     * @param _epochs Array of epochs to claim rewards for\n     * @return The total amount of rewards claimed\n     */\n    function claimProverRewards(address _coinbase, Epoch[] memory _epochs)\n        external\n        override(IRollupCore)\n        returns (uint256)\n    {\n        return RewardExtLib.claimProverRewards(_coinbase, _epochs);\n    }\n\n    /**\n     * @notice Allows the rollup itself to vote on governance proposals\n     * @dev This enables the rollup to participate in governance by voting on proposals.\n     *      See StakingLib.sol for more details on the voting mechanism.\n     * @param _proposalId The ID of the proposal to vote on\n     */\n    function vote(uint256 _proposalId) external override(IStakingCore) {\n        ValidatorOperationsExtLib.vote(_proposalId);\n    }\n\n    /**\n     * @notice Deposits stake to become a validator\n     * @dev The caller must have approved the staking asset. Validators enter a queue before becoming active.\n     * @param _attester The address that will act as the validator (sign attestations)\n     * @param _withdrawer The address that can withdraw the stake\n     * @param _publicKeyInG1 The G1 point for the BLS public key (used for efficient signature verification in GSE)\n     * @param _publicKeyInG2 The G2 point for the BLS public key (used for BLS aggregation and pairing operations in GSE)\n     * @param _proofOfPossession The proof of possession to show that the keys in G1 and G2 share secret key\n     * @param _moveWithLatestRollup Whether to follow the chain if governance migrates to a new rollup version\n     */\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) external override(IStakingCore) {\n        ValidatorOperationsExtLib.deposit(\n            _attester, _withdrawer, _publicKeyInG1, _publicKeyInG2, _proofOfPossession, _moveWithLatestRollup\n        );\n    }\n\n    /**\n     * @notice Processes the validator entry queue to add new validators to the active set\n     * @dev Can be called by anyone. The number of validators added is limited by queue configuration.\n     *      This helps maintain a controlled growth rate of the validator set.\n     * @param _toAdd - The max number the caller will try to add\n     */\n    function flushEntryQueue(uint256 _toAdd) external override(IStakingCore) {\n        ValidatorOperationsExtLib.flushEntryQueue(_toAdd);\n    }\n\n    function flushEntryQueue() external override(IStakingCore) {\n        ValidatorOperationsExtLib.flushEntryQueue(type(uint256).max);\n    }\n\n    /**\n     * @notice Initiates withdrawal of a validator's stake\n     * @dev Starts the exit delay period. The validator is immediately removed from the active set.\n     *      Only the registered withdrawer can initiate withdrawal.\n     * @param _attester The validator address to withdraw\n     * @param _recipient The address to receive the withdrawn stake\n     * @return True if withdrawal was initiated, false if already initiated\n     */\n    function initiateWithdraw(address _attester, address _recipient) external override(IStakingCore) returns (bool) {\n        return ValidatorOperationsExtLib.initiateWithdraw(_attester, _recipient);\n    }\n\n    /**\n     * @notice Completes a withdrawal after the exit delay has passed\n     * @dev Can be called by anyone. Transfers the stake to the designated recipient.\n     * @param _attester The validator address whose withdrawal to finalize\n     */\n    function finalizeWithdraw(address _attester) external override(IStakingCore) {\n        ValidatorOperationsExtLib.finalizeWithdraw(_attester);\n    }\n\n    /**\n     * @notice Slashes a validator's stake for misbehavior\n     * @dev Only callable by the authorized slasher contract. Reduces the validator's stake.\n     * @param _attester The validator to slash\n     * @param _amount The amount of stake to slash\n     * @return True if slashing was successful\n     */\n    function slash(address _attester, uint256 _amount) external override(IStakingCore) returns (bool) {\n        return ValidatorOperationsExtLib.slash(_attester, _amount);\n    }\n\n    /**\n     * @notice Removes unproven checkpoints from the pending chain\n     * @dev Can only be called after the proof submission window has expired for an epoch.\n     *      This maintains liveness by preventing the chain from being stuck on unproven checkpoints.\n     *      Pruning occurs at epoch boundaries and removes all checkpoints in unproven epochs.\n     */\n    function prune() external override(IRollupCore) {\n        RollupOperationsExtLib.prune();\n    }\n\n    /**\n     * @notice Submits a zero-knowledge proof for an epoch's state transition\n     * @dev Proves the validity of a prefix of the checkpoints in an epoch. Once proven, checkpoints become final\n     *      and cannot be pruned. The proof must be submitted within the submission window.\n     *      Successful submission triggers prover rewards.\n     * @param _args Contains the epoch range, public inputs, fees, attestations, and the ZK proof\n     */\n    function submitEpochRootProof(SubmitEpochRootProofArgs calldata _args) external override(IRollupCore) {\n        RollupOperationsExtLib.submitEpochRootProof(_args);\n    }\n\n    /**\n     * @notice Proposes a new checkpoint to extend the chain\n     * @dev Core function for checkpoint production.\n     *      The attestations must include a signature from designated proposer to be accepted.\n     *      The checkpoint must build on the previous checkpoint and include valid attestations from committee members.\n     *      Failed proposals revert; successful ones emit CheckpointProposed and advance the chain state.\n     *      See ProposeLib#propose for more details.\n     * @param _args checkpoint data including header, state updates, oracle inputs, and archive\n     * @param _attestations Aggregated signatures from committee members attesting to checkpoint validity\n     * @param _signers Addresses of committee members who signed (must match attestations)\n     * @param _blobInput Blob commitment data for data availability (format: [numBlobs][48-byte commitments...])\n     */\n    function propose(\n        ProposeArgs calldata _args,\n        CommitteeAttestations memory _attestations,\n        address[] calldata _signers,\n        Signature calldata _attestationsAndSignersSignature,\n        bytes calldata _blobInput\n    ) external override(IRollupCore) {\n        RollupOperationsExtLib.propose(\n            _args, _attestations, _signers, _attestationsAndSignersSignature, _blobInput, checkBlob\n        );\n    }\n\n    /**\n     * @notice Invalidates a checkpoint due to a bad attestation signature\n     * @dev Anyone can call this if they detect an invalid signature. This removes the checkpoint\n     *      and all subsequent checkpoints from the pending chain. Used to maintain pending chain integrity.\n     * @param _checkpointNumber The checkpoint number to invalidate\n     * @param _attestations The attestations that were submitted with the checkpoint\n     * @param _committee The committee members for the checkpoint's epoch\n     * @param _invalidIndex The index of the invalid signature in the attestations\n     */\n    function invalidateBadAttestation(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee,\n        uint256 _invalidIndex\n    ) external override(IRollupCore) {\n        ValidatorOperationsExtLib.invalidateBadAttestation(_checkpointNumber, _attestations, _committee, _invalidIndex);\n    }\n\n    /**\n     * @notice Invalidates a checkpoint due to insufficient valid attestations (>2/3 of committee required)\n     * @dev Anyone can call this if a checkpoint doesn't meet the required attestation threshold.\n     *      Even if all signatures are valid, checkpoints need a minimum number of attestations.\n     * @param _checkpointNumber The checkpoint number to invalidate\n     * @param _attestations The attestations that were submitted with the checkpoint\n     * @param _committee The committee members for the checkpoint's epoch\n     */\n    function invalidateInsufficientAttestations(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee\n    ) external override(IRollupCore) {\n        ValidatorOperationsExtLib.invalidateInsufficientAttestations(_checkpointNumber, _attestations, _committee);\n    }\n\n    /**\n     * @notice Sets up validator selection for the current epoch\n     * @dev Can be called by anyone at the start of an epoch. Samples the committee and determines proposers for all\n     *      slots in the epoch. Also stores a seed that is used for future sampling. The corresponding library\n     *      functionality is automatically called when `RollupCore.propose(...)` is called (via the\n     *      `RollupOperationsExtLib.propose(...)` -> `ProposeLib.propose(...)` ->\n     *      `ValidatorSelectionLib.setupEpoch(...)`).\n     *\n     *      If there are missed proposals then setupEpoch does not get called automatically. Since the next committee\n     *      selection is computed based on the stored randao and the epoch number, failing to update the randao stored\n     *      will keep the committee predictable longer into the future. We would only fail to get a fresh randao if:\n     *      1. All the proposals in the epoch were missed\n     *      2. Nobody called setupEpoch on the Rollup contract\n     *\n     *      While an attacker might theoretically benefit from preventing a fresh seed (e.g. by DoSing all proposers),\n     *      preventing anyone from calling this function directly is not really feasible. This makes attacks on seed\n     *      generation impractical.\n     */\n    function setupEpoch() external override(IValidatorSelectionCore) {\n        ValidatorOperationsExtLib.setupEpoch();\n    }\n\n    /**\n     * @notice Captures the randao for future validator selection\n     * @dev Can be called by anyone. Takes a snapshot of the current randao to ensure unpredictable but deterministic\n     *      validator selection. Automatically called from setupEpoch. Can be used as a cheaper alternative to\n     *      `setupEpoch` to update the randao checkpoints.\n     */\n    function checkpointRandao() public override(IValidatorSelectionCore) {\n        ValidatorOperationsExtLib.checkpointRandao();\n    }\n\n    /**\n     * @notice Updates the L1 gas fee oracle with current gas prices\n     * @dev Automatically called during checkpoint proposal but can be called manually.\n     *      Updates the fee model's view of L1 costs to ensure accurate L2 fee pricing.\n     *      Uses current L1 gas price and blob gas price for calculations.\n     */\n    function updateL1GasFeeOracle() public override(IRollupCore) {\n        FeeLib.updateL1GasFeeOracle();\n    }\n\n    /**\n     * @notice Returns the maximum number of validators that can be added from the entry queue\n     * @dev Based on queue configuration and current validator set size. Used by flushEntryQueue.\n     * @return The number of validators that can be added in the next flush\n     */\n    function getEntryQueueFlushSize() public view override(IStakingCore) returns (uint256) {\n        return ValidatorOperationsExtLib.getEntryQueueFlushSize();\n    }\n\n    /**\n     * @notice Returns the current number of active validators\n     * @dev Active validators can propose checkpoints and participate in committees\n     * @return The count of validators in the active set\n     */\n    function getActiveAttesterCount() public view override(IStakingCore) returns (uint256) {\n        return StakingLib.getAttesterCountAtTime(Timestamp.wrap(block.timestamp));\n    }\n\n    function _deploySlasher(RollupConfigInput memory _config, address _governance)\n        internal\n        returns (ISlasher slasher)\n    {\n        if (_config.targetCommitteeSize == 0 || !_config.slasherEnabled) {\n            return ISlasher(address(0));\n        }\n\n        return SlasherDeploymentExtLib.deploySlasher(address(this), _governance, _config);\n    }\n\n    function _initializeRewards(RollupConfigInput memory _config) internal {\n        RewardConfig memory rewardConfig = _config.rewardConfig;\n\n        if (address(rewardConfig.booster) == address(0)) {\n            rewardConfig.booster = RewardExtLib.deployRewardBooster(_config.rewardBoostConfig);\n        }\n\n        // Constructor-only writer; post-deployment updates go through {setRewardConfig}.\n        RewardExtLib.initializeConfig(rewardConfig);\n    }\n\n    function _initializeStore(\n        IERC20 _feeAsset,\n        IVerifier _epochProofVerifier,\n        GenesisState memory _genesisState,\n        RollupConfigInput memory _config\n    ) internal {\n        STFLib.initialize(_genesisState);\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        rollupStore.config.feeAsset = _feeAsset;\n        rollupStore.config.epochProofVerifier = _epochProofVerifier;\n        rollupStore.config.version = _config.version;\n\n        IInbox inbox = IInbox(\n            address(\n                new Inbox(\n                    address(this), _feeAsset, _config.version, Constants.L1_TO_L2_MSG_SUBTREE_HEIGHT, _config.inboxLag\n                )\n            )\n        );\n\n        rollupStore.config.inbox = inbox;\n        rollupStore.config.outbox = IOutbox(address(new Outbox(address(this), _config.version)));\n        rollupStore.config.feeAssetPortal = IFeeJuicePortal(inbox.getFeeAssetPortal());\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 402,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "RollupCore",
+        "similarity": 0.691,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/RollupCore.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/RollupCore.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 57,
+        "removed": 69,
+        "ignoredAdded": 40,
+        "ignoredRemoved": 43,
+        "unchanged": 402,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 44,
+            "oldLines": 54,
+            "newStart": 44,
+            "newLines": 23,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "        GenesisState memory _genesisState,"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "        RollupConfigInput memory _config"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    ) Ownable(_governance) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        // We do not allow the `normalFlushSizeMin` to be 0 when deployed as it would lock deposits (which is never desired",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        // from the onset). It might be updated later to 0 by governance in order to close the validator set for this",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        // instance. For details see `StakingLib.getEntryQueueFlushSize` function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        require(_config.stakingQueueConfig.normalFlushSizeMin > 0, Errors.Staking__InvalidStakingQueueConfig());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        StakingLib.assertValidQueueConfig(_config.stakingQueueConfig);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 48, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        // queueSetSlasher schedules the replacement slasher to land at `block.timestamp +",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        // SLASHER_EXECUTION_DELAY`. If a validator's exit delay is longer, an objecting validator",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // cannot finish withdrawal before the new slasher takes over, so the rollup cannot honor",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        // its end of the replacement opt-out window for the configured exit delay.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 53,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "            _config.stakingQueueConfig.normalFlushSizeQuotient > 0, Errors.Staking__InvalidNormalFlushSizeQuotient()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "            _config.exitDelaySeconds <= StakingLib.SLASHER_EXECUTION_DELAY,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "            Errors_1.Staking__ExitDelayAboveSlasherDelay(_config.exitDelaySeconds, StakingLib.SLASHER_EXECUTION_DELAY)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 56,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 57, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 58,
+                "text": "        TimeLib.initialize("
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 59,
+                "text": "            block.timestamp, _config.aztecSlotDuration, _config.aztecEpochDuration, _config.aztecProofSubmissionEpochs"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 60,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        // Deploy slasher based on flavor",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        ISlasher slasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        ISlasher slasher = _deploySlasher(_config, _governance);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 63, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        // We call one external library or another based on the slasher flavor",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // This allows us to keep the slash flavors in separate external libraries so we do not exceed max contract size",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        // Note that we do not deploy a slasher if we run with no committees (i.e. targetCommitteeSize == 0)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        if (_config.targetCommitteeSize == 0 || _config.slasherFlavor == SlasherFlavor.NONE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "            slasher = ISlasher(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        } else if (_config.slasherFlavor == SlasherFlavor.TALLY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            slasher = TallySlasherDeploymentExtLib.deployTallySlasher(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "                _config.slashingVetoer,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "                _governance,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                _config.slashingQuorum,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                _config.slashingRoundSize,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                _config.slashingLifetimeInRounds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                _config.slashingExecutionDelayInRounds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "                _config.slashAmounts,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                _config.targetCommitteeSize,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                _config.aztecEpochDuration,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "                _config.slashingOffsetInRounds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "                _config.slashingDisableDuration",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "            slasher = EmpireSlasherDeploymentExtLib.deployEmpireSlasher(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "                address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "                _config.slashingVetoer,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "                _governance,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "                _config.slashingQuorum,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "                _config.slashingRoundSize,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "                _config.slashingLifetimeInRounds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "                _config.slashingExecutionDelayInRounds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "                _config.slashingDisableDuration",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 94, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 64,
+                "text": "        StakingLib.initialize("
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 65,
+                "text": "            _stakingAsset,"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 66,
+                "text": "            _gse,"
+              }
+            ]
+          },
+          {
+            "oldStart": 104,
+            "oldLines": 47,
+            "newStart": 73,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 73,
+                "text": "            _config.targetCommitteeSize, _config.lagInEpochsForValidatorSet, _config.lagInEpochsForRandao"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 74,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 75, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        // If no booster is specifically provided, deploy one.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        if (address(_config.rewardConfig.booster) == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "            _config.rewardConfig.booster = RewardExtLib.deployRewardBooster(_config.rewardBoostConfig);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        _initializeRewards(_config);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 111, "newLine": 77, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        RewardExtLib.initialize(_config.earliestRewardsClaimableTimestamp);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        RewardExtLib.setConfig(_config.rewardConfig);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 114, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 78,
+                "text": "        L1_BLOCK_AT_GENESIS = block.number;"
+              },
+              { "type": " ", "oldLine": 116, "newLine": 79, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        STFLib.initialize(_genesisState);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        _initializeStore(_feeAsset, _epochProofVerifier, _genesisState, _config);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 119, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        rollupStore.config.feeAsset = _feeAsset;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        rollupStore.config.epochProofVerifier = _epochProofVerifier;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 122, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        uint32 version = _config.version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        rollupStore.config.version = version;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 125, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        IInbox inbox = IInbox(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "            address(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "                new Inbox(address(this), _feeAsset, version, Constants.L1_TO_L2_MSG_SUBTREE_HEIGHT, _config.inboxLag)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 131, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        rollupStore.config.inbox = inbox;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 133, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        rollupStore.config.outbox = IOutbox(address(new Outbox(address(this), version)));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 135, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        rollupStore.config.feeAssetPortal = IFeeJuicePortal(inbox.getFeeAssetPortal());",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 137, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        FeeLib.initialize(_config.manaTarget, _config.provingCostPerMana);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        FeeLib.initialize(_config.manaTarget, _config.provingCostPerMana, _config.initialEthPerFeeAsset);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 139, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 140, "newLine": 84, "text": "" },
+              { "type": " ", "oldLine": 141, "newLine": 85, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "     * @notice Updates the reward configuration for sequencers and provers",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "     * @dev Only callable by the contract owner. Updates how rewards are calculated and distributed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "     * @param _config The new reward configuration including rates and booster settings",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "     * @notice Updates the mutable reward configuration (sequencer/prover split and checkpoint reward).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "     * @dev Only callable by the contract owner. The `rewardDistributor` and `booster` addresses are",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "     *      deliberately NOT exposed by this setter -- they are written exactly once at construction",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     *      by {_initializeRewards} and immutable thereafter. Rotating either address requires",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "     *      redeploying the rollup via `Registry.addRollup`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @param _config The new mutable reward configuration",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 145, "newLine": 92, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "    function setRewardConfig(RewardConfig memory _config) external override(IRollupCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "        RewardExtLib.setConfig(_config);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function setRewardConfig(MutableRewardConfig memory _config) external override(IRollupCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        RewardExtLib.updateConfig(_config);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 95,
+                "text": "        emit RewardConfigUpdated(_config);"
+              },
+              { "type": " ", "oldLine": 149, "newLine": 96, "text": "    }" },
+              { "type": " ", "oldLine": 150, "newLine": 97, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 157,
+            "oldLines": 46,
+            "newStart": 104,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 104,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 105,
+                "text": "    function updateManaTarget(uint256 _manaTarget) external override(IRollupCore) onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 106,
+                "text": "        uint256 currentManaTarget = FeeLib.getStorage().config.getManaTarget();"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "        require(_manaTarget >= currentManaTarget, Errors.Rollup__InvalidManaTarget(currentManaTarget, _manaTarget));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        require(_manaTarget >= currentManaTarget, Errors_1.Rollup__InvalidManaTarget(currentManaTarget, _manaTarget));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 108,
+                "text": "        FeeLib.updateManaTarget(_manaTarget);"
+              },
+              { "type": " ", "oldLine": 162, "newLine": 109, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "        // If we are going from 0 to non-zero mana limits, we need to catch up the inbox",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "        if (currentManaTarget == 0 && _manaTarget > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "            RollupStore storage rollupStore = STFLib.getStorage();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "            rollupStore.config.inbox.catchUp(rollupStore.tips.getPending());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 168, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 110,
+                "text": "        emit IRollupCore.ManaTargetUpdated(_manaTarget);"
+              },
+              { "type": " ", "oldLine": 170, "newLine": 111, "text": "    }" },
+              { "type": " ", "oldLine": 171, "newLine": 112, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 113,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "     * @notice Enables or disables reward claiming",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "     * @dev Only callable by owner. This is a safety mechanism to control when rewards can be withdrawn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "     *      Cannot set rewards as claimable before the earliest reward claimable timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "     * @param _isRewardsClaimable True to enable reward claims, false to disable",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * @notice Queues a slasher replacement. Takes effect only after a 60-day delay via",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     *         {finalizeSetSlasher}. Validators who object to the change have time to exit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     *         before it lands. Overwrites any pending change, resetting the timer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * @dev The zero address is permissible. Setting to this would imply that the rollup has",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     *      at least temporarily relinquished their ability to slash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     * @param _slasher The address of the new slasher contract",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 120,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "    function setRewardsClaimable(bool _isRewardsClaimable) external override(IRollupCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "        RewardExtLib.setIsRewardsClaimable(_isRewardsClaimable);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "        emit RewardsClaimableUpdated(_isRewardsClaimable);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    function queueSetSlasher(address _slasher) external override(IStakingCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        ValidatorOperationsExtLib.queueSetSlasher(_slasher);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 181, "newLine": 123, "text": "    }" },
+              { "type": " ", "oldLine": 182, "newLine": 124, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "     * @notice Updates the slasher contract address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "     * @dev Only callable by owner. The slasher handles punishment for validator misbehavior.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "     * @param _slasher The address of the new slasher contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "    function setSlasher(address _slasher) external override(IStakingCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "        ValidatorOperationsExtLib.setSlasher(_slasher);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    /// @notice Cancels the pending slasher replacement. Reverts if nothing is pending.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "    function cancelSetSlasher() external override(IStakingCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        ValidatorOperationsExtLib.cancelSetSlasher();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 190, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 191, "newLine": 129, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "     * @notice Updates the local ejection threshold",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * @dev Only callable by owner. The local ejection threshold is the minimum amount of stake that a validator can have",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "     *      after being slashed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "     * @param _localEjectionThreshold The new local ejection threshold",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    function setLocalEjectionThreshold(uint256 _localEjectionThreshold) external override(IStakingCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "        ValidatorOperationsExtLib.setLocalEjectionThreshold(_localEjectionThreshold);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "    /// @notice Applies the pending slasher replacement once the 60-day delay has elapsed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    /// @dev Permissionless: the queued payload and the elapsed delay are the authorization.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "    ///      Anyone may poke the transaction through.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "    function finalizeSetSlasher() external override(IStakingCore) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "        ValidatorOperationsExtLib.finalizeSetSlasher();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 200, "newLine": 135, "text": "    }" },
+              { "type": " ", "oldLine": 201, "newLine": 136, "text": "" },
+              { "type": " ", "oldLine": 202, "newLine": 137, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 218,
+            "oldLines": 19,
+            "newStart": 153,
+            "newLines": 21,
+            "lines": [
+              { "type": " ", "oldLine": 218, "newLine": 153, "text": "    }" },
+              { "type": " ", "oldLine": 219, "newLine": 154, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 155,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "     * @notice Sets the escape hatch contract address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "     * @dev Only callable by owner. Set to address(0) to disable escape hatch functionality.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "     *      The escape hatch provides an alternative block production path when the committee is unavailable.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "     * @param _escapeHatch The address of the EscapeHatch contract, or address(0) to disable",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "     * @notice Sets the escape hatch contract address. One-shot: callable at most once per rollup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "     * @dev Only callable by owner. The escape hatch provides an alternative block production path",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "     *      when the committee is unavailable. Once set, the address is immutable for the life of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "     *      the rollup -- there is no replacement path. To launch without an escape hatch, simply",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "     *      never call this function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "     * @param _escapeHatch The address of the EscapeHatch contract (must be non-zero)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 162,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "    function updateEscapeHatch(address _escapeHatch) external override(IValidatorSelectionCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "        ValidatorOperationsExtLib.updateEscapeHatch(_escapeHatch);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        emit IValidatorSelectionCore.EscapeHatchUpdated(_escapeHatch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    function setEscapeHatch(address _escapeHatch) external override(IValidatorSelectionCore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "        ValidatorOperationsExtLib.setEscapeHatch(_escapeHatch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "        emit IValidatorSelectionCore.EscapeHatchSet(_escapeHatch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 229, "newLine": 166, "text": "    }" },
+              { "type": " ", "oldLine": 230, "newLine": 167, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 168,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 169,
+                "text": "     * @notice Claims accumulated rewards for a sequencer (checkpoint proposer)"
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "     * @dev Rewards must be enabled via isRewardsClaimable. Transfers all accumulated rewards to the recipient.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "     * @dev Transfers all accumulated rewards to the recipient.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 171,
+                "text": "     * @param _coinbase The address that has accumulated the rewards - rewards are sent to this address"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 172,
+                "text": "     * @return The amount of rewards claimed"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 173, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 240,
+            "oldLines": 8,
+            "newStart": 177,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 240, "newLine": 177, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 178,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 179,
+                "text": "     * @notice Claims prover rewards for specified epochs"
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "     * @dev Rewards must be enabled. Provers earn rewards for successfully proving epoch transitions.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "     *      Each epoch can only be claimed once per prover.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "     * @dev Provers earn rewards for successfully proving epoch transitions. Each epoch can only be claimed once per",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "     *      prover.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 182,
+                "text": "     * @param _coinbase The address that has accumulated the rewards - rewards are sent to this address"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 183,
+                "text": "     * @param _epochs Array of epochs to claim rewards for"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 184,
+                "text": "     * @return The total amount of rewards claimed"
+              }
+            ]
+          },
+          {
+            "oldStart": 471,
+            "oldLines": 4,
+            "newStart": 408,
+            "newLines": 52,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 471,
+                "newLine": 408,
+                "text": "    function getActiveAttesterCount() public view override(IStakingCore) returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 472,
+                "newLine": 409,
+                "text": "        return StakingLib.getAttesterCountAtTime(Timestamp.wrap(block.timestamp));"
+              },
+              { "type": " ", "oldLine": 473, "newLine": 410, "text": "    }" },
+              { "type": "+", "newLine": 411, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 412,
+                "text": "    function _deploySlasher(RollupConfigInput memory _config, address _governance)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 413,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "        returns (ISlasher slasher)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "        if (_config.targetCommitteeSize == 0 || !_config.slasherEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "            return ISlasher(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 419, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 420,
+                "text": "        return SlasherDeploymentExtLib.deploySlasher(address(this), _governance, _config);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 421,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 422, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 423,
+                "text": "    function _initializeRewards(RollupConfigInput memory _config) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 424,
+                "text": "        RewardConfig memory rewardConfig = _config.rewardConfig;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 425, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 426,
+                "text": "        if (address(rewardConfig.booster) == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 427,
+                "text": "            rewardConfig.booster = RewardExtLib.deployRewardBooster(_config.rewardBoostConfig);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 428,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 429, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 430,
+                "text": "        // Constructor-only writer; post-deployment updates go through {setRewardConfig}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 431,
+                "text": "        RewardExtLib.initializeConfig(rewardConfig);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 432,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 433, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 434,
+                "text": "    function _initializeStore(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 435,
+                "text": "        IERC20 _feeAsset,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 436,
+                "text": "        IVerifier _epochProofVerifier,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "        GenesisState memory _genesisState,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 438,
+                "text": "        RollupConfigInput memory _config",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 439,
+                "text": "    ) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 440,
+                "text": "        STFLib.initialize(_genesisState);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 441,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 442, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 443,
+                "text": "        rollupStore.config.feeAsset = _feeAsset;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 444,
+                "text": "        rollupStore.config.epochProofVerifier = _epochProofVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 445,
+                "text": "        rollupStore.config.version = _config.version;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 446, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "        IInbox inbox = IInbox(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 448,
+                "text": "            address(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 449,
+                "text": "                new Inbox(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 450,
+                "text": "                    address(this), _feeAsset, _config.version, Constants.L1_TO_L2_MSG_SUBTREE_HEIGHT, _config.inboxLag",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 451,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 453,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 454, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 455,
+                "text": "        rollupStore.config.inbox = inbox;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 456,
+                "text": "        rollupStore.config.outbox = IOutbox(address(new Outbox(address(this), _config.version)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 457,
+                "text": "        rollupStore.config.feeAssetPortal = IFeeJuicePortal(inbox.getFeeAssetPortal());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 458,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 474, "newLine": 459, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

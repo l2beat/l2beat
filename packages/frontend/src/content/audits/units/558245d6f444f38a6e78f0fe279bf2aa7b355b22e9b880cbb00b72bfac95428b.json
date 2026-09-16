@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "558245d6f444f38a6e78f0fe279bf2aa7b355b22e9b880cbb00b72bfac95428b",
+  "name": "TransparentUpgradeableProxy",
+  "kind": "contract",
+  "lines": 134,
+  "source": "contract TransparentUpgradeableProxy is ERC1967Proxy {\n    /**\n     * @dev Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`, and\n     * optionally initialized with `_data` as explained in {ERC1967Proxy-constructor}.\n     */\n    constructor(address _logic, address admin_, bytes memory _data) payable ERC1967Proxy(_logic, _data) {\n        _changeAdmin(admin_);\n    }\n\n    /**\n     * @dev Modifier used internally that will delegate the call to the implementation unless the sender is the admin.\n     *\n     * CAUTION: This modifier is deprecated, as it could cause issues if the modified function has arguments, and the\n     * implementation provides a function with the same selector.\n     */\n    modifier ifAdmin() {\n        if (msg.sender == _getAdmin()) {\n            _;\n        } else {\n            _fallback();\n        }\n    }\n\n    /**\n     * @dev If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior\n     */\n    function _fallback() internal virtual override {\n        if (msg.sender == _getAdmin()) {\n            bytes memory ret;\n            bytes4 selector = msg.sig;\n            if (selector == ITransparentUpgradeableProxy.upgradeTo.selector) {\n                ret = _dispatchUpgradeTo();\n            } else if (selector == ITransparentUpgradeableProxy.upgradeToAndCall.selector) {\n                ret = _dispatchUpgradeToAndCall();\n            } else if (selector == ITransparentUpgradeableProxy.changeAdmin.selector) {\n                ret = _dispatchChangeAdmin();\n            } else if (selector == ITransparentUpgradeableProxy.admin.selector) {\n                ret = _dispatchAdmin();\n            } else if (selector == ITransparentUpgradeableProxy.implementation.selector) {\n                ret = _dispatchImplementation();\n            } else {\n                revert(\"TransparentUpgradeableProxy: admin cannot fallback to proxy target\");\n            }\n            assembly {\n                return(add(ret, 0x20), mload(ret))\n            }\n        } else {\n            super._fallback();\n        }\n    }\n\n    /**\n     * @dev Returns the current admin.\n     *\n     * TIP: To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the\n     * https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.\n     * `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`\n     */\n    function _dispatchAdmin() private returns (bytes memory) {\n        _requireZeroValue();\n\n        address admin = _getAdmin();\n        return abi.encode(admin);\n    }\n\n    /**\n     * @dev Returns the current implementation.\n     *\n     * TIP: To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the\n     * https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.\n     * `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`\n     */\n    function _dispatchImplementation() private returns (bytes memory) {\n        _requireZeroValue();\n\n        address implementation = _implementation();\n        return abi.encode(implementation);\n    }\n\n    /**\n     * @dev Changes the admin of the proxy.\n     *\n     * Emits an {AdminChanged} event.\n     */\n    function _dispatchChangeAdmin() private returns (bytes memory) {\n        _requireZeroValue();\n\n        address newAdmin = abi.decode(msg.data[4:], (address));\n        _changeAdmin(newAdmin);\n\n        return \"\";\n    }\n\n    /**\n     * @dev Upgrade the implementation of the proxy.\n     */\n    function _dispatchUpgradeTo() private returns (bytes memory) {\n        _requireZeroValue();\n\n        address newImplementation = abi.decode(msg.data[4:], (address));\n        _upgradeToAndCall(newImplementation, bytes(\"\"), false);\n\n        return \"\";\n    }\n\n    /**\n     * @dev Upgrade the implementation of the proxy, and then call a function from the new implementation as specified\n     * by `data`, which should be an encoded function call. This is useful to initialize new storage variables in the\n     * proxied contract.\n     */\n    function _dispatchUpgradeToAndCall() private returns (bytes memory) {\n        (address newImplementation, bytes memory data) = abi.decode(msg.data[4:], (address, bytes));\n        _upgradeToAndCall(newImplementation, data, true);\n\n        return \"\";\n    }\n\n    /**\n     * @dev Returns the current admin.\n     *\n     * CAUTION: This function is deprecated. Use {ERC1967Upgrade-_getAdmin} instead.\n     */\n    function _admin() internal view virtual returns (address) {\n        return _getAdmin();\n    }\n\n    /**\n     * @dev To keep this contract fully transparent, all `ifAdmin` functions must be payable. This helper is here to\n     * emulate some proxy functions being non-payable while still allowing value to pass through.\n     */\n    function _requireZeroValue() private {\n        require(msg.value == 0);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 134,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 134,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    }
+  }
+}

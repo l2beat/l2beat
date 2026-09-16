@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a24cf985e3ca3fb4f2be70a7348c8792b00d22fe4f2aae7f7770ba8c83dbe90e",
+  "name": "IVerifier",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IVerifier {\n    function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 3,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IVerifier",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-payload-2026-03-05",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
+        "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+        "commitTimestamp": "2026-02-27T09:20:07Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

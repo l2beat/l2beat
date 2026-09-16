@@ -10,6 +10,11 @@
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dba5c64dd2172f2f7d5e3241e628fe75779052703c5956422adf9a00ad6bebc4",
+  "name": "IL1ERC20Gateway",
+  "kind": "interface",
+  "lines": 96,
+  "source": "interface IL1ERC20Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when ERC20 token is withdrawn from L2 to L1 and transfer to recipient.\n    /// @param l1Token The address of the token in L1.\n    /// @param l2Token The address of the token in L2.\n    /// @param from The address of sender in L2.\n    /// @param to The address of recipient in L1.\n    /// @param amount The amount of token withdrawn from L2 to L1.\n    /// @param data The optional calldata passed to recipient in L1.\n    event FinalizeWithdrawERC20(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data\n    );\n\n    /// @notice Emitted when someone deposit ERC20 token from L1 to L2.\n    /// @param l1Token The address of the token in L1.\n    /// @param l2Token The address of the token in L2.\n    /// @param from The address of sender in L1.\n    /// @param to The address of recipient in L2.\n    /// @param amount The amount of token will be deposited from L1 to L2.\n    /// @param data The optional calldata passed to recipient in L2.\n    event DepositERC20(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data\n    );\n\n    /// @notice Emitted when some ERC20 token is refunded.\n    /// @param token The address of the token in L1.\n    /// @param recipient The address of receiver in L1.\n    /// @param amount The amount of token refunded to receiver.\n    event RefundERC20(address indexed token, address indexed recipient, uint256 amount);\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the corresponding l2 token address given l1 token address.\n    /// @param _l1Token The address of l1 token.\n    function getL2ERC20Address(address _l1Token) external view returns (address);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Deposit some token to a caller's account on L2.\n    /// @dev Make this function payable to send relayer fee in Ether.\n    /// @param _token The address of token in L1.\n    /// @param _amount The amount of token to transfer.\n    /// @param _gasLimit Gas limit required to complete the deposit on L2.\n    function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable;\n\n    /// @notice Deposit some token to a recipient's account on L2.\n    /// @dev Make this function payable to send relayer fee in Ether.\n    /// @param _token The address of token in L1.\n    /// @param _to The address of recipient's account on L2.\n    /// @param _amount The amount of token to transfer.\n    /// @param _gasLimit Gas limit required to complete the deposit on L2.\n    function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) external payable;\n\n    /// @notice Deposit some token to a recipient's account on L2 and call.\n    /// @dev Make this function payable to send relayer fee in Ether.\n    /// @param _token The address of token in L1.\n    /// @param _to The address of recipient's account on L2.\n    /// @param _amount The amount of token to transfer.\n    /// @param _data Optional data to forward to recipient's account.\n    /// @param _gasLimit Gas limit required to complete the deposit on L2.\n    function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        external\n        payable;\n\n    /// @notice Complete ERC20 withdraw from L2 to L1 and send fund to recipient's account in L1.\n    /// @dev Make this function payable to handle WETH deposit/withdraw.\n    ///      The function should only be called by L1ScrollMessenger.\n    ///      The function should also only be called by L2ERC20Gateway in L2.\n    /// @param _l1Token The address of corresponding L1 token.\n    /// @param _l2Token The address of corresponding L2 token.\n    /// @param _from The address of account who withdraw the token in L2.\n    /// @param _to The address of recipient in L1 to receive the token.\n    /// @param _amount The amount of the token to withdraw.\n    /// @param _data Optional data to forward to recipient's account.\n    function finalizeWithdrawERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    ) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 95,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IL1ERC20Gateway",
+        "similarity": 0.978,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/IL1ERC20Gateway.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L1/gateways/IL1ERC20Gateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 95,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 27,
+            "oldLines": 6,
+            "newStart": 27,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    );" },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /// @notice Emitted when some ERC20 token is refunded.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /// @param token The address of the token in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @param recipient The address of receiver in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// @param amount The amount of token refunded to receiver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    event RefundERC20(address indexed token, address indexed recipient, uint256 amount);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 35, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 30, "newLine": 36, "text": "    /**" },
+              { "type": " ", "oldLine": 31, "newLine": 37, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 38,
+                "text": "     * Public View Functions *"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

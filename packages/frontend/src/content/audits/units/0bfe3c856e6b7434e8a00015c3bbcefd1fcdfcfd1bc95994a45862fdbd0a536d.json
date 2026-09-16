@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0bfe3c856e6b7434e8a00015c3bbcefd1fcdfcfd1bc95994a45862fdbd0a536d",
+  "name": "IERC165Upgradeable",
+  "kind": "interface",
+  "lines": 11,
+  "source": "interface IERC165Upgradeable {\n    /**\n     * @dev Returns true if this contract implements the interface defined by\n     * `interfaceId`. See the corresponding\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\n     * to learn more about how these ids are created.\n     *\n     * This function call must use less than 30 000 gas.\n     */\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

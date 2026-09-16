@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b3051f88879512aec7f2c047aa5438a6284c1648ca51871feffe4dcd79bc3b48",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 74,
+  "source": "enum RoleAccess {\n    UNKNOWN, // 0\n    ADMIN, // 1\n    COINBASE, // 2\n    GOVERNOR, // 3\n    CANDIDATE_ADMIN, // 4\n    WITHDRAWAL_MIGRATOR, // 5\n    __DEPRECATED_BRIDGE_OPERATOR, // 6\n    BLOCK_PRODUCER, // 7\n    VALIDATOR_CANDIDATE, // 8\n    CONSENSUS, // 9\n    TREASURY // 10\n\n}\nerror ErrUnauthorized(bytes4 msgSig, RoleAccess expectedRole);\nenum TokenStandard {\n    ERC20,\n    ERC721,\n    ERC1155\n}\nerror ErrInvalidThreshold(bytes4 msgSig);\nerror ErrEmptyArray();\nerror ErrLengthMismatch(bytes4 msgSig);\nstruct TokenOwner {\n    address addr;\n    address tokenAddr;\n    uint256 chainId;\n}\nstruct TokenInfo {\n    TokenStandard erc;\n    // For ERC20:  the id must be 0 and the quantity is larger than 0.\n    // For ERC721: the quantity must be 0.\n    uint256 id;\n    uint256 quantity;\n}\nerror ErrInvalidInfo();\nerror ErrUnsupportedStandard();\nerror ErrTokenCouldNotTransferFrom(TokenInfo tokenInfo, address from, address to, address token);\nerror ErrERC20MintingFailed();\nerror ErrERC721MintingFailed();\nerror ErrERC1155MintingFailed();\nerror ErrTokenCouldNotTransfer(TokenInfo tokenInfo, address to, address token);\nenum ContractType {\n    UNKNOWN, // 0\n    PAUSE_ENFORCER, // 1\n    BRIDGE, // 2\n    BRIDGE_TRACKING, // 3\n    GOVERNANCE_ADMIN, // 4\n    MAINTENANCE, // 5\n    SLASH_INDICATOR, // 6\n    STAKING_VESTING, // 7\n    VALIDATOR, // 8\n    STAKING, // 9\n    RONIN_TRUSTED_ORGANIZATION, // 10\n    BRIDGE_MANAGER, // 11\n    BRIDGE_SLASH, // 12\n    BRIDGE_REWARD, // 13\n    FAST_FINALITY_TRACKING, // 14\n    PROFILE // 15\n\n}\nerror ErrOnlySelfCall(bytes4 msgSig);\nerror ErrZeroCodeContract(address addr);\nerror ErrZeroAddress(bytes4 msgSig);\nerror ErrAddressIsNotCreatedEOA(address addr, bytes32 codehash);\nerror ErrUnsupportedInterface(bytes4 interfaceId, address addr);\nerror ErrUnexpectedInternalCall(bytes4 msgSig, ContractType expectedContractType, address actual);\nerror ErrInvalidReceipt();\nerror ErrUnsupportedToken();\nerror ErrInvalidReceiptKind();\nerror ErrInvalidChainId(bytes4 msgSig, uint256 actual, uint256 expected);\nerror ErrInvalidOrder(bytes4 msgSig);\nerror ErrInvalidRequest();\nerror ErrInvalidTokenStandard();",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dd8b8a4c0ce14019ae1ae730f590bd22bd466b7ed5f076f56a07bfb357315ad0",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"rollup_block_root_first_single_tx_simulated\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nrollup_lib = { path = \"../rollup-lib\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

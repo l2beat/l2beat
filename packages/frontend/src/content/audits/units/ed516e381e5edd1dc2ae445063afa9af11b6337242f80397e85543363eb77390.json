@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ed516e381e5edd1dc2ae445063afa9af11b6337242f80397e85543363eb77390",
+  "name": "L2StandardERC20Gateway",
+  "kind": "contract",
+  "lines": 173,
+  "source": "contract L2StandardERC20Gateway is L2ERC20Gateway {\n    using AddressUpgradeable for address;\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of ScrollStandardERC20Factory.\n    address public immutable tokenFactory;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from l2 token address to l1 token address.\n    mapping(address => address) private tokenMapping;\n\n    /// @dev The storage slot used as ScrollStandardERC20Factory contract, which is deprecated now.\n    address private __tokenFactory;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L2StandardERC20Gateway` implementation contract.\n    ///\n    /// @param _counterpart The address of `L1StandardERC20Gateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    /// @param _tokenFactory The address of `ScrollStandardERC20Factory` contract in L2.\n    constructor(address _counterpart, address _router, address _messenger, address _tokenFactory)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_router == address(0) || _tokenFactory == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        tokenFactory = _tokenFactory;\n    }\n\n    /// @notice Initialize the storage of L2StandardERC20Gateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router`, `_messenger` and `_tokenFactory` are no longer used.\n    ///\n    /// @param _counterpart The address of `L1StandardERC20Gateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    function initialize(address _counterpart, address _router, address _messenger, address /*_tokenFactory*/ )\n        external\n        initializer\n    {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL1ERC20Address(address _l2Token) external view override returns (address) {\n        return tokenMapping[_l2Token];\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL2ERC20Address(address _l1Token) public view override returns (address) {\n        return IScrollStandardERC20Factory(tokenFactory).computeL2TokenAddress(address(this), _l1Token);\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function finalizeDepositERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _data\n    ) external payable override onlyCallByCounterpart nonReentrant {\n        require(msg.value == 0, \"nonzero msg.value\");\n        require(_l1Token != address(0), \"token address cannot be 0\");\n\n        {\n            // avoid stack too deep\n            address _expectedL2Token =\n                IScrollStandardERC20Factory(tokenFactory).computeL2TokenAddress(address(this), _l1Token);\n            require(_l2Token == _expectedL2Token, \"l2 token mismatch\");\n        }\n\n        bool _hasMetadata;\n        (_hasMetadata, _data) = abi.decode(_data, (bool, bytes));\n\n        bytes memory _deployData;\n        bytes memory _callData;\n\n        if (_hasMetadata) {\n            (_callData, _deployData) = abi.decode(_data, (bytes, bytes));\n        } else {\n            require(tokenMapping[_l2Token] == _l1Token, \"token mapping mismatch\");\n            _callData = _data;\n        }\n\n        if (!_l2Token.isContract()) {\n            // first deposit, update mapping\n            tokenMapping[_l2Token] = _l1Token;\n\n            _deployL2Token(_deployData, _l1Token);\n        }\n\n        IScrollERC20Upgradeable(_l2Token).mint(_to, _amount);\n\n        _doCallback(_to, _callData);\n\n        emit FinalizeDepositERC20(_l1Token, _l2Token, _from, _to, _amount, _callData);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L2ERC20Gateway\n    function _withdraw(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        require(_amount > 0, \"withdraw zero amount\");\n\n        // 1. Extract real sender if this call is from L2GatewayRouter.\n        address _from = _msgSender();\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n\n        address _l1Token = tokenMapping[_token];\n        require(_l1Token != address(0), \"no corresponding l1 token\");\n\n        // 2. Burn token.\n        IScrollERC20Upgradeable(_token).burn(_from, _amount);\n\n        // 3. Generate message passed to L1StandardERC20Gateway.\n        bytes memory _message =\n            abi.encodeCall(IL1ERC20Gateway.finalizeWithdrawERC20, (_l1Token, _token, _from, _to, _amount, _data));\n\n        // 4. send message to L2ScrollMessenger\n        IL2ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit);\n\n        emit WithdrawERC20(_l1Token, _token, _from, _to, _amount, _data);\n    }\n\n    function _deployL2Token(bytes memory _deployData, address _l1Token) internal {\n        address _l2Token = IScrollStandardERC20Factory(tokenFactory).deployL2Token(address(this), _l1Token);\n        (string memory _symbol, string memory _name, uint8 _decimals) = abi.decode(_deployData, (string, string, uint8));\n        ScrollStandardERC20(_l2Token).initialize(_name, _symbol, _decimals, address(this), _l1Token);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 173,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2StandardERC20Gateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/L2StandardERC20Gateway.sol",
+        "commit": "a8addd896717b663bc8053744f794f721ed87cdd",
+        "commitTimestamp": "2024-02-01T06:39:19Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/a8addd896717b663bc8053744f794f721ed87cdd/contracts/src/L2/gateways/L2StandardERC20Gateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of N-07 (documentation consistency) in pull request #1098 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "warnings": []
+    }
+  }
+}

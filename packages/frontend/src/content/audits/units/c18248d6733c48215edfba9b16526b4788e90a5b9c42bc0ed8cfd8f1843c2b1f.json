@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c18248d6733c48215edfba9b16526b4788e90a5b9c42bc0ed8cfd8f1843c2b1f",
+  "name": "U256.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "use crate::bignum::BigNum;\nuse crate::bignum::derive_bignum;\nuse crate::params::BigNumParams;\n\npub global U256_PARAMS: BigNumParams<3, 257> = BigNumParams {\n    has_multiplicative_inverse: false,\n    modulus: [0x00, 0x00, 0x010000],\n    double_modulus: [\n        0x01000000000000000000000000000000,\n        0xffffffffffffffffffffffffffffff,\n        0x01ffff,\n    ],\n    redc_param: [0x00, 0x00, 0x01000000],\n};\n\n#[derive_bignum(3, 257, quote { U256_PARAMS })]\npub struct U256 {\n    limbs: [u128; 3],\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c72cecd08625ea604a57ccbb8e7020842d9d5af374e6884205b2eaea25d6e5e4",
+  "name": "FiatTokenProxy",
+  "kind": "contract",
+  "lines": 3,
+  "source": "contract FiatTokenProxy is AdminUpgradeabilityProxy {\n    constructor(address implementationContract) public AdminUpgradeabilityProxy(implementationContract) {}\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

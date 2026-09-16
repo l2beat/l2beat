@@ -1,0 +1,1357 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "96c0d28f114bbbe914fe5a647b342e00877ec5c41f64299bbdeeaaf8eadd16c6",
+  "name": "MainchainGatewayV3",
+  "kind": "contract",
+  "lines": 544,
+  "source": "contract MainchainGatewayV3 is\n    WithdrawalLimitation,\n    Initializable,\n    AccessControlEnumerable,\n    ERC1155Holder,\n    IMainchainGatewayV3,\n    HasContracts,\n    AssetMigration,\n    IBridgeManagerCallback\n{\n    using LibTokenInfo for TokenInfo;\n    using Transfer for Transfer.Request;\n    using Transfer for Transfer.Receipt;\n\n    /// @dev Withdrawal unlocker role hash\n    bytes32 public constant WITHDRAWAL_UNLOCKER_ROLE = keccak256(\"WITHDRAWAL_UNLOCKER_ROLE\");\n\n    /// @dev Wrapped native token address\n    IWETH public override(AssetMigration, IMainchainGatewayV3) wrappedNativeToken;\n    /// @dev Ronin network id\n    uint256 public roninChainId;\n    /// @dev Total deposit\n    uint256 public depositCount;\n    /// @dev Domain separator\n    bytes32 internal _domainSeparator;\n    /// @dev Mapping from mainchain token => token address on Ronin network\n    mapping(address => MappedToken) internal _roninToken;\n    /// @dev Mapping from withdrawal id => withdrawal hash\n    mapping(uint256 => bytes32) public withdrawalHash;\n    /// @dev Mapping from withdrawal id => locked\n    mapping(uint256 => bool) public withdrawalLocked;\n\n    /// @custom:deprecated Previously `_bridgeOperatorAddedBlock` (mapping(address => uint256))\n    uint256 private ______deprecatedBridgeOperatorAddedBlock;\n    /// @custom:deprecated Previously `_bridgeOperators` (uint256[])\n    uint256 private ______deprecatedBridgeOperators;\n\n    uint96 internal _totalOperatorWeight;\n    mapping(address operator => uint96 weight) internal _operatorWeight;\n    /// @custom:deprecated Previously `_wethUnwrapper` (address)\n    uint256 private ______deprecatedWethUnwrapper;\n\n    constructor() {\n        _disableInitializers();\n    }\n\n    receive() external payable {\n        _fallback();\n    }\n\n    function initializeV5(\n        address migrator,\n        address newEmergencyPauser,\n        address[] calldata tokens,\n        address[] calldata recipients,\n        uint64[] calldata remoteChainSelectors\n    ) external reinitializer(5) {\n        _grantRole(_MIGRATOR_ROLE, migrator);\n\n        uint8 forbidAllIndicator = type(uint8).max;\n\n        _restrict(this.requestDepositFor.selector, forbidAllIndicator);\n        _restrict(this.submitWithdrawal.selector, forbidAllIndicator);\n\n        if (tokens.length != 0 || recipients.length != 0 || remoteChainSelectors.length != 0) {\n            _whitelist(tokens, recipients, remoteChainSelectors);\n        }\n        emergencyPauser = newEmergencyPauser;\n    }\n\n    /**\n     * @dev Grant or revoke permission to transfer NFTs on behalf of the bridge.\n     * Requirements:\n     * - The method caller is admin or already have migrator role.\n     */\n    function bulkSetApprovalForAll(address[] calldata nfts, address[] calldata operators, bool[] calldata approveds)\n        external\n    {\n        if (msg.sender != _getProxyAdmin()) {\n            _checkRole(_MIGRATOR_ROLE);\n        }\n        if (nfts.length != operators.length || nfts.length != approveds.length) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n\n        for (uint256 i; i < nfts.length; ++i) {\n            IERC721(nfts[i]).setApprovalForAll(operators[i], approveds[i]);\n        }\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function DOMAIN_SEPARATOR() external view virtual returns (bytes32) {\n        return _domainSeparator;\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function setWrappedNativeTokenContract(IWETH _wrappedToken) external virtual onlyProxyAdmin {\n        _setWrappedNativeTokenContract(_wrappedToken);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function requestDepositFor(Transfer.Request calldata _request) external payable virtual whenNotPaused {\n        _requestDepositFor(_request, msg.sender);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function submitWithdrawal(Transfer.Receipt calldata _receipt, Signature[] calldata _signatures)\n        external\n        virtual\n        whenNotPaused\n        returns (bool _locked)\n    {\n        return _submitWithdrawal(_receipt, _signatures);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function unlockWithdrawal(Transfer.Receipt calldata receipt) external onlyRole(WITHDRAWAL_UNLOCKER_ROLE) {\n        bytes32 _receiptHash = receipt.hash();\n        if (withdrawalHash[receipt.id] != receipt.hash()) {\n            revert ErrInvalidReceipt();\n        }\n        if (!withdrawalLocked[receipt.id]) {\n            revert ErrQueryForApprovedWithdrawal();\n        }\n        delete withdrawalLocked[receipt.id];\n        emit WithdrawalUnlocked(_receiptHash, receipt);\n\n        address token = receipt.mainchain.tokenAddr;\n        if (receipt.info.erc == TokenStandard.ERC20) {\n            TokenInfo memory feeInfo = receipt.info;\n            feeInfo.quantity = _computeFeePercentage(receipt.info.quantity, unlockFeePercentages[token]);\n            TokenInfo memory withdrawInfo = receipt.info;\n            withdrawInfo.quantity = receipt.info.quantity - feeInfo.quantity;\n\n            feeInfo.handleAssetOut(payable(msg.sender), token, wrappedNativeToken);\n            withdrawInfo.handleAssetOut(payable(receipt.mainchain.addr), token, wrappedNativeToken);\n        } else {\n            receipt.info.handleAssetOut(payable(receipt.mainchain.addr), token, wrappedNativeToken);\n        }\n\n        emit Withdrew(_receiptHash, receipt);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function mapTokens(\n        address[] calldata _mainchainTokens,\n        address[] calldata _roninTokens,\n        TokenStandard[] calldata _standards\n    ) external virtual onlyProxyAdmin {\n        if (_mainchainTokens.length == 0) {\n            revert ErrEmptyArray();\n        }\n        _mapTokens(_mainchainTokens, _roninTokens, _standards);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function mapTokensAndThresholds(\n        address[] calldata _mainchainTokens,\n        address[] calldata _roninTokens,\n        TokenStandard[] calldata _standards,\n        // _thresholds[0]: highTierThreshold\n        // _thresholds[1]: lockedThreshold\n        // _thresholds[2]: unlockFeePercentages\n        // _thresholds[3]: dailyWithdrawalLimit\n        uint256[][4] calldata _thresholds\n    ) external virtual onlyProxyAdmin {\n        if (_mainchainTokens.length == 0) {\n            revert ErrEmptyArray();\n        }\n        _mapTokens(_mainchainTokens, _roninTokens, _standards);\n        _setHighTierThresholds(_mainchainTokens, _thresholds[0]);\n        _setLockedThresholds(_mainchainTokens, _thresholds[1]);\n        _setUnlockFeePercentages(_mainchainTokens, _thresholds[2]);\n        _setDailyWithdrawalLimits(_mainchainTokens, _thresholds[3]);\n    }\n\n    /**\n     * @inheritdoc IMainchainGatewayV3\n     */\n    function getRoninToken(address mainchainToken) public view returns (MappedToken memory token) {\n        token = _roninToken[mainchainToken];\n        if (token.tokenAddr == address(0)) {\n            revert ErrUnsupportedToken();\n        }\n    }\n\n    /**\n     * @dev Maps mainchain tokens to Ronin network.\n     *\n     * Requirement:\n     * - The arrays have the same length.\n     *\n     * Emits the `TokenMapped` event.\n     *\n     */\n    function _mapTokens(\n        address[] calldata mainchainTokens,\n        address[] calldata roninTokens,\n        TokenStandard[] calldata standards\n    ) internal virtual {\n        if (!(mainchainTokens.length == roninTokens.length && mainchainTokens.length == standards.length)) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n\n        for (uint256 i; i < mainchainTokens.length; ++i) {\n            _roninToken[mainchainTokens[i]].tokenAddr = roninTokens[i];\n            _roninToken[mainchainTokens[i]].erc = standards[i];\n        }\n\n        emit TokenMapped(mainchainTokens, roninTokens, standards);\n    }\n\n    /**\n     * @dev Submits withdrawal receipt.\n     *\n     * Requirements:\n     * - The receipt kind is withdrawal.\n     * - The receipt is to withdraw on this chain.\n     * - The receipt is not used to withdraw before.\n     * - The withdrawal is not reached the limit threshold.\n     * - The signer weight total is larger than or equal to the minimum threshold.\n     * - The signature signers are in order.\n     *\n     * Emits the `Withdrew` once the assets are released.\n     *\n     */\n    function _submitWithdrawal(Transfer.Receipt calldata receipt, Signature[] memory signatures)\n        internal\n        virtual\n        returns (bool locked)\n    {\n        uint256 id = receipt.id;\n        uint256 quantity = receipt.info.quantity;\n        address tokenAddr = receipt.mainchain.tokenAddr;\n\n        receipt.info.validate();\n        _requireNotRestricted(receipt.info.erc);\n        if (receipt.kind != Transfer.Kind.Withdrawal) {\n            revert ErrInvalidReceiptKind();\n        }\n\n        if (receipt.mainchain.chainId != block.chainid) {\n            revert ErrInvalidChainId(msg.sig, receipt.mainchain.chainId, block.chainid);\n        }\n\n        MappedToken memory token = getRoninToken(receipt.mainchain.tokenAddr);\n\n        if (\n            !(\n                token.erc == receipt.info.erc && token.tokenAddr == receipt.ronin.tokenAddr\n                    && receipt.ronin.chainId == roninChainId\n            )\n        ) {\n            revert ErrInvalidReceipt();\n        }\n\n        if (withdrawalHash[id] != 0) {\n            revert ErrQueryForProcessedWithdrawal();\n        }\n\n        if (!(receipt.info.erc == TokenStandard.ERC721 || !_reachedWithdrawalLimit(tokenAddr, quantity))) {\n            revert ErrReachedDailyWithdrawalLimit();\n        }\n\n        bytes32 receiptHash = receipt.hash();\n        bytes32 receiptDigest = Transfer.receiptDigest(_domainSeparator, receiptHash);\n\n        uint256 minimumWeight;\n        (minimumWeight, locked) = _computeMinVoteWeight(receipt.info.erc, tokenAddr, quantity);\n\n        {\n            bool passed;\n            address signer;\n            address lastSigner;\n            Signature memory sig;\n            uint256 accumWeight;\n            for (uint256 i; i < signatures.length; i++) {\n                sig = signatures[i];\n                signer = ECDSA.recover({hash: receiptDigest, v: sig.v, r: sig.r, s: sig.s});\n                if (lastSigner >= signer) {\n                    revert ErrInvalidOrder(msg.sig);\n                }\n\n                lastSigner = signer;\n\n                uint256 w = _getWeight(signer);\n                if (w == 0) {\n                    revert ErrInvalidSigner(signer, w, sig);\n                }\n\n                accumWeight += w;\n                if (accumWeight >= minimumWeight) {\n                    passed = true;\n                    break;\n                }\n            }\n\n            if (!passed) {\n                revert ErrQueryForInsufficientVoteWeight();\n            }\n            withdrawalHash[id] = receiptHash;\n        }\n\n        if (locked) {\n            withdrawalLocked[id] = true;\n            emit WithdrawalLocked(receiptHash, receipt);\n            return locked;\n        }\n\n        _recordWithdrawal(tokenAddr, quantity);\n        receipt.info.handleAssetOut(payable(receipt.mainchain.addr), tokenAddr, wrappedNativeToken);\n        emit Withdrew(receiptHash, receipt);\n    }\n\n    /**\n     * @dev Requests deposit made by `_requester` address.\n     *\n     * Requirements:\n     * - The token info is valid.\n     * - The `msg.value` is 0 while depositing ERC20 token.\n     * - The `msg.value` is equal to deposit quantity while depositing native token.\n     *\n     * Emits the `DepositRequested` event.\n     *\n     */\n    function _requestDepositFor(Transfer.Request memory _request, address _requester) internal virtual {\n        MappedToken memory _token;\n        address mainchainWeth = address(wrappedNativeToken);\n\n        _request.info.validate();\n        _requireNotRestricted(_request.info.erc);\n        if (_request.tokenAddr == address(0)) {\n            if (_request.info.quantity != msg.value) {\n                revert ErrInvalidRequest();\n            }\n\n            _token = getRoninToken(mainchainWeth);\n            if (_token.erc != _request.info.erc) {\n                revert ErrInvalidTokenStandard();\n            }\n\n            _request.tokenAddr = mainchainWeth;\n        } else {\n            if (msg.value != 0) {\n                revert ErrInvalidRequest();\n            }\n\n            _token = getRoninToken(_request.tokenAddr);\n            if (_token.erc != _request.info.erc) {\n                revert ErrInvalidTokenStandard();\n            }\n\n            _request.info.handleAssetIn(_requester, _request.tokenAddr);\n\n            /**\n             * Withdraw if token is WETH\n             *\n             * `IWETH.withdraw` only sends 2300 gas, which might be insufficient when recipient is a proxy, in this case, gateway proxy.\n             * However, the storage accesses of proxy relating variables on Shanghai hardfork are warm-access, only requires additional 100*2 gas. So it should be safe,\n             * no need to go via a mediator of WETH unwrapper.\n             */\n            if (mainchainWeth == _request.tokenAddr) {\n                IWETH(mainchainWeth).withdraw(_request.info.quantity);\n            }\n        }\n\n        uint256 _depositId = depositCount++;\n        Transfer.Receipt memory _receipt =\n            _request.into_deposit_receipt(_requester, _depositId, _token.tokenAddr, roninChainId);\n\n        emit DepositRequested(_receipt.hash(), _receipt);\n    }\n\n    /**\n     * @dev Returns the minimum vote weight for the token.\n     */\n    function _computeMinVoteWeight(TokenStandard _erc, address _token, uint256 _quantity)\n        internal\n        virtual\n        returns (uint256 _weight, bool _locked)\n    {\n        uint256 _totalWeight = _getTotalWeight();\n        _weight = _minimumVoteWeight(_totalWeight);\n        if (_erc == TokenStandard.ERC20) {\n            if (highTierThreshold[_token] <= _quantity) {\n                _weight = _highTierVoteWeight(_totalWeight);\n            }\n            _locked = _lockedWithdrawalRequest(_token, _quantity);\n        }\n    }\n\n    /**\n     * @dev Update domain separator.\n     */\n    function _updateDomainSeparator() internal {\n        /*\n     * _domainSeparator = keccak256(\n     *   abi.encode(\n     *     keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\"),\n     *     keccak256(\"MainchainGatewayV2\"),\n     *     keccak256(\"2\"),\n     *     block.chainid,\n     *     address(this)\n     *   )\n     * );\n     */\n        assembly {\n            let ptr := mload(0x40)\n            // keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\")\n            mstore(ptr, 0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f)\n            // keccak256(\"MainchainGatewayV2\")\n            mstore(add(ptr, 0x20), 0x159f52c1e3a2b6a6aad3950adf713516211484e0516dad685ea662a094b7c43b)\n            // keccak256(\"2\")\n            mstore(add(ptr, 0x40), 0xad7c5bef027816a800da1736444fb58a807ef4c9603b7848673f7e3a68eb14a5)\n            mstore(add(ptr, 0x60), chainid())\n            mstore(add(ptr, 0x80), address())\n            sstore(_domainSeparator.slot, keccak256(ptr, 0xa0))\n        }\n    }\n\n    /**\n     * @dev Sets the WETH contract.\n     *\n     * Emits the `WrappedNativeTokenContractUpdated` event.\n     *\n     */\n    function _setWrappedNativeTokenContract(IWETH _wrappedToken) internal {\n        wrappedNativeToken = _wrappedToken;\n        emit WrappedNativeTokenContractUpdated(_wrappedToken);\n    }\n\n    /**\n     * @dev Receives ETH from WETH or revert if sender is not WETH.\n     */\n    function _fallback() internal virtual {\n        if (msg.sender != address(wrappedNativeToken)) {\n            revert ErrInvalidRequest();\n        }\n    }\n\n    /**\n     * @inheritdoc GatewayV3\n     */\n    function _getTotalWeight() internal view override returns (uint256 totalWeight) {\n        totalWeight = _totalOperatorWeight;\n        if (totalWeight == 0) {\n            revert ErrNullTotalWeightProvided(msg.sig);\n        }\n    }\n\n    /**\n     * @dev Returns the weight of an address.\n     */\n    function _getWeight(address addr) internal view returns (uint256) {\n        return _operatorWeight[addr];\n    }\n\n    ///////////////////////////////////////////////\n    //                CALLBACKS\n    ///////////////////////////////////////////////\n\n    /**\n     * @inheritdoc IBridgeManagerCallback\n     */\n    function onBridgeOperatorsAdded(address[] calldata operators, uint96[] calldata weights, bool[] memory addeds)\n        external\n        onlyContract(ContractType.BRIDGE_MANAGER)\n        returns (bytes4)\n    {\n        uint256 length = operators.length;\n        if (length != addeds.length || length != weights.length) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n        if (length == 0) {\n            return IBridgeManagerCallback.onBridgeOperatorsAdded.selector;\n        }\n\n        for (uint256 i; i < length; ++i) {\n            unchecked {\n                if (addeds[i]) {\n                    _totalOperatorWeight += weights[i];\n                    _operatorWeight[operators[i]] = weights[i];\n                }\n            }\n        }\n\n        return IBridgeManagerCallback.onBridgeOperatorsAdded.selector;\n    }\n\n    /**\n     * @inheritdoc IBridgeManagerCallback\n     */\n    function onBridgeOperatorsRemoved(address[] calldata operators, bool[] calldata removeds)\n        external\n        onlyContract(ContractType.BRIDGE_MANAGER)\n        returns (bytes4)\n    {\n        uint256 length = operators.length;\n        if (length != removeds.length) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n        if (length == 0) {\n            return IBridgeManagerCallback.onBridgeOperatorsRemoved.selector;\n        }\n\n        uint96 totalRemovingWeight;\n        for (uint256 i; i < length; ++i) {\n            unchecked {\n                if (removeds[i]) {\n                    totalRemovingWeight += _operatorWeight[operators[i]];\n                    delete _operatorWeight[operators[i]];\n                }\n            }\n        }\n\n        _totalOperatorWeight -= totalRemovingWeight;\n\n        return IBridgeManagerCallback.onBridgeOperatorsRemoved.selector;\n    }\n\n    function supportsInterface(bytes4 interfaceId)\n        public\n        view\n        override(AccessControlEnumerable, IERC165, ERC1155Receiver)\n        returns (bool)\n    {\n        return interfaceId == type(IMainchainGatewayV3).interfaceId\n            || interfaceId == type(IBridgeManagerCallback).interfaceId || super.supportsInterface(interfaceId);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 507,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "MainchainGatewayV3",
+        "similarity": 0.856,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2024-08",
+        "repository": "ronin-chain/bridge-contract",
+        "path": "src/mainchain/MainchainGatewayV3.sol",
+        "commit": "132fcc674f46cd900c2dc6bd677379654bd7f639",
+        "commitTimestamp": "2024-08-12T11:15:06Z",
+        "url": "https://github.com/ronin-chain/bridge-contract/blob/132fcc674f46cd900c2dc6bd677379654bd7f639/src/mainchain/MainchainGatewayV3.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full contract review (function-level security analysis Ronin-01..10); no issues reported.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 37,
+        "removed": 66,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 36,
+        "unchanged": 507,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 6,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    ERC1155Holder,"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    IMainchainGatewayV3,"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    HasContracts,"
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    AssetMigration,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    IBridgeManagerCallback"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 10, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "    using LibTokenInfo for TokenInfo;"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 16,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "    bytes32 public constant WITHDRAWAL_UNLOCKER_ROLE = keccak256(\"WITHDRAWAL_UNLOCKER_ROLE\");"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 18,
+                "text": "    /// @dev Wrapped native token address"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    IWETH public wrappedNativeToken;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    IWETH public override(AssetMigration, IMainchainGatewayV3) wrappedNativeToken;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "    /// @dev Ronin network id"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "    uint256 public roninChainId;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "    /// @dev Total deposit"
+              }
+            ]
+          },
+          {
+            "oldStart": 34,
+            "oldLines": 94,
+            "newStart": 35,
+            "newLines": 60,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "    /// @custom:deprecated Previously `_bridgeOperators` (uint256[])"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 36,
+                "text": "    uint256 private ______deprecatedBridgeOperators;"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 37, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    uint96 private _totalOperatorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    mapping(address operator => uint96 weight) private _operatorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    WethUnwrapper public wethUnwrapper;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    uint96 internal _totalOperatorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    mapping(address operator => uint96 weight) internal _operatorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @custom:deprecated Previously `_wethUnwrapper` (address)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    uint256 private ______deprecatedWethUnwrapper;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 42, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 43,
+                "text": "    constructor() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 44,
+                "text": "        _disableInitializers();"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 44, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    fallback() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 47, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 48, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 47,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 48,
+                "text": "        _fallback();"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "     * @dev Initializes contract storage.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    function initialize(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        address _roleSetter,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        IWETH _wrappedToken,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        uint256 _roninChainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        uint256 _numerator,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        uint256 _highTierVWNumerator,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        uint256 _denominator,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // _addresses[0]: mainchainTokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        // _addresses[1]: roninTokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        // _addresses[2]: withdrawalUnlockers",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        address[][3] calldata _addresses,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        // _thresholds[0]: highTierThreshold",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // _thresholds[1]: lockedThreshold",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        // _thresholds[2]: unlockFeePercentages",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        // _thresholds[3]: dailyWithdrawalLimit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        uint256[][4] calldata _thresholds,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        TokenStandard[] calldata _standards",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    ) external payable virtual initializer {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        _setupRole(DEFAULT_ADMIN_ROLE, _roleSetter);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "        roninChainId = _roninChainId;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function initializeV5(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        address migrator,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        address newEmergencyPauser,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        address[] calldata tokens,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        address[] calldata recipients,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        uint64[] calldata remoteChainSelectors",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    ) external reinitializer(5) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        _grantRole(_MIGRATOR_ROLE, migrator);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 76, "newLine": 59, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        _setWrappedNativeTokenContract(_wrappedToken);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        _updateDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        _setThreshold(_numerator, _denominator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        _setHighTierVoteWeightThreshold(_highTierVWNumerator, _denominator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        _verifyThresholds();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        uint8 forbidAllIndicator = type(uint8).max;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        if (_addresses[0].length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "            // Map mainchain tokens to ronin tokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "            _mapTokens(_addresses[0], _addresses[1], _standards);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "            // Sets thresholds based on the mainchain tokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            _setHighTierThresholds(_addresses[0], _thresholds[0]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            _setLockedThresholds(_addresses[0], _thresholds[1]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            _setUnlockFeePercentages(_addresses[0], _thresholds[2]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            _setDailyWithdrawalLimits(_addresses[0], _thresholds[3]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        _restrict(this.requestDepositFor.selector, forbidAllIndicator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        _restrict(this.submitWithdrawal.selector, forbidAllIndicator);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 92, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        // Grant role for withdrawal unlocker",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        for (uint256 i; i < _addresses[2].length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "            _grantRole(WITHDRAWAL_UNLOCKER_ROLE, _addresses[2][i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        if (tokens.length != 0 || recipients.length != 0 || remoteChainSelectors.length != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "            _whitelist(tokens, recipients, remoteChainSelectors);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 67,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        emergencyPauser = newEmergencyPauser;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 69, "text": "    }" },
+              { "type": " ", "oldLine": 98, "newLine": 70, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    function initializeV2(address bridgeManagerContract) external reinitializer(2) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        _setContract(ContractType.BRIDGE_MANAGER, bridgeManagerContract);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 101, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     * @dev Grant or revoke permission to transfer NFTs on behalf of the bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "     * - The method caller is admin or already have migrator role.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    function bulkSetApprovalForAll(address[] calldata nfts, address[] calldata operators, bool[] calldata approveds)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        external",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 78, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        if (msg.sender != _getProxyAdmin()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "            _checkRole(_MIGRATOR_ROLE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if (nfts.length != operators.length || nfts.length != approveds.length) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            revert ErrLengthMismatch(msg.sig);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 102, "newLine": 85, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    function initializeV3() external reinitializer(3) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        IBridgeManager mainchainBridgeManager = IBridgeManager(getContract(ContractType.BRIDGE_MANAGER));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        (, address[] memory operators, uint96[] memory weights) = mainchainBridgeManager.getFullBridgeOperatorInfos();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 106, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        uint96 totalWeight;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        for (uint256 i; i < operators.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "            _operatorWeight[operators[i]] = weights[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "            totalWeight += weights[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        for (uint256 i; i < nfts.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            IERC721(nfts[i]).setApprovalForAll(operators[i], approveds[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 88,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        _totalOperatorWeight = totalWeight;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 113, "newLine": 89, "text": "    }" },
+              { "type": " ", "oldLine": 114, "newLine": 90, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    function initializeV4(address payable wethUnwrapper_) external reinitializer(4) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        wethUnwrapper = WethUnwrapper(wethUnwrapper_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 117, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 118, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 119, "newLine": 91, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     * @dev Receives ether without doing anything. Use this function to topup native token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    function receiveEther() external payable {}",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 123, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 92,
+                "text": "     * @inheritdoc IMainchainGatewayV3"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 93, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 94,
+                "text": "    function DOMAIN_SEPARATOR() external view virtual returns (bytes32) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 16,
+            "newStart": 112,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 112,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 113,
+                "text": "     * @inheritdoc IMainchainGatewayV3"
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 114,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "    function requestDepositForBatch(Transfer.Request[] calldata _requests) external payable virtual whenNotPaused {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "        uint256 length = _requests.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "        for (uint256 i; i < length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "            _requestDepositFor(_requests[i], msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 154, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "     * @inheritdoc IMainchainGatewayV3",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 115,
+                "text": "    function submitWithdrawal(Transfer.Receipt calldata _receipt, Signature[] calldata _signatures)"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 116,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 117,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 291,
+            "oldLines": 6,
+            "newStart": 248,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 248,
+                "text": "        address tokenAddr = receipt.mainchain.tokenAddr;"
+              },
+              { "type": " ", "oldLine": 292, "newLine": 249, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 250,
+                "text": "        receipt.info.validate();"
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "        _requireNotRestricted(receipt.info.erc);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 252,
+                "text": "        if (receipt.kind != Transfer.Kind.Withdrawal) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 253,
+                "text": "            revert ErrInvalidReceiptKind();"
+              },
+              {
+                "type": " ",
+                "oldLine": 296,
+                "newLine": 254,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 381,
+            "oldLines": 20,
+            "newStart": 339,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 381,
+                "newLine": 339,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 382,
+                "newLine": 340,
+                "text": "    function _requestDepositFor(Transfer.Request memory _request, address _requester) internal virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 383,
+                "newLine": 341,
+                "text": "        MappedToken memory _token;"
+              },
+              {
+                "type": "-",
+                "oldLine": 384,
+                "text": "        address _roninWeth = address(wrappedNativeToken);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "        address mainchainWeth = address(wrappedNativeToken);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 385, "newLine": 343, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 386,
+                "newLine": 344,
+                "text": "        _request.info.validate();"
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "        _requireNotRestricted(_request.info.erc);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 387,
+                "newLine": 346,
+                "text": "        if (_request.tokenAddr == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 388,
+                "newLine": 347,
+                "text": "            if (_request.info.quantity != msg.value) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 389,
+                "newLine": 348,
+                "text": "                revert ErrInvalidRequest();"
+              },
+              {
+                "type": " ",
+                "oldLine": 390,
+                "newLine": 349,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 391, "newLine": 350, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 392,
+                "text": "            _token = getRoninToken(_roninWeth);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "            _token = getRoninToken(mainchainWeth);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 393,
+                "newLine": 352,
+                "text": "            if (_token.erc != _request.info.erc) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 394,
+                "newLine": 353,
+                "text": "                revert ErrInvalidTokenStandard();"
+              },
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 354,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 396, "newLine": 355, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 397,
+                "text": "            _request.tokenAddr = _roninWeth;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "            _request.tokenAddr = mainchainWeth;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 398,
+                "newLine": 357,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 399,
+                "newLine": 358,
+                "text": "            if (msg.value != 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 359,
+                "text": "                revert ErrInvalidRequest();"
+              }
+            ]
+          },
+          {
+            "oldStart": 406,
+            "oldLines": 11,
+            "newStart": 365,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 406,
+                "newLine": 365,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 407, "newLine": 366, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 408,
+                "newLine": 367,
+                "text": "            _request.info.handleAssetIn(_requester, _request.tokenAddr);"
+              },
+              {
+                "type": "-",
+                "oldLine": 409,
+                "text": "            // Withdraw if token is WETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 410,
+                "text": "            // The withdraw of WETH must go via `WethUnwrapper`, because `WETH.withdraw` only sends 2300 gas, which is insufficient when recipient is a proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 411,
+                "text": "            if (_roninWeth == _request.tokenAddr) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 412,
+                "text": "                wrappedNativeToken.approve(address(wethUnwrapper), _request.info.quantity);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 413,
+                "text": "                wethUnwrapper.unwrap(_request.info.quantity);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 368, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 369,
+                "text": "            /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "             * Withdraw if token is WETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "             *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "             * `IWETH.withdraw` only sends 2300 gas, which might be insufficient when recipient is a proxy, in this case, gateway proxy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "             * However, the storage accesses of proxy relating variables on Shanghai hardfork are warm-access, only requires additional 100*2 gas. So it should be safe,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "             * no need to go via a mediator of WETH unwrapper.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "             */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "            if (mainchainWeth == _request.tokenAddr) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "                IWETH(mainchainWeth).withdraw(_request.info.quantity);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 378,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 379,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 380, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 480,
+            "oldLines": 27,
+            "newStart": 444,
+            "newLines": 15,
+            "lines": [
+              { "type": " ", "oldLine": 480, "newLine": 444, "text": "    }" },
+              { "type": " ", "oldLine": 481, "newLine": 445, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 482,
+                "newLine": 446,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 483,
+                "text": "     * @dev Receives ETH from WETH or creates deposit request if sender is not WETH or WETHUnwrapper.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "     * @dev Receives ETH from WETH or revert if sender is not WETH.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 484,
+                "newLine": 448,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 485,
+                "newLine": 449,
+                "text": "    function _fallback() internal virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 486,
+                "text": "        if (msg.sender == address(wrappedNativeToken) || msg.sender == address(wethUnwrapper)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 487,
+                "text": "            return;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 450,
+                "text": "        if (msg.sender != address(wrappedNativeToken)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 451,
+                "text": "            revert ErrInvalidRequest();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 488,
+                "newLine": 452,
+                "text": "        }"
+              },
+              { "type": "-", "oldLine": 489, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 490,
+                "text": "        _createDepositOnFallback();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 491, "newLine": 453, "text": "    }" },
+              { "type": " ", "oldLine": 492, "newLine": 454, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 493,
+                "newLine": 455,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 494,
+                "text": "     * @dev Creates deposit request.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 495,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 496,
+                "text": "    function _createDepositOnFallback() internal virtual whenNotPaused {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 497,
+                "text": "        Transfer.Request memory _request;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 498,
+                "text": "        _request.recipientAddr = msg.sender;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 499,
+                "text": "        _request.info.quantity = msg.value;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 500,
+                "text": "        _requestDepositFor(_request, _request.recipientAddr);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 502, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 503,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 456,
+                "text": "     * @inheritdoc GatewayV3"
+              },
+              {
+                "type": " ",
+                "oldLine": 505,
+                "newLine": 457,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 506,
+                "newLine": 458,
+                "text": "    function _getTotalWeight() internal view override returns (uint256 totalWeight) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

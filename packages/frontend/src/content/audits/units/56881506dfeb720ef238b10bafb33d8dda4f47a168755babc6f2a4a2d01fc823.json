@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "56881506dfeb720ef238b10bafb33d8dda4f47a168755babc6f2a4a2d01fc823",
+  "name": "IEntrypoint",
+  "kind": "interface",
+  "lines": 364,
+  "source": "interface IEntrypoint {\n    /*///////////////////////////////////////////////////////////////\n                              STRUCTS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Struct for the asset configuration\n     * @param pool The Privacy Pool contracts for the asset\n     * @param minimumDepositAmount The minimum amount that can be deposited\n     * @param vettingfeeBPS The deposit fee in basis points\n     */\n    struct AssetConfig {\n        IPrivacyPool pool;\n        uint256 minimumDepositAmount;\n        uint256 vettingFeeBPS;\n        uint256 maxRelayFeeBPS;\n    }\n\n    /**\n     * @notice Struct for the relay data\n     * @param recipient The recipient of the funds withdrawn from the pool\n     * @param feeRecipient The recipient of the fee\n     * @param relayfeeBPS The relay fee in basis points\n     */\n    struct RelayData {\n        address recipient;\n        address feeRecipient;\n        uint256 relayFeeBPS;\n    }\n\n    /**\n     * @notice Struct for the onchain association set data\n     * @param root The ASP root\n     * @param ipfsCID The IPFS v1 CID of the ASP data. A content-addressed identifier computed by hashing\n     *                the content with SHA-256, adding multicodec/multihash prefixes, and encoding in base32/58.\n     *                This uniquely identifies data by its content rather than location.\n     * @param timestamp The timestamp on which the root was updated\n     */\n    struct AssociationSetData {\n        uint256 root;\n        string ipfsCID;\n        uint256 timestamp;\n    }\n\n    /*///////////////////////////////////////////////////////////////\n                              EVENTS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Emitted when pushing a new root to the association root set\n     * @param _root The latest ASP root\n     * @param _ipfsCID The IPFS CID of the association set data\n     * @param _timestamp The timestamp of root update\n     */\n    event RootUpdated(uint256 _root, string _ipfsCID, uint256 _timestamp);\n\n    /**\n     * @notice Emitted when pushing a new root to the association root set\n     * @param _depositor The address of the depositor\n     * @param _pool The Privacy Pool contract\n     * @param _commitment The commitment hash for the deposit\n     * @param _amount The amount of asset deposited\n     */\n    event Deposited(address indexed _depositor, IPrivacyPool indexed _pool, uint256 _commitment, uint256 _amount);\n\n    /**\n     * @notice Emitted when processing a withdrawal through the Entrypoint\n     * @param _relayer The address of the relayer\n     * @param _recipient The address of the withdrawal recipient\n     * @param _asset The asset being withdrawn\n     * @param _amount The amount of asset withdrawn\n     * @param _feeAmount The fee paid to the relayer\n     */\n    event WithdrawalRelayed(\n        address indexed _relayer, address indexed _recipient, IERC20 indexed _asset, uint256 _amount, uint256 _feeAmount\n    );\n\n    /**\n     * @notice Emitted when withdrawing fees from the Entrypoint\n     * @param _asset The asset being withdrawn\n     * @param _recipient The address of the fees withdrawal recipient\n     * @param _amount The amount of asset withdrawn\n     */\n    event FeesWithdrawn(IERC20 _asset, address _recipient, uint256 _amount);\n\n    /**\n     * @notice Emitted when winding down a Privacy Pool\n     * @param _pool The Privacy Pool contract\n     */\n    event PoolWindDown(IPrivacyPool _pool);\n\n    /**\n     * @notice Emitted when registering a Privacy Pool in the Entrypoint registry\n     * @param _pool The Privacy Pool contract\n     * @param _asset The asset of the pool\n     * @param _scope The unique scope of the pool\n     */\n    event PoolRegistered(IPrivacyPool _pool, IERC20 _asset, uint256 _scope);\n\n    /**\n     * @notice Emitted when removing a Privacy Pool from the Entrypoint registry\n     * @param _pool The Privacy Pool contract\n     * @param _asset The asset of the pool\n     * @param _scope The unique scope of the pool\n     */\n    event PoolRemoved(IPrivacyPool _pool, IERC20 _asset, uint256 _scope);\n\n    /**\n     * @notice Emitted when updating the configuration of a Privacy Pool\n     * @param _pool The Privacy Pool contract\n     * @param _asset The asset of the pool\n     * @param _newMinimumDepositAmount The updated minimum deposit amount\n     * @param _newVettingFeeBPS The updated vetting fee in basis points\n     * @param _newMaxRelayFeeBPS The updated maximum relay fee in basis points\n     */\n    event PoolConfigurationUpdated(\n        IPrivacyPool _pool,\n        IERC20 _asset,\n        uint256 _newMinimumDepositAmount,\n        uint256 _newVettingFeeBPS,\n        uint256 _newMaxRelayFeeBPS\n    );\n\n    /*///////////////////////////////////////////////////////////////\n                              ERRORS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Thrown when trying to withdraw an invalid amount\n     */\n    error InvalidWithdrawalAmount();\n\n    /**\n     * @notice Thrown when trying to access a non-existent pool\n     */\n    error PoolNotFound();\n\n    /**\n     * @notice Thrown when trying to register a dead pool\n     */\n    error PoolIsDead();\n\n    /**\n     * @notice Thrown when trying to register a pool whose configured Entrypoint is not this one\n     */\n    error InvalidEntrypointForPool();\n\n    /**\n     * @notice Thrown when trying to register a pool for an asset that is already present in the registry\n     */\n    error AssetPoolAlreadyRegistered();\n\n    /**\n     * @notice Thrown when trying to register a pool for a scope that is already present in the registry\n     */\n    error ScopePoolAlreadyRegistered();\n\n    /**\n     * @notice Thrown when trying to deposit less than the minimum deposit amount\n     */\n    error MinimumDepositAmount();\n\n    /**\n     * @notice Thrown when trying to relay with a relayer fee greater than the maximum configured\n     */\n    error RelayFeeGreaterThanMax();\n\n    /**\n     * @notice Thrown when trying to process a withdrawal with an invalid processooor\n     */\n    error InvalidProcessooor();\n\n    /**\n     * @notice Thrown when finding an invalid state in the pool like an invalid asset balance\n     */\n    error InvalidPoolState();\n\n    /**\n     * @notice Thrown when trying to push a an IPFS CID with an invalid length\n     */\n    error InvalidIPFSCIDLength();\n\n    /**\n     * @notice Thrown when trying to push a root with an empty root\n     */\n    error EmptyRoot();\n\n    /**\n     * @notice Thrown when failing to send the native asset to an account\n     */\n    error NativeAssetTransferFailed();\n\n    /**\n     * @notice Thrown when an address parameter is zero\n     */\n    error ZeroAddress();\n\n    /**\n     * @notice Thrown when a fee in basis points is greater than 10000 (100%)\n     */\n    error InvalidFeeBPS();\n\n    /**\n     * @notice Thrown when trying to access an association set at an invalid index\n     */\n    error InvalidIndex();\n\n    /**\n     * @notice Thrown when trying to get the latest root when no roots exist\n     */\n    error NoRootsAvailable();\n\n    /**\n     * @notice Thrown when trying to register a pool with an asset that doesn't match the pool's asset\n     */\n    error AssetMismatch();\n\n    /**\n     * @notice Thrown when trying to send native asset to the Entrypoint\n     */\n    error NativeAssetNotAccepted();\n\n    /*//////////////////////////////////////////////////////////////\n                                LOGIC\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Initializes the contract state\n     * @param _owner The initial owner\n     * @param _postman The initial postman\n     */\n    function initialize(address _owner, address _postman) external;\n\n    /**\n     * @notice Push a new root to the association root set\n     * @param _root The new ASP root\n     * @param _ipfsCID The IPFS v1 CID of the association set data\n     * @return _index The index of the newly added root\n     */\n    function updateRoot(uint256 _root, string memory _ipfsCID) external returns (uint256 _index);\n\n    /**\n     * @notice Make a native asset deposit into the Privacy Pool\n     * @param _precommitment The precommitment for the deposit\n     * @return _commitment The deposit commitment hash\n     */\n    function deposit(uint256 _precommitment) external payable returns (uint256 _commitment);\n\n    /**\n     * @notice Make an ERC20 deposit into the Privacy Pool\n     * @param _asset The asset to deposit\n     * @param _value The amount of asset to deposit\n     * @param _precommitment The precommitment for the deposit\n     * @return _commitment The deposit commitment hash\n     */\n    function deposit(IERC20 _asset, uint256 _value, uint256 _precommitment) external returns (uint256 _commitment);\n\n    /**\n     * @notice Process a withdrawal\n     * @param _withdrawal The `Withdrawal` struct\n     * @param _proof The `WithdrawProof` struct containing the withdarawal proof signals\n     * @param _scope The Pool scope to withdraw from\n     */\n    function relay(IPrivacyPool.Withdrawal calldata _withdrawal, ProofLib.WithdrawProof calldata _proof, uint256 _scope)\n        external;\n\n    /**\n     * @notice Register a Privacy Pool in the registry\n     * @param _asset The asset of the pool\n     * @param _pool The address of the Privacy Pool contract\n     * @param _minimumDepositAmount The minimum deposit amount for the asset\n     * @param _vettingFeeBPS The deposit fee in basis points\n     * @param _maxRelayFeeBPS The maximum relay fee in basis points\n     */\n    function registerPool(\n        IERC20 _asset,\n        IPrivacyPool _pool,\n        uint256 _minimumDepositAmount,\n        uint256 _vettingFeeBPS,\n        uint256 _maxRelayFeeBPS\n    ) external;\n\n    /**\n     * @notice Remove a Privacy Pool from the registry\n     * @param _asset The asset of the pool\n     */\n    function removePool(IERC20 _asset) external;\n\n    /**\n     * @notice Updates the configuration of a specific pool\n     * @param _asset The asset of the pool to update\n     * @param _minimumDepositAmount The new minimum deposit amount\n     * @param _vettingFeeBPS The new vetting fee in basis points\n     * @param _maxRelayFeeBPS The new max relay fee in basis points\n     */\n    function updatePoolConfiguration(\n        IERC20 _asset,\n        uint256 _minimumDepositAmount,\n        uint256 _vettingFeeBPS,\n        uint256 _maxRelayFeeBPS\n    ) external;\n\n    /**\n     * @notice Irreversebly halt deposits from a Privacy Pool\n     * @param _pool The Privacy Pool contract\n     */\n    function windDownPool(IPrivacyPool _pool) external;\n\n    /**\n     * @notice Withdraw fees from the Entrypoint\n     * @param _asset The asset to withdraw\n     * @param _recipient The recipient of the fees\n     */\n    function withdrawFees(IERC20 _asset, address _recipient) external;\n\n    /*///////////////////////////////////////////////////////////////\n                            VIEWS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Returns the configured pool for a scope\n     * @param _scope The unique scope of the pool\n     * @return _pool The Privacy Pool contract\n     */\n    function scopeToPool(uint256 _scope) external view returns (IPrivacyPool _pool);\n\n    /**\n     * @notice Returns the configuration for an asset\n     * @param _asset The asset address\n     * @return _pool The Privacy Pool contract\n     * @return _minimumDepositAmount The minimum deposit amount\n     * @return _vettingFeeBPS The deposit fee in basis points\n     * @return _maxRelayFeeBPS The max relayer fee in basis points\n     */\n    function assetConfig(IERC20 _asset)\n        external\n        view\n        returns (IPrivacyPool _pool, uint256 _minimumDepositAmount, uint256 _vettingFeeBPS, uint256 _maxRelayFeeBPS);\n\n    /**\n     * @notice Returns the association set data at an index\n     * @param _index The index of the array\n     * @return _root The updated ASP root\n     * @return _ipfsCID The IPFS v1 CID for the association set data\n     * @return _timestamp The timestamp of the root update\n     */\n    function associationSets(uint256 _index)\n        external\n        view\n        returns (uint256 _root, string memory _ipfsCID, uint256 _timestamp);\n\n    /**\n     * @notice Returns the latest ASP root\n     * @return _root The latest ASP root\n     */\n    function latestRoot() external view returns (uint256 _root);\n\n    /**\n     * @notice Returns an ASP root by index\n     * @param _index The index\n     * @return _root The ASP root at the index\n     */\n    function rootByIndex(uint256 _index) external view returns (uint256 _root);\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "differs",
+      "coveredLines": 364,
+      "match": {
+        "origin": "own",
+        "collection": "privacy-pools",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IEntrypoint",
+        "similarity": 0.989,
+        "reportId": "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/interfaces/IEntrypoint.sol",
+        "commit": "238e3594053becde68aa40e1e4cef6c0c46e68da",
+        "commitTimestamp": "2025-05-19T17:53:50Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/238e3594053becde68aa40e1e4cef6c0c46e68da/packages/contracts/src/interfaces/IEntrypoint.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "upgrade audit",
+        "coverage": "Full file review as part of the Entrypoint upgrade audit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 10,
+        "unchanged": 364,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 220,
+            "oldLines": 11,
+            "newStart": 220,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 220,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 221,
+                "text": "    error NativeAssetNotAccepted();"
+              },
+              { "type": " ", "oldLine": 222, "newLine": 222, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "     * @notice Thrown when trying to deposit using a precommitment that has already been used by another deposit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "    error PrecommitmentAlreadyUsed();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 227, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 223,
+                "text": "    /*//////////////////////////////////////////////////////////////"
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 224,
+                "text": "                                LOGIC"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 225,
+                "text": "    //////////////////////////////////////////////////////////////*/"
+              }
+            ]
+          },
+          {
+            "oldStart": 366,
+            "oldLines": 11,
+            "newStart": 361,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 361,
+                "text": "     * @return _root The ASP root at the index"
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 362,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 363,
+                "text": "    function rootByIndex(uint256 _index) external view returns (uint256 _root);"
+              },
+              { "type": "-", "oldLine": 369, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 370,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 371,
+                "text": "     * @notice Returns a boolean indicating if the precommitment has been used",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 372,
+                "text": "     * @param _precommitment The precommitment hash",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "     * @return _used The usage status",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 374,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 375,
+                "text": "    function usedPrecommitments(uint256 _precommitment) external view returns (bool _used);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 376, "newLine": 364, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

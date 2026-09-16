@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "50ea08c8d2fc8824c185cb2e47cd70258a490243d5567937d2e28f567bd1aba5",
+  "name": "parity_base.nr",
+  "kind": "program",
+  "lines": 34,
+  "source": "use crate::abis::ParityPublicInputs;\nuse types::{constants::NUM_MSGS_PER_BASE_PARITY, merkle_tree::MerkleTree};\n\npub struct ParityBasePrivateInputs {\n    pub(crate) msgs: [Field; NUM_MSGS_PER_BASE_PARITY],\n    pub(crate) vk_tree_root: Field,\n    pub(crate) prover_id: Field,\n}\n\n/// The Parity Base circuit processes a batch of L1-to-L2 messages and computes their merkle roots.\n/// It is the first step in converting L1 messages from SHA256 format (used on L1) to Poseidon format\n/// (used in Aztec's state trees).\n///\n/// This circuit:\n/// - Takes a fixed batch of L1-to-L2 messages as input\n/// - Computes a SHA256 merkle tree root over the messages (for verification on L1)\n/// - Computes a Poseidon merkle tree root over the same messages (for L2 state tree insertion)\n/// - Outputs both roots along with the vk_tree_root for consistency verification\n///\n/// The output feeds into the Parity Root circuit, which aggregates multiple Parity Base proofs to form the complete\n/// L1-to-L2 message subtree for a checkpoint.\n///\n/// VkIndex: PARITY_BASE_VK_INDEX\npub fn execute(inputs: ParityBasePrivateInputs) -> ParityPublicInputs {\n    let sha_tree = MerkleTree::new_sha(inputs.msgs);\n    let poseidon_tree = MerkleTree::new(inputs.msgs);\n\n    ParityPublicInputs {\n        sha_root: sha_tree.get_root(),\n        converted_root: poseidon_tree.get_root(),\n        vk_tree_root: inputs.vk_tree_root,\n        prover_id: inputs.prover_id,\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

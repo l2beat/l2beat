@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d45b1d3db679fbe6f95676351e87732d9f182c6e8fb95b981423e37348417f79",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "mod validate_against_tx_request_tests;\nmod validate_claimed_lengths_tests;\nmod validate_contract_address_tests;\nmod validate_expected_counters_tests;\nmod validate_first_call_tests;\nmod validate_msg_senders_tests;\nmod validate_side_effect_counters_tests;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

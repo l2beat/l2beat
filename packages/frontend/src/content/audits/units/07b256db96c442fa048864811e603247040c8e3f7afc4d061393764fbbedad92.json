@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "07b256db96c442fa048864811e603247040c8e3f7afc4d061393764fbbedad92",
+  "name": "transient_data_squashing_hint.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "/// Delineates the indices* of a note hash and nullifier pair that can be squashed.\n/// *the indices relate to the note_hashes and nullifiers arrays of the previous_kernel's public_inputs.\npub struct TransientDataSquashingHint {\n    pub note_hash_index: u32,\n    pub nullifier_index: u32,\n}\n\nimpl TransientDataSquashingHint {\n    pub fn skip(NOTE_HASHES_LEN: u32, NULLIFIERS_LEN: u32) -> Self {\n        // Use the array lengths as sentinel values.\n        // A `note_hash_index` equal to `NOTE_HASHES_LEN` is treated as inactive or \"no-op\". If such value is used in an\n        // active hint, it will fail to fetch the note hash with an out-of-bounds error.\n        // Similarly, a `nullifier_index` equal to `NULLIFIERS_LEN` is treated as inactive or \"no-op\".\n        TransientDataSquashingHint {\n            note_hash_index: NOTE_HASHES_LEN,\n            nullifier_index: NULLIFIERS_LEN,\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

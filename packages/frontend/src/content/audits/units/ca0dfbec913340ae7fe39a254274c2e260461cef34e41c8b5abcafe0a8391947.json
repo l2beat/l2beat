@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ca0dfbec913340ae7fe39a254274c2e260461cef34e41c8b5abcafe0a8391947",
+  "name": "GlobalCoreGovernance",
+  "kind": "abstract",
+  "lines": 164,
+  "source": "abstract contract GlobalCoreGovernance is CoreGovernance {\n    using Proposal for Proposal.ProposalDetail;\n    using GlobalProposal for GlobalProposal.GlobalProposalDetail;\n\n    mapping(GlobalProposal.TargetOption => address) internal _targetOptionsMap;\n\n    /// @dev Emitted when a proposal is created\n    event GlobalProposalCreated(\n        uint256 indexed round,\n        bytes32 indexed proposalHash,\n        Proposal.ProposalDetail proposal,\n        bytes32 globalProposalHash,\n        GlobalProposal.GlobalProposalDetail globalProposal,\n        address creator\n    );\n\n    /// @dev Emitted when the target options are updated\n    event TargetOptionUpdated(GlobalProposal.TargetOption indexed targetOption, address indexed addr);\n\n    function __GlobalCoreGovernance_init(GlobalProposal.TargetOption[] memory targetOptions, address[] memory addrs)\n        internal\n        onlyInitializing\n    {\n        __GlobalCoreGovernance_init_unchained(targetOptions, addrs);\n    }\n\n    function __GlobalCoreGovernance_init_unchained(\n        GlobalProposal.TargetOption[] memory targetOptions,\n        address[] memory addrs\n    ) internal onlyInitializing {\n        _updateTargetOption(GlobalProposal.TargetOption.BridgeManager, address(this));\n        _updateManyTargetOption(targetOptions, addrs);\n    }\n\n    /**\n     * @dev Proposes for a global proposal.\n     *\n     * Emits the `GlobalProposalCreated` event.\n     *\n     */\n    function _proposeGlobal(\n        uint256 expiryTimestamp,\n        GlobalProposal.TargetOption[] calldata targetOptions,\n        address executor,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        uint256[] memory gasAmounts,\n        address creator\n    ) internal virtual {\n        uint256 round_ = _createVotingRound(0);\n        GlobalProposal.GlobalProposalDetail memory globalProposal = GlobalProposal.GlobalProposalDetail(\n            round_, expiryTimestamp, executor, targetOptions, values, calldatas, gasAmounts\n        );\n        Proposal.ProposalDetail memory proposal =\n            globalProposal.intoProposalDetail(_resolveTargets({targetOptions: targetOptions, strict: true}));\n        proposal.validate(_proposalExpiryDuration);\n\n        bytes32 proposalHash = proposal.hash();\n        _saveVotingRound(vote[0][round_], proposalHash, expiryTimestamp);\n        emit GlobalProposalCreated(round_, proposalHash, proposal, globalProposal.hash(), globalProposal, creator);\n    }\n\n    /**\n     * @dev Proposes global proposal struct.\n     *\n     * Requirements:\n     * - The proposal nonce is equal to the new round.\n     *\n     * Emits the `GlobalProposalCreated` event.\n     *\n     */\n    function _proposeGlobalStruct(GlobalProposal.GlobalProposalDetail memory globalProposal, address creator)\n        internal\n        virtual\n        returns (Proposal.ProposalDetail memory proposal)\n    {\n        proposal = globalProposal.intoProposalDetail(\n            _resolveTargets({targetOptions: globalProposal.targetOptions, strict: true})\n        );\n        proposal.validate(_proposalExpiryDuration);\n\n        bytes32 proposalHash = proposal.hash();\n        uint256 round_ = _createVotingRound(0);\n        _saveVotingRound(vote[0][round_], proposalHash, globalProposal.expiryTimestamp);\n\n        if (round_ != proposal.nonce) {\n            revert ErrInvalidProposalNonce(msg.sig);\n        }\n        emit GlobalProposalCreated(round_, proposalHash, proposal, globalProposal.hash(), globalProposal, creator);\n    }\n\n    /**\n     * @dev Returns corresponding address of target options. Return address(0) on non-existent target.\n     */\n    function resolveTargets(GlobalProposal.TargetOption[] calldata targetOptions)\n        external\n        view\n        returns (address[] memory targets)\n    {\n        return _resolveTargets({targetOptions: targetOptions, strict: false});\n    }\n\n    /**\n     * @dev Internal helper of {resolveTargets}.\n     *\n     * @param strict When the param is set to `true`, revert on non-existent target.\n     */\n    function _resolveTargets(GlobalProposal.TargetOption[] memory targetOptions, bool strict)\n        internal\n        view\n        returns (address[] memory targets)\n    {\n        targets = new address[](targetOptions.length);\n\n        for (uint256 i; i < targetOptions.length; ++i) {\n            targets[i] = _targetOptionsMap[targetOptions[i]];\n            if (strict && targets[i] == address(0)) {\n                revert ErrInvalidArguments(msg.sig);\n            }\n        }\n    }\n\n    /**\n     * @dev Updates list of `targetOptions` to `targets`.\n     *\n     * Requirement:\n     * - Only allow self-call through proposal.\n     *\n     */\n    function updateManyTargetOption(GlobalProposal.TargetOption[] memory targetOptions, address[] memory targets)\n        external\n    {\n        // HACK: Cannot reuse the existing library due to too deep stack\n        if (msg.sender != address(this)) {\n            revert ErrOnlySelfCall(msg.sig);\n        }\n        _updateManyTargetOption(targetOptions, targets);\n    }\n\n    /**\n     * @dev Updates list of `targetOptions` to `targets`.\n     */\n    function _updateManyTargetOption(GlobalProposal.TargetOption[] memory targetOptions, address[] memory targets)\n        internal\n    {\n        for (uint256 i; i < targetOptions.length; ++i) {\n            if (targets[i] == address(this)) {\n                revert ErrInvalidArguments(msg.sig);\n            }\n            _updateTargetOption(targetOptions[i], targets[i]);\n        }\n    }\n\n    /**\n     * @dev Updates `targetOption` to `target`.\n     *\n     * Requirement:\n     * - Emit a `TargetOptionUpdated` event.\n     */\n    function _updateTargetOption(GlobalProposal.TargetOption targetOption, address target) internal {\n        _targetOptionsMap[targetOption] = target;\n        emit TargetOptionUpdated(targetOption, target);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 148,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GlobalCoreGovernance",
+        "similarity": 0.87,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/sequential-governance/GlobalCoreGovernance.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/extensions/sequential-governance/GlobalCoreGovernance.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 16,
+        "removed": 11,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 148,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @dev Emitted when the target options are updated"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    event TargetOptionUpdated(GlobalProposal.TargetOption indexed targetOption, address indexed addr);"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    constructor(GlobalProposal.TargetOption[] memory targetOptions, address[] memory addrs) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function __GlobalCoreGovernance_init(GlobalProposal.TargetOption[] memory targetOptions, address[] memory addrs)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        onlyInitializing",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 23, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        __GlobalCoreGovernance_init_unchained(targetOptions, addrs);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 26, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function __GlobalCoreGovernance_init_unchained(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        GlobalProposal.TargetOption[] memory targetOptions,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        address[] memory addrs",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    ) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 31,
+                "text": "        _updateTargetOption(GlobalProposal.TargetOption.BridgeManager, address(this));"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 32,
+                "text": "        _updateManyTargetOption(targetOptions, addrs);"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 33, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 14,
+            "newStart": 41,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 41,
+                "text": "    function _proposeGlobal("
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 42,
+                "text": "        uint256 expiryTimestamp,"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 43,
+                "text": "        GlobalProposal.TargetOption[] calldata targetOptions,"
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        address executor,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "        uint256[] memory values,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 46,
+                "text": "        bytes[] memory calldatas,"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 47,
+                "text": "        uint256[] memory gasAmounts,"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 48,
+                "text": "        address creator"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 49,
+                "text": "    ) internal virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 50,
+                "text": "        uint256 round_ = _createVotingRound(0);"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        GlobalProposal.GlobalProposalDetail memory globalProposal =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            GlobalProposal.GlobalProposalDetail(round_, expiryTimestamp, targetOptions, values, calldatas, gasAmounts);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        GlobalProposal.GlobalProposalDetail memory globalProposal = GlobalProposal.GlobalProposalDetail(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "            round_, expiryTimestamp, executor, targetOptions, values, calldatas, gasAmounts",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 54,
+                "text": "        Proposal.ProposalDetail memory proposal ="
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 55,
+                "text": "            globalProposal.intoProposalDetail(_resolveTargets({targetOptions: targetOptions, strict: true}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 56,
+                "text": "        proposal.validate(_proposalExpiryDuration);"
+              }
+            ]
+          },
+          {
+            "oldStart": 100,
+            "oldLines": 14,
+            "newStart": 112,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 100, "newLine": 112, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 113,
+                "text": "        targets = new address[](targetOptions.length);"
+              },
+              { "type": " ", "oldLine": 102, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        for (uint256 i; i < targetOptions.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        for (uint256 i; i < targetOptions.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 116,
+                "text": "            targets[i] = _targetOptionsMap[targetOptions[i]];"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 117,
+                "text": "            if (strict && targets[i] == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 118,
+                "text": "                revert ErrInvalidArguments(msg.sig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 119,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 120,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 112, "newLine": 121, "text": "    }" },
+              { "type": " ", "oldLine": 113, "newLine": 122, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 134,
+            "oldLines": 14,
+            "newStart": 143,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 143,
+                "text": "    function _updateManyTargetOption(GlobalProposal.TargetOption[] memory targetOptions, address[] memory targets)"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 144,
+                "text": "        internal"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 145, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "        for (uint256 i; i < targetOptions.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "        for (uint256 i; i < targetOptions.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 147,
+                "text": "            if (targets[i] == address(this)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 148,
+                "text": "                revert ErrInvalidArguments(msg.sig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 149,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 150,
+                "text": "            _updateTargetOption(targetOptions[i], targets[i]);"
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 151,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 146, "newLine": 152, "text": "    }" },
+              { "type": " ", "oldLine": 147, "newLine": 153, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

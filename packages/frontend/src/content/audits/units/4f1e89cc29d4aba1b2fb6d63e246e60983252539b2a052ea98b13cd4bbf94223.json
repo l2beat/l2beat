@@ -223,6 +223,442 @@
         ]
       },
       "warnings": ["low-similarity"]
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.077,
+        "reportId": "safe/g0-safe-1-1-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/Proxy.sol",
+        "commit": "1a9e5ce768e134c556770ea50e114fd83666b8a8",
+        "commitTimestamp": "2019-09-02T18:26:30Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/1a9e5ce768e134c556770ea50e114fd83666b8a8/contracts/proxies/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 8,
+        "removed": 16,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 25,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // masterCopy always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    address internal masterCopy;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 5, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of master copy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _masterCopy Master copy address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    constructor(address _masterCopy) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        masterCopy = _masterCopy;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 12, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @dev Fallback function forwards all transactions and returns all received return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    function() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "            calldatacopy(0, 0, calldatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            returndatacopy(0, 0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "            if eq(success, 0) { revert(0, returndatasize()) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "            return(0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 24, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function upgradeTo(address _implementation) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function upgradeToAndCall(address _implementation, bytes calldata _data) external payable returns (bytes memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function changeAdmin(address _admin) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function admin() external returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function implementation() external returns (address);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 9, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.077,
+        "reportId": "safe/g0-safe-1-1-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/Proxy.sol",
+        "commit": "1a9e5ce768e134c556770ea50e114fd83666b8a8",
+        "commitTimestamp": "2019-09-02T18:26:30Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/1a9e5ce768e134c556770ea50e114fd83666b8a8/contracts/proxies/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 8,
+        "removed": 16,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 25,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // masterCopy always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    address internal masterCopy;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 5, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of master copy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _masterCopy Master copy address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    constructor(address _masterCopy) public {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        masterCopy = _masterCopy;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 12, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @dev Fallback function forwards all transactions and returns all received return data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    function() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "            calldatacopy(0, 0, calldatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            returndatacopy(0, 0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "            if eq(success, 0) { revert(0, returndatasize()) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "            return(0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 24, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function upgradeTo(address _implementation) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function upgradeToAndCall(address _implementation, bytes calldata _data) external payable returns (bytes memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function changeAdmin(address _admin) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function admin() external returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function implementation() external returns (address);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 9, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
     }
   }
 }

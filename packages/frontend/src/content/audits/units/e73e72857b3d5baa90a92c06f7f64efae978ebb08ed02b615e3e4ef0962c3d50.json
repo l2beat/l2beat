@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e73e72857b3d5baa90a92c06f7f64efae978ebb08ed02b615e3e4ef0962c3d50",
+  "name": "ISchemaRegistry",
+  "kind": "interface",
+  "lines": 19,
+  "source": "interface ISchemaRegistry {\n    /// @dev Emitted when a new schema has been registered\n    /// @param uid The schema UID.\n    /// @param registerer The address of the account used to register the schema.\n    /// @param schema The schema data.\n    event Registered(bytes32 indexed uid, address indexed registerer, SchemaRecord schema);\n\n    /// @dev Submits and reserves a new schema\n    /// @param schema The schema data schema.\n    /// @param resolver An optional schema resolver.\n    /// @param revocable Whether the schema allows revocations explicitly.\n    /// @return The UID of the new schema.\n    function register(string calldata schema, ISchemaResolver resolver, bool revocable) external returns (bytes32);\n\n    /// @dev Returns an existing schema by UID\n    /// @param uid The UID of the schema to retrieve.\n    /// @return The schema data members.\n    function getSchema(bytes32 uid) external view returns (SchemaRecord memory);\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

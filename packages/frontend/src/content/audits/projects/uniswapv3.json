@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "uniswapv3",
   "slug": "uniswapv3",
-  "generatedAt": 1789490343,
-  "datasetRevision": "558a14f6d9bcb7f8f0517a0b4a3ccd1558023c21-dirty",
+  "generatedAt": 1789565213,
+  "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1786913047,
   "contractSelection": "all",
   "context": {

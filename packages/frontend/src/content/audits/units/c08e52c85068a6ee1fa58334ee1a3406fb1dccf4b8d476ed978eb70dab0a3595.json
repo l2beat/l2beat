@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c08e52c85068a6ee1fa58334ee1a3406fb1dccf4b8d476ed978eb70dab0a3595",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 31,
+  "source": "mod validate_gas_used_tests;\nmod validate_propagated_sorted_values_tests;\nmod validate_propagated_values_tests;\n\nuse crate::components::{gas_meter::meter_gas_used, tail_output_validator::TailOutputValidator};\nuse super::TestBuilder;\nuse types::abis::kernel_circuit_public_inputs::PrivateToRollupKernelCircuitPublicInputs;\n\nimpl TestBuilder {\n    pub fn export_output(self) -> PrivateToRollupKernelCircuitPublicInputs {\n        let mut output = self.output.to_private_to_rollup_kernel_circuit_public_inputs();\n        let previous_kernel = self.previous_kernel.to_private_kernel_circuit_public_inputs();\n        output.gas_used = meter_gas_used(previous_kernel, false);\n        output\n    }\n\n    pub fn validate(self) {\n        let output = self.export_output();\n        self.validate_with_output(output);\n    }\n\n    pub fn validate_with_output(self, output: PrivateToRollupKernelCircuitPublicInputs) {\n        let previous_kernel = self.previous_kernel.to_private_kernel_circuit_public_inputs();\n        TailOutputValidator::new(\n            output,\n            previous_kernel,\n            self.expiration_timestamp_upper_bound,\n        )\n            .validate();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "89184052fa79a8fe3087aba2428aad47e0ab92abeef0d737a26b627ee77bc2bf",
+  "name": "SystemConfig",
+  "kind": "contract",
+  "lines": 133,
+  "source": "contract SystemConfig is OwnableUpgradeable {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the message queue parameters are updated.\n    /// @param oldParams The old parameters.\n    /// @param newParams The new parameters.\n    event MessageQueueParametersUpdated(MessageQueueParameters oldParams, MessageQueueParameters newParams);\n\n    /// @notice Emitted when the enforced batch parameters are updated.\n    /// @param oldParams The old parameters.\n    /// @param newParams The new parameters.\n    event EnforcedBatchParametersUpdated(EnforcedBatchParameters oldParams, EnforcedBatchParameters newParams);\n\n    /// @notice Emitted when the signer is updated.\n    /// @param oldSigner The old signer.\n    /// @param newSigner The new signer.\n    event SignerUpdated(address oldSigner, address newSigner);\n\n    /**\n     *\n     * Structs *\n     *\n     */\n\n    /// @notice Parameters for the message queue.\n    /// @param maxGasLimit The maximum gas limit allowed for each L1 message.\n    /// @param baseFeeOverhead The overhead used to calculate l2 base fee.\n    /// @param baseFeeScalar The scalar used to calculate l2 base fee.\n    /// @dev The compiler will pack this struct into single `bytes32`.\n    struct MessageQueueParameters {\n        uint32 maxGasLimit;\n        uint112 baseFeeOverhead;\n        uint112 baseFeeScalar;\n    }\n\n    /// @notice Parameters for the enforced batch mode.\n    /// @param maxDelayEnterEnforcedMode If no batch has been finalized for `maxDelayEnterEnforcedMode`,\n    ///        batch submission becomes permissionless. Anyone can submit a batch together with a proof.\n    /// @param maxDelayMessageQueue If no message is included/finalized for `maxDelayMessageQueue`,\n    ///        batch submission becomes permissionless. Anyone can submit a batch together with a proof.\n    /// @dev The compiler will pack this struct into single `bytes32`.\n    struct EnforcedBatchParameters {\n        uint24 maxDelayEnterEnforcedMode;\n        uint24 maxDelayMessageQueue;\n    }\n\n    /**\n     *\n     * Storage Variables *\n     *\n     */\n\n    /// @notice The parameters for the message queue.\n    MessageQueueParameters public messageQueueParameters;\n\n    /// @notice The parameters for the enforced batch mode.\n    EnforcedBatchParameters public enforcedBatchParameters;\n\n    /// @dev The address of the current authorized signer.\n    address private currentSigner;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor() {\n        _disableInitializers();\n    }\n\n    function initialize(\n        address _owner,\n        address _signer,\n        MessageQueueParameters memory _messageQueueParameters,\n        EnforcedBatchParameters memory _enforcedBatchParameters\n    ) external initializer {\n        __Ownable_init();\n        transferOwnership(_owner);\n\n        currentSigner = _signer;\n        messageQueueParameters = _messageQueueParameters;\n        enforcedBatchParameters = _enforcedBatchParameters;\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the current authorized signer.\n    /// @return The authorized signer address.\n    function getSigner() external view returns (address) {\n        return currentSigner;\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update the message queue parameters.\n    /// @param _params The new message queue parameters.\n    /// @dev Only the owner can call this function.\n    function updateMessageQueueParameters(MessageQueueParameters memory _params) external onlyOwner {\n        MessageQueueParameters memory oldParams = messageQueueParameters;\n        messageQueueParameters = _params;\n        emit MessageQueueParametersUpdated(oldParams, _params);\n    }\n\n    /// @notice Update the enforced batch parameters.\n    /// @param _params The new enforced batch parameters.\n    /// @dev Only the owner can call this function.\n    function updateEnforcedBatchParameters(EnforcedBatchParameters memory _params) external onlyOwner {\n        EnforcedBatchParameters memory oldParams = enforcedBatchParameters;\n        enforcedBatchParameters = _params;\n        emit EnforcedBatchParametersUpdated(oldParams, _params);\n    }\n\n    /// @notice Update the current signer.\n    /// @param _newSigner The address of the new authorized signer.\n    /// @dev Only the owner can call this function.\n    function updateSigner(address _newSigner) external onlyOwner {\n        address oldSigner = currentSigner;\n        currentSigner = _newSigner;\n        emit SignerUpdated(oldSigner, _newSigner);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 124,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "SystemConfig",
+        "similarity": 0.901,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase2-2025-04",
+        "repository": "scroll-tech/scroll-contracts",
+        "path": "src/L1/system-contract/SystemConfig.sol",
+        "commit": "1a44cc4cd5bb29067051f59c09dd4407511f1a3a",
+        "commitTimestamp": "2025-03-12T15:03:19Z",
+        "url": "https://github.com/scroll-tech/scroll-contracts/blob/1a44cc4cd5bb29067051f59c09dd4407511f1a3a/src/L1/system-contract/SystemConfig.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Euclid phase 2 contract changes only (branch feat/euclid_phase_2): message queue v2, enforced liveness mode, v7 batch handling. Owner-only system configuration updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 9,
+        "removed": 0,
+        "ignoredAdded": 18,
+        "ignoredRemoved": 0,
+        "unchanged": 124,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract SystemConfig is OwnableUpgradeable {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * Events *",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              { "type": "+", "newLine": 6, "text": "     */", "ignored": true },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Emitted when the message queue parameters are updated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param oldParams The old parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param newParams The new parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    event MessageQueueParametersUpdated(MessageQueueParameters oldParams, MessageQueueParameters newParams);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @notice Emitted when the enforced batch parameters are updated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @param oldParams The old parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @param newParams The new parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    event EnforcedBatchParametersUpdated(EnforcedBatchParameters oldParams, EnforcedBatchParameters newParams);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @notice Emitted when the signer is updated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param oldSigner The old signer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param newSigner The new signer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    event SignerUpdated(address oldSigner, address newSigner);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 22, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 24, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 25,
+                "text": "     * Structs *"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 26, "text": "     *" },
+              { "type": " ", "oldLine": 6, "newLine": 27, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 87,
+            "oldLines": 20,
+            "newStart": 108,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 108,
+                "text": "    /// @param _params The new message queue parameters."
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 109,
+                "text": "    /// @dev Only the owner can call this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 110,
+                "text": "    function updateMessageQueueParameters(MessageQueueParameters memory _params) external onlyOwner {"
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "        MessageQueueParameters memory oldParams = messageQueueParameters;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 112,
+                "text": "        messageQueueParameters = _params;"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        emit MessageQueueParametersUpdated(oldParams, _params);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 91, "newLine": 114, "text": "    }" },
+              { "type": " ", "oldLine": 92, "newLine": 115, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 116,
+                "text": "    /// @notice Update the enforced batch parameters."
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 117,
+                "text": "    /// @param _params The new enforced batch parameters."
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 118,
+                "text": "    /// @dev Only the owner can call this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 119,
+                "text": "    function updateEnforcedBatchParameters(EnforcedBatchParameters memory _params) external onlyOwner {"
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        EnforcedBatchParameters memory oldParams = enforcedBatchParameters;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 121,
+                "text": "        enforcedBatchParameters = _params;"
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        emit EnforcedBatchParametersUpdated(oldParams, _params);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 98, "newLine": 123, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 124, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 125,
+                "text": "    /// @notice Update the current signer."
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 126,
+                "text": "    /// @param _newSigner The address of the new authorized signer."
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 127,
+                "text": "    /// @dev Only the owner can call this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 128,
+                "text": "    function updateSigner(address _newSigner) external onlyOwner {"
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        address oldSigner = currentSigner;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 130,
+                "text": "        currentSigner = _newSigner;"
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "        emit SignerUpdated(oldSigner, _newSigner);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 105, "newLine": 132, "text": "    }" },
+              { "type": " ", "oldLine": 106, "newLine": 133, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

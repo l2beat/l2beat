@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "148e5660349ad77b5bde5a0f4faba44d16a32704ef62d335247c2549dd669e58",
+  "name": "IVotes",
+  "kind": "interface",
+  "lines": 45,
+  "source": "interface IVotes {\n    /**\n     * @dev Emitted when an account changes their delegate.\n     */\n    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);\n\n    /**\n     * @dev Emitted when a token transfer or delegate change results in changes to a delegate's number of votes.\n     */\n    event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance);\n\n    /**\n     * @dev Returns the current amount of votes that `account` has.\n     */\n    function getVotes(address account) external view returns (uint256);\n\n    /**\n     * @dev Returns the amount of votes that `account` had at the end of a past block (`blockNumber`).\n     */\n    function getPastVotes(address account, uint256 blockNumber) external view returns (uint256);\n\n    /**\n     * @dev Returns the total supply of votes available at the end of a past block (`blockNumber`).\n     *\n     * NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.\n     * Votes that have not been delegated are still part of total supply, even though they would not participate in a\n     * vote.\n     */\n    function getPastTotalSupply(uint256 blockNumber) external view returns (uint256);\n\n    /**\n     * @dev Returns the delegate that `account` has chosen.\n     */\n    function delegates(address account) external view returns (address);\n\n    /**\n     * @dev Delegates votes from the sender to `delegatee`.\n     */\n    function delegate(address delegatee) external;\n\n    /**\n     * @dev Delegates votes from signer to `delegatee`.\n     */\n    function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) external;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "IVotes",
+        "similarity": 0.8,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/utils/IVotes.sol",
+        "commit": "01f5abc8622981ba436be09c3515568aa0c141b9",
+        "commitTimestamp": "2023-04-13T15:01:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/01f5abc8622981ba436be09c3515568aa0c141b9/contracts/governance/utils/IVotes.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4176 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 4,
+        "unchanged": 43,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 20,
+            "newStart": 15,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    function getVotes(address account) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev Returns the amount of votes that `account` had at a specific moment in the past. If the `clock()` is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * configured to use block numbers, this will return the value at the end of the corresponding block.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @dev Returns the amount of votes that `account` had at the end of a past block (`blockNumber`).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 19, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function getPastVotes(address account, uint256 timepoint) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function getPastVotes(address account, uint256 blockNumber) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 21, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 22, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * @dev Returns the total supply of votes available at a specific moment in the past. If the `clock()` is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * configured to use block numbers, this will return the value at the end of the corresponding block.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * @dev Returns the total supply of votes available at the end of a past block (`blockNumber`).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 26, "newLine": 24, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 25,
+                "text": "     * NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes."
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 26,
+                "text": "     * Votes that have not been delegated are still part of total supply, even though they would not participate in a"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 27,
+                "text": "     * vote."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 28, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function getPastTotalSupply(uint256 timepoint) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    function getPastTotalSupply(uint256 blockNumber) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 33, "newLine": 31, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 32,
+                "text": "     * @dev Returns the delegate that `account` has chosen."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

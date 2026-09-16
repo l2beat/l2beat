@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a4fa95d5c90c0fac3478330a1c21ace0816533a20d41dd16c5f965c0f0e1b267",
+  "name": "IMessageDropCallback",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IMessageDropCallback {\n    function onDropMessage(bytes memory message) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 3,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IMessageDropCallback",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/callbacks/IMessageDropCallback.sol",
+        "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+        "commitTimestamp": "2023-07-25T17:25:27Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2eb458cf4224d82fc56254e91e297a9ed261cefb/contracts/src/libraries/callbacks/IMessageDropCallback.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

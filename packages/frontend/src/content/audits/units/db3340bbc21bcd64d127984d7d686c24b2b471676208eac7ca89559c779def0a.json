@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "db3340bbc21bcd64d127984d7d686c24b2b471676208eac7ca89559c779def0a",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "use rollup_lib::block_root::{\n    block_root_single_tx_rollup, BlockRollupPublicInputs, BlockRootSingleTxRollupPrivateInputs,\n};\n\nunconstrained fn main(inputs: BlockRootSingleTxRollupPrivateInputs) -> pub BlockRollupPublicInputs {\n    block_root_single_tx_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

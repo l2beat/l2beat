@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c46ee846654e0fb69751aadc45230594dd811ca106d730710e025d0b3abe4661",
+  "name": "DepositDelegationLib",
+  "kind": "library",
+  "lines": 271,
+  "source": "library DepositDelegationLib {\n    using CheckpointedUintLib for Checkpoints.Trace224;\n\n    event DelegateChanged(address indexed attester, address oldDelegatee, address newDelegatee);\n    event DelegateVotesChanged(address indexed delegatee, uint256 oldValue, uint256 newValue);\n\n    /**\n     * @notice Increase the balance of an `_attester` on `_instance` by `_amount`,\n     *         increases the voting power of the delegatee equally.\n     *\n     * @param _self The DepositAndDelegationAccounting struct to modify in storage\n     * @param _instance The instance that the attester is on\n     * @param _attester The attester to increase the balance of\n     * @param _amount The amount to increase by\n     */\n    function increaseBalance(\n        DepositAndDelegationAccounting storage _self,\n        address _instance,\n        address _attester,\n        uint256 _amount\n    ) internal {\n        if (_amount == 0) {\n            return;\n        }\n\n        DepositLedger storage instance = _self.ledgers[_instance];\n\n        instance.positions[_attester].balance += _amount;\n        moveVotingPower(_self, address(0), instance.positions[_attester].delegatee, _amount);\n\n        instance.supply.add(_amount);\n        _self.supply.add(_amount);\n    }\n\n    /**\n     * @notice Decrease the balance of an `_attester` on `_instance` by `_amount`,\n     *         decrease the voting power of the delegatee equally\n     *\n     * @param _self The DepositAndDelegationAccounting struct to modify in storage\n     * @param _instance The instance that the attester is on\n     * @param _attester The attester to decrease the balance of\n     * @param _amount The amount to decrease by\n     */\n    function decreaseBalance(\n        DepositAndDelegationAccounting storage _self,\n        address _instance,\n        address _attester,\n        uint256 _amount\n    ) internal {\n        if (_amount == 0) {\n            return;\n        }\n\n        DepositLedger storage instance = _self.ledgers[_instance];\n\n        instance.positions[_attester].balance -= _amount;\n        moveVotingPower(_self, instance.positions[_attester].delegatee, address(0), _amount);\n\n        instance.supply.sub(_amount);\n        _self.supply.sub(_amount);\n    }\n\n    /**\n     * @notice    Use `_amount` of `_delegatee`'s voting power on `_proposalId`\n     *            The `_delegatee`'s voting power based on the snapshot at `_timestamp`\n     *\n     * @dev       If different timestamps are passed, it can cause mismatch in the amount of\n     *            power that can be voted with, so it is very important that it is stable for\n     *            a given `_proposalId`\n     *\n     * @param _self       - The DelegationDate struct to modify in storage\n     * @param _delegatee  - The delegatee using their power\n     * @param _proposalId - The id to use for accounting\n     * @param _timestamp  - The timestamp for voting power of the specific `_proposalId`\n     * @param _amount     - The amount of power to use\n     */\n    function usePower(\n        DepositAndDelegationAccounting storage _self,\n        address _delegatee,\n        uint256 _proposalId,\n        Timestamp _timestamp,\n        uint256 _amount\n    ) internal {\n        uint256 powerAt = getVotingPowerAt(_self, _delegatee, _timestamp);\n        uint256 powerUsed = getPowerUsed(_self, _delegatee, _proposalId);\n\n        require(\n            powerAt >= powerUsed + _amount,\n            Errors_1.Delegation__InsufficientPower(_delegatee, powerAt, powerUsed + _amount)\n        );\n\n        _self.votingAccounts[_delegatee].powerUsed[_proposalId] += _amount;\n    }\n\n    /**\n     * @notice Delegate the voting power of an `_attester` on a specific `_instance` to a `_delegatee`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to modify in storage\n     * @param _instance The instance the attester is on\n     * @param _attester The attester to delegate the voting power of\n     * @param _delegatee The delegatee to delegate the voting power to\n     */\n    function delegate(\n        DepositAndDelegationAccounting storage _self,\n        address _instance,\n        address _attester,\n        address _delegatee\n    ) internal {\n        address oldDelegate = getDelegatee(_self, _instance, _attester);\n        if (oldDelegate == _delegatee) {\n            return;\n        }\n        _self.ledgers[_instance].positions[_attester].delegatee = _delegatee;\n        emit DelegateChanged(_attester, oldDelegate, _delegatee);\n\n        moveVotingPower(_self, oldDelegate, _delegatee, getBalanceOf(_self, _instance, _attester));\n    }\n\n    /**\n     * @notice Convenience function to remove delegation from `_attester` at `_instance`\n     *\n     * @dev Similar as calling `delegate` with `_delegatee = address(0)`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to modify in storage\n     * @param _instance The instance that the attester is on\n     * @param _attester The attester to undelegate the voting power of\n     */\n    function undelegate(DepositAndDelegationAccounting storage _self, address _instance, address _attester) internal {\n        delegate(_self, _instance, _attester, address(0));\n    }\n\n    /**\n     * @notice Get the balance of an `_attester` on `_instance`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _instance The instance that the attester is on\n     * @param _attester The attester to get the balance of\n     *\n     * @return The balance of the attester\n     */\n    function getBalanceOf(DepositAndDelegationAccounting storage _self, address _instance, address _attester)\n        internal\n        view\n        returns (uint256)\n    {\n        return _self.ledgers[_instance].positions[_attester].balance;\n    }\n\n    /**\n     * @notice Get the supply of an `_instance`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _instance The instance to get the supply of\n     *\n     * @return The supply of the instance\n     */\n    function getSupplyOf(DepositAndDelegationAccounting storage _self, address _instance)\n        internal\n        view\n        returns (uint256)\n    {\n        return _self.ledgers[_instance].supply.valueNow();\n    }\n\n    /**\n     * @notice Get the total supply of all instances\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     *\n     * @return The total supply of all instances\n     */\n    function getSupply(DepositAndDelegationAccounting storage _self) internal view returns (uint256) {\n        return _self.supply.valueNow();\n    }\n\n    /**\n     * @notice Get the delegatee of an `_attester` on `_instance`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _instance The instance that the attester is on\n     * @param _attester The attester to get the delegatee of\n     *\n     * @return The delegatee of the attester\n     */\n    function getDelegatee(DepositAndDelegationAccounting storage _self, address _instance, address _attester)\n        internal\n        view\n        returns (address)\n    {\n        return _self.ledgers[_instance].positions[_attester].delegatee;\n    }\n\n    /**\n     * @notice Get the voting power of a `_delegatee`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _delegatee The delegatee to get the voting power of\n     *\n     * @return The voting power of the delegatee\n     */\n    function getVotingPower(DepositAndDelegationAccounting storage _self, address _delegatee)\n        internal\n        view\n        returns (uint256)\n    {\n        return _self.votingAccounts[_delegatee].votingPower.valueNow();\n    }\n\n    /**\n     * @notice Get the voting power of a `_delegatee` at a specific `_timestamp`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _delegatee The delegatee to get the voting power of\n     * @param _timestamp The timestamp to get the voting power at\n     *\n     * @return The voting power of the delegatee at the specific `_timestamp`\n     */\n    function getVotingPowerAt(DepositAndDelegationAccounting storage _self, address _delegatee, Timestamp _timestamp)\n        internal\n        view\n        returns (uint256)\n    {\n        return _self.votingAccounts[_delegatee].votingPower.valueAt(_timestamp);\n    }\n\n    /**\n     * @notice Get the power used by a `_delegatee` on a specific `_proposalId`\n     *\n     * @param _self The DepositAndDelegationAccounting struct to read from\n     * @param _delegatee The delegatee to get the power used by\n     * @param _proposalId The proposal to get the power used on\n     *\n     * @return The voting power used by the `_delegatee` at `_proposalId`\n     */\n    function getPowerUsed(DepositAndDelegationAccounting storage _self, address _delegatee, uint256 _proposalId)\n        internal\n        view\n        returns (uint256)\n    {\n        return _self.votingAccounts[_delegatee].powerUsed[_proposalId];\n    }\n\n    /**\n     * @notice Move `_amount` of voting power from the delegatee of `_from` to the delegatee of `_to`\n     *\n     * @dev If the `_from` is `address(0)` the decrease is skipped, and it is effectively a mint\n     * @dev If the `_to` is `address(0)` the increase is skipped, and it is effectively a burn\n     *\n     * @param _self The DepositAndDelegationAccounting struct to modify in storage\n     * @param _from The address to move the voting power from\n     * @param _to The address to move the voting power to\n     * @param _amount The amount of voting power to move\n     */\n    function moveVotingPower(DepositAndDelegationAccounting storage _self, address _from, address _to, uint256 _amount)\n        private\n    {\n        if (_from == _to || _amount == 0) {\n            return;\n        }\n\n        if (_from != address(0)) {\n            (uint256 oldValue, uint256 newValue) = _self.votingAccounts[_from].votingPower.sub(_amount);\n            emit DelegateVotesChanged(_from, oldValue, newValue);\n        }\n\n        if (_to != address(0)) {\n            (uint256 oldValue, uint256 newValue) = _self.votingAccounts[_to].votingPower.add(_amount);\n            emit DelegateVotesChanged(_to, oldValue, newValue);\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 270,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "DepositDelegationLib",
+        "similarity": 0.992,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 270,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 86,
+            "oldLines": 7,
+            "newStart": 86,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 86, "newLine": 86, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 88,
+                "text": "            powerAt >= powerUsed + _amount,"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            Errors.Delegation__InsufficientPower(_delegatee, powerAt, powerUsed + _amount)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "            Errors_1.Delegation__InsufficientPower(_delegatee, powerAt, powerUsed + _amount)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 91, "newLine": 91, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 92,
+                "text": "        _self.votingAccounts[_delegatee].powerUsed[_proposalId] += _amount;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a52b23f695cf0ac01471c7d6581c5fd4f58ef77f027621e497c1025a986c4576",
+  "name": "OperatorFeeVault",
+  "kind": "contract",
+  "lines": 9,
+  "source": "contract OperatorFeeVault is FeeVault, ISemver {\n    /// @notice Semantic version.\n    /// @custom:semver 1.0.0\n    string public constant version = \"1.0.0\";\n\n    /// @notice Constructs the OperatorFeeVault contract.\n    /// Funds are withdrawn to the base fee vault on the L2 network.\n    constructor() FeeVault(Predeploys.BASE_FEE_VAULT, 0, Types.WithdrawalNetwork.L2) {}\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 7,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "OperatorFeeVault",
+        "similarity": 0.571,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L2/OperatorFeeVault.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/L2/OperatorFeeVault.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 7,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract OperatorFeeVault is FeeVault, ISemver {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @custom:semver 1.1.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    string public constant version = \"1.1.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @custom:semver 1.0.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    string public constant version = \"1.0.0\";",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @notice Constructs the OperatorFeeVault contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// Funds are withdrawn to the base fee vault on the L2 network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    constructor() FeeVault(Predeploys.BASE_FEE_VAULT, 0, Types.WithdrawalNetwork.L2) {}",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 9, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

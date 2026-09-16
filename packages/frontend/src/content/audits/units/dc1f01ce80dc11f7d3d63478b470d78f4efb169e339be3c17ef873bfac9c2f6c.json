@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc1f01ce80dc11f7d3d63478b470d78f4efb169e339be3c17ef873bfac9c2f6c",
+  "name": "key_validation_request.nr",
+  "kind": "program",
+  "lines": 35,
+  "source": "use crate::traits::{Deserialize, Empty, Serialize};\nuse std::meta::derive;\n\n/// A request from an app circuit to the kernel for validation of a siloed app secret key.\n///\n/// The master public key is exposed only as its [`hash_public_key`](crate::public_keys::hash_public_key) digest -- apps\n/// must not see the raw point. The kernel reset circuit derives the point from the master secret\n/// key hint, hashes it, and asserts equality with `pk_m_hash`.\n#[derive(Deserialize, Eq, Serialize)]\npub struct KeyValidationRequest {\n    pub pk_m_hash: Field,\n    pub sk_app: Field, // not a grumpkin scalar because it's output of poseidon2\n}\n\nimpl Empty for KeyValidationRequest {\n    fn empty() -> Self {\n        KeyValidationRequest { pk_m_hash: 0, sk_app: 0 }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::validation_requests::key_validation_request::KeyValidationRequest,\n        constants::KEY_VALIDATION_REQUEST_LENGTH,\n        traits::{Deserialize, Serialize},\n    };\n\n    #[test]\n    fn serialization_of_key_validation_request() {\n        let item = KeyValidationRequest { pk_m_hash: 123, sk_app: 789 };\n        let serialized: [Field; KEY_VALIDATION_REQUEST_LENGTH] = item.serialize();\n        let deserialized = KeyValidationRequest::deserialize(serialized);\n        assert_eq(item, deserialized);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

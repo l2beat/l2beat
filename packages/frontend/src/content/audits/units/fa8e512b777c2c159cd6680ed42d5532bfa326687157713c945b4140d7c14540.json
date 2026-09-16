@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fa8e512b777c2c159cd6680ed42d5532bfa326687157713c945b4140d7c14540",
+  "name": "IL1GatewayRouter",
+  "kind": "interface",
+  "lines": 67,
+  "source": "interface IL1GatewayRouter is IL1ETHGateway, IL1ERC20Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the address of ETH Gateway is updated.\n    /// @param oldETHGateway The address of the old ETH Gateway.\n    /// @param newEthGateway The address of the new ETH Gateway.\n    event SetETHGateway(address indexed oldETHGateway, address indexed newEthGateway);\n\n    /// @notice Emitted when the address of default ERC20 Gateway is updated.\n    /// @param oldDefaultERC20Gateway The address of the old default ERC20 Gateway.\n    /// @param newDefaultERC20Gateway The address of the new default ERC20 Gateway.\n    event SetDefaultERC20Gateway(address indexed oldDefaultERC20Gateway, address indexed newDefaultERC20Gateway);\n\n    /// @notice Emitted when the `gateway` for `token` is updated.\n    /// @param token The address of token updated.\n    /// @param oldGateway The corresponding address of the old gateway.\n    /// @param newGateway The corresponding address of the new gateway.\n    event SetERC20Gateway(address indexed token, address indexed oldGateway, address indexed newGateway);\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the corresponding gateway address for given token address.\n    /// @param _token The address of token to query.\n    function getERC20Gateway(address _token) external view returns (address);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Request ERC20 token transfer from users to gateways.\n    /// @param sender The address of sender to request fund.\n    /// @param token The address of token to request.\n    /// @param amount The amount of token to request.\n    function requestERC20(address sender, address token, uint256 amount) external returns (uint256);\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update the address of ETH gateway contract.\n    /// @dev This function should only be called by contract owner.\n    /// @param _ethGateway The address to update.\n    function setETHGateway(address _ethGateway) external;\n\n    /// @notice Update the address of default ERC20 gateway contract.\n    /// @dev This function should only be called by contract owner.\n    /// @param _defaultERC20Gateway The address to update.\n    function setDefaultERC20Gateway(address _defaultERC20Gateway) external;\n\n    /// @notice Update the mapping from token address to gateway address.\n    /// @dev This function should only be called by contract owner.\n    /// @param _tokens The list of addresses of tokens to update.\n    /// @param _gateways The list of addresses of gateways to update.\n    function setERC20Gateway(address[] memory _tokens, address[] memory _gateways) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 67,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL1GatewayRouter",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/IL1GatewayRouter.sol",
+        "commit": "b7a02fbe54cf14fb0149df520343bf0195e00c99",
+        "commitTimestamp": "2023-07-25T16:30:22Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/b7a02fbe54cf14fb0149df520343bf0195e00c99/contracts/src/L1/gateways/IL1GatewayRouter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #673 partial fix of N-05 (indexed event parameters). Note: commit timestamp (2023-07-25T16:30Z) precedes the audited commit and is on a diverged branch. Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

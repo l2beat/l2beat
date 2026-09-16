@@ -1,0 +1,4258 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f4a6863b77470fa8ea7a9c0da55f91ca36e351080217c476c2009122ce22e4e8",
+  "name": "Math",
+  "kind": "library",
+  "lines": 420,
+  "source": "library Math {\n    /**\n     * @dev Muldiv operation overflow.\n     */\n    error MathOverflowedMulDiv();\n\n    enum Rounding {\n        Floor, // Toward negative infinity\n        Ceil, // Toward positive infinity\n        Trunc, // Toward zero\n        Expand // Away from zero\n\n    }\n\n    /**\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\n     */\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n        unchecked {\n            uint256 c = a + b;\n            if (c < a) {\n                return (false, 0);\n            }\n            return (true, c);\n        }\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\n     */\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n        unchecked {\n            if (b > a) {\n                return (false, 0);\n            }\n            return (true, a - b);\n        }\n    }\n\n    /**\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\n     */\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n        unchecked {\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n            // benefit is lost if 'b' is also tested.\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\n            if (a == 0) {\n                return (true, 0);\n            }\n            uint256 c = a * b;\n            if (c / a != b) {\n                return (false, 0);\n            }\n            return (true, c);\n        }\n    }\n\n    /**\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\n     */\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n        unchecked {\n            if (b == 0) {\n                return (false, 0);\n            }\n            return (true, a / b);\n        }\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\n     */\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n        unchecked {\n            if (b == 0) {\n                return (false, 0);\n            }\n            return (true, a % b);\n        }\n    }\n\n    /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a > b ? a : b;\n    }\n\n    /**\n     * @dev Returns the smallest of two numbers.\n     */\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a < b ? a : b;\n    }\n\n    /**\n     * @dev Returns the average of two numbers. The result is rounded towards\n     * zero.\n     */\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b) / 2 can overflow.\n        return (a & b) + (a ^ b) / 2;\n    }\n\n    /**\n     * @dev Returns the ceiling of the division of two numbers.\n     *\n     * This differs from standard division with `/` in that it rounds towards infinity instead\n     * of rounding towards zero.\n     */\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (b == 0) {\n            // Guarantee the same behavior as in a regular Solidity division.\n            return a / b;\n        }\n\n        // (a + b - 1) / b can overflow on addition, so we distribute.\n        return a == 0 ? 0 : (a - 1) / b + 1;\n    }\n\n    /**\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or\n     * denominator == 0.\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by\n     * Uniswap Labs also under MIT license.\n     */\n    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {\n        unchecked {\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\n            // variables such that product = prod1 * 2^256 + prod0.\n            uint256 prod0 = x * y; // Least significant 256 bits of the product\n            uint256 prod1; // Most significant 256 bits of the product\n            assembly {\n                let mm := mulmod(x, y, not(0))\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\n            }\n\n            // Handle non-overflow cases, 256 by 256 division.\n            if (prod1 == 0) {\n                // Solidity will revert if denominator == 0, unlike the div opcode on its own.\n                // The surrounding unchecked block does not change this fact.\n                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.\n                return prod0 / denominator;\n            }\n\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\n            if (denominator <= prod1) {\n                revert MathOverflowedMulDiv();\n            }\n\n            ///////////////////////////////////////////////\n            // 512 by 256 division.\n            ///////////////////////////////////////////////\n\n            // Make division exact by subtracting the remainder from [prod1 prod0].\n            uint256 remainder;\n            assembly {\n                // Compute remainder using mulmod.\n                remainder := mulmod(x, y, denominator)\n\n                // Subtract 256 bit number from 512 bit number.\n                prod1 := sub(prod1, gt(remainder, prod0))\n                prod0 := sub(prod0, remainder)\n            }\n\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.\n            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.\n\n            uint256 twos = denominator & (0 - denominator);\n            assembly {\n                // Divide denominator by twos.\n                denominator := div(denominator, twos)\n\n                // Divide [prod1 prod0] by twos.\n                prod0 := div(prod0, twos)\n\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\n                twos := add(div(sub(0, twos), twos), 1)\n            }\n\n            // Shift in bits from prod1 into prod0.\n            prod0 |= prod1 * twos;\n\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\n            // four bits. That is, denominator * inv = 1 mod 2^4.\n            uint256 inverse = (3 * denominator) ^ 2;\n\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also\n            // works in modular arithmetic, doubling the correct bits in each step.\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\n\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\n            // is no longer required.\n            result = prod0 * inverse;\n            return result;\n        }\n    }\n\n    /**\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\n     */\n    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {\n        uint256 result = mulDiv(x, y, denominator);\n        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {\n            result += 1;\n        }\n        return result;\n    }\n\n    /**\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded\n     * towards zero.\n     *\n     * Inspired by Henry S. Warren, Jr.'s \"Hacker's Delight\" (Chapter 11).\n     */\n    function sqrt(uint256 a) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\n        //\n        // We know that the \"msb\" (most significant bit) of our target number `a` is a power of 2 such that we have\n        // `msb(a) <= a < 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.\n        //\n        // This can be rewritten `2**log2(a) <= a < 2**(log2(a) + 1)`\n        // → `sqrt(2**k) <= sqrt(a) < sqrt(2**(k+1))`\n        // → `2**(k/2) <= sqrt(a) < 2**((k+1)/2) <= 2**(k/2 + 1)`\n        //\n        // Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.\n        uint256 result = 1 << (log2(a) >> 1);\n\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\n        // into the expected uint128 result.\n        unchecked {\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            result = (result + a / result) >> 1;\n            return min(result, a / result);\n        }\n    }\n\n    /**\n     * @notice Calculates sqrt(a), following the selected rounding direction.\n     */\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = sqrt(a);\n            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 2 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     */\n    function log2(uint256 value) internal pure returns (uint256) {\n        uint256 result = 0;\n        unchecked {\n            if (value >> 128 > 0) {\n                value >>= 128;\n                result += 128;\n            }\n            if (value >> 64 > 0) {\n                value >>= 64;\n                result += 64;\n            }\n            if (value >> 32 > 0) {\n                value >>= 32;\n                result += 32;\n            }\n            if (value >> 16 > 0) {\n                value >>= 16;\n                result += 16;\n            }\n            if (value >> 8 > 0) {\n                value >>= 8;\n                result += 8;\n            }\n            if (value >> 4 > 0) {\n                value >>= 4;\n                result += 4;\n            }\n            if (value >> 2 > 0) {\n                value >>= 2;\n                result += 2;\n            }\n            if (value >> 1 > 0) {\n                result += 1;\n            }\n        }\n        return result;\n    }\n\n    /**\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log2(value);\n            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 10 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     */\n    function log10(uint256 value) internal pure returns (uint256) {\n        uint256 result = 0;\n        unchecked {\n            if (value >= 10 ** 64) {\n                value /= 10 ** 64;\n                result += 64;\n            }\n            if (value >= 10 ** 32) {\n                value /= 10 ** 32;\n                result += 32;\n            }\n            if (value >= 10 ** 16) {\n                value /= 10 ** 16;\n                result += 16;\n            }\n            if (value >= 10 ** 8) {\n                value /= 10 ** 8;\n                result += 8;\n            }\n            if (value >= 10 ** 4) {\n                value /= 10 ** 4;\n                result += 4;\n            }\n            if (value >= 10 ** 2) {\n                value /= 10 ** 2;\n                result += 2;\n            }\n            if (value >= 10 ** 1) {\n                result += 1;\n            }\n        }\n        return result;\n    }\n\n    /**\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log10(value);\n            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 256 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     *\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\n     */\n    function log256(uint256 value) internal pure returns (uint256) {\n        uint256 result = 0;\n        unchecked {\n            if (value >> 128 > 0) {\n                value >>= 128;\n                result += 16;\n            }\n            if (value >> 64 > 0) {\n                value >>= 64;\n                result += 8;\n            }\n            if (value >> 32 > 0) {\n                value >>= 32;\n                result += 4;\n            }\n            if (value >> 16 > 0) {\n                value >>= 16;\n                result += 2;\n            }\n            if (value >> 8 > 0) {\n                result += 1;\n            }\n        }\n        return result;\n    }\n\n    /**\n     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log256(value);\n            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);\n        }\n    }\n\n    /**\n     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.\n     */\n    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {\n        return uint8(rounding) % 2 == 1;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 403,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Math",
+        "similarity": 0.944,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 1 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 17,
+        "removed": 11,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 24,
+        "unchanged": 403,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 16,
+            "newStart": 5,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error MathOverflowedMulDiv();"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        Down, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        Up, // Toward infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        Zero // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        Floor, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        Ceil, // Toward positive infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        Trunc, // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        Expand // Away from zero",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 14, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "     * @dev Returns the addition of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 17, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 8,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 29,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 31,
+                "text": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 32,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 42,
+            "oldLines": 8,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 42, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 43, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 41,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 47, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 43,
+                "text": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 44,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 63, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 59, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 60,
+                "text": "     * @dev Returns the division of two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 66, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 61, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 62,
+                "text": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 63,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 70,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 71, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 72,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 80, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 82, "newLine": 73, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 74,
+                "text": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 75,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 29,
+            "newStart": 106,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 106,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 107,
+                "text": "     * @dev Returns the ceiling of the division of two numbers."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 108, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     * This differs from standard division with `/` in that it rounds up instead",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "     * of rounding down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * This differs from standard division with `/` in that it rounds towards infinity instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * of rounding towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 111,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 112,
+                "text": "    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        if (b == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            // Guarantee the same behavior as in a regular Solidity division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            return a / b;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 117, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 118,
+                "text": "        // (a + b - 1) / b can overflow on addition, so we distribute."
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 119,
+                "text": "        return a == 0 ? 0 : (a - 1) / b + 1;"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 122,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "     * with further edits by Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     * denominator == 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 127,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 128,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 129,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 130,
+                "text": "            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 131,
+                "text": "            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 132,
+                "text": "            // variables such that product = prod1 * 2^256 + prod0."
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            uint256 prod0; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            uint256 prod0 = x * y; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 134,
+                "text": "            uint256 prod1; // Most significant 256 bits of the product"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 135,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 136,
+                "text": "                let mm := mulmod(x, y, not(0))"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                prod0 := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 137,
+                "text": "                prod1 := sub(sub(mm, prod0), lt(mm, prod0))"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 138,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 139, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 11,
+            "newStart": 165,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 165,
+                "text": "                prod0 := sub(prod0, remainder)"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 166,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            // See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 174, "newLine": 170, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            // Does not overflow because the denominator cannot be zero at this stage in the function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "            uint256 twos = denominator & (~denominator + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "            uint256 twos = denominator & (0 - denominator);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 172,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 173,
+                "text": "                // Divide denominator by twos."
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 174,
+                "text": "                denominator := div(denominator, twos)"
+              }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 8,
+            "newStart": 188,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 188,
+                "text": "            // four bits. That is, denominator * inv = 1 mod 2^4."
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 189,
+                "text": "            uint256 inverse = (3 * denominator) ^ 2;"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            // in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "            // works in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 193,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^8"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 194,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^16"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 195,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^32"
+              }
+            ]
+          },
+          {
+            "oldStart": 216,
+            "oldLines": 14,
+            "newStart": 211,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 211,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 212,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 213,
+                "text": "        uint256 result = mulDiv(x, y, denominator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 215,
+                "text": "            result += 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 216,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 217,
+                "text": "        return result;"
+              },
+              { "type": " ", "oldLine": 223, "newLine": 218, "text": "    }" },
+              { "type": " ", "oldLine": 224, "newLine": 219, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 220,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "     * towards zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 227, "newLine": 223, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 224,
+                "text": "     * Inspired by Henry S. Warren, Jr.'s \"Hacker's Delight\" (Chapter 11)."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 225, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 266,
+            "oldLines": 12,
+            "newStart": 262,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 264,
+                "text": "            uint256 result = sqrt(a);"
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 266,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 267, "text": "    }" },
+              { "type": " ", "oldLine": 272, "newLine": 268, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 269,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "     * @dev Return the log in base 2, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     * @dev Return the log in base 2 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 271,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 272,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 273,
+                "text": "    function log2(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 319,
+            "oldLines": 12,
+            "newStart": 315,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 315,
+                "text": "    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 316,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 317,
+                "text": "            uint256 result = log2(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 319,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 324, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 325, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "     * @dev Return the log in base 10, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 10 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 326,
+                "text": "    function log10(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 368,
+            "oldLines": 12,
+            "newStart": 364,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 364,
+                "text": "    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 365,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 366,
+                "text": "            uint256 result = log10(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 371,
+                "text": "            return result + (rounding == Rounding.Up && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 368,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 373, "newLine": 369, "text": "    }" },
+              { "type": " ", "oldLine": 374, "newLine": 370, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "     * @dev Return the log in base 256, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "     * @dev Return the log in base 256 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 373,
+                "text": "     * Returns 0 if given 0."
+              },
+              { "type": " ", "oldLine": 378, "newLine": 374, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string."
+              }
+            ]
+          },
+          {
+            "oldStart": 411,
+            "oldLines": 7,
+            "newStart": 407,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 408,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 409,
+                "text": "            uint256 result = log256(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            return result + (rounding == Rounding.Up && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 411,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 412, "text": "    }" },
+              { "type": "+", "newLine": 413, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "        return uint8(rounding) % 2 == 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 417, "newLine": 420, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 403,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Math",
+        "similarity": 0.944,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 1 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 17,
+        "removed": 11,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 24,
+        "unchanged": 403,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 16,
+            "newStart": 5,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error MathOverflowedMulDiv();"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        Down, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        Up, // Toward infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        Zero // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        Floor, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        Ceil, // Toward positive infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        Trunc, // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        Expand // Away from zero",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 14, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "     * @dev Returns the addition of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 17, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 8,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 29,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 31,
+                "text": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 32,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 42,
+            "oldLines": 8,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 42, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 43, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 41,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 47, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 43,
+                "text": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 44,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 63, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 59, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 60,
+                "text": "     * @dev Returns the division of two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 66, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 61, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 62,
+                "text": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 63,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 70,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 71, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 72,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 80, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 82, "newLine": 73, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 74,
+                "text": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 75,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 29,
+            "newStart": 106,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 106,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 107,
+                "text": "     * @dev Returns the ceiling of the division of two numbers."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 108, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     * This differs from standard division with `/` in that it rounds up instead",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "     * of rounding down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * This differs from standard division with `/` in that it rounds towards infinity instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * of rounding towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 111,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 112,
+                "text": "    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        if (b == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            // Guarantee the same behavior as in a regular Solidity division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            return a / b;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 117, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 118,
+                "text": "        // (a + b - 1) / b can overflow on addition, so we distribute."
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 119,
+                "text": "        return a == 0 ? 0 : (a - 1) / b + 1;"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 122,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "     * with further edits by Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     * denominator == 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 127,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 128,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 129,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 130,
+                "text": "            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 131,
+                "text": "            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 132,
+                "text": "            // variables such that product = prod1 * 2^256 + prod0."
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            uint256 prod0; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            uint256 prod0 = x * y; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 134,
+                "text": "            uint256 prod1; // Most significant 256 bits of the product"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 135,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 136,
+                "text": "                let mm := mulmod(x, y, not(0))"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                prod0 := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 137,
+                "text": "                prod1 := sub(sub(mm, prod0), lt(mm, prod0))"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 138,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 139, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 11,
+            "newStart": 165,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 165,
+                "text": "                prod0 := sub(prod0, remainder)"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 166,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            // See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 174, "newLine": 170, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            // Does not overflow because the denominator cannot be zero at this stage in the function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "            uint256 twos = denominator & (~denominator + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "            uint256 twos = denominator & (0 - denominator);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 172,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 173,
+                "text": "                // Divide denominator by twos."
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 174,
+                "text": "                denominator := div(denominator, twos)"
+              }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 8,
+            "newStart": 188,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 188,
+                "text": "            // four bits. That is, denominator * inv = 1 mod 2^4."
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 189,
+                "text": "            uint256 inverse = (3 * denominator) ^ 2;"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            // in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "            // works in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 193,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^8"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 194,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^16"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 195,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^32"
+              }
+            ]
+          },
+          {
+            "oldStart": 216,
+            "oldLines": 14,
+            "newStart": 211,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 211,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 212,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 213,
+                "text": "        uint256 result = mulDiv(x, y, denominator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 215,
+                "text": "            result += 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 216,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 217,
+                "text": "        return result;"
+              },
+              { "type": " ", "oldLine": 223, "newLine": 218, "text": "    }" },
+              { "type": " ", "oldLine": 224, "newLine": 219, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 220,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "     * towards zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 227, "newLine": 223, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 224,
+                "text": "     * Inspired by Henry S. Warren, Jr.'s \"Hacker's Delight\" (Chapter 11)."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 225, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 266,
+            "oldLines": 12,
+            "newStart": 262,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 264,
+                "text": "            uint256 result = sqrt(a);"
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 266,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 267, "text": "    }" },
+              { "type": " ", "oldLine": 272, "newLine": 268, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 269,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "     * @dev Return the log in base 2, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     * @dev Return the log in base 2 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 271,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 272,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 273,
+                "text": "    function log2(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 319,
+            "oldLines": 12,
+            "newStart": 315,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 315,
+                "text": "    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 316,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 317,
+                "text": "            uint256 result = log2(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 319,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 324, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 325, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "     * @dev Return the log in base 10, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 10 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 326,
+                "text": "    function log10(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 368,
+            "oldLines": 12,
+            "newStart": 364,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 364,
+                "text": "    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 365,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 366,
+                "text": "            uint256 result = log10(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 371,
+                "text": "            return result + (rounding == Rounding.Up && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 368,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 373, "newLine": 369, "text": "    }" },
+              { "type": " ", "oldLine": 374, "newLine": 370, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "     * @dev Return the log in base 256, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "     * @dev Return the log in base 256 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 373,
+                "text": "     * Returns 0 if given 0."
+              },
+              { "type": " ", "oldLine": 378, "newLine": 374, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string."
+              }
+            ]
+          },
+          {
+            "oldStart": 411,
+            "oldLines": 7,
+            "newStart": 407,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 408,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 409,
+                "text": "            uint256 result = log256(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            return result + (rounding == Rounding.Up && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 411,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 412, "text": "    }" },
+              { "type": "+", "newLine": 413, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "        return uint8(rounding) % 2 == 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 417, "newLine": 420, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 403,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Math",
+        "similarity": 0.944,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 1 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 17,
+        "removed": 11,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 24,
+        "unchanged": 403,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 16,
+            "newStart": 5,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error MathOverflowedMulDiv();"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        Down, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        Up, // Toward infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        Zero // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        Floor, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        Ceil, // Toward positive infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        Trunc, // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        Expand // Away from zero",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 14, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "     * @dev Returns the addition of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 17, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 8,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 29,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 31,
+                "text": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 32,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 42,
+            "oldLines": 8,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 42, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 43, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 41,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 47, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 43,
+                "text": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 44,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 63, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 59, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 60,
+                "text": "     * @dev Returns the division of two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 66, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 61, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 62,
+                "text": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 63,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 70,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 71, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 72,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 80, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 82, "newLine": 73, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 74,
+                "text": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 75,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 29,
+            "newStart": 106,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 106,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 107,
+                "text": "     * @dev Returns the ceiling of the division of two numbers."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 108, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     * This differs from standard division with `/` in that it rounds up instead",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "     * of rounding down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * This differs from standard division with `/` in that it rounds towards infinity instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * of rounding towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 111,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 112,
+                "text": "    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        if (b == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            // Guarantee the same behavior as in a regular Solidity division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            return a / b;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 117, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 118,
+                "text": "        // (a + b - 1) / b can overflow on addition, so we distribute."
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 119,
+                "text": "        return a == 0 ? 0 : (a - 1) / b + 1;"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 122,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "     * with further edits by Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     * denominator == 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 127,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 128,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 129,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 130,
+                "text": "            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 131,
+                "text": "            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 132,
+                "text": "            // variables such that product = prod1 * 2^256 + prod0."
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            uint256 prod0; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            uint256 prod0 = x * y; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 134,
+                "text": "            uint256 prod1; // Most significant 256 bits of the product"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 135,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 136,
+                "text": "                let mm := mulmod(x, y, not(0))"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                prod0 := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 137,
+                "text": "                prod1 := sub(sub(mm, prod0), lt(mm, prod0))"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 138,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 139, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 11,
+            "newStart": 165,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 165,
+                "text": "                prod0 := sub(prod0, remainder)"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 166,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            // See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 174, "newLine": 170, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            // Does not overflow because the denominator cannot be zero at this stage in the function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "            uint256 twos = denominator & (~denominator + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "            uint256 twos = denominator & (0 - denominator);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 172,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 173,
+                "text": "                // Divide denominator by twos."
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 174,
+                "text": "                denominator := div(denominator, twos)"
+              }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 8,
+            "newStart": 188,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 188,
+                "text": "            // four bits. That is, denominator * inv = 1 mod 2^4."
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 189,
+                "text": "            uint256 inverse = (3 * denominator) ^ 2;"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            // in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "            // works in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 193,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^8"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 194,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^16"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 195,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^32"
+              }
+            ]
+          },
+          {
+            "oldStart": 216,
+            "oldLines": 14,
+            "newStart": 211,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 211,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 212,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 213,
+                "text": "        uint256 result = mulDiv(x, y, denominator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 215,
+                "text": "            result += 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 216,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 217,
+                "text": "        return result;"
+              },
+              { "type": " ", "oldLine": 223, "newLine": 218, "text": "    }" },
+              { "type": " ", "oldLine": 224, "newLine": 219, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 220,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "     * towards zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 227, "newLine": 223, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 224,
+                "text": "     * Inspired by Henry S. Warren, Jr.'s \"Hacker's Delight\" (Chapter 11)."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 225, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 266,
+            "oldLines": 12,
+            "newStart": 262,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 264,
+                "text": "            uint256 result = sqrt(a);"
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 266,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 267, "text": "    }" },
+              { "type": " ", "oldLine": 272, "newLine": 268, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 269,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "     * @dev Return the log in base 2, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     * @dev Return the log in base 2 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 271,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 272,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 273,
+                "text": "    function log2(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 319,
+            "oldLines": 12,
+            "newStart": 315,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 315,
+                "text": "    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 316,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 317,
+                "text": "            uint256 result = log2(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 319,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 324, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 325, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "     * @dev Return the log in base 10, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 10 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 326,
+                "text": "    function log10(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 368,
+            "oldLines": 12,
+            "newStart": 364,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 364,
+                "text": "    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 365,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 366,
+                "text": "            uint256 result = log10(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 371,
+                "text": "            return result + (rounding == Rounding.Up && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 368,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 373, "newLine": 369, "text": "    }" },
+              { "type": " ", "oldLine": 374, "newLine": 370, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "     * @dev Return the log in base 256, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "     * @dev Return the log in base 256 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 373,
+                "text": "     * Returns 0 if given 0."
+              },
+              { "type": " ", "oldLine": 378, "newLine": 374, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string."
+              }
+            ]
+          },
+          {
+            "oldStart": 411,
+            "oldLines": 7,
+            "newStart": 407,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 408,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 409,
+                "text": "            uint256 result = log256(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            return result + (rounding == Rounding.Up && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 411,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 412, "text": "    }" },
+              { "type": "+", "newLine": 413, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "        return uint8(rounding) % 2 == 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 417, "newLine": 420, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 403,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Math",
+        "similarity": 0.944,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 1 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 17,
+        "removed": 11,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 24,
+        "unchanged": 403,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 16,
+            "newStart": 5,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error MathOverflowedMulDiv();"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        Down, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        Up, // Toward infinity",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        Zero // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        Floor, // Toward negative infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        Ceil, // Toward positive infinity",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        Trunc, // Toward zero",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        Expand // Away from zero",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 14, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "     * @dev Returns the addition of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 17, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 8,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 29,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 31,
+                "text": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 32,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 42,
+            "oldLines": 8,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 42, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 43, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 41,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, with an overflow flag."
+              },
+              { "type": "-", "oldLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 47, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 43,
+                "text": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 44,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 63, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 59, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 60,
+                "text": "     * @dev Returns the division of two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 66, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 61, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 62,
+                "text": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 63,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 70,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 71, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 72,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag."
+              },
+              { "type": "-", "oldLine": 80, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     * _Available since v5.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 82, "newLine": 73, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 74,
+                "text": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 75,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 29,
+            "newStart": 106,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 106,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 107,
+                "text": "     * @dev Returns the ceiling of the division of two numbers."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 108, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     * This differs from standard division with `/` in that it rounds up instead",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "     * of rounding down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * This differs from standard division with `/` in that it rounds towards infinity instead",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * of rounding towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 111,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 112,
+                "text": "    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        if (b == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            // Guarantee the same behavior as in a regular Solidity division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            return a / b;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 117, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 118,
+                "text": "        // (a + b - 1) / b can overflow on addition, so we distribute."
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 119,
+                "text": "        return a == 0 ? 0 : (a - 1) / b + 1;"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 120, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 122,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "     * with further edits by Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     * denominator == 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * Uniswap Labs also under MIT license.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 127,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 128,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 129,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 130,
+                "text": "            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 131,
+                "text": "            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 132,
+                "text": "            // variables such that product = prod1 * 2^256 + prod0."
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            uint256 prod0; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            uint256 prod0 = x * y; // Least significant 256 bits of the product",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 134,
+                "text": "            uint256 prod1; // Most significant 256 bits of the product"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 135,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 136,
+                "text": "                let mm := mulmod(x, y, not(0))"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                prod0 := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 137,
+                "text": "                prod1 := sub(sub(mm, prod0), lt(mm, prod0))"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 138,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 139, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 11,
+            "newStart": 165,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 165,
+                "text": "                prod0 := sub(prod0, remainder)"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 166,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            // See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 174, "newLine": 170, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            // Does not overflow because the denominator cannot be zero at this stage in the function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "            uint256 twos = denominator & (~denominator + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "            uint256 twos = denominator & (0 - denominator);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 172,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 173,
+                "text": "                // Divide denominator by twos."
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 174,
+                "text": "                denominator := div(denominator, twos)"
+              }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 8,
+            "newStart": 188,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 188,
+                "text": "            // four bits. That is, denominator * inv = 1 mod 2^4."
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 189,
+                "text": "            uint256 inverse = (3 * denominator) ^ 2;"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            // in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "            // works in modular arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 193,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^8"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 194,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^16"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 195,
+                "text": "            inverse *= 2 - denominator * inverse; // inverse mod 2^32"
+              }
+            ]
+          },
+          {
+            "oldStart": 216,
+            "oldLines": 14,
+            "newStart": 211,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 211,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 212,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 213,
+                "text": "        uint256 result = mulDiv(x, y, denominator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 215,
+                "text": "            result += 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 216,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 217,
+                "text": "        return result;"
+              },
+              { "type": " ", "oldLine": 223, "newLine": 218, "text": "    }" },
+              { "type": " ", "oldLine": 224, "newLine": 219, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 220,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "     * towards zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 227, "newLine": 223, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 224,
+                "text": "     * Inspired by Henry S. Warren, Jr.'s \"Hacker's Delight\" (Chapter 11)."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 225, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 266,
+            "oldLines": 12,
+            "newStart": 262,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 264,
+                "text": "            uint256 result = sqrt(a);"
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 266,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 267, "text": "    }" },
+              { "type": " ", "oldLine": 272, "newLine": 268, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 269,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "     * @dev Return the log in base 2, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "     * @dev Return the log in base 2 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 271,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 272,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 273,
+                "text": "    function log2(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 319,
+            "oldLines": 12,
+            "newStart": 315,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 315,
+                "text": "    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 316,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 317,
+                "text": "            uint256 result = log2(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 319,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 324, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 325, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "     * @dev Return the log in base 10, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 10 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 326,
+                "text": "    function log10(uint256 value) internal pure returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 368,
+            "oldLines": 12,
+            "newStart": 364,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 364,
+                "text": "    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 365,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 366,
+                "text": "            uint256 result = log10(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 371,
+                "text": "            return result + (rounding == Rounding.Up && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 368,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 373, "newLine": 369, "text": "    }" },
+              { "type": " ", "oldLine": 374, "newLine": 370, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "     * @dev Return the log in base 256, rounded down, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "     * @dev Return the log in base 256 of a positive value rounded towards zero.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 373,
+                "text": "     * Returns 0 if given 0."
+              },
+              { "type": " ", "oldLine": 378, "newLine": 374, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string."
+              }
+            ]
+          },
+          {
+            "oldStart": 411,
+            "oldLines": 7,
+            "newStart": 407,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 408,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 409,
+                "text": "            uint256 result = log256(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            return result + (rounding == Rounding.Up && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 411,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 412, "text": "    }" },
+              { "type": "+", "newLine": 413, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "        return uint8(rounding) % 2 == 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 417, "newLine": 420, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

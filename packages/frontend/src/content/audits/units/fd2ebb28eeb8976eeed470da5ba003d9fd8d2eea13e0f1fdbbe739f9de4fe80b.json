@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd2ebb28eeb8976eeed470da5ba003d9fd8d2eea13e0f1fdbbe739f9de4fe80b",
+  "name": "GlobalGovernanceRelay",
+  "kind": "abstract",
+  "lines": 27,
+  "source": "abstract contract GlobalGovernanceRelay is CommonGovernanceRelay, GlobalCoreGovernance {\n    using GlobalProposal for GlobalProposal.GlobalProposalDetail;\n\n    /**\n     * @dev Returns whether the voter `_voter` casted vote for the proposal.\n     */\n    function globalProposalRelayed(uint256 _round) external view returns (bool) {\n        return vote[0][_round].status != VoteStatus.Pending;\n    }\n\n    /**\n     * @dev Relays voted global proposal.\n     *\n     * Requirements:\n     * - The relay proposal is finalized.\n     *\n     */\n    function _relayGlobalProposal(\n        GlobalProposal.GlobalProposalDetail calldata globalProposal,\n        Ballot.VoteType[] calldata supports_,\n        Signature[] calldata signatures,\n        address creator\n    ) internal {\n        Proposal.ProposalDetail memory _proposal = _proposeGlobalStruct(globalProposal, creator);\n        _relayVotesBySignatures(_proposal, supports_, signatures, globalProposal.hash());\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 26,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GlobalGovernanceRelay",
+        "similarity": 0.737,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/sequential-governance/governance-relay/GlobalGovernanceRelay.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/extensions/sequential-governance/governance-relay/GlobalGovernanceRelay.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 26,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 17,
+            "newStart": 19,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        GlobalProposal.GlobalProposalDetail calldata globalProposal,"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        Ballot.VoteType[] calldata supports_,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        Signature[] calldata signatures,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        bytes32 domainSeparator,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 22,
+                "text": "        address creator"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 23,
+                "text": "    ) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 24,
+                "text": "        Proposal.ProposalDetail memory _proposal = _proposeGlobalStruct(globalProposal, creator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        bytes32 globalProposalHash = globalProposal.hash();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        _relayVotesBySignatures(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "            _proposal,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "            supports_,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "            signatures,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "            ECDSA.toTypedDataHash(domainSeparator, Ballot.hash(globalProposalHash, Ballot.VoteType.For)),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            ECDSA.toTypedDataHash(domainSeparator, Ballot.hash(globalProposalHash, Ballot.VoteType.Against))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        _relayVotesBySignatures(_proposal, supports_, signatures, globalProposal.hash());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 27, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

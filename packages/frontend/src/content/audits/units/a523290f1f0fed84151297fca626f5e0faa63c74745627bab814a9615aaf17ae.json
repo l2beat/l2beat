@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a523290f1f0fed84151297fca626f5e0faa63c74745627bab814a9615aaf17ae",
+  "name": "NoncesUpgradeable",
+  "kind": "abstract",
+  "lines": 57,
+  "source": "abstract contract NoncesUpgradeable is Initializable {\n    /**\n     * @dev The nonce used for an `account` is not the expected current nonce.\n     */\n    error InvalidAccountNonce(address account, uint256 currentNonce);\n\n    /// @custom:storage-location erc7201:openzeppelin.storage.Nonces\n    struct NoncesStorage {\n        mapping(address account => uint256) _nonces;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.Nonces\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant NoncesStorageLocation = 0x5ab42ced628888259c08ac98db1eb0cf702fc1501344311d8b100cd1bfe4bb00;\n\n    function _getNoncesStorage() private pure returns (NoncesStorage storage $) {\n        assembly {\n            $.slot := NoncesStorageLocation\n        }\n    }\n\n    function __Nonces_init() internal onlyInitializing {}\n\n    function __Nonces_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev Returns the next unused nonce for an address.\n     */\n\n    function nonces(address owner) public view virtual returns (uint256) {\n        NoncesStorage storage $ = _getNoncesStorage();\n        return $._nonces[owner];\n    }\n\n    /**\n     * @dev Consumes a nonce.\n     *\n     * Returns the current value and increments nonce.\n     */\n    function _useNonce(address owner) internal virtual returns (uint256) {\n        NoncesStorage storage $ = _getNoncesStorage();\n        // For each account, the nonce has an initial value of 0, can only be incremented by one, and cannot be\n        // decremented or reset. This guarantees that the nonce never overflows.\n        unchecked {\n            // It is important to do x++ and not ++x here.\n            return $._nonces[owner]++;\n        }\n    }\n\n    /**\n     * @dev Same as {_useNonce} but checking that `nonce` is the next valid for `owner`.\n     */\n    function _useCheckedNonce(address owner, uint256 nonce) internal virtual {\n        uint256 current = _useNonce(owner);\n        if (nonce != current) {\n            revert InvalidAccountNonce(owner, current);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

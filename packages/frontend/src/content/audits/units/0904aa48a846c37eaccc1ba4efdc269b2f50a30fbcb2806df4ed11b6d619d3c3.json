@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0904aa48a846c37eaccc1ba4efdc269b2f50a30fbcb2806df4ed11b6d619d3c3",
+  "name": "IL1Block",
+  "kind": "interface",
+  "lines": 42,
+  "source": "interface IL1Block {\n    error NotDepositor();\n\n    event GasPayingTokenSet(address indexed token, uint8 indexed decimals, bytes32 name, bytes32 symbol);\n\n    function DEPOSITOR_ACCOUNT() external pure returns (address addr_);\n    function baseFeeScalar() external view returns (uint32);\n    function basefee() external view returns (uint256);\n    function batcherHash() external view returns (bytes32);\n    function blobBaseFee() external view returns (uint256);\n    function blobBaseFeeScalar() external view returns (uint32);\n    function gasPayingToken() external view returns (address addr_, uint8 decimals_);\n    function gasPayingTokenName() external view returns (string memory name_);\n    function gasPayingTokenSymbol() external view returns (string memory symbol_);\n    function hash() external view returns (bytes32);\n    function isCustomGasToken() external view returns (bool);\n    function l1FeeOverhead() external view returns (uint256);\n    function l1FeeScalar() external view returns (uint256);\n    function number() external view returns (uint64);\n    function operatorFeeScalar() external view returns (uint32);\n    function operatorFeeConstant() external view returns (uint64);\n    function daFootprintGasScalar() external view returns (uint16);\n    function sequenceNumber() external view returns (uint64);\n    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external;\n    function setL1BlockValues(\n        uint64 _number,\n        uint64 _timestamp,\n        uint256 _basefee,\n        bytes32 _hash,\n        uint64 _sequenceNumber,\n        bytes32 _batcherHash,\n        uint256 _l1FeeOverhead,\n        uint256 _l1FeeScalar\n    ) external;\n    function setL1BlockValuesEcotone() external;\n    function setL1BlockValuesIsthmus() external;\n    function setL1BlockValuesJovian() external;\n    function timestamp() external view returns (uint64);\n    function version() external pure returns (string memory);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IL1Block",
+        "similarity": 0.974,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L2/IL1Block.sol",
+        "commit": "2c50c87bab8a37aeb363664b22ace82b898c2d8b",
+        "commitTimestamp": "2026-01-14T10:59:08Z",
+        "url": "https://github.com/celo-org/optimism/blob/2c50c87bab8a37aeb363664b22ace82b898c2d8b/packages/contracts-bedrock/interfaces/L2/IL1Block.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v4.1.0 line (Celo CGT changes vs op-deployer/v0.4.7)",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 2,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 6,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    function number() external view returns (uint64);"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    function operatorFeeScalar() external view returns (uint32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function operatorFeeConstant() external view returns (uint64);"
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function daFootprintGasScalar() external view returns (uint16);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "    function sequenceNumber() external view returns (uint64);"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 24,
+                "text": "    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 25,
+                "text": "    function setL1BlockValues("
+              }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 6,
+            "newStart": 34,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 34,
+                "text": "    ) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "    function setL1BlockValuesEcotone() external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 36,
+                "text": "    function setL1BlockValuesIsthmus() external;"
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    function setL1BlockValuesJovian() external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "    function timestamp() external view returns (uint64);"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 39,
+                "text": "    function version() external pure returns (string memory);"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 40, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

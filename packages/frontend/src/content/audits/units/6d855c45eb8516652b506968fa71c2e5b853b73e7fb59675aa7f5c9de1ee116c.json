@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6d855c45eb8516652b506968fa71c2e5b853b73e7fb59675aa7f5c9de1ee116c",
+  "name": "chunk.rs",
+  "kind": "program",
+  "lines": 65,
+  "source": "use scroll_zkvm_types::chunk::{ChunkWitness, ToArchievedWitness, execute};\n\nuse crate::{\n    Error, Prover, ProverType,\n    commitments::chunk,\n    proof::ChunkProofMetadata,\n    task::{ProvingTask, chunk::ChunkProvingTask},\n};\n\nuse super::Commitments;\n\npub struct ChunkCircuit;\n\nimpl Commitments for ChunkCircuit {\n    const EXE_COMMIT: [u32; 8] = chunk::EXE_COMMIT;\n    const LEAF_COMMIT: [u32; 8] = chunk::LEAF_COMMIT;\n}\n\npub type ChunkProverType = GenericChunkProverType<ChunkCircuit>;\n\n/// Prover for [`ChunkCircuit`].\npub type ChunkProver = Prover<ChunkProverType>;\n\npub struct GenericChunkProverType<C: Commitments>(std::marker::PhantomData<C>);\n\nimpl<C: Commitments> ProverType for GenericChunkProverType<C> {\n    const NAME: &'static str = \"chunk\";\n\n    const EVM: bool = false;\n\n    const SEGMENT_SIZE: usize = (1 << 22) - 100;\n\n    const EXE_COMMIT: [u32; 8] = C::EXE_COMMIT;\n\n    const LEAF_COMMIT: [u32; 8] = C::LEAF_COMMIT;\n\n    type ProvingTask = ChunkProvingTask;\n\n    type ProofMetadata = ChunkProofMetadata;\n\n    fn metadata_with_prechecks(task: &Self::ProvingTask) -> Result<Self::ProofMetadata, Error> {\n        let err_prefix = format!(\n            \"metadata_with_prechecks for task_id={:?}\",\n            task.identifier()\n        );\n\n        if task.block_witnesses.is_empty() {\n            return Err(Error::GenProof(format!(\n                \"{err_prefix}: chunk should contain at least one block\",\n            )));\n        }\n\n        let chunk_witness = ChunkWitness::new(\n            &task.block_witnesses,\n            task.prev_msg_queue_hash,\n            task.fork_name.as_str().into(),\n        );\n\n        let to_archieve = ToArchievedWitness::create(&chunk_witness).map_err(Error::GenProof)?;\n        let chunk_info = execute(to_archieve.access().map_err(Error::GenProof)?)\n            .map_err(|e| Error::GenProof(format!(\"{}: {}\", err_prefix, e)))?;\n\n        Ok(ChunkProofMetadata { chunk_info })\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

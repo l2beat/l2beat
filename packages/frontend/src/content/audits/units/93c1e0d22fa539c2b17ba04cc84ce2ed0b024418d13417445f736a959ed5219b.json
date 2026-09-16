@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "93c1e0d22fa539c2b17ba04cc84ce2ed0b024418d13417445f736a959ed5219b",
+  "name": "L2StandardBridge",
+  "kind": "contract",
+  "lines": 192,
+  "source": "contract L2StandardBridge is StandardBridge, ISemver {\n    /// @custom:legacy\n    /// @notice Emitted whenever a withdrawal from L2 to L1 is initiated.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the withdrawer.\n    /// @param to        Address of the recipient on L1.\n    /// @param amount    Amount of the ERC20 withdrawn.\n    /// @param extraData Extra data attached to the withdrawal.\n    event WithdrawalInitiated(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @custom:legacy\n    /// @notice Emitted whenever an ERC20 deposit is finalized.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the depositor.\n    /// @param to        Address of the recipient on L2.\n    /// @param amount    Amount of the ERC20 deposited.\n    /// @param extraData Extra data attached to the deposit.\n    event DepositFinalized(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.11.1-beta.1\n    function version() public pure virtual returns (string memory) {\n        return \"1.11.1-beta.1\";\n    }\n\n    /// @notice Constructs the L2StandardBridge contract.\n    constructor() StandardBridge() {\n        initialize({_otherBridge: StandardBridge(payable(address(0)))});\n    }\n\n    /// @notice Initializer.\n    /// @param _otherBridge Contract for the corresponding bridge on the other chain.\n    function initialize(StandardBridge _otherBridge) public initializer {\n        __StandardBridge_init({\n            _messenger: ICrossDomainMessenger(Predeploys.L2_CROSS_DOMAIN_MESSENGER),\n            _otherBridge: _otherBridge\n        });\n    }\n\n    /// @notice Allows EOAs to bridge ETH by sending directly to the bridge.\n    receive() external payable override onlyEOA {\n        _initiateWithdrawal(\n            Predeploys.LEGACY_ERC20_ETH, msg.sender, msg.sender, msg.value, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\")\n        );\n    }\n\n    /// @inheritdoc StandardBridge\n    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {\n        (addr_, decimals_) = L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).gasPayingToken();\n    }\n\n    /// @custom:legacy\n    /// @notice Initiates a withdrawal from L2 to L1.\n    ///         This function only works with OptimismMintableERC20 tokens or ether. Use the\n    ///         `bridgeERC20` function to bridge native L2 tokens to L1.\n    ///         Subject to be deprecated in the future.\n    /// @param _l2Token     Address of the L2 token to withdraw.\n    /// @param _amount      Amount of the L2 token to withdraw.\n    /// @param _minGasLimit Minimum gas limit to use for the transaction.\n    /// @param _extraData   Extra data attached to the withdrawal.\n    function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes calldata _extraData)\n        external\n        payable\n        virtual\n        onlyEOA\n    {\n        require(isCustomGasToken() == false, \"L2StandardBridge: not supported with custom gas token\");\n        _initiateWithdrawal(_l2Token, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Initiates a withdrawal from L2 to L1 to a target account on L1.\n    ///         Note that if ETH is sent to a contract on L1 and the call fails, then that ETH will\n    ///         be locked in the L1StandardBridge. ETH may be recoverable if the call can be\n    ///         successfully replayed by increasing the amount of gas supplied to the call. If the\n    ///         call will fail for any amount of gas, then the ETH will be locked permanently.\n    ///         This function only works with OptimismMintableERC20 tokens or ether. Use the\n    ///         `bridgeERC20To` function to bridge native L2 tokens to L1.\n    ///         Subject to be deprecated in the future.\n    /// @param _l2Token     Address of the L2 token to withdraw.\n    /// @param _to          Recipient account on L1.\n    /// @param _amount      Amount of the L2 token to withdraw.\n    /// @param _minGasLimit Minimum gas limit to use for the transaction.\n    /// @param _extraData   Extra data attached to the withdrawal.\n    function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes calldata _extraData)\n        external\n        payable\n        virtual\n    {\n        require(isCustomGasToken() == false, \"L2StandardBridge: not supported with custom gas token\");\n        _initiateWithdrawal(_l2Token, msg.sender, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Retrieves the access of the corresponding L1 bridge contract.\n    /// @return Address of the corresponding L1 bridge contract.\n    function l1TokenBridge() external view returns (address) {\n        return address(otherBridge);\n    }\n\n    /// @custom:legacy\n    /// @notice Internal function to initiate a withdrawal from L2 to L1 to a target account on L1.\n    /// @param _l2Token     Address of the L2 token to withdraw.\n    /// @param _from        Address of the withdrawer.\n    /// @param _to          Recipient account on L1.\n    /// @param _amount      Amount of the L2 token to withdraw.\n    /// @param _minGasLimit Minimum gas limit to use for the transaction.\n    /// @param _extraData   Extra data attached to the withdrawal.\n    function _initiateWithdrawal(\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        if (_l2Token == Predeploys.LEGACY_ERC20_ETH) {\n            _initiateBridgeETH(_from, _to, _amount, _minGasLimit, _extraData);\n        } else {\n            address l1Token = OptimismMintableERC20(_l2Token).l1Token();\n            _initiateBridgeERC20(_l2Token, l1Token, _from, _to, _amount, _minGasLimit, _extraData);\n        }\n    }\n\n    /// @notice Emits the legacy WithdrawalInitiated event followed by the ETHBridgeInitiated event.\n    ///         This is necessary for backwards compatibility with the legacy bridge.\n    /// @inheritdoc StandardBridge\n    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit WithdrawalInitiated(address(0), Predeploys.LEGACY_ERC20_ETH, _from, _to, _amount, _extraData);\n        super._emitETHBridgeInitiated(_from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the legacy DepositFinalized event followed by the ETHBridgeFinalized event.\n    ///         This is necessary for backwards compatibility with the legacy bridge.\n    /// @inheritdoc StandardBridge\n    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit DepositFinalized(address(0), Predeploys.LEGACY_ERC20_ETH, _from, _to, _amount, _extraData);\n        super._emitETHBridgeFinalized(_from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the legacy WithdrawalInitiated event followed by the ERC20BridgeInitiated\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    /// @inheritdoc StandardBridge\n    function _emitERC20BridgeInitiated(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit WithdrawalInitiated(_remoteToken, _localToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the legacy DepositFinalized event followed by the ERC20BridgeFinalized event.\n    ///         This is necessary for backwards compatibility with the legacy bridge.\n    /// @inheritdoc StandardBridge\n    function _emitERC20BridgeFinalized(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit DepositFinalized(_remoteToken, _localToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 184,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L2StandardBridge",
+        "similarity": 0.948,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L2/L2StandardBridge.sol",
+        "commit": "8d0dd96e494b2ba154587877351e87788336a4ec",
+        "commitTimestamp": "2025-02-25T20:13:01Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/8d0dd96e494b2ba154587877351e87788336a4ec/packages/contracts-bedrock/src/L2/L2StandardBridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Targeted review (Feb 27 to Mar 1, 2025) of the impact of the Pectra EIPs (EIP-7702, EIP-7623) on the contracts-bedrock contracts at the stated commit; the report declares no file list, this file is recorded because findings locate in it. No Critical/High findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 8,
+        "removed": 3,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 184,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 34,
+            "oldLines": 19,
+            "newStart": 34,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "    );" },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @custom:semver 1.12.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// @custom:semver 1.11.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    function version() public pure virtual returns (string memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        return \"1.12.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        return \"1.11.1-beta.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    /// @notice Constructs the L2StandardBridge contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    constructor() StandardBridge() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        initialize({_otherBridge: StandardBridge(payable(address(0)))});",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "    /// @param _otherBridge Contract for the corresponding bridge on the other chain."
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    function initialize(StandardBridge _otherBridge) external initializer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function initialize(StandardBridge _otherBridge) public initializer {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        __StandardBridge_init({"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "            _messenger: ICrossDomainMessenger(Predeploys.L2_CROSS_DOMAIN_MESSENGER),"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "            _otherBridge: _otherBridge"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 62, "text": "" },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @inheritdoc StandardBridge",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        (addr_, decimals_) = L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).gasPayingToken();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 67, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 68,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 69,
+                "text": "    /// @notice Initiates a withdrawal from L2 to L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 70,
+                "text": "    ///         This function only works with OptimismMintableERC20 tokens or ether. Use the"
+              }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 6,
+            "newStart": 80,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 80,
+                "text": "        virtual"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 81,
+                "text": "        onlyEOA"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 82, "text": "    {" },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        require(isCustomGasToken() == false, \"L2StandardBridge: not supported with custom gas token\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 84,
+                "text": "        _initiateWithdrawal(_l2Token, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 85, "text": "    }" },
+              { "type": " ", "oldLine": 80, "newLine": 86, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 97,
+            "oldLines": 6,
+            "newStart": 103,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 103,
+                "text": "        payable"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 104,
+                "text": "        virtual"
+              },
+              { "type": " ", "oldLine": 99, "newLine": 105, "text": "    {" },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        require(isCustomGasToken() == false, \"L2StandardBridge: not supported with custom gas token\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 107,
+                "text": "        _initiateWithdrawal(_l2Token, msg.sender, _to, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 101, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 102, "newLine": 109, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

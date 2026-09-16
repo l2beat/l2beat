@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1b88c7228e02b7613d7b7ae3fc14955b4117b7ee1b43df096da55a6b87a79ff8",
+  "name": "IGovernorTimelockUpgradeable",
+  "kind": "abstract",
+  "lines": 23,
+  "source": "abstract contract IGovernorTimelockUpgradeable is Initializable, IGovernorUpgradeable {\n    function __IGovernorTimelock_init() internal onlyInitializing {}\n\n    function __IGovernorTimelock_init_unchained() internal onlyInitializing {}\n\n    event ProposalQueued(uint256 proposalId, uint256 eta);\n\n    function timelock() public view virtual returns (address);\n\n    function proposalEta(uint256 proposalId) public view virtual returns (uint256);\n\n    function queue(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash)\n        public\n        virtual\n        returns (uint256 proposalId);\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

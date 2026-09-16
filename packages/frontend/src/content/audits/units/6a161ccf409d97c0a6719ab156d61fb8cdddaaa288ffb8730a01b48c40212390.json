@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6a161ccf409d97c0a6719ab156d61fb8cdddaaa288ffb8730a01b48c40212390",
+  "name": "call_context.nr",
+  "kind": "program",
+  "lines": 76,
+  "source": "use crate::{\n    abis::function_selector::FunctionSelector,\n    address::AztecAddress,\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n// docs:start:call-context\n#[derive(Deserialize, Eq, Serialize)]\npub struct CallContext {\n    // The address of the contract that is making the call.\n    pub msg_sender: AztecAddress,\n    // The address of the contract being called.\n    pub contract_address: AztecAddress,\n    // The selector of the function being called.\n    pub function_selector: FunctionSelector,\n    // Whether the call will modify the state of the contract.\n    pub is_static_call: bool,\n}\n// docs:end:call-context\n\nimpl Empty for CallContext {\n    fn empty() -> Self {\n        CallContext {\n            msg_sender: AztecAddress::empty(),\n            contract_address: AztecAddress::empty(),\n            function_selector: FunctionSelector::empty(),\n            is_static_call: false,\n        }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::call_context::CallContext,\n        address::AztecAddress,\n        constants::CALL_CONTEXT_LENGTH,\n        traits::{Deserialize, Empty, FromField, Serialize},\n    };\n\n    #[test]\n    fn serialize_deserialize_of_empty() {\n        let context = CallContext::empty();\n        // We use the CALL_CONTEXT_LENGTH constant to ensure that there is a match between the derived trait\n        // implementation and the constant.\n        let serialized: [Field; CALL_CONTEXT_LENGTH] = context.serialize();\n        let deserialized = CallContext::deserialize(serialized);\n        assert(context.eq(deserialized));\n    }\n\n    #[test]\n    fn test_eq() {\n        let mut context1 = CallContext::empty();\n        let mut context2 = CallContext::empty();\n\n        let address: AztecAddress = AztecAddress::from_field(69420);\n        context1.msg_sender = address;\n        context2.msg_sender = address;\n\n        assert(context1.eq(context2));\n    }\n\n    #[test(should_fail)]\n    fn not_eq_test_eq() {\n        let mut context1 = CallContext::empty();\n        let mut context2 = CallContext::empty();\n\n        let address1: AztecAddress = AztecAddress::from_field(69420);\n        let address2: AztecAddress = AztecAddress::from_field(42069);\n\n        context1.msg_sender = address1;\n        context2.msg_sender = address2;\n\n        assert(context1.eq(context2));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

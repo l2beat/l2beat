@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b1b0af1d7d3b01213d672ef6b19eaf2972541520f339e4346bc32a54272eed0f",
+  "name": "out_hash_tests.nr",
+  "kind": "program",
+  "lines": 21,
+  "source": "use super::TestBuilder;\n\n#[test(should_fail_with = \"Epoch did not start with empty out hash tree root\")]\nfn non_empty_out_hash_root() {\n    let mut builder = TestBuilder::default();\n\n    // Tweak the root of the previous_out_hash in the left rollup.\n    builder.left_rollup.previous_out_hash.root += 1;\n\n    builder.execute_and_fail();\n}\n\n#[test(should_fail_with = \"Epoch did not start with zero out hash tree index\")]\nfn non_zero_next_available_leaf_index() {\n    let mut builder = TestBuilder::default();\n\n    // Tweak the next_available_leaf_index in the left rollup.\n    builder.left_rollup.previous_out_hash.next_available_leaf_index = 1;\n\n    builder.execute_and_fail();\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

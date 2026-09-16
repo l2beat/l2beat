@@ -1,0 +1,680 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ff5738729786d39a7e741dd8f7ef7d3d75b5721a1cccc6eeac8b231fe9db6d8c",
+  "name": "FeeLib",
+  "kind": "library",
+  "lines": 387,
+  "source": "library FeeLib {\n    using Math for uint256;\n    using SafeCast for int256;\n    using SafeCast for uint256;\n    using SignedMath for int256;\n    using PriceLib for EthValue;\n    using TimeLib for Slot;\n    using TimeLib for Timestamp;\n\n    using FeeHeaderLib for FeeHeader;\n    using FeeHeaderLib for CompressedFeeHeader;\n    using CompressedTimeMath for CompressedSlot;\n    using CompressedTimeMath for Slot;\n\n    using FeeStructsLib for L1FeeData;\n    using FeeStructsLib for CompressedL1FeeData;\n    using FeeConfigLib for FeeConfig;\n    using FeeConfigLib for CompressedFeeConfig;\n\n    Slot internal constant LIFETIME = Slot.wrap(5);\n    Slot internal constant LAG = Slot.wrap(2);\n\n    bytes32 private constant FEE_STORE_POSITION = keccak256(\"aztec.fee.storage\");\n\n    function initialize(uint256 _manaTarget, EthValue _provingCostPerMana, EthPerFeeAssetE12 _initialEthPerFeeAsset)\n        internal\n    {\n        FeeStore storage feeStore = getStorage();\n\n        // Computes and ensures that limit is within sane bounds\n        computeManaLimit(_manaTarget);\n\n        // The rate-limit algebra in updateProvingCostPerMana assumes `current >= 2`; initializing\n        // below the floor would permanently freeze the proving-cost update path.\n        uint256 provingCost = EthValue.unwrap(_provingCostPerMana);\n        require(\n            provingCost >= MIN_PROVING_COST_PER_MANA,\n            Errors.FeeLib__ProvingCostBelowFloor(provingCost, MIN_PROVING_COST_PER_MANA)\n        );\n        // The uint64 cap inside FeeConfigLib.compress is a storage-shape bound, not an economic\n        // bound. Enforce a separate initial ceiling so a deploy cannot strand the rollup at a value\n        // that takes years to drift back to normal operating ranges via the rate-limited updater.\n        require(\n            provingCost <= MAX_INITIAL_PROVING_COST_PER_MANA,\n            Errors.FeeLib__ProvingCostAboveCeiling(provingCost, MAX_INITIAL_PROVING_COST_PER_MANA)\n        );\n\n        // Validate initial ETH per fee asset is within bounds\n        uint256 initialPrice = EthPerFeeAssetE12.unwrap(_initialEthPerFeeAsset);\n        require(\n            initialPrice >= MIN_ETH_PER_FEE_ASSET && initialPrice <= MAX_ETH_PER_FEE_ASSET,\n            Errors.FeeLib__InvalidInitialEthPerFeeAsset(initialPrice, MIN_ETH_PER_FEE_ASSET, MAX_ETH_PER_FEE_ASSET)\n        );\n\n        feeStore.config = FeeConfig({\n            manaTarget: _manaTarget,\n            congestionUpdateFraction: _manaTarget * MAGIC_CONGESTION_VALUE_MULTIPLIER / MAGIC_CONGESTION_VALUE_DIVISOR,\n            provingCostPerMana: _provingCostPerMana\n        }).compress();\n\n        feeStore.l1GasOracleValues = L1GasOracleValues({\n            pre: L1FeeData({baseFee: 1 gwei, blobFee: 1}).compress(),\n            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib_1.getBlobBaseFee()}).compress(),\n            slotOfChange: LIFETIME.compress()\n        });\n\n        // Write the initial ethPerFeeAsset to checkpoint 0's fee header\n        STFLib.writeGenesisFeeHeader(EthPerFeeAssetE12.unwrap(_initialEthPerFeeAsset));\n    }\n\n    function updateManaTarget(uint256 _manaTarget) internal {\n        // Computes and ensures that limit is within sane bounds\n        computeManaLimit(_manaTarget);\n\n        FeeStore storage feeStore = getStorage();\n\n        FeeConfig memory config = feeStore.config.decompress();\n        config.manaTarget = _manaTarget;\n        config.congestionUpdateFraction =\n            _manaTarget * MAGIC_CONGESTION_VALUE_MULTIPLIER / MAGIC_CONGESTION_VALUE_DIVISOR;\n\n        feeStore.config = config.compress();\n    }\n\n    function updateProvingCostPerMana(EthValue _provingCostPerMana) internal {\n        FeeStore storage feeStore = getStorage();\n        FeeConfig memory config = feeStore.config.decompress();\n\n        uint256 current = EthValue.unwrap(config.provingCostPerMana);\n        uint256 newV = EthValue.unwrap(_provingCostPerMana);\n\n        require(\n            newV >= MIN_PROVING_COST_PER_MANA, Errors.FeeLib__ProvingCostBelowFloor(newV, MIN_PROVING_COST_PER_MANA)\n        );\n\n        uint256 nextAllowed = uint256(feeStore.provingCostLastUpdate) + PROVING_COST_UPDATE_INTERVAL;\n        require(\n            feeStore.provingCostLastUpdate == 0 || block.timestamp >= nextAllowed,\n            Errors.FeeLib__ProvingCostCooldown(nextAllowed)\n        );\n\n        require(\n            newV * PROVING_COST_STEP_DEN <= current * PROVING_COST_STEP_NUM\n                && newV * PROVING_COST_STEP_NUM >= current * PROVING_COST_STEP_DEN,\n            Errors.FeeLib__ProvingCostStepExceeded(current, newV)\n        );\n\n        config.provingCostPerMana = _provingCostPerMana;\n        feeStore.config = config.compress();\n        feeStore.provingCostLastUpdate = uint64(block.timestamp);\n    }\n\n    function updateL1GasFeeOracle() internal {\n        Slot slot = Timestamp.wrap(block.timestamp).slotFromTimestamp();\n        // The slot where we find a new queued value acceptable\n        FeeStore storage feeStore = getStorage();\n\n        Slot acceptableSlot = feeStore.l1GasOracleValues.slotOfChange.decompress() + (LIFETIME - LAG);\n\n        if (slot < acceptableSlot) {\n            return;\n        }\n\n        feeStore.l1GasOracleValues = L1GasOracleValues({\n            pre: feeStore.l1GasOracleValues.post,\n            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib_1.getBlobBaseFee()}).compress(),\n            slotOfChange: (slot + LAG).compress()\n        });\n    }\n\n    function computeFeeHeader(\n        uint256 _checkpointNumber,\n        int256 _feeAssetPriceModifierBps,\n        uint256 _manaUsed,\n        uint256 _congestionCost,\n        uint256 _proverCost\n    ) internal view returns (FeeHeader memory) {\n        require(\n            SignedMath.abs(_feeAssetPriceModifierBps) <= MAX_FEE_ASSET_PRICE_MODIFIER_BPS,\n            Errors.FeeLib__InvalidFeeAssetPriceModifier()\n        );\n        CompressedFeeHeader parentFeeHeader = STFLib.getFeeHeader(_checkpointNumber - 1);\n        return FeeHeader({\n            excessMana: FeeLib.computeExcessMana(parentFeeHeader),\n            ethPerFeeAsset: FeeLib.computeNewEthPerFeeAsset(parentFeeHeader.getEthPerFeeAsset(), _feeAssetPriceModifierBps),\n            manaUsed: _manaUsed,\n            congestionCost: _congestionCost,\n            proverCost: _proverCost\n        });\n    }\n\n    function getL1FeesAt(Timestamp _timestamp) internal view returns (L1FeeData memory) {\n        FeeStore storage feeStore = getStorage();\n        return _timestamp.slotFromTimestamp() < feeStore.l1GasOracleValues.slotOfChange.decompress()\n            ? feeStore.l1GasOracleValues.pre.decompress()\n            : feeStore.l1GasOracleValues.post.decompress();\n    }\n\n    function getManaMinFeeComponentsAt(uint256 _checkpointOfInterest, Timestamp _timestamp, bool _inFeeAsset)\n        internal\n        view\n        returns (ManaMinFeeComponents memory)\n    {\n        FeeStore storage feeStore = getStorage();\n\n        uint256 manaTarget = feeStore.config.getManaTarget();\n\n        EthValue sequencerCostPerMana;\n        EthValue proverCostPerMana;\n        EthValue total;\n\n        {\n            L1FeeData memory fees = FeeLib.getL1FeesAt(_timestamp);\n\n            // Sequencer cost per mana\n            {\n                uint256 ethUsed = (L1_GAS_PER_CHECKPOINT_PROPOSED * fees.baseFee)\n                    + (BLOBS_PER_CHECKPOINT * BLOB_GAS_PER_BLOB * fees.blobFee);\n\n                sequencerCostPerMana = EthValue.wrap(Math.mulDiv(ethUsed, 1, manaTarget, Math.Rounding.Ceil));\n            }\n\n            // Prover cost per mana\n            {\n                proverCostPerMana = EthValue.wrap(\n                    Math.mulDiv(\n                        Math.mulDiv(\n                            L1_GAS_PER_EPOCH_VERIFIED,\n                            fees.baseFee,\n                            TimeLib.getStorage().epochDuration,\n                            Math.Rounding.Ceil\n                        ),\n                        1,\n                        manaTarget,\n                        Math.Rounding.Ceil\n                    )\n                ) + feeStore.config.getProvingCostPerMana();\n            }\n\n            total = sequencerCostPerMana + proverCostPerMana;\n        }\n\n        CompressedFeeHeader parentFeeHeader = STFLib.getFeeHeader(_checkpointOfInterest);\n        uint256 excessMana =\n            FeeLib.clampedAdd(parentFeeHeader.getExcessMana() + parentFeeHeader.getManaUsed(), -int256(manaTarget));\n        uint256 congestionMultiplier_ = congestionMultiplier(excessMana);\n\n        EthValue congestionCost = EthValue.wrap(\n            Math.mulDiv(\n                EthValue.unwrap(total), congestionMultiplier_, MINIMUM_CONGESTION_MULTIPLIER, Math.Rounding.Floor\n            )\n        ) - total;\n\n        EthPerFeeAssetE12 ethPerFeeAsset = _inFeeAsset\n            ? FeeLib.getEthPerFeeAssetAtCheckpoint(_checkpointOfInterest)\n            : EthPerFeeAssetE12.wrap(ETH_PER_FEE_ASSET_PRECISION);\n\n        return ManaMinFeeComponents({\n            sequencerCost: FeeAssetValue.unwrap(sequencerCostPerMana.toFeeAsset(ethPerFeeAsset)),\n            proverCost: FeeAssetValue.unwrap(proverCostPerMana.toFeeAsset(ethPerFeeAsset)),\n            congestionCost: FeeAssetValue.unwrap(congestionCost.toFeeAsset(ethPerFeeAsset)),\n            congestionMultiplier: congestionMultiplier_\n        });\n    }\n\n    function getManaTarget() internal view returns (uint256) {\n        return getStorage().config.getManaTarget();\n    }\n\n    function getManaLimit() internal view returns (uint256) {\n        FeeStore storage feeStore = getStorage();\n        return computeManaLimit(feeStore.config.getManaTarget());\n    }\n\n    function getProvingCostPerMana() internal view returns (EthValue) {\n        return getStorage().config.getProvingCostPerMana();\n    }\n\n    function getEthPerFeeAssetAtCheckpoint(uint256 _checkpointNumber) internal view returns (EthPerFeeAssetE12) {\n        return EthPerFeeAssetE12.wrap(STFLib.getFeeHeader(_checkpointNumber).getEthPerFeeAsset());\n    }\n\n    function computeExcessMana(CompressedFeeHeader _feeHeader) internal view returns (uint256) {\n        FeeStore storage feeStore = getStorage();\n        return\n            clampedAdd(_feeHeader.getExcessMana() + _feeHeader.getManaUsed(), -int256(feeStore.config.getManaTarget()));\n    }\n\n    function congestionMultiplier(uint256 _numerator) internal view returns (uint256) {\n        FeeStore storage feeStore = getStorage();\n        uint256 denominator = feeStore.config.getCongestionUpdateFraction();\n        // Cap the exponent to prevent overflow in the Taylor series.\n        // At e^100, the multiplier is ~2.69e43 * MINIMUM_CONGESTION_MULTIPLIER, more than enough\n        uint256 cappedNumerator = Math.min(_numerator, denominator * 100);\n        return fakeExponential(MINIMUM_CONGESTION_MULTIPLIER, cappedNumerator, denominator);\n    }\n\n    function computeManaLimit(uint256 _manaTarget) internal pure returns (uint256) {\n        require(_manaTarget > 0, Errors.FeeLib__InvalidManaTarget(1, _manaTarget));\n        uint256 manaLimit = _manaTarget * 2;\n\n        // Ensure that the maximum spent mana can fit in the fee header\n        require(manaLimit <= type(uint32).max, Errors.FeeLib__InvalidManaLimit(type(uint32).max, manaLimit));\n\n        return manaLimit;\n    }\n\n    /**\n     * @notice  Compute new ETH per fee asset price based on percentage modifier\n     * @param _currentPrice The current price (ETH per fee asset with 1e12 precision)\n     * @param _modifierBps The modifier in basis points (-100 to +100 for ±1%)\n     * @return The new price clamped to [MIN_ETH_PER_FEE_ASSET, MAX_ETH_PER_FEE_ASSET]\n     */\n    function computeNewEthPerFeeAsset(uint256 _currentPrice, int256 _modifierBps) internal pure returns (uint256) {\n        uint256 newPrice;\n        if (_modifierBps >= 0) {\n            newPrice = _currentPrice * (10_000 + uint256(_modifierBps)) / 10_000;\n        } else {\n            newPrice = _currentPrice * (10_000 - SignedMath.abs(_modifierBps)) / 10_000;\n        }\n\n        // Clamp to bounds\n        if (newPrice < MIN_ETH_PER_FEE_ASSET) {\n            return MIN_ETH_PER_FEE_ASSET;\n        }\n        if (newPrice > MAX_ETH_PER_FEE_ASSET) {\n            return MAX_ETH_PER_FEE_ASSET;\n        }\n        return newPrice;\n    }\n\n    function summedMinFee(ManaMinFeeComponents memory _components) internal pure returns (uint256) {\n        // Cap at uint128 max to ensure the fee can always be represented in the proposal header's\n        // feePerL2Gas field (uint128). Without this cap, extreme congestion or parameter combinations\n        // could produce fees that no valid header can represent, causing a liveness failure.\n        return\n            Math.min(_components.sequencerCost + _components.proverCost + _components.congestionCost, type(uint128).max);\n    }\n\n    function getStorage() internal pure returns (FeeStore storage storageStruct) {\n        bytes32 position = FEE_STORE_POSITION;\n        assembly {\n            storageStruct.slot := position\n        }\n    }\n\n    /**\n     * @notice  Clamps the addition of a signed integer to a uint256\n     *          Useful for running values, whose minimum value will be 0\n     *          but should not throw if going below.\n     * @param _a The base value\n     * @param _b The value to add\n     * @return The clamped value\n     */\n    function clampedAdd(uint256 _a, int256 _b) internal pure returns (uint256) {\n        if (_b >= 0) {\n            return _a + _b.toUint256();\n        }\n\n        uint256 sub = SignedMath.abs(_b);\n\n        if (_a > sub) {\n            return _a - sub;\n        }\n\n        return 0;\n    }\n\n    /**\n     * @notice An approximation of the exponential function: factor * e ** (numerator / denominator)\n     *\n     *         The function is the same as used in EIP-4844\n     *         https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md\n     *\n     *         Approximated using a taylor series.\n     *         For shorthand below, let `a = factor`, `x = numerator`, `d = denominator`\n     *\n     *         f(x) =  a\n     *              + (a * x) / d\n     *              + (a * x ** 2) / (2 * d ** 2)\n     *              + (a * x ** 3) / (6 * d ** 3)\n     *              + (a * x ** 4) / (24 * d ** 4)\n     *              + (a * x ** 5) / (120 * d ** 5)\n     *              + ...\n     *\n     *         For integer precision purposes, we will multiply by the denominator for intermediary steps and then\n     *         finally do a division by it.\n     *         The notation below might look slightly strange, but it is to try to convey the program flow below.\n     *\n     *         e(x) = (          a * d\n     *                 +         a * d * x / d\n     *                 +       ((a * d * x / d) * x) / (2 * d)\n     *                 +     ((((a * d * x / d) * x) / (2 * d)) * x) / (3 * d)\n     *                 +   ((((((a * d * x / d) * x) / (2 * d)) * x) / (3 * d)) * x) / (4 * d)\n     *                 + ((((((((a * d * x / d) * x) / (2 * d)) * x) / (3 * d)) * x) / (4 * d)) * x) / (5 * d)\n     *                 + ...\n     *                 ) / d\n     *\n     *         The notation might make it a bit of a pain to look at, but f(x) and e(x) are the same.\n     *         Gotta love integer math.\n     *\n     * @dev   Notice that as _numerator grows, the computation will quickly overflow.\n     *        As long as the `_denominator` is fairly small, it won't bring us back down to not overflow\n     *        For our purposes, this is acceptable, as if we have a fee that is so high that it would overflow and throw\n     *        then we would have other problems.\n     *\n     * @param _factor The base value\n     * @param _numerator The numerator\n     * @param _denominator The denominator\n     * @return The approximated value `_factor * e ** (_numerator / _denominator)`\n     */\n    function fakeExponential(uint256 _factor, uint256 _numerator, uint256 _denominator)\n        private\n        pure\n        returns (uint256)\n    {\n        uint256 i = 1;\n        uint256 output = 0;\n        uint256 numeratorAccumulator = _factor * _denominator;\n        while (numeratorAccumulator > 0) {\n            output += numeratorAccumulator;\n            numeratorAccumulator = (numeratorAccumulator * _numerator) / (_denominator * i);\n            i += 1;\n        }\n        return output / _denominator;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 357,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "FeeLib",
+        "similarity": 0.914,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
+        "commit": "9f8ff7e337e12bd798fff868524a14788099ed21",
+        "commitTimestamp": "2026-02-16T12:42:46Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/9f8ff7e337e12bd798fff868524a14788099ed21/l1-contracts/src/core/libraries/rollup/FeeLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified dead feeHeaders storage removal (PR 20423 commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 30,
+        "removed": 12,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 5,
+        "unchanged": 357,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 30,
+            "oldLines": 6,
+            "newStart": 30,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "        // Computes and ensures that limit is within sane bounds"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        computeManaLimit(_manaTarget);"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "" },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        // The rate-limit algebra in updateProvingCostPerMana assumes `current >= 2`; initializing",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        // below the floor would permanently freeze the proving-cost update path.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        uint256 provingCost = EthValue.unwrap(_provingCostPerMana);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "            provingCost >= MIN_PROVING_COST_PER_MANA,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "            Errors.FeeLib__ProvingCostBelowFloor(provingCost, MIN_PROVING_COST_PER_MANA)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        // The uint64 cap inside FeeConfigLib.compress is a storage-shape bound, not an economic",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        // bound. Enforce a separate initial ceiling so a deploy cannot strand the rollup at a value",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        // that takes years to drift back to normal operating ranges via the rate-limited updater.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "            provingCost <= MAX_INITIAL_PROVING_COST_PER_MANA,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            Errors.FeeLib__ProvingCostAboveCeiling(provingCost, MAX_INITIAL_PROVING_COST_PER_MANA)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 47, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 48,
+                "text": "        // Validate initial ETH per fee asset is within bounds"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 49,
+                "text": "        uint256 initialPrice = EthPerFeeAssetE12.unwrap(_initialEthPerFeeAsset);"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 50,
+                "text": "        require("
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 60,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 45, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 61,
+                "text": "        feeStore.l1GasOracleValues = L1GasOracleValues({"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 62,
+                "text": "            pre: L1FeeData({baseFee: 1 gwei, blobFee: 1}).compress(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib.getBlobBaseFee()}).compress(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib_1.getBlobBaseFee()}).compress(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 64,
+                "text": "            slotOfChange: LIFETIME.compress()"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 65,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 66, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 70,
+            "oldLines": 8,
+            "newStart": 85,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 85,
+                "text": "    function updateProvingCostPerMana(EthValue _provingCostPerMana) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 86,
+                "text": "        FeeStore storage feeStore = getStorage();"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 87,
+                "text": "        FeeConfig memory config = feeStore.config.decompress();"
+              },
+              { "type": "+", "newLine": 88, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        uint256 current = EthValue.unwrap(config.provingCostPerMana);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        uint256 newV = EthValue.unwrap(_provingCostPerMana);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 91, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "            newV >= MIN_PROVING_COST_PER_MANA, Errors.FeeLib__ProvingCostBelowFloor(newV, MIN_PROVING_COST_PER_MANA)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        uint256 nextAllowed = uint256(feeStore.provingCostLastUpdate) + PROVING_COST_UPDATE_INTERVAL;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            feeStore.provingCostLastUpdate == 0 || block.timestamp >= nextAllowed,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            Errors.FeeLib__ProvingCostCooldown(nextAllowed)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 101, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "            newV * PROVING_COST_STEP_DEN <= current * PROVING_COST_STEP_NUM",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "                && newV * PROVING_COST_STEP_NUM >= current * PROVING_COST_STEP_DEN,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            Errors.FeeLib__ProvingCostStepExceeded(current, newV)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 107, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 108,
+                "text": "        config.provingCostPerMana = _provingCostPerMana;"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 109,
+                "text": "        feeStore.config = config.compress();"
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        feeStore.provingCostLastUpdate = uint64(block.timestamp);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 75, "newLine": 111, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 112, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 113,
+                "text": "    function updateL1GasFeeOracle() internal {"
+              }
+            ]
+          },
+          {
+            "oldStart": 87,
+            "oldLines": 7,
+            "newStart": 123,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 87, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 124,
+                "text": "        feeStore.l1GasOracleValues = L1GasOracleValues({"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 125,
+                "text": "            pre: feeStore.l1GasOracleValues.post,"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib.getBlobBaseFee()}).compress(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            post: L1FeeData({baseFee: block.basefee, blobFee: BlobLib_1.getBlobBaseFee()}).compress(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 127,
+                "text": "            slotOfChange: (slot + LAG).compress()"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 128,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 93, "newLine": 129, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 104,
+            "oldLines": 11,
+            "newStart": 140,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 140,
+                "text": "            Errors.FeeLib__InvalidFeeAssetPriceModifier()"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 141,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 142,
+                "text": "        CompressedFeeHeader parentFeeHeader = STFLib.getFeeHeader(_checkpointNumber - 1);"
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        // Use Math.max to handle checkpoints from ignition where ethPerFeeAsset may be 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        uint256 parentEthPerFeeAsset = Math.max(parentFeeHeader.getEthPerFeeAsset(), MIN_ETH_PER_FEE_ASSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 143,
+                "text": "        return FeeHeader({"
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 144,
+                "text": "            excessMana: FeeLib.computeExcessMana(parentFeeHeader),"
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "            ethPerFeeAsset: FeeLib.computeNewEthPerFeeAsset(parentEthPerFeeAsset, _feeAssetPriceModifierBps),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "            ethPerFeeAsset: FeeLib.computeNewEthPerFeeAsset(parentFeeHeader.getEthPerFeeAsset(), _feeAssetPriceModifierBps),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 146,
+                "text": "            manaUsed: _manaUsed,"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 147,
+                "text": "            congestionCost: _congestionCost,"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 148,
+                "text": "            proverCost: _proverCost"
+              }
+            ]
+          },
+          {
+            "oldStart": 131,
+            "oldLines": 10,
+            "newStart": 165,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 131, "newLine": 165, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 166,
+                "text": "        uint256 manaTarget = feeStore.config.getManaTarget();"
+              },
+              { "type": " ", "oldLine": 133, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        if (manaTarget == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            return ManaMinFeeComponents({sequencerCost: 0, proverCost: 0, congestionCost: 0, congestionMultiplier: 0});",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 137, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 168,
+                "text": "        EthValue sequencerCostPerMana;"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 169,
+                "text": "        EthValue proverCostPerMana;"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 170,
+                "text": "        EthValue total;"
+              }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 11,
+            "newStart": 223,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 223,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 194, "newLine": 224, "text": "    }" },
+              { "type": " ", "oldLine": 195, "newLine": 225, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    function isTxsEnabled() internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "        // If the target is 0, the limit is 0. And no transactions can enter",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "        return getManaTarget() > 0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 200, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 226,
+                "text": "    function getManaTarget() internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 227,
+                "text": "        return getStorage().config.getManaTarget();"
+              },
+              { "type": " ", "oldLine": 203, "newLine": 228, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 9,
+            "newStart": 237,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 212, "newLine": 237, "text": "    }" },
+              { "type": " ", "oldLine": 213, "newLine": 238, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 239,
+                "text": "    function getEthPerFeeAssetAtCheckpoint(uint256 _checkpointNumber) internal view returns (EthPerFeeAssetE12) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "        uint256 value = STFLib.getFeeHeader(_checkpointNumber).getEthPerFeeAsset();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "        // Ensure we never return 0 (e.g., from checkpoints proposed during ignition with manaTarget = 0)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 217,
+                "text": "        return EthPerFeeAssetE12.wrap(Math.max(value, MIN_ETH_PER_FEE_ASSET));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "        return EthPerFeeAssetE12.wrap(STFLib.getFeeHeader(_checkpointNumber).getEthPerFeeAsset());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 218, "newLine": 241, "text": "    }" },
+              { "type": " ", "oldLine": 219, "newLine": 242, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 243,
+                "text": "    function computeExcessMana(CompressedFeeHeader _feeHeader) internal view returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 233,
+            "oldLines": 6,
+            "newStart": 256,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 233, "newLine": 256, "text": "    }" },
+              { "type": " ", "oldLine": 234, "newLine": 257, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 258,
+                "text": "    function computeManaLimit(uint256 _manaTarget) internal pure returns (uint256) {"
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "        require(_manaTarget > 0, Errors.FeeLib__InvalidManaTarget(1, _manaTarget));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 260,
+                "text": "        uint256 manaLimit = _manaTarget * 2;"
+              },
+              { "type": " ", "oldLine": 237, "newLine": 261, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 262,
+                "text": "        // Ensure that the maximum spent mana can fit in the fee header"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

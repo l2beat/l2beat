@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bf46daaade30077d08eae031a2e4020661c52e97d1c33142e3be7e348431ac16",
+  "name": "IERC20MetadataUpgradeable",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface IERC20MetadataUpgradeable is IERC20Upgradeable {\n    /**\n     * @dev Returns the name of the token.\n     */\n    function name() external view returns (string memory);\n\n    /**\n     * @dev Returns the symbol of the token.\n     */\n    function symbol() external view returns (string memory);\n\n    /**\n     * @dev Returns the decimals places of the token.\n     */\n    function decimals() external view returns (uint8);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

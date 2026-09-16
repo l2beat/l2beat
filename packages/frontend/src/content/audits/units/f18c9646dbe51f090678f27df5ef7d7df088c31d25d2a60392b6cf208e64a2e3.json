@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f18c9646dbe51f090678f27df5ef7d7df088c31d25d2a60392b6cf208e64a2e3",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"rollup_checkpoint_root_single_block_simulated\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nrollup_lib = { path = \"../rollup-lib\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

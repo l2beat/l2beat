@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "82480d1165bca931db019991198c4b67e204f742559c8129563235287f41cefd",
+  "name": "avm_accumulated_data.nr",
+  "kind": "program",
+  "lines": 70,
+  "source": "use crate::{\n    abis::{public_data_write::PublicDataWrite, public_logs::PublicLogs},\n    constants::{\n        MAX_L2_TO_L1_MSGS_PER_TX, MAX_NOTE_HASHES_PER_TX, MAX_NULLIFIERS_PER_TX,\n        MAX_TOTAL_PUBLIC_DATA_UPDATE_REQUESTS_PER_TX,\n    },\n    messaging::l2_to_l1_message::L2ToL1Message,\n    side_effect::Scoped,\n    traits::{Deserialize, Empty, Serialize},\n    utils::arrays::array_length,\n};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct AvmAccumulatedData {\n    // The note hashes from private combining with those made in the AVM execution.\n    pub note_hashes: [Field; MAX_NOTE_HASHES_PER_TX],\n    // The nullifiers from private combining with those made in the AVM execution.\n    pub nullifiers: [Field; MAX_NULLIFIERS_PER_TX],\n    // The L2 to L1 messages from private combining with those made in the AVM execution.\n    pub l2_to_l1_msgs: [Scoped<L2ToL1Message>; MAX_L2_TO_L1_MSGS_PER_TX],\n    // The public logs emitted from the AVM execution.\n    pub public_logs: PublicLogs,\n    // The public data writes made in the AVM execution.\n    pub public_data_writes: [PublicDataWrite; MAX_TOTAL_PUBLIC_DATA_UPDATE_REQUESTS_PER_TX],\n}\n\nimpl Empty for AvmAccumulatedData {\n    fn empty() -> Self {\n        AvmAccumulatedData {\n            note_hashes: [0; MAX_NOTE_HASHES_PER_TX],\n            nullifiers: [0; MAX_NULLIFIERS_PER_TX],\n            l2_to_l1_msgs: [Scoped::empty(); MAX_L2_TO_L1_MSGS_PER_TX],\n            public_logs: PublicLogs::empty(),\n            public_data_writes: [\n                PublicDataWrite::empty(); MAX_TOTAL_PUBLIC_DATA_UPDATE_REQUESTS_PER_TX\n            ],\n        }\n    }\n}\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct AvmAccumulatedDataArrayLengths {\n    pub note_hashes: u32,\n    pub nullifiers: u32,\n    pub l2_to_l1_msgs: u32,\n    pub public_data_writes: u32,\n}\n\nimpl AvmAccumulatedDataArrayLengths {\n    pub fn new(data: AvmAccumulatedData) -> Self {\n        AvmAccumulatedDataArrayLengths {\n            note_hashes: array_length(data.note_hashes),\n            nullifiers: array_length(data.nullifiers),\n            l2_to_l1_msgs: array_length(data.l2_to_l1_msgs),\n            public_data_writes: array_length(data.public_data_writes),\n        }\n    }\n}\n\nimpl Empty for AvmAccumulatedDataArrayLengths {\n    fn empty() -> Self {\n        AvmAccumulatedDataArrayLengths {\n            note_hashes: 0,\n            nullifiers: 0,\n            l2_to_l1_msgs: 0,\n            public_data_writes: 0,\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

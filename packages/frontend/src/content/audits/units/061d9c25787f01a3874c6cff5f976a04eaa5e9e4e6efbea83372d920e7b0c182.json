@@ -1601,6 +1601,538 @@
         ]
       },
       "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 191,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 0.892,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 10,
+        "removed": 6,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 20,
+        "unchanged": 191,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 22,
+            "newStart": 15,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "     *  - an address where a contract will be created"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "     *  - an address where a contract lived, but was destroyed"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "     * ===="
+              },
+              { "type": "-", "oldLine": 18, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * [IMPORTANT]",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * ====",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * You shouldn't rely on `isContract` to protect against flash loan attacks!",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * Preventing calls from contracts is highly discouraged. It breaks composability, breaks support for smart wallets",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * like Gnosis Safe, and does not provide security since it can be circumvented by calling from a contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * constructor.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * ====",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 27, "newLine": 18, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 19,
+                "text": "    function isContract(address account) internal view returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        // This method relies on extcodesize/address.code.length, which returns 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        // for contracts in construction, since the code is only stored at the end",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        // of the constructor execution.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        // This method relies on extcodesize, which returns 0 for contracts in",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        // construction, since the code is only stored at the end of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        // constructor execution.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        return account.code.length > 0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        uint256 size;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "            size := extcodesize(account)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        return size > 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 31, "text": "" },
+              { "type": " ", "oldLine": 36, "newLine": 32, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 13,
+            "newStart": 48,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 48,
+                "text": "    function sendValue(address payable recipient, uint256 amount) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 49,
+                "text": "        require(address(this).balance >= amount, \"Address: insufficient balance\");"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 50, "text": "" },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls, avoid-call-value",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 52,
+                "text": "        (bool success,) = recipient.call{value: amount}(\"\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 53,
+                "text": "        require(success, \"Address: unable to send value, recipient may have reverted\");"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 54, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 55, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 56, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 57,
+                "text": "     * @dev Performs a Solidity function call using a low level `call`. A"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * plain `call` is an unsafe replacement for a function call: use this",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * plain`call` is an unsafe replacement for a function call: use this",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 59,
+                "text": "     * function instead."
+              },
+              { "type": " ", "oldLine": 63, "newLine": 60, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 61,
+                "text": "     * If `target` reverts with a revert reason, it is bubbled up by this"
+              }
+            ]
+          },
+          {
+            "oldStart": 119,
+            "oldLines": 8,
+            "newStart": 116,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 116,
+                "text": "        require(address(this).balance >= value, \"Address: insufficient balance for call\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 117,
+                "text": "        require(isContract(target), \"Address: call to non-contract\");"
+              },
+              { "type": " ", "oldLine": 121, "newLine": 118, "text": "" },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "        (bool success, bytes memory returndata) = target.call{value: value}(data);"
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        return verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        return _verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 122, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 123, "text": "" },
+              { "type": " ", "oldLine": 126, "newLine": 124, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 146,
+            "oldLines": 8,
+            "newStart": 144,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 146, "newLine": 144, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 145,
+                "text": "        require(isContract(target), \"Address: static call to non-contract\");"
+              },
+              { "type": " ", "oldLine": 148, "newLine": 146, "text": "" },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 148,
+                "text": "        (bool success, bytes memory returndata) = target.staticcall(data);"
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "        return verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "        return _verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 151, "newLine": 150, "text": "    }" },
+              { "type": " ", "oldLine": 152, "newLine": 151, "text": "" },
+              { "type": " ", "oldLine": 153, "newLine": 152, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 172,
+            "oldLines": 18,
+            "newStart": 171,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 172, "newLine": 171, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 172,
+                "text": "        require(isContract(target), \"Address: delegate call to non-contract\");"
+              },
+              { "type": " ", "oldLine": 174, "newLine": 173, "text": "" },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 175,
+                "text": "        (bool success, bytes memory returndata) = target.delegatecall(data);"
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "        return verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "        return _verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 177, "newLine": 177, "text": "    }" },
+              { "type": " ", "oldLine": 178, "newLine": 178, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "     * @dev Tool to verifies that a low level call was successful, and revert if it wasn't, either by bubbling the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "     * revert reason using the provided one.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "     * _Available since v4.3._",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    function verifyCallResult(bool success, bytes memory returndata, string memory errorMessage)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "    function _verifyCallResult(bool success, bytes memory returndata, string memory errorMessage)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 181,
+                "text": "        pure"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 182,
+                "text": "        returns (bytes memory)"
+              },
+              { "type": " ", "oldLine": 189, "newLine": 183, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 193,
+            "oldLines": 7,
+            "newStart": 187,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 187,
+                "text": "            // Look for revert reason and bubble it up if present"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 188,
+                "text": "            if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 189,
+                "text": "                // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 190, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "                // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 192,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 193,
+                "text": "                    let returndata_size := mload(returndata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 194,
+                "text": "                    revert(add(32, returndata), returndata_size)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

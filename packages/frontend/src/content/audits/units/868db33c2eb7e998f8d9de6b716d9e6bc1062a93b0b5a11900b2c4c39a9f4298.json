@@ -1,0 +1,1270 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "868db33c2eb7e998f8d9de6b716d9e6bc1062a93b0b5a11900b2c4c39a9f4298",
+  "name": "RLPWriter",
+  "kind": "library",
+  "lines": 207,
+  "source": "library RLPWriter {\n    /**\n     * @notice RLP encodes a byte string.\n     *\n     * @param _in The byte string to encode.\n     *\n     * @return The RLP encoded string in bytes.\n     */\n    function writeBytes(bytes memory _in) internal pure returns (bytes memory) {\n        bytes memory encoded;\n\n        if (_in.length == 1 && uint8(_in[0]) < 128) {\n            encoded = _in;\n        } else {\n            encoded = abi.encodePacked(_writeLength(_in.length, 128), _in);\n        }\n\n        return encoded;\n    }\n\n    /**\n     * @notice RLP encodes a list of RLP encoded byte byte strings.\n     *\n     * @param _in The list of RLP encoded byte strings.\n     *\n     * @return The RLP encoded list of items in bytes.\n     */\n    function writeList(bytes[] memory _in) internal pure returns (bytes memory) {\n        bytes memory list = _flatten(_in);\n        return abi.encodePacked(_writeLength(list.length, 192), list);\n    }\n\n    /**\n     * @notice RLP encodes a string.\n     *\n     * @param _in The string to encode.\n     *\n     * @return The RLP encoded string in bytes.\n     */\n    function writeString(string memory _in) internal pure returns (bytes memory) {\n        return writeBytes(bytes(_in));\n    }\n\n    /**\n     * @notice RLP encodes an address.\n     *\n     * @param _in The address to encode.\n     *\n     * @return The RLP encoded address in bytes.\n     */\n    function writeAddress(address _in) internal pure returns (bytes memory) {\n        return writeBytes(abi.encodePacked(_in));\n    }\n\n    /**\n     * @notice RLP encodes a uint.\n     *\n     * @param _in The uint256 to encode.\n     *\n     * @return The RLP encoded uint256 in bytes.\n     */\n    function writeUint(uint256 _in) internal pure returns (bytes memory) {\n        return writeBytes(_toBinary(_in));\n    }\n\n    /**\n     * @notice RLP encodes a bool.\n     *\n     * @param _in The bool to encode.\n     *\n     * @return The RLP encoded bool in bytes.\n     */\n    function writeBool(bool _in) internal pure returns (bytes memory) {\n        bytes memory encoded = new bytes(1);\n        encoded[0] = (_in ? bytes1(0x01) : bytes1(0x80));\n        return encoded;\n    }\n\n    /**\n     * @notice Encode the first byte and then the `len` in binary form if `length` is more than 55.\n     *\n     * @param _len    The length of the string or the payload.\n     * @param _offset 128 if item is string, 192 if item is list.\n     *\n     * @return RLP encoded bytes.\n     */\n    function _writeLength(uint256 _len, uint256 _offset) private pure returns (bytes memory) {\n        bytes memory encoded;\n\n        if (_len < 56) {\n            encoded = new bytes(1);\n            encoded[0] = bytes1(uint8(_len) + uint8(_offset));\n        } else {\n            uint256 lenLen;\n            uint256 i = 1;\n            while (_len / i != 0) {\n                lenLen++;\n                i *= 256;\n            }\n\n            encoded = new bytes(lenLen + 1);\n            encoded[0] = bytes1(uint8(lenLen) + uint8(_offset) + 55);\n            for (i = 1; i <= lenLen; i++) {\n                encoded[i] = bytes1(uint8((_len / (256 ** (lenLen - i))) % 256));\n            }\n        }\n\n        return encoded;\n    }\n\n    /**\n     * @notice Encode integer in big endian binary form with no leading zeroes.\n     *\n     * @param _x The integer to encode.\n     *\n     * @return RLP encoded bytes.\n     */\n    function _toBinary(uint256 _x) private pure returns (bytes memory) {\n        bytes memory b = abi.encodePacked(_x);\n\n        uint256 i = 0;\n        for (; i < 32; i++) {\n            if (b[i] != 0) {\n                break;\n            }\n        }\n\n        bytes memory res = new bytes(32 - i);\n        for (uint256 j = 0; j < res.length; j++) {\n            res[j] = b[i++];\n        }\n\n        return res;\n    }\n\n    /**\n     * @custom:attribution https://github.com/Arachnid/solidity-stringutils\n     * @notice Copies a piece of memory to another location.\n     *\n     * @param _dest Destination location.\n     * @param _src  Source location.\n     * @param _len  Length of memory to copy.\n     */\n    function _memcpy(uint256 _dest, uint256 _src, uint256 _len) private pure {\n        uint256 dest = _dest;\n        uint256 src = _src;\n        uint256 len = _len;\n\n        for (; len >= 32; len -= 32) {\n            assembly {\n                mstore(dest, mload(src))\n            }\n            dest += 32;\n            src += 32;\n        }\n\n        uint256 mask;\n        unchecked {\n            mask = 256 ** (32 - len) - 1;\n        }\n        assembly {\n            let srcpart := and(mload(src), not(mask))\n            let destpart := and(mload(dest), mask)\n            mstore(dest, or(destpart, srcpart))\n        }\n    }\n\n    /**\n     * @custom:attribution https://github.com/sammayo/solidity-rlp-encoder\n     * @notice Flattens a list of byte strings into one byte string.\n     *\n     * @param _list List of byte strings to flatten.\n     *\n     * @return The flattened byte string.\n     */\n    function _flatten(bytes[] memory _list) private pure returns (bytes memory) {\n        if (_list.length == 0) {\n            return new bytes(0);\n        }\n\n        uint256 len;\n        uint256 i = 0;\n        for (; i < _list.length; i++) {\n            len += _list[i].length;\n        }\n\n        bytes memory flattened = new bytes(len);\n        uint256 flattenedPtr;\n        assembly {\n            flattenedPtr := add(flattened, 0x20)\n        }\n\n        for (i = 0; i < _list.length; i++) {\n            bytes memory item = _list[i];\n\n            uint256 listPtr;\n            assembly {\n                listPtr := add(item, 0x20)\n            }\n\n            _memcpy(flattenedPtr, listPtr, item.length);\n            flattenedPtr += _list[i].length;\n        }\n\n        return flattened;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 172,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "RLPWriter",
+        "similarity": 0.701,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 35,
+        "removed": 28,
+        "ignoredAdded": 79,
+        "ignoredRemoved": 34,
+        "unchanged": 172,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 60,
+            "newStart": 1,
+            "newLines": 95,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library RLPWriter {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice RLP encodes a byte string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param _in The byte string to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @return out_ The RLP encoded string in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    function writeBytes(bytes memory _in) internal pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice RLP encodes a byte string.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @param _in The byte string to encode.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @return The RLP encoded string in bytes.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    function writeBytes(bytes memory _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        bytes memory encoded;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 11, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 12,
+                "text": "        if (_in.length == 1 && uint8(_in[0]) < 128) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "            out_ = _in;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "            encoded = _in;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 14,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "            out_ = abi.encodePacked(_writeLength(_in.length, 128), _in);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "            encoded = abi.encodePacked(_writeLength(_in.length, 128), _in);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 16,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        return encoded;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 19, "text": "    }" },
+              { "type": " ", "oldLine": 12, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice RLP encodes a list of RLP encoded byte byte strings.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @param _in The list of RLP encoded byte strings.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @return list_ The RLP encoded list of items in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    function writeList(bytes[] memory _in) internal pure returns (bytes memory list_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        list_ = _flatten(_in);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        list_ = abi.encodePacked(_writeLength(list_.length, 192), list_);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @notice RLP encodes a list of RLP encoded byte byte strings.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * @param _in The list of RLP encoded byte strings.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 25, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * @return The RLP encoded list of items in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    function writeList(bytes[] memory _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        bytes memory list = _flatten(_in);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        return abi.encodePacked(_writeLength(list.length, 192), list);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 31, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @notice RLP encodes a string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @param _in The string to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @return out_ The RLP encoded string in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    function writeString(string memory _in) internal pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        out_ = writeBytes(bytes(_in));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * @notice RLP encodes a string.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * @param _in The string to encode.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * @return The RLP encoded string in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    function writeString(string memory _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        return writeBytes(bytes(_in));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice RLP encodes an address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param _in The address to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @return out_ The RLP encoded address in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function writeAddress(address _in) internal pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        out_ = writeBytes(abi.encodePacked(_in));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "     * @notice RLP encodes an address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 46, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @param _in The address to encode.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 48, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * @return The RLP encoded address in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function writeAddress(address _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        return writeBytes(abi.encodePacked(_in));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 33, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @notice RLP encodes a uint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @param _in The uint256 to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @return out_ The RLP encoded uint256 in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function writeUint(uint256 _in) internal pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        out_ = writeBytes(_toBinary(_in));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * @notice RLP encodes a uint.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 57, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @param _in The uint256 to encode.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 59, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @return The RLP encoded uint256 in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    function writeUint(uint256 _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        return writeBytes(_toBinary(_in));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 65, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @notice RLP encodes a bool.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @param _in The bool to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @return out_ The RLP encoded bool in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    function writeBool(bool _in) internal pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        out_ = new bytes(1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        out_[0] = (_in ? bytes1(0x01) : bytes1(0x80));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @notice RLP encodes a bool.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 68, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     * @param _in The bool to encode.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 70, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     * @return The RLP encoded bool in bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function writeBool(bool _in) internal pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        bytes memory encoded = new bytes(1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        encoded[0] = (_in ? bytes1(0x01) : bytes1(0x80));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        return encoded;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 77, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 78, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @notice Encode the first byte and then the `len` in binary form if `length` is more than 55.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @param _len    The length of the string or the payload.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @param _offset 128 if item is string, 192 if item is list.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @return out_ RLP encoded bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function _writeLength(uint256 _len, uint256 _offset) private pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * @notice Encode the first byte and then the `len` in binary form if `length` is more than 55.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @param _len    The length of the string or the payload.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     * @param _offset 128 if item is string, 192 if item is list.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 84, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "     * @return RLP encoded bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    function _writeLength(uint256 _len, uint256 _offset) private pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        bytes memory encoded;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 89, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 90,
+                "text": "        if (_len < 56) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            out_ = new bytes(1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            out_[0] = bytes1(uint8(_len) + uint8(_offset));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "            encoded = new bytes(1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            encoded[0] = bytes1(uint8(_len) + uint8(_offset));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 93,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 94,
+                "text": "            uint256 lenLen;"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 95,
+                "text": "            uint256 i = 1;"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 18,
+            "newStart": 98,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 98,
+                "text": "                i *= 256;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 99,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 100, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "            out_ = new bytes(lenLen + 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "            out_[0] = bytes1(uint8(lenLen) + uint8(_offset) + 55);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            encoded = new bytes(lenLen + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "            encoded[0] = bytes1(uint8(lenLen) + uint8(_offset) + 55);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 103,
+                "text": "            for (i = 1; i <= lenLen; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                out_[i] = bytes1(uint8((_len / (256 ** (lenLen - i))) % 256));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "                encoded[i] = bytes1(uint8((_len / (256 ** (lenLen - i))) % 256));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 105,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 106,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 107, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "        return encoded;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 72, "newLine": 109, "text": "    }" },
+              { "type": " ", "oldLine": 73, "newLine": 110, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @notice Encode integer in big endian binary form with no leading zeroes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// @param _x The integer to encode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    /// @return out_ RLP encoded bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    function _toBinary(uint256 _x) private pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * @notice Encode integer in big endian binary form with no leading zeroes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * @param _x The integer to encode.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * @return RLP encoded bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    function _toBinary(uint256 _x) private pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 119,
+                "text": "        bytes memory b = abi.encodePacked(_x);"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 120, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 121,
+                "text": "        uint256 i = 0;"
+              }
+            ]
+          },
+          {
+            "oldStart": 84,
+            "oldLines": 17,
+            "newStart": 125,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 125,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 126,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 86, "newLine": 127, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        out_ = new bytes(32 - i);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        for (uint256 j = 0; j < out_.length; j++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            out_[j] = b[i++];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "        bytes memory res = new bytes(32 - i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        for (uint256 j = 0; j < res.length; j++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "            res[j] = b[i++];",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 131,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 132, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        return res;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 91, "newLine": 134, "text": "    }" },
+              { "type": " ", "oldLine": 92, "newLine": 135, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /// @custom:attribution https://github.com/Arachnid/solidity-stringutils",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @notice Copies a piece of memory to another location.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @param _dest Destination location.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    /// @param _src  Source location.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    /// @param _len  Length of memory to copy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "     * @custom:attribution https://github.com/Arachnid/solidity-stringutils",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "     * @notice Copies a piece of memory to another location.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "     * @param _dest Destination location.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "     * @param _src  Source location.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "     * @param _len  Length of memory to copy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 144,
+                "text": "    function _memcpy(uint256 _dest, uint256 _src, uint256 _len) private pure {"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 145,
+                "text": "        uint256 dest = _dest;"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 146,
+                "text": "        uint256 src = _src;"
+              }
+            ]
+          },
+          {
+            "oldStart": 119,
+            "oldLines": 11,
+            "newStart": 165,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 165,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 120, "newLine": 166, "text": "    }" },
+              { "type": " ", "oldLine": 121, "newLine": 167, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /// @custom:attribution https://github.com/sammayo/solidity-rlp-encoder",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /// @notice Flattens a list of byte strings into one byte string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// @param _list List of byte strings to flatten.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    /// @return out_ The flattened byte string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    function _flatten(bytes[] memory _list) private pure returns (bytes memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "     * @custom:attribution https://github.com/sammayo/solidity-rlp-encoder",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "     * @notice Flattens a list of byte strings into one byte string.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "     * @param _list List of byte strings to flatten.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "     * @return The flattened byte string.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "    function _flatten(bytes[] memory _list) private pure returns (bytes memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 177,
+                "text": "        if (_list.length == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 178,
+                "text": "            return new bytes(0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 179,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 134,
+            "oldLines": 10,
+            "newStart": 184,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 184,
+                "text": "            len += _list[i].length;"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 185,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 186, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "        out_ = new bytes(len);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "        bytes memory flattened = new bytes(len);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 188,
+                "text": "        uint256 flattenedPtr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 189,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "            flattenedPtr := add(out_, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "            flattenedPtr := add(flattened, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 191,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 142, "newLine": 192, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 193,
+                "text": "        for (i = 0; i < _list.length; i++) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 151,
+            "oldLines": 5,
+            "newStart": 201,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 201,
+                "text": "            _memcpy(flattenedPtr, listPtr, item.length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 202,
+                "text": "            flattenedPtr += _list[i].length;"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 203,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 204, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        return flattened;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 154, "newLine": 206, "text": "    }" },
+              { "type": " ", "oldLine": 155, "newLine": 207, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a87612371549c603e2a99e90f9798b27fc3380f164e1cb0e9725fb4782a56fc5",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 30,
+  "source": "use private_kernel_lib::{private_kernel_inner_n, PrivateKernelInnerNCircuitPrivateInputs};\nuse types::{\n    abis::{\n        private_circuit_public_inputs::PrivateCircuitPublicInputs,\n        private_kernel::private_call_data::PrivateCallDataWithoutPublicInputs,\n        private_kernel_data::PrivateKernelDataWithoutPublicInputs,\n    },\n    PrivateKernelCircuitPublicInputs,\n};\n\nfn main(\n    previous_kernel: PrivateKernelDataWithoutPublicInputs,\n    previous_kernel_public_inputs: call_data(0) PrivateKernelCircuitPublicInputs,\n    private_call_0: PrivateCallDataWithoutPublicInputs,\n    private_call_1: PrivateCallDataWithoutPublicInputs,\n    private_call_2: PrivateCallDataWithoutPublicInputs,\n    app_public_inputs_0: call_data(1) PrivateCircuitPublicInputs,\n    app_public_inputs_1: call_data(2) PrivateCircuitPublicInputs,\n    app_public_inputs_2: call_data(3) PrivateCircuitPublicInputs,\n) -> return_data PrivateKernelCircuitPublicInputs {\n    let private_inputs = PrivateKernelInnerNCircuitPrivateInputs {\n        previous_kernel: previous_kernel.to_private_kernel_data(previous_kernel_public_inputs),\n        private_calls: [\n            private_call_0.to_private_call_data(app_public_inputs_0),\n            private_call_1.to_private_call_data(app_public_inputs_1),\n            private_call_2.to_private_call_data(app_public_inputs_2),\n        ],\n    };\n    private_kernel_inner_n::execute::<3>(private_inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

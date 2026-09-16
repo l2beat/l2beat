@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "080945bcc12553702d16bc42158498b480b0426b4f7d0ebea6b267a6630fc684",
+  "name": "BaseFeeVault",
+  "kind": "contract",
+  "lines": 8,
+  "source": "contract BaseFeeVault is FeeVault, Semver {\n    /**\n     * @custom:semver 1.0.0\n     *\n     * @param _recipient Address that will receive the accumulated fees.\n     */\n    constructor(address _recipient) FeeVault(_recipient, 10 ether) Semver(1, 0, 0) {}\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 8,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "BaseFeeVault",
+        "similarity": 1,
+        "reportId": "optimism/sherlock-bedrock-2023-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/L2/BaseFeeVault.sol",
+        "commit": "3f4b3c328153a8aa03611158b6984d624b17c1d9",
+        "commitTimestamp": "2023-01-12T22:02:10Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/3f4b3c328153a8aa03611158b6984d624b17c1d9/packages/contracts-bedrock/contracts/L2/BaseFeeVault.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope directory (L2 predeploys); no High findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

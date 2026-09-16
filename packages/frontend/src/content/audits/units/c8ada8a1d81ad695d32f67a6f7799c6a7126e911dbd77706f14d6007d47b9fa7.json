@@ -1,0 +1,4234 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c8ada8a1d81ad695d32f67a6f7799c6a7126e911dbd77706f14d6007d47b9fa7",
+  "name": "BridgeManager",
+  "kind": "abstract",
+  "lines": 460,
+  "source": "abstract contract BridgeManager is IBridgeManager, BridgeManagerQuorum, BridgeManagerCallbackRegister {\n    using AddressArrayUtils for address[];\n\n    struct BridgeManagerStorage {\n        /// @notice List of the governors.\n        /// @dev We do not use EnumerableSet here to maintain identical order of `governors` and `operators`. If `.contains` is needed, use the corresponding weight mapping.\n        address[] _governors;\n        address[] _operators;\n        /// @dev Mapping from address to the governor weight\n        mapping(address governor => uint96 weight) _governorWeight;\n        /// @dev Mapping from address to the operator weight. This must always be identical `_governorWeight`.\n        mapping(address operator => uint96 weight) _operatorWeight;\n        /// @dev Total weight of all governors / operators.\n        uint256 _totalWeight;\n        /// @dev The minimum number of governors that must exist in the contract, to avoid the contract become non-accessible.\n        uint256 _minRequiredGovernor;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"ronin.storage.BridgeManagerStorageLocation\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant $$_BridgeManagerStorageLocation =\n        0xc648703095712c0419b6431ae642c061f0a105ac2d7c3d9604061ef4ebc38300;\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    bytes32 public DOMAIN_SEPARATOR;\n\n    modifier onlyGovernor() virtual {\n        _requireGovernor(msg.sender);\n        _;\n    }\n\n    constructor() {\n        _disableInitializers();\n    }\n\n    function __BridgeManager_init(\n        uint256 num,\n        uint256 denom,\n        uint256 roninChainId,\n        address bridgeContract,\n        address[] memory callbackRegisters,\n        address[] memory bridgeOperators,\n        address[] memory governors,\n        uint96[] memory voteWeights\n    ) internal onlyInitializing {\n        __BridgeManagerQuorum_init_unchained(num, denom);\n        __BridgeManagerCallbackRegister_init_unchained(callbackRegisters);\n        __BridgeManager_init_unchained(roninChainId, bridgeContract, bridgeOperators, governors, voteWeights);\n    }\n\n    function __BridgeManager_init_unchained(\n        uint256 roninChainId,\n        address bridgeContract,\n        address[] memory bridgeOperators,\n        address[] memory governors,\n        uint96[] memory voteWeights\n    ) internal onlyInitializing {\n        _setContract(ContractType.BRIDGE, bridgeContract);\n\n        DOMAIN_SEPARATOR = keccak256(\n            abi.encode(\n                keccak256(\"EIP712Domain(string name,string version,bytes32 salt)\"),\n                keccak256(\"BridgeManager\"), // name hash\n                keccak256(\"3\"), // version hash\n                keccak256(abi.encode(\"BRIDGE_MANAGER\", roninChainId)) // salt\n            )\n        );\n\n        _addBridgeOperators(voteWeights, governors, bridgeOperators);\n        _setMinRequiredGovernor(3);\n    }\n\n    function _getBridgeManagerStorage() private pure returns (BridgeManagerStorage storage $) {\n        assembly {\n            $.slot := $$_BridgeManagerStorageLocation\n        }\n    }\n\n    // ===================== CONFIG ========================\n\n    /**\n     * @inheritdoc IHasContracts\n     */\n    function setContract(ContractType contractType, address addr) external override onlyProxyAdmin {\n        _requireHasCode(addr);\n        _setContract(contractType, addr);\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function setMinRequiredGovernor(uint256 min) external override onlyProxyAdmin {\n        _setMinRequiredGovernor(min);\n    }\n\n    function _setMinRequiredGovernor(uint256 min) internal {\n        if (min < 3) {\n            revert ErrInvalidInput();\n        }\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n        $._minRequiredGovernor = min;\n        emit MinRequiredGovernorUpdated(min);\n    }\n\n    /**\n     * @dev Internal function to require that the caller has governor role access.\n     */\n    function _requireGovernor(address addr) internal view {\n        if (_getGovernorWeight(addr) == 0) {\n            revert ErrUnauthorized(msg.sig, RoleAccess.GOVERNOR);\n        }\n    }\n\n    // ===================== WEIGHTS METHOD ========================\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getTotalWeight() public view returns (uint256) {\n        return _totalWeight();\n    }\n\n    function _totalWeight() internal view override returns (uint256) {\n        return _getBridgeManagerStorage()._totalWeight;\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getGovernorWeights(address[] calldata governors) external view returns (uint96[] memory weights) {\n        weights = _getGovernorWeights(governors);\n    }\n\n    /**\n     * @dev Internal function to get the vote weights of a given array of governors.\n     */\n    function _getGovernorWeights(address[] memory governors) internal view returns (uint96[] memory weights) {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n        weights = new uint96[](governors.length);\n\n        for (uint256 i; i < governors.length; i++) {\n            weights[i] = $._governorWeight[governors[i]];\n        }\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getGovernorWeight(address governor) external view returns (uint96 weight) {\n        weight = _getGovernorWeight(governor);\n    }\n\n    /**\n     * @dev Internal function to retrieve the vote weight of a specific governor.\n     */\n    function _getGovernorWeight(address governor) internal view returns (uint96) {\n        return _getBridgeManagerStorage()._governorWeight[governor];\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function sumGovernorsWeight(address[] calldata governors)\n        external\n        view\n        nonDuplicate(governors)\n        returns (uint256 sum)\n    {\n        sum = _sumGovernorsWeight(governors);\n    }\n\n    /**\n     * @dev Internal function to calculate the sum of vote weights for a given array of governors.\n     * @param governors The non-duplicated input.\n     */\n    function _sumGovernorsWeight(address[] memory governors)\n        internal\n        view\n        nonDuplicate(governors)\n        returns (uint256 sum)\n    {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        for (uint256 i; i < governors.length; i++) {\n            sum += $._governorWeight[governors[i]];\n        }\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getBridgeOperatorWeight(address bridgeOperator) external view returns (uint96 weight) {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        return $._operatorWeight[bridgeOperator];\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function minimumVoteWeight() public view virtual returns (uint256) {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        (uint256 numerator, uint256 denominator) = getThreshold();\n        return (numerator * $._totalWeight + denominator - 1) / denominator;\n    }\n\n    // ===================== MANAGER CRUD ========================\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function addBridgeOperators(\n        uint96[] calldata voteWeights,\n        address[] calldata governors,\n        address[] calldata bridgeOperators\n    ) external onlyProxyAdmin {\n        _addBridgeOperators(voteWeights, governors, bridgeOperators);\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function removeBridgeOperators(address[] calldata bridgeOperators) external onlyProxyAdmin {\n        _removeBridgeOperators(bridgeOperators);\n    }\n\n    /**\n     * @dev Internal function to add bridge operators.\n     *\n     * This function adds the specified `bridgeOperators` to the bridge operator set and establishes the associated mappings.\n     *\n     * Requirements:\n     * - The caller must have the necessary permission to add bridge operators.\n     * - The lengths of `voteWeights`, `governors`, and `bridgeOperators` arrays must be equal.\n     *\n     * @return addeds An array of boolean values indicating whether each bridge operator was successfully added.\n     */\n    function _addBridgeOperators(\n        uint96[] memory voteWeights,\n        address[] memory newGovernors,\n        address[] memory newOperators\n    ) internal nonDuplicate(newGovernors.extend(newOperators)) returns (bool[] memory addeds) {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        uint256 length = newOperators.length;\n        if (!(length == voteWeights.length && length == newGovernors.length)) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n        addeds = new bool[](length);\n\n        // simply skip add operations if inputs are empty.\n        if (length == 0) {\n            return addeds;\n        }\n\n        address iGovernor;\n        address iOperator;\n        uint96 iVoteWeight;\n        uint256 accumulatedWeight;\n\n        for (uint256 i; i < length; i++) {\n            iGovernor = newGovernors[i];\n            iOperator = newOperators[i];\n            iVoteWeight = voteWeights[i];\n\n            // Check non-zero inputs\n            _requireNonZeroAddress(iGovernor);\n            _requireNonZeroAddress(iOperator);\n            if (iVoteWeight == 0) {\n                revert ErrInvalidVoteWeight(msg.sig);\n            }\n\n            // Check not yet added operators\n            addeds[i] = (\n                $._governorWeight[iGovernor] + $._governorWeight[iOperator] + $._operatorWeight[iOperator]\n                    + $._operatorWeight[iGovernor]\n            ) == 0;\n\n            // Only add the valid operator\n            if (addeds[i]) {\n                // Add governor to list, update governor weight\n                $._governors.push(iGovernor);\n                $._governorWeight[iGovernor] = iVoteWeight;\n\n                // Add operator to list, update governor weight\n                $._operators.push(iOperator);\n                $._operatorWeight[iOperator] = iVoteWeight;\n\n                accumulatedWeight += iVoteWeight;\n            }\n        }\n\n        $._totalWeight += accumulatedWeight;\n\n        _notifyRegisters(\n            IBridgeManagerCallback.onBridgeOperatorsAdded.selector, abi.encode(newOperators, voteWeights, addeds)\n        );\n\n        emit BridgeOperatorsAdded(addeds, voteWeights, newGovernors, newOperators);\n    }\n\n    /**\n     * @dev Internal function to remove bridge operators.\n     *\n     * This function removes the specified `bridgeOperators` from the bridge operator set and related mappings.\n     *\n     * Requirements:\n     * - The caller must have the necessary permission to remove bridge operators.\n     *\n     * @param removingOperators An array of addresses representing the bridge operators to be removed.\n     * @return removeds An array of boolean values indicating whether each bridge operator was successfully removed.\n     */\n    function _removeBridgeOperators(address[] memory removingOperators)\n        internal\n        nonDuplicate(removingOperators)\n        returns (bool[] memory removeds)\n    {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        uint256 length = removingOperators.length;\n        removeds = new bool[](length);\n\n        // simply skip remove operations if inputs are empty.\n        if (length == 0) {\n            return removeds;\n        }\n        if ($._governors.length - length < $._minRequiredGovernor) {\n            revert ErrBelowMinRequiredGovernors();\n        }\n\n        address iGovernor;\n        address iOperator;\n        uint256 accumulatedWeight;\n        uint256 idx;\n\n        for (uint256 i; i < length; i++) {\n            iOperator = removingOperators[i];\n\n            // Check non-zero inputs\n            (iGovernor, idx) = _getGovernorOf(iOperator);\n            _requireNonZeroAddress(iGovernor);\n            _requireNonZeroAddress(iOperator);\n\n            // Check existing operators\n            removeds[i] = $._governorWeight[iGovernor] > 0 && $._operatorWeight[iOperator] > 0;\n\n            // Only remove the valid operator\n            if (removeds[i]) {\n                uint256 removingVoteWeight = $._governorWeight[iGovernor];\n\n                // Remove governor from list, update governor weight\n                uint256 lastIdx = $._governors.length - 1;\n                $._governors[idx] = $._governors[lastIdx];\n                $._governors.pop();\n                delete $._governorWeight[iGovernor];\n\n                // Remove operator from list, update operator weight\n                $._operators[idx] = $._operators[lastIdx];\n                $._operators.pop();\n                delete $._operatorWeight[iOperator];\n\n                accumulatedWeight += removingVoteWeight;\n            }\n        }\n\n        $._totalWeight -= accumulatedWeight;\n\n        _notifyRegisters(\n            IBridgeManagerCallback.onBridgeOperatorsRemoved.selector, abi.encode(removingOperators, removeds)\n        );\n\n        emit BridgeOperatorsRemoved(removeds, removingOperators);\n    }\n\n    function _findInArray(address[] storage $_array, address addr) internal view returns (bool found, uint256 idx) {\n        for (uint256 i; i < $_array.length; i++) {\n            if (addr == $_array[i]) {\n                return (true, i);\n            }\n        }\n\n        return (false, type(uint256).max);\n    }\n\n    // ================= MANAGER VIEW METHODS =============\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function totalBridgeOperator() external view returns (uint256) {\n        return _getBridgeManagerStorage()._operators.length;\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function isBridgeOperator(address addr) external view returns (bool) {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n        return $._operatorWeight[addr] > 0;\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getBridgeOperators() external view returns (address[] memory) {\n        return _getBridgeManagerStorage()._operators;\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getGovernors() external view returns (address[] memory) {\n        return _getBridgeManagerStorage()._governors;\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getOperatorOf(address governor) external view returns (address operator) {\n        (bool found, uint256 idx) = _findInArray(_getBridgeManagerStorage()._governors, governor);\n        if (!found) {\n            revert ErrGovernorNotFound(governor);\n        }\n\n        return _getBridgeManagerStorage()._operators[idx];\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getGovernorOf(address operator) external view returns (address governor) {\n        (governor,) = _getGovernorOf(operator);\n    }\n\n    function _getGovernorOf(address operator) internal view returns (address governor, uint256 idx) {\n        (bool found, uint256 foundId) = _findInArray(_getBridgeManagerStorage()._operators, operator);\n        if (!found) {\n            revert ErrOperatorNotFound(operator);\n        }\n\n        return (_getBridgeManagerStorage()._governors[foundId], foundId);\n    }\n\n    /**\n     * @inheritdoc IBridgeManager\n     */\n    function getFullBridgeOperatorInfos()\n        external\n        view\n        returns (address[] memory governors, address[] memory bridgeOperators, uint96[] memory weights)\n    {\n        BridgeManagerStorage storage $ = _getBridgeManagerStorage();\n\n        governors = $._governors;\n        bridgeOperators = $._operators;\n        weights = _getGovernorWeights(governors);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 297,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "BridgeManager",
+        "similarity": 0.3,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/bridge-operator-governance/BridgeManager.sol",
+        "commit": "2fb8af4b172aebbaaf8ec393ed7e5ab078802d7e",
+        "commitTimestamp": "2023-08-14T08:36:55Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/2fb8af4b172aebbaaf8ec393ed7e5ab078802d7e/contracts/extensions/bridge-operator-governance/BridgeManager.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix of RB-03 (Info) verified in PR #273 commit 2fb8af4b cited by the report.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 163,
+        "removed": 219,
+        "ignoredAdded": 76,
+        "ignoredRemoved": 147,
+        "unchanged": 297,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 57,
+            "newStart": 1,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract BridgeManager is IQuorum, IBridgeManager, BridgeManagerCallbackRegister, HasContracts {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract BridgeManager is IBridgeManager, BridgeManagerQuorum, BridgeManagerCallbackRegister {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using AddressArrayUtils for address[];"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    using EnumerableSet for EnumerableSet.AddressSet;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @dev value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.governorToBridgeOperatorInfo.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    bytes32 private constant GOVERNOR_TO_BRIDGE_OPERATOR_INFO_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        0x88547008e60f5748911f2e59feb3093b7e4c2e87b2dd69d61f112fcc932de8e3;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @dev value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.govenorOf.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 private constant GOVENOR_OF_SLOT = 0x8400683eb2cb350596d73644c0c89fe45f108600003457374f4ab3e87b4f3aa3;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @dev value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.governors.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    bytes32 private constant GOVERNOR_SET_SLOT = 0x546f6b46ab35b030b6816596b352aef78857377176c8b24baa2046a62cf1998c;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @dev value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.bridgeOperators.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    bytes32 private constant BRIDGE_OPERATOR_SET_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        0xd38c234075fde25875da8a6b7e36b58b86681d483271a99eeeee1d78e258a24d;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    struct BridgeManagerStorage {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "        /// @notice List of the governors.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "        /// @dev We do not use EnumerableSet here to maintain identical order of `governors` and `operators`. If `.contains` is needed, use the corresponding weight mapping.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        address[] _governors;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        address[] _operators;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        /// @dev Mapping from address to the governor weight",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        mapping(address governor => uint96 weight) _governorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        /// @dev Mapping from address to the operator weight. This must always be identical `_governorWeight`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        mapping(address operator => uint96 weight) _operatorWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        /// @dev Total weight of all governors / operators.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        uint256 _totalWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        /// @dev The minimum number of governors that must exist in the contract, to avoid the contract become non-accessible.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        uint256 _minRequiredGovernor;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 15, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev The numerator value used for calculations in the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @notice value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.numerator.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    TUint256Slot internal constant NUMERATOR_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        TUint256Slot.wrap(0xc55405a488814eaa0e2a685a0131142785b8d033d311c8c8244e34a7c12ca40f);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    // keccak256(abi.encode(uint256(keccak256(\"ronin.storage.BridgeManagerStorageLocation\")) - 1)) & ~bytes32(uint256(0xff))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    bytes32 private constant $$_BridgeManagerStorageLocation =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        0xc648703095712c0419b6431ae642c061f0a105ac2d7c3d9604061ef4ebc38300;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * @dev The denominator value used for calculations in the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @notice value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.denominator.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    TUint256Slot internal constant DENOMINATOR_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        TUint256Slot.wrap(0xac1ff16a4f04f2a37a9ba5252a69baa100b460e517d1f8019c054a5ad698f9ff);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 29, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev The nonce value used for tracking nonces in the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * @notice value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.nonce.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    TUint256Slot internal constant NONCE_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        TUint256Slot.wrap(0x92872d32822c9d44b36a2537d3e0d4c46fc4de1ce154ccfaed560a8a58445f1d);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 36, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * @dev The total weight value used for storing the cumulative weight in the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * @notice value is equal to keccak256(\"@ronin.dpos.gateway.BridgeAdmin.totalWeights.slot\") - 1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    TUint256Slot internal constant TOTAL_WEIGHTS_SLOT =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        TUint256Slot.wrap(0x6924fe71b0c8b61aea02ca498b5f53b29bd95726278b1fe4eb791bb24a42644c);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 24,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 25, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    bytes32 public immutable DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    bytes32 public DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 27, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 28,
+                "text": "    modifier onlyGovernor() virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 29,
+                "text": "        _requireGovernor(msg.sender);"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 30,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 52, "newLine": 31, "text": "    }" },
+              { "type": " ", "oldLine": 53, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    constructor(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 35, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 36, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    function __BridgeManager_init(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 38,
+                "text": "        uint256 num,"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 39,
+                "text": "        uint256 denom,"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 40,
+                "text": "        uint256 roninChainId,"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 239,
+            "newStart": 43,
+            "newLines": 187,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 43,
+                "text": "        address[] memory bridgeOperators,"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 44,
+                "text": "        address[] memory governors,"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 45,
+                "text": "        uint96[] memory voteWeights"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    ) payable BridgeManagerCallbackRegister(callbackRegisters) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        NONCE_SLOT.store(1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        NUMERATOR_SLOT.store(num);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        DENOMINATOR_SLOT.store(denom);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    ) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        __BridgeManagerQuorum_init_unchained(num, denom);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        __BridgeManagerCallbackRegister_init_unchained(callbackRegisters);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        __BridgeManager_init_unchained(roninChainId, bridgeContract, bridgeOperators, governors, voteWeights);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 50, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 67, "newLine": 51, "text": "" },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    function __BridgeManager_init_unchained(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        uint256 roninChainId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        address bridgeContract,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        address[] memory bridgeOperators,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        address[] memory governors,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        uint96[] memory voteWeights",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    ) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 59,
+                "text": "        _setContract(ContractType.BRIDGE, bridgeContract);"
+              },
+              { "type": " ", "oldLine": 69, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 61,
+                "text": "        DOMAIN_SEPARATOR = keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 62,
+                "text": "            abi.encode("
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 63,
+                "text": "                keccak256(\"EIP712Domain(string name,string version,bytes32 salt)\"),"
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                keccak256(\"BridgeAdmin\"), // name hash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                keccak256(\"2\"), // version hash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                keccak256(abi.encode(\"BRIDGE_ADMIN\", roninChainId)) // salt",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                keccak256(\"BridgeManager\"), // name hash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                keccak256(\"3\"), // version hash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "                keccak256(abi.encode(\"BRIDGE_MANAGER\", roninChainId)) // salt",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 67,
+                "text": "            )"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 68,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 69, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 70,
+                "text": "        _addBridgeOperators(voteWeights, governors, bridgeOperators);"
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        _setMinRequiredGovernor(3);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    function addBridgeOperators(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        uint96[] calldata voteWeights,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        address[] calldata governors,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        address[] calldata bridgeOperators",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    ) external onlySelfCall returns (bool[] memory addeds) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        addeds = _addBridgeOperators(voteWeights, governors, bridgeOperators);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    function _getBridgeManagerStorage() private pure returns (BridgeManagerStorage storage $) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "            $.slot := $$_BridgeManagerStorageLocation",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 91, "newLine": 78, "text": "    }" },
+              { "type": " ", "oldLine": 92, "newLine": 79, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    function removeBridgeOperators(address[] calldata bridgeOperators)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        external",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        onlySelfCall",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        returns (bool[] memory removeds)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 100, "text": "    {", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        removeds = _removeBridgeOperators(bridgeOperators);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 102, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    // ===================== CONFIG ========================",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 103, "newLine": 81, "text": "" },
+              { "type": " ", "oldLine": 104, "newLine": 82, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "     * @notice This method checks authorization by querying the corresponding operator of the msg.sender and then",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     * attempts to remove it from the `_bridgeOperatorSet` for gas optimization. In case we allow a governor can leave",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     * their operator address blank null `address(0)`, consider add authorization check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    function updateBridgeOperator(address newBridgeOperator) external onlyGovernor {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        _requireNonZeroAddress(newBridgeOperator);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 112, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        // Queries the previous bridge operator",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _gorvernorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        address currentBridgeOperator = _gorvernorToBridgeOperatorInfo[msg.sender].addr;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        if (currentBridgeOperator == newBridgeOperator) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "            revert ErrBridgeOperatorAlreadyExisted(newBridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        // Tries replace the bridge operator",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        EnumerableSet.AddressSet storage _bridgeOperatorSet = _getBridgeOperatorSet();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        bool updated = _bridgeOperatorSet.remove(currentBridgeOperator) && _bridgeOperatorSet.add(newBridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        if (!updated) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            revert ErrBridgeOperatorUpdateFailed(newBridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 127, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        mapping(address => address) storage _governorOf = _getGovernorOf();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        delete _governorOf[currentBridgeOperator];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        _governorOf[newBridgeOperator] = msg.sender;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "        _gorvernorToBridgeOperatorInfo[msg.sender].addr = newBridgeOperator;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 132, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        _notifyRegisters(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "            IBridgeManagerCallback.onBridgeOperatorUpdated.selector,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            abi.encode(currentBridgeOperator, newBridgeOperator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 137, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        emit BridgeOperatorUpdated(msg.sender, currentBridgeOperator, newBridgeOperator);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 139, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 140, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 83,
+                "text": "     * @inheritdoc IHasContracts"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 84, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    function setContract(ContractType contractType, address addr) external override onlySelfCall {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function setContract(ContractType contractType, address addr) external override onlyProxyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 86,
+                "text": "        _requireHasCode(addr);"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 87,
+                "text": "        _setContract(contractType, addr);"
+              },
+              { "type": " ", "oldLine": 147, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 148, "newLine": 89, "text": "" },
+              { "type": " ", "oldLine": 149, "newLine": 90, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "     * @inheritdoc IQuorum",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "    function setThreshold(uint256 numerator, uint256 denominator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "        external",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "        onlySelfCall",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "        returns (uint256, uint256)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 157, "text": "    {", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "        return _setThreshold(numerator, denominator);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 159, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 160, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 91,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              { "type": " ", "oldLine": 163, "newLine": 92, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    function getTotalWeights() public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "        return TOTAL_WEIGHTS_SLOT.load();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function setMinRequiredGovernor(uint256 min) external override onlyProxyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        _setMinRequiredGovernor(min);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 95, "text": "    }" },
+              { "type": " ", "oldLine": 167, "newLine": 96, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    function getGovernorWeights(address[] calldata governors) external view returns (uint256[] memory weights) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "        weights = _getGovernorWeights(governors);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    function _setMinRequiredGovernor(uint256 min) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        if (min < 3) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            revert ErrInvalidInput();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        $._minRequiredGovernor = min;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        emit MinRequiredGovernorUpdated(min);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 173, "newLine": 104, "text": "    }" },
+              { "type": " ", "oldLine": 174, "newLine": 105, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 106,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "     * @dev Internal function to require that the caller has governor role access.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 108,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "    function getGovernorWeight(address governor) external view returns (uint256 weight) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "        weight = _getGovernorWeight(governor);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    function _requireGovernor(address addr) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        if (_getGovernorWeight(addr) == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "            revert ErrUnauthorized(msg.sig, RoleAccess.GOVERNOR);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 180, "newLine": 113, "text": "    }" },
+              { "type": " ", "oldLine": 181, "newLine": 114, "text": "" },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    // ===================== WEIGHTS METHOD ========================",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 116, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 117,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 118,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 119,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    function sumGovernorsWeight(address[] calldata governors)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        external",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "        view",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "        nonDuplicate(governors)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "        returns (uint256 sum)",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 190, "text": "    {", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "        sum = _sumGovernorsWeight(governors);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    function getTotalWeight() public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        return _totalWeight();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 192, "newLine": 122, "text": "    }" },
+              { "type": " ", "oldLine": 193, "newLine": 123, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    function totalBridgeOperators() external view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "        return _getBridgeOperatorSet().length();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    function _totalWeight() internal view override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        return _getBridgeManagerStorage()._totalWeight;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 199, "newLine": 126, "text": "    }" },
+              { "type": " ", "oldLine": 200, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 128,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 129,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 130,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "    function isBridgeOperator(address addr) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "        return _getBridgeOperatorSet().contains(addr);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    function getGovernorWeights(address[] calldata governors) external view returns (uint96[] memory weights) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        weights = _getGovernorWeights(governors);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 206, "newLine": 133, "text": "    }" },
+              { "type": " ", "oldLine": 207, "newLine": 134, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 135,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     * @dev Internal function to get the vote weights of a given array of governors.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 137,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "    function getBridgeOperators() external view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "        return _getBridgeOperators();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    function _getGovernorWeights(address[] memory governors) internal view returns (uint96[] memory weights) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        weights = new uint96[](governors.length);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 141, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        for (uint256 i; i < governors.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "            weights[i] = $._governorWeight[governors[i]];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 213, "newLine": 145, "text": "    }" },
+              { "type": " ", "oldLine": 214, "newLine": 146, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 147,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 148,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 149,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "    function getGovernors() external view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        return _getGovernors();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "    function getGovernorWeight(address governor) external view returns (uint96 weight) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        weight = _getGovernorWeight(governor);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 220, "newLine": 152, "text": "    }" },
+              { "type": " ", "oldLine": 221, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 154,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "     * @dev Internal function to retrieve the vote weight of a specific governor.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 156,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    function getBridgeOperatorOf(address[] memory governors) public view returns (address[] memory bridgeOperators) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "        uint256 length = governors.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "        bridgeOperators = new address[](length);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 228, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _gorvernorToBridgeOperator = _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "        for (uint256 i; i < length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "            bridgeOperators[i] = _gorvernorToBridgeOperator[governors[i]].addr;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "    function _getGovernorWeight(address governor) internal view returns (uint96) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "        return _getBridgeManagerStorage()._governorWeight[governor];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 236, "newLine": 159, "text": "    }" },
+              { "type": " ", "oldLine": 237, "newLine": 160, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 161,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 162,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 163,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "    function getGovernorsOf(address[] calldata bridgeOperators) external view returns (address[] memory governors) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "        uint256 length = bridgeOperators.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        governors = new address[](length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "        mapping(address => address) storage _governorOf = _getGovernorOf();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 245, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "        for (uint256 i; i < length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "            governors[i] = _governorOf[bridgeOperators[i]];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "    function sumGovernorsWeight(address[] calldata governors)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "        external",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "        view",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "        nonDuplicate(governors)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        returns (uint256 sum)",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 169, "text": "    {", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "        sum = _sumGovernorsWeight(governors);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 252, "newLine": 171, "text": "    }" },
+              { "type": " ", "oldLine": 253, "newLine": 172, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 173,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "     * @dev Internal function to calculate the sum of vote weights for a given array of governors.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "     * @param governors The non-duplicated input.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 176,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "    function getFullBridgeOperatorInfos()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "        external",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "    function _sumGovernorsWeight(address[] memory governors)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 179,
+                "text": "        view"
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "        returns (address[] memory governors, address[] memory bridgeOperators, uint256[] memory weights)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        nonDuplicate(governors)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "        returns (uint256 sum)",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 261, "newLine": 182, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "        governors = _getGovernors();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "        bridgeOperators = getBridgeOperatorOf(governors);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "        weights = _getGovernorWeights(governors);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 184, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        for (uint256 i; i < governors.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "            sum += $._governorWeight[governors[i]];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 265, "newLine": 188, "text": "    }" },
+              { "type": " ", "oldLine": 266, "newLine": 189, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 190,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 191,
+                "text": "     * @inheritdoc IBridgeManager"
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 192,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "    function getBridgeOperatorWeight(address bridgeOperator) external view returns (uint256 weight) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "        mapping(address => address) storage _governorOf = _getGovernorOf();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _governorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "        weight = _governorToBridgeOperatorInfo[_governorOf[bridgeOperator]].voteWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    function getBridgeOperatorWeight(address bridgeOperator) external view returns (uint96 weight) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 195, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "        return $._operatorWeight[bridgeOperator];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 275, "newLine": 197, "text": "    }" },
+              { "type": " ", "oldLine": 276, "newLine": 198, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 199,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 278,
+                "newLine": 200,
+                "text": "     * @inheritdoc IQuorum"
+              },
+              {
+                "type": " ",
+                "oldLine": 279,
+                "newLine": 201,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 202,
+                "text": "    function minimumVoteWeight() public view virtual returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 281,
+                "text": "        return (NUMERATOR_SLOT.mul(TOTAL_WEIGHTS_SLOT.load()) + DENOMINATOR_SLOT.load() - 1) / DENOMINATOR_SLOT.load();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 204, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        (uint256 numerator, uint256 denominator) = getThreshold();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "        return (numerator * $._totalWeight + denominator - 1) / denominator;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 282, "newLine": 207, "text": "    }" },
+              { "type": " ", "oldLine": 283, "newLine": 208, "text": "" },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "    // ===================== MANAGER CRUD ========================",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 210, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 211,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "     * @inheritdoc IQuorum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 213,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 287,
+                "text": "    function getThreshold() external view virtual returns (uint256 num_, uint256 denom_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "        return (NUMERATOR_SLOT.load(), DENOMINATOR_SLOT.load());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    function addBridgeOperators(",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "        uint96[] calldata voteWeights,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "        address[] calldata governors,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "        address[] calldata bridgeOperators",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "    ) external onlyProxyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "        _addBridgeOperators(voteWeights, governors, bridgeOperators);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 289, "newLine": 220, "text": "    }" },
+              { "type": " ", "oldLine": 290, "newLine": 221, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 222,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 292,
+                "text": "     * @inheritdoc IQuorum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 224,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 294,
+                "text": "    function checkThreshold(uint256 _voteWeight) external view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 295,
+                "text": "        return _voteWeight * DENOMINATOR_SLOT.load() >= NUMERATOR_SLOT.mul(TOTAL_WEIGHTS_SLOT.load());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "    function removeBridgeOperators(address[] calldata bridgeOperators) external onlyProxyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "        _removeBridgeOperators(bridgeOperators);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 296, "newLine": 227, "text": "    }" },
+              { "type": " ", "oldLine": 297, "newLine": 228, "text": "" },
+              { "type": " ", "oldLine": 298, "newLine": 229, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 304,
+            "oldLines": 70,
+            "newStart": 235,
+            "newLines": 70,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 235,
+                "text": "     * - The caller must have the necessary permission to add bridge operators."
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 236,
+                "text": "     * - The lengths of `voteWeights`, `governors`, and `bridgeOperators` arrays must be equal."
+              },
+              { "type": " ", "oldLine": 306, "newLine": 237, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "     * @param voteWeights An array of uint256 values representing the vote weights for each bridge operator.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "     * @param governors An array of addresses representing the governors for each bridge operator.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 309,
+                "newLine": 238,
+                "text": "     * @return addeds An array of boolean values indicating whether each bridge operator was successfully added."
+              },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 239,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 311,
+                "newLine": 240,
+                "text": "    function _addBridgeOperators("
+              },
+              {
+                "type": " ",
+                "oldLine": 312,
+                "newLine": 241,
+                "text": "        uint96[] memory voteWeights,"
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "        address[] memory governors,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 314,
+                "text": "        address[] memory bridgeOperators",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 315,
+                "text": "    ) internal nonDuplicate(governors.extend(bridgeOperators)) returns (bool[] memory addeds) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 316,
+                "text": "        uint256 length = bridgeOperators.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 317,
+                "text": "        if (!(length == voteWeights.length && length == governors.length)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "        address[] memory newGovernors,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "        address[] memory newOperators",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "    ) internal nonDuplicate(newGovernors.extend(newOperators)) returns (bool[] memory addeds) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 246, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        uint256 length = newOperators.length;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        if (!(length == voteWeights.length && length == newGovernors.length)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 318,
+                "newLine": 249,
+                "text": "            revert ErrLengthMismatch(msg.sig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 250,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 251,
+                "text": "        addeds = new bool[](length);"
+              },
+              { "type": "+", "newLine": 252, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 253,
+                "text": "        // simply skip add operations if inputs are empty."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 254,
+                "text": "        if (length == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 255,
+                "text": "            return addeds;"
+              },
+              {
+                "type": " ",
+                "oldLine": 324,
+                "newLine": 256,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 325, "newLine": 257, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 326,
+                "text": "        EnumerableSet.AddressSet storage _governorSet = _getGovernorsSet();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "        mapping(address => address) storage _governorOf = _getGovernorOf();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 328,
+                "text": "        EnumerableSet.AddressSet storage _bridgeOperatorSet = _getBridgeOperatorSet();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 329,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _governorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 330,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 331, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 332,
+                "text": "        address governor;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 333,
+                "text": "        address bridgeOperator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "        address iGovernor;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "        address iOperator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "        uint96 iVoteWeight;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 261,
+                "text": "        uint256 accumulatedWeight;"
+              },
+              {
+                "type": "-",
+                "oldLine": 335,
+                "text": "        BridgeOperatorInfo memory bridgeOperatorInfo;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 336, "newLine": 262, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 337,
+                "text": "        for (uint256 i; i < length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 338,
+                "text": "            governor = governors[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 339,
+                "text": "            bridgeOperator = bridgeOperators[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "        for (uint256 i; i < length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "            iGovernor = newGovernors[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "            iOperator = newOperators[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "            iVoteWeight = voteWeights[i];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 340, "newLine": 267, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 341,
+                "text": "            _requireNonZeroAddress(governor);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 342,
+                "text": "            _requireNonZeroAddress(bridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 343,
+                "text": "            if (voteWeights[i] == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "            // Check non-zero inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "            _requireNonZeroAddress(iGovernor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "            _requireNonZeroAddress(iOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "            if (iVoteWeight == 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 344,
+                "newLine": 272,
+                "text": "                revert ErrInvalidVoteWeight(msg.sig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 345,
+                "newLine": 273,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 346, "newLine": 274, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 347,
+                "text": "            addeds[i] = !(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 348,
+                "text": "                _governorSet.contains(governor) || _governorSet.contains(bridgeOperator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 349,
+                "text": "                    || _bridgeOperatorSet.contains(governor) || _bridgeOperatorSet.contains(bridgeOperator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 350,
+                "text": "            );",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "            // Check not yet added operators",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "            addeds[i] = (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "                $._governorWeight[iGovernor] + $._governorWeight[iOperator] + $._operatorWeight[iOperator]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "                    + $._operatorWeight[iGovernor]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "            ) == 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 351, "newLine": 280, "text": "" },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "            // Only add the valid operator",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 282,
+                "text": "            if (addeds[i]) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 353,
+                "text": "                _governorSet.add(governor);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 354,
+                "text": "                _bridgeOperatorSet.add(bridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 355,
+                "text": "                _governorOf[bridgeOperator] = governor;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 356,
+                "text": "                bridgeOperatorInfo.addr = bridgeOperator;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 357,
+                "text": "                accumulatedWeight += bridgeOperatorInfo.voteWeight = voteWeights[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 358,
+                "text": "                _governorToBridgeOperatorInfo[governor] = bridgeOperatorInfo;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 359,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "                // Add governor to list, update governor weight",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "                $._governors.push(iGovernor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "                $._governorWeight[iGovernor] = iVoteWeight;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 360, "newLine": 286, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 361,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 362,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "                // Add operator to list, update governor weight",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "                $._operators.push(iOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "                $._operatorWeight[iOperator] = iVoteWeight;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 290, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "                accumulatedWeight += iVoteWeight;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 363,
+                "newLine": 292,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 364,
+                "newLine": 293,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 365, "newLine": 294, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 366,
+                "text": "        TOTAL_WEIGHTS_SLOT.addAssign(accumulatedWeight);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "        $._totalWeight += accumulatedWeight;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 367, "newLine": 296, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 368,
+                "text": "        _notifyRegisters(IBridgeManagerCallback.onBridgeOperatorsAdded.selector, abi.encode(bridgeOperators, addeds));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "        _notifyRegisters(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "            IBridgeManagerCallback.onBridgeOperatorsAdded.selector, abi.encode(newOperators, voteWeights, addeds)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "        );",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 369, "newLine": 300, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 370,
+                "text": "        emit BridgeOperatorsAdded(addeds, voteWeights, governors, bridgeOperators);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "        emit BridgeOperatorsAdded(addeds, voteWeights, newGovernors, newOperators);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 371, "newLine": 302, "text": "    }" },
+              { "type": " ", "oldLine": 372, "newLine": 303, "text": "" },
+              { "type": " ", "oldLine": 373, "newLine": 304, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 378,
+            "oldLines": 210,
+            "newStart": 309,
+            "newLines": 152,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 309,
+                "text": "     * Requirements:"
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 310,
+                "text": "     * - The caller must have the necessary permission to remove bridge operators."
+              },
+              { "type": " ", "oldLine": 380, "newLine": 311, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 381,
+                "text": "     * @param bridgeOperators An array of addresses representing the bridge operators to be removed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "     * @param removingOperators An array of addresses representing the bridge operators to be removed.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 382,
+                "newLine": 313,
+                "text": "     * @return removeds An array of boolean values indicating whether each bridge operator was successfully removed."
+              },
+              {
+                "type": " ",
+                "oldLine": 383,
+                "newLine": 314,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 384,
+                "text": "    function _removeBridgeOperators(address[] memory bridgeOperators)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 315,
+                "text": "    function _removeBridgeOperators(address[] memory removingOperators)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 316,
+                "text": "        internal"
+              },
+              {
+                "type": "-",
+                "oldLine": 386,
+                "text": "        nonDuplicate(bridgeOperators)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "        nonDuplicate(removingOperators)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 387,
+                "newLine": 318,
+                "text": "        returns (bool[] memory removeds)"
+              },
+              { "type": " ", "oldLine": 388, "newLine": 319, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 389,
+                "text": "        uint256 length = bridgeOperators.length;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 321, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "        uint256 length = removingOperators.length;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 390,
+                "newLine": 323,
+                "text": "        removeds = new bool[](length);"
+              },
+              { "type": "+", "newLine": 324, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 391,
+                "newLine": 325,
+                "text": "        // simply skip remove operations if inputs are empty."
+              },
+              {
+                "type": " ",
+                "oldLine": 392,
+                "newLine": 326,
+                "text": "        if (length == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 393,
+                "newLine": 327,
+                "text": "            return removeds;"
+              },
+              {
+                "type": " ",
+                "oldLine": 394,
+                "newLine": 328,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "        if ($._governors.length - length < $._minRequiredGovernor) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "            revert ErrBelowMinRequiredGovernors();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 395, "newLine": 332, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 396,
+                "text": "        mapping(address => address) storage _governorOf = _getGovernorOf();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 397,
+                "text": "        EnumerableSet.AddressSet storage _governorSet = _getGovernorsSet();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 398,
+                "text": "        EnumerableSet.AddressSet storage _bridgeOperatorSet = _getBridgeOperatorSet();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 399,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _governorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 400,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 401, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 402,
+                "text": "        address governor;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 403,
+                "text": "        address bridgeOperator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "        address iGovernor;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "        address iOperator;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 335,
+                "text": "        uint256 accumulatedWeight;"
+              },
+              {
+                "type": "-",
+                "oldLine": 405,
+                "text": "        BridgeOperatorInfo memory bridgeOperatorInfo;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "        uint256 idx;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 406, "newLine": 337, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 407,
+                "text": "        for (uint256 i; i < length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 408,
+                "text": "            bridgeOperator = bridgeOperators[i];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 409,
+                "text": "            governor = _governorOf[bridgeOperator];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "        for (uint256 i; i < length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 339,
+                "text": "            iOperator = removingOperators[i];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 410, "newLine": 340, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 411,
+                "text": "            _requireNonZeroAddress(governor);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 412,
+                "text": "            _requireNonZeroAddress(bridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "            // Check non-zero inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "            (iGovernor, idx) = _getGovernorOf(iOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "            _requireNonZeroAddress(iGovernor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "            _requireNonZeroAddress(iOperator);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 413, "newLine": 345, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            bridgeOperatorInfo = _governorToBridgeOperatorInfo[governor];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 415,
+                "text": "            if (bridgeOperatorInfo.addr != bridgeOperator) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 416,
+                "text": "                revert ErrInvalidArguments(msg.sig);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 417,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 346,
+                "text": "            // Check existing operators",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "            removeds[i] = $._governorWeight[iGovernor] > 0 && $._operatorWeight[iOperator] > 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 418, "newLine": 348, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 419,
+                "text": "            removeds[i] = _bridgeOperatorSet.contains(bridgeOperator) && _governorSet.contains(governor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "            // Only remove the valid operator",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 420,
+                "newLine": 350,
+                "text": "            if (removeds[i]) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 421,
+                "text": "                _governorSet.remove(governor);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 422,
+                "text": "                _bridgeOperatorSet.remove(bridgeOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "                uint256 removingVoteWeight = $._governorWeight[iGovernor];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 423, "newLine": 352, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 424,
+                "text": "                delete _governorOf[bridgeOperator];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 425,
+                "text": "                delete _governorToBridgeOperatorInfo[governor];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 426,
+                "text": "                accumulatedWeight += bridgeOperatorInfo.voteWeight;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 427,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "                // Remove governor from list, update governor weight",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 354,
+                "text": "                uint256 lastIdx = $._governors.length - 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "                $._governors[idx] = $._governors[lastIdx];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "                $._governors.pop();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "                delete $._governorWeight[iGovernor];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 428, "newLine": 358, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 429,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 430,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "                // Remove operator from list, update operator weight",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "                $._operators[idx] = $._operators[lastIdx];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "                $._operators.pop();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "                delete $._operatorWeight[iOperator];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 363, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "                accumulatedWeight += removingVoteWeight;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 431,
+                "newLine": 365,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 432,
+                "newLine": 366,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 433, "newLine": 367, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 434,
+                "text": "        TOTAL_WEIGHTS_SLOT.subAssign(accumulatedWeight);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "        $._totalWeight -= accumulatedWeight;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 435, "newLine": 369, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 436,
+                "newLine": 370,
+                "text": "        _notifyRegisters("
+              },
+              {
+                "type": "-",
+                "oldLine": 437,
+                "text": "            IBridgeManagerCallback.onBridgeOperatorsRemoved.selector, abi.encode(bridgeOperators, removeds)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "            IBridgeManagerCallback.onBridgeOperatorsRemoved.selector, abi.encode(removingOperators, removeds)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 438,
+                "newLine": 372,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 439, "newLine": 373, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 440,
+                "text": "        emit BridgeOperatorsRemoved(removeds, bridgeOperators);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "        emit BridgeOperatorsRemoved(removeds, removingOperators);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 441, "newLine": 375, "text": "    }" },
+              { "type": " ", "oldLine": 442, "newLine": 376, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 443,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 444,
+                "text": "     * @dev Sets threshold and returns the old one.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 445,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 446,
+                "text": "     * Emits the `ThresholdUpdated` event.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 447,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 448,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 449,
+                "text": "    function _setThreshold(uint256 numerator, uint256 denominator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 450,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 451,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "        returns (uint256 previousNum, uint256 previousDenom)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 453,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 454,
+                "text": "        if (numerator > denominator) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 455,
+                "text": "            revert ErrInvalidThreshold(msg.sig);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "    function _findInArray(address[] storage $_array, address addr) internal view returns (bool found, uint256 idx) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "        for (uint256 i; i < $_array.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "            if (addr == $_array[i]) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 380,
+                "text": "                return (true, i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 456,
+                "newLine": 382,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 457, "newLine": 383, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 458,
+                "text": "        previousNum = NUMERATOR_SLOT.load();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 459,
+                "text": "        previousDenom = DENOMINATOR_SLOT.load();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 460,
+                "text": "        NUMERATOR_SLOT.store(numerator);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 461,
+                "text": "        DENOMINATOR_SLOT.store(denominator);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 462, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 463,
+                "text": "        emit ThresholdUpdated(NONCE_SLOT.postIncrement(), numerator, denominator, previousNum, previousDenom);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 384,
+                "text": "        return (false, type(uint256).max);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 464, "newLine": 385, "text": "    }" },
+              { "type": " ", "oldLine": 465, "newLine": 386, "text": "" },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "    // ================= MANAGER VIEW METHODS =============",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 388, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 466,
+                "newLine": 389,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 467,
+                "text": "     * @dev Internal function to get all bridge operators.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 468,
+                "text": "     * @return bridgeOperators An array containing all the registered bridge operator addresses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 390,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 469,
+                "newLine": 391,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 470,
+                "text": "    function _getBridgeOperators() internal view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 471,
+                "text": "        return _getBridgeOperatorSet().values();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 392,
+                "text": "    function totalBridgeOperator() external view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 393,
+                "text": "        return _getBridgeManagerStorage()._operators.length;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 472, "newLine": 394, "text": "    }" },
+              { "type": " ", "oldLine": 473, "newLine": 395, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 474,
+                "newLine": 396,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 475,
+                "text": "     * @dev Internal function to get all governors.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 476,
+                "text": "     * @return governors An array containing all the registered governor addresses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 397,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 477,
+                "newLine": 398,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 478,
+                "text": "    function _getGovernors() internal view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 479,
+                "text": "        return _getGovernorsSet().values();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 399,
+                "text": "    function isBridgeOperator(address addr) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 400,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 401,
+                "text": "        return $._operatorWeight[addr] > 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 480, "newLine": 402, "text": "    }" },
+              { "type": " ", "oldLine": 481, "newLine": 403, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 482,
+                "newLine": 404,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 483,
+                "text": "     * @dev Internal function to get the vote weights of a given array of governors.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 484,
+                "text": "     * @param governors An array containing the addresses of governors.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 485,
+                "text": "     * @return weights An array containing the vote weights of the corresponding governors.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 405,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 486,
+                "newLine": 406,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 487,
+                "text": "    function _getGovernorWeights(address[] memory governors) internal view returns (uint256[] memory weights) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 488,
+                "text": "        uint256 length = governors.length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 489,
+                "text": "        weights = new uint256[](length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 490,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _governorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 491,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 492,
+                "text": "        for (uint256 i; i < length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 493,
+                "text": "            weights[i] = _governorToBridgeOperatorInfo[governors[i]].voteWeight;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 494,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 495,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 496,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 497,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 407,
+                "text": "    function getBridgeOperators() external view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 408,
+                "text": "        return _getBridgeManagerStorage()._operators;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 498, "newLine": 409, "text": "    }" },
+              { "type": " ", "oldLine": 499, "newLine": 410, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 500,
+                "newLine": 411,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "     * @dev Internal function to calculate the sum of vote weights for a given array of governors.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 502,
+                "text": "     * @param governors An array containing the addresses of governors to calculate the sum of vote weights.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 503,
+                "text": "     * @return sum The total sum of vote weights for the provided governors.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 504,
+                "text": "     * @notice The input array `governors` must contain unique addresses to avoid duplicate calculations.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 412,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 505,
+                "newLine": 413,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 506,
+                "text": "    function _sumGovernorsWeight(address[] memory governors)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 507,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 508,
+                "text": "        view",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 509,
+                "text": "        nonDuplicate(governors)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 510,
+                "text": "        returns (uint256 sum)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 511,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 512,
+                "text": "        mapping(address => BridgeOperatorInfo) storage _governorToBridgeOperatorInfo =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 513,
+                "text": "            _getGovernorToBridgeOperatorInfo();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 514, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 515,
+                "text": "        for (uint256 i; i < governors.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 516,
+                "text": "            sum += _governorToBridgeOperatorInfo[governors[i]].voteWeight;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 517, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 518,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 519,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 520,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 521,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    function getGovernors() external view returns (address[] memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "        return _getBridgeManagerStorage()._governors;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 522, "newLine": 416, "text": "    }" },
+              { "type": " ", "oldLine": 523, "newLine": 417, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 524,
+                "newLine": 418,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 525,
+                "text": "     * @dev Internal function to require that the caller has governor role access.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 526,
+                "text": "     * @param addr The address to check for governor role access.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 527,
+                "text": "     * @dev If the address does not have governor role access (vote weight is zero), a revert with the corresponding error message is triggered.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 419,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 528,
+                "newLine": 420,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 529,
+                "text": "    function _requireGovernor(address addr) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 530,
+                "text": "        if (_getGovernorWeight(addr) == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 531,
+                "text": "            revert ErrUnauthorized(msg.sig, RoleAccess.GOVERNOR);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 421,
+                "text": "    function getOperatorOf(address governor) external view returns (address operator) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 422,
+                "text": "        (bool found, uint256 idx) = _findInArray(_getBridgeManagerStorage()._governors, governor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 423,
+                "text": "        if (!found) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 424,
+                "text": "            revert ErrGovernorNotFound(governor);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 532,
+                "newLine": 425,
+                "text": "        }"
+              },
+              { "type": "-", "oldLine": 533, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 534, "newLine": 426, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 535,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 536,
+                "text": "     * @dev Internal function to retrieve the vote weight of a specific governor.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 537,
+                "text": "     * @param governor The address of the governor to get the vote weight for.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 538,
+                "text": "     * @return voteWeight The vote weight of the specified governor.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 539,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 540,
+                "text": "    function _getGovernorWeight(address governor) internal view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 541,
+                "text": "        return _getGovernorToBridgeOperatorInfo()[governor].voteWeight;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 427,
+                "text": "        return _getBridgeManagerStorage()._operators[idx];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 542, "newLine": 428, "text": "    }" },
+              { "type": " ", "oldLine": 543, "newLine": 429, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 544,
+                "newLine": 430,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 545,
+                "text": "     * @dev Internal function to access the address set of bridge operators.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 546,
+                "text": "     * @return bridgeOperators the storage address set.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 431,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 547,
+                "newLine": 432,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 548,
+                "text": "    function _getBridgeOperatorSet() internal pure returns (EnumerableSet.AddressSet storage bridgeOperators) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 549,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 550,
+                "text": "            bridgeOperators.slot := BRIDGE_OPERATOR_SET_SLOT",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 551,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 433,
+                "text": "    function getGovernorOf(address operator) external view returns (address governor) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 434,
+                "text": "        (governor,) = _getGovernorOf(operator);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 552, "newLine": 435, "text": "    }" },
+              { "type": " ", "oldLine": 553, "newLine": 436, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 554,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 555,
+                "text": "     * @dev Internal function to access the address set of bridge operators.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 556,
+                "text": "     * @return governors the storage address set.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 557,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 558,
+                "text": "    function _getGovernorsSet() internal pure returns (EnumerableSet.AddressSet storage governors) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 559,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 560,
+                "text": "            governors.slot := GOVERNOR_SET_SLOT",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "    function _getGovernorOf(address operator) internal view returns (address governor, uint256 idx) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 438,
+                "text": "        (bool found, uint256 foundId) = _findInArray(_getBridgeManagerStorage()._operators, operator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 439,
+                "text": "        if (!found) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 440,
+                "text": "            revert ErrOperatorNotFound(operator);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 561,
+                "newLine": 441,
+                "text": "        }"
+              },
+              { "type": "+", "newLine": 442, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 443,
+                "text": "        return (_getBridgeManagerStorage()._governors[foundId], foundId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 562, "newLine": 444, "text": "    }" },
+              { "type": " ", "oldLine": 563, "newLine": 445, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 564,
+                "newLine": 446,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 565,
+                "text": "     * @dev Internal function to access the mapping from governor => BridgeOperatorInfo.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 566,
+                "text": "     * @return governorToBridgeOperatorInfo the mapping from governor => BridgeOperatorInfo.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "     * @inheritdoc IBridgeManager",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 567,
+                "newLine": 448,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 568,
+                "text": "    function _getGovernorToBridgeOperatorInfo()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 569,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 570,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 571,
+                "text": "        returns (mapping(address => BridgeOperatorInfo) storage governorToBridgeOperatorInfo)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 449,
+                "text": "    function getFullBridgeOperatorInfos()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 450,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 451,
+                "text": "        view",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "        returns (address[] memory governors, address[] memory bridgeOperators, uint96[] memory weights)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 572, "newLine": 453, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 573,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 574,
+                "text": "            governorToBridgeOperatorInfo.slot := GOVERNOR_TO_BRIDGE_OPERATOR_INFO_SLOT",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 575,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 576, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 454,
+                "text": "        BridgeManagerStorage storage $ = _getBridgeManagerStorage();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 577, "newLine": 455, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 578,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 579,
+                "text": "     * @dev Internal function to access the mapping from bridge operator => governor.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 580,
+                "text": "     * @return governorOf the mapping from bridge operator => governor.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 581,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 582,
+                "text": "    function _getGovernorOf() internal pure returns (mapping(address => address) storage governorOf) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 583,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 584,
+                "text": "            governorOf.slot := GOVENOR_OF_SLOT",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 585,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 456,
+                "text": "        governors = $._governors;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 457,
+                "text": "        bridgeOperators = $._operators;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 458,
+                "text": "        weights = _getGovernorWeights(governors);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 586, "newLine": 459, "text": "    }" },
+              { "type": " ", "oldLine": 587, "newLine": 460, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

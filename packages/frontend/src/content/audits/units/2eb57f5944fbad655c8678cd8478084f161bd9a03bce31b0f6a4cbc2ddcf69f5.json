@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2eb57f5944fbad655c8678cd8478084f161bd9a03bce31b0f6a4cbc2ddcf69f5",
+  "name": "GSE",
+  "kind": "contract",
+  "lines": 210,
+  "source": "contract GSE is IGSE, GSECore {\n    using AddressSnapshotLib for SnapshottedAddressSet;\n    using SafeCast for uint256;\n    using SafeCast for uint224;\n    using Checkpoints for Checkpoints.Trace224;\n    using DepositDelegationLib for DepositAndDelegationAccounting;\n\n    constructor(address __owner, IERC20 _asset, uint256 _activationThreshold, uint256 _ejectionThreshold)\n        GSECore(__owner, _asset, _activationThreshold, _ejectionThreshold)\n    {}\n\n    /**\n     * @notice  Get the registration digest of a public key\n     *          by hashing the the public key to a point on the curve which may subsequently\n     *          be signed by the corresponding private key.\n     *\n     * @param _publicKey - The public key to get the registration digest of\n     *\n     * @return The registration digest of the public key. Sign and submit as a proof of possession.\n     */\n    function getRegistrationDigest(G1Point memory _publicKey) external view override(IGSE) returns (G1Point memory) {\n        return BN254_LIB_WRAPPER.g1ToDigestPoint(_publicKey);\n    }\n\n    function getConfig(address _attester) external view override(IGSE) returns (AttesterConfig memory) {\n        return configOf[_attester];\n    }\n\n    function getWithdrawer(address _attester) external view override(IGSE) returns (address withdrawer) {\n        AttesterConfig memory config = configOf[_attester];\n\n        return config.withdrawer;\n    }\n\n    function balanceOf(address _instance, address _attester) external view override(IGSE) returns (uint256) {\n        return delegation.getBalanceOf(_instance, _attester);\n    }\n\n    /**\n     * @notice  Get the effective balance of the attester at the instance.\n     *\n     *          The effective balance is the balance of the attester at the specific instance or at the bonus if the\n     *          instance is the latest rollup and he was not at the specific. We can do this as an `or` since the\n     *          attester may only be active at one of them.\n     *\n     * @param _instance   - The instance to look at\n     * @param _attester   - The attester to look at\n     *\n     * @return The effective balance of the attester at the instance\n     */\n    function effectiveBalanceOf(address _instance, address _attester) external view override(IGSE) returns (uint256) {\n        uint256 balance = delegation.getBalanceOf(_instance, _attester);\n        if (balance == 0 && getLatestRollup() == _instance) {\n            return delegation.getBalanceOf(BONUS_INSTANCE_ADDRESS, _attester);\n        }\n        return balance;\n    }\n\n    function supplyOf(address _instance) external view override(IGSE) returns (uint256) {\n        return delegation.getSupplyOf(_instance);\n    }\n\n    function totalSupply() external view override(IGSE) returns (uint256) {\n        return delegation.getSupply();\n    }\n\n    function getDelegatee(address _instance, address _attester) external view override(IGSE) returns (address) {\n        return delegation.getDelegatee(_instance, _attester);\n    }\n\n    function getVotingPower(address _delegatee) external view override(IGSE) returns (uint256) {\n        return delegation.getVotingPower(_delegatee);\n    }\n\n    function getAttestersFromIndicesAtTime(address _instance, Timestamp _timestamp, uint256[] memory _indices)\n        external\n        view\n        override(IGSE)\n        returns (address[] memory)\n    {\n        return _getAddressFromIndicesAtTimestamp(_instance, _indices, _timestamp);\n    }\n\n    /**\n     * @notice  Get the G1 public keys of the attesters\n     *\n     * NOTE: this function does NOT check if the attesters are CURRENTLY ACTIVE.\n     *\n     * @param _attesters  - The attesters to lookup\n     *\n     * @return The G1 public keys of the attesters\n     */\n    function getG1PublicKeysFromAddresses(address[] memory _attesters)\n        external\n        view\n        override(IGSE)\n        returns (G1Point[] memory)\n    {\n        G1Point[] memory keys = new G1Point[](_attesters.length);\n        for (uint256 i = 0; i < _attesters.length; i++) {\n            keys[i] = configOf[_attesters[i]].publicKey;\n        }\n\n        return keys;\n    }\n\n    function getAttesterFromIndexAtTime(address _instance, uint256 _index, Timestamp _timestamp)\n        external\n        view\n        override(IGSE)\n        returns (address)\n    {\n        uint256[] memory indices = new uint256[](1);\n        indices[0] = _index;\n        return _getAddressFromIndicesAtTimestamp(_instance, indices, _timestamp)[0];\n    }\n\n    function getPowerUsed(address _delegatee, uint256 _proposalId) external view override(IGSE) returns (uint256) {\n        return delegation.getPowerUsed(_delegatee, _proposalId);\n    }\n\n    function getBonusInstanceAddress() external pure override(IGSE) returns (address) {\n        return BONUS_INSTANCE_ADDRESS;\n    }\n\n    function getVotingPowerAt(address _delegatee, Timestamp _timestamp) public view override(IGSE) returns (uint256) {\n        return delegation.getVotingPowerAt(_delegatee, _timestamp);\n    }\n\n    /**\n     * @notice  Get the number of effective attesters at the instance at the time of `_timestamp`\n     *          (including the bonus instance)\n     *\n     * @param _instance   - The instance to look at\n     * @param _timestamp  - The timestamp to lookup\n     *\n     * @return The number of effective attesters at the instance at the time of `_timestamp`\n     */\n    function getAttesterCountAtTime(address _instance, Timestamp _timestamp)\n        public\n        view\n        override(IGSE)\n        returns (uint256)\n    {\n        InstanceAttesterRegistry storage store = instances[_instance];\n        uint32 timestamp = Timestamp.unwrap(_timestamp).toUint32();\n\n        uint256 count = store.attesters.lengthAtTimestamp(timestamp);\n        if (getLatestRollupAt(_timestamp) == _instance) {\n            count += instances[BONUS_INSTANCE_ADDRESS].attesters.lengthAtTimestamp(timestamp);\n        }\n\n        return count;\n    }\n\n    /**\n     * @notice  Get the addresses of the attesters at the instance at the time of `_timestamp`\n     *\n     * @dev\n     *\n     * @param _instance   - The instance to look at\n     * @param _indices    - The indices of the attesters to lookup\n     * @param _timestamp  - The timestamp to lookup\n     *\n     * @return The addresses of the attesters at the instance at the time of `_timestamp`\n     */\n    function _getAddressFromIndicesAtTimestamp(address _instance, uint256[] memory _indices, Timestamp _timestamp)\n        internal\n        view\n        returns (address[] memory)\n    {\n        address[] memory attesters = new address[](_indices.length);\n\n        // Note: This function could get called where _instance is the bonus instance.\n        // This is okay, because we know that in this case, `isLatestRollup` will be false.\n        // So we won't double count.\n        InstanceAttesterRegistry storage instanceStore = instances[_instance];\n        InstanceAttesterRegistry storage bonusStore = instances[BONUS_INSTANCE_ADDRESS];\n        bool isLatestRollup = getLatestRollupAt(_timestamp) == _instance;\n\n        uint32 ts = Timestamp.unwrap(_timestamp).toUint32();\n\n        // The effective size of the set will be the size of the instance attesters, plus the size of the bonus attesters\n        // if the instance is the latest rollup. This will effectively work as one long list with [...instance, ...bonus]\n        uint256 storeSize = instanceStore.attesters.lengthAtTimestamp(ts);\n        uint256 canonicalSize = isLatestRollup ? bonusStore.attesters.lengthAtTimestamp(ts) : 0;\n        uint256 totalSize = storeSize + canonicalSize;\n\n        // We loop through the indices, and for each index we get the attester from the instance or bonus instance\n        // depending on value in the collective list [...instance, ...bonus]\n        for (uint256 i = 0; i < _indices.length; i++) {\n            uint256 index = _indices[i];\n            require(index < totalSize, Errors_1.GSE__OutOfBounds(index, totalSize));\n\n            // since we have ensured that the index is not out of bounds, we can use the unsafe function in\n            // `AddressSnapshotLib` to fetch if. We use the `recent` variant as we expect the attesters to\n            // mainly be from recent history when fetched during tx execution.\n\n            if (index < storeSize) {\n                attesters[i] = instanceStore.attesters.unsafeGetRecentAddressFromIndexAtTimestamp(index, ts);\n            } else if (isLatestRollup) {\n                attesters[i] = bonusStore.attesters.unsafeGetRecentAddressFromIndexAtTimestamp(index - storeSize, ts);\n            } else {\n                revert Errors_1.GSE__FatalError(\"SHOULD NEVER HAPPEN\");\n            }\n        }\n\n        return attesters;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 207,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GSE",
+        "similarity": 0.975,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/GSE.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/GSE.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 207,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "     * @return The registration digest of the public key. Sign and submit as a proof of possession."
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function getRegistrationDigest(G1Point memory _publicKey) external view override(IGSE) returns (G1Point memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        return BN254Lib.g1ToDigestPoint(_publicKey);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        return BN254_LIB_WRAPPER.g1ToDigestPoint(_publicKey);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "    }" },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    function getConfig(address _attester) external view override(IGSE) returns (AttesterConfig memory) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 190,
+            "oldLines": 7,
+            "newStart": 190,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 190,
+                "text": "        // depending on value in the collective list [...instance, ...bonus]"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 191,
+                "text": "        for (uint256 i = 0; i < _indices.length; i++) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 192,
+                "text": "            uint256 index = _indices[i];"
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "            require(index < totalSize, Errors.GSE__OutOfBounds(index, totalSize));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "            require(index < totalSize, Errors_1.GSE__OutOfBounds(index, totalSize));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 194, "newLine": 194, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 195,
+                "text": "            // since we have ensured that the index is not out of bounds, we can use the unsafe function in"
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 196,
+                "text": "            // `AddressSnapshotLib` to fetch if. We use the `recent` variant as we expect the attesters to"
+              }
+            ]
+          },
+          {
+            "oldStart": 201,
+            "oldLines": 7,
+            "newStart": 201,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 201,
+                "text": "            } else if (isLatestRollup) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 202,
+                "text": "                attesters[i] = bonusStore.attesters.unsafeGetRecentAddressFromIndexAtTimestamp(index - storeSize, ts);"
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 203,
+                "text": "            } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "                revert Errors.GSE__FatalError(\"SHOULD NEVER HAPPEN\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "                revert Errors_1.GSE__FatalError(\"SHOULD NEVER HAPPEN\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 205,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 206,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 207, "newLine": 207, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

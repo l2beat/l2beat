@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7acf26943f0cc72fdf1c90c2550699fd49efd97aa507948c9383d97c0f54a3c0",
+  "name": "ERC20Upgradeable",
+  "kind": "abstract",
+  "lines": 304,
+  "source": "abstract contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20, IERC20Metadata, IERC20Errors {\n    /// @custom:storage-location erc7201:openzeppelin.storage.ERC20\n    struct ERC20Storage {\n        mapping(address account => uint256) _balances;\n        mapping(address account => mapping(address spender => uint256)) _allowances;\n        uint256 _totalSupply;\n        string _name;\n        string _symbol;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.ERC20\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant ERC20StorageLocation = 0x52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace00;\n\n    function _getERC20Storage() private pure returns (ERC20Storage storage $) {\n        assembly {\n            $.slot := ERC20StorageLocation\n        }\n    }\n\n    /**\n     * @dev Sets the values for {name} and {symbol}.\n     *\n     * All two of these values are immutable: they can only be set once during\n     * construction.\n     */\n    function __ERC20_init(string memory name_, string memory symbol_) internal onlyInitializing {\n        __ERC20_init_unchained(name_, symbol_);\n    }\n\n    function __ERC20_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing {\n        ERC20Storage storage $ = _getERC20Storage();\n        $._name = name_;\n        $._symbol = symbol_;\n    }\n\n    /**\n     * @dev Returns the name of the token.\n     */\n    function name() public view virtual returns (string memory) {\n        ERC20Storage storage $ = _getERC20Storage();\n        return $._name;\n    }\n\n    /**\n     * @dev Returns the symbol of the token, usually a shorter version of the\n     * name.\n     */\n    function symbol() public view virtual returns (string memory) {\n        ERC20Storage storage $ = _getERC20Storage();\n        return $._symbol;\n    }\n\n    /**\n     * @dev Returns the number of decimals used to get its user representation.\n     * For example, if `decimals` equals `2`, a balance of `505` tokens should\n     * be displayed to a user as `5.05` (`505 / 10 ** 2`).\n     *\n     * Tokens usually opt for a value of 18, imitating the relationship between\n     * Ether and Wei. This is the default value returned by this function, unless\n     * it's overridden.\n     *\n     * NOTE: This information is only used for _display_ purposes: it in\n     * no way affects any of the arithmetic of the contract, including\n     * {IERC20-balanceOf} and {IERC20-transfer}.\n     */\n    function decimals() public view virtual returns (uint8) {\n        return 18;\n    }\n\n    /**\n     * @dev See {IERC20-totalSupply}.\n     */\n    function totalSupply() public view virtual returns (uint256) {\n        ERC20Storage storage $ = _getERC20Storage();\n        return $._totalSupply;\n    }\n\n    /**\n     * @dev See {IERC20-balanceOf}.\n     */\n    function balanceOf(address account) public view virtual returns (uint256) {\n        ERC20Storage storage $ = _getERC20Storage();\n        return $._balances[account];\n    }\n\n    /**\n     * @dev See {IERC20-transfer}.\n     *\n     * Requirements:\n     *\n     * - `to` cannot be the zero address.\n     * - the caller must have a balance of at least `value`.\n     */\n    function transfer(address to, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _transfer(owner, to, value);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-allowance}.\n     */\n    function allowance(address owner, address spender) public view virtual returns (uint256) {\n        ERC20Storage storage $ = _getERC20Storage();\n        return $._allowances[owner][spender];\n    }\n\n    /**\n     * @dev See {IERC20-approve}.\n     *\n     * NOTE: If `value` is the maximum `uint256`, the allowance is not updated on\n     * `transferFrom`. This is semantically equivalent to an infinite approval.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     */\n    function approve(address spender, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _approve(owner, spender, value);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-transferFrom}.\n     *\n     * Emits an {Approval} event indicating the updated allowance. This is not\n     * required by the EIP. See the note at the beginning of {ERC20}.\n     *\n     * NOTE: Does not update the allowance if the current allowance\n     * is the maximum `uint256`.\n     *\n     * Requirements:\n     *\n     * - `from` and `to` cannot be the zero address.\n     * - `from` must have a balance of at least `value`.\n     * - the caller must have allowance for ``from``'s tokens of at least\n     * `value`.\n     */\n    function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {\n        address spender = _msgSender();\n        _spendAllowance(from, spender, value);\n        _transfer(from, to, value);\n        return true;\n    }\n\n    /**\n     * @dev Moves a `value` amount of tokens from `from` to `to`.\n     *\n     * This internal function is equivalent to {transfer}, and can be used to\n     * e.g. implement automatic token fees, slashing mechanisms, etc.\n     *\n     * Emits a {Transfer} event.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _transfer(address from, address to, uint256 value) internal {\n        if (from == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        if (to == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(from, to, value);\n    }\n\n    /**\n     * @dev Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`\n     * (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding\n     * this function.\n     *\n     * Emits a {Transfer} event.\n     */\n    function _update(address from, address to, uint256 value) internal virtual {\n        ERC20Storage storage $ = _getERC20Storage();\n        if (from == address(0)) {\n            // Overflow check required: The rest of the code assumes that totalSupply never overflows\n            $._totalSupply += value;\n        } else {\n            uint256 fromBalance = $._balances[from];\n            if (fromBalance < value) {\n                revert ERC20InsufficientBalance(from, fromBalance, value);\n            }\n            unchecked {\n                // Overflow not possible: value <= fromBalance <= totalSupply.\n                $._balances[from] = fromBalance - value;\n            }\n        }\n\n        if (to == address(0)) {\n            unchecked {\n                // Overflow not possible: value <= totalSupply or value <= fromBalance <= totalSupply.\n                $._totalSupply -= value;\n            }\n        } else {\n            unchecked {\n                // Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256.\n                $._balances[to] += value;\n            }\n        }\n\n        emit Transfer(from, to, value);\n    }\n\n    /**\n     * @dev Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).\n     * Relies on the `_update` mechanism\n     *\n     * Emits a {Transfer} event with `from` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _mint(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(address(0), account, value);\n    }\n\n    /**\n     * @dev Destroys a `value` amount of tokens from `account`, lowering the total supply.\n     * Relies on the `_update` mechanism.\n     *\n     * Emits a {Transfer} event with `to` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead\n     */\n    function _burn(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        _update(account, address(0), value);\n    }\n\n    /**\n     * @dev Sets `value` as the allowance of `spender` over the `owner` s tokens.\n     *\n     * This internal function is equivalent to `approve`, and can be used to\n     * e.g. set automatic allowances for certain subsystems, etc.\n     *\n     * Emits an {Approval} event.\n     *\n     * Requirements:\n     *\n     * - `owner` cannot be the zero address.\n     * - `spender` cannot be the zero address.\n     *\n     * Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.\n     */\n    function _approve(address owner, address spender, uint256 value) internal {\n        _approve(owner, spender, value, true);\n    }\n\n    /**\n     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event.\n     *\n     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by\n     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any\n     * `Approval` event during `transferFrom` operations.\n     *\n     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to\n     * true using the following override:\n     * ```\n     * function _approve(address owner, address spender, uint256 value, bool) internal virtual override {\n     *     super._approve(owner, spender, value, true);\n     * }\n     * ```\n     *\n     * Requirements are the same as {_approve}.\n     */\n    function _approve(address owner, address spender, uint256 value, bool emitEvent) internal virtual {\n        ERC20Storage storage $ = _getERC20Storage();\n        if (owner == address(0)) {\n            revert ERC20InvalidApprover(address(0));\n        }\n        if (spender == address(0)) {\n            revert ERC20InvalidSpender(address(0));\n        }\n        $._allowances[owner][spender] = value;\n        if (emitEvent) {\n            emit Approval(owner, spender, value);\n        }\n    }\n\n    /**\n     * @dev Updates `owner` s allowance for `spender` based on spent `value`.\n     *\n     * Does not update the allowance value in case of infinite allowance.\n     * Revert if not enough allowance is available.\n     *\n     * Does not emit an {Approval} event.\n     */\n    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {\n        uint256 currentAllowance = allowance(owner, spender);\n        if (currentAllowance != type(uint256).max) {\n            if (currentAllowance < value) {\n                revert ERC20InsufficientAllowance(spender, currentAllowance, value);\n            }\n            unchecked {\n                _approve(owner, spender, currentAllowance - value, false);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 264,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ERC20",
+        "similarity": 0.755,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/ERC20.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/ERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 40,
+        "removed": 21,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 13,
+        "unchanged": 264,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 28,
+            "newStart": 1,
+            "newLines": 44,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    mapping(address account => uint256) private _balances;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20, IERC20Metadata, IERC20Errors {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @custom:storage-location erc7201:openzeppelin.storage.ERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    struct ERC20Storage {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "        mapping(address account => uint256) _balances;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "        mapping(address account => mapping(address spender => uint256)) _allowances;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "        uint256 _totalSupply;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        string _name;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        string _symbol;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 9, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 3, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    mapping(address account => mapping(address spender => uint256)) private _allowances;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.ERC20\")) - 1)) & ~bytes32(uint256(0xff))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    bytes32 private constant ERC20StorageLocation = 0x52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace00;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    uint256 private _totalSupply;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _getERC20Storage() private pure returns (ERC20Storage storage $) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "            $.slot := ERC20StorageLocation",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 18, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 7, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    string private _name;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    string private _symbol;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 10, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 11, "newLine": 20, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 21,
+                "text": "     * @dev Sets the values for {name} and {symbol}."
+              },
+              { "type": " ", "oldLine": 13, "newLine": 22, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * Both values are immutable: they can only be set once during construction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * All two of these values are immutable: they can only be set once during",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * construction.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 25, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    constructor(string memory name_, string memory symbol_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        _name = name_;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        _symbol = symbol_;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    function __ERC20_init(string memory name_, string memory symbol_) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        __ERC20_init_unchained(name_, symbol_);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 29, "text": "" },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function __ERC20_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        $._name = name_;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        $._symbol = symbol_;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 35, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 21, "newLine": 36, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 37,
+                "text": "     * @dev Returns the name of the token."
+              },
+              { "type": " ", "oldLine": 23, "newLine": 38, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 39,
+                "text": "    function name() public view virtual returns (string memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        return _name;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        return $._name;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 43, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 44, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 7,
+            "newStart": 46,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 46,
+                "text": "     * name."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 47, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 48,
+                "text": "    function symbol() public view virtual returns (string memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        return _symbol;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        return $._symbol;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 52, "text": "" },
+              { "type": " ", "oldLine": 36, "newLine": 53, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 50,
+            "oldLines": 14,
+            "newStart": 67,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 67,
+                "text": "        return 18;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 68, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 69, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     * @dev See {IERC20-totalSupply}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 73,
+                "text": "    function totalSupply() public view virtual returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        return _totalSupply;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        return $._totalSupply;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 56, "newLine": 76, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 77, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * @dev See {IERC20-balanceOf}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 81,
+                "text": "    function balanceOf(address account) public view virtual returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        return _balances[account];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        return $._balances[account];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 84, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 85, "text": "" },
+              { "type": " ", "oldLine": 63, "newLine": 86, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 9,
+            "newStart": 97,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 97,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 98, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 99, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     * @dev See {IERC20-allowance}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 103,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        return _allowances[owner][spender];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        return $._allowances[owner][spender];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 106, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 107, "text": "" },
+              { "type": " ", "oldLine": 82, "newLine": 108, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 98,
+            "oldLines": 8,
+            "newStart": 124,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 124, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 125,
+                "text": "     * @dev See {IERC20-transferFrom}."
+              },
+              { "type": " ", "oldLine": 100, "newLine": 126, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * Skips emitting an {Approval} event indicating an allowance update. This is not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "     * Emits an {Approval} event indicating the updated allowance. This is not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "     * required by the EIP. See the note at the beginning of {ERC20}.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 103, "newLine": 129, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 130,
+                "text": "     * NOTE: Does not update the allowance if the current allowance"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 131,
+                "text": "     * is the maximum `uint256`."
+              }
+            ]
+          },
+          {
+            "oldStart": 146,
+            "oldLines": 29,
+            "newStart": 172,
+            "newLines": 30,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 172,
+                "text": "     * Emits a {Transfer} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 173,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 174,
+                "text": "    function _update(address from, address to, uint256 value) internal virtual {"
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 176,
+                "text": "        if (from == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 177,
+                "text": "            // Overflow check required: The rest of the code assumes that totalSupply never overflows"
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "            _totalSupply += value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "            $._totalSupply += value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 179,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "            uint256 fromBalance = _balances[from];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "            uint256 fromBalance = $._balances[from];",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 181,
+                "text": "            if (fromBalance < value) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 182,
+                "text": "                revert ERC20InsufficientBalance(from, fromBalance, value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 183,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 184,
+                "text": "            unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 185,
+                "text": "                // Overflow not possible: value <= fromBalance <= totalSupply."
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "                _balances[from] = fromBalance - value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "                $._balances[from] = fromBalance - value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 187,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 188,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 162, "newLine": 189, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 190,
+                "text": "        if (to == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 191,
+                "text": "            unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 192,
+                "text": "                // Overflow not possible: value <= totalSupply or value <= fromBalance <= totalSupply."
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "                _totalSupply -= value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "                $._totalSupply -= value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 194,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 195,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 196,
+                "text": "            unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 197,
+                "text": "                // Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256."
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "                _balances[to] += value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "                $._balances[to] += value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 199,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 200,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 174, "newLine": 201, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 206,
+            "oldLines": 7,
+            "newStart": 233,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 206, "newLine": 233, "text": "    }" },
+              { "type": " ", "oldLine": 207, "newLine": 234, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 235,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "     * @dev Sets `value` as the allowance of `spender` over the `owner`'s tokens.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "     * @dev Sets `value` as the allowance of `spender` over the `owner` s tokens.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 210, "newLine": 237, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 238,
+                "text": "     * This internal function is equivalent to `approve`, and can be used to"
+              },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 239,
+                "text": "     * e.g. set automatic allowances for certain subsystems, etc."
+              }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 13,
+            "newStart": 255,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 255,
+                "text": "     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 256, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 257,
+                "text": "     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation sets the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 259,
+                "text": "     * `Approval` event during `transferFrom` operations."
+              },
+              { "type": " ", "oldLine": 233, "newLine": 260, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the `transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 262,
+                "text": "     * true using the following override:"
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "     * ```solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "     * ```",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 264,
+                "text": "     * function _approve(address owner, address spender, uint256 value, bool) internal virtual override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 265,
+                "text": "     *     super._approve(owner, spender, value, true);"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 266,
+                "text": "     * }"
+              }
+            ]
+          },
+          {
+            "oldStart": 243,
+            "oldLines": 20,
+            "newStart": 269,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 269,
+                "text": "     * Requirements are the same as {_approve}."
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 270,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 271,
+                "text": "    function _approve(address owner, address spender, uint256 value, bool emitEvent) internal virtual {"
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "        ERC20Storage storage $ = _getERC20Storage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 273,
+                "text": "        if (owner == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 274,
+                "text": "            revert ERC20InvalidApprover(address(0));"
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 275,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 276,
+                "text": "        if (spender == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 277,
+                "text": "            revert ERC20InvalidSpender(address(0));"
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 278,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "        _allowances[owner][spender] = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "        $._allowances[owner][spender] = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 280,
+                "text": "        if (emitEvent) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 281,
+                "text": "            emit Approval(owner, spender, value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 282,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 256, "newLine": 283, "text": "    }" },
+              { "type": " ", "oldLine": 257, "newLine": 284, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 285,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "     * @dev Updates `owner`'s allowance for `spender` based on spent `value`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "     * @dev Updates `owner` s allowance for `spender` based on spent `value`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 260, "newLine": 287, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 288,
+                "text": "     * Does not update the allowance value in case of infinite allowance."
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 289,
+                "text": "     * Revert if not enough allowance is available."
+              }
+            ]
+          },
+          {
+            "oldStart": 265,
+            "oldLines": 7,
+            "newStart": 292,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 292,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 293,
+                "text": "    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 294,
+                "text": "        uint256 currentAllowance = allowance(owner, spender);"
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "        if (currentAllowance < type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "        if (currentAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 296,
+                "text": "            if (currentAllowance < value) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 297,
+                "text": "                revert ERC20InsufficientAllowance(spender, currentAllowance, value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 298,
+                "text": "            }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

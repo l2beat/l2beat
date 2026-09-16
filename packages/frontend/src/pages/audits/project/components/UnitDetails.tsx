@@ -8,9 +8,11 @@ import { UnitSourceView } from './UnitSourceView'
 export function UnitDetails({
   unit,
   view,
+  hideIgnoredChanges,
 }: {
   unit: AuditsUnitEntry
   view: 'source' | 'diff'
+  hideIgnoredChanges: boolean
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
@@ -50,10 +52,15 @@ export function UnitDetails({
             </a>{' '}
             ({unit.match.reportTitle}) to the deployed unit. Removed lines are
             audited code missing onchain, added lines are deployed code that was
-            not audited. Dimmed lines are ignored changes (comments, require
-            messages) that do not count.
+            not audited.{' '}
+            {hideIgnoredChanges
+              ? 'Ignored changes (comments, require messages) are hidden.'
+              : 'Ignored changes (comments, require messages) are shown too, although they do not count.'}
           </div>
-          <UnitDiffView diff={data.diff} />
+          <UnitDiffView
+            diff={data.diff}
+            hideIgnoredChanges={hideIgnoredChanges}
+          />
         </>
       ) : (
         <UnitSourceView source={data.source} startLine={data.startLine} />

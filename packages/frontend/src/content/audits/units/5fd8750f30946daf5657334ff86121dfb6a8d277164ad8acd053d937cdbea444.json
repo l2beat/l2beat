@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5fd8750f30946daf5657334ff86121dfb6a8d277164ad8acd053d937cdbea444",
+  "name": "validate_final_blob_batching_challenges.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "use crate::abis::{\n    blob_accumulator::BlobAccumulator, final_blob_batching_challenges::FinalBlobBatchingChallenges,\n};\nuse bignum::bignum;\nuse types::{constants::DOM_SEP__BLOB_GAMMA_FINAL, hash::poseidon2_hash_with_separator};\n\n/// Validate the challenges used throughout the blob accumulation against the final state of the accumulator.\npub fn validate_final_blob_batching_challenges(\n    accumulator: BlobAccumulator,\n    challenges: FinalBlobBatchingChallenges,\n) {\n    assert_eq(accumulator.z_acc, challenges.z, \"Final blob challenge z mismatch.\");\n\n    let gamma = poseidon2_hash_with_separator(\n        [accumulator.gamma_acc, accumulator.z_acc],\n        DOM_SEP__BLOB_GAMMA_FINAL,\n    );\n    assert_eq(gamma, bignum::to_field(challenges.gamma), \"Final blob challenge gamma mismatch.\");\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

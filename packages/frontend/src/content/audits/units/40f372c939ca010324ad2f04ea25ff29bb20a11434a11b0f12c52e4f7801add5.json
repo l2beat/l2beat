@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "40f372c939ca010324ad2f04ea25ff29bb20a11434a11b0f12c52e4f7801add5",
+  "name": "IScrollERC1155",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface IScrollERC1155 is IERC1155, IScrollERC1155Extension {}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 0,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IScrollERC1155",
+        "similarity": 0,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollERC1155.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/token/IScrollERC1155.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 29,
+        "unchanged": 0,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 38,
+            "newStart": 1,
+            "newLines": 1,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IScrollERC1155 is IERC1155 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Return the address of Gateway the token belongs to.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    function gateway() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 4, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @notice Return the address of counterpart token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function counterpart() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Mint some token to recipient's account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param _to The address of recipient.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @param _tokenId The token id to mint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @param _amount The amount of token to mint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @param _data The data passed to recipient",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    function mint(address _to, uint256 _tokenId, uint256 _amount, bytes memory _data) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @notice Burn some token from account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @param _from The address of account to burn token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @param _tokenId The token id to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @param _amount The amount of token to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function burn(address _from, uint256 _tokenId, uint256 _amount) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 22, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @notice Batch mint some token to recipient's account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param _to The address of recipient.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param _tokenIds The token id to mint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param _amounts The list of corresponding amount of token to mint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @param _data The data passed to recipient",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    function batchMint(address _to, uint256[] calldata _tokenIds, uint256[] calldata _amounts, bytes calldata _data)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 31, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @notice Batch burn some token from account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param _from The address of account to burn token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @param _tokenIds The list of token ids to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @param _amounts The list of corresponding amount of token to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    function batchBurn(address _from, uint256[] calldata _tokenIds, uint256[] calldata _amounts) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IScrollERC1155 is IERC1155, IScrollERC1155Extension {}",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

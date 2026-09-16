@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4d7ad1312e43755512d4d412a4988f3a1ee3cf8bb8a816a3d3d7de71bf1e867d",
+  "name": "InvalidateLib",
+  "kind": "library",
+  "lines": 214,
+  "source": "library InvalidateLib {\n    using TimeLib for Timestamp;\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using ChainTipsLib for CompressedChainTips;\n    using AttestationLib for CommitteeAttestations;\n    using CompressedTimeMath for CompressedSlot;\n\n    /**\n     * @notice Invalidates a checkpoint containing an invalid attestation\n     * @dev Anyone can call this function to remove checkpoints with invalid attestations.\n     *\n     *      There are two cases where an individual attestation might be invalid:\n     *      1. The attestation is a signature that does not recover to the address from the committee\n     *      2. The attestation is an address, that does not match the address from the committee\n     *\n     *      Upon successful validation of the invalid attestation, the checkpoint and all subsequent pending\n     *      checkpoints are removed from the chain by resetting the pending tip to the previous valid checkpoint.\n     *\n     *      No economic rebate is provided for calling this function.\n     *\n     * @param _checkpointNumber The checkpoint number to invalidate (must be in pending chain)\n     * @param _attestations The attestations that were submitted with the checkpoint (must match stored hash)\n     * @param _committee The committee members for the checkpoint's epoch (must match stored computed commitment)\n     * @param _invalidIndex The index in the committee/attestations array of the invalid attestation\n     *\n     * @custom:reverts Errors.Rollup__CheckpointNotInPendingChain If checkpoint number is beyond pending tip\n     * @custom:reverts Errors.Rollup__CheckpointAlreadyProven If checkpoint number is already proven\n     * @custom:reverts Errors.Rollup__InvalidAttestations If provided attestations don't match stored hash\n     * @custom:reverts Errors.ValidatorSelection__InvalidCommitteeCommitment If committee doesn't match stored commitment\n     * @custom:reverts Rollup__InvalidAttestationIndex if the _invalidIndex is beyond the committee\n     * @custom:reverts Errors.Rollup__AttestationsAreValid If the attestation at invalidIndex is actually valid\n     */\n    function invalidateBadAttestation(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee,\n        uint256 _invalidIndex\n    ) internal {\n        (bytes32 digest, uint256 committeeSize) =\n            _validateInvalidationInputs(_checkpointNumber, _attestations, _committee);\n        require(_invalidIndex < committeeSize, Errors.Rollup__InvalidAttestationIndex());\n\n        address recovered;\n\n        // Verify that the attestation at invalidIndex does not match the the expected attestation\n        // i.e., either recover the address directly from the attestations if no signature\n        // or recover the address from the signature if there is a signature.\n        // Then take the recovered address and check it against the committee\n        if (!_attestations.isSignature(_invalidIndex)) {\n            recovered = _attestations.getAddress(_invalidIndex);\n        } else {\n            Signature memory signature = _attestations.getSignature(_invalidIndex);\n            // We use `tryRecover` instead of `recover` since we want improper signatures to return `address(0)` rather than\n            // revert. Since `address(0)` is not allowed as an attester, this will cause the recovered address to not match\n            // the committee data.\n            (recovered,,) = ECDSA.tryRecover(digest, signature.v, signature.r, signature.s);\n        }\n\n        require(recovered != _committee[_invalidIndex], Errors.Rollup__AttestationsAreValid());\n\n        _invalidateCheckpoint(_checkpointNumber);\n    }\n\n    /**\n     * @notice Invalidates a checkpoint that doesn't meet the required >2/3 committee attestation threshold\n     * @dev Anyone can call this function to remove checkpoints with insufficient valid attestations.\n     *\n     *      The function counts the number of signature attestations (as opposed to address attestations) and\n     *      compares against the required threshold of (committeeSize * 2 / 3) + 1. If insufficient signatures\n     *      are present, the checkpoint and all subsequent pending checkpoints are removed from the chain.\n     *\n     *      No economic rebate is provided for calling this function.\n     *\n     * @param _checkpointNumber The checkpoint number to invalidate (must be in pending chain)\n     * @param _attestations The attestations that were submitted with the checkpoint (must match stored hash)\n     * @param _committee The committee members for the checkpoint's epoch (must match stored commitment)\n     *\n     * @custom:reverts Errors.Rollup__CheckpointNotInPendingChain If checkpoint number is beyond pending tip\n     * @custom:reverts Errors.Rollup__CheckpointAlreadyProven If checkpoint number is already proven\n     * @custom:reverts Errors.Rollup__InvalidAttestations If provided attestations don't match stored hash\n     * @custom:reverts Errors.ValidatorSelection__InvalidCommitteeCommitment If committee doesn't match stored commitment\n     * @custom:reverts Errors.ValidatorSelection__InsufficientAttestations If the attestations actually meet the threshold\n     */\n    function invalidateInsufficientAttestations(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee\n    ) internal {\n        (, uint256 committeeSize) = _validateInvalidationInputs(_checkpointNumber, _attestations, _committee);\n\n        uint256 signatureCount = 0;\n        for (uint256 i = 0; i < committeeSize; ++i) {\n            if (_attestations.isSignature(i)) {\n                signatureCount++;\n            }\n        }\n\n        // Calculate required threshold (2/3 + 1)\n        uint256 requiredSignatures = (committeeSize << 1) / 3 + 1; // committeeSize * 2 / 3 + 1\n\n        // Ensure the number of valid signatures is actually insufficient\n        require(\n            signatureCount < requiredSignatures,\n            Errors.ValidatorSelection__InsufficientAttestations(requiredSignatures, signatureCount)\n        );\n\n        _invalidateCheckpoint(_checkpointNumber);\n    }\n\n    /**\n     * @notice Common validation logic shared by all invalidation functions\n     * @dev Performs validation checks to ensure invalidation calls are legitimate and target valid checkpoints.\n     *      This function establishes the foundation for all invalidation operations by verifying:\n     *\n     *      1. Checkpoint existence and state: The target checkpoint must be in the pending chain (after the proven tip\n     *         but not beyond the pending tip). Proven checkpoints cannot be invalidated as they are final.\n     *\n     *      2. Attestation integrity: The provided attestations must exactly match the hash stored when the\n     *         checkpoint was originally proposed. This prevents manipulation of attestation data.\n     *\n     *      3. Committee authenticity: The provided committee addresses must match the commitment stored for\n     *         the checkpoint's epoch. This ensures invalidation is based on the actual committee that should have\n     *         attested to the checkpoint.\n     *\n     *      4. Signature context: Computes the digest that committee members were expected to sign, enabling\n     *         proper signature verification in calling functions.\n     *\n     * @param _checkpointNumber The checkpoint number being validated for invalidation\n     * @param _attestations The attestations provided for validation\n     * @param _committee The committee members for the checkpoint's epoch\n     * @return digest The payload digest that committee members signed\n     * @return committeeSize The number of committee members for the epoch\n     *\n     * @custom:reverts Errors.Rollup__CheckpointNotInPendingChain If checkpoint is beyond the current pending tip\n     * @custom:reverts Errors.Rollup__CheckpointAlreadyProven If checkpoint has already been proven and is final\n     * @custom:reverts Errors.Rollup__InvalidAttestations If attestations hash doesn't match stored value\n     * @custom:reverts Errors.ValidatorSelection__InvalidCommitteeCommitment If committee hash doesn't match stored\n     * commitment\n     */\n    function _validateInvalidationInputs(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee\n    ) private returns (bytes32, uint256) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        // Checkpoint must be in the pending chain\n        require(_checkpointNumber <= rollupStore.tips.getPending(), Errors.Rollup__CheckpointNotInPendingChain());\n\n        // But not yet proven\n        require(_checkpointNumber > rollupStore.tips.getProven(), Errors.Rollup__CheckpointAlreadyProven());\n\n        // Get the stored checkpoint data\n        CompressedTempCheckpointLog storage checkpointLog = STFLib.getStorageTempCheckpointLog(_checkpointNumber);\n\n        // Verify that the provided attestations match the stored hash\n        bytes32 providedAttestationsHash = keccak256(abi.encode(_attestations));\n        require(providedAttestationsHash == checkpointLog.attestationsHash, Errors.Rollup__InvalidAttestations());\n\n        // Get the epoch for the checkpoint's slot to verify committee\n        Epoch epoch = checkpointLog.slotNumber.decompress().epochFromSlot();\n\n        // Check if this is an escape hatch epoch - escape hatch checkpoints cannot be invalidated\n        // since they have no committee attestations by design.\n        // Uses epoch-stable lookup so invalidation rules use the escape hatch that was\n        // active when the epoch started, not whatever is currently configured.\n        {\n            IEscapeHatch escapeHatch = ValidatorSelectionLib.getEscapeHatchForEpoch(epoch);\n            if (address(escapeHatch) != address(0)) {\n                (bool isOpen,) = escapeHatch.isHatchOpen(epoch);\n                require(!isOpen, Errors.Rollup__CannotInvalidateEscapeHatch());\n            }\n        }\n\n        // Get and verify the committee commitment\n        (bytes32 committeeCommitment, uint256 committeeSize) = ValidatorSelectionLib.getCommitteeCommitmentAt(epoch);\n        bytes32 providedCommitteeCommitment = keccak256(abi.encode(_committee));\n        require(\n            committeeCommitment == providedCommitteeCommitment,\n            Errors.ValidatorSelection__InvalidCommitteeCommitment(providedCommitteeCommitment, committeeCommitment)\n        );\n\n        // Get the digest of the payload that was signed by the committee\n        bytes32 digest = checkpointLog.payloadDigest;\n\n        return (digest, committeeSize);\n    }\n\n    /**\n     * @notice Helper that invalidates a checkpoint by rolling back the pending chain to the previous valid checkpoint\n     * @dev This function implements the core invalidation logic by updating the chain tips to remove\n     *      the invalid checkpoint and all subsequent checkpoints from the pending chain. The rollback is atomic\n     *      and immediately takes effect, preventing any further operations on the invalidated checkpoints.\n     *\n     *      The invalidation works by:\n     *      1. Setting the pending checkpoint number to (_checkpointNumber - 1)\n     *      2. Emitting a CheckpointInvalidated event for external observers\n     *\n     *      This approach ensures that when the next valid checkpoint is proposed, it will build on the\n     *      last remaining valid checkpoint, effectively removing the invalid checkpoint and any checkpoints that\n     *      were built on top of it.\n     *\n     *      Note: This function does not clean up the storage for invalidated checkpoints (archive roots,\n     *      temp checkpoint logs, etc.) as they may be overwritten by future valid checkpoints at the same numbers.\n     *\n     * @param _checkpointNumber The checkpoint number to invalidate\n     */\n    function _invalidateCheckpoint(uint256 _checkpointNumber) private {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        rollupStore.tips = rollupStore.tips.updatePending(_checkpointNumber - 1);\n        emit IRollupCore.CheckpointInvalidated(_checkpointNumber);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 212,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "InvalidateLib",
+        "similarity": 0.969,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 212,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    using TimeLib for Epoch;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    using ChainTipsLib for CompressedChainTips;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    using AttestationLib for CommitteeAttestations;"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    using MessageHashUtils for bytes32;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 7,
+                "text": "    using CompressedTimeMath for CompressedSlot;"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 8, "text": "" },
+              { "type": " ", "oldLine": 10, "newLine": 9, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 163,
+            "oldLines": 9,
+            "newStart": 162,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 162,
+                "text": "        Epoch epoch = checkpointLog.slotNumber.decompress().epochFromSlot();"
+              },
+              { "type": " ", "oldLine": 164, "newLine": 163, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 164,
+                "text": "        // Check if this is an escape hatch epoch - escape hatch checkpoints cannot be invalidated"
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "        // since they have no committee attestations by design",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "        // since they have no committee attestations by design.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "        // Uses epoch-stable lookup so invalidation rules use the escape hatch that was",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "        // active when the epoch started, not whatever is currently configured.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 168,
+                "text": "        {"
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "            IEscapeHatch escapeHatch = ValidatorSelectionLib.getEscapeHatch();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            IEscapeHatch escapeHatch = ValidatorSelectionLib.getEscapeHatchForEpoch(epoch);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 170,
+                "text": "            if (address(escapeHatch) != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 171,
+                "text": "                (bool isOpen,) = escapeHatch.isHatchOpen(epoch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 172,
+                "text": "                require(!isOpen, Errors.Rollup__CannotInvalidateEscapeHatch());"
+              }
+            ]
+          },
+          {
+            "oldStart": 181,
+            "oldLines": 7,
+            "newStart": 182,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 182,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 182, "newLine": 183, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 184,
+                "text": "        // Get the digest of the payload that was signed by the committee"
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "        bytes32 digest = checkpointLog.payloadDigest.toEthSignedMessageHash();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        bytes32 digest = checkpointLog.payloadDigest;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 185, "newLine": 186, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 187,
+                "text": "        return (digest, committeeSize);"
+              },
+              { "type": " ", "oldLine": 187, "newLine": 188, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

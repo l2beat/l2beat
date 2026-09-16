@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c9dcbd518c540eca36c6710c57f39c5c073efbd7dabb4e019be012b5ae0aeb6b",
+  "name": "BN254Lib",
+  "kind": "library",
+  "lines": 283,
+  "source": "library BN254Lib {\n    /**\n     * We use uint256[2] for G1 points and uint256[4] for G2 points.\n     * For G1 points, the expected order is (x, y).\n     * For G2 points, the expected order is (x_imaginary, x_real, y_imaginary, y_real)\n     * Using structs would be more readable, but it would be more expensive to use them, particularly\n     * when aggregating the public keys, since we need to convert to uint256[2] and uint256[4] anyway.\n     */\n    // See bn254_registration.test.ts and BLSKey.t.sol for tests which validate these constants.\n    uint256 public constant BASE_FIELD_ORDER =\n        21_888_242_871_839_275_222_246_405_745_257_275_088_696_311_157_297_823_662_689_037_894_645_226_208_583;\n\n    uint256 public constant GROUP_ORDER =\n        21_888_242_871_839_275_222_246_405_745_257_275_088_548_364_400_416_034_343_698_204_186_575_808_495_617;\n\n    bytes32 public constant STAKING_DOMAIN_SEPARATOR = bytes32(\"AZTEC_BLS_POP_BN254_V1\");\n\n    error AddPointFail();\n    error MulPointFail();\n    error GammaZero();\n    error SqrtFail();\n    error PairingFail();\n    error NoPointFound();\n    error InfinityNotAllowed();\n\n    /**\n     * @notice Prove possession of a secret for a point in G1 and G2.\n     *\n     * Ultimately, we want to check:\n     * - That the caller knows the secret key of pk2 (to prevent rogue-key attacks)\n     * - That pk1 and pk2 have the same secret key (as an optimization)\n     *\n     * Registering two public keys is an optimization: It means we can do G1-only operations\n     * at the time of verifying a signature, which is much cheaper than G2 operations.\n     *\n     * In this function, we check:\n     * e(signature + gamma * pk1, -G2) * e(hashToPoint(pk1) + gamma * G1, pk2) == 1\n     *\n     * Which is effectively a check that:\n     * e(signature, G2) == e(hashToPoint(pk1), pk2) // a BLS signature over msg = pk1, to prove knowledge of the sk.\n     * e(pk1, G2) == e(G1, pk2) // a demonstration that pk1 and pk2 have the same sk.\n     *\n     * @param pk1 The G1 point of the BLS public key (x, y coordinates)\n     * @param pk2 The G2 point of the BLS public key (x_1, x_0, y_1, y_0 coordinates)\n     * @param signature The G1 point that acts as a proof of possession of the private keys corresponding to pk1 and pk2\n     */\n    function proofOfPossession(G1Point memory pk1, G2Point memory pk2, G1Point memory signature)\n        internal\n        view\n        returns (bool)\n    {\n        // Ensure that provided points are not infinity\n        require(!isZero(pk1), InfinityNotAllowed());\n        require(!isZero(pk2), InfinityNotAllowed());\n        require(!isZero(signature), InfinityNotAllowed());\n\n        // Compute the point \"digest\" of the pk1 that sigma is a signature over\n        G1Point memory pk1DigestPoint = g1ToDigestPoint(pk1);\n\n        // Random challenge:\n        // gamma = keccak(pk1, pk2, signature) mod |Fr|\n        uint256 gamma = gammaOf(pk1, pk2, signature);\n        require(gamma != 0, GammaZero());\n\n        // Build G1 L = signature + gamma * pk1\n        G1Point memory left = g1Add(signature, g1Mul(pk1, gamma));\n\n        // Build G1 R = pk1DigestPoint + gamma * G1\n        G1Point memory right = g1Add(pk1DigestPoint, g1Mul(g1Generator(), gamma));\n\n        // Pairing: e(L, -G2) * e(R, pk2) == 1\n        return bn254Pairing(left, g2NegatedGenerator(), right, pk2);\n    }\n\n    /// @notice Convert a G1 point (public key) to the digest point that must be signed to prove possession.\n    /// @dev exposed as public to allow clients not to have implemented the hashToPoint function.\n    function g1ToDigestPoint(G1Point memory pk1) internal view returns (G1Point memory) {\n        bytes memory pk1Bytes = abi.encodePacked(pk1.x, pk1.y);\n        return hashToPoint(STAKING_DOMAIN_SEPARATOR, pk1Bytes);\n    }\n\n    /// @dev Add two points on BN254 G1 (affine coords).\n    ///      Reverts if the inputs are not on‐curve.\n    function g1Add(G1Point memory p1, G1Point memory p2) internal view returns (G1Point memory output) {\n        uint256[4] memory input;\n        input[0] = p1.x;\n        input[1] = p1.y;\n        input[2] = p2.x;\n        input[3] = p2.y;\n\n        bool success;\n        assembly {\n            // call(gas, to, value, in, insize, out, outsize)\n            // STATICCALL is 40 gas vs 700 gas for CALL\n            success :=\n                staticcall(\n                    sub(gas(), 2000),\n                    0x06, // precompile address\n                    input,\n                    0x80, // input size = 4 × 32 bytes\n                    output,\n                    0x40 // output size = 2 × 32 bytes\n                )\n        }\n\n        if (!success) {\n            revert AddPointFail();\n        }\n        return output;\n    }\n\n    /// @dev Multiply a point by a scalar (little‑endian 256‑bit integer).\n    ///      Reverts if the point is not on‐curve or the scalar ≥ p.\n    function g1Mul(G1Point memory p, uint256 s) internal view returns (G1Point memory output) {\n        uint256[3] memory input;\n        input[0] = p.x;\n        input[1] = p.y;\n        input[2] = s;\n\n        bool success;\n        assembly {\n            success :=\n                staticcall(\n                    sub(gas(), 2000),\n                    0x07, // precompile address\n                    input,\n                    0x60, // input size = 3 × 32 bytes\n                    output,\n                    0x40 // output size = 2 × 32 bytes\n                )\n        }\n        if (!success) {\n            revert MulPointFail();\n        }\n        return output;\n    }\n\n    function bn254Pairing(G1Point memory g1a, G2Point memory g2a, G1Point memory g1b, G2Point memory g2b)\n        internal\n        view\n        returns (bool)\n    {\n        uint256[12] memory input;\n\n        input[0] = g1a.x;\n        input[1] = g1a.y;\n        input[2] = g2a.x1;\n        input[3] = g2a.x0;\n        input[4] = g2a.y1;\n        input[5] = g2a.y0;\n\n        input[6] = g1b.x;\n        input[7] = g1b.y;\n        input[8] = g2b.x1;\n        input[9] = g2b.x0;\n        input[10] = g2b.y1;\n        input[11] = g2b.y0;\n\n        uint256[1] memory result;\n        bool didCallSucceed;\n        assembly {\n            didCallSucceed :=\n                staticcall(\n                    sub(gas(), 2000),\n                    8,\n                    input,\n                    0x180, // input size = 12 * 32 bytes\n                    result,\n                    0x20 // output size = 32 bytes\n                )\n        }\n        require(didCallSucceed, PairingFail());\n        return result[0] == 1;\n    }\n\n    // The hash to point is based on the \"mapToPoint\" function in https://www.iacr.org/archive/asiacrypt2001/22480516.pdf\n    function hashToPoint(bytes32 domain, bytes memory message) internal view returns (G1Point memory output) {\n        bool found = false;\n        uint256 attempts = 0;\n        while (true) {\n            uint256 x = uint256(keccak256(abi.encode(domain, message, attempts)));\n            attempts++;\n\n            if (x >= BASE_FIELD_ORDER) {\n                continue;\n            }\n\n            uint256 y = mulmod(x, x, BASE_FIELD_ORDER);\n            y = mulmod(y, x, BASE_FIELD_ORDER);\n            y = addmod(y, 3, BASE_FIELD_ORDER);\n            (y, found) = sqrt(y);\n            if (found) {\n                uint256 y0 = y;\n                uint256 y1 = BASE_FIELD_ORDER - y;\n\n                // Ensure that y1 > y0, flip em if necessary\n                if (y0 > y1) {\n                    (y0, y1) = (y1, y0);\n                }\n\n                uint256 b = uint256(keccak256(abi.encode(domain, message, type(uint256).max)));\n                if (b & 1 == 0) {\n                    output = G1Point({x: x, y: y0});\n                } else {\n                    output = G1Point({x: x, y: y1});\n                }\n\n                break;\n            }\n        }\n        require(found, NoPointFound());\n        return output;\n    }\n\n    function sqrt(uint256 xx) internal view returns (uint256 x, bool hasRoot) {\n        bool callSuccess;\n        assembly {\n            let freeMem := mload(0x40)\n            mstore(freeMem, 0x20)\n            mstore(add(freeMem, 0x20), 0x20)\n            mstore(add(freeMem, 0x40), 0x20)\n            mstore(add(freeMem, 0x60), xx)\n            // (N + 1) / 4 = 0xc19139cb84c680a6e14116da060561765e05aa45a1c72a34f082305b61f3f52\n            mstore(add(freeMem, 0x80), 0xc19139cb84c680a6e14116da060561765e05aa45a1c72a34f082305b61f3f52)\n            // N = BASE_FIELD_ORDER\n            mstore(add(freeMem, 0xA0), BASE_FIELD_ORDER)\n            callSuccess := staticcall(sub(gas(), 2000), 5, freeMem, 0xC0, freeMem, 0x20)\n            x := mload(freeMem)\n            hasRoot := eq(xx, mulmod(x, x, BASE_FIELD_ORDER))\n        }\n        require(callSuccess, SqrtFail());\n    }\n\n    /// @notice γ = keccak(PK1, PK2, σ_init) mod Fr\n    function gammaOf(G1Point memory pk1, G2Point memory pk2, G1Point memory sigmaInit)\n        internal\n        pure\n        returns (uint256)\n    {\n        return uint256(keccak256(abi.encode(pk1.x, pk1.y, pk2.x0, pk2.x1, pk2.y0, pk2.y1, sigmaInit.x, sigmaInit.y)))\n            % GROUP_ORDER;\n    }\n\n    function g1Negate(G1Point memory p) internal pure returns (G1Point memory) {\n        if (p.x == 0 && p.y == 0) {\n            // Point at infinity remains unchanged\n            return p;\n        }\n\n        // For a point (x, y), its negation is (x, -y mod p)\n        // Since we're working in the field Fp, -y mod p = p - y\n        return G1Point({x: p.x, y: BASE_FIELD_ORDER - p.y});\n    }\n\n    function g1Zero() internal pure returns (G1Point memory) {\n        return G1Point({x: 0, y: 0});\n    }\n\n    function isZero(G1Point memory p) internal pure returns (bool) {\n        return p.x == 0 && p.y == 0;\n    }\n\n    function g1Generator() internal pure returns (G1Point memory) {\n        return G1Point({x: 1, y: 2});\n    }\n\n    function g2Zero() internal pure returns (G2Point memory) {\n        return G2Point({x0: 0, x1: 0, y0: 0, y1: 0});\n    }\n\n    function isZero(G2Point memory p) internal pure returns (bool) {\n        return p.x0 == 0 && p.x1 == 0 && p.y0 == 0 && p.y1 == 0;\n    }\n\n    function g2NegatedGenerator() internal pure returns (G2Point memory) {\n        return G2Point({\n            x0: 10_857_046_999_023_057_135_944_570_762_232_829_481_370_756_359_578_518_086_990_519_993_285_655_852_781,\n            x1: 11_559_732_032_986_387_107_991_004_021_392_285_783_925_812_861_821_192_530_917_403_151_452_391_805_634,\n            y0: 13_392_588_948_715_843_804_641_432_497_768_002_650_278_120_570_034_223_513_918_757_245_338_268_106_653,\n            y1: 17_805_874_995_975_841_540_914_202_342_111_839_520_379_459_829_704_422_454_583_296_818_431_106_115_052\n        });\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 278,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "BN254Lib",
+        "similarity": 0.982,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
+        "commit": "1856c6133d4f5f5d8e465722be5d752dff3864bb",
+        "commitTimestamp": "2025-09-30T11:47:50Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/1856c6133d4f5f5d8e465722be5d752dff3864bb/l1-contracts/src/shared/libraries/BN254Lib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed fix commit for V-AZGV-VUL-009 (PR 17262)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 5,
+        "removed": 2,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 8,
+        "unchanged": 278,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * Using structs would be more readable, but it would be more expensive to use them, particularly"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * when aggregating the public keys, since we need to convert to uint256[2] and uint256[4] anyway."
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     */" },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 9,
+                "text": "    // See bn254_registration.test.ts and BLSKey.t.sol for tests which validate these constants."
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "    uint256 public constant BASE_FIELD_ORDER ="
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 11,
+                "text": "        21_888_242_871_839_275_222_246_405_745_257_275_088_696_311_157_297_823_662_689_037_894_645_226_208_583;"
+              }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 7,
+            "newStart": 79,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "        return hashToPoint(STAKING_DOMAIN_SEPARATOR, pk1Bytes);"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 80, "text": "    }" },
+              { "type": " ", "oldLine": 82, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @dev Add two points on BN254 G1 (affine coords).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @dev Add two points on BN254 G1 (affine coords).",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 83,
+                "text": "    ///      Reverts if the inputs are not on‐curve."
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 84,
+                "text": "    function g1Add(G1Point memory p1, G1Point memory p2) internal view returns (G1Point memory output) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 85,
+                "text": "        uint256[4] memory input;"
+              }
+            ]
+          },
+          {
+            "oldStart": 92,
+            "oldLines": 15,
+            "newStart": 91,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 91,
+                "text": "        bool success;"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 92,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 93,
+                "text": "            // call(gas, to, value, in, insize, out, outsize)"
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "            // STATICCALL is 40 gas vs 700 gas for CALL",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            // STATICCALL is 40 gas vs 700 gas for CALL",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 95,
+                "text": "            success :="
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 96,
+                "text": "                staticcall("
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 97,
+                "text": "                    sub(gas(), 2000),"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 98,
+                "text": "                    0x06, // precompile address"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 99,
+                "text": "                    input,"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "                    0x80, // input size = 4 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "                    0x80, // input size = 4 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 101,
+                "text": "                    output,"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "                    0x40 // output size = 2 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "                    0x40 // output size = 2 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 103,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 104,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 105, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 110,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 111, "newLine": 110, "text": "    }" },
+              { "type": " ", "oldLine": 112, "newLine": 111, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 112,
+                "text": "    /// @dev Multiply a point by a scalar (little‑endian 256‑bit integer)."
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    ///      Reverts if the point is not on‐curve or the scalar ≥ p.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    ///      Reverts if the point is not on‐curve or the scalar ≥ p.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 114,
+                "text": "    function g1Mul(G1Point memory p, uint256 s) internal view returns (G1Point memory output) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 115,
+                "text": "        uint256[3] memory input;"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 116,
+                "text": "        input[0] = p.x;"
+              }
+            ]
+          },
+          {
+            "oldStart": 125,
+            "oldLines": 9,
+            "newStart": 124,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "                    sub(gas(), 2000),"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 125,
+                "text": "                    0x07, // precompile address"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 126,
+                "text": "                    input,"
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "                    0x60, // input size = 3 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                    0x60, // input size = 3 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 128,
+                "text": "                    output,"
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "                    0x40 // output size = 2 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "                    0x40 // output size = 2 × 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 130,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 131,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 132,
+                "text": "        if (!success) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 179,
+            "oldLines": 9,
+            "newStart": 178,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 178,
+                "text": "        bool found = false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 179,
+                "text": "        uint256 attempts = 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 180,
+                "text": "        while (true) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "            uint256 x = uint256(keccak256(abi.encode(domain, message, attempts))) % BASE_FIELD_ORDER;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            uint256 x = uint256(keccak256(abi.encode(domain, message, attempts)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 182,
+                "text": "            attempts++;"
+              },
+              { "type": " ", "oldLine": 184, "newLine": 183, "text": "" },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "            if (x >= BASE_FIELD_ORDER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "                continue;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 187, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 188,
+                "text": "            uint256 y = mulmod(x, x, BASE_FIELD_ORDER);"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 189,
+                "text": "            y = mulmod(y, x, BASE_FIELD_ORDER);"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 190,
+                "text": "            y = addmod(y, 3, BASE_FIELD_ORDER);"
+              }
+            ]
+          },
+          {
+            "oldStart": 195,
+            "oldLines": 7,
+            "newStart": 198,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 198,
+                "text": "                    (y0, y1) = (y1, y0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 199,
+                "text": "                }"
+              },
+              { "type": " ", "oldLine": 197, "newLine": 200, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "                uint256 b = uint256(keccak256(abi.encode(domain, message, attempts)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "                uint256 b = uint256(keccak256(abi.encode(domain, message, type(uint256).max)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 202,
+                "text": "                if (b & 1 == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 203,
+                "text": "                    output = G1Point({x: x, y: y0});"
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 204,
+                "text": "                } else {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

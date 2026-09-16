@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "473804a94e5f41b63be8d5c7473fcd07e9a62e062450e9e7e511eb319e8b67e7",
+  "name": "GasPayingToken",
+  "kind": "library",
+  "lines": 61,
+  "source": "library GasPayingToken {\n    /// @notice The storage slot that contains the address and decimals of the gas paying token\n    bytes32 internal constant GAS_PAYING_TOKEN_SLOT = bytes32(uint256(keccak256(\"opstack.gaspayingtoken\")) - 1);\n\n    /// @notice The storage slot that contains the ERC20 `name()` of the gas paying token\n    bytes32 internal constant GAS_PAYING_TOKEN_NAME_SLOT = bytes32(uint256(keccak256(\"opstack.gaspayingtokenname\")) - 1);\n\n    /// @notice the storage slot that contains the ERC20 `symbol()` of the gas paying token\n    bytes32 internal constant GAS_PAYING_TOKEN_SYMBOL_SLOT =\n        bytes32(uint256(keccak256(\"opstack.gaspayingtokensymbol\")) - 1);\n\n    /// @notice Reads the gas paying token and its decimals from the magic\n    ///         storage slot. If nothing is set in storage, then the ether\n    ///         address is returned instead.\n    function getToken() internal view returns (address addr_, uint8 decimals_) {\n        bytes32 slot = Storage.getBytes32(GAS_PAYING_TOKEN_SLOT);\n        addr_ = address(uint160(uint256(slot) & uint256(type(uint160).max)));\n        if (addr_ == address(0)) {\n            addr_ = Constants.ETHER;\n            decimals_ = 18;\n        } else {\n            decimals_ = uint8(uint256(slot) >> 160);\n        }\n    }\n\n    /// @notice Reads the gas paying token's name from the magic storage slot.\n    ///         If nothing is set in storage, then the ether name, 'Ether', is returned instead.\n    function getName() internal view returns (string memory name_) {\n        (address addr,) = getToken();\n        if (addr == Constants.ETHER) {\n            name_ = \"Ether\";\n        } else {\n            name_ = LibString.fromSmallString(Storage.getBytes32(GAS_PAYING_TOKEN_NAME_SLOT));\n        }\n    }\n\n    /// @notice Reads the gas paying token's symbol from the magic storage slot.\n    ///         If nothing is set in storage, then the ether symbol, 'ETH', is returned instead.\n    function getSymbol() internal view returns (string memory symbol_) {\n        (address addr,) = getToken();\n        if (addr == Constants.ETHER) {\n            symbol_ = \"ETH\";\n        } else {\n            symbol_ = LibString.fromSmallString(Storage.getBytes32(GAS_PAYING_TOKEN_SYMBOL_SLOT));\n        }\n    }\n\n    /// @notice Writes the gas paying token, its decimals, name and symbol to the magic storage slot.\n    function set(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) internal {\n        Storage.setBytes32(GAS_PAYING_TOKEN_SLOT, bytes32(uint256(_decimals) << 160 | uint256(uint160(_token))));\n        Storage.setBytes32(GAS_PAYING_TOKEN_NAME_SLOT, _name);\n        Storage.setBytes32(GAS_PAYING_TOKEN_SYMBOL_SLOT, _symbol);\n    }\n\n    /// @notice Maps a string to a normalized null-terminated small string.\n    function sanitize(string memory _str) internal pure returns (bytes32) {\n        require(bytes(_str).length <= 32, \"GasPayingToken: string cannot be greater than 32 bytes\");\n\n        return LibString.toSmallString(_str);\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 56,
+      "match": {
+        "origin": "other",
+        "collection": "ethscriptions",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "GasPayingToken",
+        "similarity": 0.878,
+        "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 5,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 56,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 16,
+            "oldLines": 7,
+            "newStart": 16,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        bytes32 slot = Storage.getBytes32(GAS_PAYING_TOKEN_SLOT);"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        addr_ = address(uint160(uint256(slot) & uint256(type(uint160).max)));"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        if (addr_ == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "            addr_ = Constants.FACET_COMPUTE_TOKEN;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            addr_ = Constants.ETHER;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "            decimals_ = 18;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            decimals_ = uint8(uint256(slot) >> 160);"
+              }
+            ]
+          },
+          {
+            "oldStart": 27,
+            "oldLines": 8,
+            "newStart": 27,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    ///         If nothing is set in storage, then the ether name, 'Ether', is returned instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    function getName() internal view returns (string memory name_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        (address addr,) = getToken();"
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        if (addr == Constants.FACET_COMPUTE_TOKEN) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "            name_ = \"Facet Compute Token\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        if (addr == Constants.ETHER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            name_ = \"Ether\";",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "            name_ = LibString.fromSmallString(Storage.getBytes32(GAS_PAYING_TOKEN_NAME_SLOT));"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 8,
+            "newStart": 38,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    ///         If nothing is set in storage, then the ether symbol, 'ETH', is returned instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    function getSymbol() internal view returns (string memory symbol_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "        (address addr,) = getToken();"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        if (addr == Constants.FACET_COMPUTE_TOKEN) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            symbol_ = \"FCT\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        if (addr == Constants.ETHER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "            symbol_ = \"ETH\";",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "            symbol_ = LibString.fromSmallString(Storage.getBytes32(GAS_PAYING_TOKEN_SYMBOL_SLOT));"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "        }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "54165732d524f6b339c81ee86ab8a747326feeab1a388d9d1dc3dbe33d253479",
+  "name": "Governance",
+  "kind": "contract",
+  "lines": 652,
+  "source": "contract Governance is IGovernance {\n    using SafeERC20 for IERC20;\n    using ProposalLib for CompressedProposal;\n    using CheckpointedUintLib for Checkpoints.Trace224;\n    using ConfigurationLib for Configuration;\n    using ConfigurationLib for CompressedConfiguration;\n    using CompressedConfigurationLib for CompressedConfiguration;\n    using CompressedProposalLib for CompressedProposal;\n    using BallotLib for CompressedBallot;\n\n    IERC20 public immutable ASSET;\n\n    /**\n     * @dev The address that is allowed to `propose` new proposals.\n     *\n     * This address can only be updated by the governance itself through a proposal.\n     */\n    address public governanceProposer;\n\n    /**\n     * @dev The whitelist of beneficiaries that are allowed to hold power via `deposit`,\n     * and the flag to allow all beneficiaries to hold power.\n     */\n    DepositControl internal depositControl;\n\n    /**\n     * @dev The proposals that have been made.\n     *\n     * The proposal ID is the current count of proposals (see `proposalCount`).\n     * New proposals are created by calling `_propose`, via `propose` or `proposeWithLock`.\n     * The storage of a proposal may be modified by calling `vote`, `execute`, or `dropProposal`.\n     */\n    mapping(uint256 proposalId => CompressedProposal proposal) internal proposals;\n\n    /**\n     * @dev The ballots that have been cast for each proposal.\n     *\n     * `CompressedBallot`s contain a compressed `yea` and `nay` count (uint128 each packed into uint256),\n     * which are the number of votes for and against the proposal.\n     * `ballots` is only updated during `vote`.\n     */\n    mapping(uint256 proposalId => mapping(address user => CompressedBallot ballot)) internal ballots;\n\n    /**\n     * @dev Checkpointed deposit amounts for an address.\n     *\n     * `users` is only updated during `deposit`, `initiateWithdraw`, and `proposeWithLock`.\n     */\n    mapping(address userAddress => Checkpoints.Trace224 user) internal users;\n\n    /**\n     * @dev Withdrawals that have been initiated.\n     *\n     * `withdrawals` is only updated during `initiateWithdraw`, `proposeWithLock`, and `finalizeWithdraw`.\n     */\n    mapping(uint256 withdrawalId => Withdrawal withdrawal) internal withdrawals;\n\n    /**\n     * @dev The configuration of the governance contract.\n     *\n     * `configuration` is set in the constructor, and is only updated during `updateConfiguration`,\n     * which must be done via a proposal.\n     */\n    CompressedConfiguration internal configuration;\n\n    /**\n     * @dev The total power of the governance contract.\n     *\n     * `total` is only updated during `deposit`, `initiateWithdraw`, and `proposeWithLock`.\n     */\n    Checkpoints.Trace224 internal total;\n\n    /**\n     * @dev The count of proposals that have been made.\n     *\n     * `proposalCount` is only updated during `_propose`.\n     */\n    uint256 public proposalCount;\n\n    /**\n     * @dev The count of withdrawals that have been initiated.\n     *\n     * `withdrawalCount` is only updated during `initiateWithdraw` and `proposeWithLock`.\n     */\n    uint256 public withdrawalCount;\n\n    /**\n     * @dev Modifier to ensure that the caller is the governance contract itself.\n     *\n     * The caller will only be the governance itself if executed via a proposal.\n     */\n    modifier onlySelf() {\n        require(msg.sender == address(this), Errors.Governance__CallerNotSelf(msg.sender, address(this)));\n        _;\n    }\n\n    /**\n     * @dev Modifier to ensure that the beneficiary is allowed to hold power in Governance.\n     */\n    modifier isDepositAllowed(address _beneficiary) {\n        require(msg.sender != address(this), Errors.Governance__CallerCannotBeSelf());\n        require(\n            depositControl.allBeneficiariesAllowed || depositControl.isAllowed[_beneficiary],\n            Errors.Governance__DepositNotAllowed()\n        );\n\n        _;\n    }\n\n    /**\n     * @dev the initial _beneficiary is expected to be the GSE or address(0) for anyone\n     */\n    constructor(IERC20 _asset, address _governanceProposer, address _beneficiary, Configuration memory _configuration) {\n        ASSET = _asset;\n        governanceProposer = _governanceProposer;\n\n        _configuration.assertValid();\n        configuration = CompressedConfigurationLib.compress(_configuration);\n\n        if (_beneficiary == address(0)) {\n            depositControl.allBeneficiariesAllowed = true;\n            emit FloodGatesOpened();\n        } else {\n            depositControl.allBeneficiariesAllowed = false;\n            depositControl.isAllowed[_beneficiary] = true;\n            emit BeneficiaryAdded(_beneficiary);\n        }\n    }\n\n    /**\n     * @notice Add a beneficiary to the whitelist.\n     * @dev The beneficiary may hold power in the governance contract after this call.\n     * only callable by the governance contract itself.\n     *\n     * @param _beneficiary The address to add to the whitelist.\n     */\n    function addBeneficiary(address _beneficiary) external override(IGovernance) onlySelf {\n        depositControl.isAllowed[_beneficiary] = true;\n        emit BeneficiaryAdded(_beneficiary);\n    }\n\n    /**\n     * @notice Allow all addresses to hold power in the governance contract.\n     * @dev This is a one-way valve.\n     * only callable by the governance contract itself.\n     */\n    function openFloodgates() external override(IGovernance) onlySelf {\n        depositControl.allBeneficiariesAllowed = true;\n        emit FloodGatesOpened();\n    }\n\n    /**\n     * @notice Update the governance proposer.\n     * @dev The governance proposer is the address that is allowed to use `propose`.\n     *\n     * @dev only callable by the governance contract itself.\n     *\n     * @dev causes all proposals proposed by the previous governance proposer to be `Droppable`.\n     *\n     * @dev prevents the governance proposer from being set to the governance contract itself.\n     *\n     * @param _governanceProposer The new governance proposer.\n     */\n    function updateGovernanceProposer(address _governanceProposer) external override(IGovernance) onlySelf {\n        require(_governanceProposer != address(this), Errors.Governance__GovernanceProposerCannotBeSelf());\n        governanceProposer = _governanceProposer;\n        emit GovernanceProposerUpdated(_governanceProposer);\n    }\n\n    /**\n     * @notice Update the governance configuration.\n     * only callable by the governance contract itself.\n     *\n     * @dev all existing proposals will use the configuration they were created with.\n     */\n    function updateConfiguration(Configuration memory _configuration) external override(IGovernance) onlySelf {\n        // This following MUST revert if the configuration is invalid\n        _configuration.assertValid();\n\n        configuration = CompressedConfigurationLib.compress(_configuration);\n\n        emit ConfigurationUpdated(Timestamp.wrap(block.timestamp));\n    }\n\n    /**\n     * @notice Deposit funds into the governance contract, transferring ASSET from msg.sender to the governance contract,\n     * increasing the power 1:1 of the beneficiary within the governance contract.\n     *\n     * @dev The beneficiary must be allowed to hold power in the governance contract,\n     * according to `depositControl`.\n     *\n     * Increments the checkpointed power of the specified beneficiary, and the total power of the governance contract.\n     *\n     * Note that anyone may deposit funds into the governance contract, and the only restriction is that\n     * the beneficiary must be allowed to hold power in the governance contract, according to `depositControl`.\n     *\n     * It is worth pointing out that someone could attempt to spam the deposit function, and increase the cost to vote\n     * as a result of creating many checkpoints. In reality though, as the checkpoints are using time as a key it would\n     * take ~36 years of continuous spamming to increase the cost to vote by ~66K gas with 12 second block times.\n     *\n     * @param _beneficiary The beneficiary to increase the power of.\n     * @param _amount The amount of funds to deposit, which is converted to power 1:1.\n     */\n    function deposit(address _beneficiary, uint256 _amount)\n        external\n        override(IGovernance)\n        isDepositAllowed(_beneficiary)\n    {\n        ASSET.safeTransferFrom(msg.sender, address(this), _amount);\n        users[_beneficiary].add(_amount);\n        total.add(_amount);\n\n        emit Deposit(msg.sender, _beneficiary, _amount);\n    }\n\n    /**\n     * @notice Initiate a withdrawal of funds from the governance contract,\n     * decreasing the power of the beneficiary within the governance contract.\n     *\n     * @dev the withdraw may be finalized by anyone after configuration.getWithdrawalDelay() has passed.\n     *\n     * @param _to The address that will receive the funds when the withdrawal is finalized.\n     * @param _amount The amount of power to reduce, and thus funds to withdraw.\n     * @return The id of the withdrawal, passed to `finalizeWithdraw`.\n     */\n    function initiateWithdraw(address _to, uint256 _amount) external override(IGovernance) returns (uint256) {\n        return _initiateWithdraw(msg.sender, _to, _amount, configuration.getWithdrawalDelay());\n    }\n\n    /**\n     * @notice Finalize a withdrawal of funds from the governance contract,\n     * transferring ASSET from the governance contract to the recipient specified in the withdrawal.\n     *\n     * @dev The withdrawal must not have been claimed, and the delay specified on the withdrawal must have passed.\n     *\n     * @param _withdrawalId The id of the withdrawal to finalize.\n     */\n    function finalizeWithdraw(uint256 _withdrawalId) external override(IGovernance) {\n        Withdrawal storage withdrawal = withdrawals[_withdrawalId];\n        // This is a sanity check, the `recipient` will only be zero for a non-existent withdrawal, so this avoids\n        // `finalize`ing non-existent withdrawals. Note, that `_initiateWithdraw` will fail if `_to` is `address(0)`\n        require(withdrawal.recipient != address(0), Errors.Governance__WithdrawalNotInitiated());\n        require(!withdrawal.claimed, Errors.Governance__WithdrawalAlreadyClaimed());\n        require(\n            Timestamp.wrap(block.timestamp) >= withdrawal.unlocksAt,\n            Errors.Governance__WithdrawalNotUnlockedYet(Timestamp.wrap(block.timestamp), withdrawal.unlocksAt)\n        );\n        withdrawal.claimed = true;\n\n        emit WithdrawFinalized(_withdrawalId);\n\n        ASSET.safeTransfer(withdrawal.recipient, withdrawal.amount);\n    }\n\n    /**\n     * @notice Propose a new proposal as the governanceProposer\n     *\n     * @dev the state of the proposal may be retrieved via `getProposalState`.\n     *\n     * Note that the `proposer` of the proposal is the *current* governanceProposer; if the governanceProposer\n     * no longer matches the one stored in the proposal, the state of the proposal will be `Droppable`.\n     *\n     * @param _proposal The IPayload address, which is a contract that contains the proposed actions to be executed by the\n     * governance.\n     * @return The id of the proposal.\n     */\n    function propose(IPayload _proposal) external override(IGovernance) returns (uint256) {\n        require(\n            msg.sender == governanceProposer,\n            Errors.Governance__CallerNotGovernanceProposer(msg.sender, governanceProposer)\n        );\n        return _propose(_proposal, governanceProposer);\n    }\n\n    /**\n     * @notice Propose a new proposal by withdrawing an existing amount of power from Governance with a longer delay.\n     *\n     * @dev proposals made in this way are identical to those made by the governanceProposer, with the exception\n     * that the \"proposer\" stored in the proposal is the address of the governance contract itself,\n     * which means it will not transition to a \"Droppable\" state if the governanceProposer changes.\n     *\n     * @dev this is intended to only be used in an emergency, where the governanceProposer is compromised.\n     *\n     * @dev We don't actually need to check available power here, since if the msg.sender does not have\n     * sufficient balance, the `_initiateWithdraw` would revert with an underflow.\n     *\n     * @param _proposal The IPayload address, which is a contract that contains the proposed actions to be executed by\n     * the governance.\n     * @param _to The address that will receive the withdrawn funds when the withdrawal is finalized (see\n     * `finalizeWithdraw`)\n     * @return The id of the proposal\n     */\n    function proposeWithLock(IPayload _proposal, address _to) external override(IGovernance) returns (uint256) {\n        ProposeWithLockConfiguration memory proposeConfig = configuration.getProposeConfig();\n        _initiateWithdraw(msg.sender, _to, proposeConfig.lockAmount, proposeConfig.lockDelay);\n        return _propose(_proposal, address(this));\n    }\n\n    /**\n     * @notice Vote on a proposal.\n     * @dev The proposal must be `Active` to vote on it.\n     *\n     * NOTE: The amount of power to vote is equal to the power of msg.sender at the time\n     * just before the proposal became active.\n     *\n     * The same caller (e.g. the GSE) may `vote` multiple times, voting different ways,\n     * so long as their total votes are less than or equal to their available power;\n     * each vote is tracked per proposal, per caller within the `ballots` mapping.\n     *\n     * We keep track of the total yea and nay votes as a `summedBallot` on the proposal in storage.\n     *\n     * @param _proposalId The id of the proposal to vote on.\n     * @param _amount The amount of power to vote with, which must be less than the available power.\n     * @param _support The support of the vote.\n     */\n    function vote(uint256 _proposalId, uint256 _amount, bool _support) external override(IGovernance) {\n        ProposalState state = getProposalState(_proposalId);\n        require(state == ProposalState.Active, Errors.Governance__ProposalNotActive());\n\n        // Compute the power at the time the proposals goes from pending to active.\n        // This is the last second before active, and NOT the first second active, because it would then be possible to\n        // alter the power while the proposal is active since all txs in a block have the same timestamp.\n        uint256 userPower = users[msg.sender].valueAt(proposals[_proposalId].pendingThrough());\n\n        CompressedBallot userBallot = ballots[_proposalId][msg.sender];\n\n        uint256 availablePower = userPower - (userBallot.getNay() + userBallot.getYea());\n        require(_amount <= availablePower, Errors.Governance__InsufficientPower(msg.sender, availablePower, _amount));\n\n        CompressedProposal storage proposal = proposals[_proposalId];\n        if (_support) {\n            ballots[_proposalId][msg.sender] = userBallot.addYea(_amount);\n            proposal.addYea(_amount);\n        } else {\n            ballots[_proposalId][msg.sender] = userBallot.addNay(_amount);\n            proposal.addNay(_amount);\n        }\n\n        emit VoteCast(_proposalId, msg.sender, _support, _amount);\n    }\n\n    /**\n     * @notice Execute a proposal.\n     * @dev The proposal must be `Executable` to execute it.\n     * If it is, we mark the proposal as `Executed` and execute the actions,\n     * simply looping through and calling them.\n     *\n     * As far as the individual calls, there are 2 safety measures:\n     *  - The call cannot target the ASSET which underlies the governance contract\n     *  - The call must succeed\n     *\n     * @param _proposalId The id of the proposal to execute.\n     */\n    function execute(uint256 _proposalId) external override(IGovernance) {\n        ProposalState state = getProposalState(_proposalId);\n        require(state == ProposalState.Executable, Errors.Governance__ProposalNotExecutable());\n\n        CompressedProposal storage proposal = proposals[_proposalId];\n        proposal.cachedState = ProposalState.Executed;\n\n        IPayload.Action[] memory actions = proposal.payload.getActions();\n\n        for (uint256 i = 0; i < actions.length; i++) {\n            require(actions[i].target != address(ASSET), Errors.Governance__CannotCallAsset());\n            // We allow calls to EOAs. If you really want be my guest.\n            // solhint-disable-next-line avoid-low-level-calls\n            (bool success,) = actions[i].target.call(actions[i].data);\n            require(success, Errors.Governance__CallFailed(actions[i].target));\n        }\n\n        emit ProposalExecuted(_proposalId);\n    }\n\n    /**\n     * @notice Update a proposal to be `Dropped`.\n     * @dev The proposal must be `Droppable` to mark it permanently as `Dropped`.\n     * See `getProposalState` for more details.\n     *\n     * @param _proposalId The id of the proposal to mark as `Dropped`.\n     */\n    function dropProposal(uint256 _proposalId) external override(IGovernance) {\n        CompressedProposal storage self = proposals[_proposalId];\n        require(self.cachedState != ProposalState.Dropped, Errors.Governance__ProposalAlreadyDropped());\n        require(getProposalState(_proposalId) == ProposalState.Droppable, Errors.Governance__ProposalCannotBeDropped());\n\n        self.cachedState = ProposalState.Dropped;\n\n        emit ProposalDropped(_proposalId);\n    }\n\n    /**\n     * @notice Get the power of an address at a given timestamp.\n     *\n     * @param _owner The address to get the power of.\n     * @param _ts The timestamp to get the power at.\n     * @return The power of the address at the given timestamp.\n     */\n    function powerAt(address _owner, Timestamp _ts) external view override(IGovernance) returns (uint256) {\n        return users[_owner].valueAt(_ts);\n    }\n\n    /**\n     * @notice Get the power of an address at the current block timestamp.\n     *\n     * Note that `powerNow` with the current block timestamp is NOT STABLE.\n     *\n     *  For example, imagine a transaction that performs the following:\n     *  1. deposit\n     *  2. powerNow\n     *  3. deposit\n     *  4. powerNow\n     *\n     *  The powerNow at 4 will be different from the powerNow at 2.\n     *\n     * @param _owner The address to get the power of.\n     * @return The power of the address at the current block timestamp.\n     */\n    function powerNow(address _owner) external view override(IGovernance) returns (uint256) {\n        return users[_owner].valueNow();\n    }\n\n    /**\n     * @notice Get the total power in Governance at a given timestamp.\n     *\n     * @param _ts The timestamp to get the power at.\n     * @return The total power at the given timestamp.\n     */\n    function totalPowerAt(Timestamp _ts) external view override(IGovernance) returns (uint256) {\n        return total.valueAt(_ts);\n    }\n\n    /**\n     * @notice Get the total power in Governance at the current block timestamp.\n     * Note that `powerNow` with the current block timestamp is NOT STABLE.\n     *\n     * @return The total power at the current block timestamp.\n     */\n    function totalPowerNow() external view override(IGovernance) returns (uint256) {\n        return total.valueNow();\n    }\n\n    /**\n     * @notice Check if an address is permitted to hold power in Governance.\n     *\n     * @param _beneficiary The address to check.\n     * @return True if the address is permitted to hold power in Governance.\n     */\n    function isPermittedInGovernance(address _beneficiary) external view override(IGovernance) returns (bool) {\n        return depositControl.isAllowed[_beneficiary];\n    }\n\n    /**\n     * @notice Check if everyone is permitted to hold power in Governance.\n     *\n     * @return True if everyone is permitted to hold power in Governance.\n     */\n    function isAllBeneficiariesAllowed() external view override(IGovernance) returns (bool) {\n        return depositControl.allBeneficiariesAllowed;\n    }\n\n    function getConfiguration() external view override(IGovernance) returns (Configuration memory) {\n        return configuration.decompress();\n    }\n\n    /**\n     * @notice Get a proposal by its id.\n     *\n     * @dev   Will return default values (0) for non-existing proposals\n     *\n     * @param _proposalId The id of the proposal to get.\n     * @return The proposal.\n     */\n    function getProposal(uint256 _proposalId) external view override(IGovernance) returns (Proposal memory) {\n        return proposals[_proposalId].decompress();\n    }\n\n    /**\n     * @notice Get a withdrawal by its id.\n     *\n     * @dev   Will return default values (0) for non-existing withdrawals\n     *\n     * @param _withdrawalId The id of the withdrawal to get.\n     * @return The withdrawal.\n     */\n    function getWithdrawal(uint256 _withdrawalId) external view override(IGovernance) returns (Withdrawal memory) {\n        return withdrawals[_withdrawalId];\n    }\n\n    /**\n     * @notice Get a user's ballot for a specific proposal.\n     *\n     * @dev Returns the uncompressed Ballot struct for external callers.\n     *\n     * @param _proposalId The id of the proposal.\n     * @param _user The address of the user.\n     * @return The user's ballot with yea and nay votes.\n     */\n    function getBallot(uint256 _proposalId, address _user)\n        external\n        view\n        override(IGovernance)\n        returns (Ballot memory)\n    {\n        return ballots[_proposalId][_user].decompress();\n    }\n\n    /**\n     * @notice Get the state of a proposal in the governance system\n     *\n     * @dev Determine the current state of a proposal based on timestamps, vote results, and governance configuration.\n     *\n     * @dev NB: the state returned here is LOGICAL, and is the \"true state\" of the proposal:\n     * it need not match the state of the proposal in storage, which is effectively just a cache.\n     *\n     *  Flow Logic:\n     *  1. Check if proposal exists (revert if not)\n     *  2. If the cached state of the proposal is \"stable\" (Executed/Dropped), return that state\n     *  3. Check if governance proposer changed (→ Droppable, unless proposed via lock)\n     *  4. Time-based state transitions:\n     *   - currentTime ≤ pendingThrough() → Pending\n     *   - currentTime ≤ activeThrough() → Active\n     *   - Vote tabulation check → Rejected if not accepted\n     *   - currentTime ≤ queuedThrough() → Queued\n     *   - currentTime ≤ executableThrough() → Executable\n     *   - Otherwise → Expired\n     *\n     * @dev State Descriptions:\n     *      - Pending: Proposal created but voting hasn't started yet\n     *      - Active: Voting is currently open\n     *      - Rejected: Voting closed but proposal didn't meet acceptance criteria\n     *      - Queued: Proposal accepted and waiting for execution window\n     *      - Executable: Proposal can be executed\n     *      - Expired: Execution window has passed\n     *      - Droppable: Proposer changed\n     *      - Dropped: Proposal dropped by calling `dropProposal`\n     *      - Executed: Proposal has been successfully executed\n     *\n     * @dev edge case: it is possible that a proposal be \"Droppable\" according to the logic here,\n     * but no one called `dropProposal`, and then be in a different state later.\n     * This can happen if, for whatever reason, the governance proposer stored by this contract changes\n     * from the one the proposal is made via, (which would cause this function to return `Droppable`),\n     * but then a separate proposal is executed which restores the original governance proposer.\n     * So, `Dropped` is permanent, but `Droppable` is not.\n     *\n     * @param _proposalId The ID of the proposal to check\n     * @return The current state of the proposal\n     */\n    function getProposalState(uint256 _proposalId) public view override(IGovernance) returns (ProposalState) {\n        require(_proposalId < proposalCount, Errors.Governance__ProposalDoesNotExists(_proposalId));\n\n        CompressedProposal storage self = proposals[_proposalId];\n\n        // A proposal's state is \"stable\" after `execute` or `dropProposal` has been called on it.\n        // In this case, the state of the proposal as returned by `getProposalState` is the same as the cached state,\n        // and the state will not change.\n        if (self.cachedState == ProposalState.Executed || self.cachedState == ProposalState.Dropped) {\n            return self.cachedState;\n        }\n\n        // If the governanceProposer has changed, and the proposal did not come through `proposeWithLock`,\n        // the state of the proposal is `Droppable`.\n        if (governanceProposer != self.proposer && address(this) != self.proposer) {\n            return ProposalState.Droppable;\n        }\n\n        Timestamp currentTime = Timestamp.wrap(block.timestamp);\n\n        if (currentTime <= self.pendingThrough()) {\n            return ProposalState.Pending;\n        }\n\n        if (currentTime <= self.activeThrough()) {\n            return ProposalState.Active;\n        }\n\n        uint256 totalPower = total.valueAt(self.pendingThrough());\n        (VoteTabulationReturn vtr,) = self.voteTabulation(totalPower);\n        if (vtr != VoteTabulationReturn.Accepted) {\n            return ProposalState.Rejected;\n        }\n\n        if (currentTime <= self.queuedThrough()) {\n            return ProposalState.Queued;\n        }\n\n        if (currentTime <= self.executableThrough()) {\n            return ProposalState.Executable;\n        }\n\n        return ProposalState.Expired;\n    }\n\n    /**\n     * @dev reduce the user's power, the total power, and insert a new withdrawal.\n     *\n     *  The reason for a configurable delay is that `proposeWithLock` creates a withdrawal,\n     *  which has a (presumably) very long delay, whereas `initiateWithdraw` has a much shorter delay.\n     *\n     * @param _from The address to reduce the power of.\n     * @param _to The address to send the funds to.\n     * @param _amount The amount of power to reduce, and thus funds to withdraw.\n     * @param _delay The delay before the funds can be withdrawn.\n     * @return The id of the withdrawal.\n     */\n    function _initiateWithdraw(address _from, address _to, uint256 _amount, Timestamp _delay)\n        internal\n        returns (uint256)\n    {\n        require(_to != address(0), Errors.Governance__CannotWithdrawToAddressZero());\n        users[_from].sub(_amount);\n        total.sub(_amount);\n\n        uint256 withdrawalId = withdrawalCount++;\n\n        withdrawals[withdrawalId] = Withdrawal({\n            amount: _amount,\n            unlocksAt: Timestamp.wrap(block.timestamp) + _delay,\n            recipient: _to,\n            claimed: false\n        });\n\n        emit WithdrawInitiated(withdrawalId, _to, _amount);\n\n        return withdrawalId;\n    }\n\n    /**\n     * @dev create a new proposal. In it we store:\n     *\n     *  - a copy of the current governance configuration, effectively \"freezing\" the config for the proposal.\n     *      This is done to ensure that in progress proposals that alter the delays etc won't take effect on existing\n     *      proposals.\n     *  - the summed ballots\n     *  - the proposer, which can be:\n     *    - the current governanceProposer (which can be updated on the Governance contract), if created via `propose`\n     *    - the governance contract itself, if created via `proposeWithLock`\n     *\n     * @param _proposal The proposal to propose.\n     * @param _proposer The address that is proposing the proposal.\n     * @return The id of the proposal, which is one less than the current count of proposals.\n     */\n    function _propose(IPayload _proposal, address _proposer) internal returns (uint256) {\n        uint256 proposalId = proposalCount++;\n\n        proposals[proposalId] =\n            CompressedProposalLib.create(_proposer, _proposal, Timestamp.wrap(block.timestamp), configuration);\n\n        emit Proposed(proposalId, address(_proposal));\n\n        return proposalId;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 647,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Governance",
+        "similarity": 0.989,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/Governance.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/Governance.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 5,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 647,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 108,
+            "oldLines": 7,
+            "newStart": 108,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 108, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 109, "newLine": 109, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 110,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @dev the initial _beneficiary is expected to be the GSE.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * @dev the initial _beneficiary is expected to be the GSE or address(0) for anyone",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 112,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 113,
+                "text": "    constructor(IERC20 _asset, address _governanceProposer, address _beneficiary, Configuration memory _configuration) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 114,
+                "text": "        ASSET = _asset;"
+              }
+            ]
+          },
+          {
+            "oldStart": 117,
+            "oldLines": 10,
+            "newStart": 117,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 117,
+                "text": "        _configuration.assertValid();"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "        configuration = CompressedConfigurationLib.compress(_configuration);"
+              },
+              { "type": " ", "oldLine": 119, "newLine": 119, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        // Unnecessary to set, but better clarity.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        depositControl.allBeneficiariesAllowed = false;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        depositControl.isAllowed[_beneficiary] = true;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        emit BeneficiaryAdded(_beneficiary);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        if (_beneficiary == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "            depositControl.allBeneficiariesAllowed = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "            emit FloodGatesOpened();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            depositControl.allBeneficiariesAllowed = false;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            depositControl.isAllowed[_beneficiary] = true;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            emit BeneficiaryAdded(_beneficiary);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 129, "text": "" },
+              { "type": " ", "oldLine": 126, "newLine": 130, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "95027f8005fbbf273e98cbd495cea15d1e2059f48b77ccf7c45c842215c31e70",
+  "name": "tree_snapshots.nr",
+  "kind": "program",
+  "lines": 55,
+  "source": "use crate::{\n    abis::{\n        append_only_tree_snapshot::AppendOnlyTreeSnapshot,\n        partial_state_reference::PartialStateReference,\n    },\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct TreeSnapshots {\n    pub l1_to_l2_message_tree: AppendOnlyTreeSnapshot,\n    pub note_hash_tree: AppendOnlyTreeSnapshot,\n    pub nullifier_tree: AppendOnlyTreeSnapshot,\n    pub public_data_tree: AppendOnlyTreeSnapshot,\n}\n\nimpl TreeSnapshots {\n    pub fn to_partial_state_reference(self) -> PartialStateReference {\n        PartialStateReference {\n            note_hash_tree: self.note_hash_tree,\n            nullifier_tree: self.nullifier_tree,\n            public_data_tree: self.public_data_tree,\n        }\n    }\n}\n\nimpl Empty for TreeSnapshots {\n    fn empty() -> Self {\n        Self {\n            l1_to_l2_message_tree: AppendOnlyTreeSnapshot::empty(),\n            note_hash_tree: AppendOnlyTreeSnapshot::empty(),\n            nullifier_tree: AppendOnlyTreeSnapshot::empty(),\n            public_data_tree: AppendOnlyTreeSnapshot::empty(),\n        }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::tree_snapshots::TreeSnapshots,\n        constants::TREE_SNAPSHOTS_LENGTH,\n        traits::{Deserialize, Empty, Serialize},\n    };\n\n    #[test]\n    fn serialization_of_empty_tree_snapshots() {\n        let item = TreeSnapshots::empty();\n        // We use the TREE_SNAPSHOTS_LENGTH constant to ensure that there is a match\n        // between the derived trait implementation and the constant.\n        let serialized: [Field; TREE_SNAPSHOTS_LENGTH] = item.serialize();\n        let deserialized = TreeSnapshots::deserialize(serialized);\n        assert_eq(item, deserialized);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

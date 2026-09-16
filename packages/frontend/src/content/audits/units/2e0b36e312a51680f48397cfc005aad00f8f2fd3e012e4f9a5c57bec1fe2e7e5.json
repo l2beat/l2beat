@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2e0b36e312a51680f48397cfc005aad00f8f2fd3e012e4f9a5c57bec1fe2e7e5",
+  "name": "GlobalProposal",
+  "kind": "library",
+  "lines": 105,
+  "source": "library GlobalProposal {\n    /**\n     * @dev Error thrown when attempting to interact with an unsupported target.\n     */\n    error ErrUnsupportedTarget(bytes32 proposalHash, uint256 targetNumber);\n\n    enum TargetOption {\n        BridgeManager, // 0\n        GatewayContract, // 1\n        BridgeReward, // 2\n        BridgeSlash, // 3\n        BridgeTracking, // 4\n        PauseEnforcer // 5\n\n    }\n\n    struct GlobalProposalDetail {\n        // Nonce to make sure proposals are executed in order\n        uint256 nonce;\n        uint256 expiryTimestamp;\n        address executor;\n        TargetOption[] targetOptions;\n        uint256[] values;\n        bytes[] calldatas;\n        uint256[] gasAmounts;\n    }\n\n    // keccak256(\"GlobalProposalDetail(uint256 nonce,uint256 expiryTimestamp,address executor,uint8[] targetOptions,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");\n    bytes32 internal constant TYPE_HASH = 0xde480f0c53a3651c08fbab1dffbc45fe574f31188827fe52cb9035da9fe57e4a;\n\n    /**\n     * @dev Returns struct hash of the proposal.\n     */\n    function hash(GlobalProposalDetail memory self) internal pure returns (bytes32 digest_) {\n        uint256[] memory values = self.values;\n        TargetOption[] memory targets = self.targetOptions;\n        bytes32[] memory calldataHashList = new bytes32[](self.calldatas.length);\n        uint256[] memory gasAmounts = self.gasAmounts;\n\n        for (uint256 i; i < calldataHashList.length;) {\n            calldataHashList[i] = keccak256(self.calldatas[i]);\n\n            unchecked {\n                ++i;\n            }\n        }\n\n        /*\n     * return\n     *   keccak256(\n     *     abi.encode(\n     *       TYPE_HASH,\n     *       proposal.nonce,\n     *       proposal.expiryTimestamp,\n     *       proposal.executor,\n     *       targetsHash,\n     *       valuesHash,\n     *       calldatasHash,\n     *       gasAmountsHash\n     *     )\n     *   );\n     */\n        assembly {\n            let ptr := mload(0x40)\n            mstore(ptr, TYPE_HASH)\n            mstore(add(ptr, 0x20), mload(self)) // proposal.nonce\n            mstore(add(ptr, 0x40), mload(add(self, 0x20))) // proposal.expiryTimestamp\n            mstore(add(ptr, 0x60), mload(add(self, 0x40))) // proposal.executor\n\n            let arrayHashed\n            arrayHashed := keccak256(add(targets, 32), mul(mload(targets), 32)) // targetsHash\n            mstore(add(ptr, 0x80), arrayHashed)\n            arrayHashed := keccak256(add(values, 32), mul(mload(values), 32)) // valuesHash\n            mstore(add(ptr, 0xa0), arrayHashed)\n            arrayHashed := keccak256(add(calldataHashList, 32), mul(mload(calldataHashList), 32)) // calldatasHash\n            mstore(add(ptr, 0xc0), arrayHashed)\n            arrayHashed := keccak256(add(gasAmounts, 32), mul(mload(gasAmounts), 32)) // gasAmountsHash\n            mstore(add(ptr, 0xe0), arrayHashed)\n            digest_ := keccak256(ptr, 0x100)\n        }\n    }\n\n    /**\n     * @dev Converts into the normal proposal.\n     */\n    function intoProposalDetail(GlobalProposalDetail memory self, address[] memory targets)\n        internal\n        pure\n        returns (Proposal.ProposalDetail memory detail_)\n    {\n        detail_.nonce = self.nonce;\n        detail_.chainId = 0;\n        detail_.expiryTimestamp = self.expiryTimestamp;\n        detail_.executor = self.executor;\n\n        detail_.targets = new address[](self.targetOptions.length);\n        detail_.values = self.values;\n        detail_.calldatas = self.calldatas;\n        detail_.gasAmounts = self.gasAmounts;\n\n        for (uint256 i; i < self.targetOptions.length; ++i) {\n            detail_.targets[i] = targets[i];\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 95,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GlobalProposal",
+        "similarity": 0.803,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/libraries/GlobalProposal.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/libraries/GlobalProposal.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 10,
+        "removed": 8,
+        "ignoredAdded": 19,
+        "ignoredRemoved": 20,
+        "unchanged": 95,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 28,
+            "newStart": 5,
+            "newLines": 28,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error ErrUnsupportedTarget(bytes32 proposalHash, uint256 targetNumber);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    enum TargetOption {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        /* 0 */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        BridgeManager,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        /* 1 */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        GatewayContract,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        /* 2 */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        BridgeReward,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        /* 3 */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        BridgeSlash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        BridgeManager, // 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        GatewayContract, // 1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        BridgeReward, // 2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        BridgeSlash, // 3",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        BridgeTracking, // 4",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        PauseEnforcer // 5",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 16, "newLine": 15, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 17,
+                "text": "    struct GlobalProposalDetail {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "        // Nonce to make sure proposals are executed in order"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        uint256 nonce;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 20,
+                "text": "        uint256 expiryTimestamp;"
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        address executor;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        TargetOption[] targetOptions;"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        uint256[] values;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        bytes[] calldatas;"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        uint256[] gasAmounts;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    // keccak256(\"GlobalProposalDetail(uint256 nonce,uint256 expiryTimestamp,uint8[] targetOptions,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    bytes32 public constant TYPE_HASH = 0x1463f426c05aff2c1a7a0957a71c9898bc8b47142540538e79ee25ee91141350;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    // keccak256(\"GlobalProposalDetail(uint256 nonce,uint256 expiryTimestamp,address executor,uint8[] targetOptions,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    bytes32 internal constant TYPE_HASH = 0xde480f0c53a3651c08fbab1dffbc45fe574f31188827fe52cb9035da9fe57e4a;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "     * @dev Returns struct hash of the proposal."
+              }
+            ]
+          },
+          {
+            "oldStart": 50,
+            "oldLines": 31,
+            "newStart": 50,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "     *   keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "     *     abi.encode("
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "     *       TYPE_HASH,"
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "     *       _proposal.nonce,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "     *       _proposal.expiryTimestamp,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     *       _targetsHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "     *       _valuesHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     *       _calldatasHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "     *       _gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     *       proposal.nonce,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     *       proposal.expiryTimestamp,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     *       proposal.executor,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     *       targetsHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     *       valuesHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     *       calldatasHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     *       gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 60,
+                "text": "     *     )"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 61,
+                "text": "     *   );"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 62, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 63,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 64,
+                "text": "            let ptr := mload(0x40)"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 65,
+                "text": "            mstore(ptr, TYPE_HASH)"
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            mstore(add(ptr, 0x20), mload(self)) // _proposal.nonce",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "            mstore(add(ptr, 0x40), mload(add(self, 0x20))) // _proposal.expiryTimestamp",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "            mstore(add(ptr, 0x20), mload(self)) // proposal.nonce",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "            mstore(add(ptr, 0x40), mload(add(self, 0x20))) // proposal.expiryTimestamp",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            mstore(add(ptr, 0x60), mload(add(self, 0x40))) // proposal.executor",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 70,
+                "text": "            let arrayHashed"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 71,
+                "text": "            arrayHashed := keccak256(add(targets, 32), mul(mload(targets), 32)) // targetsHash"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            mstore(add(ptr, 0x60), arrayHashed)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            arrayHashed := keccak256(add(values, 32), mul(mload(values), 32)) // _valuesHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "            mstore(add(ptr, 0x80), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "            arrayHashed := keccak256(add(calldataHashList, 32), mul(mload(calldataHashList), 32)) // _calldatasHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            arrayHashed := keccak256(add(values, 32), mul(mload(values), 32)) // valuesHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "            mstore(add(ptr, 0xa0), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "            arrayHashed := keccak256(add(gasAmounts, 32), mul(mload(gasAmounts), 32)) // _gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "            arrayHashed := keccak256(add(calldataHashList, 32), mul(mload(calldataHashList), 32)) // calldatasHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "            mstore(add(ptr, 0xc0), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            digest_ := keccak256(ptr, 0xe0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "            arrayHashed := keccak256(add(gasAmounts, 32), mul(mload(gasAmounts), 32)) // gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "            mstore(add(ptr, 0xe0), arrayHashed)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "            digest_ := keccak256(ptr, 0x100)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 80,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 80, "newLine": 82, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 87,
+            "oldLines": 18,
+            "newStart": 89,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 89,
+                "text": "        returns (Proposal.ProposalDetail memory detail_)"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 90, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 91,
+                "text": "        detail_.nonce = self.nonce;"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        detail_.expiryTimestamp = self.expiryTimestamp;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 92,
+                "text": "        detail_.chainId = 0;"
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        detail_.expiryTimestamp = self.expiryTimestamp;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        detail_.executor = self.executor;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 96,
+                "text": "        detail_.targets = new address[](self.targetOptions.length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 97,
+                "text": "        detail_.values = self.values;"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 98,
+                "text": "        detail_.calldatas = self.calldatas;"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 99,
+                "text": "        detail_.gasAmounts = self.gasAmounts;"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 100, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        for (uint256 i; i < self.targetOptions.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        for (uint256 i; i < self.targetOptions.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 102,
+                "text": "            detail_.targets[i] = targets[i];"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "                ++i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 103,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 103, "newLine": 104, "text": "    }" },
+              { "type": " ", "oldLine": 104, "newLine": 105, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

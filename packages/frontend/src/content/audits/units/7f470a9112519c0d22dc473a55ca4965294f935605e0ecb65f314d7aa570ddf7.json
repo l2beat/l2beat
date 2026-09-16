@@ -1,0 +1,623 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7f470a9112519c0d22dc473a55ca4965294f935605e0ecb65f314d7aa570ddf7",
+  "name": "AccessManager",
+  "kind": "contract",
+  "lines": 137,
+  "source": "contract AccessManager is Ownable {\n    ////////////////////////////////////////////////////////////////\n    //                         Events                             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Event emitted when proposer permissions are updated.\n    event ProposerPermissionUpdated(address indexed proposer, bool allowed);\n\n    /// @notice Event emitted when challenger permissions are updated.\n    event ChallengerPermissionUpdated(address indexed challenger, bool allowed);\n\n    ////////////////////////////////////////////////////////////////\n    //                         State Vars                         //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Tracks whitelisted proposers.\n    mapping(address => bool) public proposers;\n\n    /// @notice Tracks whitelisted challengers.\n    mapping(address => bool) public challengers;\n\n    /// @notice The timeout (in seconds) after which permissionless proposing is allowed (immutable).\n    uint256 public immutable FALLBACK_TIMEOUT;\n\n    /// @notice The dispute game factory address.\n    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;\n\n    /// @notice The timestamp of this contract's creation. Used for permissionless fallback proposals.\n    uint256 public immutable DEPLOYMENT_TIMESTAMP;\n\n    ////////////////////////////////////////////////////////////////\n    //                      Constructor                           //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Constructor sets the fallback timeout and initializes timestamp.\n    /// @param _fallbackTimeout The timeout in seconds after last proposal when permissionless mode activates.\n    /// @param _disputeGameFactory The dispute game factory address.\n    constructor(uint256 _fallbackTimeout, IDisputeGameFactory _disputeGameFactory) {\n        FALLBACK_TIMEOUT = _fallbackTimeout;\n        DISPUTE_GAME_FACTORY = _disputeGameFactory;\n        DEPLOYMENT_TIMESTAMP = block.timestamp;\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                      Functions                             //\n    ////////////////////////////////////////////////////////////////\n\n    /**\n     * @notice Allows the owner to whitelist or un-whitelist proposers.\n     * @param _proposer The address to set in the proposers mapping.\n     * @param _allowed True if whitelisting, false otherwise.\n     */\n    function setProposer(address _proposer, bool _allowed) external onlyOwner {\n        proposers[_proposer] = _allowed;\n        emit ProposerPermissionUpdated(_proposer, _allowed);\n    }\n\n    /**\n     * @notice Allows the owner to whitelist or un-whitelist challengers.\n     * @param _challenger The address to set in the challengers mapping.\n     * @param _allowed True if whitelisting, false otherwise.\n     */\n    function setChallenger(address _challenger, bool _allowed) external onlyOwner {\n        challengers[_challenger] = _allowed;\n        emit ChallengerPermissionUpdated(_challenger, _allowed);\n    }\n\n    /// @notice Returns the last proposal timestamp.\n    /// @return The last proposal timestamp.\n    function getLastProposalTimestamp() public view returns (uint256) {\n        // Get the latest game to check its timestamp.\n        GameType gameType = GameType.wrap(OP_SUCCINCT_FAULT_DISPUTE_GAME_TYPE);\n        uint256 numGames = DISPUTE_GAME_FACTORY.gameCount();\n\n        // Early return if no games exist.\n        if (numGames == 0) {\n            return DEPLOYMENT_TIMESTAMP;\n        }\n\n        // Iterate backwards through games to find the most recent of our type.\n        // This avoids the memory allocation of findLatestGames for a single result.\n        uint256 i = numGames - 1;\n        while (true) {\n            (GameType gameTypeAtIndex, Timestamp timestamp,) = DISPUTE_GAME_FACTORY.gameAtIndex(i);\n            uint256 gameTimestamp = uint256(timestamp.raw());\n\n            // If this game is older than deployment, no point searching further.\n            if (gameTimestamp < DEPLOYMENT_TIMESTAMP) {\n                return DEPLOYMENT_TIMESTAMP;\n            }\n\n            // If we found a game of the correct type, return its timestamp.\n            if (gameTypeAtIndex.raw() == gameType.raw()) {\n                return gameTimestamp;\n            }\n\n            // If we've reached index 0, break out of the loop\n            if (i == 0) {\n                break;\n            }\n\n            unchecked {\n                --i;\n            }\n        }\n\n        // If we've checked all games without finding our type, return deployment timestamp.\n        return DEPLOYMENT_TIMESTAMP;\n    }\n\n    /// @notice Returns whether proposal fallback timeout has elapsed.\n    /// @return Whether permissionless proposing is active.\n    function isProposalPermissionlessMode() public view returns (bool) {\n        // Check the cheap storage read first to avoid expensive function call.\n        if (proposers[address(0)]) {\n            return true;\n        }\n\n        uint256 lastProposalTimestamp = getLastProposalTimestamp();\n        return block.timestamp - lastProposalTimestamp > FALLBACK_TIMEOUT;\n    }\n\n    /// @notice Checks if an address is allowed to propose.\n    /// @param _proposer The address to check.\n    /// @return allowed_ Whether the address is allowed to propose.\n    function isAllowedProposer(address _proposer) external view returns (bool allowed_) {\n        allowed_ = proposers[_proposer] || isProposalPermissionlessMode();\n    }\n\n    /// @notice Checks if an address is allowed to challenge.\n    /// @param _challenger The address to check.\n    /// @return allowed_ Whether the address is allowed to challenge.\n    function isAllowedChallenger(address _challenger) external view returns (bool allowed_) {\n        // If address(0) is allowed, then it's permissionless.\n        allowed_ = challengers[address(0)] || challengers[_challenger];\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 124,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "AccessManager",
+        "similarity": 0.8,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/zk/AccessManager.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/dispute/zk/AccessManager.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 8,
+        "ignoredAdded": 18,
+        "ignoredRemoved": 17,
+        "unchanged": 124,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract AccessManager is Ownable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract AccessManager is Ownable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    //                         Events                             //"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 15,
+            "newStart": 20,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    mapping(address => bool) public challengers;"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    /// @notice The timeout (in seconds) after which permissionless proposing is allowed (immutable)."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 23,
+                "text": "    uint256 public immutable FALLBACK_TIMEOUT;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 25,
+                "text": "    /// @notice The dispute game factory address."
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 26,
+                "text": "    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;"
+              },
+              { "type": " ", "oldLine": 29, "newLine": 27, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 28,
+                "text": "    /// @notice The timestamp of this contract's creation. Used for permissionless fallback proposals."
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 29,
+                "text": "    uint256 public immutable DEPLOYMENT_TIMESTAMP;"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 31,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 17,
+            "newStart": 45,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 45,
+                "text": "    //                      Functions                             //"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 46,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 47, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @notice Allows the owner to whitelist or un-whitelist proposers.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @param _proposer The address to set in the proposers mapping.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @param _allowed True if whitelisting, false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * @notice Allows the owner to whitelist or un-whitelist proposers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     * @param _proposer The address to set in the proposers mapping.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * @param _allowed True if whitelisting, false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 53,
+                "text": "    function setProposer(address _proposer, bool _allowed) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 54,
+                "text": "        proposers[_proposer] = _allowed;"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 55,
+                "text": "        emit ProposerPermissionUpdated(_proposer, _allowed);"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 56, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /// @notice Allows the owner to whitelist or un-whitelist challengers.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /// @param _challenger The address to set in the challengers mapping.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @param _allowed True if whitelisting, false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * @notice Allows the owner to whitelist or un-whitelist challengers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @param _challenger The address to set in the challengers mapping.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * @param _allowed True if whitelisting, false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 63,
+                "text": "    function setChallenger(address _challenger, bool _allowed) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 64,
+                "text": "        challengers[_challenger] = _allowed;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 65,
+                "text": "        emit ChallengerPermissionUpdated(_challenger, _allowed);"
+              }
+            ]
+          },
+          {
+            "oldStart": 81,
+            "oldLines": 10,
+            "newStart": 82,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 82,
+                "text": "        uint256 i = numGames - 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 83,
+                "text": "        while (true) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 84,
+                "text": "            (GameType gameTypeAtIndex, Timestamp timestamp,) = DISPUTE_GAME_FACTORY.gameAtIndex(i);"
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "            uint256 gameTimestamp = uint256(timestamp.raw());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 84, "newLine": 86, "text": "" },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            // If this game is older than deployment, no point searching further.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            if (gameTimestamp < DEPLOYMENT_TIMESTAMP) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "                return DEPLOYMENT_TIMESTAMP;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 91, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 92,
+                "text": "            // If we found a game of the correct type, return its timestamp."
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 93,
+                "text": "            if (gameTypeAtIndex.raw() == gameType.raw()) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "                return uint256(timestamp.raw());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "                return gameTimestamp;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 95,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 89, "newLine": 96, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 97,
+                "text": "            // If we've reached index 0, break out of the loop"
+              }
+            ]
+          },
+          {
+            "oldStart": 101,
+            "oldLines": 17,
+            "newStart": 108,
+            "newLines": 23,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 108,
+                "text": "        return DEPLOYMENT_TIMESTAMP;"
+              },
+              { "type": " ", "oldLine": 102, "newLine": 109, "text": "    }" },
+              { "type": " ", "oldLine": 103, "newLine": 110, "text": "" },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @notice Returns whether proposal fallback timeout has elapsed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    /// @return Whether permissionless proposing is active.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    function isProposalPermissionlessMode() public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        // Check the cheap storage read first to avoid expensive function call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        if (proposers[address(0)]) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "            return true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 118, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "        uint256 lastProposalTimestamp = getLastProposalTimestamp();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        return block.timestamp - lastProposalTimestamp > FALLBACK_TIMEOUT;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 122, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 123,
+                "text": "    /// @notice Checks if an address is allowed to propose."
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 124,
+                "text": "    /// @param _proposer The address to check."
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 125,
+                "text": "    /// @return allowed_ Whether the address is allowed to propose."
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 126,
+                "text": "    function isAllowedProposer(address _proposer) external view returns (bool allowed_) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        // If address(0) is allowed, then it's permissionless.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "        // If the fallback timeout has elapsed since last proposal, anyone can propose.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 110, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        uint256 lastProposalTimestamp = getLastProposalTimestamp();",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 112, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        allowed_ = proposers[address(0)] || proposers[_proposer]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "            || (block.timestamp - lastProposalTimestamp > FALLBACK_TIMEOUT);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        allowed_ = proposers[_proposer] || isProposalPermissionlessMode();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 115, "newLine": 128, "text": "    }" },
+              { "type": " ", "oldLine": 116, "newLine": 129, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 130,
+                "text": "    /// @notice Checks if an address is allowed to challenge."
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 11,
+            "newStart": 134,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 134,
+                "text": "        // If address(0) is allowed, then it's permissionless."
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 135,
+                "text": "        allowed_ = challengers[address(0)] || challengers[_challenger];"
+              },
+              { "type": " ", "oldLine": 123, "newLine": 136, "text": "    }" },
+              { "type": "-", "oldLine": 124, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    /// @notice Returns whether proposal fallback timeout has elapsed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    /// @return Whether permissionless proposing is active.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "    function isProposalPermissionlessMode() external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        uint256 lastProposalTimestamp = getLastProposalTimestamp();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        return block.timestamp - lastProposalTimestamp > FALLBACK_TIMEOUT || proposers[address(0)];",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 131, "newLine": 137, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

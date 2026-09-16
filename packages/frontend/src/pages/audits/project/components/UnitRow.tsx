@@ -26,12 +26,39 @@ const KIND_LABEL: Record<AuditsUnitEntry['kind'], string> = {
 
 type View = 'source' | 'diff' | undefined
 
-export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
+const ACTION_BUTTON =
+  'inline-flex w-[76px] shrink-0 items-center justify-center rounded border px-1.5 py-0.5 text-2xs leading-4'
+
+function DisabledAction({ label, reason }: { label: string; reason: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span
+          aria-disabled
+          className={cn(
+            ACTION_BUTTON,
+            'cursor-default border-divider border-dashed text-secondary opacity-50',
+          )}
+        >
+          {label}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>{reason}</TooltipContent>
+    </Tooltip>
+  )
+}
+
+export function UnitRow({
+  unit,
+  hideIgnoredChanges,
+}: {
+  unit: AuditsUnitEntry
+  hideIgnoredChanges: boolean
+}) {
   const [view, setView] = useState<View>(undefined)
   const meta = AUDIT_STATUS_META[unit.status]
   const match = unit.match
   const majorFinding = hasUnresolvedMajorFinding(unit)
-  const isIdentical = unit.status === 'identical' || unit.status === 'library'
 
   function toggle(next: Exclude<View, undefined>) {
     setView((prev) => (prev === next ? undefined : next))
@@ -44,7 +71,7 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
         majorFinding && 'border-l-2 border-l-negative bg-negative/5',
       )}
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 px-3 py-1.5 text-xs md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_250px]">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 px-3 py-1.5 text-xs md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px]">
         <span className="text-secondary max-md:hidden">
           {KIND_LABEL[unit.kind]}
         </span>
@@ -109,18 +136,6 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
             {unit.diffStats?.ignoredOnly && (
               <span className="text-secondary"> · ignored changes only</span>
             )}
-            {match?.laterAuditedVersionExists && (
-              <Tooltip>
-                <TooltipTrigger className="ml-1 rounded border border-chart-stacked-yellow px-1 text-[10px] text-chart-stacked-yellow">
-                  older revision
-                </TooltipTrigger>
-                <TooltipContent>
-                  The deployed code equals an older audited revision; a later
-                  audited revision exists ({match.totalVersions} audited
-                  revisions in total).
-                </TooltipContent>
-              </Tooltip>
-            )}
             {unit.warnings.map((w) => (
               <Tooltip key={w}>
                 <TooltipTrigger className="ml-1 rounded border border-divider px-1 text-[10px] text-secondary">
@@ -150,19 +165,11 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                 </a>
               </TooltipTrigger>
               <TooltipContent className="max-w-[360px] space-y-1">
+                <div className="font-medium">Matched audit</div>
                 <div className="font-medium">{match.reportTitle}</div>
                 <div className="text-secondary">
-                  {match.auditor}
-                  {match.commitTimestamp &&
-                    ` · commit ${match.commitTimestamp.slice(0, 10)}`}
+                  {match.auditor} · commit {match.commit.slice(0, 8)}
                 </div>
-                <div>
-                  Status: {match.auditStatus.replaceAll('_', ' ')}
-                  {match.majorFindings > 0 &&
-                    ` · ${match.majorFindings} major ${match.majorFindings === 1 ? 'finding' : 'findings'}${formatFindingIds(match.findingIds)}`}
-                </div>
-                <div>Review phase: {match.reviewPhase}</div>
-                <div>Coverage: {match.coverage}</div>
                 <div>
                   Matched by {match.matchedBy}, similarity{' '}
                   {Math.round(match.similarity * 100)}%
@@ -171,10 +178,10 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
             </Tooltip>
           )}
         </span>
-        <span className="flex items-center justify-end gap-2 whitespace-nowrap">
+        <span className="justify-self-end whitespace-nowrap font-mono">
           {unit.diffStats && (
             <Tooltip>
-              <TooltipTrigger className="font-mono">
+              <TooltipTrigger>
                 <span className="text-positive">+{unit.diffStats.added}</span>{' '}
                 <span className="text-negative">−{unit.diffStats.removed}</span>
                 {unit.diffStats.ignoredAdded + unit.diffStats.ignoredRemoved >
@@ -193,7 +200,9 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
               </TooltipContent>
             </Tooltip>
           )}
-          {isIdentical && match?.reportUrl && (
+        </span>
+        <span className="flex items-center justify-end gap-1.5 whitespace-nowrap max-md:col-span-2">
+          {match?.reportUrl ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <a
@@ -201,7 +210,7 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    'rounded border px-1.5 py-0.5',
+                    ACTION_BUTTON,
                     majorFinding
                       ? 'border-negative text-negative'
                       : 'border-divider',
@@ -211,7 +220,7 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                Open the audit report that covered this exact revision:{' '}
+                Open the audit report that covered the matched audited revision:{' '}
                 {match.reportTitle}
                 {majorFinding &&
                   match.findingIds &&
@@ -219,34 +228,53 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                   `. Search it for ${match.findingIds.join(', ')}.`}
               </TooltipContent>
             </Tooltip>
+          ) : (
+            <DisabledAction label="Audit" reason="No audited source matched." />
           )}
           <button
             type="button"
             aria-pressed={view === 'source'}
             onClick={() => toggle('source')}
             className={cn(
-              'rounded border border-divider px-1.5 py-0.5',
+              ACTION_BUTTON,
+              'border-divider',
               view === 'source' && 'bg-surface-secondary',
             )}
           >
-            Source
+            Deployed
           </button>
-          {unit.diffStats && (
+          {unit.diffStats ? (
             <button
               type="button"
               aria-pressed={view === 'diff'}
               onClick={() => toggle('diff')}
               className={cn(
-                'rounded border border-divider px-1.5 py-0.5',
+                ACTION_BUTTON,
+                'border-divider',
                 view === 'diff' && 'bg-surface-secondary',
               )}
             >
               Diff
             </button>
+          ) : (
+            <DisabledAction
+              label="Diff"
+              reason={
+                match
+                  ? 'The deployed unit is identical to the audited one.'
+                  : 'No audited source to compare with.'
+              }
+            />
           )}
         </span>
       </div>
-      {view && <UnitDetails unit={unit} view={view} />}
+      {view && (
+        <UnitDetails
+          unit={unit}
+          view={view}
+          hideIgnoredChanges={hideIgnoredChanges}
+        />
+      )}
     </div>
   )
 }

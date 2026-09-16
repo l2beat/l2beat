@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "338a7b6f3b9d0d4e58ad662b34e43ba1450d1cefba368185edb2898d8c095d12",
+  "name": "ERC20Permit",
+  "kind": "abstract",
+  "lines": 62,
+  "source": "abstract contract ERC20Permit is ERC20, IERC20Permit, EIP712 {\n    using Counters for Counters.Counter;\n\n    mapping(address => Counters.Counter) private _nonces;\n\n    // solhint-disable-next-line var-name-mixedcase\n    bytes32 private immutable _PERMIT_TYPEHASH =\n        keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");\n\n    /**\n     * @dev Initializes the {EIP712} domain separator using the `name` parameter, and setting `version` to `\"1\"`.\n     *\n     * It's a good idea to use the same `name` that is defined as the ERC20 token name.\n     */\n    constructor(string memory name) EIP712(name, \"1\") {}\n\n    /**\n     * @dev See {IERC20Permit-permit}.\n     */\n    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        public\n        virtual\n        override\n    {\n        require(block.timestamp <= deadline, \"ERC20Permit: expired deadline\");\n\n        bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));\n\n        bytes32 hash = _hashTypedDataV4(structHash);\n\n        address signer = ECDSA.recover(hash, v, r, s);\n        require(signer == owner, \"ERC20Permit: invalid signature\");\n\n        _approve(owner, spender, value);\n    }\n\n    /**\n     * @dev See {IERC20Permit-nonces}.\n     */\n    function nonces(address owner) public view virtual override returns (uint256) {\n        return _nonces[owner].current();\n    }\n\n    /**\n     * @dev See {IERC20Permit-DOMAIN_SEPARATOR}.\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function DOMAIN_SEPARATOR() external view override returns (bytes32) {\n        return _domainSeparatorV4();\n    }\n\n    /**\n     * @dev \"Consume a nonce\": return the current value and increment.\n     *\n     * _Available since v4.1._\n     */\n    function _useNonce(address owner) internal virtual returns (uint256 current) {\n        Counters.Counter storage nonce = _nonces[owner];\n        current = nonce.current();\n        nonce.increment();\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 48,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC20Permit",
+        "similarity": 0.542,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 14,
+        "removed": 13,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 8,
+        "unchanged": 48,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC20Permit is ERC20, IERC20Permit, EIP712, Nonces {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC20Permit is ERC20, IERC20Permit, EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using Counters for Counters.Counter;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    mapping(address => Counters.Counter) private _nonces;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 6,
+                "text": "    // solhint-disable-next-line var-name-mixedcase"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    bytes32 private constant _PERMIT_TYPEHASH =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    bytes32 private immutable _PERMIT_TYPEHASH =",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 8,
+                "text": "        keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 9, "text": "" },
+              { "type": " ", "oldLine": 6, "newLine": 10, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * @dev Permit deadline has expired.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 8, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    error ERC2612ExpiredDeadline(uint256 deadline);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 10, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * @dev Mismatched signature.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    error ERC2612InvalidSignature(address signer, address owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 11,
+                "text": "     * @dev Initializes the {EIP712} domain separator using the `name` parameter, and setting `version` to `\"1\"`."
+              },
+              { "type": " ", "oldLine": 18, "newLine": 12, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 13,
+                "text": "     * It's a good idea to use the same `name` that is defined as the ERC20 token name."
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 18,
+            "newStart": 22,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 22,
+                "text": "        virtual"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 23,
+                "text": "        override"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 24, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        if (block.timestamp > deadline) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            revert ERC2612ExpiredDeadline(deadline);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        require(block.timestamp <= deadline, \"ERC20Permit: expired deadline\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 27,
+                "text": "        bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 29,
+                "text": "        bytes32 hash = _hashTypedDataV4(structHash);"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 31,
+                "text": "        address signer = ECDSA.recover(hash, v, r, s);"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        if (signer != owner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            revert ERC2612InvalidSignature(signer, owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        require(signer == owner, \"ERC20Permit: invalid signature\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 33, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 34,
+                "text": "        _approve(owner, spender, value);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 35, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 47,
+            "oldLines": 15,
+            "newStart": 37,
+            "newLines": 26,
+            "lines": [
+              { "type": " ", "oldLine": 47, "newLine": 37, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 38,
+                "text": "     * @dev See {IERC20Permit-nonces}."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 39, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    function nonces(address owner) public view virtual override(IERC20Permit, Nonces) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        return super.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    function nonces(address owner) public view virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        return _nonces[owner].current();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 53, "newLine": 43, "text": "" },
+              { "type": " ", "oldLine": 54, "newLine": 44, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 45,
+                "text": "     * @dev See {IERC20Permit-DOMAIN_SEPARATOR}."
+              },
+              { "type": " ", "oldLine": 56, "newLine": 46, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 47,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    function DOMAIN_SEPARATOR() external view virtual override returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    function DOMAIN_SEPARATOR() external view override returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 49,
+                "text": "        return _domainSeparatorV4();"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 50, "text": "    }" },
+              { "type": "+", "newLine": 51, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev \"Consume a nonce\": return the current value and increment.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 54, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     * _Available since v4.1._",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function _useNonce(address owner) internal virtual returns (uint256 current) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        Counters.Counter storage nonce = _nonces[owner];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        current = nonce.current();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        nonce.increment();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 61, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 61, "newLine": 62, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

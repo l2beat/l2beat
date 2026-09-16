@@ -1,6 +1,24 @@
 {
   "schemaVersion": 2,
   "reports": {
+    "aztecnetwork/cantina-coinissuer-2025-11-12": {
+      "id": "aztecnetwork/cantina-coinissuer-2025-11-12",
+      "collection": "aztecnetwork",
+      "title": "Aztec Coinissuer Security Review",
+      "auditor": "Cantina",
+      "reportDate": "2025-11-12",
+      "reportFile": "Cantina - Coinissuer.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Cantina%20-%20Coinissuer.pdf"
+    },
+    "aztecnetwork/cantina-escape-hatch-2026-02-24": {
+      "id": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+      "collection": "aztecnetwork",
+      "title": "Aztec: Hatch Security Review",
+      "auditor": "Cantina",
+      "reportDate": "2026-02-24",
+      "reportFile": "Cantina - Escape Hatch.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Cantina%20-%20Escape%20Hatch.pdf"
+    },
     "aztecnetwork/cantina-governance-2025-11-12": {
       "id": "aztecnetwork/cantina-governance-2025-11-12",
       "collection": "aztecnetwork",
@@ -19,6 +37,24 @@
       "reportFile": "Cantina - Payload 2025.03.05.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Cantina%20-%20Payload%202025.03.05.pdf"
     },
+    "aztecnetwork/cantina-rollup-contracts-2025-11-12": {
+      "id": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+      "collection": "aztecnetwork",
+      "title": "Aztec Rollup Contracts Security Review",
+      "auditor": "Cantina",
+      "reportDate": "2025-11-12",
+      "reportFile": "Cantina - Rollup Contracts.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Cantina%20-%20Rollup%20Contracts.pdf"
+    },
+    "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15": {
+      "id": "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15",
+      "collection": "aztecnetwork",
+      "title": "Formal Verification Report: Aztec Governance Contracts",
+      "auditor": "Igor Konnov, Thomas Pani (blltprf.xyz / konnov.phd)",
+      "reportDate": "2025-09-15",
+      "reportFile": "Igor Konnov, Thomas Pani - Governance Formal Verification.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Igor%20Konnov%2C%20Thomas%20Pani%20-%20Governance%20Formal%20Verification.pdf"
+    },
     "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18": {
       "id": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
       "collection": "aztecnetwork",
@@ -36,6 +72,15 @@
       "reportDate": "2022-06-14",
       "reportFile": "Solidified - Aztec Liquity Bridge.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Solidified%20-%20Aztec%20Liquity%20Bridge.pdf"
+    },
+    "aztecnetwork/veridise-governance-2025-10-13": {
+      "id": "aztecnetwork/veridise-governance-2025-10-13",
+      "collection": "aztecnetwork",
+      "title": "Veridise Auditing Report: Aztec Governance",
+      "auditor": "Veridise",
+      "reportDate": "2025-10-13",
+      "reportFile": "Veridise - Governance.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/aztecnetwork/reports/Veridise%20-%20Governance.pdf"
     },
     "bob/pashov-bob-usdc-bridge-2024-04": {
       "id": "bob/pashov-bob-usdc-bridge-2024-04",
@@ -73,6 +118,33 @@
       "reportFile": "Hashlock - Celo Optimism and Superchain (2nd Audit).md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/Hashlock%20-%20Celo%20Optimism%20and%20Superchain%20(2nd%20Audit).pdf"
     },
+    "celo/hashlock-celosuperchainconfig-2026-03": {
+      "id": "celo/hashlock-celosuperchainconfig-2026-03",
+      "collection": "celo",
+      "title": "Celo Smart Contract Audit Report (CeloSuperchainConfig, 3rd audit)",
+      "auditor": "Hashlock Pty Ltd",
+      "reportDate": "2026-03-31",
+      "reportFile": "Hashlock - CeloSuperchainConfig (3rd Audit).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/Hashlock%20-%20CeloSuperchainConfig%20(3rd%20Audit).pdf"
+    },
+    "celo/nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
+      "id": "celo/nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+      "collection": "celo",
+      "title": "NM-0561 Celo Custom Gas Token Security Review",
+      "auditor": "Nethermind Security",
+      "reportDate": "2025-07-01",
+      "reportFile": "Nethermind - NM-0561 Celo Custom Gas Token.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/Nethermind%20-%20NM-0561%20Celo%20Custom%20Gas%20Token.pdf"
+    },
+    "celo/oz-celo-contracts-mainnet-releases-1-3": {
+      "id": "celo/oz-celo-contracts-mainnet-releases-1-3",
+      "collection": "celo",
+      "title": "Celo Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2021-02-05",
+      "reportFile": "OpenZeppelin - Celo Contracts Mainnet and Releases 1-3.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/OpenZeppelin%20-%20Celo%20Contracts%20Mainnet%20and%20Releases%201-3.html"
+    },
     "celo/trail-of-bits-celo-l2-2024-12-19": {
       "id": "celo/trail-of-bits-celo-l2-2024-12-19",
       "collection": "celo",
@@ -90,6 +162,15 @@
       "reportDate": "2023-03-09",
       "reportFile": "Verilog - Celo Monorepo PRs 9798-10159.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/Verilog%20-%20Celo%20Monorepo%20PRs%209798-10159.md"
+    },
+    "celo/verilog-staked-celo-prs-72-120-2023": {
+      "id": "celo/verilog-staked-celo-prs-72-120-2023",
+      "collection": "celo",
+      "title": "CELO Liquid Staking (staked-celo) Report",
+      "auditor": "Verilog Solutions",
+      "reportDate": "2023-03-27",
+      "reportFile": "Verilog - Staked Celo PRs 72-120.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/celo/reports/Verilog%20-%20Staked%20Celo%20PRs%2072-120.md"
     },
     "ethscriptions/cantina-facet-zk-fault-proof-rollup-2025-08-05": {
       "id": "ethscriptions/cantina-facet-zk-fault-proof-rollup-2025-08-05",
@@ -118,6 +199,24 @@
       "reportFile": "Zellic_Facet_Node_Audit_Report.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/ethscriptions/reports/Zellic_Facet_Node_Audit_Report.pdf"
     },
+    "facet/cantina-facet-zk-fault-proof-rollup-2025-08-05": {
+      "id": "facet/cantina-facet-zk-fault-proof-rollup-2025-08-05",
+      "collection": "facet",
+      "title": "Facet ZK Fault Proof Rollup Security Review",
+      "auditor": "Cantina (Slowfi, solo review)",
+      "reportDate": "2025-08-05",
+      "reportFile": "Cantina_Facet_ZK_Fault_Proofs_Report.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/facet/reports/Cantina_Facet_ZK_Fault_Proofs_Report.pdf"
+    },
+    "facet/zellic-facet-bridge-2024-11-04": {
+      "id": "facet/zellic-facet-bridge-2024-11-04",
+      "collection": "facet",
+      "title": "Facet Bridge Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "reportDate": "2024-11-04",
+      "reportFile": "Zellic_Facet_Bridge_Audit_Report.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/facet/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
+    },
     "openzeppelin/contracts__audits__2017-03": {
       "id": "openzeppelin/contracts__audits__2017-03",
       "collection": "openzeppelin",
@@ -135,6 +234,24 @@
       "reportDate": "2018-10-21",
       "reportFile": "contracts__audits__2018-10.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "openzeppelin/contracts__audits__2022-10-Checkpoints": {
+      "id": "openzeppelin/contracts__audits__2022-10-Checkpoints",
+      "collection": "openzeppelin",
+      "title": "OpenZeppelin Checkpoints Library Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2022-11-15",
+      "reportFile": "contracts__audits__2022-10-Checkpoints.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2022-10-Checkpoints.pdf"
+    },
+    "openzeppelin/contracts__audits__2022-10-ERC4626": {
+      "id": "openzeppelin/contracts__audits__2022-10-ERC4626",
+      "collection": "openzeppelin",
+      "title": "OpenZeppelin ERC4626 Tokenized Vault Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2022-11-15",
+      "reportFile": "contracts__audits__2022-10-ERC4626.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2022-10-ERC4626.pdf"
     },
     "openzeppelin/contracts__audits__2023-05-v4.9": {
       "id": "openzeppelin/contracts__audits__2023-05-v4.9",
@@ -162,6 +279,15 @@
       "reportDate": "2024-10-03",
       "reportFile": "contracts__audits__2024-10-v5.1.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "openzeppelin/contracts__audits__2024-12-v5.2": {
+      "id": "openzeppelin/contracts__audits__2024-12-v5.2",
+      "collection": "openzeppelin",
+      "title": "OpenZeppelin Contracts Release v5.2 Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2024-12-04",
+      "reportFile": "contracts__audits__2024-12-v5.2.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
     },
     "openzeppelin/contracts__audits__2025-04-v5.3": {
       "id": "openzeppelin/contracts__audits__2025-04-v5.3",
@@ -244,6 +370,15 @@
       "reportFile": "2024_02-MCP_L1-Cantina.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_02-MCP_L1-Cantina.pdf"
     },
+    "optimism/cantina-safe-extensions-2024-06": {
+      "id": "optimism/cantina-safe-extensions-2024-06",
+      "collection": "optimism",
+      "title": "Optimism Safe Extensions Competition (Cantina)",
+      "auditor": "Cantina",
+      "reportDate": "2024-06-06",
+      "reportFile": "2024_05_SafeLivenessExtensions-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_05_SafeLivenessExtensions-Cantina.pdf"
+    },
     "optimism/cantina-u17-2025-10": {
       "id": "optimism/cantina-u17-2025-10",
       "collection": "optimism",
@@ -289,6 +424,15 @@
       "reportFile": "2024_08-Superchain-Code4rena.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_08-Superchain-Code4rena.html"
     },
+    "optimism/openzeppelin-agora-governor-v6-2023-11": {
+      "id": "optimism/openzeppelin-agora-governor-v6-2023-11",
+      "collection": "optimism",
+      "title": "Agora Optimism Governance Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-11-22",
+      "reportFile": "2023_11-Governor-OpenZeppelin.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2023_11-Governor-OpenZeppelin.pdf"
+    },
     "optimism/openzeppelin-bedrock-bridge-2022-05": {
       "id": "optimism/openzeppelin-bedrock-bridge-2022-05",
       "collection": "optimism",
@@ -306,6 +450,24 @@
       "reportDate": "2022-09-02",
       "reportFile": "2022_09-Bedrock_and_Periphery-Zeppelin.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
+    },
+    "optimism/openzeppelin-ovm-rollup-2021-03": {
+      "id": "optimism/openzeppelin-ovm-rollup-2021-03",
+      "collection": "optimism",
+      "title": "OpenZeppelin OVM and Rollup Audit (March-May 2021)",
+      "auditor": "OpenZeppelin",
+      "reportDate": null,
+      "reportFile": "2021_03-OVM_and_Rollup-OpenZeppelin.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2021_03-OVM_and_Rollup-OpenZeppelin.pdf"
+    },
+    "optimism/sherlock-bedrock-2023-03": {
+      "id": "optimism/sherlock-bedrock-2023-03",
+      "collection": "optimism",
+      "title": "Sherlock Security Review for Optimism (Bedrock)",
+      "auditor": "Sherlock",
+      "reportDate": "2023-03-03",
+      "reportFile": "2023_03-Bedrock-Sherlock.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2023_03-Bedrock-Sherlock.pdf"
     },
     "optimism/spearbit-fault-proofs-no-mips-2024-08": {
       "id": "optimism/spearbit-fault-proofs-no-mips-2024-08",
@@ -343,6 +505,33 @@
       "reportFile": "2025_05-Upgrade16-Spearbit.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
     },
+    "optimism/trailofbits-invariant-testing-2022-11": {
+      "id": "optimism/trailofbits-invariant-testing-2022-11",
+      "collection": "optimism",
+      "title": "Optimism Security Assessment (testing strategy and invariants, November 2022)",
+      "auditor": "Trail of Bits",
+      "reportDate": "2022-11-10",
+      "reportFile": "2022_11-Invariant_Testing-TrailOfBits.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
+    },
+    "optimism/trust-superchainconfig-upgrade-2024-01": {
+      "id": "optimism/trust-superchainconfig-upgrade-2024-01",
+      "collection": "optimism",
+      "title": "Smart Contract Audit: Optimism Bedrock upgrade (Trust Security)",
+      "auditor": "Trust Security",
+      "reportDate": "2024-01-11",
+      "reportFile": "2023_12_SuperchainConfigUpgrade_Trust.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2023_12_SuperchainConfigUpgrade_Trust.pdf"
+    },
+    "optimism/zachobront-agora-governor-v5-2023-05": {
+      "id": "optimism/zachobront-agora-governor-v5-2023-05",
+      "collection": "optimism",
+      "title": "Agora Audit Report - Optimism Governor & Approval Voting Module",
+      "auditor": "Zach Obront",
+      "reportDate": "2023-05-12",
+      "reportFile": "2023_05-Governor-ZachObront.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2023_05-Governor-ZachObront.md"
+    },
     "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03": {
       "id": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
       "collection": "privacy-pools",
@@ -352,6 +541,15 @@
       "reportFile": "oxorio-privacy-pools-core-contracts-audit-2025-03.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/privacy-pools/reports/oxorio-privacy-pools-core-contracts-audit-2025-03.pdf"
     },
+    "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05": {
+      "id": "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
+      "collection": "privacy-pools",
+      "title": "Privacy Pools Smart Contracts Audit Report (Entrypoint precommitment upgrade)",
+      "auditor": "Oxorio",
+      "reportDate": "2025-05-20",
+      "reportFile": "oxorio-privacy-pools-precommitment-pr-audit-2025-05.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/privacy-pools/reports/oxorio-privacy-pools-precommitment-pr-audit-2025-05.pdf"
+    },
     "privacy-pools/oxorio-privacy-pools-v1-2024-05": {
       "id": "privacy-pools/oxorio-privacy-pools-v1-2024-05",
       "collection": "privacy-pools",
@@ -360,6 +558,33 @@
       "reportDate": "2024-05-24",
       "reportFile": "oxorio-privacy-pools-v1-audit-2024-05.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/privacy-pools/reports/oxorio-privacy-pools-v1-audit-2024-05.pdf"
+    },
+    "roninnetwork/beosin-ronin-bridge-2023-09": {
+      "id": "roninnetwork/beosin-ronin-bridge-2023-09",
+      "collection": "roninnetwork",
+      "title": "Ronin Bridge Smart Contract Security Audit (No. 202309081700)",
+      "auditor": "Beosin",
+      "reportDate": "2023-09-08",
+      "reportFile": "Beosin - Ronin Bridge (2023-09).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/roninnetwork/reports/Beosin%20-%20Ronin%20Bridge%20(2023-09).pdf"
+    },
+    "roninnetwork/beosin-ronin-bridge-2024-08": {
+      "id": "roninnetwork/beosin-ronin-bridge-2024-08",
+      "collection": "roninnetwork",
+      "title": "Ronin Bridge Security Analysis Audit (No. 202408211552)",
+      "auditor": "Beosin",
+      "reportDate": "2024-08-21",
+      "reportFile": "Beosin - Ronin Bridge (2024-08).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/roninnetwork/reports/Beosin%20-%20Ronin%20Bridge%20(2024-08).pdf"
+    },
+    "roninnetwork/beosin-ronin-network-2023-03": {
+      "id": "roninnetwork/beosin-ronin-network-2023-03",
+      "collection": "roninnetwork",
+      "title": "Ronin Network Public Block Chain Security Audit V1.5 (No. 202303031441)",
+      "auditor": "Beosin",
+      "reportDate": "2023-03-03",
+      "reportFile": "Beosin - Ronin Network (2023-03).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/roninnetwork/reports/Beosin%20-%20Ronin%20Network%20(2023-03).pdf"
     },
     "roninnetwork/certik-axie-infinity-ronin-bridge-2022-06": {
       "id": "roninnetwork/certik-axie-infinity-ronin-bridge-2022-06",
@@ -378,6 +603,24 @@
       "reportDate": "2024-11-25",
       "reportFile": "Code4rena - Ronin Katana v3.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/roninnetwork/reports/Code4rena%20-%20Ronin%20Katana%20v3.html"
+    },
+    "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08": {
+      "id": "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08",
+      "collection": "roninnetwork",
+      "title": "Security Audit - Ronin Bridge Smart Contracts (Private Report, Version 1.0)",
+      "auditor": "Verichains Lab",
+      "reportDate": "2024-08-21",
+      "reportFile": "Verichains - Ronin Bridge (2024-08).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/roninnetwork/reports/Verichains%20-%20Ronin%20Bridge%20(2024-08).pdf"
+    },
+    "safe/ackee-safe-1-4-0": {
+      "id": "safe/ackee-safe-1-4-0",
+      "collection": "safe",
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "reportDate": "2023-03-28",
+      "reportFile": "safe-core__docs__Safe_Audit_Report_1_4_0.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "safe/certora-safe-1-3-0": {
       "id": "safe/certora-safe-1-3-0",
@@ -424,6 +667,15 @@
       "reportFile": "safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/safe/reports/safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md"
     },
+    "safe/nethermind-safe-1-3-0": {
+      "id": "safe/nethermind-safe-1-3-0",
+      "collection": "safe",
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "reportDate": "2026-08-17",
+      "reportFile": "safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
     "safe/nethermind-safe-allowance-v1-0-0": {
       "id": "safe/nethermind-safe-allowance-v1-0-0",
       "collection": "safe",
@@ -441,6 +693,132 @@
       "reportDate": "2023-05-09",
       "reportFile": "zodiac-roles__packages__evm__docs__Audit02_RolesV2_May2023_Omniscia.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/safe/reports/zodiac-roles__packages__evm__docs__Audit02_RolesV2_May2023_Omniscia.pdf"
+    },
+    "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02": {
+      "id": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+      "collection": "scroll",
+      "title": "Scroll - Bridge Gas Optimizations Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2024-02-06",
+      "reportFile": "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02.pdf"
+    },
+    "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04": {
+      "id": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
+      "collection": "scroll",
+      "title": "EIP-4844 Support Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2024-04-15",
+      "reportFile": "openzeppelin-scroll-eip4844-support-audit-2024-04.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-eip4844-support-audit-2024-04.pdf"
+    },
+    "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08": {
+      "id": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+      "collection": "scroll",
+      "title": "Scroll GasSwap, Multiple Verifier, Wrapped Ether and Diff Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-08-31",
+      "reportFile": "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08.pdf"
+    },
+    "scroll/openzeppelin-scroll-layer1-audit-2023-07": {
+      "id": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+      "collection": "scroll",
+      "title": "Scroll Layer 1 Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-07-18",
+      "reportFile": "openzeppelin-scroll-layer1-audit-2023-07.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-layer1-audit-2023-07.pdf"
+    },
+    "scroll/openzeppelin-scroll-layer2-audit-2023-07": {
+      "id": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+      "collection": "scroll",
+      "title": "Scroll Phase 2 Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-07-21",
+      "reportFile": "openzeppelin-scroll-layer2-audit-2023-07.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-layer2-audit-2023-07.pdf"
+    },
+    "scroll/openzeppelin-scroll-owner-rate-limiter-audit-2023-09": {
+      "id": "scroll/openzeppelin-scroll-owner-rate-limiter-audit-2023-09",
+      "collection": "scroll",
+      "title": "ScrollOwner and Rate Limiter Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-09-26",
+      "reportFile": "openzeppelin-scroll-owner-rate-limiter-audit-2023-09.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-owner-rate-limiter-audit-2023-09.pdf"
+    },
+    "scroll/openzeppelin-scroll-usdc-gateway-audit-2023-09": {
+      "id": "scroll/openzeppelin-scroll-usdc-gateway-audit-2023-09",
+      "collection": "scroll",
+      "title": "Scroll USDC Gateway Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-09-13",
+      "reportFile": "openzeppelin-scroll-usdc-gateway-audit-2023-09.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-usdc-gateway-audit-2023-09.pdf"
+    },
+    "scroll/trailofbits-scroll-euclid-phase1-2025-04": {
+      "id": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+      "collection": "scroll",
+      "title": "Scroll Euclid Upgrade Phase 1 Security Assessment",
+      "auditor": "Trail of Bits",
+      "reportDate": "2025-04-04",
+      "reportFile": "trailofbits-scroll-euclid-phase1-2025-04.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/trailofbits-scroll-euclid-phase1-2025-04.pdf"
+    },
+    "scroll/trailofbits-scroll-euclid-phase2-2025-04": {
+      "id": "scroll/trailofbits-scroll-euclid-phase2-2025-04",
+      "collection": "scroll",
+      "title": "Scroll Euclid Upgrade Phase 2 Security Assessment",
+      "auditor": "Trail of Bits",
+      "reportDate": "2025-04-04",
+      "reportFile": "trailofbits-scroll-euclid-phase2-2025-04.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/trailofbits-scroll-euclid-phase2-2025-04.pdf"
+    },
+    "scroll/trailofbits-scroll-feynman-upgrade": {
+      "id": "scroll/trailofbits-scroll-feynman-upgrade",
+      "collection": "scroll",
+      "title": "Scroll Feynman Upgrade Smart Contract Changes Security Assessment (Summary Report)",
+      "auditor": "Trail of Bits",
+      "reportDate": "2025-07-10",
+      "reportFile": "trailofbits-scroll-feynman-upgrade.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/trailofbits-scroll-feynman-upgrade.pdf"
+    },
+    "scroll/zellic-scroll-bridge-rollup-audit-2023-09": {
+      "id": "scroll/zellic-scroll-bridge-rollup-audit-2023-09",
+      "collection": "scroll",
+      "title": "Scroll Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "reportDate": "2023-09-07",
+      "reportFile": "zellic-scroll-bridge-rollup-audit-2023-09.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/zellic-scroll-bridge-rollup-audit-2023-09.pdf"
+    },
+    "scroll/zellic-scroll-lido-gateway-audit": {
+      "id": "scroll/zellic-scroll-lido-gateway-audit",
+      "collection": "scroll",
+      "title": "Lido Gateway Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "reportDate": "2024-01-23",
+      "reportFile": "zellic-scroll-lido-gateway-audit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/zellic-scroll-lido-gateway-audit.pdf"
+    },
+    "solady/ackee-blockchain-solady-report": {
+      "id": "solady/ackee-blockchain-solady-report",
+      "collection": "solady",
+      "title": "Solady: Tokens & Utils Selection",
+      "auditor": "Ackee Blockchain",
+      "reportDate": "2023-06-02",
+      "reportFile": "solady__audits__ackee-blockchain-solady-report.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/solady/reports/solady__audits__ackee-blockchain-solady-report.pdf"
+    },
+    "solady/cantina-solady-report": {
+      "id": "solady/cantina-solady-report",
+      "collection": "solady",
+      "title": "Solady Security Review (Cantina Public Goods)",
+      "auditor": "Cantina",
+      "reportDate": "2023-09-14",
+      "reportFile": "solady__audits__cantina-solady-report.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/solady/reports/solady__audits__cantina-solady-report.pdf"
     },
     "solady/cantina-spearbit-coinbase-solady-report": {
       "id": "solady/cantina-spearbit-coinbase-solady-report",
@@ -513,6 +891,15 @@
       "reportDate": null,
       "reportFile": "umbra-audit-2021-03.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/umbra/reports/umbra-audit-2021-03.pdf"
+    },
+    "unichain/cantina-unichain-contracts-2024-11": {
+      "id": "unichain/cantina-unichain-contracts-2024-11",
+      "collection": "unichain",
+      "title": "Unichain contracts Security Review (November 2024)",
+      "auditor": "Cantina",
+      "reportDate": "2024-11-05",
+      "reportFile": "Cantina - Unichain contracts Security Review 2024-11-05.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/unichain/reports/Cantina%20-%20Unichain%20contracts%20Security%20Review%202024-11-05.pdf"
     },
     "uniswapv3/abdk-uniswap-v3-core-2021-03": {
       "id": "uniswapv3/abdk-uniswap-v3-core-2021-03",

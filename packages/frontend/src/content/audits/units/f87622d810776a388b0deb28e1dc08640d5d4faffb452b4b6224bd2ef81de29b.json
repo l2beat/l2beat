@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f87622d810776a388b0deb28e1dc08640d5d4faffb452b4b6224bd2ef81de29b",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 48,
+  "source": "// Tests for rollup-bound terminal tail validation helpers.\n\nmod previous_kernel_validation_tests;\nmod tail_output_validator;\n\nuse crate::components::{\n    previous_kernel_for_tail_validator::validate_previous_kernel_for_tail,\n    tail_finalize::tail_finalize,\n};\nuse protocol_test_utils::FixtureBuilder;\nuse types::{\n    abis::{gas::Gas, kernel_circuit_public_inputs::PrivateToRollupKernelCircuitPublicInputs},\n    address::AztecAddress,\n    constants::PRIVATE_KERNEL_INNER_VK_INDEX,\n    traits::FromField,\n};\n\npub struct TestBuilder {\n    pub previous_kernel: FixtureBuilder,\n    pub expiration_timestamp_upper_bound: u64,\n    pub output: FixtureBuilder,\n}\n\nimpl TestBuilder {\n    pub fn new() -> Self {\n        let mut previous_kernel = FixtureBuilder::new().in_vk_tree(PRIVATE_KERNEL_INNER_VK_INDEX);\n        previous_kernel.tx_context.gas_settings.gas_limits = Gas::new(1_000_000_000, 1_000_000_000);\n        previous_kernel.append_siloed_nullifiers(1);\n        previous_kernel.claimed_first_nullifier =\n            previous_kernel.nullifiers.get(0).innermost().value;\n        previous_kernel.set_fee_payer(AztecAddress::from_field(234234));\n        previous_kernel.is_private_only = true;\n\n        let output = previous_kernel;\n\n        TestBuilder {\n            previous_kernel,\n            expiration_timestamp_upper_bound: previous_kernel.expiration_timestamp,\n            output,\n        }\n    }\n\n    pub fn execute(self) -> PrivateToRollupKernelCircuitPublicInputs {\n        let previous_kernel_pi = self.previous_kernel.to_private_kernel_circuit_public_inputs();\n        validate_previous_kernel_for_tail(previous_kernel_pi, false /* is_for_public */);\n        tail_finalize(previous_kernel_pi, self.expiration_timestamp_upper_bound)\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

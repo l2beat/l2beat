@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d907140064b894852db2613917dad0e40b3e89f207084c4cc5c6922c12ee5c94",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "use rollup_lib::tx_base::{\n    public_tx_base_rollup, PublicTxBaseRollupPrivateInputs, TxRollupPublicInputs,\n};\n\nfn main(inputs: PublicTxBaseRollupPrivateInputs) -> pub TxRollupPublicInputs {\n    public_tx_base_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f8170dc4133a6d0a1f6a59c4068ba76fffe476323811b681c22e43ec20ce98f5",
+  "name": "padded_side_effect_amounts.nr",
+  "kind": "program",
+  "lines": 24,
+  "source": "use types::traits::Empty;\n\n#[derive(Eq)]\npub struct PaddedSideEffectAmounts {\n    pub non_revertible_note_hashes: u32,\n    pub revertible_note_hashes: u32,\n    pub non_revertible_nullifiers: u32,\n    pub revertible_nullifiers: u32,\n    pub non_revertible_private_logs: u32,\n    pub revertible_private_logs: u32,\n}\n\nimpl Empty for PaddedSideEffectAmounts {\n    fn empty() -> Self {\n        PaddedSideEffectAmounts {\n            non_revertible_note_hashes: 0,\n            revertible_note_hashes: 0,\n            non_revertible_nullifiers: 0,\n            revertible_nullifiers: 0,\n            non_revertible_private_logs: 0,\n            revertible_private_logs: 0,\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

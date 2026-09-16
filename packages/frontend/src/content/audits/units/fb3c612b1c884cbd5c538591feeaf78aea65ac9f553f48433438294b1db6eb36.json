@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fb3c612b1c884cbd5c538591feeaf78aea65ac9f553f48433438294b1db6eb36",
+  "name": "TokenRateAndUpdateTimestampProvider",
+  "kind": "abstract",
+  "lines": 40,
+  "source": "abstract contract TokenRateAndUpdateTimestampProvider {\n    /// @notice Non-rebasable token of Core Lido procotol.\n    address public immutable WSTETH;\n\n    /// @notice Address of the AccountingOracle instance\n    address public immutable ACCOUNTING_ORACLE;\n\n    /// @notice Timetamp of the Consensus Layer genesis\n    uint256 public immutable GENESIS_TIME;\n\n    /// @notice Seconds per single Consensus Layer slot\n    uint256 public immutable SECONDS_PER_SLOT;\n\n    /// @notice Token rate decimals to push\n    uint256 public constant TOKEN_RATE_DECIMALS = 27;\n\n    constructor(address wstETH_, address accountingOracle_) {\n        if (wstETH_ == address(0)) {\n            revert ErrorZeroAddressWstETH();\n        }\n        if (accountingOracle_ == address(0)) {\n            revert ErrorZeroAddressAccountingOracle();\n        }\n        WSTETH = wstETH_;\n        ACCOUNTING_ORACLE = accountingOracle_;\n        GENESIS_TIME = IAccountingOracle(ACCOUNTING_ORACLE).GENESIS_TIME();\n        SECONDS_PER_SLOT = IAccountingOracle(ACCOUNTING_ORACLE).SECONDS_PER_SLOT();\n    }\n\n    function _getTokenRateAndUpdateTimestamp() internal view returns (uint256 rate, uint256 updateTimestamp) {\n        rate = IERC20WstETH(WSTETH).getStETHByWstETH(10 ** TOKEN_RATE_DECIMALS);\n\n        /// @dev github.com/ethereum/consensus-specs/blob/dev/specs/bellatrix/beacon-chain.md#compute_timestamp_at_slot\n        updateTimestamp =\n            GENESIS_TIME + SECONDS_PER_SLOT * IAccountingOracle(ACCOUNTING_ORACLE).getLastProcessingRefSlot();\n    }\n\n    error ErrorZeroAddressWstETH();\n    error ErrorZeroAddressAccountingOracle();\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

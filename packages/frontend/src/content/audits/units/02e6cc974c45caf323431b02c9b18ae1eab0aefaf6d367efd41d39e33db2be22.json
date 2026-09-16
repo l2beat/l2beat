@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "02e6cc974c45caf323431b02c9b18ae1eab0aefaf6d367efd41d39e33db2be22",
+  "name": "state_reference.nr",
+  "kind": "program",
+  "lines": 44,
+  "source": "use crate::{\n    abis::{\n        append_only_tree_snapshot::AppendOnlyTreeSnapshot,\n        partial_state_reference::PartialStateReference,\n    },\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n/// Deprecated. Use `TreeSnapshots` instead.\n#[derive(Deserialize, Eq, Serialize)]\npub struct StateReference {\n    pub l1_to_l2_message_tree: AppendOnlyTreeSnapshot,\n    pub partial: PartialStateReference,\n}\n\nimpl Empty for StateReference {\n    fn empty() -> Self {\n        Self {\n            l1_to_l2_message_tree: AppendOnlyTreeSnapshot::empty(),\n            partial: PartialStateReference::empty(),\n        }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::state_reference::StateReference,\n        constants::STATE_REFERENCE_LENGTH,\n        traits::{Deserialize, Empty, Serialize},\n    };\n\n    #[test]\n    fn serialization_of_empty() {\n        let state = StateReference::empty();\n\n        // We use the STATE_REFERENCE_LENGTH constant to ensure that there is a match between the derived trait\n        // implementation and the constant.\n        let serialized: [Field; STATE_REFERENCE_LENGTH] = state.serialize();\n        let deserialized = StateReference::deserialize(serialized);\n\n        assert_eq(state, deserialized);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

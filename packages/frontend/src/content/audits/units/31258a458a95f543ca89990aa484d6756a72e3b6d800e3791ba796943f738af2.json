@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "31258a458a95f543ca89990aa484d6756a72e3b6d800e3791ba796943f738af2",
+  "name": "scoped.nr",
+  "kind": "program",
+  "lines": 65,
+  "source": "use crate::{\n    address::AztecAddress,\n    side_effect::{counted::Counted, Ordered},\n    traits::{Deserialize, Empty, Serialize},\n};\n\n#[derive(Deserialize, Serialize)]\npub struct Scoped<T> {\n    pub inner: T,\n    pub contract_address: AztecAddress,\n}\n\nimpl<T> Scoped<T> {\n    pub fn new(inner: T, contract_address: AztecAddress) -> Self {\n        Self { inner, contract_address }\n    }\n}\n\nimpl<T> Eq for Scoped<T>\nwhere\n    T: Eq,\n{\n    fn eq(self, other: Self) -> bool {\n        (self.inner == other.inner) & (self.contract_address == other.contract_address)\n    }\n}\n\nimpl<T> Empty for Scoped<T>\nwhere\n    T: Empty,\n{\n    fn empty() -> Self {\n        Self { inner: T::empty(), contract_address: AztecAddress::empty() }\n    }\n}\n\nimpl<T> Ordered for Scoped<Counted<T>> {\n    fn counter(self) -> u32 {\n        self.inner.counter\n    }\n}\n\nimpl<T> Scoped<Counted<T>> {\n    pub fn innermost(self) -> T {\n        self.inner.inner\n    }\n\n    pub fn is_non_revertible(self, is_private_only: bool, claimed_revertible_counter: u32) -> bool {\n        self.inner.is_non_revertible(is_private_only, claimed_revertible_counter)\n    }\n}\n\nimpl Scoped<Counted<Field>> {\n    pub fn expose_to_public(self) -> Field {\n        self.innermost()\n    }\n}\n\n#[test]\nfn serialization_of_empty_scoped() {\n    let item: Scoped<Field> = Scoped::empty();\n    let serialized = item.serialize();\n    let deserialized: Scoped<Field> = Scoped::deserialize(serialized);\n    assert(item.eq(deserialized));\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "43a3591f9dca4d41a4bcefb7d8fc94b69548d7d261d5285950bb81cc77acba79",
+  "name": "Transfer",
+  "kind": "library",
+  "lines": 113,
+  "source": "library Transfer {\n    using ECDSA for bytes32;\n    using LibTokenOwner for TokenOwner;\n    using LibTokenInfo for TokenInfo;\n\n    enum Kind {\n        Deposit,\n        Withdrawal\n    }\n\n    struct Request {\n        // For deposit request: Recipient address on Ronin network\n        // For withdrawal request: Recipient address on mainchain network\n        address recipientAddr;\n        // Token address to deposit/withdraw\n        // Value 0: native token\n        address tokenAddr;\n        TokenInfo info;\n    }\n\n    /**\n     * @dev Converts the transfer request into the deposit receipt.\n     */\n    function into_deposit_receipt(\n        Request memory _request,\n        address _requester,\n        uint256 _id,\n        address _roninTokenAddr,\n        uint256 _roninChainId\n    ) internal view returns (Receipt memory _receipt) {\n        _receipt.id = _id;\n        _receipt.kind = Kind.Deposit;\n        _receipt.mainchain.addr = _requester;\n        _receipt.mainchain.tokenAddr = _request.tokenAddr;\n        _receipt.mainchain.chainId = block.chainid;\n        _receipt.ronin.addr = _request.recipientAddr;\n        _receipt.ronin.tokenAddr = _roninTokenAddr;\n        _receipt.ronin.chainId = _roninChainId;\n        _receipt.info = _request.info;\n    }\n\n    /**\n     * @dev Converts the transfer request into the withdrawal receipt.\n     */\n    function into_withdrawal_receipt(\n        Request memory _request,\n        address _requester,\n        uint256 _id,\n        address _mainchainTokenAddr,\n        uint256 _mainchainId\n    ) internal view returns (Receipt memory _receipt) {\n        _receipt.id = _id;\n        _receipt.kind = Kind.Withdrawal;\n        _receipt.ronin.addr = _requester;\n        _receipt.ronin.tokenAddr = _request.tokenAddr;\n        _receipt.ronin.chainId = block.chainid;\n        _receipt.mainchain.addr = _request.recipientAddr;\n        _receipt.mainchain.tokenAddr = _mainchainTokenAddr;\n        _receipt.mainchain.chainId = _mainchainId;\n        _receipt.info = _request.info;\n    }\n\n    struct Receipt {\n        uint256 id;\n        Kind kind;\n        TokenOwner mainchain;\n        TokenOwner ronin;\n        TokenInfo info;\n    }\n\n    // keccak256(\"Receipt(uint256 id,uint8 kind,TokenOwner mainchain,TokenOwner ronin,TokenInfo info)TokenInfo(uint8 erc,uint256 id,uint256 quantity)TokenOwner(address addr,address tokenAddr,uint256 chainId)\");\n    bytes32 public constant TYPE_HASH = 0xb9d1fe7c9deeec5dc90a2f47ff1684239519f2545b2228d3d91fb27df3189eea;\n\n    /**\n     * @dev Returns token info struct hash.\n     */\n    function hash(Receipt memory _receipt) internal pure returns (bytes32 digest) {\n        bytes32 hashedReceiptMainchain = _receipt.mainchain.hash();\n        bytes32 hashedReceiptRonin = _receipt.ronin.hash();\n        bytes32 hashedReceiptInfo = _receipt.info.hash();\n\n        /*\n     * return\n     *   keccak256(\n     *     abi.encode(\n     *       TYPE_HASH,\n     *       _receipt.id,\n     *       _receipt.kind,\n     *       Token.hash(_receipt.mainchain),\n     *       Token.hash(_receipt.ronin),\n     *       Token.hash(_receipt.info)\n     *     )\n     *   );\n     */\n        assembly {\n            let ptr := mload(0x40)\n            mstore(ptr, TYPE_HASH)\n            mstore(add(ptr, 0x20), mload(_receipt)) // _receipt.id\n            mstore(add(ptr, 0x40), mload(add(_receipt, 0x20))) // _receipt.kind\n            mstore(add(ptr, 0x60), hashedReceiptMainchain)\n            mstore(add(ptr, 0x80), hashedReceiptRonin)\n            mstore(add(ptr, 0xa0), hashedReceiptInfo)\n            digest := keccak256(ptr, 0xc0)\n        }\n    }\n\n    /**\n     * @dev Returns the receipt digest.\n     */\n    function receiptDigest(bytes32 _domainSeparator, bytes32 _receiptHash) internal pure returns (bytes32) {\n        return _domainSeparator.toTypedDataHash(_receiptHash);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 104,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Transfer",
+        "similarity": 0.89,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/libraries/Transfer.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/libraries/Transfer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 9,
+        "removed": 7,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 104,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Transfer {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using ECDSA for bytes32;"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    using LibTokenOwner for TokenOwner;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    using LibTokenInfo for TokenInfo;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    enum Kind {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "        Deposit,"
+              }
+            ]
+          },
+          {
+            "oldStart": 13,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "        // Token address to deposit/withdraw"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 16,
+                "text": "        // Value 0: native token"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 17,
+                "text": "        address tokenAddr;"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        Token.Info info;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        TokenInfo info;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 19, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 21, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 61,
+            "oldLines": 9,
+            "newStart": 63,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 63,
+                "text": "    struct Receipt {"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 64,
+                "text": "        uint256 id;"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 65,
+                "text": "        Kind kind;"
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        Token.Owner mainchain;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        Token.Owner ronin;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        Token.Info info;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        TokenOwner mainchain;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        TokenOwner ronin;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        TokenInfo info;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 67, "newLine": 69, "text": "    }" },
+              { "type": " ", "oldLine": 68, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 71,
+                "text": "    // keccak256(\"Receipt(uint256 id,uint8 kind,TokenOwner mainchain,TokenOwner ronin,TokenInfo info)TokenInfo(uint8 erc,uint256 id,uint256 quantity)TokenOwner(address addr,address tokenAddr,uint256 chainId)\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 73,
+            "oldLines": 9,
+            "newStart": 75,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 75,
+                "text": "     * @dev Returns token info struct hash."
+              },
+              { "type": " ", "oldLine": 74, "newLine": 76, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 77,
+                "text": "    function hash(Receipt memory _receipt) internal pure returns (bytes32 digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        bytes32 hashedReceiptMainchain = Token.hash(_receipt.mainchain);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        bytes32 hashedReceiptRonin = Token.hash(_receipt.ronin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        bytes32 hashedReceiptInfo = Token.hash(_receipt.info);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        bytes32 hashedReceiptMainchain = _receipt.mainchain.hash();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        bytes32 hashedReceiptRonin = _receipt.ronin.hash();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        bytes32 hashedReceiptInfo = _receipt.info.hash();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 79, "newLine": 81, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 82,
+                "text": "        /*"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 83,
+                "text": "     * return"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

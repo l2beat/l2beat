@@ -1,0 +1,1319 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5582397504357a9f2d79dbb926db8aed9851ecabe6a089d4fdbc1e2c1c5230b2",
+  "name": "WithdrawalVerifier",
+  "kind": "contract",
+  "lines": 194,
+  "source": "contract WithdrawalVerifier {\n    // Scalar field size\n    uint256 constant r = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\n    // Base field size\n    uint256 constant q = 21888242871839275222246405745257275088696311157297823662689037894645226208583;\n\n    // Verification Key data\n    uint256 constant alphax = 16428432848801857252194528405604668803277877773566238944394625302971855135431;\n    uint256 constant alphay = 16846502678714586896801519656441059708016666274385668027902869494772365009666;\n    uint256 constant betax1 = 3182164110458002340215786955198810119980427837186618912744689678939861918171;\n    uint256 constant betax2 = 16348171800823588416173124589066524623406261996681292662100840445103873053252;\n    uint256 constant betay1 = 4920802715848186258981584729175884379674325733638798907835771393452862684714;\n    uint256 constant betay2 = 19687132236965066906216944365591810874384658708175106803089633851114028275753;\n    uint256 constant gammax1 = 11559732032986387107991004021392285783925812861821192530917403151452391805634;\n    uint256 constant gammax2 = 10857046999023057135944570762232829481370756359578518086990519993285655852781;\n    uint256 constant gammay1 = 4082367875863433681332203403145435568316851327593401208105741076214120093531;\n    uint256 constant gammay2 = 8495653923123431417604973247489272438418190587263600148770280649306958101930;\n    uint256 constant deltax1 = 355730187017390060257088699243557931444743893437609284639879195946356391671;\n    uint256 constant deltax2 = 11377546232269146885719711323617440487334358631817944307305954377320021081609;\n    uint256 constant deltay1 = 14828571047823507951936654719331566168682863576761372686128260593891040163007;\n    uint256 constant deltay2 = 14925671126934765953425446845541707408298799882358491896288696759849089416456;\n\n    uint256 constant IC0x = 20917852783971662989037834579922189207796850157455689196836407829693273058181;\n    uint256 constant IC0y = 14309172700509163829827835936087829189193823544006124999667589607573555153317;\n\n    uint256 constant IC1x = 4002318554163308338961115195600756325669504095744400749661836505711747131480;\n    uint256 constant IC1y = 19388553801400869339697580180794985615392396320851212290435880306887322433262;\n\n    uint256 constant IC2x = 4254123736274716305094004322466639736349000292613093104635160011340821139688;\n    uint256 constant IC2y = 19581123507269704428735684612376263280905609143077051758684797548075203355862;\n\n    uint256 constant IC3x = 12829149822163537636941647022474968478908625676617259064999683111486877280191;\n    uint256 constant IC3y = 11906986527782177454913261933143777359684553833291705890148735374364062300950;\n\n    uint256 constant IC4x = 14959519196996577022953934863461427249996916985368164934760550902108247251314;\n    uint256 constant IC4y = 17153998018818455451015682095753537372058398415644924731407055981674255991568;\n\n    uint256 constant IC5x = 386592992276936501107132673378759567169940445750810516666781824566579325489;\n    uint256 constant IC5y = 6545363418535856048783449340812901581000301323807547677423370106415935030419;\n\n    uint256 constant IC6x = 14405334651179970829248032802453416652902403107461697011217734903378819167500;\n    uint256 constant IC6y = 5941867495000526980426755384727509338287954936978959436019043816230884260430;\n\n    uint256 constant IC7x = 6593325309923573421969784559603844408437482353554868263039840702125354704945;\n    uint256 constant IC7y = 19710681365262161445645108505967116609968223704683705865914938644210040221046;\n\n    uint256 constant IC8x = 13832774438085654502815602896317109691851791928314457690314578958243235503172;\n    uint256 constant IC8y = 2034154171145211628085643224823864015412822036123513499722451852634747199812;\n\n    // Memory data\n    uint16 constant pVk = 0;\n    uint16 constant pPairing = 128;\n\n    uint16 constant pLastMem = 896;\n\n    function verifyProof(\n        uint256[2] calldata _pA,\n        uint256[2][2] calldata _pB,\n        uint256[2] calldata _pC,\n        uint256[8] calldata _pubSignals\n    ) public view returns (bool) {\n        assembly {\n            function checkField(v) {\n                if iszero(lt(v, r)) {\n                    mstore(0, 0)\n                    return(0, 0x20)\n                }\n            }\n\n            // G1 function to multiply a G1 value(x,y) to value in an address\n            function g1_mulAccC(pR, x, y, s) {\n                let success\n                let mIn := mload(0x40)\n                mstore(mIn, x)\n                mstore(add(mIn, 32), y)\n                mstore(add(mIn, 64), s)\n\n                success := staticcall(sub(gas(), 2000), 7, mIn, 96, mIn, 64)\n\n                if iszero(success) {\n                    mstore(0, 0)\n                    return(0, 0x20)\n                }\n\n                mstore(add(mIn, 64), mload(pR))\n                mstore(add(mIn, 96), mload(add(pR, 32)))\n\n                success := staticcall(sub(gas(), 2000), 6, mIn, 128, pR, 64)\n\n                if iszero(success) {\n                    mstore(0, 0)\n                    return(0, 0x20)\n                }\n            }\n\n            function checkPairing(pA, pB, pC, pubSignals, pMem) -> isOk {\n                let _pPairing := add(pMem, pPairing)\n                let _pVk := add(pMem, pVk)\n\n                mstore(_pVk, IC0x)\n                mstore(add(_pVk, 32), IC0y)\n\n                // Compute the linear combination vk_x\n\n                g1_mulAccC(_pVk, IC1x, IC1y, calldataload(add(pubSignals, 0)))\n\n                g1_mulAccC(_pVk, IC2x, IC2y, calldataload(add(pubSignals, 32)))\n\n                g1_mulAccC(_pVk, IC3x, IC3y, calldataload(add(pubSignals, 64)))\n\n                g1_mulAccC(_pVk, IC4x, IC4y, calldataload(add(pubSignals, 96)))\n\n                g1_mulAccC(_pVk, IC5x, IC5y, calldataload(add(pubSignals, 128)))\n\n                g1_mulAccC(_pVk, IC6x, IC6y, calldataload(add(pubSignals, 160)))\n\n                g1_mulAccC(_pVk, IC7x, IC7y, calldataload(add(pubSignals, 192)))\n\n                g1_mulAccC(_pVk, IC8x, IC8y, calldataload(add(pubSignals, 224)))\n\n                // -A\n                mstore(_pPairing, calldataload(pA))\n                mstore(add(_pPairing, 32), mod(sub(q, calldataload(add(pA, 32))), q))\n\n                // B\n                mstore(add(_pPairing, 64), calldataload(pB))\n                mstore(add(_pPairing, 96), calldataload(add(pB, 32)))\n                mstore(add(_pPairing, 128), calldataload(add(pB, 64)))\n                mstore(add(_pPairing, 160), calldataload(add(pB, 96)))\n\n                // alpha1\n                mstore(add(_pPairing, 192), alphax)\n                mstore(add(_pPairing, 224), alphay)\n\n                // beta2\n                mstore(add(_pPairing, 256), betax1)\n                mstore(add(_pPairing, 288), betax2)\n                mstore(add(_pPairing, 320), betay1)\n                mstore(add(_pPairing, 352), betay2)\n\n                // vk_x\n                mstore(add(_pPairing, 384), mload(add(pMem, pVk)))\n                mstore(add(_pPairing, 416), mload(add(pMem, add(pVk, 32))))\n\n                // gamma2\n                mstore(add(_pPairing, 448), gammax1)\n                mstore(add(_pPairing, 480), gammax2)\n                mstore(add(_pPairing, 512), gammay1)\n                mstore(add(_pPairing, 544), gammay2)\n\n                // C\n                mstore(add(_pPairing, 576), calldataload(pC))\n                mstore(add(_pPairing, 608), calldataload(add(pC, 32)))\n\n                // delta2\n                mstore(add(_pPairing, 640), deltax1)\n                mstore(add(_pPairing, 672), deltax2)\n                mstore(add(_pPairing, 704), deltay1)\n                mstore(add(_pPairing, 736), deltay2)\n\n                let success := staticcall(sub(gas(), 2000), 8, _pPairing, 768, _pPairing, 0x20)\n\n                isOk := and(success, mload(_pPairing))\n            }\n\n            let pMem := mload(0x40)\n            mstore(0x40, add(pMem, pLastMem))\n\n            // Validate that all evaluations ∈ F\n\n            checkField(calldataload(add(_pubSignals, 0)))\n\n            checkField(calldataload(add(_pubSignals, 32)))\n\n            checkField(calldataload(add(_pubSignals, 64)))\n\n            checkField(calldataload(add(_pubSignals, 96)))\n\n            checkField(calldataload(add(_pubSignals, 128)))\n\n            checkField(calldataload(add(_pubSignals, 160)))\n\n            checkField(calldataload(add(_pubSignals, 192)))\n\n            checkField(calldataload(add(_pubSignals, 224)))\n\n            // Validate all evaluations\n            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)\n\n            mstore(0, isValid)\n            return(0, 0x20)\n        }\n    }\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "differs",
+      "coveredLines": 77,
+      "match": {
+        "origin": "other",
+        "collection": "optimism",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "WithdrawalVerifier",
+        "similarity": 0.059,
+        "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
+        "repository": "ethereum-optimism/optimistic-specs",
+        "path": "packages/contracts/contracts/libraries/Lib_WithdrawalVerifier.sol",
+        "commit": "8cbaf02ed6a7ecbad1b86e5ea1781566031ff694",
+        "commitTimestamp": "2022-05-16T22:29:31Z",
+        "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/8cbaf02ed6a7ecbad1b86e5ea1781566031ff694/packages/contracts/contracts/libraries/Lib_WithdrawalVerifier.sol",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Two further days completing the review of the new version; C-01, H-01 and N-07 verified fixed, H-02 (StandardBridge token refunds) found at this commit.",
+        "majorFindings": 1,
+        "findingIds": ["H-02"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 117,
+        "removed": 38,
+        "ignoredAdded": 71,
+        "ignoredRemoved": 26,
+        "unchanged": 77,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 70,
+            "newStart": 1,
+            "newLines": 194,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library WithdrawalVerifier {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice A struct containing the elements hashed together to generate the output root.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    struct OutputRootProof {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "        bytes32 version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        bytes32 stateRoot;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "        bytes32 withdrawerStorageRoot;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        bytes32 latestBlockhash;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract WithdrawalVerifier {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Scalar field size",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    uint256 constant r = 21888242871839275222246405745257275088548364400416034343698204186575808495617;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    // Base field size",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    uint256 constant q = 21888242871839275222246405745257275088696311157297823662689037894645226208583;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * @param _nonce Nonce for the provided message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @param _sender Message sender address on L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @param _target Target address on L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @param _value ETH to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * @param _gasLimit Gas to be forwarded to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @param _data Data to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    function withdrawalHash(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        uint256 _nonce,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        address _sender,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        address _target,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        uint256 _value,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        uint256 _gasLimit,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        bytes memory _data",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    ) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        return keccak256(abi.encode(_nonce, _sender, _target, _value, _gasLimit, _data));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 28, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    // Verification Key data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    uint256 constant alphax = 16428432848801857252194528405604668803277877773566238944394625302971855135431;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    uint256 constant alphay = 16846502678714586896801519656441059708016666274385668027902869494772365009666;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    uint256 constant betax1 = 3182164110458002340215786955198810119980427837186618912744689678939861918171;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    uint256 constant betax2 = 16348171800823588416173124589066524623406261996681292662100840445103873053252;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    uint256 constant betay1 = 4920802715848186258981584729175884379674325733638798907835771393452862684714;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    uint256 constant betay2 = 19687132236965066906216944365591810874384658708175106803089633851114028275753;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    uint256 constant gammax1 = 11559732032986387107991004021392285783925812861821192530917403151452391805634;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    uint256 constant gammax2 = 10857046999023057135944570762232829481370756359578518086990519993285655852781;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    uint256 constant gammay1 = 4082367875863433681332203403145435568316851327593401208105741076214120093531;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    uint256 constant gammay2 = 8495653923123431417604973247489272438418190587263600148770280649306958101930;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    uint256 constant deltax1 = 355730187017390060257088699243557931444743893437609284639879195946356391671;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    uint256 constant deltax2 = 11377546232269146885719711323617440487334358631817944307305954377320021081609;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    uint256 constant deltay1 = 14828571047823507951936654719331566168682863576761372686128260593891040163007;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    uint256 constant deltay2 = 14925671126934765953425446845541707408298799882358491896288696759849089416456;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @notice Derives the output root corresponding to the elements provided in the proof.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * @param _outputRootProof The elements which were hashed together to generate the output root.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * @return Whether or not the output root matches the hashed output of the proof.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    function _deriveOutputRoot(OutputRootProof memory _outputRootProof) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        return keccak256(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            abi.encode(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "                _outputRootProof.version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "                _outputRootProof.stateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "                _outputRootProof.withdrawerStorageRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "                _outputRootProof.latestBlockhash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 44, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    uint256 constant IC0x = 20917852783971662989037834579922189207796850157455689196836407829693273058181;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    uint256 constant IC0y = 14309172700509163829827835936087829189193823544006124999667589607573555153317;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @notice Verifies a proof that a given withdrawal hash is present in the Withdrawer contract's",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * withdrawals mapping.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * @param _withdrawalHash Keccak256 hash of the withdrawal transaction data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     * @param _withdrawerStorageRoot Storage root of the withdrawer predeploy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @param _withdrawalProof Merkle trie inclusion proof for the desired node.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * @return Whether or not the inclusion proof was successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function _verifyWithdrawalInclusion(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        bytes32 _withdrawalHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        bytes32 _withdrawerStorageRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        bytes memory _withdrawalProof",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    ) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        bytes32 storageKey = keccak256(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            abi.encode(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "                _withdrawalHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "                uint256(0) // The withdrawals mapping is at the first slot in the layout.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    uint256 constant IC1x = 4002318554163308338961115195600756325669504095744400749661836505711747131480;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    uint256 constant IC1y = 19388553801400869339697580180794985615392396320851212290435880306887322433262;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 65, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        return Lib_SecureMerkleTrie.verifyInclusionProof(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "            abi.encode(storageKey), hex\"01\", _withdrawalProof, _withdrawerStorageRoot",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    uint256 constant IC2x = 4254123736274716305094004322466639736349000292613093104635160011340821139688;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    uint256 constant IC2y = 19581123507269704428735684612376263280905609143077051758684797548075203355862;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 31, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    uint256 constant IC3x = 12829149822163537636941647022474968478908625676617259064999683111486877280191;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    uint256 constant IC3y = 11906986527782177454913261933143777359684553833291705890148735374364062300950;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    uint256 constant IC4x = 14959519196996577022953934863461427249996916985368164934760550902108247251314;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    uint256 constant IC4y = 17153998018818455451015682095753537372058398415644924731407055981674255991568;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 37, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    uint256 constant IC5x = 386592992276936501107132673378759567169940445750810516666781824566579325489;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    uint256 constant IC5y = 6545363418535856048783449340812901581000301323807547677423370106415935030419;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    uint256 constant IC6x = 14405334651179970829248032802453416652902403107461697011217734903378819167500;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    uint256 constant IC6y = 5941867495000526980426755384727509338287954936978959436019043816230884260430;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 43, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    uint256 constant IC7x = 6593325309923573421969784559603844408437482353554868263039840702125354704945;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    uint256 constant IC7y = 19710681365262161445645108505967116609968223704683705865914938644210040221046;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    uint256 constant IC8x = 13832774438085654502815602896317109691851791928314457690314578958243235503172;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    uint256 constant IC8y = 2034154171145211628085643224823864015412822036123513499722451852634747199812;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    // Memory data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    uint16 constant pVk = 0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    uint16 constant pPairing = 128;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 53, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    uint16 constant pLastMem = 896;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    function verifyProof(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        uint256[2] calldata _pA,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        uint256[2][2] calldata _pB,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        uint256[2] calldata _pC,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        uint256[8] calldata _pubSignals",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    ) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "            function checkField(v) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                if iszero(lt(v, r)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                    mstore(0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "                    return(0, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 69, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "            // G1 function to multiply a G1 value(x,y) to value in an address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            function g1_mulAccC(pR, x, y, s) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                let success",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                let mIn := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                mstore(mIn, x)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "                mstore(add(mIn, 32), y)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "                mstore(add(mIn, 64), s)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 77, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "                success := staticcall(sub(gas(), 2000), 7, mIn, 96, mIn, 64)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 79, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "                if iszero(success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "                    mstore(0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "                    return(0, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "                }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 84, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "                mstore(add(mIn, 64), mload(pR))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "                mstore(add(mIn, 96), mload(add(pR, 32)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 87, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "                success := staticcall(sub(gas(), 2000), 6, mIn, 128, pR, 64)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 89, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "                if iszero(success) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "                    mstore(0, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "                    return(0, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            function checkPairing(pA, pB, pC, pubSignals, pMem) -> isOk {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                let _pPairing := add(pMem, pPairing)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "                let _pVk := add(pMem, pVk)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 99, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "                mstore(_pVk, IC0x)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "                mstore(add(_pVk, 32), IC0y)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 102, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "                // Compute the linear combination vk_x",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 104, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "                g1_mulAccC(_pVk, IC1x, IC1y, calldataload(add(pubSignals, 0)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 106, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "                g1_mulAccC(_pVk, IC2x, IC2y, calldataload(add(pubSignals, 32)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 108, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "                g1_mulAccC(_pVk, IC3x, IC3y, calldataload(add(pubSignals, 64)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "                g1_mulAccC(_pVk, IC4x, IC4y, calldataload(add(pubSignals, 96)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 112, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "                g1_mulAccC(_pVk, IC5x, IC5y, calldataload(add(pubSignals, 128)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 114, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                g1_mulAccC(_pVk, IC6x, IC6y, calldataload(add(pubSignals, 160)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 116, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                g1_mulAccC(_pVk, IC7x, IC7y, calldataload(add(pubSignals, 192)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 118, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "                g1_mulAccC(_pVk, IC8x, IC8y, calldataload(add(pubSignals, 224)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 120, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "                // -A",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "                mstore(_pPairing, calldataload(pA))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "                mstore(add(_pPairing, 32), mod(sub(q, calldataload(add(pA, 32))), q))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 124, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "                // B",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "                mstore(add(_pPairing, 64), calldataload(pB))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                mstore(add(_pPairing, 96), calldataload(add(pB, 32)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "                mstore(add(_pPairing, 128), calldataload(add(pB, 64)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "                mstore(add(_pPairing, 160), calldataload(add(pB, 96)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 130, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "                // alpha1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "                mstore(add(_pPairing, 192), alphax)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                mstore(add(_pPairing, 224), alphay)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 134, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "                // beta2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                mstore(add(_pPairing, 256), betax1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "                mstore(add(_pPairing, 288), betax2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "                mstore(add(_pPairing, 320), betay1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "                mstore(add(_pPairing, 352), betay2)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 140, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "                // vk_x",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "                mstore(add(_pPairing, 384), mload(add(pMem, pVk)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "                mstore(add(_pPairing, 416), mload(add(pMem, add(pVk, 32))))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "                // gamma2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                mstore(add(_pPairing, 448), gammax1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "                mstore(add(_pPairing, 480), gammax2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "                mstore(add(_pPairing, 512), gammay1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "                mstore(add(_pPairing, 544), gammay2)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 150, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                // C",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "                mstore(add(_pPairing, 576), calldataload(pC))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "                mstore(add(_pPairing, 608), calldataload(add(pC, 32)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 154, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                // delta2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "                mstore(add(_pPairing, 640), deltax1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "                mstore(add(_pPairing, 672), deltax2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "                mstore(add(_pPairing, 704), deltay1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "                mstore(add(_pPairing, 736), deltay2)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 160, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "                let success := staticcall(sub(gas(), 2000), 8, _pPairing, 768, _pPairing, 0x20)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 162, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "                isOk := and(success, mload(_pPairing))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "            }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 165, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "            let pMem := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "            mstore(0x40, add(pMem, pLastMem))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 168, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "            // Validate that all evaluations ∈ F",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 170, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "            checkField(calldataload(add(_pubSignals, 0)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 172, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "            checkField(calldataload(add(_pubSignals, 32)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 174, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "            checkField(calldataload(add(_pubSignals, 64)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 176, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "            checkField(calldataload(add(_pubSignals, 96)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 178, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "            checkField(calldataload(add(_pubSignals, 128)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 180, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            checkField(calldataload(add(_pubSignals, 160)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 182, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "            checkField(calldataload(add(_pubSignals, 192)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 184, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "            checkField(calldataload(add(_pubSignals, 224)))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 186, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "            // Validate all evaluations",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 189, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "            mstore(0, isValid)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            return(0, 0x20)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 69, "newLine": 193, "text": "    }" },
+              { "type": " ", "oldLine": 70, "newLine": 194, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch", "low-similarity"]
+    }
+  }
+}

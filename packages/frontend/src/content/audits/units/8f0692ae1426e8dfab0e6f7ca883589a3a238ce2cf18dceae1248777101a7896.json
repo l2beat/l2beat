@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f0692ae1426e8dfab0e6f7ca883589a3a238ce2cf18dceae1248777101a7896",
+  "name": "SlasherDeploymentExtLib",
+  "kind": "library",
+  "lines": 28,
+  "source": "library SlasherDeploymentExtLib {\n    function deploySlasher(address _rollup, address _governance, RollupConfigInput memory _config)\n        external\n        returns (ISlasher)\n    {\n        // Deploy slasher first\n        Slasher slasher = new Slasher(_config.slashingVetoer, _governance, _config.slashingDisableDuration);\n\n        // Deploy proposer with slasher address\n        SlashingProposer proposer = new SlashingProposer(\n            _rollup,\n            ISlasher(address(slasher)),\n            _config.slashingQuorum,\n            _config.slashingRoundSize,\n            _config.slashingLifetimeInRounds,\n            _config.slashingExecutionDelayInRounds,\n            _config.slashAmounts,\n            _config.targetCommitteeSize,\n            _config.aztecEpochDuration,\n            _config.slashingOffsetInRounds\n        );\n\n        // Initialize the slasher with the proposer address\n        slasher.initializeProposer(address(proposer));\n\n        return ISlasher(address(slasher));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

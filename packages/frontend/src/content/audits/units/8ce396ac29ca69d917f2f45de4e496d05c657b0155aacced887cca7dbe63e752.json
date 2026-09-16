@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8ce396ac29ca69d917f2f45de4e496d05c657b0155aacced887cca7dbe63e752",
+  "name": "IBoosterCore",
+  "kind": "interface",
+  "lines": 4,
+  "source": "interface IBoosterCore {\n    function updateAndGetShares(address _prover) external returns (uint256);\n    function getSharesFor(address _prover) external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

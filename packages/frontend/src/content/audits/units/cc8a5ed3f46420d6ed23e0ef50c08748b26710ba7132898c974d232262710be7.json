@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cc8a5ed3f46420d6ed23e0ef50c08748b26710ba7132898c974d232262710be7",
+  "name": "read_request_hints.nr",
+  "kind": "program",
+  "lines": 14,
+  "source": "use super::{\n    read_request_action::ReadRequestAction, validate_pending_read_requests::PendingReadHint,\n    validate_settled_read_requests::SettledReadHint,\n};\n\npub struct ReadRequestHints<let ReadRequestLen: u32, let PendingReadHintsLen: u32, let SettledReadHintsLen: u32, let TreeHeight: u32, SettledReadLeafPreimage> {\n    // Each item in this array of actions corresponds to an item in the previous kernel's note_hashes (or nullifiers) read_requests array.\n    // Each item hints at whether the corresponding read request should be skipped (ignored by this circuit and propagated to a later one);\n    // or processed as a \"pending\" read (a read of a note/nullifier that was emitted by another fn of this same tx); or processed as a\n    // \"settled\" read (a read from a state tree of a note/nullifier from some earlier tx).\n    pub read_request_actions: [ReadRequestAction; ReadRequestLen],\n    pub pending_read_hints: [PendingReadHint; PendingReadHintsLen],\n    pub settled_read_hints: [SettledReadHint<TreeHeight, SettledReadLeafPreimage>; SettledReadHintsLen],\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

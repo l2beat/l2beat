@@ -1,0 +1,1094 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d4a6a03f58ad1ebb08d835a9a0d637df30c5b58f24935aa2d8e4f09ed2874fea",
+  "name": "EpochProofLib",
+  "kind": "library",
+  "lines": 424,
+  "source": "library EpochProofLib {\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using TimeLib for Timestamp;\n    using FeeHeaderLib for CompressedFeeHeader;\n    using SafeCast for uint256;\n    using ChainTipsLib for CompressedChainTips;\n    using AttestationLib for CommitteeAttestations;\n    using CompressedTimeMath for CompressedSlot;\n\n    /**\n     * @notice Submit a validity proof for an epoch's state transitions, advancing the proven chain tip\n     *\n     * @dev This is the main entry point for epoch finalization. It performs comprehensive validation\n     *      of the epoch proof including attestation verification, archive root validation, blob proof\n     *      verification, and validity proof verification. Upon success, advances the proven chain tip and\n     *      distributes rewards to the prover and validators.\n     *\n     *      The function will automatically prune unproven checkpoints if the pruning window has expired.\n     *\n     * @dev Events Emitted:\n     *      - L2ProofVerified: When proof verification succeeds and proven tip advances\n     *\n     * @dev Errors Thrown:\n     *      - Rollup__InvalidProof: validity proof verification failed\n     *      - Rollup__InvalidPreviousArchive: Previous archive root mismatch\n     *      - Rollup__InvalidArchive: End archive root mismatch\n     *      - Rollup__InvalidAttestations: Attestation verification failed for last checkpoint\n     *      - Rollup__StartAndEndNotSameEpoch: Proof spans multiple epochs\n     *      - Rollup__PastDeadline: Proof submitted after deadline\n     *      - Rollup__InvalidFirstEpochProof: Invalid first epoch proof structure\n     *      - Rollup__StartIsNotFirstCheckpointOfEpoch: Start checkpoint is not epoch boundary\n     *      - Rollup__StartIsNotBuildingOnProven: Start checkpoint doesn't build on proven chain\n     *      - Rollup__TooManyCheckpointsInEpoch: Epoch exceeds maximum checkpoint count\n     *      - Rollup__InvalidBlobProof: Batched blob proof verification failed\n     *\n     * @param _args The epoch proof submission arguments containing:\n     *              - start: First checkpoint number in the epoch (inclusive)\n     *              - end: Last checkpoint number in the epoch (inclusive)\n     *              - args: Public inputs (previousArchive, endArchive, endTimestamp, proverId)\n     *              - headers: Proposed headers for each checkpoint, supplying the fee recipient and value\n     *              - attestations: Committee attestations for the last checkpoint in the epoch\n     *              - blobInputs: Batched blob data for EIP-4844 point evaluation precompile\n     *              - proof: The validity proof bytes for the root rollup circuit\n     */\n    function submitEpochRootProof(SubmitEpochRootProofArgs calldata _args) internal {\n        if (STFLib.canPruneAtTime(Timestamp.wrap(block.timestamp))) {\n            STFLib.prune();\n        }\n\n        Epoch endEpoch = assertAcceptable(_args.start, _args.end);\n\n        // Verify attestations for the last checkpoint in the epoch\n        // -> This serves as training wheels for the public part of the system (proving systems used in public and AVM)\n        // ensuring committee agreement on the epoch's validity alongside the cryptographic proof verification below.\n        verifyLastCheckpointAttestationsAndOutHash(_args.end, _args.attestations, _args.args.outHash);\n\n        require(verifyEpochRootProof(_args), Errors_1.Rollup__InvalidProof());\n\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        // Advance the proven block number and insert the out hash if the chain is extended.\n        if (_args.end > rollupStore.tips.getProven()) {\n            rollupStore.tips = rollupStore.tips.updateProven(_args.end);\n\n            // Handle L2->L1 message processing.\n            // The circuit outputs an empty out hash tree root if the epoch contains no messages.\n            // Since the out hash tree is append-only, with the first checkpoint at index 0, the second at index 1, and so on,\n            // a partial epoch cannot produce a non-empty out hash and later revert to an empty one as more checkpoints are\n            // included. Therefore, it is safe to skip insertion when the out hash is empty.\n            if (_args.args.outHash != bytes32(Constants.EMPTY_EPOCH_OUT_HASH)) {\n                // Insert L2->L1 messages root into outbox for consumption. The Outbox keys each root by\n                // the number of checkpoints proven in this epoch so off-chain consumers can map a tx's\n                // position-within-epoch directly to the smallest proof that covers it.\n                uint256 numCheckpointsInEpoch = _args.end - _args.start + 1;\n                rollupStore.config.outbox.insert(endEpoch, numCheckpointsInEpoch, _args.args.outHash);\n            }\n        }\n\n        RewardLib.handleRewardsAndFees(_args, endEpoch);\n\n        emit IRollupCore.L2ProofVerified(_args.end, _args.args.proverId);\n    }\n\n    /**\n     * @notice Returns the computed public inputs for the given epoch proof.\n     *\n     * @dev Useful for debugging and testing. Allows submitter to compare their\n     * own public inputs used for generating the proof vs the ones assembled\n     * by this contract when verifying it.\n     *\n     * @param  _start - The start of the epoch (inclusive)\n     * @param  _end - The end of the epoch (inclusive)\n     * @param  _args - Array of public inputs to the proof (previousArchive, endArchive, endTimestamp, outHash, proverId)\n     * @param  _headers - The proposed checkpoint headers supplying the fee recipient and value for each checkpoint\n     * @param _blobPublicInputs- The blob public inputs for the proof\n     */\n    function getEpochProofPublicInputs(\n        uint256 _start,\n        uint256 _end,\n        PublicInputArgs calldata _args,\n        ProposedHeader[] calldata _headers,\n        bytes calldata _blobPublicInputs\n    ) internal view returns (bytes32[] memory) {\n        verifyHeaders(_start, _end, _headers);\n\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        {\n            // We do it this way to provide better error messages than passing along the storage values\n            {\n                bytes32 expectedPreviousArchive = rollupStore.archives[_start - 1];\n                require(\n                    expectedPreviousArchive == _args.previousArchive,\n                    Errors_1.Rollup__InvalidPreviousArchive(expectedPreviousArchive, _args.previousArchive)\n                );\n            }\n\n            {\n                bytes32 expectedEndArchive = rollupStore.archives[_end];\n                require(\n                    expectedEndArchive == _args.endArchive,\n                    Errors_1.Rollup__InvalidArchive(expectedEndArchive, _args.endArchive)\n                );\n            }\n        }\n\n        bytes32[] memory publicInputs = new bytes32[](Constants.ROOT_ROLLUP_PUBLIC_INPUTS_LENGTH);\n\n        // Structure of the root rollup public inputs we need to reassemble:\n        //\n        // struct RootRollupPublicInputs {\n        //   previous_archive_root: Field,\n        //   end_archive_root: Field,\n        //   out_hash: Field,\n        //   checkpointHeaderHashes: [Field; Constants.MAX_CHECKPOINTS_PER_EPOCH],\n        //   fees: [FeeRecipient; Constants.MAX_CHECKPOINTS_PER_EPOCH],\n        //   chain_id: Field,\n        //   version: Field,\n        //   vk_tree_root: Field,\n        //   protocol_contracts_hash: Field,\n        //   prover_id: Field,\n        //   blob_public_inputs: FinalBlobAccumulator,\n        // }\n        {\n            // previous_archive.root: the previous archive tree root\n            publicInputs[0] = _args.previousArchive;\n\n            // end_archive.root: the new archive tree root\n            publicInputs[1] = _args.endArchive;\n\n            publicInputs[2] = _args.outHash;\n        }\n\n        uint256 numCheckpoints = _end - _start + 1;\n\n        for (uint256 i = 0; i < numCheckpoints; i++) {\n            publicInputs[3 + i] = STFLib.getHeaderHash(_start + i);\n        }\n\n        uint256 offset = 3 + Constants.MAX_CHECKPOINTS_PER_EPOCH;\n\n        // Taking recipient/value from the checkpoint headers rather than the prover\n        // as defense in depth. Slots past numCheckpoints stay zero.\n        for (uint256 i = 0; i < numCheckpoints; i++) {\n            publicInputs[offset + 2 * i] = addressToField(_headers[i].coinbase);\n            publicInputs[offset + 2 * i + 1] = bytes32(_headers[i].accumulatedFees);\n        }\n        offset += Constants.MAX_CHECKPOINTS_PER_EPOCH * 2;\n\n        publicInputs[offset] = bytes32(block.chainid);\n        offset += 1;\n\n        publicInputs[offset] = bytes32(uint256(rollupStore.config.version));\n        offset += 1;\n\n        // vk_tree_root\n        publicInputs[offset] = rollupStore.config.vkTreeRoot;\n        offset += 1;\n\n        // protocol_contracts_hash\n        publicInputs[offset] = rollupStore.config.protocolContractsHash;\n        offset += 1;\n\n        // prover_id: id of current epoch's prover\n        publicInputs[offset] = addressToField(_args.proverId);\n        offset += 1;\n\n        // FinalBlobAccumulatorPublicInputs:\n        // The blob public inputs do not require the versioned hash of the batched commitment, which is stored in\n        // _blobPublicInputs[0:32]\n        // or the KZG opening 'proof' (commitment Q) stored in _blobPublicInputs[144:]. They are used in\n        // validateBatchedBlob().\n        // See BlobLib.sol -> validateBatchedBlob() and calculateBlobCommitmentsHash() for documentation on the below blob\n        // related inputs.\n\n        // blobCommitmentsHash\n        publicInputs[offset] = STFLib.getBlobCommitmentsHash(_end);\n        offset += 1;\n\n        // z\n        publicInputs[offset] = bytes32(_blobPublicInputs[32:64]);\n        offset += 1;\n\n        // y\n        (publicInputs[offset], publicInputs[offset + 1], publicInputs[offset + 2]) =\n            bytes32ToBigNum(bytes32(_blobPublicInputs[64:96]));\n        offset += 3;\n\n        // To fit into 2 fields, the commitment is split into 31 and 17 byte numbers\n        // See yarn-project/foundation/src/blob/index.ts -> commitmentToFields()\n        // TODO: The below left pads, possibly inefficiently\n        // c[0]\n        publicInputs[offset] = bytes32(uint256(uint248(bytes31((_blobPublicInputs[96:127])))));\n        // c[1]\n        publicInputs[offset + 1] = bytes32(uint256(uint136(bytes17((_blobPublicInputs[127:144])))));\n\n        return publicInputs;\n    }\n\n    /**\n     * @notice Verifies committee attestations for the last checkpoint in the epoch before accepting the epoch proof\n     *\n     * @dev This verification ensures that the committee has properly validated the final state of the epoch\n     *      before the proof can be accepted. The function validates that:\n     *      1. The provided attestations match the stored attestation hash for the checkpoint\n     *      2. The attestations have valid signatures from committee members\n     *      3. The attestations meet the required threshold (2/3+ of committee)\n     *\n     *      For escape hatch epochs, attestation verification is skipped since there is no committee\n     *      involvement - only the designated escape hatch proposer can propose blocks.\n     *\n     * @dev Errors Thrown:\n     *      - Rollup__InvalidAttestations: Provided attestations don't match stored hash or fail validation\n     *\n     * @param _endCheckpointNumber The last checkpoint number in the epoch to verify attestations for\n     * @param _attestations The committee attestations containing signatures and validator information\n     */\n    function verifyLastCheckpointAttestationsAndOutHash(\n        uint256 _endCheckpointNumber,\n        CommitteeAttestations memory _attestations,\n        bytes32 _outHash\n    ) private {\n        // Get the stored attestation hash and payload digest for the last checkpoint\n        CompressedTempCheckpointLog storage checkpointLog = STFLib.getStorageTempCheckpointLog(_endCheckpointNumber);\n\n        // Verify that the out hash matches the stored value\n        // The stored out hash is part of the payloadDigest that was attested to.\n        require(checkpointLog.outHash == _outHash, Errors_1.Rollup__InvalidOutHash(checkpointLog.outHash, _outHash));\n\n        // Verify that the provided attestations match the stored hash\n        bytes32 providedAttestationsHash = keccak256(abi.encode(_attestations));\n        require(providedAttestationsHash == checkpointLog.attestationsHash, Errors_1.Rollup__InvalidAttestations());\n\n        // Get the epoch for the last checkpoint\n        Epoch epoch = STFLib.getEpochForCheckpoint(_endCheckpointNumber);\n\n        // Check if this is an escape hatch epoch - skip attestation verification if so\n        // since escape hatch blocks are proposed without committee attestations.\n        // Uses epoch-stable lookup so proof verification uses the escape hatch that was\n        // active when the epoch started, not whatever is currently configured.\n        {\n            IEscapeHatch escapeHatch = ValidatorSelectionLib.getEscapeHatchForEpoch(epoch);\n            if (address(escapeHatch) != address(0)) {\n                (bool isOpen,) = escapeHatch.isHatchOpen(epoch);\n                if (isOpen) {\n                    // Skip attestation verification for escape hatch epochs\n                    return;\n                }\n            }\n        }\n\n        ValidatorSelectionLib.verifyAttestations(epoch, _attestations, checkpointLog.payloadDigest);\n    }\n\n    /**\n     * @notice Rehashes each provided checkpoint header and requires it to match the stored header hash\n     *\n     * @param _start The first checkpoint number in the epoch (inclusive)\n     * @param _end The last checkpoint number in the epoch (inclusive)\n     * @param _headers The proposed headers for each checkpoint in [_start, _end]\n     */\n    function verifyHeaders(uint256 _start, uint256 _end, ProposedHeader[] calldata _headers) private view {\n        uint256 numCheckpoints = _end - _start + 1;\n        require(\n            _headers.length == numCheckpoints,\n            Errors_1.Rollup__InvalidCheckpointHeaderCount(numCheckpoints, _headers.length)\n        );\n\n        for (uint256 i = 0; i < numCheckpoints; i++) {\n            bytes32 expectedHeaderHash = STFLib.getHeaderHash(_start + i);\n            bytes32 providedHeaderHash = ProposedHeaderLib.hash(_headers[i]);\n            require(\n                providedHeaderHash == expectedHeaderHash,\n                Errors_1.Rollup__InvalidCheckpointHeader(expectedHeaderHash, providedHeaderHash)\n            );\n        }\n    }\n\n    /**\n     * @notice Validates that an epoch proof submission meets all acceptance criteria\n     *\n     * @dev Performs comprehensive validation of epoch boundaries, timing constraints, and chain state:\n     *      - Ensures start and end checkpoints are in the same epoch\n     *      - Verifies proof is submitted within the deadline window\n     *      - Confirms start checkpoint is the first checkpoint of its epoch\n     *      - Validates start checkpoint builds on the proven chain\n     *      - Checks epoch doesn't exceed maximum checkpoint count\n     *\n     * @dev Errors Thrown:\n     *      - Rollup__StartAndEndNotSameEpoch: Start and end checkpoints in different epochs\n     *      - Rollup__PastDeadline: Proof submitted after deadline\n     *      - Rollup__InvalidFirstEpochProof: Invalid structure for first epoch proof\n     *      - Rollup__StartIsNotFirstCheckpointOfEpoch: Start checkpoint is not at epoch boundary\n     *      - Rollup__StartIsNotBuildingOnProven: Start checkpoint doesn't build on proven chain\n     *      - Rollup__TooManyCheckpointsInEpoch: Epoch exceeds maximum allowed checkpoints\n     *\n     * @param _start The first checkpoint number in the epoch (inclusive)\n     * @param _end The last checkpoint number in the epoch (inclusive)\n     * @return The epoch number that the proof covers\n     */\n    function assertAcceptable(uint256 _start, uint256 _end) private view returns (Epoch) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        Epoch startEpoch = STFLib.getEpochForCheckpoint(_start);\n        // This also checks for existence of the checkpoint.\n        Epoch endEpoch = STFLib.getEpochForCheckpoint(_end);\n\n        require(startEpoch == endEpoch, Errors_1.Rollup__StartAndEndNotSameEpoch(startEpoch, endEpoch));\n\n        Epoch currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();\n\n        require(\n            startEpoch.isAcceptingProofsAtEpoch(currentEpoch),\n            Errors_1.Rollup__PastDeadline(startEpoch.toDeadlineEpoch(), currentEpoch)\n        );\n\n        // By making sure that the previous checkpoint is in another epoch, we know that we were\n        // at the start.\n        Epoch parentEpoch = STFLib.getEpochForCheckpoint(_start - 1);\n\n        require(startEpoch > Epoch.wrap(0) || _start == 1, Errors_1.Rollup__InvalidFirstEpochProof());\n\n        bool isStartOfEpoch = _start == 1 || parentEpoch <= startEpoch - Epoch.wrap(1);\n        require(isStartOfEpoch, Errors_1.Rollup__StartIsNotFirstCheckpointOfEpoch());\n\n        bool isStartBuildingOnProven = _start - 1 <= rollupStore.tips.getProven();\n        require(isStartBuildingOnProven, Errors_1.Rollup__StartIsNotBuildingOnProven());\n\n        bool claimedNumCheckpointsInEpoch = _end - _start + 1 <= Constants.MAX_CHECKPOINTS_PER_EPOCH;\n        require(\n            claimedNumCheckpointsInEpoch,\n            Errors_1.Rollup__TooManyCheckpointsInEpoch(Constants.MAX_CHECKPOINTS_PER_EPOCH, _end - _start)\n        );\n\n        return endEpoch;\n    }\n\n    /**\n     * @notice Verifies the validity proof and batched blob proof for an epoch\n     *\n     * @dev Performs the core cryptographic verification by:\n     *      1. Validating the batched blob proof using EIP-4844 point evaluation precompile\n     *      2. Assembling the public inputs for the root rollup circuit\n     *      3. Verifying the validity proof against the assembled public inputs using the configured verifier\n     *\n     * @dev Errors Thrown:\n     *      - Rollup__InvalidBlobProof: Batched blob proof verification failed\n     *      - Rollup__InvalidProof: validity proof verification failed\n     *      - Rollup__InvalidPreviousArchive: Previous archive root mismatch in public inputs\n     *      - Rollup__InvalidArchive: End archive root mismatch in public inputs\n     *\n     * @param _args The epoch proof submission arguments containing proof data and public inputs\n     * @return True if both blob proof and validity proof verification succeed\n     */\n    function verifyEpochRootProof(SubmitEpochRootProofArgs calldata _args) private view returns (bool) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        BlobLib_1.validateBatchedBlob(_args.blobInputs);\n\n        bytes32[] memory publicInputs =\n            getEpochProofPublicInputs(_args.start, _args.end, _args.args, _args.headers, _args.blobInputs);\n\n        require(\n            rollupStore.config.epochProofVerifier.verify(_args.proof, publicInputs), Errors_1.Rollup__InvalidProof()\n        );\n\n        return true;\n    }\n\n    /**\n     * @notice Converts a BLS12 field element from bytes32 to a nr BigNum type\n     *\n     * @dev The nr bignum type for BLS12 fields is encoded as 3 nr fields - see blob_public_inputs.ts:\n     *      firstLimb = last 15 bytes;\n     *      secondLimb = bytes 2 -> 17;\n     *      thirdLimb = first 2 bytes;\n     *      Used when verifying epoch proofs to gather blob specific public inputs.\n     * @param _input - The field in bytes32\n     */\n    function bytes32ToBigNum(bytes32 _input)\n        private\n        pure\n        returns (bytes32 firstLimb, bytes32 secondLimb, bytes32 thirdLimb)\n    {\n        firstLimb = bytes32(uint256(uint120(bytes15(_input << 136))));\n        secondLimb = bytes32(uint256(uint120(bytes15(_input << 16))));\n        thirdLimb = bytes32(uint256(uint16(bytes2(_input))));\n    }\n\n    /**\n     * @notice Converts an Ethereum address to a field element for circuit public inputs\n     *\n     * @dev Addresses are 20 bytes (160 bits) and need to be converted to 32-byte field elements\n     *      for use as public inputs in the rollup circuits. The conversion zero-pads the address\n     *      to fit the field element format.\n     *\n     * @param _a The Ethereum address to convert\n     * @return The address as a bytes32 field element\n     */\n    function addressToField(address _a) private pure returns (bytes32) {\n        return bytes32(uint256(uint160(_a)));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 384,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "EpochProofLib",
+        "similarity": 0.809,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/EpochProofLib.sol",
+        "commit": "e3b9467385bbb1eaa4eb096e6e1a18b06d45bba9",
+        "commitTimestamp": "2026-02-16T15:32:23Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/e3b9467385bbb1eaa4eb096e6e1a18b06d45bba9/l1-contracts/src/core/libraries/rollup/EpochProofLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified remediation of retroactive escape-hatch epoch classification from PR 20363 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 40,
+        "removed": 22,
+        "ignoredAdded": 18,
+        "ignoredRemoved": 5,
+        "unchanged": 384,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 38,
+            "oldLines": 7,
+            "newStart": 38,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "     *              - start: First checkpoint number in the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "     *              - end: Last checkpoint number in the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "     *              - args: Public inputs (previousArchive, endArchive, endTimestamp, proverId)"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     *              - fees: Fee distribution array (recipient-value pairs)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     *              - headers: Proposed headers for each checkpoint, supplying the fee recipient and value",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "     *              - attestations: Committee attestations for the last checkpoint in the epoch"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     *              - blobInputs: Batched blob data for EIP-4844 point evaluation precompile"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "     *              - proof: The validity proof bytes for the root rollup circuit"
+              }
+            ]
+          },
+          {
+            "oldStart": 55,
+            "oldLines": 7,
+            "newStart": 55,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "        // ensuring committee agreement on the epoch's validity alongside the cryptographic proof verification below."
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "        verifyLastCheckpointAttestationsAndOutHash(_args.end, _args.attestations, _args.args.outHash);"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        require(verifyEpochRootProof(_args), Errors.Rollup__InvalidProof());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        require(verifyEpochRootProof(_args), Errors_1.Rollup__InvalidProof());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 8,
+            "newStart": 69,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "            // a partial epoch cannot produce a non-empty out hash and later revert to an empty one as more checkpoints are"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "            // included. Therefore, it is safe to skip insertion when the out hash is empty."
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "            if (_args.args.outHash != bytes32(Constants.EMPTY_EPOCH_OUT_HASH)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                // Insert L2->L1 messages root into outbox for consumption.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                rollupStore.config.outbox.insert(endEpoch, _args.args.outHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                // Insert L2->L1 messages root into outbox for consumption. The Outbox keys each root by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                // the number of checkpoints proven in this epoch so off-chain consumers can map a tx's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                // position-within-epoch directly to the smallest proof that covers it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "                uint256 numCheckpointsInEpoch = _args.end - _args.start + 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "                rollupStore.config.outbox.insert(endEpoch, numCheckpointsInEpoch, _args.args.outHash);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 79, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 16,
+            "newStart": 92,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 92,
+                "text": "     * @param  _start - The start of the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 93,
+                "text": "     * @param  _end - The end of the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 94,
+                "text": "     * @param  _args - Array of public inputs to the proof (previousArchive, endArchive, endTimestamp, outHash, proverId)"
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "     * @param  _fees - Array of recipient-value pairs with fees to be distributed for the epoch",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * @param  _headers - The proposed checkpoint headers supplying the fee recipient and value for each checkpoint",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 96,
+                "text": "     * @param _blobPublicInputs- The blob public inputs for the proof"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 97, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 98,
+                "text": "    function getEpochProofPublicInputs("
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 99,
+                "text": "        uint256 _start,"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 100,
+                "text": "        uint256 _end,"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 101,
+                "text": "        PublicInputArgs calldata _args,"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        bytes32[] calldata _fees,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        ProposedHeader[] calldata _headers,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 103,
+                "text": "        bytes calldata _blobPublicInputs"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 104,
+                "text": "    ) internal view returns (bytes32[] memory) {"
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        verifyHeaders(_start, _end, _headers);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 106, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 107,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              { "type": " ", "oldLine": 103, "newLine": 108, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 109,
+                "text": "        {"
+              }
+            ]
+          },
+          {
+            "oldStart": 107,
+            "oldLines": 7,
+            "newStart": 112,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 112,
+                "text": "                bytes32 expectedPreviousArchive = rollupStore.archives[_start - 1];"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 113,
+                "text": "                require("
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 114,
+                "text": "                    expectedPreviousArchive == _args.previousArchive,"
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "                    Errors.Rollup__InvalidPreviousArchive(expectedPreviousArchive, _args.previousArchive)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                    Errors_1.Rollup__InvalidPreviousArchive(expectedPreviousArchive, _args.previousArchive)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 116,
+                "text": "                );"
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 117,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 113, "newLine": 118, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 7,
+            "newStart": 120,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 120,
+                "text": "                bytes32 expectedEndArchive = rollupStore.archives[_end];"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 121,
+                "text": "                require("
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 122,
+                "text": "                    expectedEndArchive == _args.endArchive,"
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "                    Errors.Rollup__InvalidArchive(expectedEndArchive, _args.endArchive)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "                    Errors_1.Rollup__InvalidArchive(expectedEndArchive, _args.endArchive)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 124,
+                "text": "                );"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 125,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 126,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 155,
+            "oldLines": 12,
+            "newStart": 160,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 155, "newLine": 160, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 161,
+                "text": "        uint256 offset = 3 + Constants.MAX_CHECKPOINTS_PER_EPOCH;"
+              },
+              { "type": " ", "oldLine": 157, "newLine": 162, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "        uint256 feesLength = Constants.MAX_CHECKPOINTS_PER_EPOCH * 2;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "        // fees[2n to 2n + 1]: a fee element, which contains of a recipient and a value",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "        for (uint256 i = 0; i < feesLength; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "            publicInputs[offset + i] = _fees[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "        // Taking recipient/value from the checkpoint headers rather than the prover",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "        // as defense in depth. Slots past numCheckpoints stay zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "        for (uint256 i = 0; i < numCheckpoints; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "            publicInputs[offset + 2 * i] = addressToField(_headers[i].coinbase);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "            publicInputs[offset + 2 * i + 1] = bytes32(_headers[i].accumulatedFees);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 168,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "        offset += feesLength;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "        offset += Constants.MAX_CHECKPOINTS_PER_EPOCH * 2;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 164, "newLine": 170, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 171,
+                "text": "        publicInputs[offset] = bytes32(block.chainid);"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 172,
+                "text": "        offset += 1;"
+              }
+            ]
+          },
+          {
+            "oldStart": 240,
+            "oldLines": 14,
+            "newStart": 246,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 240, "newLine": 246, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 247,
+                "text": "        // Verify that the out hash matches the stored value"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 248,
+                "text": "        // The stored out hash is part of the payloadDigest that was attested to."
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        require(checkpointLog.outHash == _outHash, Errors.Rollup__InvalidOutHash(checkpointLog.outHash, _outHash));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "        require(checkpointLog.outHash == _outHash, Errors_1.Rollup__InvalidOutHash(checkpointLog.outHash, _outHash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 244, "newLine": 250, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 251,
+                "text": "        // Verify that the provided attestations match the stored hash"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 252,
+                "text": "        bytes32 providedAttestationsHash = keccak256(abi.encode(_attestations));"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "        require(providedAttestationsHash == checkpointLog.attestationsHash, Errors.Rollup__InvalidAttestations());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        require(providedAttestationsHash == checkpointLog.attestationsHash, Errors_1.Rollup__InvalidAttestations());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 248, "newLine": 254, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "        // Get the slot and epoch for the last checkpoint",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "        Slot slot = checkpointLog.slotNumber.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        // Get the epoch for the last checkpoint",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 256,
+                "text": "        Epoch epoch = STFLib.getEpochForCheckpoint(_endCheckpointNumber);"
+              },
+              { "type": " ", "oldLine": 252, "newLine": 257, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 258,
+                "text": "        // Check if this is an escape hatch epoch - skip attestation verification if so"
+              }
+            ]
+          },
+          {
+            "oldStart": 265,
+            "oldLines": 10,
+            "newStart": 270,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 270,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 271,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 267, "newLine": 272, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "        ValidatorSelectionLib.verifyAttestations(slot, epoch, _attestations, checkpointLog.payloadDigest);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "        ValidatorSelectionLib.verifyAttestations(epoch, _attestations, checkpointLog.payloadDigest);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 269, "newLine": 274, "text": "    }" },
+              { "type": " ", "oldLine": 270, "newLine": 275, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 276,
+                "text": "    /**"
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "     * @notice Rehashes each provided checkpoint header and requires it to match the stored header hash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "     * @param _start The first checkpoint number in the epoch (inclusive)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "     * @param _end The last checkpoint number in the epoch (inclusive)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "     * @param _headers The proposed headers for each checkpoint in [_start, _end]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "    function verifyHeaders(uint256 _start, uint256 _end, ProposedHeader[] calldata _headers) private view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "        uint256 numCheckpoints = _end - _start + 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "            _headers.length == numCheckpoints,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "            Errors_1.Rollup__InvalidCheckpointHeaderCount(numCheckpoints, _headers.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 289, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "        for (uint256 i = 0; i < numCheckpoints; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "            bytes32 expectedHeaderHash = STFLib.getHeaderHash(_start + i);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "            bytes32 providedHeaderHash = ProposedHeaderLib.hash(_headers[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "            require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "                providedHeaderHash == expectedHeaderHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "                Errors_1.Rollup__InvalidCheckpointHeader(expectedHeaderHash, providedHeaderHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 299, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 301,
+                "text": "     * @notice Validates that an epoch proof submission meets all acceptance criteria"
+              },
+              { "type": " ", "oldLine": 273, "newLine": 302, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 303,
+                "text": "     * @dev Performs comprehensive validation of epoch boundaries, timing constraints, and chain state:"
+              }
+            ]
+          },
+          {
+            "oldStart": 297,
+            "oldLines": 31,
+            "newStart": 326,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 297,
+                "newLine": 326,
+                "text": "        // This also checks for existence of the checkpoint."
+              },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 327,
+                "text": "        Epoch endEpoch = STFLib.getEpochForCheckpoint(_end);"
+              },
+              { "type": " ", "oldLine": 299, "newLine": 328, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "        require(startEpoch == endEpoch, Errors.Rollup__StartAndEndNotSameEpoch(startEpoch, endEpoch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "        require(startEpoch == endEpoch, Errors_1.Rollup__StartAndEndNotSameEpoch(startEpoch, endEpoch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 301, "newLine": 330, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 331,
+                "text": "        Epoch currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();"
+              },
+              { "type": " ", "oldLine": 303, "newLine": 332, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 333,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 334,
+                "text": "            startEpoch.isAcceptingProofsAtEpoch(currentEpoch),"
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "            Errors.Rollup__PastDeadline(startEpoch.toDeadlineEpoch(), currentEpoch)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "            Errors_1.Rollup__PastDeadline(startEpoch.toDeadlineEpoch(), currentEpoch)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 307,
+                "newLine": 336,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 308, "newLine": 337, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 309,
+                "newLine": 338,
+                "text": "        // By making sure that the previous checkpoint is in another epoch, we know that we were"
+              },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 339,
+                "text": "        // at the start."
+              },
+              {
+                "type": " ",
+                "oldLine": 311,
+                "newLine": 340,
+                "text": "        Epoch parentEpoch = STFLib.getEpochForCheckpoint(_start - 1);"
+              },
+              { "type": " ", "oldLine": 312, "newLine": 341, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "        require(startEpoch > Epoch.wrap(0) || _start == 1, Errors.Rollup__InvalidFirstEpochProof());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "        require(startEpoch > Epoch.wrap(0) || _start == 1, Errors_1.Rollup__InvalidFirstEpochProof());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 314, "newLine": 343, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 315,
+                "newLine": 344,
+                "text": "        bool isStartOfEpoch = _start == 1 || parentEpoch <= startEpoch - Epoch.wrap(1);"
+              },
+              {
+                "type": "-",
+                "oldLine": 316,
+                "text": "        require(isStartOfEpoch, Errors.Rollup__StartIsNotFirstCheckpointOfEpoch());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "        require(isStartOfEpoch, Errors_1.Rollup__StartIsNotFirstCheckpointOfEpoch());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 317, "newLine": 346, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 318,
+                "newLine": 347,
+                "text": "        bool isStartBuildingOnProven = _start - 1 <= rollupStore.tips.getProven();"
+              },
+              {
+                "type": "-",
+                "oldLine": 319,
+                "text": "        require(isStartBuildingOnProven, Errors.Rollup__StartIsNotBuildingOnProven());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "        require(isStartBuildingOnProven, Errors_1.Rollup__StartIsNotBuildingOnProven());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 320, "newLine": 349, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 350,
+                "text": "        bool claimedNumCheckpointsInEpoch = _end - _start + 1 <= Constants.MAX_CHECKPOINTS_PER_EPOCH;"
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 351,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 352,
+                "text": "            claimedNumCheckpointsInEpoch,"
+              },
+              {
+                "type": "-",
+                "oldLine": 324,
+                "text": "            Errors.Rollup__TooManyCheckpointsInEpoch(Constants.MAX_CHECKPOINTS_PER_EPOCH, _end - _start)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "            Errors_1.Rollup__TooManyCheckpointsInEpoch(Constants.MAX_CHECKPOINTS_PER_EPOCH, _end - _start)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 354,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 326, "newLine": 355, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 356,
+                "text": "        return endEpoch;"
+              }
+            ]
+          },
+          {
+            "oldStart": 347,
+            "oldLines": 12,
+            "newStart": 376,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 347,
+                "newLine": 376,
+                "text": "    function verifyEpochRootProof(SubmitEpochRootProofArgs calldata _args) private view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 348,
+                "newLine": 377,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              { "type": " ", "oldLine": 349, "newLine": 378, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 350,
+                "text": "        BlobLib.validateBatchedBlob(_args.blobInputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "        BlobLib_1.validateBatchedBlob(_args.blobInputs);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 351, "newLine": 380, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 381,
+                "text": "        bytes32[] memory publicInputs ="
+              },
+              {
+                "type": "-",
+                "oldLine": 353,
+                "text": "            getEpochProofPublicInputs(_args.start, _args.end, _args.args, _args.fees, _args.blobInputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 382,
+                "text": "            getEpochProofPublicInputs(_args.start, _args.end, _args.args, _args.headers, _args.blobInputs);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 354, "newLine": 383, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 355,
+                "text": "        require(rollupStore.config.epochProofVerifier.verify(_args.proof, publicInputs), Errors.Rollup__InvalidProof());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 384,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 385,
+                "text": "            rollupStore.config.epochProofVerifier.verify(_args.proof, publicInputs), Errors_1.Rollup__InvalidProof()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 386,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 356, "newLine": 387, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 357,
+                "newLine": 388,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 358, "newLine": 389, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

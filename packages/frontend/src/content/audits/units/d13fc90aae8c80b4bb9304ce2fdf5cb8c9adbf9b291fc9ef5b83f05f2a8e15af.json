@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d13fc90aae8c80b4bb9304ce2fdf5cb8c9adbf9b291fc9ef5b83f05f2a8e15af",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 11,
+  "source": "pub mod avm_accumulated_data;\npub mod private_to_rollup_accumulated_data;\npub mod private_accumulated_data;\npub mod private_to_avm_accumulated_data;\npub mod private_to_public_accumulated_data;\n\npub use avm_accumulated_data::AvmAccumulatedData;\npub use private_accumulated_data::PrivateAccumulatedData;\npub use private_to_avm_accumulated_data::PrivateToAvmAccumulatedData;\npub use private_to_public_accumulated_data::PrivateToPublicAccumulatedData;\npub use private_to_rollup_accumulated_data::PrivateToRollupAccumulatedData;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

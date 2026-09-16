@@ -32,6 +32,60 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 98,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ISystemConfig",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 98,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "ISystemConfig",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

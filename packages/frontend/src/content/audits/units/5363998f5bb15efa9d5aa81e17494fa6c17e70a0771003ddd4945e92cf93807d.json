@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5363998f5bb15efa9d5aa81e17494fa6c17e70a0771003ddd4945e92cf93807d",
+  "name": "IWETH",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IWETH {\n    event Transfer(address indexed src, address indexed dst, uint256 wad);\n\n    function deposit() external payable;\n\n    function transfer(address dst, uint256 wad) external returns (bool);\n\n    function approve(address guy, uint256 wad) external returns (bool);\n\n    function transferFrom(address src, address dst, uint256 wad) external returns (bool);\n\n    function withdraw(uint256 _wad) external;\n\n    function balanceOf(address) external view returns (uint256);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 11,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IWETH",
+        "similarity": 0.714,
+        "reportId": "roninnetwork/beosin-ronin-network-2023-03",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/interfaces/IWETH.sol",
+        "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
+        "commitTimestamp": "2023-03-08T05:44:18Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/IWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audited commit",
+        "coverage": "Final audited commit; all consensus-contract findings fixed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 4,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 11,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IWETH {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    function deposit() external payable;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 9, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 11, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 12,
+                "text": "    function withdraw(uint256 _wad) external;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 14,
+                "text": "    function balanceOf(address) external view returns (uint256);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

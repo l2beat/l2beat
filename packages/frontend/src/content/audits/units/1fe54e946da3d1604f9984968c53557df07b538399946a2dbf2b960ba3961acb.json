@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1fe54e946da3d1604f9984968c53557df07b538399946a2dbf2b960ba3961acb",
+  "name": "IScrollERC1155Extension",
+  "kind": "interface",
+  "lines": 38,
+  "source": "interface IScrollERC1155Extension {\n    /// @notice Return the address of Gateway the token belongs to.\n    function gateway() external view returns (address);\n\n    /// @notice Return the address of counterpart token.\n    function counterpart() external view returns (address);\n\n    /// @notice Mint some token to recipient's account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _to The address of recipient.\n    /// @param _tokenId The token id to mint.\n    /// @param _amount The amount of token to mint.\n    /// @param _data The data passed to recipient\n    function mint(address _to, uint256 _tokenId, uint256 _amount, bytes memory _data) external;\n\n    /// @notice Burn some token from account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _from The address of account to burn token.\n    /// @param _tokenId The token id to burn.\n    /// @param _amount The amount of token to burn.\n    function burn(address _from, uint256 _tokenId, uint256 _amount) external;\n\n    /// @notice Batch mint some token to recipient's account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _to The address of recipient.\n    /// @param _tokenIds The token id to mint.\n    /// @param _amounts The list of corresponding amount of token to mint.\n    /// @param _data The data passed to recipient\n    function batchMint(address _to, uint256[] calldata _tokenIds, uint256[] calldata _amounts, bytes calldata _data)\n        external;\n\n    /// @notice Batch burn some token from account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _from The address of account to burn token.\n    /// @param _tokenIds The list of token ids to burn.\n    /// @param _amounts The list of corresponding amount of token to burn.\n    function batchBurn(address _from, uint256[] calldata _tokenIds, uint256[] calldata _amounts) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 38,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollERC1155Extension",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollERC1155Extension.sol",
+        "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+        "commitTimestamp": "2023-07-25T17:25:27Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2eb458cf4224d82fc56254e91e297a9ed261cefb/contracts/src/libraries/token/IScrollERC1155Extension.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9d3de4c86574275b788dea36e15e78846209c313447965a26982489e87ee409f",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 1,
+  "source": "pub mod map;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

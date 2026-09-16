@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "498109ccfc99f98b76bcd0f0d255238e645faff88387c467b45c48b4a1bd8512",
+  "name": "IScrollERC721",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface IScrollERC721 is IERC721, IScrollERC721Extension {}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 0,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IScrollERC721",
+        "similarity": 0,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollERC721.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/token/IScrollERC721.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 12,
+        "unchanged": 0,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 1,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IScrollERC721 is IERC721 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Return the address of Gateway the token belongs to.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    function gateway() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 4, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @notice Return the address of counterpart token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function counterpart() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Mint some token to recipient's account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param _to The address of recipient.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @param _tokenId The token id to mint.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    function mint(address _to, uint256 _tokenId) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @notice Burn some token from account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @dev Gateway Utilities, only gateway contract can call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @param _tokenId The token id to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    function burn(uint256 _tokenId) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 18, "text": "}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IScrollERC721 is IERC721, IScrollERC721Extension {}",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

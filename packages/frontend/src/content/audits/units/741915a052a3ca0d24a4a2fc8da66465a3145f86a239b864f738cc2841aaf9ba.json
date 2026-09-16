@@ -32,6 +32,347 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "VMStatuses",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 13,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @notice The VM has executed successfully and the outcome is invalid."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    VMStatus internal constant INVALID = VMStatus.wrap(1);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice The VM has panicked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice The VM has paniced.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    VMStatus internal constant PANIC = VMStatus.wrap(2);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @notice The VM execution is still in progress."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "VMStatuses",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 13,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @notice The VM has executed successfully and the outcome is invalid."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    VMStatus internal constant INVALID = VMStatus.wrap(1);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice The VM has panicked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice The VM has paniced.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    VMStatus internal constant PANIC = VMStatus.wrap(2);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @notice The VM execution is still in progress."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "VMStatuses",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 13,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @notice The VM has executed successfully and the outcome is invalid."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    VMStatus internal constant INVALID = VMStatus.wrap(1);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice The VM has panicked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice The VM has paniced.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    VMStatus internal constant PANIC = VMStatus.wrap(2);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @notice The VM execution is still in progress."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "VMStatuses",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 13,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @notice The VM has executed successfully and the outcome is invalid."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    VMStatus internal constant INVALID = VMStatus.wrap(1);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice The VM has panicked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice The VM has paniced.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    VMStatus internal constant PANIC = VMStatus.wrap(2);"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @notice The VM execution is still in progress."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

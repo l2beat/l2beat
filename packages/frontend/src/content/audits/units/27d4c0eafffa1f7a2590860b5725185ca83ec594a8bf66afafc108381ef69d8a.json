@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "27d4c0eafffa1f7a2590860b5725185ca83ec594a8bf66afafc108381ef69d8a",
+  "name": "ICoinIssuer",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface ICoinIssuer {\n    event BudgetReset(uint256 indexed newYear, uint256 newBudget);\n\n    function mint(address _to, uint256 _amount) external;\n    function acceptTokenOwnership() external;\n    function mintAvailable() external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 6,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ICoinIssuer",
+        "similarity": 0.909,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 6,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface ICoinIssuer {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event BudgetReset(uint256 indexed newYear, uint256 newBudget);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    function mint(address _to, uint256 _amount) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    function acceptTokenOwnership() external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "    function mintAvailable() external view returns (uint256);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

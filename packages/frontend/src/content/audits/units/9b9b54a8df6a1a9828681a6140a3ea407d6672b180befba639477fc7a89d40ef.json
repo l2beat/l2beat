@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9b9b54a8df6a1a9828681a6140a3ea407d6672b180befba639477fc7a89d40ef",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 4,
+  "source": "# `range`\n\nThis binary contains the client program for executing the Optimism rollup state transition across a range of blocks, which can be used to generate an on chain validity proof. Depending on the compilation pipeline, it will compile to be run either in native mode or in zkVM mode. In native mode, the data for verifying\nthe batch validity is fetched from RPC, while in zkVM mode, the data is supplied by the host binary to the verifiable program.",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "97b919f884900f613f0d2fe1bd0c9b980bb7a25c611115eca3d953ab11a3c7fd",
+  "name": "private_to_rollup_accumulated_data.nr",
+  "kind": "program",
+  "lines": 49,
+  "source": "use crate::{\n    abis::{log_hash::LogHash, private_log::PrivateLog},\n    constants::{\n        MAX_CONTRACT_CLASS_LOGS_PER_TX, MAX_L2_TO_L1_MSGS_PER_TX, MAX_NOTE_HASHES_PER_TX,\n        MAX_NULLIFIERS_PER_TX, MAX_PRIVATE_LOGS_PER_TX, PRIVATE_TO_ROLLUP_ACCUMULATED_DATA_LENGTH,\n    },\n    messaging::l2_to_l1_message::L2ToL1Message,\n    side_effect::Scoped,\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct PrivateToRollupAccumulatedData {\n    pub note_hashes: [Field; MAX_NOTE_HASHES_PER_TX],\n    pub nullifiers: [Field; MAX_NULLIFIERS_PER_TX],\n    pub l2_to_l1_msgs: [Scoped<L2ToL1Message>; MAX_L2_TO_L1_MSGS_PER_TX],\n    pub private_logs: [PrivateLog; MAX_PRIVATE_LOGS_PER_TX],\n    pub contract_class_logs_hashes: [Scoped<LogHash>; MAX_CONTRACT_CLASS_LOGS_PER_TX],\n}\n\nimpl Empty for PrivateToRollupAccumulatedData {\n    fn empty() -> Self {\n        PrivateToRollupAccumulatedData {\n            note_hashes: [0; MAX_NOTE_HASHES_PER_TX],\n            nullifiers: [0; MAX_NULLIFIERS_PER_TX],\n            l2_to_l1_msgs: [Scoped::empty(); MAX_L2_TO_L1_MSGS_PER_TX],\n            private_logs: [PrivateLog::empty(); MAX_PRIVATE_LOGS_PER_TX],\n            contract_class_logs_hashes: [Scoped::empty(); MAX_CONTRACT_CLASS_LOGS_PER_TX],\n        }\n    }\n}\n\n#[test]\nfn test_private_to_rollup_accumulated_data_serialization() {\n    let item = PrivateToRollupAccumulatedData {\n        note_hashes: [123; MAX_NOTE_HASHES_PER_TX],\n        nullifiers: [456; MAX_NULLIFIERS_PER_TX],\n        l2_to_l1_msgs: [Scoped::empty(); MAX_L2_TO_L1_MSGS_PER_TX],\n        private_logs: [PrivateLog::empty(); MAX_PRIVATE_LOGS_PER_TX],\n        contract_class_logs_hashes: [Scoped::empty(); MAX_CONTRACT_CLASS_LOGS_PER_TX],\n    };\n\n    // We use the PRIVATE_TO_ROLLUP_ACCUMULATED_DATA_LENGTH constant to ensure that there is a match\n    // between the derived trait implementation and the constant\n    let serialized: [Field; PRIVATE_TO_ROLLUP_ACCUMULATED_DATA_LENGTH] = item.serialize();\n    let deserialized = PrivateToRollupAccumulatedData::deserialize(serialized);\n    assert(item.eq(deserialized));\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

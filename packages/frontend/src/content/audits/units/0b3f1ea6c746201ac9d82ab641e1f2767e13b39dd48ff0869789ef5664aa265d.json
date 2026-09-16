@@ -32,6 +32,159 @@
         "totalVersions": 4
       },
       "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 90,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "KailuaKZGLib",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaLib.sol",
+        "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+        "commitTimestamp": "2026-03-04T11:05:25Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/04cb174bebbe305082b8746b1542e0db3cd352fc/crates/contracts/foundry/src/KailuaLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Partial fix for V-KLA-VUL-005 (PR #128): function mutability updates.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 6,
+        "unchanged": 90,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 56,
+            "oldLines": 12,
+            "newStart": 56,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "        bytes calldata proof"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "    ) internal view returns (bool success) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "        uint256 rootOfUnity = modExp(reverseBits(index));"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        // Byte range\tName\t        Description",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        // [0:32]\t    versioned_hash\tReference to a blob in the execution layer.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        // [32:64]\t    x\t            x-coordinate at which the blob is being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        // [64:96]\t    y\t            y-coordinate at which the blob is being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // [96:144]\t    commitment\t    Commitment to the blob being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        // [144:192]\tproof\t        Proof associated with the commitment.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        // Byte range   Name            Description",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        // [0:32]           versioned_hash      Reference to a blob in the execution layer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        // [32:64]          x               x-coordinate at which the blob is being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        // [64:96]          y               y-coordinate at which the blob is being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        // [96:144]         commitment      Commitment to the blob being evaluated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        // [144:192]    proof           Proof associated with the commitment.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 65,
+                "text": "        bytes memory kzgCallData = abi.encodePacked(versionedBlobHash, rootOfUnity, value, blobCommitment, proof);"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "        // The precompile will reject non-canonical field elements (i.e. value must be less than BLS_MODULUS)."
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "        (bool _success, bytes memory kzgResult) = KZG.staticcall(kzgCallData);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

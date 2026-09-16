@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fa56262c029e03bc62fe2c0565ea334bd343be60744c71f525ba39a224acca77",
+  "name": "IRewardDistributor",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IRewardDistributor {\n    function claim(address _to, uint256 _amount) external;\n    function recover(address _asset, address _to, uint256 _amount) external;\n    function canonicalRollup() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IRewardDistributor",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

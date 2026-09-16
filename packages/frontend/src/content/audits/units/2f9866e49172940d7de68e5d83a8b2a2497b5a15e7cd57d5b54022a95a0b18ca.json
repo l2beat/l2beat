@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2f9866e49172940d7de68e5d83a8b2a2497b5a15e7cd57d5b54022a95a0b18ca",
+  "name": "SynthetixBridgeEscrow",
+  "kind": "contract",
+  "lines": 13,
+  "source": "contract SynthetixBridgeEscrow is Owned, ISynthetixBridgeEscrow {\n    using SafeERC20 for IERC20;\n\n    constructor(address _owner) public Owned(_owner) {}\n\n    function approveBridge(address _token, address _bridge, uint256 _amount) external onlyOwner {\n        IERC20(_token).safeApprove(_bridge, _amount);\n        emit BridgeApproval(_token, _bridge, _amount);\n    }\n\n    /* ========== EVENTS ========== */\n    event BridgeApproval(address _token, address indexed spender, uint256 value);\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

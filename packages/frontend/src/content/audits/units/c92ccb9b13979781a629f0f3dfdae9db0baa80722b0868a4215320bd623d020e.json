@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c92ccb9b13979781a629f0f3dfdae9db0baa80722b0868a4215320bd623d020e",
+  "name": "contract_class_log.nr",
+  "kind": "program",
+  "lines": 18,
+  "source": "use crate::{\n    abis::log::Log,\n    address::AztecAddress,\n    constants::CONTRACT_CLASS_LOG_SIZE_IN_FIELDS,\n    traits::{Deserialize, Empty, Serialize},\n};\n\n#[derive(Eq, Serialize, Deserialize)]\npub struct ContractClassLog {\n    pub log: Log<CONTRACT_CLASS_LOG_SIZE_IN_FIELDS>,\n    pub contract_address: AztecAddress,\n}\n\nimpl Empty for ContractClassLog {\n    fn empty() -> Self {\n        ContractClassLog { log: Log::empty(), contract_address: AztecAddress::empty() }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

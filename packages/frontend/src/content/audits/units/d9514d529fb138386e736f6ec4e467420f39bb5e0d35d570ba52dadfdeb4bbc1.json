@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d9514d529fb138386e736f6ec4e467420f39bb5e0d35d570ba52dadfdeb4bbc1",
+  "name": "global_variables.nr",
+  "kind": "program",
+  "lines": 48,
+  "source": "use crate::{\n    abis::gas_fees::GasFees,\n    address::{AztecAddress, EthAddress},\n    traits::{Deserialize, Empty, Serialize},\n};\n\n// docs:start:global-variables\n#[derive(Deserialize, Eq, Serialize)]\npub struct GlobalVariables {\n    pub chain_id: Field,\n    pub version: Field,\n    pub block_number: u32,\n    pub slot_number: Field,\n    pub timestamp: u64,\n    // Remember to call `EthAddress::validate()` to ensure an EthAddress fits within 20 bytes.\n    pub coinbase: EthAddress,\n    pub fee_recipient: AztecAddress,\n    pub gas_fees: GasFees,\n}\n// docs:end:global-variables\n\nimpl GlobalVariables {\n    pub fn is_empty(self) -> bool {\n        (self.chain_id == 0)\n            & (self.version == 0)\n            & (self.block_number == 0)\n            & (self.slot_number == 0)\n            & (self.timestamp == 0)\n            & (self.coinbase.is_zero())\n            & (self.fee_recipient.is_zero())\n            & (self.gas_fees.is_empty())\n    }\n}\n\nimpl Empty for GlobalVariables {\n    fn empty() -> Self {\n        Self {\n            chain_id: 0,\n            version: 0,\n            block_number: 0,\n            slot_number: 0,\n            timestamp: 0,\n            coinbase: EthAddress::empty(),\n            fee_recipient: AztecAddress::empty(),\n            gas_fees: GasFees::empty(),\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

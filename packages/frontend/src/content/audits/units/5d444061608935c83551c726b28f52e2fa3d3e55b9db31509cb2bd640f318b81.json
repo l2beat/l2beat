@@ -32,6 +32,33 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 32,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Panic",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Panic.sol",
+        "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
+        "commitTimestamp": "2024-08-29T16:00:08Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/04e0df30aaf341bed5398012e3a8740bddeb6e04/contracts/utils/Panic.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5172 (resolving N-09, N-13); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

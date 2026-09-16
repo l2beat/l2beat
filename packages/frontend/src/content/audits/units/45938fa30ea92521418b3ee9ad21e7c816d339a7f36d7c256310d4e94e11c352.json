@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "45938fa30ea92521418b3ee9ad21e7c816d339a7f36d7c256310d4e94e11c352",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 11,
+  "source": "pub mod aztec_address;\npub mod eth_address;\npub mod partial_address;\npub mod public_keys_hash;\npub mod salted_initialization_hash;\n\npub use aztec_address::AztecAddress;\npub use eth_address::EthAddress;\npub use partial_address::PartialAddress;\npub use public_keys_hash::PublicKeysHash;\npub use salted_initialization_hash::SaltedInitializationHash;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

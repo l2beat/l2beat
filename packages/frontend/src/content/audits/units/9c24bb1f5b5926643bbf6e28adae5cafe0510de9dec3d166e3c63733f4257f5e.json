@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9c24bb1f5b5926643bbf6e28adae5cafe0510de9dec3d166e3c63733f4257f5e",
+  "name": "UpgradeabilityProxy",
+  "kind": "contract",
+  "lines": 58,
+  "source": "contract UpgradeabilityProxy is Proxy {\n    /**\n     * @dev Emitted when the implementation is upgraded.\n     * @param implementation Address of the new implementation.\n     */\n    event Upgraded(address implementation);\n\n    /**\n     * @dev Storage slot with the address of the current implementation.\n     * This is the keccak-256 hash of \"org.zeppelinos.proxy.implementation\", and is\n     * validated in the constructor.\n     */\n    bytes32 private constant IMPLEMENTATION_SLOT = 0x7050c9e0f4ca769c69bd3a8ef740bc37934f8e2c036e5a723fd8ee048ed3f8c3;\n\n    /**\n     * @dev Contract constructor.\n     * @param implementationContract Address of the initial implementation.\n     */\n    constructor(address implementationContract) public {\n        assert(IMPLEMENTATION_SLOT == keccak256(\"org.zeppelinos.proxy.implementation\"));\n\n        _setImplementation(implementationContract);\n    }\n\n    /**\n     * @dev Returns the current implementation.\n     * @return impl Address of the current implementation\n     */\n    function _implementation() internal view override returns (address impl) {\n        bytes32 slot = IMPLEMENTATION_SLOT;\n        assembly {\n            impl := sload(slot)\n        }\n    }\n\n    /**\n     * @dev Upgrades the proxy to a new implementation.\n     * @param newImplementation Address of the new implementation.\n     */\n    function _upgradeTo(address newImplementation) internal {\n        _setImplementation(newImplementation);\n        emit Upgraded(newImplementation);\n    }\n\n    /**\n     * @dev Sets the implementation address of the proxy.\n     * @param newImplementation Address of the new implementation.\n     */\n    function _setImplementation(address newImplementation) private {\n        require(Address.isContract(newImplementation), \"Cannot set a proxy implementation to a non-contract address\");\n\n        bytes32 slot = IMPLEMENTATION_SLOT;\n\n        assembly {\n            sstore(slot, newImplementation)\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

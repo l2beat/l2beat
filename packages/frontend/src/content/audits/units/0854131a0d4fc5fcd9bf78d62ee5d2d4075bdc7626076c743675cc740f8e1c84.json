@@ -1,0 +1,639 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0854131a0d4fc5fcd9bf78d62ee5d2d4075bdc7626076c743675cc740f8e1c84",
+  "name": "SystemConfig",
+  "kind": "contract",
+  "lines": 619,
+  "source": "contract SystemConfig is ProxyAdminOwnedBase, OwnableUpgradeable, ReinitializableBase, ISemver, IGasToken {\n    /// @notice Enum representing different types of updates.\n    /// @custom:value BATCHER              Represents an update to the batcher hash.\n    /// @custom:value FEE_SCALARS          Represents an update to l1 data fee scalars.\n    /// @custom:value GAS_LIMIT            Represents an update to gas limit on L2.\n    /// @custom:value UNSAFE_BLOCK_SIGNER  Represents an update to the signer key for unsafe\n    ///                                    block distrubution.\n    /// @custom:value EIP_1559_PARAMS     Represents an update to EIP-1559 parameters.\n    /// @custom:value OPERATOR_FEE_PARAMS Represents an update to operator fee parameters.\n    /// @custom:value MIN_BASE_FEE        Represents an update to the minimum base fee.\n    /// @custom:value DA_FOOTPRINT_GAS_SCALAR Represents an update to the DA footprint gas scalar.\n    enum UpdateType {\n        BATCHER,\n        FEE_SCALARS,\n        GAS_LIMIT,\n        UNSAFE_BLOCK_SIGNER,\n        EIP_1559_PARAMS,\n        OPERATOR_FEE_PARAMS,\n        MIN_BASE_FEE,\n        DA_FOOTPRINT_GAS_SCALAR\n    }\n\n    /// @notice Struct representing the addresses of L1 system contracts. These should be the\n    ///         contracts that users interact with (not implementations for proxied contracts)\n    ///         and are network specific.\n    struct Addresses {\n        address l1CrossDomainMessenger;\n        address l1ERC721Bridge;\n        address l1StandardBridge;\n        address optimismPortal;\n        address optimismMintableERC20Factory;\n        address gasPayingToken;\n    }\n\n    /// @notice Version identifier, used for upgrades.\n    uint256 public constant VERSION = 0;\n\n    /// @notice Storage slot that the unsafe block signer is stored at.\n    ///         Storing it at this deterministic storage slot allows for decoupling the storage\n    ///         layout from the way that `solc` lays out storage. The `op-node` uses a storage\n    ///         proof to fetch this value.\n    /// @dev    NOTE: this value will be migrated to another storage slot in a future version.\n    ///         User input should not be placed in storage in this contract until this migration\n    ///         happens. It is unlikely that keccak second preimage resistance will be broken,\n    ///         but it is better to be safe than sorry.\n    bytes32 public constant UNSAFE_BLOCK_SIGNER_SLOT = keccak256(\"systemconfig.unsafeblocksigner\");\n\n    /// @notice Storage slot that the L1CrossDomainMessenger address is stored at.\n    bytes32 public constant L1_CROSS_DOMAIN_MESSENGER_SLOT =\n        bytes32(uint256(keccak256(\"systemconfig.l1crossdomainmessenger\")) - 1);\n\n    /// @notice Storage slot that the L1ERC721Bridge address is stored at.\n    bytes32 public constant L1_ERC_721_BRIDGE_SLOT = bytes32(uint256(keccak256(\"systemconfig.l1erc721bridge\")) - 1);\n\n    /// @notice Storage slot that the L1StandardBridge address is stored at.\n    bytes32 public constant L1_STANDARD_BRIDGE_SLOT = bytes32(uint256(keccak256(\"systemconfig.l1standardbridge\")) - 1);\n\n    /// @notice Storage slot that the OptimismPortal address is stored at.\n    bytes32 public constant OPTIMISM_PORTAL_SLOT = bytes32(uint256(keccak256(\"systemconfig.optimismportal\")) - 1);\n\n    /// @notice Storage slot that the OptimismMintableERC20Factory address is stored at.\n    bytes32 public constant OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT =\n        bytes32(uint256(keccak256(\"systemconfig.optimismmintableerc20factory\")) - 1);\n\n    /// @notice Storage slot that the batch inbox address is stored at.\n    bytes32 public constant BATCH_INBOX_SLOT = bytes32(uint256(keccak256(\"systemconfig.batchinbox\")) - 1);\n\n    /// @notice Storage slot for block at which the op-node can start searching for logs from.\n    bytes32 public constant START_BLOCK_SLOT = bytes32(uint256(keccak256(\"systemconfig.startBlock\")) - 1);\n\n    /// @notice The number of decimals that the gas paying token has.\n    uint8 internal constant GAS_PAYING_TOKEN_DECIMALS = 18;\n\n    /// @notice The maximum gas limit that can be set for L2 blocks. This limit is used to enforce that the blocks\n    ///         on L2 are not too large to process and prove. Over time, this value can be increased as various\n    ///         optimizations and improvements are made to the system at large.\n    uint64 internal constant MAX_GAS_LIMIT = 500_000_000;\n\n    /// @notice Fixed L2 gas overhead. Used as part of the L2 fee calculation.\n    ///         Deprecated since the Ecotone network upgrade\n    uint256 public overhead;\n\n    /// @notice Dynamic L2 gas overhead. Used as part of the L2 fee calculation.\n    ///         The most significant byte is used to determine the version since the\n    ///         Ecotone network upgrade.\n    uint256 public scalar;\n\n    /// @notice Identifier for the batcher.\n    ///         For version 1 of this configuration, this is represented as an address left-padded\n    ///         with zeros to 32 bytes.\n    bytes32 public batcherHash;\n\n    /// @notice L2 block gas limit.\n    uint64 public gasLimit;\n\n    /// @notice Basefee scalar value. Part of the L2 fee calculation since the Ecotone network upgrade.\n    uint32 public basefeeScalar;\n\n    /// @notice Blobbasefee scalar value. Part of the L2 fee calculation since the Ecotone network upgrade.\n    uint32 public blobbasefeeScalar;\n\n    /// @notice The configuration for the deposit fee market.\n    ///         Used by the OptimismPortal to meter the cost of buying L2 gas on L1.\n    ///         Set as internal with a getter so that the struct is returned instead of a tuple.\n    IResourceMetering.ResourceConfig internal _resourceConfig;\n\n    /// @notice The EIP-1559 base fee max change denominator.\n    uint32 public eip1559Denominator;\n\n    /// @notice The EIP-1559 elasticity multiplier.\n    uint32 public eip1559Elasticity;\n\n    /// @notice The operator fee scalar.\n    uint32 public operatorFeeScalar;\n\n    /// @notice The operator fee constant.\n    uint64 public operatorFeeConstant;\n\n    // @notice The DA footprint gas scalar.\n    uint16 public daFootprintGasScalar;\n\n    /// @notice The L2 chain ID that this SystemConfig configures.\n    uint256 public l2ChainId;\n\n    /// @notice The SuperchainConfig contract that manages the pause state.\n    ISuperchainConfig public superchainConfig;\n\n    /// @notice The minimum base fee, in wei.\n    uint64 public minBaseFee;\n\n    /// @notice Bytes32 feature flag name to boolean enabled value.\n    mapping(bytes32 => bool) public isFeatureEnabled;\n\n    /// @notice Emitted when configuration is updated.\n    /// @param version    SystemConfig version.\n    /// @param updateType Type of update.\n    /// @param data       Encoded update data.\n    event ConfigUpdate(uint256 indexed version, UpdateType indexed updateType, bytes data);\n\n    /// @notice Emitted when a feature is set.\n    /// @param feature Feature that was set.\n    /// @param enabled Whether the feature is enabled.\n    event FeatureSet(bytes32 indexed feature, bool indexed enabled);\n\n    /// @notice Thrown when attempting to enable/disable a feature when already enabled/disabled,\n    ///         respectively.\n    error SystemConfig_InvalidFeatureState();\n\n    /// @notice Semantic version.\n    /// @custom:semver 3.11.0\n    function version() public pure virtual returns (string memory) {\n        return \"3.11.0\";\n    }\n\n    /// @notice Constructs the SystemConfig contract.\n    /// @dev    START_BLOCK_SLOT is set to type(uint256).max here so that it will be a dead value\n    ///         in the singleton.\n    constructor() ReinitializableBase(3) {\n        Storage.setUint(START_BLOCK_SLOT, type(uint256).max);\n        _disableInitializers();\n    }\n\n    /// @notice Initializer.\n    ///         The resource config must be set before the require check.\n    /// @param _owner             Initial owner of the contract.\n    /// @param _basefeeScalar     Initial basefee scalar value.\n    /// @param _blobbasefeeScalar Initial blobbasefee scalar value.\n    /// @param _batcherHash       Initial batcher hash.\n    /// @param _gasLimit          Initial gas limit.\n    /// @param _unsafeBlockSigner Initial unsafe block signer address.\n    /// @param _config            Initial ResourceConfig.\n    /// @param _batchInbox        Batch inbox address. An identifier for the op-node to find\n    ///                           canonical data.\n    /// @param _addresses         Set of L1 contract addresses. These should be the proxies.\n    /// @param _l2ChainId         The L2 chain ID that this SystemConfig configures.\n    /// @param _superchainConfig  The SuperchainConfig contract address.\n    function initialize(\n        address _owner,\n        uint32 _basefeeScalar,\n        uint32 _blobbasefeeScalar,\n        bytes32 _batcherHash,\n        uint64 _gasLimit,\n        address _unsafeBlockSigner,\n        IResourceMetering.ResourceConfig memory _config,\n        address _batchInbox,\n        SystemConfig.Addresses memory _addresses,\n        uint256 _l2ChainId,\n        ISuperchainConfig _superchainConfig\n    ) public reinitializer(initVersion()) {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        __Ownable_init();\n        transferOwnership(_owner);\n\n        // These are set in ascending order of their UpdateTypes.\n        _setBatcherHash(_batcherHash);\n        _setGasConfigEcotone({_basefeeScalar: _basefeeScalar, _blobbasefeeScalar: _blobbasefeeScalar});\n        _setGasLimit(_gasLimit);\n\n        Storage.setAddress(UNSAFE_BLOCK_SIGNER_SLOT, _unsafeBlockSigner);\n        Storage.setAddress(BATCH_INBOX_SLOT, _batchInbox);\n        Storage.setAddress(L1_CROSS_DOMAIN_MESSENGER_SLOT, _addresses.l1CrossDomainMessenger);\n        Storage.setAddress(L1_ERC_721_BRIDGE_SLOT, _addresses.l1ERC721Bridge);\n        Storage.setAddress(L1_STANDARD_BRIDGE_SLOT, _addresses.l1StandardBridge);\n        Storage.setAddress(OPTIMISM_PORTAL_SLOT, _addresses.optimismPortal);\n        Storage.setAddress(OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT, _addresses.optimismMintableERC20Factory);\n\n        _setStartBlock();\n        _setGasPayingToken(_addresses.gasPayingToken);\n\n        _setResourceConfig(_config);\n\n        l2ChainId = _l2ChainId;\n        superchainConfig = _superchainConfig;\n    }\n\n    /// @notice Returns the minimum L2 gas limit that can be safely set for the system to\n    ///         operate. The L2 gas limit must be larger than or equal to the amount of\n    ///         gas that is allocated for deposits per block plus the amount of gas that\n    ///         is allocated for the system transaction.\n    ///         This function is used to determine if changes to parameters are safe.\n    /// @return uint64 Minimum gas limit.\n    function minimumGasLimit() public view returns (uint64) {\n        return uint64(_resourceConfig.maxResourceLimit) + uint64(_resourceConfig.systemTxMaxGas);\n    }\n\n    /// @notice Returns the maximum L2 gas limit that can be safely set for the system to\n    ///         operate. This bound is used to prevent the gas limit from being set too high\n    ///         and causing the system to be unable to process and/or prove L2 blocks.\n    /// @return uint64 Maximum gas limit.\n    function maximumGasLimit() public pure returns (uint64) {\n        return MAX_GAS_LIMIT;\n    }\n\n    /// @notice High level getter for the unsafe block signer address.\n    ///         Unsafe blocks can be propagated across the p2p network if they are signed by the\n    ///         key corresponding to this address.\n    /// @return addr_ Address of the unsafe block signer.\n    function unsafeBlockSigner() public view returns (address addr_) {\n        addr_ = Storage.getAddress(UNSAFE_BLOCK_SIGNER_SLOT);\n    }\n\n    /// @notice Getter for the L1CrossDomainMessenger address.\n    function l1CrossDomainMessenger() public view returns (address addr_) {\n        addr_ = Storage.getAddress(L1_CROSS_DOMAIN_MESSENGER_SLOT);\n    }\n\n    /// @notice Getter for the L1ERC721Bridge address.\n    function l1ERC721Bridge() public view returns (address addr_) {\n        addr_ = Storage.getAddress(L1_ERC_721_BRIDGE_SLOT);\n    }\n\n    /// @notice Getter for the L1StandardBridge address.\n    function l1StandardBridge() public view returns (address addr_) {\n        addr_ = Storage.getAddress(L1_STANDARD_BRIDGE_SLOT);\n    }\n\n    /// @notice Getter for the DisputeGameFactory address.\n    function disputeGameFactory() public view returns (address addr_) {\n        IOptimismPortal2 portal = IOptimismPortal2(payable(optimismPortal()));\n        addr_ = address(portal.disputeGameFactory());\n    }\n\n    /// @notice Getter for the OptimismPortal address.\n    function optimismPortal() public view returns (address addr_) {\n        addr_ = Storage.getAddress(OPTIMISM_PORTAL_SLOT);\n    }\n\n    /// @notice Getter for the OptimismMintableERC20Factory address.\n    function optimismMintableERC20Factory() public view returns (address addr_) {\n        addr_ = Storage.getAddress(OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT);\n    }\n\n    /// @notice Consolidated getter for the Addresses struct.\n    function getAddresses() external view returns (Addresses memory) {\n        (address gasPayingToken_,) = gasPayingToken();\n        return Addresses({\n            l1CrossDomainMessenger: l1CrossDomainMessenger(),\n            l1ERC721Bridge: l1ERC721Bridge(),\n            l1StandardBridge: l1StandardBridge(),\n            optimismPortal: optimismPortal(),\n            optimismMintableERC20Factory: optimismMintableERC20Factory(),\n            gasPayingToken: gasPayingToken_\n        });\n    }\n\n    /// @notice Getter for the BatchInbox address.\n    function batchInbox() external view returns (address addr_) {\n        addr_ = Storage.getAddress(BATCH_INBOX_SLOT);\n    }\n\n    /// @notice Getter for the StartBlock number.\n    function startBlock() external view returns (uint256 startBlock_) {\n        startBlock_ = Storage.getUint(START_BLOCK_SLOT);\n    }\n\n    /// @notice Getter for the gas paying asset address.\n    function gasPayingToken() public view returns (address addr_, uint8 decimals_) {\n        (addr_, decimals_) = GasPayingToken.getToken();\n    }\n\n    /// @notice Getter for custom gas token paying networks. Returns true if the\n    ///         network uses a custom gas token.\n    function isCustomGasToken() public view returns (bool) {\n        (address token,) = gasPayingToken();\n        return token != Constants.ETHER;\n    }\n\n    /// @notice Getter for the gas paying token name.\n    function gasPayingTokenName() external view returns (string memory name_) {\n        name_ = GasPayingToken.getName();\n    }\n\n    /// @notice Getter for the gas paying token symbol.\n    function gasPayingTokenSymbol() external view returns (string memory symbol_) {\n        symbol_ = GasPayingToken.getSymbol();\n    }\n\n    /// @notice Internal setter for the gas paying token address, includes validation.\n    ///         The token must not already be set and must be non zero and not the ether address\n    ///         to set the token address. This prevents the token address from being changed\n    ///         and makes it explicitly opt-in to use custom gas token.\n    /// @param _token Address of the gas paying token.\n    function _setGasPayingToken(address _token) internal virtual {\n        if (_token != address(0) && _token != Constants.ETHER && !isCustomGasToken()) {\n            require(\n                ERC20(_token).decimals() == GAS_PAYING_TOKEN_DECIMALS, \"SystemConfig: bad decimals of gas paying token\"\n            );\n            bytes32 name = GasPayingToken.sanitize(ERC20(_token).name());\n            bytes32 symbol = GasPayingToken.sanitize(ERC20(_token).symbol());\n\n            // Set the gas paying token in storage and in the OptimismPortal.\n            GasPayingToken.set({_token: _token, _decimals: GAS_PAYING_TOKEN_DECIMALS, _name: name, _symbol: symbol});\n            IOptimismPortal2(payable(optimismPortal())).setGasPayingToken({\n                _token: _token,\n                _decimals: GAS_PAYING_TOKEN_DECIMALS,\n                _name: name,\n                _symbol: symbol\n            });\n        }\n    }\n\n    /// @notice Updates the unsafe block signer address. Can only be called by the owner.\n    /// @param _unsafeBlockSigner New unsafe block signer address.\n    function setUnsafeBlockSigner(address _unsafeBlockSigner) external onlyOwner {\n        _setUnsafeBlockSigner(_unsafeBlockSigner);\n    }\n\n    /// @notice Updates the unsafe block signer address.\n    /// @param _unsafeBlockSigner New unsafe block signer address.\n    function _setUnsafeBlockSigner(address _unsafeBlockSigner) internal {\n        Storage.setAddress(UNSAFE_BLOCK_SIGNER_SLOT, _unsafeBlockSigner);\n\n        bytes memory data = abi.encode(_unsafeBlockSigner);\n        emit ConfigUpdate(VERSION, UpdateType.UNSAFE_BLOCK_SIGNER, data);\n    }\n\n    /// @notice Updates the batcher hash. Can only be called by the owner.\n    /// @param _batcherHash New batcher hash.\n    function setBatcherHash(bytes32 _batcherHash) external onlyOwner {\n        _setBatcherHash(_batcherHash);\n    }\n\n    /// @notice Internal function for updating the batcher hash.\n    /// @param _batcherHash New batcher hash.\n    function _setBatcherHash(bytes32 _batcherHash) internal {\n        batcherHash = _batcherHash;\n\n        bytes memory data = abi.encode(_batcherHash);\n        emit ConfigUpdate(VERSION, UpdateType.BATCHER, data);\n    }\n\n    /// @notice Updates gas config. Can only be called by the owner.\n    ///         Deprecated in favor of setGasConfigEcotone since the Ecotone upgrade.\n    /// @param _overhead New overhead value.\n    /// @param _scalar   New scalar value.\n    function setGasConfig(uint256 _overhead, uint256 _scalar) external onlyOwner {\n        _setGasConfig(_overhead, _scalar);\n    }\n\n    /// @notice Internal function for updating the gas config.\n    /// @param _overhead New overhead value.\n    /// @param _scalar   New scalar value.\n    function _setGasConfig(uint256 _overhead, uint256 _scalar) internal {\n        require((uint256(0xff) << 248) & _scalar == 0, \"SystemConfig: scalar exceeds max.\");\n\n        overhead = _overhead;\n        scalar = _scalar;\n\n        bytes memory data = abi.encode(_overhead, _scalar);\n        emit ConfigUpdate(VERSION, UpdateType.FEE_SCALARS, data);\n    }\n\n    /// @notice Updates gas config as of the Ecotone upgrade. Can only be called by the owner.\n    /// @param _basefeeScalar     New basefeeScalar value.\n    /// @param _blobbasefeeScalar New blobbasefeeScalar value.\n    function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) external onlyOwner {\n        _setGasConfigEcotone(_basefeeScalar, _blobbasefeeScalar);\n    }\n\n    /// @notice Internal function for updating the fee scalars as of the Ecotone upgrade.\n    /// @param _basefeeScalar     New basefeeScalar value.\n    /// @param _blobbasefeeScalar New blobbasefeeScalar value.\n    function _setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar) internal {\n        basefeeScalar = _basefeeScalar;\n        blobbasefeeScalar = _blobbasefeeScalar;\n\n        scalar = (uint256(0x01) << 248) | (uint256(_blobbasefeeScalar) << 32) | _basefeeScalar;\n\n        bytes memory data = abi.encode(overhead, scalar);\n        emit ConfigUpdate(VERSION, UpdateType.FEE_SCALARS, data);\n    }\n\n    /// @notice Updates the L2 gas limit. Can only be called by the owner.\n    /// @param _gasLimit New gas limit.\n    function setGasLimit(uint64 _gasLimit) external onlyOwner {\n        _setGasLimit(_gasLimit);\n    }\n\n    /// @notice Internal function for updating the L2 gas limit.\n    /// @param _gasLimit New gas limit.\n    function _setGasLimit(uint64 _gasLimit) internal {\n        require(_gasLimit >= minimumGasLimit(), \"SystemConfig: gas limit too low\");\n        require(_gasLimit <= maximumGasLimit(), \"SystemConfig: gas limit too high\");\n        gasLimit = _gasLimit;\n\n        bytes memory data = abi.encode(_gasLimit);\n        emit ConfigUpdate(VERSION, UpdateType.GAS_LIMIT, data);\n    }\n\n    /// @notice Updates the EIP-1559 parameters of the chain. Can only be called by the owner.\n    /// @param _denominator EIP-1559 base fee max change denominator.\n    /// @param _elasticity  EIP-1559 elasticity multiplier.\n    function setEIP1559Params(uint32 _denominator, uint32 _elasticity) external onlyOwner {\n        _setEIP1559Params(_denominator, _elasticity);\n    }\n\n    /// @notice Internal function for updating the EIP-1559 parameters.\n    function _setEIP1559Params(uint32 _denominator, uint32 _elasticity) internal {\n        // require the parameters have sane values:\n        require(_denominator >= 1, \"SystemConfig: denominator must be >= 1\");\n        require(_elasticity >= 1, \"SystemConfig: elasticity must be >= 1\");\n        eip1559Denominator = _denominator;\n        eip1559Elasticity = _elasticity;\n\n        bytes memory data = abi.encode(uint256(_denominator) << 32 | uint64(_elasticity));\n        emit ConfigUpdate(VERSION, UpdateType.EIP_1559_PARAMS, data);\n    }\n\n    /// @notice Updates the minimum base fee. Can only be called by the owner.\n    ///         Setting this value to 0 is equivalent to disabling the min base fee feature\n    /// @param _minBaseFee New minimum base fee.\n    function setMinBaseFee(uint64 _minBaseFee) external onlyOwner {\n        _setMinBaseFee(_minBaseFee);\n    }\n\n    /// @notice Internal function for updating the minimum base fee.\n    function _setMinBaseFee(uint64 _minBaseFee) internal {\n        minBaseFee = _minBaseFee;\n\n        bytes memory data = abi.encode(_minBaseFee);\n        emit ConfigUpdate(VERSION, UpdateType.MIN_BASE_FEE, data);\n    }\n\n    /// @notice Updates the operator fee parameters. Can only be called by the owner.\n    /// @param _operatorFeeScalar New operator fee scalar.\n    /// @param _operatorFeeConstant New operator fee constant.\n    function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant) external onlyOwner {\n        _setOperatorFeeScalars(_operatorFeeScalar, _operatorFeeConstant);\n    }\n\n    /// @notice Internal function for updating the operator fee parameters.\n    function _setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant) internal {\n        operatorFeeScalar = _operatorFeeScalar;\n        operatorFeeConstant = _operatorFeeConstant;\n\n        bytes memory data = abi.encode(uint256(_operatorFeeScalar) << 64 | _operatorFeeConstant);\n        emit ConfigUpdate(VERSION, UpdateType.OPERATOR_FEE_PARAMS, data);\n    }\n\n    /// @notice Updates the DA footprint gas scalar. Can only be called by the owner.\n    /// @param _daFootprintGasScalar New DA footprint gas scalar.\n    function setDAFootprintGasScalar(uint16 _daFootprintGasScalar) external onlyOwner {\n        _setDAFootprintGasScalar(_daFootprintGasScalar);\n    }\n\n    /// @notice Internal function for updating the DA footprint gas scalar.\n    function _setDAFootprintGasScalar(uint16 _dAFootprintGasScalar) internal {\n        daFootprintGasScalar = _dAFootprintGasScalar;\n\n        bytes memory data = abi.encode(_dAFootprintGasScalar);\n        emit ConfigUpdate(VERSION, UpdateType.DA_FOOTPRINT_GAS_SCALAR, data);\n    }\n\n    /// @notice Sets the start block in a backwards compatible way. Proxies\n    ///         that were initialized before the startBlock existed in storage\n    ///         can have their start block set by a user provided override.\n    ///         A start block of 0 indicates that there is no override and the\n    ///         start block will be set by `block.number`.\n    /// @dev    This logic is used to patch legacy deployments with new storage values.\n    ///         Use the override if it is provided as a non zero value and the value\n    ///         has not already been set in storage. Use `block.number` if the value\n    ///         has already been set in storage\n    function _setStartBlock() internal {\n        if (Storage.getUint(START_BLOCK_SLOT) == 0) {\n            Storage.setUint(START_BLOCK_SLOT, block.number);\n        }\n    }\n\n    /// @notice A getter for the resource config.\n    ///         Ensures that the struct is returned instead of a tuple.\n    /// @return ResourceConfig\n    function resourceConfig() external view returns (IResourceMetering.ResourceConfig memory) {\n        return _resourceConfig;\n    }\n\n    /// @notice An internal setter for the resource config.\n    ///         Ensures that the config is sane before storing it by checking for invariants.\n    ///         In the future, this method may emit an event that the `op-node` picks up\n    ///         for when the resource config is changed.\n    /// @param _config The new resource config.\n    function _setResourceConfig(IResourceMetering.ResourceConfig memory _config) internal {\n        // Min base fee must be less than or equal to max base fee.\n        require(\n            _config.minimumBaseFee <= _config.maximumBaseFee, \"SystemConfig: min base fee must be less than max base\"\n        );\n        // Base fee change denominator must be greater than 1.\n        require(_config.baseFeeMaxChangeDenominator > 1, \"SystemConfig: denominator must be larger than 1\");\n        // Max resource limit plus system tx gas must be less than or equal to the L2 gas limit.\n        // The gas limit must be increased before these values can be increased.\n        require(_config.maxResourceLimit + _config.systemTxMaxGas <= gasLimit, \"SystemConfig: gas limit too low\");\n        // Elasticity multiplier must be greater than 0.\n        require(_config.elasticityMultiplier > 0, \"SystemConfig: elasticity multiplier cannot be 0\");\n        // No precision loss when computing target resource limit.\n        require(\n            ((_config.maxResourceLimit / _config.elasticityMultiplier) * _config.elasticityMultiplier)\n                == _config.maxResourceLimit,\n            \"SystemConfig: precision loss with target resource limit\"\n        );\n\n        _resourceConfig = _config;\n    }\n\n    /// @notice Sets a feature flag enabled or disabled. Can only be called by the ProxyAdmin or\n    ///         its owner.\n    /// @param _feature Feature to set.\n    /// @param _enabled Whether the feature should be enabled or disabled.\n    function setFeature(bytes32 _feature, bool _enabled) external {\n        // Features can only be set by the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Prevent Lockbox on CGT chains\n        if (_enabled && _feature == Features.ETH_LOCKBOX && isCustomGasToken()) {\n            revert SystemConfig_InvalidFeatureState();\n        }\n\n        // As a sanity check, prevent users from enabling the feature if already enabled or\n        // disabling the feature if already disabled. This helps to prevent accidental misuse.\n        if (_enabled == isFeatureEnabled[_feature]) {\n            revert SystemConfig_InvalidFeatureState();\n        }\n\n        // Handle feature-specific safety logic here.\n        if (_feature == Features.ETH_LOCKBOX) {\n            // It would probably better to check that the ETHLockbox contract is set inside the\n            // OptimismPortal2 contract before you're allowed to enable the feature here, but the\n            // portal checks that the feature is set before allowing you to set the lockbox, so\n            // these checks are good enough.\n\n            // Lockbox shouldn't be unset if the ethLockbox address is still configured in the\n            // OptimismPortal2 contract. Doing so would cause the system to start keeping ETH in\n            // the portal. This check means there's no way to stop using ETHLockbox at the moment\n            // after it's been configured (which is expected).\n            if (\n                isFeatureEnabled[_feature] && !_enabled\n                    && address(IOptimismPortal2(payable(optimismPortal())).ethLockbox()) != address(0)\n            ) {\n                revert SystemConfig_InvalidFeatureState();\n            }\n\n            // Lockbox can't be set or unset if the system is currently paused because it would\n            // change the pause identifier which would potentially cause the system to become\n            // unpaused unexpectedly.\n            if (paused()) {\n                revert SystemConfig_InvalidFeatureState();\n            }\n        }\n\n        // Set the feature.\n        isFeatureEnabled[_feature] = _enabled;\n\n        // Emit an event.\n        emit FeatureSet(_feature, _enabled);\n    }\n\n    /// @notice Returns the current pause state for this network. If the network is using\n    ///         ETHLockbox, the system is paused if either the global pause is active or the pause\n    ///         is active where the ETHLockbox address is used as the identifier. If the network is\n    ///         not using ETHLockbox, the system is paused if either the global pause is active or\n    ///         the pause is active where the OptimismPortal address is used as the identifier.\n    /// @return bool True if the system is paused, false otherwise.\n    function paused() public view returns (bool) {\n        // Determine the appropriate chain identifier based on the feature flags.\n        address identifier = isFeatureEnabled[Features.ETH_LOCKBOX]\n            ? address(IOptimismPortal2(payable(optimismPortal())).ethLockbox())\n            : address(optimismPortal());\n\n        // Check if either global or local pause is active.\n        return superchainConfig.paused(address(0)) || superchainConfig.paused(identifier);\n    }\n\n    /// @notice Returns the guardian address of the SuperchainConfig.\n    /// @return address The guardian address.\n    function guardian() public view returns (address) {\n        return superchainConfig.guardian();\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 580,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "SystemConfig",
+        "similarity": 0.927,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/L1/SystemConfig.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/src/L1/SystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 39,
+        "removed": 2,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 0,
+        "unchanged": 580,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract SystemConfig is ProxyAdminOwnedBase, OwnableUpgradeable, ReinitializableBase, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SystemConfig is ProxyAdminOwnedBase, OwnableUpgradeable, ReinitializableBase, ISemver, IGasToken {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Enum representing different types of updates."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    /// @custom:value BATCHER              Represents an update to the batcher hash."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @custom:value FEE_SCALARS          Represents an update to l1 data fee scalars."
+              }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 6,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        address l1StandardBridge;"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "        address optimismPortal;"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        address optimismMintableERC20Factory;"
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        address gasPayingToken;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "    /// @notice Version identifier, used for upgrades."
+              }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 6,
+            "newStart": 68,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 68,
+                "text": "    /// @notice Storage slot for block at which the op-node can start searching for logs from."
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 69,
+                "text": "    bytes32 public constant START_BLOCK_SLOT = bytes32(uint256(keccak256(\"systemconfig.startBlock\")) - 1);"
+              },
+              { "type": " ", "oldLine": 69, "newLine": 70, "text": "" },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    /// @notice The number of decimals that the gas paying token has.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    uint8 internal constant GAS_PAYING_TOKEN_DECIMALS = 18;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 73, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 74,
+                "text": "    /// @notice The maximum gas limit that can be set for L2 blocks. This limit is used to enforce that the blocks"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 75,
+                "text": "    ///         on L2 are not too large to process and prove. Over time, this value can be increased as various"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 76,
+                "text": "    ///         optimizations and improvements are made to the system at large."
+              }
+            ]
+          },
+          {
+            "oldStart": 204,
+            "oldLines": 6,
+            "newStart": 208,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 208,
+                "text": "        Storage.setAddress(OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT, _addresses.optimismMintableERC20Factory);"
+              },
+              { "type": " ", "oldLine": 205, "newLine": 209, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 210,
+                "text": "        _setStartBlock();"
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "        _setGasPayingToken(_addresses.gasPayingToken);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 207, "newLine": 212, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 213,
+                "text": "        _setResourceConfig(_config);"
+              },
+              { "type": " ", "oldLine": 209, "newLine": 214, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 270,
+            "oldLines": 12,
+            "newStart": 275,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 270, "newLine": 275, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 276,
+                "text": "    /// @notice Consolidated getter for the Addresses struct."
+              },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 277,
+                "text": "    function getAddresses() external view returns (Addresses memory) {"
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "        (address gasPayingToken_,) = gasPayingToken();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 279,
+                "text": "        return Addresses({"
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 280,
+                "text": "            l1CrossDomainMessenger: l1CrossDomainMessenger(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 281,
+                "text": "            l1ERC721Bridge: l1ERC721Bridge(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 282,
+                "text": "            l1StandardBridge: l1StandardBridge(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 283,
+                "text": "            optimismPortal: optimismPortal(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "            optimismMintableERC20Factory: optimismMintableERC20Factory()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "            optimismMintableERC20Factory: optimismMintableERC20Factory(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "            gasPayingToken: gasPayingToken_",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 279,
+                "newLine": 286,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 280, "newLine": 287, "text": "    }" },
+              { "type": " ", "oldLine": 281, "newLine": 288, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 289,
+            "oldLines": 6,
+            "newStart": 296,
+            "newLines": 52,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 296,
+                "text": "        startBlock_ = Storage.getUint(START_BLOCK_SLOT);"
+              },
+              { "type": " ", "oldLine": 290, "newLine": 297, "text": "    }" },
+              { "type": " ", "oldLine": 291, "newLine": 298, "text": "" },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "    /// @notice Getter for the gas paying asset address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "    function gasPayingToken() public view returns (address addr_, uint8 decimals_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "        (addr_, decimals_) = GasPayingToken.getToken();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 303, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "    /// @notice Getter for custom gas token paying networks. Returns true if the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "    ///         network uses a custom gas token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "    function isCustomGasToken() public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 307,
+                "text": "        (address token,) = gasPayingToken();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "        return token != Constants.ETHER;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 310, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "    /// @notice Getter for the gas paying token name.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "    function gasPayingTokenName() external view returns (string memory name_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "        name_ = GasPayingToken.getName();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 314,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 315, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "    /// @notice Getter for the gas paying token symbol.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "    function gasPayingTokenSymbol() external view returns (string memory symbol_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "        symbol_ = GasPayingToken.getSymbol();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 320, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "    /// @notice Internal setter for the gas paying token address, includes validation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "    ///         The token must not already be set and must be non zero and not the ether address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "    ///         to set the token address. This prevents the token address from being changed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "    ///         and makes it explicitly opt-in to use custom gas token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "    /// @param _token Address of the gas paying token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "    function _setGasPayingToken(address _token) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "        if (_token != address(0) && _token != Constants.ETHER && !isCustomGasToken()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "            require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "                ERC20(_token).decimals() == GAS_PAYING_TOKEN_DECIMALS, \"SystemConfig: bad decimals of gas paying token\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "            bytes32 name = GasPayingToken.sanitize(ERC20(_token).name());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "            bytes32 symbol = GasPayingToken.sanitize(ERC20(_token).symbol());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 333, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "            // Set the gas paying token in storage and in the OptimismPortal.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "            GasPayingToken.set({_token: _token, _decimals: GAS_PAYING_TOKEN_DECIMALS, _name: name, _symbol: symbol});",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "            IOptimismPortal2(payable(optimismPortal())).setGasPayingToken({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "                _token: _token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "                _decimals: GAS_PAYING_TOKEN_DECIMALS,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 339,
+                "text": "                _name: name,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "                _symbol: symbol",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 344, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 345,
+                "text": "    /// @notice Updates the unsafe block signer address. Can only be called by the owner."
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 346,
+                "text": "    /// @param _unsafeBlockSigner New unsafe block signer address."
+              },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 347,
+                "text": "    function setUnsafeBlockSigner(address _unsafeBlockSigner) external onlyOwner {"
+              }
+            ]
+          },
+          {
+            "oldStart": 498,
+            "oldLines": 6,
+            "newStart": 551,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 498,
+                "newLine": 551,
+                "text": "        // Features can only be set by the ProxyAdmin or its owner."
+              },
+              {
+                "type": " ",
+                "oldLine": 499,
+                "newLine": 552,
+                "text": "        _assertOnlyProxyAdminOrProxyAdminOwner();"
+              },
+              { "type": " ", "oldLine": 500, "newLine": 553, "text": "" },
+              {
+                "type": "+",
+                "newLine": 554,
+                "text": "        // Prevent Lockbox on CGT chains",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 555,
+                "text": "        if (_enabled && _feature == Features.ETH_LOCKBOX && isCustomGasToken()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 556,
+                "text": "            revert SystemConfig_InvalidFeatureState();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 557,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 558, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 501,
+                "newLine": 559,
+                "text": "        // As a sanity check, prevent users from enabling the feature if already enabled or"
+              },
+              {
+                "type": " ",
+                "oldLine": 502,
+                "newLine": 560,
+                "text": "        // disabling the feature if already disabled. This helps to prevent accidental misuse."
+              },
+              {
+                "type": " ",
+                "oldLine": 503,
+                "newLine": 561,
+                "text": "        if (_enabled == isFeatureEnabled[_feature]) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6f5bba3ddfce4f4fcadce5f6a4f57d382680568e99fb51732d003495d299965e",
+  "name": "GovernorVotesUpgradeableV2",
+  "kind": "abstract",
+  "lines": 31,
+  "source": "abstract contract GovernorVotesUpgradeableV2 is Initializable, GovernorUpgradeableV2 {\n    IVotesUpgradeable public token;\n\n    function __GovernorVotes_init(IVotesUpgradeable tokenAddress) internal onlyInitializing {\n        __GovernorVotes_init_unchained(tokenAddress);\n    }\n\n    function __GovernorVotes_init_unchained(IVotesUpgradeable tokenAddress) internal onlyInitializing {\n        token = tokenAddress;\n    }\n\n    /**\n     * Read the voting weight from the token's built in snapshot mechanism (see {Governor-_getVotes}).\n     */\n    function _getVotes(address account, uint256 blockNumber, bytes memory /*params*/ )\n        internal\n        view\n        virtual\n        override\n        returns (uint256)\n    {\n        return token.getPastVotes(account, blockNumber);\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

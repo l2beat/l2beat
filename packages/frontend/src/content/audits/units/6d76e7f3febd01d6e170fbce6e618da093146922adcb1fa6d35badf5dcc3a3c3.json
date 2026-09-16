@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6d76e7f3febd01d6e170fbce6e618da093146922adcb1fa6d35badf5dcc3a3c3",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 46,
+  "source": "use std::path::PathBuf;\n\n/// Errors encountered by the prover.\n#[derive(thiserror::Error, Debug)]\npub enum Error {\n    /// Error occurred while doing i/o operations.\n    #[error(transparent)]\n    Io(#[from] std::io::Error),\n    /// Error encountered while reading from or writing to files.\n    #[error(\"error during read/write! path={path}, e={source}\")]\n    IoReadWrite {\n        /// The path we tried to read from or write to.\n        path: PathBuf,\n        /// The source error.\n        source: std::io::Error,\n    },\n    /// Error occurred while doing serde operations.\n    #[error(transparent)]\n    Serde(#[from] serde_json::Error),\n    /// Error encountered during JSON serde.\n    #[error(\"error during read/write json! path={path}, e={source}\")]\n    JsonReadWrite {\n        /// The path of the file we tried to serialize/deserialize.\n        path: PathBuf,\n        /// The source error.\n        source: serde_json::Error,\n    },\n    /// Covers various errors encountered during the setup phase.\n    #[error(\"failed to read or deserialize {path}: {src}\")]\n    Setup { path: PathBuf, src: String },\n    /// An error encountered while generating commitments to the app exe.\n    #[error(\"failed to commit app exe: {0}\")]\n    Commit(String),\n    /// An error encountered while performing the STARK aggregation keygen process.\n    #[error(\"failed to generate STARK aggregation proving key: {0}\")]\n    Keygen(String),\n    /// An error encountered during proof generation.\n    #[error(\"failed to generate proof: {0}\")]\n    GenProof(String),\n    /// An error encountered during proof verification.\n    #[error(\"failed to verify proof: {0}\")]\n    VerifyProof(String),\n    /// A custom error not covered by above variants.\n    #[error(\"custom error: {0}\")]\n    Custom(String),\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

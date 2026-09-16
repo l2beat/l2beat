@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7d83ff9d1efaa7b9e68028869d18cbafe672b476736d1474c883f3534be4b70b",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "use rollup_lib::checkpoint_merge::{\n    checkpoint_merge_rollup, CheckpointMergeRollupPrivateInputs, CheckpointRollupPublicInputs,\n};\n\nfn main(inputs: CheckpointMergeRollupPrivateInputs) -> pub CheckpointRollupPublicInputs {\n    checkpoint_merge_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

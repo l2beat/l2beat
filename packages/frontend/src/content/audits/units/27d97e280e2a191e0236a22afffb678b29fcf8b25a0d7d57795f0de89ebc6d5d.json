@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "27d97e280e2a191e0236a22afffb678b29fcf8b25a0d7d57795f0de89ebc6d5d",
+  "name": "IBridgeManagerCallback",
+  "kind": "interface",
+  "lines": 21,
+  "source": "interface IBridgeManagerCallback is IERC165 {\n    /**\n     * @dev Handles the event when bridge operators are added.\n     * @param bridgeOperators The addresses of the bridge operators.\n     * @param addeds The corresponding boolean values indicating whether the operators were added or not.\n     * @return selector The selector of the function being called.\n     */\n    function onBridgeOperatorsAdded(address[] memory bridgeOperators, uint96[] calldata weights, bool[] memory addeds)\n        external\n        returns (bytes4 selector);\n\n    /**\n     * @dev Handles the event when bridge operators are removed.\n     * @param bridgeOperators The addresses of the bridge operators.\n     * @param removeds The corresponding boolean values indicating whether the operators were removed or not.\n     * @return selector The selector of the function being called.\n     */\n    function onBridgeOperatorsRemoved(address[] memory bridgeOperators, bool[] memory removeds)\n        external\n        returns (bytes4 selector);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

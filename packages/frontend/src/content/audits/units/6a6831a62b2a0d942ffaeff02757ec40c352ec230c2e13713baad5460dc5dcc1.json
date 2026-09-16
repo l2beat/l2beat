@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6a6831a62b2a0d942ffaeff02757ec40c352ec230c2e13713baad5460dc5dcc1",
+  "name": "SafeL2",
+  "kind": "contract",
+  "lines": 64,
+  "source": "contract SafeL2 is Safe {\n    event SafeMultiSigTransaction(\n        address to,\n        uint256 value,\n        bytes data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes signatures,\n        // We combine nonce, sender and threshold into one to avoid stack too deep\n        // Dev note: additionalInfo should not contain `bytes`, as this complicates decoding\n        bytes additionalInfo\n    );\n\n    event SafeModuleTransaction(address module, address to, uint256 value, bytes data, Enum.Operation operation);\n\n    // @inheritdoc Safe\n    function execTransaction(\n        address to,\n        uint256 value,\n        bytes calldata data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes memory signatures\n    ) public payable override returns (bool) {\n        bytes memory additionalInfo;\n        {\n            additionalInfo = abi.encode(nonce, msg.sender, threshold);\n        }\n        emit SafeMultiSigTransaction(\n            to,\n            value,\n            data,\n            operation,\n            safeTxGas,\n            baseGas,\n            gasPrice,\n            gasToken,\n            refundReceiver,\n            signatures,\n            additionalInfo\n        );\n        return super.execTransaction(\n            to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, signatures\n        );\n    }\n\n    // @inheritdoc Safe\n    function execTransactionFromModule(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        override\n        returns (bool success)\n    {\n        emit SafeModuleTransaction(msg.sender, to, value, data, operation);\n        success = super.execTransactionFromModule(to, value, data, operation);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeL2",
+        "similarity": 1,
+        "reportId": "safe/ackee-safe-1-4-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/SafeL2.sol",
+        "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+        "commitTimestamp": "2023-03-28T12:49:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c/contracts/SafeL2.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to changes addressing the reported findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

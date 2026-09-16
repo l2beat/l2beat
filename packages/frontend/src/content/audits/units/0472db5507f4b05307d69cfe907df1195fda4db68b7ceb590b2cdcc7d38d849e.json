@@ -1,0 +1,424 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0472db5507f4b05307d69cfe907df1195fda4db68b7ceb590b2cdcc7d38d849e",
+  "name": "ValidatorOperationsExtLib",
+  "kind": "library",
+  "lines": 178,
+  "source": "library ValidatorOperationsExtLib {\n    using TimeLib for Timestamp;\n\n    function queueSetSlasher(address _slasher) external {\n        StakingLib.queueSetSlasher(_slasher);\n    }\n\n    function cancelSetSlasher() external {\n        StakingLib.cancelSetSlasher();\n    }\n\n    function finalizeSetSlasher() external {\n        StakingLib.finalizeSetSlasher();\n    }\n\n    function vote(uint256 _proposalId) external {\n        StakingLib.vote(_proposalId);\n    }\n\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) external {\n        StakingLib.deposit(\n            _attester, _withdrawer, _publicKeyInG1, _publicKeyInG2, _proofOfPossession, _moveWithLatestRollup\n        );\n    }\n\n    function flushEntryQueue(uint256 _toAdd) external {\n        StakingLib.flushEntryQueue(_toAdd);\n    }\n\n    function initiateWithdraw(address _attester, address _recipient) external returns (bool) {\n        return StakingLib.initiateWithdraw(_attester, _recipient);\n    }\n\n    function finalizeWithdraw(address _attester) external {\n        StakingLib.finalizeWithdraw(_attester);\n    }\n\n    function initializeValidatorSelection(\n        uint256 _targetCommitteeSize,\n        uint256 _lagInEpochsForValidatorSet,\n        uint256 _lagInEpochsForRandao\n    ) external {\n        ValidatorSelectionLib.initialize(_targetCommitteeSize, _lagInEpochsForValidatorSet, _lagInEpochsForRandao);\n    }\n\n    function setupEpoch() external {\n        Epoch currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();\n        ValidatorSelectionLib.setupEpoch(currentEpoch);\n    }\n\n    function checkpointRandao() external {\n        Epoch currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();\n        ValidatorSelectionLib.checkpointRandao(currentEpoch);\n    }\n\n    function updateStakingQueueConfig(StakingQueueConfig memory _config) external {\n        StakingLib.updateStakingQueueConfig(_config);\n    }\n\n    function setEscapeHatch(address _escapeHatch) external {\n        ValidatorSelectionLib.setEscapeHatch(_escapeHatch);\n    }\n\n    function invalidateBadAttestation(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee,\n        uint256 _invalidIndex\n    ) external {\n        InvalidateLib.invalidateBadAttestation(_checkpointNumber, _attestations, _committee, _invalidIndex);\n    }\n\n    function invalidateInsufficientAttestations(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee\n    ) external {\n        InvalidateLib.invalidateInsufficientAttestations(_checkpointNumber, _attestations, _committee);\n    }\n\n    function slash(address _attester, uint256 _amount) external returns (bool) {\n        return StakingLib.trySlash(_attester, _amount);\n    }\n\n    function canProposeAtTime(Timestamp _ts, bytes32 _archive, address _who) external returns (Slot, uint256) {\n        return ValidatorSelectionLib.canProposeAtTime(_ts, _archive, _who);\n    }\n\n    function getCommitteeAt(Epoch _epoch) external returns (address[] memory) {\n        return ValidatorSelectionLib.getCommitteeAt(_epoch);\n    }\n\n    function getProposerAt(Slot _slot) external returns (address proposer) {\n        (proposer,) = ValidatorSelectionLib.getProposerAt(_slot);\n    }\n\n    function getCommitteeCommitmentAt(Epoch _epoch) external returns (bytes32, uint256) {\n        return ValidatorSelectionLib.getCommitteeCommitmentAt(_epoch);\n    }\n\n    function getSampleSeedAt(Epoch _epoch) external view returns (uint256) {\n        return ValidatorSelectionLib.getSampleSeed(_epoch);\n    }\n\n    function getSamplingSizeAt(Epoch _epoch) external view returns (uint256) {\n        return ValidatorSelectionLib.getSamplingSize(_epoch);\n    }\n\n    function getLagInEpochsForValidatorSet() external view returns (uint256) {\n        return ValidatorSelectionLib.getLagInEpochsForValidatorSet();\n    }\n\n    function getLagInEpochsForRandao() external view returns (uint256) {\n        return ValidatorSelectionLib.getLagInEpochsForRandao();\n    }\n\n    function getEscapeHatch() external view returns (IEscapeHatch) {\n        return ValidatorSelectionLib.getEscapeHatch();\n    }\n\n    function getEscapeHatchForEpoch(Epoch _epoch) external view returns (IEscapeHatch) {\n        return ValidatorSelectionLib.getEscapeHatchForEpoch(_epoch);\n    }\n\n    function getTargetCommitteeSize() external view returns (uint256) {\n        return ValidatorSelectionLib.getStorage().targetCommitteeSize;\n    }\n\n    function getEntryQueueFlushSize() external view returns (uint256) {\n        uint256 activeAttesterCount = StakingLib.getAttesterCountAtTime(Timestamp.wrap(block.timestamp));\n        return StakingLib.getEntryQueueFlushSize(activeAttesterCount);\n    }\n\n    function getAvailableValidatorFlushes() external view returns (uint256) {\n        return StakingLib.getAvailableValidatorFlushes();\n    }\n\n    // View wrappers - delegated from Rollup.sol to avoid inlining StakingLib into Rollup bytecode\n\n    function getAttesterView(address _attester) external view returns (AttesterView memory) {\n        return StakingLib.getAttesterView(_attester);\n    }\n\n    function getStatus(address _attester) external view returns (Status_1) {\n        return StakingLib.getStatus(_attester);\n    }\n\n    function getConfig(address _attester) external view returns (AttesterConfig memory) {\n        return StakingLib.getConfig(_attester);\n    }\n\n    function getExit(address _attester) external view returns (Exit memory) {\n        return StakingLib.getExit(_attester);\n    }\n\n    function getAttesterAtIndex(uint256 _index) external view returns (address) {\n        return StakingLib.getAttesterAtIndex(_index);\n    }\n\n    function getEntryQueueAt(uint256 _index) external view returns (DepositArgs memory) {\n        return StakingLib.getEntryQueueAt(_index);\n    }\n\n    function getNextFlushableEpoch() external view returns (Epoch) {\n        return StakingLib.getNextFlushableEpoch();\n    }\n\n    function getEntryQueueLength() external view returns (uint256) {\n        return StakingLib.getEntryQueueLength();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 142,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ValidatorOperationsExtLib",
+        "similarity": 0.831,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/ValidatorOperationsExtLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/ValidatorOperationsExtLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 36,
+        "removed": 6,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 0,
+        "unchanged": 142,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 14,
+            "newStart": 1,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library ValidatorOperationsExtLib {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using TimeLib for Timestamp;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    function setSlasher(address _slasher) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        StakingLib.setSlasher(_slasher);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function queueSetSlasher(address _slasher) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "        StakingLib.queueSetSlasher(_slasher);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    function setLocalEjectionThreshold(uint256 _localEjectionThreshold) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        StakingLib.setLocalEjectionThreshold(_localEjectionThreshold);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function cancelSetSlasher() external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        StakingLib.cancelSetSlasher();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function finalizeSetSlasher() external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        StakingLib.finalizeSetSlasher();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 16,
+                "text": "    function vote(uint256 _proposalId) external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "        StakingLib.vote(_proposalId);"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 18, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 8,
+            "newStart": 64,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 64,
+                "text": "        StakingLib.updateStakingQueueConfig(_config);"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 65, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 66, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    function updateEscapeHatch(address _escapeHatch) external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        ValidatorSelectionLib.updateEscapeHatch(_escapeHatch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    function setEscapeHatch(address _escapeHatch) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        ValidatorSelectionLib.setEscapeHatch(_escapeHatch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 65, "newLine": 69, "text": "    }" },
+              { "type": " ", "oldLine": 66, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 71,
+                "text": "    function invalidateBadAttestation("
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 6,
+            "newStart": 125,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 125,
+                "text": "        return ValidatorSelectionLib.getEscapeHatch();"
+              },
+              { "type": " ", "oldLine": 122, "newLine": 126, "text": "    }" },
+              { "type": " ", "oldLine": 123, "newLine": 127, "text": "" },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    function getEscapeHatchForEpoch(Epoch _epoch) external view returns (IEscapeHatch) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        return ValidatorSelectionLib.getEscapeHatchForEpoch(_epoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 131, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 132,
+                "text": "    function getTargetCommitteeSize() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 133,
+                "text": "        return ValidatorSelectionLib.getStorage().targetCommitteeSize;"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 134, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 4,
+            "newStart": 141,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 141,
+                "text": "    function getAvailableValidatorFlushes() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 142,
+                "text": "        return StakingLib.getAvailableValidatorFlushes();"
+              },
+              { "type": " ", "oldLine": 135, "newLine": 143, "text": "    }" },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "    // View wrappers - delegated from Rollup.sol to avoid inlining StakingLib into Rollup bytecode",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 146, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "    function getAttesterView(address _attester) external view returns (AttesterView memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "        return StakingLib.getAttesterView(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 150, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "    function getStatus(address _attester) external view returns (Status_1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "        return StakingLib.getStatus(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 154, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "    function getConfig(address _attester) external view returns (AttesterConfig memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        return StakingLib.getConfig(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 158, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "    function getExit(address _attester) external view returns (Exit memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "        return StakingLib.getExit(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 162, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    function getAttesterAtIndex(uint256 _index) external view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "        return StakingLib.getAttesterAtIndex(_index);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 166, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "    function getEntryQueueAt(uint256 _index) external view returns (DepositArgs memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        return StakingLib.getEntryQueueAt(_index);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 170, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    function getNextFlushableEpoch() external view returns (Epoch) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "        return StakingLib.getNextFlushableEpoch();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 174, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "    function getEntryQueueLength() external view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "        return StakingLib.getEntryQueueLength();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 136, "newLine": 178, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

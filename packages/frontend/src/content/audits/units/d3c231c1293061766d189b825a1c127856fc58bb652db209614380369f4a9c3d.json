@@ -1,0 +1,1344 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d3c231c1293061766d189b825a1c127856fc58bb652db209614380369f4a9c3d",
+  "name": "ERC721Bridge",
+  "kind": "abstract",
+  "lines": 188,
+  "source": "abstract contract ERC721Bridge {\n    /**\n     * @notice Messenger contract on this domain.\n     */\n    CrossDomainMessenger public immutable MESSENGER;\n\n    /**\n     * @notice Address of the bridge on the other network.\n     */\n    address public immutable OTHER_BRIDGE;\n\n    /**\n     * @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.\n     */\n    uint256[49] private __gap;\n\n    /**\n     * @notice Emitted when an ERC721 bridge to the other network is initiated.\n     *\n     * @param localToken  Address of the token on this domain.\n     * @param remoteToken Address of the token on the remote domain.\n     * @param from        Address that initiated bridging action.\n     * @param to          Address to receive the token.\n     * @param tokenId     ID of the specific token deposited.\n     * @param extraData   Extra data for use on the client-side.\n     */\n    event ERC721BridgeInitiated(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        bytes extraData\n    );\n\n    /**\n     * @notice Emitted when an ERC721 bridge from the other network is finalized.\n     *\n     * @param localToken  Address of the token on this domain.\n     * @param remoteToken Address of the token on the remote domain.\n     * @param from        Address that initiated bridging action.\n     * @param to          Address to receive the token.\n     * @param tokenId     ID of the specific token deposited.\n     * @param extraData   Extra data for use on the client-side.\n     */\n    event ERC721BridgeFinalized(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        bytes extraData\n    );\n\n    /**\n     * @notice Ensures that the caller is a cross-chain message from the other bridge.\n     */\n    modifier onlyOtherBridge() {\n        require(\n            msg.sender == address(MESSENGER) && MESSENGER.xDomainMessageSender() == OTHER_BRIDGE,\n            \"ERC721Bridge: function can only be called from the other bridge\"\n        );\n        _;\n    }\n\n    /**\n     * @param _messenger   Address of the CrossDomainMessenger on this network.\n     * @param _otherBridge Address of the ERC721 bridge on the other network.\n     */\n    constructor(address _messenger, address _otherBridge) {\n        require(_messenger != address(0), \"ERC721Bridge: messenger cannot be address(0)\");\n        require(_otherBridge != address(0), \"ERC721Bridge: other bridge cannot be address(0)\");\n\n        MESSENGER = CrossDomainMessenger(_messenger);\n        OTHER_BRIDGE = _otherBridge;\n    }\n\n    /**\n     * @custom:legacy\n     * @notice Legacy getter for messenger contract.\n     *\n     * @return Messenger contract on this domain.\n     */\n    function messenger() external view returns (CrossDomainMessenger) {\n        return MESSENGER;\n    }\n\n    /**\n     * @custom:legacy\n     * @notice Legacy getter for other bridge address.\n     *\n     * @return Address of the bridge on the other network.\n     */\n    function otherBridge() external view returns (address) {\n        return OTHER_BRIDGE;\n    }\n\n    /**\n     * @notice Initiates a bridge of an NFT to the caller's account on the other chain. Note that\n     *         this function can only be called by EOAs. Smart contract wallets should use the\n     *         `bridgeERC721To` function after ensuring that the recipient address on the remote\n     *         chain exists. Also note that the current owner of the token on this chain must\n     *         approve this contract to operate the NFT before it can be bridged.\n     *         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This\n     *         bridge only supports ERC721s originally deployed on Ethereum. Users will need to\n     *         wait for the one-week challenge period to elapse before their Optimism-native NFT\n     *         can be refunded on L2.\n     *\n     * @param _localToken  Address of the ERC721 on this domain.\n     * @param _remoteToken Address of the ERC721 on the remote domain.\n     * @param _tokenId     Token ID to bridge.\n     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.\n     * @param _extraData   Optional data to forward to the other chain. Data supplied here will not\n     *                     be used to execute any code on the other chain and is only emitted as\n     *                     extra data for the convenience of off-chain tooling.\n     */\n    function bridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external {\n        // Modifier requiring sender to be EOA. This prevents against a user error that would occur\n        // if the sender is a smart contract wallet that has a different address on the remote chain\n        // (or doesn't have an address on the remote chain at all). The user would fail to receive\n        // the NFT if they use this function because it sends the NFT to the same address as the\n        // caller. This check could be bypassed by a malicious contract via initcode, but it takes\n        // care of the user error we want to avoid.\n        require(!Address.isContract(msg.sender), \"ERC721Bridge: account is not externally owned\");\n\n        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Initiates a bridge of an NFT to some recipient's account on the other chain. Note\n     *         that the current owner of the token on this chain must approve this contract to\n     *         operate the NFT before it can be bridged.\n     *         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This\n     *         bridge only supports ERC721s originally deployed on Ethereum. Users will need to\n     *         wait for the one-week challenge period to elapse before their Optimism-native NFT\n     *         can be refunded on L2.\n     *\n     * @param _localToken  Address of the ERC721 on this domain.\n     * @param _remoteToken Address of the ERC721 on the remote domain.\n     * @param _to          Address to receive the token on the other domain.\n     * @param _tokenId     Token ID to bridge.\n     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.\n     * @param _extraData   Optional data to forward to the other chain. Data supplied here will not\n     *                     be used to execute any code on the other chain and is only emitted as\n     *                     extra data for the convenience of off-chain tooling.\n     */\n    function bridgeERC721To(\n        address _localToken,\n        address _remoteToken,\n        address _to,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external {\n        require(_to != address(0), \"ERC721Bridge: nft recipient cannot be address(0)\");\n\n        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, _to, _tokenId, _minGasLimit, _extraData);\n    }\n\n    /**\n     * @notice Internal function for initiating a token bridge to the other domain.\n     *\n     * @param _localToken  Address of the ERC721 on this domain.\n     * @param _remoteToken Address of the ERC721 on the remote domain.\n     * @param _from        Address of the sender on this domain.\n     * @param _to          Address to receive the token on the other domain.\n     * @param _tokenId     Token ID to bridge.\n     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.\n     * @param _extraData   Optional data to forward to the other domain. Data supplied here will\n     *                     not be used to execute any code on the other domain and is only emitted\n     *                     as extra data for the convenience of off-chain tooling.\n     */\n    function _initiateBridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) internal virtual;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 186,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ERC721Bridge",
+        "similarity": 0.95,
+        "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+        "commitTimestamp": "2024-01-08T19:01:54Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Mitigation review commit named by the report.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 5,
+        "ignoredAdded": 98,
+        "ignoredRemoved": 74,
+        "unchanged": 186,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 24,
+            "newStart": 1,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC721Bridge is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Messenger contract on this domain. This will be removed in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    ///         future, use `messenger` instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC721Bridge {",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Messenger contract on this domain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    CrossDomainMessenger public immutable MESSENGER;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @notice Address of the bridge on the other network. This will be removed in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    ///         future, use `otherBridge` instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 7, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @notice Address of the bridge on the other network.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    address public immutable OTHER_BRIDGE;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    uint256[48] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    uint256[49] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @notice Emitted when an ERC721 bridge to the other network is initiated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @param localToken  Address of the token on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @param remoteToken Address of the token on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @param from        Address that initiated bridging action.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @param to          Address to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @param tokenId     ID of the specific token deposited.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @param extraData   Extra data for use on the client-side.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @notice Emitted when an ERC721 bridge to the other network is initiated.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 19, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param localToken  Address of the token on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @param remoteToken Address of the token on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @param from        Address that initiated bridging action.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * @param to          Address to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * @param tokenId     ID of the specific token deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * @param extraData   Extra data for use on the client-side.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 27,
+                "text": "    event ERC721BridgeInitiated("
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 28,
+                "text": "        address indexed localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "        address indexed remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 13,
+            "newStart": 33,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 33,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 29, "newLine": 34, "text": "    );" },
+              { "type": " ", "oldLine": 30, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @notice Emitted when an ERC721 bridge from the other network is finalized.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @param localToken  Address of the token on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param remoteToken Address of the token on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param from        Address that initiated bridging action.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @param to          Address to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @param tokenId     ID of the specific token deposited.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @param extraData   Extra data for use on the client-side.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @notice Emitted when an ERC721 bridge from the other network is finalized.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 38, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @param localToken  Address of the token on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @param remoteToken Address of the token on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * @param from        Address that initiated bridging action.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @param to          Address to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     * @param tokenId     ID of the specific token deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * @param extraData   Extra data for use on the client-side.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 46,
+                "text": "    event ERC721BridgeFinalized("
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 47,
+                "text": "        address indexed localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 48,
+                "text": "        address indexed remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 44,
+            "oldLines": 7,
+            "newStart": 52,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 52,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 53, "text": "    );" },
+              { "type": " ", "oldLine": 46, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// @notice Ensures that the caller is a cross-chain message from the other bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * @notice Ensures that the caller is a cross-chain message from the other bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 58,
+                "text": "    modifier onlyOtherBridge() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 59,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 60,
+                "text": "            msg.sender == address(MESSENGER) && MESSENGER.xDomainMessageSender() == OTHER_BRIDGE,"
+              }
+            ]
+          },
+          {
+            "oldStart": 53,
+            "oldLines": 8,
+            "newStart": 63,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 63,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 55, "newLine": 65, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @param _messenger   Address of the CrossDomainMessenger on this network.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @param _otherBridge Address of the ERC721 bridge on the other network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @param _messenger   Address of the CrossDomainMessenger on this network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * @param _otherBridge Address of the ERC721 bridge on the other network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 70,
+                "text": "    constructor(address _messenger, address _otherBridge) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 71,
+                "text": "        require(_messenger != address(0), \"ERC721Bridge: messenger cannot be address(0)\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 72,
+                "text": "        require(_otherBridge != address(0), \"ERC721Bridge: other bridge cannot be address(0)\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 42,
+            "newStart": 75,
+            "newLines": 45,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 75,
+                "text": "        OTHER_BRIDGE = _otherBridge;"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 76, "text": "    }" },
+              { "type": " ", "oldLine": 65, "newLine": 77, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    /// @notice Legacy getter for messenger contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    /// @return Messenger contract on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * @notice Legacy getter for messenger contract.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @return Messenger contract on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 84,
+                "text": "    function messenger() external view returns (CrossDomainMessenger) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 85,
+                "text": "        return MESSENGER;"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 86, "text": "    }" },
+              { "type": " ", "oldLine": 71, "newLine": 87, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    /// @notice Legacy getter for other bridge address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /// @return Address of the bridge on the other network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "     * @notice Legacy getter for other bridge address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * @return Address of the bridge on the other network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 94,
+                "text": "    function otherBridge() external view returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 95,
+                "text": "        return OTHER_BRIDGE;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 96, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 97, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /// @notice This function should return true if the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    ///         On L1 this function will check the SuperchainConfig for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    ///         On L2 this function should be a no-op.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    /// @return Whether or not the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        return false;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 84, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 85, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @notice Initiates a bridge of an NFT to the caller's account on the other chain. Note that",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    ///         this function can only be called by EOAs. Smart contract wallets should use the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    ///         `bridgeERC721To` function after ensuring that the recipient address on the remote",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    ///         chain exists. Also note that the current owner of the token on this chain must",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    ///         approve this contract to operate the NFT before it can be bridged.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    ///         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    ///         bridge only supports ERC721s originally deployed on Ethereum. Users will need to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    ///         wait for the one-week challenge period to elapse before their Optimism-native NFT",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    ///         can be refunded on L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    /// @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    /// @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "    /// @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    /// @param _extraData   Optional data to forward to the other chain. Data supplied here will not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    ///                     be used to execute any code on the other chain and is only emitted as",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    ///                     extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "     * @notice Initiates a bridge of an NFT to the caller's account on the other chain. Note that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "     *         this function can only be called by EOAs. Smart contract wallets should use the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     *         `bridgeERC721To` function after ensuring that the recipient address on the remote",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "     *         chain exists. Also note that the current owner of the token on this chain must",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "     *         approve this contract to operate the NFT before it can be bridged.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "     *         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "     *         bridge only supports ERC721s originally deployed on Ethereum. Users will need to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "     *         wait for the one-week challenge period to elapse before their Optimism-native NFT",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "     *         can be refunded on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     * @param _extraData   Optional data to forward to the other chain. Data supplied here will not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     *                     be used to execute any code on the other chain and is only emitted as",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     *                     extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 117,
+                "text": "    function bridgeERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 118,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 119,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 117,
+            "oldLines": 21,
+            "newStart": 132,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 132,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 118, "newLine": 133, "text": "    }" },
+              { "type": " ", "oldLine": 119, "newLine": 134, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    /// @notice Initiates a bridge of an NFT to some recipient's account on the other chain. Note",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    ///         that the current owner of the token on this chain must approve this contract to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    ///         operate the NFT before it can be bridged.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    ///         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    ///         bridge only supports ERC721s originally deployed on Ethereum. Users will need to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    ///         wait for the one-week challenge period to elapse before their Optimism-native NFT",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    ///         can be refunded on L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "    /// @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "    /// @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "    /// @param _to          Address to receive the token on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "    /// @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "    /// @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "    /// @param _extraData   Optional data to forward to the other chain. Data supplied here will not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "    ///                     be used to execute any code on the other chain and is only emitted as",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "    ///                     extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     * @notice Initiates a bridge of an NFT to some recipient's account on the other chain. Note",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "     *         that the current owner of the token on this chain must approve this contract to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "     *         operate the NFT before it can be bridged.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "     *         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "     *         bridge only supports ERC721s originally deployed on Ethereum. Users will need to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "     *         wait for the one-week challenge period to elapse before their Optimism-native NFT",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "     *         can be refunded on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "     * @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "     * @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "     * @param _to          Address to receive the token on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "     * @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "     * @param _extraData   Optional data to forward to the other chain. Data supplied here will not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "     *                     be used to execute any code on the other chain and is only emitted as",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "     *                     extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 153,
+                "text": "    function bridgeERC721To("
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 154,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 155,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 16,
+            "newStart": 163,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 163,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, _to, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 146, "newLine": 164, "text": "    }" },
+              { "type": " ", "oldLine": 147, "newLine": 165, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "    /// @notice Internal function for initiating a token bridge to the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "    /// @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "    /// @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    /// @param _from        Address of the sender on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "    /// @param _to          Address to receive the token on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "    /// @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "    /// @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    /// @param _extraData   Optional data to forward to the other domain. Data supplied here will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    ///                     not be used to execute any code on the other domain and is only emitted",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "    ///                     as extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     * @notice Internal function for initiating a token bridge to the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "     * @param _localToken  Address of the ERC721 on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "     * @param _remoteToken Address of the ERC721 on the remote domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "     * @param _from        Address of the sender on this domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "     * @param _to          Address to receive the token on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "     * @param _tokenId     Token ID to bridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "     * @param _minGasLimit Minimum gas limit for the bridge message on the other domain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "     * @param _extraData   Optional data to forward to the other domain. Data supplied here will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "     *                     not be used to execute any code on the other domain and is only emitted",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "     *                     as extra data for the convenience of off-chain tooling.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 179,
+                "text": "    function _initiateBridgeERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 180,
+                "text": "        address _localToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 181,
+                "text": "        address _remoteToken,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

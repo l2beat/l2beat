@@ -1486,6 +1486,2968 @@
         ]
       },
       "warnings": ["low-similarity"]
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "L1ChugSplashProxy",
+        "similarity": 0.019,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 7,
+        "removed": 98,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 177,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 276,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1ChugSplashProxy {",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Constants *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // \"Magic\" prefix. When prepended to some arbitrary bytecode and used to create a contract, the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // appended bytecode will be deployed as given.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    bytes13 internal constant DEPLOY_CODE_PREFIX = 0x600D380380600D6000396000f3;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    bytes32 internal constant IMPLEMENTATION_KEY = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 14, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    // bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    bytes32 internal constant OWNER_KEY = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 17, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 19, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 21, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @param _owner Address of the initial contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    constructor(address _owner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        _setOwner(_owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 29, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 30, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 32, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * Function Modifiers *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 34, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 36, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * Blocks a function from being called when the parent signals that the system should be paused",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * via an isUpgrading function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    modifier onlyWhenNotPaused() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        address owner = _getOwner();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        // We do a low-level call because there's no guarantee that the owner actually *is* an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        // L1ChugSplashDeployer contract and Solidity will throw errors if we do a normal call and",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        // it turns out that it isn't the right type of contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        (bool success, bytes memory returndata) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            owner.staticcall(abi.encodeWithSelector(iL1ChugSplashDeployer.isUpgrading.selector));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 49, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        // If the call was unsuccessful then we assume that there's no \"isUpgrading\" method and we",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        // can just continue as normal. We also expect that the return value is exactly 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        // long. If this isn't the case then we can safely ignore the result.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        if (success && returndata.length == 32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            // Although the expected value is a *boolean*, it's safer to decode as a uint256 in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            // case that the isUpgrading function returned something other than 0 or 1. But we only",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            // really care about the case where this value is 0 (= false).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            uint256 ret = abi.decode(returndata, (uint256));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            require(ret == 0, \"L1ChugSplashProxy: system is currently being upgraded\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 60, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        _;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 62, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 63, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * Makes a proxy call instead of triggering the given function when the caller is either the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     * owner or the zero address. Caller can only ever be the zero address if this function is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * being called off-chain via eth_call, which is totally fine and can be convenient for",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "     * client-side tooling. Avoids situations where the proxy and implementation share a sighash",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "     * and the proxy function ends up being called instead of the implementation one.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 70, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * Note: msg.sender == address(0) can ONLY be triggered off-chain via eth_call. If there's a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * way for someone to send a transaction with msg.sender == address(0) in any real context then",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     * we have much bigger problems. Primary reason to include this additional allowed sender is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * because the owner address can be changed dynamically and we do not want clients to have to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * keep track of the current owner in order to make an eth_call that doesn't trigger the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     * proxied contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    // slither-disable-next-line incorrect-modifier",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    modifier proxyCallIfNotOwner() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        if (msg.sender == _getOwner() || msg.sender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            _;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "            // This WILL halt the call frame on completion.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "            _doProxyCall();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 86, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 87, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 89, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 93, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    // slither-disable-next-line locked-ether",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    fallback() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        // Proxy call by default.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        _doProxyCall();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 98, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 99, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * Public Functions *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 105, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     * Sets the code that should be running behind this proxy. Note that this scheme is a bit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     * different from the standard proxy scheme where one would typically deploy the code",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     * separately and then set the implementation address. We're doing it this way because it gives",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * us a lot more freedom on the client side. Can only be triggered by the contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @param _code New contract code to run inside this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    function setCode(bytes memory _code) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "        // Get the code hash of the current implementation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        address implementation = _getImplementation();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 117, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        // If the code hash matches the new implementation then we return early.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        if (keccak256(_code) == _getAccountCodeHash(implementation)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "            return;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 122, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        // Create the deploycode by appending the magic prefix.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        bytes memory deploycode = abi.encodePacked(DEPLOY_CODE_PREFIX, _code);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 125, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        // Deploy the code and set the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        address newImplementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            newImplementation := create(0x0, add(deploycode, 0x20), mload(deploycode))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 131, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        // Check that the code was actually deployed correctly. I'm not sure if you can ever",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        // actually fail this check. Should only happen if the contract creation from above runs",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        // out of gas but this parent execution thread does NOT run out of gas. Seems like we",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        // should be doing this check anyway though.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "            _getAccountCodeHash(newImplementation) == keccak256(_code),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "            \"L1ChugSplashProxy: code was not correctly deployed.\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 140, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "        _setImplementation(newImplementation);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 143, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "     * Modifies some storage slot within the proxy contract. Gives us a lot of power to perform",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "     * upgrades in a more transparent way. Only callable by the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "     * @param _key Storage key to modify.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "     * @param _value New value for the storage key.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    function setStorage(bytes32 _key, bytes32 _value) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "            sstore(_key, _value)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 156, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "     * Changes the owner of the proxy contract. Only callable by the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "     * @param _owner New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    function setOwner(address _owner) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "        _setOwner(_owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 165, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "     * Queries the owner of the proxy contract. Can only be called by the owner OR by making an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "     * eth_call and setting the \"from\" address to address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "     * @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "    function getOwner() public proxyCallIfNotOwner returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return _getOwner();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 175, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "     * Queries the implementation address. Can only be called by the owner OR by making an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "     * eth_call and setting the \"from\" address to address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "     * @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "    function getImplementation() public proxyCallIfNotOwner returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "        return _getImplementation();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 185, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "     * Internal Functions *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 191, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "     * Sets the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * @param _implementation New implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    function _setImplementation(address _implementation) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "            sstore(IMPLEMENTATION_KEY, _implementation)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 201, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "     * Queries the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "     * @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "    function _getImplementation() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        address implementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "            implementation := sload(IMPLEMENTATION_KEY)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        return implementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 213, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "     * Changes the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "     * @param _owner New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 217,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "    function _setOwner(address _owner) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "            sstore(OWNER_KEY, _owner)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 223, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "     * Queries the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "    function _getOwner() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "        address owner;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "            owner := sload(OWNER_KEY)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "        return owner;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 235, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "     * Gets the code hash for a given account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "     * @param _account Address of the account to get a code hash for.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "     * @return Code hash for the account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "    function _getAccountCodeHash(address _account) internal view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "        bytes32 codeHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "            codeHash := extcodehash(_account)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "        return codeHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 248, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "     * Performs the proxy call via a delegatecall.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "    function _doProxyCall() internal onlyWhenNotPaused {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 253,
+                "text": "        address implementation = _getImplementation();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 254, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "        require(implementation != address(0), \"L1ChugSplashProxy: implementation is not set yet\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 256, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "            // Copy calldata into memory at 0x0....calldatasize.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "            calldatacopy(0x0, 0x0, calldatasize())",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 260, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            // Perform the delegatecall, make sure to pass all available gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "            let success := delegatecall(gas(), implementation, 0x0, calldatasize(), 0x0, 0x0)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 263, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "            // Copy returndata into memory at 0x0....returndatasize. Note that this *will*",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "            // overwrite the calldata that we just copied into memory but that doesn't really",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "            // matter because we'll be returning in a second anyway.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "            returndatacopy(0x0, 0x0, returndatasize())",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 268, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            // Success == 0 means a revert. We'll revert too and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "            if iszero(success) { revert(0x0, returndatasize()) }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 271, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "            // Otherwise we'll just return and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "            return(0x0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 275,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface L1ChugSplashProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function setStorage(bytes32 _key, bytes32 _value) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function setOwner(address _owner) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function getOwner() external returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function getImplementation() external returns (address);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 276, "newLine": 8, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L1ChugSplashProxy",
+        "similarity": 0.019,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 7,
+        "removed": 98,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 177,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 276,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1ChugSplashProxy {",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Constants *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // \"Magic\" prefix. When prepended to some arbitrary bytecode and used to create a contract, the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // appended bytecode will be deployed as given.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    bytes13 internal constant DEPLOY_CODE_PREFIX = 0x600D380380600D6000396000f3;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    bytes32 internal constant IMPLEMENTATION_KEY = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 14, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    // bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    bytes32 internal constant OWNER_KEY = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 17, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 19, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 21, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @param _owner Address of the initial contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    constructor(address _owner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        _setOwner(_owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 29, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 30, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 32, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * Function Modifiers *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 34, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 36, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * Blocks a function from being called when the parent signals that the system should be paused",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * via an isUpgrading function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    modifier onlyWhenNotPaused() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        address owner = _getOwner();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        // We do a low-level call because there's no guarantee that the owner actually *is* an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        // L1ChugSplashDeployer contract and Solidity will throw errors if we do a normal call and",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        // it turns out that it isn't the right type of contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        (bool success, bytes memory returndata) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            owner.staticcall(abi.encodeWithSelector(iL1ChugSplashDeployer.isUpgrading.selector));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 49, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        // If the call was unsuccessful then we assume that there's no \"isUpgrading\" method and we",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        // can just continue as normal. We also expect that the return value is exactly 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        // long. If this isn't the case then we can safely ignore the result.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        if (success && returndata.length == 32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            // Although the expected value is a *boolean*, it's safer to decode as a uint256 in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            // case that the isUpgrading function returned something other than 0 or 1. But we only",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            // really care about the case where this value is 0 (= false).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            uint256 ret = abi.decode(returndata, (uint256));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            require(ret == 0, \"L1ChugSplashProxy: system is currently being upgraded\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 60, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        _;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 62, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 63, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     * Makes a proxy call instead of triggering the given function when the caller is either the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     * owner or the zero address. Caller can only ever be the zero address if this function is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * being called off-chain via eth_call, which is totally fine and can be convenient for",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "     * client-side tooling. Avoids situations where the proxy and implementation share a sighash",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "     * and the proxy function ends up being called instead of the implementation one.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 70, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * Note: msg.sender == address(0) can ONLY be triggered off-chain via eth_call. If there's a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * way for someone to send a transaction with msg.sender == address(0) in any real context then",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     * we have much bigger problems. Primary reason to include this additional allowed sender is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * because the owner address can be changed dynamically and we do not want clients to have to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * keep track of the current owner in order to make an eth_call that doesn't trigger the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     * proxied contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    // slither-disable-next-line incorrect-modifier",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    modifier proxyCallIfNotOwner() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        if (msg.sender == _getOwner() || msg.sender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            _;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "            // This WILL halt the call frame on completion.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "            _doProxyCall();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 86, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 87, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 89, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 93, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    // slither-disable-next-line locked-ether",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    fallback() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        // Proxy call by default.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        _doProxyCall();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 98, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 99, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * Public Functions *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 105, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     * Sets the code that should be running behind this proxy. Note that this scheme is a bit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     * different from the standard proxy scheme where one would typically deploy the code",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     * separately and then set the implementation address. We're doing it this way because it gives",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * us a lot more freedom on the client side. Can only be triggered by the contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @param _code New contract code to run inside this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    function setCode(bytes memory _code) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "        // Get the code hash of the current implementation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        address implementation = _getImplementation();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 117, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        // If the code hash matches the new implementation then we return early.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        if (keccak256(_code) == _getAccountCodeHash(implementation)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "            return;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 122, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        // Create the deploycode by appending the magic prefix.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "        bytes memory deploycode = abi.encodePacked(DEPLOY_CODE_PREFIX, _code);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 125, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        // Deploy the code and set the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        address newImplementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            newImplementation := create(0x0, add(deploycode, 0x20), mload(deploycode))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 131, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        // Check that the code was actually deployed correctly. I'm not sure if you can ever",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        // actually fail this check. Should only happen if the contract creation from above runs",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        // out of gas but this parent execution thread does NOT run out of gas. Seems like we",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        // should be doing this check anyway though.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "            _getAccountCodeHash(newImplementation) == keccak256(_code),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "            \"L1ChugSplashProxy: code was not correctly deployed.\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 140, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "        _setImplementation(newImplementation);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 143, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "     * Modifies some storage slot within the proxy contract. Gives us a lot of power to perform",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "     * upgrades in a more transparent way. Only callable by the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "     * @param _key Storage key to modify.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "     * @param _value New value for the storage key.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    function setStorage(bytes32 _key, bytes32 _value) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "            sstore(_key, _value)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 156, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "     * Changes the owner of the proxy contract. Only callable by the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "     * @param _owner New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    function setOwner(address _owner) public proxyCallIfNotOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "        _setOwner(_owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 165, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "     * Queries the owner of the proxy contract. Can only be called by the owner OR by making an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "     * eth_call and setting the \"from\" address to address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "     * @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "    function getOwner() public proxyCallIfNotOwner returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return _getOwner();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 175, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "     * Queries the implementation address. Can only be called by the owner OR by making an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "     * eth_call and setting the \"from\" address to address(0).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "     * @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "    function getImplementation() public proxyCallIfNotOwner returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "        return _getImplementation();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 185, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "     * Internal Functions *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 191, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "     * Sets the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * @param _implementation New implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    function _setImplementation(address _implementation) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "            sstore(IMPLEMENTATION_KEY, _implementation)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 201, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "     * Queries the implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "     * @return Implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "    function _getImplementation() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        address implementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "            implementation := sload(IMPLEMENTATION_KEY)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        return implementation;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 213, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "     * Changes the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "     * @param _owner New owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 217,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "    function _setOwner(address _owner) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "            sstore(OWNER_KEY, _owner)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 223, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "     * Queries the owner of the proxy contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "     * @return Owner address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "    function _getOwner() internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "        address owner;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "            owner := sload(OWNER_KEY)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "        return owner;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 235, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "     * Gets the code hash for a given account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "     * @param _account Address of the account to get a code hash for.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "     * @return Code hash for the account.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "    function _getAccountCodeHash(address _account) internal view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "        bytes32 codeHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "            codeHash := extcodehash(_account)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "        return codeHash;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 248, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "     * Performs the proxy call via a delegatecall.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "    function _doProxyCall() internal onlyWhenNotPaused {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 253,
+                "text": "        address implementation = _getImplementation();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 254, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "        require(implementation != address(0), \"L1ChugSplashProxy: implementation is not set yet\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 256, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "            // Copy calldata into memory at 0x0....calldatasize.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "            calldatacopy(0x0, 0x0, calldatasize())",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 260, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            // Perform the delegatecall, make sure to pass all available gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "            let success := delegatecall(gas(), implementation, 0x0, calldatasize(), 0x0, 0x0)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 263, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "            // Copy returndata into memory at 0x0....returndatasize. Note that this *will*",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "            // overwrite the calldata that we just copied into memory but that doesn't really",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "            // matter because we'll be returning in a second anyway.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "            returndatacopy(0x0, 0x0, returndatasize())",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 268, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            // Success == 0 means a revert. We'll revert too and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "            if iszero(success) { revert(0x0, returndatasize()) }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 271, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "            // Otherwise we'll just return and pass the data up.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "            return(0x0, returndatasize())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 275,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface L1ChugSplashProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function setStorage(bytes32 _key, bytes32 _value) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function setOwner(address _owner) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function getOwner() external returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function getImplementation() external returns (address);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 276, "newLine": 8, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
     }
   }
 }

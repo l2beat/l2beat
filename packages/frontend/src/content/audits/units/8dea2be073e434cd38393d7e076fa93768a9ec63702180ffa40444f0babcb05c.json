@@ -131,6 +131,132 @@
         ]
       },
       "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 161,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "AccessControl",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/AccessControl.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/access/AccessControl.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 2,
+        "unchanged": 161,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @inheritdoc ERC165",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 23,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 24,
+                "text": "        return interfaceId == type(IAccessControl).interfaceId || super.supportsInterface(interfaceId);"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 25, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 141,
+            "oldLines": 7,
+            "newStart": 143,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 141, "newLine": 143, "text": "    }" },
+              { "type": " ", "oldLine": 142, "newLine": 144, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 145,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "     * @dev Attempts to revoke `role` from `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "     * @dev Attempts to revoke `role` to `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 145, "newLine": 147, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 148,
+                "text": "     * Internal function without access restriction."
+              },
+              { "type": " ", "oldLine": 147, "newLine": 149, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

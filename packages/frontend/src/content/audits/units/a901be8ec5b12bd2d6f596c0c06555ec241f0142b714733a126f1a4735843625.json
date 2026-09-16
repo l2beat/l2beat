@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a901be8ec5b12bd2d6f596c0c06555ec241f0142b714733a126f1a4735843625",
+  "name": "LivenessGuard",
+  "kind": "contract",
+  "lines": 137,
+  "source": "contract LivenessGuard is ISemver, BaseGuard {\n    using EnumerableSet for EnumerableSet.AddressSet;\n\n    /// @notice Emitted when an owner is recorded.\n    /// @param owner The owner's address.\n    event OwnerRecorded(address owner);\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.0.1-beta.2\n    string public constant version = \"1.0.1-beta.2\";\n\n    /// @notice The safe account for which this contract will be the guard.\n    Safe internal immutable SAFE;\n\n    /// @notice A mapping of the timestamp at which an owner last participated in signing a\n    ///         an executed transaction, or called showLiveness.\n    mapping(address => uint256) public lastLive;\n\n    /// @notice An enumerable set of addresses used to store the list of owners before execution,\n    ///         and then to update the lastLive mapping according to changes in the set observed\n    ///         after execution.\n    EnumerableSet.AddressSet internal ownersBefore;\n\n    /// @notice Constructor.\n    /// @param _safe The safe account for which this contract will be the guard.\n    constructor(Safe _safe) {\n        SAFE = _safe;\n        address[] memory owners = _safe.getOwners();\n        for (uint256 i = 0; i < owners.length; i++) {\n            address owner = owners[i];\n            lastLive[owner] = block.timestamp;\n            emit OwnerRecorded(owner);\n        }\n    }\n\n    /// @notice Getter function for the Safe contract instance\n    /// @return safe_ The Safe contract instance\n    function safe() public view returns (Safe safe_) {\n        safe_ = SAFE;\n    }\n\n    /// @notice Internal function to ensure that only the Safe can call certain functions.\n    function _requireOnlySafe() internal view {\n        require(msg.sender == address(SAFE), \"LivenessGuard: only Safe can call this function\");\n    }\n\n    /// @notice Records the most recent time which any owner has signed a transaction.\n    /// @dev Called by the Safe contract before execution of a transaction.\n    function checkTransaction(\n        address _to,\n        uint256 _value,\n        bytes memory _data,\n        Enum.Operation _operation,\n        uint256 _safeTxGas,\n        uint256 _baseGas,\n        uint256 _gasPrice,\n        address _gasToken,\n        address payable _refundReceiver,\n        bytes memory _signatures,\n        address _msgSender\n    ) external {\n        _msgSender; // silence unused variable warning\n        _requireOnlySafe();\n\n        // Cache the set of owners prior to execution.\n        // This will be used in the checkAfterExecution method.\n        address[] memory owners = SAFE.getOwners();\n        for (uint256 i = 0; i < owners.length; i++) {\n            ownersBefore.add(owners[i]);\n        }\n\n        // This call will reenter to the Safe which is calling it. This is OK because it is only reading the\n        // nonce, and using the getTransactionHash() method.\n        bytes32 txHash = SAFE.getTransactionHash({\n            to: _to,\n            value: _value,\n            data: _data,\n            operation: _operation,\n            safeTxGas: _safeTxGas,\n            baseGas: _baseGas,\n            gasPrice: _gasPrice,\n            gasToken: _gasToken,\n            refundReceiver: _refundReceiver,\n            _nonce: SAFE.nonce() - 1\n        });\n\n        uint256 threshold = SAFE.getThreshold();\n        address[] memory signers =\n            SafeSigners.getNSigners({_dataHash: txHash, _signatures: _signatures, _requiredSignatures: threshold});\n\n        for (uint256 i = 0; i < signers.length; i++) {\n            lastLive[signers[i]] = block.timestamp;\n            emit OwnerRecorded(signers[i]);\n        }\n    }\n\n    /// @notice Update the lastLive mapping according to the set of owners before and after execution.\n    /// @dev Called by the Safe contract after the execution of a transaction.\n    ///      We use this post execution hook to compare the set of owners before and after.\n    ///      If the set of owners has changed then we:\n    ///      1. Add new owners to the lastLive mapping\n    ///      2. Delete removed owners from the lastLive mapping\n    function checkAfterExecution(bytes32, bool) external {\n        _requireOnlySafe();\n        // Get the current set of owners\n        address[] memory ownersAfter = SAFE.getOwners();\n\n        // Iterate over the current owners, and remove one at a time from the ownersBefore set.\n        for (uint256 i = 0; i < ownersAfter.length; i++) {\n            // If the value was present, remove() returns true.\n            address ownerAfter = ownersAfter[i];\n            if (ownersBefore.remove(ownerAfter) == false) {\n                // This address was not already an owner, add it to the lastLive mapping\n                lastLive[ownerAfter] = block.timestamp;\n            }\n        }\n\n        // Now iterate over the remaining ownersBefore entries. Any remaining addresses are no longer an owner, so we\n        // delete them from the lastLive mapping.\n        // We cache the ownersBefore set before iterating over it, because the remove() method mutates the set.\n        address[] memory ownersBeforeCache = ownersBefore.values();\n        for (uint256 i = 0; i < ownersBeforeCache.length; i++) {\n            address ownerBefore = ownersBeforeCache[i];\n            delete lastLive[ownerBefore];\n            ownersBefore.remove(ownerBefore);\n        }\n    }\n\n    /// @notice Enables an owner to demonstrate liveness by calling this method directly.\n    ///         This is useful for owners who have not recently signed a transaction via the Safe.\n    function showLiveness() external {\n        require(SAFE.isOwner(msg.sender), \"LivenessGuard: only Safe owners may demonstrate liveness\");\n        lastLive[msg.sender] = block.timestamp;\n\n        emit OwnerRecorded(msg.sender);\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 136,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "LivenessGuard",
+        "similarity": 0.988,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/safe/LivenessGuard.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/safe/LivenessGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 136,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 8,
+            "newStart": 6,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    event OwnerRecorded(address owner);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @custom:semver 1.1.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    string public constant version = \"1.1.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @custom:semver 1.0.1-beta.2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    string public constant version = \"1.0.1-beta.2\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    /// @notice The safe account for which this contract will be the guard."
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    Safe internal immutable SAFE;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

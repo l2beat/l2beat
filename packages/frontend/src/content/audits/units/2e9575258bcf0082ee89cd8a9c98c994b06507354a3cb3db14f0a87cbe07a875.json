@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2e9575258bcf0082ee89cd8a9c98c994b06507354a3cb3db14f0a87cbe07a875",
+  "name": "contract_instance.nr",
+  "kind": "program",
+  "lines": 77,
+  "source": "use crate::{\n    address::{aztec_address::AztecAddress, partial_address::PartialAddress},\n    contract_class_id::ContractClassId,\n    public_keys::PublicKeys,\n    traits::{Deserialize, Hash, Serialize, ToField},\n};\nuse std::meta::derive;\n\n/// The complete preimage of an [`AztecAddress`].\n///\n/// All of these values are hashed into the contract's `AztecAddress` (see [`Self::to_address`]), so they are fixed\n/// at deployment time and never change.\n///\n/// In particular, `original_contract_class_id` is the class the contract was *deployed* with. For upgradeable contracts\n/// which utilize the `ContractInstanceRegistry` this is NOT the class currently executing i.e. the 'current' class.\n#[derive(Deserialize, Eq, Serialize)]\npub struct ContractInstance {\n    pub salt: Field,\n    pub deployer: AztecAddress,\n    pub original_contract_class_id: ContractClassId,\n    pub initialization_hash: Field,\n    pub immutables_hash: Field,\n    pub public_keys: PublicKeys,\n}\n\nimpl Hash for ContractInstance {\n    fn hash(self) -> Field {\n        self.to_address().to_field()\n    }\n}\n\nimpl ContractInstance {\n    pub fn to_address(self) -> AztecAddress {\n        AztecAddress::compute(\n            self.public_keys,\n            PartialAddress::compute(\n                self.original_contract_class_id,\n                self.salt,\n                self.initialization_hash,\n                self.deployer,\n                self.immutables_hash,\n            ),\n        )\n    }\n}\n\nmod test {\n    use crate::{\n        address::AztecAddress,\n        constants::CONTRACT_INSTANCE_LENGTH,\n        contract_class_id::ContractClassId,\n        contract_instance::ContractInstance,\n        public_keys::PublicKeys,\n        traits::{Deserialize, FromField, Serialize},\n    };\n\n    #[test]\n    fn serde() {\n        let instance = ContractInstance {\n            salt: 6,\n            deployer: AztecAddress::from_field(12),\n            original_contract_class_id: ContractClassId::from_field(13),\n            initialization_hash: 156,\n            immutables_hash: 789,\n            public_keys: PublicKeys::default(),\n        };\n\n        // We use the CONTRACT_INSTANCE_LENGTH constant to ensure that there is a match between the derived trait\n        // implementation and the constant.\n        let serialized: [Field; CONTRACT_INSTANCE_LENGTH] = instance.serialize();\n\n        let deserialized = ContractInstance::deserialize(serialized);\n\n        assert(instance.eq(deserialized));\n    }\n\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "94bc4b01b6281c226f0c21559467be6b884f1654e070591c6275666b2b1ca397",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 4,
+  "source": "mod batch_exe_commit;\nmod batch_leaf_commit;\npub const EXE_COMMIT: [u32; 8] = batch_exe_commit::COMMIT;\npub const LEAF_COMMIT: [u32; 8] = batch_leaf_commit::COMMIT;",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

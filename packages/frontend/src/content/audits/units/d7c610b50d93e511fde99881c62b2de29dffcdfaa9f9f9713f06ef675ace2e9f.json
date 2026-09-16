@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d7c610b50d93e511fde99881c62b2de29dffcdfaa9f9f9713f06ef675ace2e9f",
+  "name": "IOwnable",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IOwnable {\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    /// @dev The caller account is not authorized to perform an operation.\n    error OwnableUnauthorizedAccount(address account);\n\n    /// @dev The owner is not a valid owner account. (eg. `address(0)`)\n    error OwnableInvalidOwner(address owner);\n\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 9,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IOwnable",
+        "similarity": 0.5,
+        "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
+        "repository": "celo-org/celo-monorepo",
+        "path": "packages/protocol/contracts/common/interfaces/IOwnable.sol",
+        "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+        "commitTimestamp": "2024-10-17T11:21:11Z",
+        "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/interfaces/IOwnable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 0,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 1,
+        "unchanged": 9,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IOwnable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // WARNING: owner() in ownable is public, not external",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @dev The caller account is not authorized to perform an operation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    error OwnableInvalidOwner(address owner);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 9, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 10,
+                "text": "    function owner() external view returns (address);"
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function renounceOwnership() external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function transferOwnership(address newOwner) external; // nosemgrep",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function __constructor__() external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 15, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

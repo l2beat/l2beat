@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2267c30d3c612bc02f1fee79a1015e81eb4cf12d11900bcc0f6dc41f35051040",
+  "name": "partial_address.nr",
+  "kind": "program",
+  "lines": 79,
+  "source": "use crate::{\n    address::{aztec_address::AztecAddress, salted_initialization_hash::SaltedInitializationHash},\n    constants::DOM_SEP__PARTIAL_ADDRESS,\n    contract_class_id::ContractClassId,\n    hash::poseidon2_hash_with_separator,\n    traits::{Deserialize, Empty, Serialize, ToField},\n};\nuse std::meta::derive;\n\n// Partial address\n#[derive(Deserialize, Eq, Serialize)]\npub struct PartialAddress {\n    pub inner: Field,\n}\n\nimpl ToField for PartialAddress {\n    fn to_field(self) -> Field {\n        self.inner\n    }\n}\n\nimpl Empty for PartialAddress {\n    fn empty() -> Self {\n        Self { inner: 0 }\n    }\n}\n\nimpl PartialAddress {\n    pub fn from_field(field: Field) -> Self {\n        Self { inner: field }\n    }\n\n    pub fn compute(\n        contract_class_id: ContractClassId,\n        salt: Field,\n        initialization_hash: Field,\n        deployer: AztecAddress,\n        immutables_hash: Field,\n    ) -> Self {\n        PartialAddress::compute_from_salted_initialization_hash(\n            contract_class_id,\n            SaltedInitializationHash::compute(salt, initialization_hash, deployer, immutables_hash),\n        )\n    }\n\n    pub fn compute_from_salted_initialization_hash(\n        contract_class_id: ContractClassId,\n        salted_initialization_hash: SaltedInitializationHash,\n    ) -> Self {\n        PartialAddress::from_field(poseidon2_hash_with_separator(\n            [contract_class_id.to_field(), salted_initialization_hash.to_field()],\n            DOM_SEP__PARTIAL_ADDRESS,\n        ))\n    }\n\n    pub fn to_field(self) -> Field {\n        self.inner\n    }\n\n    pub fn is_zero(self) -> bool {\n        self.to_field() == 0\n    }\n\n    pub fn assert_is_zero(self) {\n        assert(self.to_field() == 0);\n    }\n}\n\nmod test {\n    use crate::{address::partial_address::PartialAddress, traits::{Deserialize, Serialize}};\n\n    #[test]\n    fn serialization_of_partial_address() {\n        let item = PartialAddress::from_field(1);\n        let serialized: [Field; 1] = item.serialize();\n        let deserialized = PartialAddress::deserialize(serialized);\n        assert_eq(item, deserialized);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

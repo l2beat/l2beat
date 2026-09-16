@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "53e656208df4b6bc70bbf4530b3bf303a7c0553a04e9d045ce1d147566c19b67",
+  "name": "VotingModule",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface VotingModule {\n    function propose(uint256 proposalId, bytes calldata proposalData, bytes32 descriptionHash) external;\n    function _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes calldata params)\n        external;\n    function _formatExecuteParams(uint256 proposalId, bytes calldata proposalData)\n        external\n        returns (address[] memory targets, uint256[] memory values, bytes[] memory calldatas);\n    function _voteSucceeded(uint256) external view returns (bool);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 3,
+      "match": {
+        "origin": "other",
+        "collection": "optimism",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "VotingModule",
+        "similarity": 0.182,
+        "reportId": "optimism/zachobront-agora-governor-v5-2023-05",
+        "repository": "voteagora/optimism-gov",
+        "path": "src/modules/VotingModule.sol",
+        "commit": "74b6df0e9ef73c565518535ad02aa2481e4604c4",
+        "commitTimestamp": "2023-06-27T15:35:37Z",
+        "url": "https://github.com/voteagora/optimism-gov/blob/74b6df0e9ef73c565518535ad02aa2481e4604c4/src/modules/VotingModule.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of pull request 10 (audit fixes) reviewed after completion of the fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 6,
+        "removed": 21,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 25,
+        "unchanged": 3,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 49,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract VotingModule {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "                                 ERRORS",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    //////////////////////////////////////////////////////////////*/",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    error NotGovernor();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error ExistingProposal();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    error InvalidParams();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    error AlreadyVoted();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 10, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "                               MODIFIERS",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    //////////////////////////////////////////////////////////////*/",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 14, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    function _onlyGovernor(address governor) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        if (msg.sender != governor) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "            revert NotGovernor();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 19, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "                            WRITE FUNCTIONS",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    //////////////////////////////////////////////////////////////*/",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 24, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    function propose(uint256 proposalId, bytes memory proposalData, bytes32 descriptionHash) external virtual;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 26, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    function _afterExecute(uint256 proposalId, bytes memory proposalData) external virtual {}",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 28, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    function _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface VotingModule {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function propose(uint256 proposalId, bytes calldata proposalData, bytes32 descriptionHash) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    function _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes calldata params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "        external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function _formatExecuteParams(uint256 proposalId, bytes calldata proposalData)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 6,
+                "text": "        external"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        virtual;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 32, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /*//////////////////////////////////////////////////////////////",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "                             VIEW FUNCTIONS",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    //////////////////////////////////////////////////////////////*/",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 36, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    function _formatExecuteParams(uint256 proposalId, bytes memory proposalData)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 7,
+                "text": "        returns (address[] memory targets, uint256[] memory values, bytes[] memory calldatas);"
+              },
+              { "type": "-", "oldLine": 41, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    function _voteSucceeded(uint256 proposalId) external view virtual returns (bool);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function COUNTING_MODE() external pure virtual returns (string memory);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 45, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    function PROPOSAL_DATA_ENCODING() external pure virtual returns (string memory);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 47, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    function VOTE_PARAMS_ENCODING() external pure virtual returns (string memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function _voteSucceeded(uint256) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 9, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

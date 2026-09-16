@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "826537361dea7c9abeaf1406eecdfcaf9c3f4c6b1b3631d78a3ea313c359df5b",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 34,
+  "source": "use private_kernel_lib::{private_kernel_init_n, PrivateKernelInitNCircuitPrivateInputs};\nuse types::{\n    abis::{\n        private_circuit_public_inputs::PrivateCircuitPublicInputs,\n        private_kernel::private_call_data::PrivateCallDataWithoutPublicInputs,\n        protocol_contracts::ProtocolContracts, transaction::tx_request::TxRequest,\n    },\n    PrivateKernelCircuitPublicInputs,\n};\n\nfn main(\n    tx_request: TxRequest,\n    vk_tree_root: Field,\n    protocol_contracts: ProtocolContracts,\n    private_call_0: PrivateCallDataWithoutPublicInputs,\n    private_call_1: PrivateCallDataWithoutPublicInputs,\n    is_private_only: bool,\n    revertible_counter_hint: u32,\n    app_public_inputs_0: call_data(1) PrivateCircuitPublicInputs,\n    app_public_inputs_1: call_data(2) PrivateCircuitPublicInputs,\n) -> return_data PrivateKernelCircuitPublicInputs {\n    let private_inputs = PrivateKernelInitNCircuitPrivateInputs {\n        tx_request,\n        vk_tree_root,\n        protocol_contracts,\n        private_calls: [\n            private_call_0.to_private_call_data(app_public_inputs_0),\n            private_call_1.to_private_call_data(app_public_inputs_1),\n        ],\n        is_private_only,\n        revertible_counter_hint,\n    };\n    private_kernel_init_n::execute::<2>(private_inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

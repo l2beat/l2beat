@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9f83dcb8d0c9eb51856fea80297790d3348352659cac7b11197d6d5087b6d028",
+  "name": "constants.nr",
+  "kind": "program",
+  "lines": 9,
+  "source": "pub(crate) global TWO_POW_60: u128 = 0x1000000000000000;\npub(crate) global TWO_POW_120: u128 = 0x1000000000000000000000000000000;\npub(crate) global TWO_POW_126: Field = 0x40000000000000000000000000000000;\npub(crate) global TWO_POW_240: Field =\n    0x1000000000000000000000000000000000000000000000000000000000000;\npub(crate) global TWO_POW_246: Field =\n    0x40000000000000000000000000000000000000000000000000000000000000;\npub(crate) global GRUMPKIN_MODULUS: [u128; 3] =\n    [0x33e84879b9709143e1f593f0000001, 0x4e72e131a029b85045b68181585d28, 0x3064];",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "31caf0e5af01dcb33a5d129e9b88976d080252662cc431baa2a0cf3451af9eb8",
+  "name": "IL1Splitter",
+  "kind": "interface",
+  "lines": 63,
+  "source": "interface IL1Splitter {\n    /// @notice Emitted when the contract is withdrawn\n    /// @param recipient The recipient of the withdrawal\n    /// @param amount The amount of ETH withdrawn\n    event Withdrawal(address indexed recipient, uint256 amount);\n\n    /// @notice Emitted when the L1 recipient is updated\n    /// @param oldRecipient The old L1 recipient\n    /// @param newRecipient The new L1 recipient\n    event L1RecipientUpdated(address indexed oldRecipient, address indexed newRecipient);\n\n    /// @notice Emitted when the fee disbursement interval is updated\n    /// @param oldInterval The old fee disbursement interval in seconds\n    /// @param newInterval The new fee disbursement interval in seconds\n    event FeeDisbursementIntervalUpdated(uint48 oldInterval, uint48 newInterval);\n\n    /// @notice Emitted when the minimum withdrawal amount is updated\n    /// @param oldAmount The old minimum withdrawal amount\n    /// @param newAmount The new minimum withdrawal amount\n    event MinWithdrawalAmountUpdated(uint256 oldAmount, uint256 newAmount);\n\n    /// @notice Thrown when the contract is withdrawn with an insufficient amount\n    error InsufficientWithdrawalAmount();\n    /// @notice Thrown when the contract is withdrawn before the disbursement interval is reached\n    error DisbursementIntervalNotReached();\n\n    /// @notice Thrown when the address is zero\n    error AddressZero();\n\n    /// @notice Thrown when the disbursement interval is less than the minimum disbursement interval\n    error MinDisbursementInterval();\n\n    /// @notice Thrown when the minimum withdrawal amount is less than the minimum withdrawal amount\n    error MinWithdrawalAmount();\n\n    /// @notice Withdraws the balance of the contract to L1\n    /// @return The amount of ETH withdrawn\n    function withdraw() external returns (uint256);\n\n    /// @notice Updates the L1 recipient\n    /// @param newRecipient The new L1 recipient\n    function updateL1Recipient(address newRecipient) external;\n\n    /// @notice Updates the fee disbursement interval\n    /// @param newInterval The new fee disbursement interval in seconds\n    function updateFeeDisbursementInterval(uint48 newInterval) external;\n\n    /// @notice Updates the minimum withdrawal amount\n    /// @param newAmount The new minimum withdrawal amount\n    function updateMinWithdrawalAmount(uint256 newAmount) external;\n\n    /// @return The L1 recipient.\n    function l1Recipient() external view returns (address);\n\n    /// @return The fee disbursement interval in seconds.\n    function feeDisbursementInterval() external view returns (uint48);\n\n    /// @return The minimum amount of ETH that must be sent to L1.\n    function minWithdrawalAmount() external view returns (uint256);\n\n    /// @return The last disbursement time\n    function lastDisbursementTime() external view returns (uint48);\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 63,
+      "match": {
+        "origin": "own",
+        "collection": "unichain",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL1Splitter",
+        "similarity": 1,
+        "reportId": "unichain/cantina-unichain-contracts-2024-11",
+        "repository": "Uniswap/unichain-contracts",
+        "path": "src/interfaces/FeeSplitter/IL1Splitter.sol",
+        "commit": "d7db41e68e73bc7e58bfff9cae6f4e8f695030da",
+        "commitTimestamp": "2024-11-01T13:28:26Z",
+        "url": "https://github.com/Uniswap/unichain-contracts/blob/d7db41e68e73bc7e58bfff9cae6f4e8f695030da/src/interfaces/FeeSplitter/IL1Splitter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix_review",
+        "coverage": "Fix review of src/FeeSplitter/NetFeeSplitter.sol and src/interfaces/FeeSplitter/INetFeeSplitter.sol only (Informational 3.3.1 rename newAdmin to newSetter).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

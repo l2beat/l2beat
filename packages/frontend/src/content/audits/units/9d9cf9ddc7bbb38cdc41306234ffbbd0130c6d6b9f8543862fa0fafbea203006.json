@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9d9cf9ddc7bbb38cdc41306234ffbbd0130c6d6b9f8543862fa0fafbea203006",
+  "name": "Slasher",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface Slasher is ISlasher {\n    function PROPOSER() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

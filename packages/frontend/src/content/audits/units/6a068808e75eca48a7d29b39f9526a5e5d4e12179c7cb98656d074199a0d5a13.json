@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6a068808e75eca48a7d29b39f9526a5e5d4e12179c7cb98656d074199a0d5a13",
+  "name": "GovernanceProposer",
+  "kind": "contract",
+  "lines": 72,
+  "source": "contract GovernanceProposer is IGovernanceProposer, EmpireBase {\n    IRegistry public immutable REGISTRY;\n    IGSE public immutable GSE;\n\n    /**\n     * @dev Mapping of proposal ID to the proposer address.\n     * This allows instances to see if they were the proposer of a proposal\n     * after the payload is `propose`ed to Governance.\n     * Instances that *did* propose a proposal are willing to vote on it in Governance.\n     * See `StakingLib.vote` for more details.\n     */\n    mapping(uint256 proposalId => address proposer) internal proposalProposer;\n\n    /**\n     * @notice Constructor for the GovernanceProposer contract.\n     *\n     * @dev The _executionDelayInRounds are set to 0, as there already is a delay in the governance contract.\n     *      If this was not the case, the delay could be applied here.\n     *\n     * @param _registry The registry contract address.\n     * @param _gse The GSE contract address.\n     * @param _quorumSize The number of signals needed in a round for a payload to pass.\n     * @param _roundSize The number of signals that can be cast in a round.\n     */\n    constructor(IRegistry _registry, IGSE _gse, uint256 _quorumSize, uint256 _roundSize)\n        EmpireBase(_quorumSize, _roundSize, 5, 0)\n    {\n        REGISTRY = _registry;\n        GSE = _gse;\n    }\n\n    function getProposalProposer(uint256 _proposalId) external view override(IGovernanceProposer) returns (address) {\n        return proposalProposer[_proposalId];\n    }\n\n    /**\n     * @dev Returns the address of the Governance contract, i.e. the contract at which\n     * we will `propose` a winning proposal.\n     */\n    function getGovernance() public view override(IGovernanceProposer) returns (address) {\n        return REGISTRY.getGovernance();\n    }\n\n    /**\n     * @dev A hook used by the EmpireBase to determine who is the current block builder (block \"proposer\"),\n     * and thus may signal.\n     *\n     * This contract only respects the canonical rollup.\n     */\n    function getInstance() public view override(EmpireBase, IEmpire) returns (address) {\n        return address(REGISTRY.getCanonicalRollup());\n    }\n\n    /**\n     * @dev Called by the EmpireBase contract in `submitRoundWinner`, which asserts that the payload\n     * has enough support to be proposed to Governance.\n     *\n     * Note that it wraps the original payload in a GSEPayload before pushing into the Governance contract.\n     *\n     * This creates additional checks, namely that *after* the original payload is executed,\n     * the canonical rollup (both the instance and the \"magical address\") has at least 2/3 of the total stake.\n     *\n     * @param _payload The payload to propose to the governance contract.\n     * @return true if the proposal was proposed successfully, reverts otherwise.\n     */\n    function _handleRoundWinner(IPayload _payload) internal override(EmpireBase) returns (bool) {\n        GSEPayload extendedPayload = new GSEPayload(_payload, GSE, REGISTRY);\n        uint256 proposalId = IGovernance(getGovernance()).propose(IPayload(address(extendedPayload)));\n        proposalProposer[proposalId] = getInstance();\n        return true;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 72,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "GovernanceProposer",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/proposer/GovernanceProposer.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/proposer/GovernanceProposer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

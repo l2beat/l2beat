@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d9e297123aa5319df04673e87bb325a859a75463eb49b3d8830a3f718dbcbe8f",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 9,
+  "source": "[package]\nname = \"private_kernel_reset_tail_to_public\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nprivate_kernel_lib = { path = \"../private-kernel-lib\" }\ntypes = { path = \"../types\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

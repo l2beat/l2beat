@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ac0b8aa20d91fff6e84804d746c00a084bde53eb4804b71de388acdfd664a9ba",
+  "name": "Versioned",
+  "kind": "contract",
+  "lines": 57,
+  "source": "contract Versioned {\n    using UnstructuredStorage for bytes32;\n\n    event ContractVersionSet(uint256 version);\n\n    error NonZeroContractVersionOnInit();\n    error InvalidContractVersionIncrement();\n    error UnexpectedContractVersion(uint256 expected, uint256 received);\n\n    /// @dev Storage slot: uint256 version\n    /// Version of the initialized contract storage.\n    /// The version stored in CONTRACT_VERSION_POSITION equals to:\n    /// - 0 right after the deployment, before an initializer is invoked (and only at that moment);\n    /// - N after calling initialize(), where N is the initially deployed contract version;\n    /// - N after upgrading contract by calling finalizeUpgrade_vN().\n    bytes32 internal constant CONTRACT_VERSION_POSITION = keccak256(\"lido.Versioned.contractVersion\");\n\n    uint256 internal constant PETRIFIED_VERSION_MARK = type(uint256).max;\n\n    constructor() {\n        // lock version in the implementation's storage to prevent initialization\n        CONTRACT_VERSION_POSITION.setStorageUint256(PETRIFIED_VERSION_MARK);\n    }\n\n    /// @notice Returns the current contract version.\n    function getContractVersion() public view returns (uint256) {\n        return CONTRACT_VERSION_POSITION.getStorageUint256();\n    }\n\n    function _checkContractVersion(uint256 version) internal view {\n        uint256 expectedVersion = getContractVersion();\n        if (version != expectedVersion) {\n            revert UnexpectedContractVersion(expectedVersion, version);\n        }\n    }\n\n    /// @dev Sets the contract version to N. Should be called from the initialize() function.\n    function _initializeContractVersionTo(uint256 version) internal {\n        if (getContractVersion() != 0) {\n            revert NonZeroContractVersionOnInit();\n        }\n        _setContractVersion(version);\n    }\n\n    /// @dev Updates the contract version. Should be called from a finalizeUpgrade_vN() function.\n    function _updateContractVersion(uint256 newVersion) internal {\n        if (newVersion != getContractVersion() + 1) {\n            revert InvalidContractVersionIncrement();\n        }\n        _setContractVersion(newVersion);\n    }\n\n    function _setContractVersion(uint256 version) private {\n        CONTRACT_VERSION_POSITION.setStorageUint256(version);\n        emit ContractVersionSet(version);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

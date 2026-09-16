@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4d41dfed844309cdf30bd0e38a3b0fa93d4432e93e85f0f5e9ee864c584ba6a2",
+  "name": "ScrollGatewayBase",
+  "kind": "abstract",
+  "lines": 80,
+  "source": "abstract contract ScrollGatewayBase is ReentrancyGuardUpgradeable, OwnableUpgradeable, IScrollGateway {\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @inheritdoc IScrollGateway\n    address public override counterpart;\n\n    /// @inheritdoc IScrollGateway\n    address public override router;\n\n    /// @inheritdoc IScrollGateway\n    address public override messenger;\n\n    /// @dev The storage slot used as token rate limiter contract, which is deprecated now.\n    address private __rateLimiter;\n\n    /// @dev The storage slots for future usage.\n    uint256[46] private __gap;\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n    modifier onlyCallByCounterpart() {\n        address _messenger = messenger; // gas saving\n        require(_msgSender() == _messenger, \"only messenger can call\");\n        require(counterpart == IScrollMessenger(_messenger).xDomainMessageSender(), \"only call by counterpart\");\n        _;\n    }\n\n    modifier onlyInDropContext() {\n        address _messenger = messenger; // gas saving\n        require(_msgSender() == _messenger, \"only messenger can call\");\n        require(\n            ScrollConstants.DROP_XDOMAIN_MESSAGE_SENDER == IScrollMessenger(_messenger).xDomainMessageSender(),\n            \"only called in drop context\"\n        );\n        _;\n    }\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    function _initialize(address _counterpart, address _router, address _messenger) internal {\n        require(_counterpart != address(0), \"zero counterpart address\");\n        require(_messenger != address(0), \"zero messenger address\");\n\n        ReentrancyGuardUpgradeable.__ReentrancyGuard_init();\n        OwnableUpgradeable.__Ownable_init();\n\n        counterpart = _counterpart;\n        messenger = _messenger;\n\n        // @note: the address of router could be zero, if this contract is GatewayRouter.\n        if (_router != address(0)) {\n            router = _router;\n        }\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to forward calldata to target contract.\n    /// @param _to The address of contract to call.\n    /// @param _data The calldata passed to the contract.\n    function _doCallback(address _to, bytes memory _data) internal {\n        if (_data.length > 0 && _to.code.length > 0) {\n            IScrollGatewayCallback(_to).onScrollGatewayCallback(_data);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ScrollGatewayBase",
+        "similarity": 0.861,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/gateway/ScrollGatewayBase.sol",
+        "commit": "a798e4d52524ddc388e48f9b24d437ee0b3ad85d",
+        "commitTimestamp": "2023-08-01T12:13:37Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/a798e4d52524ddc388e48f9b24d437ee0b3ad85d/contracts/src/libraries/gateway/ScrollGatewayBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #698 fix of L-04 (consistent reentrancy guard usage). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 6,
+        "removed": 4,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ScrollGatewayBase is ReentrancyGuardUpgradeable, IScrollGateway {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ScrollGatewayBase is ReentrancyGuardUpgradeable, OwnableUpgradeable, IScrollGateway {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Variables *"
+              }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 8,
+            "newStart": 14,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @inheritdoc IScrollGateway"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    address public override messenger;"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @dev The storage slot used as token rate limiter contract, which is deprecated now.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    address private __rateLimiter;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 19, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 20,
+                "text": "    /// @dev The storage slots for future usage."
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    uint256[47] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    uint256[46] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 22, "text": "" },
+              { "type": " ", "oldLine": 20, "newLine": 23, "text": "    /**" },
+              { "type": " ", "oldLine": 21, "newLine": 24, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 14,
+            "newStart": 27,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 24, "newLine": 27, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 28,
+                "text": "    modifier onlyCallByCounterpart() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 29,
+                "text": "        address _messenger = messenger; // gas saving"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        require(msg.sender == _messenger, \"only messenger can call\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        require(_msgSender() == _messenger, \"only messenger can call\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 31,
+                "text": "        require(counterpart == IScrollMessenger(_messenger).xDomainMessageSender(), \"only call by counterpart\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 32,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 35,
+                "text": "    modifier onlyInDropContext() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 36,
+                "text": "        address _messenger = messenger; // gas saving"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        require(msg.sender == _messenger, \"only messenger can call\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        require(_msgSender() == _messenger, \"only messenger can call\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 38,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 39,
+                "text": "            ScrollConstants.DROP_XDOMAIN_MESSAGE_SENDER == IScrollMessenger(_messenger).xDomainMessageSender(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 40,
+                "text": "            \"only called in drop context\""
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 6,
+            "newStart": 52,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 52,
+                "text": "        require(_messenger != address(0), \"zero messenger address\");"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 54,
+                "text": "        ReentrancyGuardUpgradeable.__ReentrancyGuard_init();"
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        OwnableUpgradeable.__Ownable_init();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 56, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 57,
+                "text": "        counterpart = _counterpart;"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 58,
+                "text": "        messenger = _messenger;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

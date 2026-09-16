@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "75d2d2efca0e72f83b2dc85c75d72253cb7a4b68bf18077896f06d7b0f4de6c0",
+  "name": "Clones",
+  "kind": "library",
+  "lines": 71,
+  "source": "library Clones {\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`.\n     *\n     * This function uses the create opcode, which should never revert.\n     */\n    function clone(address implementation) internal returns (address instance) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\n            // of the `implementation` address with the bytecode before the address.\n            mstore(0x00, or(shr(0xe8, shl(0x60, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\n            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))\n            instance := create(0, 0x09, 0x37)\n        }\n        require(instance != address(0), \"ERC1167: create failed\");\n    }\n\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`.\n     *\n     * This function uses the create2 opcode and a `salt` to deterministically deploy\n     * the clone. Using the same `implementation` and `salt` multiple time will revert, since\n     * the clones cannot be deployed twice at the same address.\n     */\n    function cloneDeterministic(address implementation, bytes32 salt) internal returns (address instance) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\n            // of the `implementation` address with the bytecode before the address.\n            mstore(0x00, or(shr(0xe8, shl(0x60, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\n            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))\n            instance := create2(0, 0x09, 0x37, salt)\n        }\n        require(instance != address(0), \"ERC1167: create2 failed\");\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\n     */\n    function predictDeterministicAddress(address implementation, bytes32 salt, address deployer)\n        internal\n        pure\n        returns (address predicted)\n    {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let ptr := mload(0x40)\n            mstore(add(ptr, 0x38), deployer)\n            mstore(add(ptr, 0x24), 0x5af43d82803e903d91602b57fd5bf3ff)\n            mstore(add(ptr, 0x14), implementation)\n            mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73)\n            mstore(add(ptr, 0x58), salt)\n            mstore(add(ptr, 0x78), keccak256(add(ptr, 0x0c), 0x37))\n            predicted := keccak256(add(ptr, 0x43), 0x55)\n        }\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\n     */\n    function predictDeterministicAddress(address implementation, bytes32 salt)\n        internal\n        view\n        returns (address predicted)\n    {\n        return predictDeterministicAddress(implementation, salt, address(this));\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 69,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Clones",
+        "similarity": 0.897,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Clones.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/proxy/Clones.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 7,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 4,
+        "unchanged": 69,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Clones {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev A clone instance deployment failed.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    error ERC1167FailedCreateClone();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 6, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 7, "text": "    /**", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 3,
+                "text": "     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 4, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 5,
+                "text": "     * This function uses the create opcode, which should never revert."
+              }
+            ]
+          },
+          {
+            "oldStart": 19,
+            "oldLines": 9,
+            "newStart": 14,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 14,
+                "text": "            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 15,
+                "text": "            instance := create(0, 0x09, 0x37)"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 16,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        if (instance == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            revert ERC1167FailedCreateClone();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        require(instance != address(0), \"ERC1167: create failed\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 18, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 19, "text": "" },
+              { "type": " ", "oldLine": 27, "newLine": 20, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 41,
+            "oldLines": 9,
+            "newStart": 34,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 34,
+                "text": "            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 35,
+                "text": "            instance := create2(0, 0x09, 0x37, salt)"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 36,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        if (instance == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "            revert ERC1167FailedCreateClone();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        require(instance != address(0), \"ERC1167: create2 failed\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 48, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 49, "newLine": 40, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "783d0ac752c2a40fda989a4914905f2596fe205721d1436064b113f6dbcaed47",
+  "name": "private_kernel_inner_n.nr",
+  "kind": "program",
+  "lines": 29,
+  "source": "use crate::{\n    private_kernel_batch::execute_next_private_call,\n    private_kernel_inner::ALLOWED_PREVIOUS_CIRCUITS,\n};\nuse types::abis::{\n    kernel_circuit_public_inputs::PrivateKernelCircuitPublicInputs,\n    private_kernel::private_call_data::PrivateCallData, private_kernel_data::PrivateKernelData,\n};\n\npub struct PrivateKernelInnerNCircuitPrivateInputs<let N: u32> {\n    pub previous_kernel: PrivateKernelData,\n    pub private_calls: [PrivateCallData; N],\n}\n\npub fn execute<let N: u32>(\n    inputs: PrivateKernelInnerNCircuitPrivateInputs<N>,\n) -> PrivateKernelCircuitPublicInputs {\n    if !::std::runtime::is_unconstrained() {\n        inputs.previous_kernel.verify(false);\n    }\n    inputs.previous_kernel.validate_vk_in_vk_tree(ALLOWED_PREVIOUS_CIRCUITS);\n\n    let mut output = inputs.previous_kernel.public_inputs;\n    for i in 0..N {\n        output = execute_next_private_call(output, inputs.private_calls[i]);\n    }\n\n    output\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

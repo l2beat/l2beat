@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "32a3ac32c58bdad01ddd3ef294bacc9d22989f39b0a05941a839fe4df9ef2117",
+  "name": "OptimismMintableERC721Factory",
+  "kind": "contract",
+  "lines": 60,
+  "source": "contract OptimismMintableERC721Factory is Semver {\n    /**\n     * @notice Address of the ERC721 bridge on this network.\n     */\n    address public immutable BRIDGE;\n\n    /**\n     * @notice Chain ID for the remote network.\n     */\n    uint256 public immutable REMOTE_CHAIN_ID;\n\n    /**\n     * @notice Tracks addresses created by this factory.\n     */\n    mapping(address => bool) public isOptimismMintableERC721;\n\n    /**\n     * @notice Emitted whenever a new OptimismMintableERC721 contract is created.\n     *\n     * @param localToken  Address of the token on the this domain.\n     * @param remoteToken Address of the token on the remote domain.\n     * @param deployer    Address of the initiator of the deployment\n     */\n    event OptimismMintableERC721Created(address indexed localToken, address indexed remoteToken, address deployer);\n\n    /**\n     * @custom:semver 1.2.0\n     * @notice The semver MUST be bumped any time that there is a change in\n     *         the OptimismMintableERC721 token contract since this contract\n     *         is responsible for deploying OptimismMintableERC721 contracts.\n     *\n     * @param _bridge Address of the ERC721 bridge on this network.\n     * @param _remoteChainId Chain ID for the remote network.\n     */\n    constructor(address _bridge, uint256 _remoteChainId) Semver(1, 2, 0) {\n        BRIDGE = _bridge;\n        REMOTE_CHAIN_ID = _remoteChainId;\n    }\n\n    /**\n     * @notice Creates an instance of the standard ERC721.\n     *\n     * @param _remoteToken Address of the corresponding token on the other domain.\n     * @param _name        ERC721 name.\n     * @param _symbol      ERC721 symbol.\n     */\n    function createOptimismMintableERC721(address _remoteToken, string memory _name, string memory _symbol)\n        external\n        returns (address)\n    {\n        require(_remoteToken != address(0), \"OptimismMintableERC721Factory: L1 token address cannot be address(0)\");\n\n        address localToken = address(new OptimismMintableERC721(BRIDGE, REMOTE_CHAIN_ID, _remoteToken, _name, _symbol));\n\n        isOptimismMintableERC721[localToken] = true;\n        emit OptimismMintableERC721Created(localToken, _remoteToken, msg.sender);\n\n        return localToken;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

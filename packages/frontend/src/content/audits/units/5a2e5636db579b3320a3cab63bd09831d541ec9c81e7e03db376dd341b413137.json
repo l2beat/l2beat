@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5a2e5636db579b3320a3cab63bd09831d541ec9c81e7e03db376dd341b413137",
+  "name": "Errors",
+  "kind": "library",
+  "lines": 73,
+  "source": "library Errors {\n    error Governance__CallerNotGovernanceProposer(address caller, address governanceProposer);\n    error Governance__GovernanceProposerCannotBeSelf();\n    error Governance__CallerNotSelf(address caller, address self);\n    error Governance__CallerCannotBeSelf();\n    error Governance__InsufficientPower(address voter, uint256 have, uint256 required);\n    error Governance__CannotWithdrawToAddressZero();\n    error Governance__WithdrawalNotInitiated();\n    error Governance__WithdrawalAlreadyClaimed();\n    error Governance__WithdrawalNotUnlockedYet(Timestamp currentTime, Timestamp unlocksAt);\n    error Governance__ProposalNotActive();\n    error Governance__ProposalNotExecutable();\n    error Governance__CannotCallAsset();\n    error Governance__CallFailed(address target);\n    error Governance__ProposalDoesNotExists(uint256 proposalId);\n    error Governance__ProposalAlreadyDropped();\n    error Governance__ProposalCannotBeDropped();\n    error Governance__DepositNotAllowed();\n\n    error Governance__CheckpointedUintLib__InsufficientValue(address owner, uint256 have, uint256 required);\n    error Governance__CheckpointedUintLib__NotInPast();\n\n    error Governance__ConfigurationLib__InvalidMinimumVotes();\n    error Governance__ConfigurationLib__LockAmountTooSmall();\n    error Governance__ConfigurationLib__LockAmountTooBig();\n    error Governance__ConfigurationLib__QuorumTooSmall();\n    error Governance__ConfigurationLib__QuorumTooBig();\n    error Governance__ConfigurationLib__RequiredYeaMarginTooBig();\n    error Governance__ConfigurationLib__TimeTooSmall(string name);\n    error Governance__ConfigurationLib__TimeTooBig(string name);\n\n    error EmpireBase__FailedToSubmitRoundWinner(IPayload payload);\n    error EmpireBase__InstanceHaveNoCode(address instance);\n    error EmpireBase__InsufficientSignals(uint256 signalsCast, uint256 signalsNeeded);\n    error EmpireBase__InvalidQuorumAndRoundSize(uint256 quorumSize, uint256 roundSize);\n    error EmpireBase__QuorumCannotBeLargerThanRoundSize(uint256 quorumSize, uint256 roundSize);\n    error EmpireBase__InvalidLifetimeAndExecutionDelay(uint256 lifetimeInRounds, uint256 executionDelayInRounds);\n    error EmpireBase__OnlyProposerCanSignal(address caller, address proposer);\n    error EmpireBase__PayloadAlreadySubmitted(uint256 roundNumber);\n    error EmpireBase__PayloadCannotBeAddressZero();\n    error EmpireBase__RoundTooOld(uint256 roundNumber, uint256 currentRoundNumber);\n    error EmpireBase__RoundTooNew(uint256 roundNumber, uint256 currentRoundNumber);\n    error EmpireBase__SignalAlreadyCastForSlot(Slot slot);\n    error GovernanceProposer__GSEPayloadInvalid();\n\n    error CoinIssuer__InsufficientMintAvailable(uint256 available, uint256 needed); // 0xa1cc8799\n    error CoinIssuer__InvalidConfiguration();\n\n    error Registry__RollupAlreadyRegistered(address rollup); // 0x3c34eabf\n    error Registry__RollupNotRegistered(uint256 version);\n    error Registry__NoRollupsRegistered();\n\n    error RewardDistributor__InvalidCaller(address caller, address canonical); // 0xb95e39f6\n\n    error GSE__NotRollup(address);\n    error GSE__GovernanceAlreadySet();\n    error GSE__InvalidRollupAddress(address);\n    error GSE__RollupAlreadyRegistered(address);\n    error GSE__NotLatestRollup(address);\n    error GSE__AlreadyRegistered(address, address);\n    error GSE__NothingToExit(address);\n    error GSE__InsufficientBalance(uint256, uint256);\n    error GSE__FailedToRemove(address);\n    error GSE__InstanceDoesNotExist(address);\n    error GSE__NotWithdrawer(address, address);\n    error GSE__OutOfBounds(uint256, uint256);\n    error GSE__FatalError(string);\n    error GSE__InvalidProofOfPossession();\n    error GSE__CannotChangePublicKeys(uint256 existingPk1x, uint256 existingPk1y);\n    error GSE__ProofOfPossessionAlreadySeen(bytes32 hashedPK1);\n\n    error Delegation__InsufficientPower(address, uint256, uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 72,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Errors",
+        "similarity": 0.992,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/libraries/Errors.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/Errors.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 72,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 44,
+            "oldLines": 6,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    error GovernanceProposer__GSEPayloadInvalid();"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    error CoinIssuer__InsufficientMintAvailable(uint256 available, uint256 needed); // 0xa1cc8799"
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    error CoinIssuer__InvalidConfiguration();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 49,
+                "text": "    error Registry__RollupAlreadyRegistered(address rollup); // 0x3c34eabf"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 50,
+                "text": "    error Registry__RollupNotRegistered(uint256 version);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0936dda4f3833e36598dd5fbabe61bc969178eb99c6c10cc701c51dbdf2f3b22",
+  "name": "Blacklistable",
+  "kind": "contract",
+  "lines": 57,
+  "source": "contract Blacklistable is Ownable {\n    address public blacklister;\n    mapping(address => bool) internal blacklisted;\n\n    event Blacklisted(address indexed _account);\n    event UnBlacklisted(address indexed _account);\n    event BlacklisterChanged(address indexed newBlacklister);\n\n    /**\n     * @dev Throws if called by any account other than the blacklister\n     */\n    modifier onlyBlacklister() {\n        require(msg.sender == blacklister, \"Blacklistable: caller is not the blacklister\");\n        _;\n    }\n\n    /**\n     * @dev Throws if argument account is blacklisted\n     * @param _account The address to check\n     */\n    modifier notBlacklisted(address _account) {\n        require(!blacklisted[_account], \"Blacklistable: account is blacklisted\");\n        _;\n    }\n\n    /**\n     * @dev Checks if account is blacklisted\n     * @param _account The address to check\n     */\n    function isBlacklisted(address _account) external view returns (bool) {\n        return blacklisted[_account];\n    }\n\n    /**\n     * @dev Adds account to blacklist\n     * @param _account The address to blacklist\n     */\n    function blacklist(address _account) external onlyBlacklister {\n        blacklisted[_account] = true;\n        emit Blacklisted(_account);\n    }\n\n    /**\n     * @dev Removes account from blacklist\n     * @param _account The address to remove from the blacklist\n     */\n    function unBlacklist(address _account) external onlyBlacklister {\n        blacklisted[_account] = false;\n        emit UnBlacklisted(_account);\n    }\n\n    function updateBlacklister(address _newBlacklister) external onlyOwner {\n        require(_newBlacklister != address(0), \"Blacklistable: new blacklister is the zero address\");\n        blacklister = _newBlacklister;\n        emit BlacklisterChanged(blacklister);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

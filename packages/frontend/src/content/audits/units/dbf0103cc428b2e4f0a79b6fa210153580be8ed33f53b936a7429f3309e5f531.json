@@ -628,6 +628,2498 @@
         ]
       },
       "warnings": ["low-similarity"]
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EIP712",
+        "similarity": 0.224,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 50,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 22,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract EIP712 is IERC5267 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    using ShortStrings for *;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    bytes32 private constant _TYPE_HASH =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /* solhint-disable var-name-mixedcase */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 3,
+                "text": "    // Cache the domain separator as an immutable value, but also store the chain id that it corresponds to, in order to"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    // invalidate the cached domain separator if the chain id changes."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 private immutable _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    uint256 private immutable _cachedChainId;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    address private immutable _cachedThis;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    uint256 private immutable _CACHED_CHAIN_ID;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address private immutable _CACHED_THIS;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ShortString private immutable _name;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    ShortString private immutable _version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string private _nameFallback;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    string private _versionFallback;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    bytes32 private immutable _HASHED_NAME;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    bytes32 private immutable _HASHED_VERSION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    bytes32 private immutable _TYPE_HASH;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    bytes32 private immutable _hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    bytes32 private immutable _hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /* solhint-enable var-name-mixedcase */",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 16,
+                "text": "     * @dev Initializes the domain separator and parameter caches."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 29,
+            "newStart": 25,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "     * contract upgrade]."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 27,
+                "text": "    constructor(string memory name, string memory version) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        _name = name.toShortStringWithFallback(_nameFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        _version = version.toShortStringWithFallback(_versionFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        _hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        _hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        _cachedChainId = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        _cachedDomainSeparator = _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        _cachedThis = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        bytes32 hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        bytes32 typeHash =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _HASHED_NAME = hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        _HASHED_VERSION = hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        _CACHED_CHAIN_ID = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        _CACHED_DOMAIN_SEPARATOR = _buildDomainSeparator(typeHash, hashedName, hashedVersion);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        _CACHED_THIS = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        _TYPE_HASH = typeHash;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 44, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 41,
+                "text": "     * @dev Returns the domain separator for the current chain."
+              },
+              { "type": " ", "oldLine": 46, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 43,
+                "text": "    function _domainSeparatorV4() internal view returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        if (address(this) == _cachedThis && block.chainid == _cachedChainId) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "            return _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        if (address(this) == _CACHED_THIS && block.chainid == _CACHED_CHAIN_ID) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            return _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 46,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            return _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            return _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME, _HASHED_VERSION);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _buildDomainSeparator() private view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        return keccak256(abi.encode(_TYPE_HASH, _hashedName, _hashedVersion, block.chainid, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function _buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        returns (bytes32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        return keccak256(abi.encode(typeHash, nameHash, versionHash, block.chainid, address(this)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 33,
+            "newStart": 74,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        return ECDSA.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @dev See {EIP-5267}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    function eip712Domain()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        returns (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            bytes1 fields,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            string memory name,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            string memory version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            uint256 chainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "            address verifyingContract,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            bytes32 salt,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            uint256[] memory extensions",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        )",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 95, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        return (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "            hex\"0f\", // 01111",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            _name.toStringWithFallback(_nameFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            _version.toStringWithFallback(_versionFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "            block.chainid,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "            bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            new uint256[](0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 106, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EIP712",
+        "similarity": 0.224,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 50,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 22,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract EIP712 is IERC5267 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    using ShortStrings for *;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    bytes32 private constant _TYPE_HASH =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /* solhint-disable var-name-mixedcase */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 3,
+                "text": "    // Cache the domain separator as an immutable value, but also store the chain id that it corresponds to, in order to"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    // invalidate the cached domain separator if the chain id changes."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 private immutable _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    uint256 private immutable _cachedChainId;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    address private immutable _cachedThis;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    uint256 private immutable _CACHED_CHAIN_ID;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address private immutable _CACHED_THIS;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ShortString private immutable _name;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    ShortString private immutable _version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string private _nameFallback;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    string private _versionFallback;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    bytes32 private immutable _HASHED_NAME;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    bytes32 private immutable _HASHED_VERSION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    bytes32 private immutable _TYPE_HASH;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    bytes32 private immutable _hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    bytes32 private immutable _hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /* solhint-enable var-name-mixedcase */",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 16,
+                "text": "     * @dev Initializes the domain separator and parameter caches."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 29,
+            "newStart": 25,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "     * contract upgrade]."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 27,
+                "text": "    constructor(string memory name, string memory version) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        _name = name.toShortStringWithFallback(_nameFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        _version = version.toShortStringWithFallback(_versionFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        _hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        _hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        _cachedChainId = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        _cachedDomainSeparator = _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        _cachedThis = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        bytes32 hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        bytes32 typeHash =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _HASHED_NAME = hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        _HASHED_VERSION = hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        _CACHED_CHAIN_ID = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        _CACHED_DOMAIN_SEPARATOR = _buildDomainSeparator(typeHash, hashedName, hashedVersion);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        _CACHED_THIS = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        _TYPE_HASH = typeHash;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 44, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 41,
+                "text": "     * @dev Returns the domain separator for the current chain."
+              },
+              { "type": " ", "oldLine": 46, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 43,
+                "text": "    function _domainSeparatorV4() internal view returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        if (address(this) == _cachedThis && block.chainid == _cachedChainId) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "            return _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        if (address(this) == _CACHED_THIS && block.chainid == _CACHED_CHAIN_ID) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            return _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 46,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            return _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            return _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME, _HASHED_VERSION);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _buildDomainSeparator() private view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        return keccak256(abi.encode(_TYPE_HASH, _hashedName, _hashedVersion, block.chainid, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function _buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        returns (bytes32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        return keccak256(abi.encode(typeHash, nameHash, versionHash, block.chainid, address(this)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 33,
+            "newStart": 74,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        return ECDSA.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @dev See {EIP-5267}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    function eip712Domain()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        returns (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            bytes1 fields,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            string memory name,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            string memory version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            uint256 chainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "            address verifyingContract,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            bytes32 salt,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            uint256[] memory extensions",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        )",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 95, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        return (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "            hex\"0f\", // 01111",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            _name.toStringWithFallback(_nameFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            _version.toStringWithFallback(_versionFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "            block.chainid,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "            bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            new uint256[](0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 106, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EIP712",
+        "similarity": 0.224,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 50,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 22,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract EIP712 is IERC5267 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    using ShortStrings for *;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    bytes32 private constant _TYPE_HASH =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /* solhint-disable var-name-mixedcase */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 3,
+                "text": "    // Cache the domain separator as an immutable value, but also store the chain id that it corresponds to, in order to"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    // invalidate the cached domain separator if the chain id changes."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 private immutable _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    uint256 private immutable _cachedChainId;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    address private immutable _cachedThis;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    uint256 private immutable _CACHED_CHAIN_ID;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address private immutable _CACHED_THIS;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ShortString private immutable _name;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    ShortString private immutable _version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string private _nameFallback;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    string private _versionFallback;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    bytes32 private immutable _HASHED_NAME;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    bytes32 private immutable _HASHED_VERSION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    bytes32 private immutable _TYPE_HASH;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    bytes32 private immutable _hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    bytes32 private immutable _hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /* solhint-enable var-name-mixedcase */",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 16,
+                "text": "     * @dev Initializes the domain separator and parameter caches."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 29,
+            "newStart": 25,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "     * contract upgrade]."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 27,
+                "text": "    constructor(string memory name, string memory version) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        _name = name.toShortStringWithFallback(_nameFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        _version = version.toShortStringWithFallback(_versionFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        _hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        _hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        _cachedChainId = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        _cachedDomainSeparator = _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        _cachedThis = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        bytes32 hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        bytes32 typeHash =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _HASHED_NAME = hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        _HASHED_VERSION = hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        _CACHED_CHAIN_ID = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        _CACHED_DOMAIN_SEPARATOR = _buildDomainSeparator(typeHash, hashedName, hashedVersion);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        _CACHED_THIS = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        _TYPE_HASH = typeHash;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 44, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 41,
+                "text": "     * @dev Returns the domain separator for the current chain."
+              },
+              { "type": " ", "oldLine": 46, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 43,
+                "text": "    function _domainSeparatorV4() internal view returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        if (address(this) == _cachedThis && block.chainid == _cachedChainId) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "            return _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        if (address(this) == _CACHED_THIS && block.chainid == _CACHED_CHAIN_ID) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            return _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 46,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            return _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            return _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME, _HASHED_VERSION);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _buildDomainSeparator() private view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        return keccak256(abi.encode(_TYPE_HASH, _hashedName, _hashedVersion, block.chainid, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function _buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        returns (bytes32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        return keccak256(abi.encode(typeHash, nameHash, versionHash, block.chainid, address(this)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 33,
+            "newStart": 74,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        return ECDSA.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @dev See {EIP-5267}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    function eip712Domain()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        returns (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            bytes1 fields,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            string memory name,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            string memory version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            uint256 chainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "            address verifyingContract,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            bytes32 salt,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            uint256[] memory extensions",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        )",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 95, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        return (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "            hex\"0f\", // 01111",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            _name.toStringWithFallback(_nameFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            _version.toStringWithFallback(_versionFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "            block.chainid,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "            bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            new uint256[](0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 106, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EIP712",
+        "similarity": 0.224,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 50,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 22,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract EIP712 is IERC5267 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    using ShortStrings for *;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    bytes32 private constant _TYPE_HASH =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /* solhint-disable var-name-mixedcase */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 3,
+                "text": "    // Cache the domain separator as an immutable value, but also store the chain id that it corresponds to, in order to"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    // invalidate the cached domain separator if the chain id changes."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    bytes32 private immutable _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    uint256 private immutable _cachedChainId;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    address private immutable _cachedThis;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    uint256 private immutable _CACHED_CHAIN_ID;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address private immutable _CACHED_THIS;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ShortString private immutable _name;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    ShortString private immutable _version;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    string private _nameFallback;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    string private _versionFallback;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    bytes32 private immutable _HASHED_NAME;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    bytes32 private immutable _HASHED_VERSION;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    bytes32 private immutable _TYPE_HASH;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    bytes32 private immutable _hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    bytes32 private immutable _hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /* solhint-enable var-name-mixedcase */",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 15, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 16,
+                "text": "     * @dev Initializes the domain separator and parameter caches."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 29,
+            "newStart": 25,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "     * contract upgrade]."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 27,
+                "text": "    constructor(string memory name, string memory version) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        _name = name.toShortStringWithFallback(_nameFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        _version = version.toShortStringWithFallback(_versionFallback);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        _hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        _hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        _cachedChainId = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        _cachedDomainSeparator = _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        _cachedThis = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 hashedName = keccak256(bytes(name));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        bytes32 hashedVersion = keccak256(bytes(version));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        bytes32 typeHash =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "            keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _HASHED_NAME = hashedName;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        _HASHED_VERSION = hashedVersion;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        _CACHED_CHAIN_ID = block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        _CACHED_DOMAIN_SEPARATOR = _buildDomainSeparator(typeHash, hashedName, hashedVersion);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        _CACHED_THIS = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        _TYPE_HASH = typeHash;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 39, "text": "" },
+              { "type": " ", "oldLine": 44, "newLine": 40, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 41,
+                "text": "     * @dev Returns the domain separator for the current chain."
+              },
+              { "type": " ", "oldLine": 46, "newLine": 42, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 43,
+                "text": "    function _domainSeparatorV4() internal view returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        if (address(this) == _cachedThis && block.chainid == _cachedChainId) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "            return _cachedDomainSeparator;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        if (address(this) == _CACHED_THIS && block.chainid == _CACHED_CHAIN_ID) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "            return _CACHED_DOMAIN_SEPARATOR;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 46,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            return _buildDomainSeparator();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            return _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME, _HASHED_VERSION);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _buildDomainSeparator() private view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        return keccak256(abi.encode(_TYPE_HASH, _hashedName, _hashedVersion, block.chainid, address(this)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function _buildDomainSeparator(bytes32 typeHash, bytes32 nameHash, bytes32 versionHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        returns (bytes32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        return keccak256(abi.encode(typeHash, nameHash, versionHash, block.chainid, address(this)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 33,
+            "newStart": 74,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        return ECDSA.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @dev See {EIP-5267}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    function eip712Domain()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        returns (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            bytes1 fields,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            string memory name,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            string memory version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            uint256 chainId,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "            address verifyingContract,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            bytes32 salt,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            uint256[] memory extensions",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        )",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 95, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        return (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "            hex\"0f\", // 01111",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            _name.toStringWithFallback(_nameFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            _version.toStringWithFallback(_versionFallback),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "            block.chainid,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            address(this),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "            bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            new uint256[](0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 106, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
     }
   }
 }

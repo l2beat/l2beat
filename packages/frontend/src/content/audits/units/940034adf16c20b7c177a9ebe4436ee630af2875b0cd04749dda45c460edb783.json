@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "940034adf16c20b7c177a9ebe4436ee630af2875b0cd04749dda45c460edb783",
+  "name": "checkpoint_constant_data.nr",
+  "kind": "program",
+  "lines": 47,
+  "source": "use crate::{\n    abis::gas_fees::GasFees,\n    address::{AztecAddress, EthAddress},\n    constants::CHECKPOINT_CONSTANT_DATA_LENGTH,\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct CheckpointConstantData {\n    // Constants inherited from the parent rollup (i.e., EpochConstantData).\n    pub chain_id: Field,\n    pub version: Field,\n    pub vk_tree_root: Field,\n    pub protocol_contracts_hash: Field,\n    pub prover_id: Field,\n\n    // Additional constants that remain the same for all blocks within a checkpoint.\n    pub slot_number: Field,\n    pub coinbase: EthAddress,\n    pub fee_recipient: AztecAddress,\n    pub gas_fees: GasFees,\n}\n\nimpl Empty for CheckpointConstantData {\n    fn empty() -> Self {\n        CheckpointConstantData {\n            chain_id: 0,\n            version: 0,\n            vk_tree_root: 0,\n            protocol_contracts_hash: 0,\n            prover_id: 0,\n            slot_number: 0,\n            coinbase: EthAddress::empty(),\n            fee_recipient: AztecAddress::empty(),\n            gas_fees: GasFees::empty(),\n        }\n    }\n}\n\n#[test]\nfn serialization_of_empty_checkpoint_constant_data() {\n    let fields = [0; CHECKPOINT_CONSTANT_DATA_LENGTH].mapi(|i, _| i as Field);\n    let deserialized = CheckpointConstantData::deserialize(fields);\n    let serialized = deserialized.serialize();\n    assert_eq(serialized, fields);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

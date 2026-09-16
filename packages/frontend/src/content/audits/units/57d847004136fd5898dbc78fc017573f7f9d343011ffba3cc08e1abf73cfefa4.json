@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "57d847004136fd5898dbc78fc017573f7f9d343011ffba3cc08e1abf73cfefa4",
+  "name": "ERC1967Proxy",
+  "kind": "contract",
+  "lines": 18,
+  "source": "contract ERC1967Proxy is Proxy, ERC1967Upgrade {\n    /**\n     * @dev Initializes the upgradeable proxy with an initial implementation specified by `_logic`.\n     *\n     * If `_data` is nonempty, it's used as data in a delegate call to `_logic`. This will typically be an encoded\n     * function call, and allows initializing the storage of the proxy like a Solidity constructor.\n     */\n    constructor(address _logic, bytes memory _data) payable {\n        _upgradeToAndCall(_logic, _data, false);\n    }\n\n    /**\n     * @dev Returns the current implementation address.\n     */\n    function _implementation() internal view virtual override returns (address impl) {\n        return ERC1967Upgrade._getImplementation();\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC1967Proxy",
+        "similarity": 0.625,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+        "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
+        "commitTimestamp": "2023-07-13T22:25:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/121be5dd09caa2f7ce731f0806b0e14761023bd6/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of commit 121be5d from pull request #4382.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 15,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 26,
+            "newStart": 1,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ERC1967Proxy is Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ERC1967Proxy is Proxy, ERC1967Upgrade {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Initializes the upgradeable proxy with an initial implementation specified by `_logic`."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "     * If `_data` is nonempty, it's used as data in a delegate call to `_logic`. This will typically be an encoded"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * function call, and allows initializing the storage of the proxy like a Solidity constructor."
+              },
+              { "type": "-", "oldLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * - If `data` is empty, `msg.value` must be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 8,
+                "text": "    constructor(address _logic, bytes memory _data) payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        ERC1967Utils.upgradeToAndCall(_logic, _data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        _upgradeToAndCall(_logic, _data, false);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 15, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 12, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 13,
+                "text": "     * @dev Returns the current implementation address."
+              },
+              { "type": "-", "oldLine": 18, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 22, "newLine": 14, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 15,
+                "text": "    function _implementation() internal view virtual override returns (address impl) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        return ERC1967Utils.getImplementation();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        return ERC1967Upgrade._getImplementation();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 17, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 18, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC1967Proxy",
+        "similarity": 0.625,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+        "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
+        "commitTimestamp": "2023-07-13T22:25:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/121be5dd09caa2f7ce731f0806b0e14761023bd6/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of commit 121be5d from pull request #4382.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 15,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 26,
+            "newStart": 1,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ERC1967Proxy is Proxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ERC1967Proxy is Proxy, ERC1967Upgrade {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Initializes the upgradeable proxy with an initial implementation specified by `_logic`."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "     * If `_data` is nonempty, it's used as data in a delegate call to `_logic`. This will typically be an encoded"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * function call, and allows initializing the storage of the proxy like a Solidity constructor."
+              },
+              { "type": "-", "oldLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * - If `data` is empty, `msg.value` must be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 8,
+                "text": "    constructor(address _logic, bytes memory _data) payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        ERC1967Utils.upgradeToAndCall(_logic, _data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        _upgradeToAndCall(_logic, _data, false);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 15, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 12, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 13,
+                "text": "     * @dev Returns the current implementation address."
+              },
+              { "type": "-", "oldLine": 18, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 22, "newLine": 14, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 15,
+                "text": "    function _implementation() internal view virtual override returns (address impl) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        return ERC1967Utils.getImplementation();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        return ERC1967Upgrade._getImplementation();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 17, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 18, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

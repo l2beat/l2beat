@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9b77da746db3584fc541173b935dd323fa8bb8338390f3485d76d36881839de0",
+  "name": "AttestationLib",
+  "kind": "library",
+  "lines": 206,
+  "source": "library AttestationLib {\n    using SignatureLib for Signature;\n\n    function getAttestationsAndSignersDigest(CommitteeAttestations memory _attestations, address[] memory _signers)\n        internal\n        view\n        returns (bytes32)\n    {\n        return getAttestationsAndSignersDigest(_attestations, _signers, address(this));\n    }\n\n    function getAttestationsAndSignersDigest(\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        address _verifyingContract\n    ) internal view returns (bytes32) {\n        return CoordinationSignatureLib.attestationsAndSignersDigest(\n            keccak256(abi.encode(_attestations, _signers)), _verifyingContract\n        );\n    }\n\n    /**\n     * @notice Checks if the given CommitteeAttestations is empty\n     *          Wll return true if either component is empty as they are needed together.\n     * @param _attestations - The committee attestations\n     * @return True if the committee attestations are empty, false otherwise\n     */\n    function isEmpty(CommitteeAttestations memory _attestations) internal pure returns (bool) {\n        return _attestations.signatureIndices.length == 0 || _attestations.signaturesOrAddresses.length == 0;\n    }\n\n    /**\n     * @notice Checks if the given index in the CommitteeAttestations is a signature\n     * @param _attestations - The committee attestations\n     * @param _index - The index to check\n     * @return True if the index is a signature, false otherwise\n     *\n     * @dev The signatureIndices is a bitmap of which indices are signatures.\n     * The index is a signature if the bit at the index is 1.\n     * The index is an address if the bit at the index is 0.\n     *\n     * See its use over in ValidatorSelectionLib.sol\n     */\n    function isSignature(CommitteeAttestations memory _attestations, uint256 _index) internal pure returns (bool) {\n        uint256 byteIndex = _index / 8;\n        uint256 shift = 7 - (_index % 8);\n        return (uint8(_attestations.signatureIndices[byteIndex]) >> shift) & 1 == 1;\n    }\n\n    /**\n     * @notice Gets the signature at the given index\n     * @param _attestations - The committee attestations\n     * @param _index - The index of the signature to get\n     */\n    function getSignature(CommitteeAttestations memory _attestations, uint256 _index)\n        internal\n        pure\n        returns (Signature memory)\n    {\n        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;\n        require(isSignature(_attestations, _index), Errors_1.AttestationLib__NotASignatureAtIndex(_index));\n\n        uint256 dataPtr;\n        assembly {\n            // Skip length\n            dataPtr := add(signaturesOrAddresses, 0x20)\n        }\n\n        // Move to the start of the signature\n        for (uint256 i = 0; i < _index; ++i) {\n            dataPtr += isSignature(_attestations, i) ? SIGNATURE_LENGTH : ADDRESS_LENGTH;\n        }\n\n        uint8 v;\n        bytes32 r;\n        bytes32 s;\n\n        assembly {\n            v := byte(0, mload(dataPtr))\n            dataPtr := add(dataPtr, 1)\n            r := mload(dataPtr)\n            dataPtr := add(dataPtr, 32)\n            s := mload(dataPtr)\n        }\n        return Signature({v: v, r: r, s: s});\n    }\n\n    /**\n     * @notice Gets the address at the given index\n     * @param _attestations - The committee attestations\n     * @param _index - The index of the address to get\n     */\n    function getAddress(CommitteeAttestations memory _attestations, uint256 _index) internal pure returns (address) {\n        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;\n        require(!isSignature(_attestations, _index), Errors_1.AttestationLib__NotAnAddressAtIndex(_index));\n\n        uint256 dataPtr;\n        assembly {\n            // Skip length\n            dataPtr := add(signaturesOrAddresses, 0x20)\n        }\n\n        // Move to the start of the signature\n        for (uint256 i = 0; i < _index; ++i) {\n            dataPtr += isSignature(_attestations, i) ? SIGNATURE_LENGTH : ADDRESS_LENGTH;\n        }\n\n        address addr;\n        assembly {\n            addr := shr(96, mload(dataPtr))\n        }\n\n        return addr;\n    }\n\n    /**\n     * Recovers the committee from the addresses in the attestations and signers.\n     *\n     * @custom:reverts SignatureIndicesSizeMismatch if the signature indices have a wrong size\n     * @custom:reverts OutOfBounds throws if reading data beyond the `_attestations`\n     * @custom:reverts SignaturesOrAddressesSizeMismatch if the signatures or addresses object has wrong size\n     *\n     * @param _attestations - The committee attestations\n     * @param _signers The addresses of the committee members that signed the attestations. Provided in order to not have\n     * to recover them from their attestations' signatures (and hence save gas). The addresses of the non-signing\n     * committee members are directly included in the attestations.\n     * @param _length - The number of addresses to return, should match the number of committee members\n     * @return The addresses of the committee members.\n     */\n    function reconstructCommitteeFromSigners(\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        uint256 _length\n    ) internal pure returns (address[] memory) {\n        uint256 bitmapBytes = (_length + 7) / 8; // Round up to nearest byte\n        require(\n            bitmapBytes == _attestations.signatureIndices.length,\n            Errors_1.AttestationLib__SignatureIndicesSizeMismatch(bitmapBytes, _attestations.signatureIndices.length)\n        );\n\n        // To get a ref that we can easily use with the assembly down below.\n        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;\n        address[] memory addresses = new address[](_length);\n\n        uint256 signersIndex;\n        uint256 dataPtr;\n        uint256 currentByte;\n        uint256 bitMask;\n\n        assembly {\n            // Skip length\n            dataPtr := add(signaturesOrAddresses, 0x20)\n        }\n        uint256 offset = dataPtr;\n\n        for (uint256 i = 0; i < _length; ++i) {\n            // Load new byte every 8 iterations\n            if (i % 8 == 0) {\n                uint256 byteIndex = i / 8;\n                currentByte = uint8(_attestations.signatureIndices[byteIndex]);\n                bitMask = 128; // 0b10000000\n            }\n\n            bool isSignatureFlag = (currentByte & bitMask) != 0;\n            bitMask >>= 1;\n\n            if (isSignatureFlag) {\n                dataPtr += SIGNATURE_LENGTH;\n                addresses[i] = _signers[signersIndex];\n                signersIndex++;\n            } else {\n                address addr;\n                assembly {\n                    addr := shr(96, mload(dataPtr))\n                    dataPtr := add(dataPtr, 20)\n                }\n                addresses[i] = addr;\n            }\n        }\n\n        // Ensure that the size of data provided actually matches what we expect\n        uint256 sizeOfSignaturesAndAddresses =\n            (signersIndex * SIGNATURE_LENGTH) + ((_length - signersIndex) * ADDRESS_LENGTH);\n        require(\n            sizeOfSignaturesAndAddresses == _attestations.signaturesOrAddresses.length,\n            Errors_1.AttestationLib__SignaturesOrAddressesSizeMismatch(\n                sizeOfSignaturesAndAddresses, _attestations.signaturesOrAddresses.length\n            )\n        );\n        require(\n            signersIndex == _signers.length, Errors_1.AttestationLib__SignersSizeMismatch(signersIndex, _signers.length)\n        );\n\n        // Ensure that the reads were within the boundaries of the data, and that we have read all the data.\n        // This check is an extra precaution. There are two cases, we we would end up with an invalid\n        // read, and both should be covered by the above checks.\n        // 1. If trying to read beyond the expected data, the bitmap must have more ones than signatures,\n        // but this will make the the `sizeOfSignaturesAndAddresses` larger than passed data.\n        // 2. If trying to read less than expected data, the bitmap must have fewer ones than signatures,\n        // but this will make the the `sizeOfSignaturesAndAddresses` smaller than passed data.\n        uint256 upperLimit = offset + _attestations.signaturesOrAddresses.length;\n        require(dataPtr == upperLimit, Errors_1.AttestationLib__InvalidDataSize(dataPtr - offset, upperLimit - offset));\n\n        return addresses;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 182,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "AttestationLib",
+        "similarity": 0.778,
+        "reportId": "aztecnetwork/cantina-governance-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
+        "commit": "a3da5c9acb07cd3c4359e024fc9e0e678f25abc5",
+        "commitTimestamp": "2025-08-23T08:00:09Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a3da5c9acb07cd3c4359e024fc9e0e678f25abc5/l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified assembly pointer-caching cleanup",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 24,
+        "removed": 31,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 23,
+        "unchanged": 182,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AttestationLib {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SignatureLib for Signature;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function getAttestationsAndSignersDigest(CommitteeAttestations memory _attestations, address[] memory _signers)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        returns (bytes32)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 8, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        return getAttestationsAndSignersDigest(_attestations, _signers, address(this));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 10, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 11, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function getAttestationsAndSignersDigest(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        CommitteeAttestations memory _attestations,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        address[] memory _signers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        address _verifyingContract",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    ) internal view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        return CoordinationSignatureLib.attestationsAndSignersDigest(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "            keccak256(abi.encode(_attestations, _signers)), _verifyingContract",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 21, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 4, "newLine": 22, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 23,
+                "text": "     * @notice Checks if the given CommitteeAttestations is empty"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 24,
+                "text": "     *          Wll return true if either component is empty as they are needed together."
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 7,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 58,
+                "text": "        returns (Signature memory)"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 59, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 60,
+                "text": "        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        require(isSignature(_attestations, _index), Errors.AttestationLib__NotASignatureAtIndex(_index));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        require(isSignature(_attestations, _index), Errors_1.AttestationLib__NotASignatureAtIndex(_index));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 62, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 63,
+                "text": "        uint256 dataPtr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 64,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 7,
+            "newStart": 92,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 74, "newLine": 92, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 93,
+                "text": "    function getAddress(CommitteeAttestations memory _attestations, uint256 _index) internal pure returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 94,
+                "text": "        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;"
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        require(!isSignature(_attestations, _index), Errors.AttestationLib__NotAnAddressAtIndex(_index));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        require(!isSignature(_attestations, _index), Errors_1.AttestationLib__NotAnAddressAtIndex(_index));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 78, "newLine": 96, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 97,
+                "text": "        uint256 dataPtr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 98,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 49,
+            "newStart": 114,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 96, "newLine": 114, "text": "    }" },
+              { "type": " ", "oldLine": 97, "newLine": 115, "text": "" },
+              { "type": " ", "oldLine": 98, "newLine": 116, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "     * @notice Assert that the size of `_attestations` is as expected, throw otherwise",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * @custom:reverts SignatureIndicesSizeMismatch if the signature indices have a wrong size",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * @custom:reverts SignaturesOrAddressesSizeMismatch if the signatures or addresses object has wrong size",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     * @param _attestations - The attestation struct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "     * @param _expectedCount - The expected size of the validator set",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "    function assertSizes(CommitteeAttestations memory _attestations, uint256 _expectedCount) internal pure {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        // Count signatures (1s) and addresses (0s) from bitmap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "        uint256 signatureCount = 0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "        uint256 addressCount = 0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        uint256 bitmapBytes = (_expectedCount + 7) / 8; // Round up to nearest byte",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "            bitmapBytes == _attestations.signatureIndices.length,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "            Errors.AttestationLib__SignatureIndicesSizeMismatch(bitmapBytes, _attestations.signatureIndices.length)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 116, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        for (uint256 i = 0; i < _expectedCount; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "            uint256 byteIndex = i / 8;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "            uint256 bitIndex = 7 - (i % 8);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "            uint8 bitMask = uint8(1 << bitIndex);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 121, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "            if (uint8(_attestations.signatureIndices[byteIndex]) & bitMask != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "                signatureCount++;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "            } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "                addressCount++;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 128, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        // Calculate expected size",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        uint256 sizeOfSignaturesAndAddresses = (signatureCount * SIGNATURE_LENGTH) + (addressCount * ADDRESS_LENGTH);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 131, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        // Validate actual size matches expected",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "            sizeOfSignaturesAndAddresses == _attestations.signaturesOrAddresses.length,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            Errors.AttestationLib__SignaturesOrAddressesSizeMismatch(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                sizeOfSignaturesAndAddresses, _attestations.signaturesOrAddresses.length",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 140, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 117,
+                "text": "     * Recovers the committee from the addresses in the attestations and signers."
+              },
+              { "type": " ", "oldLine": 143, "newLine": 118, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 119,
+                "text": "     * @custom:reverts SignatureIndicesSizeMismatch if the signature indices have a wrong size"
+              }
+            ]
+          },
+          {
+            "oldStart": 160,
+            "oldLines": 7,
+            "newStart": 135,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 135,
+                "text": "        uint256 bitmapBytes = (_length + 7) / 8; // Round up to nearest byte"
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 136,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 137,
+                "text": "            bitmapBytes == _attestations.signatureIndices.length,"
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "            Errors.AttestationLib__SignatureIndicesSizeMismatch(bitmapBytes, _attestations.signatureIndices.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "            Errors_1.AttestationLib__SignatureIndicesSizeMismatch(bitmapBytes, _attestations.signatureIndices.length)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 139,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 165, "newLine": 140, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 141,
+                "text": "        // To get a ref that we can easily use with the assembly down below."
+              }
+            ]
+          },
+          {
+            "oldStart": 203,
+            "oldLines": 23,
+            "newStart": 178,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 178,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 179,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 205, "newLine": 180, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "        // Ensure that the reads were within the boundaries of the data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        // As `dataPtr` will always be increasing (and unlikely to wrap around because it would require insane size)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "        // we can just check that the last dataPtr value is inside the limit, as all the others would be as well then.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "        uint256 upperLimit = offset + _attestations.signaturesOrAddresses.length;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        // As the offset was added already part of both values, we can subtract to give a more meaningful error.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        require(dataPtr <= upperLimit, Errors.AttestationLib__OutOfBounds(dataPtr - offset, upperLimit - offset));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 212, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 181,
+                "text": "        // Ensure that the size of data provided actually matches what we expect"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 182,
+                "text": "        uint256 sizeOfSignaturesAndAddresses ="
+              },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 183,
+                "text": "            (signersIndex * SIGNATURE_LENGTH) + ((_length - signersIndex) * ADDRESS_LENGTH);"
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 184,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 185,
+                "text": "            sizeOfSignaturesAndAddresses == _attestations.signaturesOrAddresses.length,"
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "            Errors.AttestationLib__SignaturesOrAddressesSizeMismatch(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "            Errors_1.AttestationLib__SignaturesOrAddressesSizeMismatch(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 187,
+                "text": "                sizeOfSignaturesAndAddresses, _attestations.signaturesOrAddresses.length"
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 188,
+                "text": "            )"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 189,
+                "text": "        );"
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            signersIndex == _signers.length, Errors_1.AttestationLib__SignersSizeMismatch(signersIndex, _signers.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 222, "newLine": 193, "text": "" },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        // Ensure that the reads were within the boundaries of the data, and that we have read all the data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "        // This check is an extra precaution. There are two cases, we we would end up with an invalid",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "        // read, and both should be covered by the above checks.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "        // 1. If trying to read beyond the expected data, the bitmap must have more ones than signatures,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "        // but this will make the the `sizeOfSignaturesAndAddresses` larger than passed data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "        // 2. If trying to read less than expected data, the bitmap must have fewer ones than signatures,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "        // but this will make the the `sizeOfSignaturesAndAddresses` smaller than passed data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "        uint256 upperLimit = offset + _attestations.signaturesOrAddresses.length;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "        require(dataPtr == upperLimit, Errors_1.AttestationLib__InvalidDataSize(dataPtr - offset, upperLimit - offset));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 203, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 204,
+                "text": "        return addresses;"
+              },
+              { "type": " ", "oldLine": 224, "newLine": 205, "text": "    }" },
+              { "type": " ", "oldLine": 225, "newLine": 206, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

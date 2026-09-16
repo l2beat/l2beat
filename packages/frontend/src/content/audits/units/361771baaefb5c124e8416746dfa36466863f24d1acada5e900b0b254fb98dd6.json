@@ -563,6 +563,564 @@
         ]
       },
       "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 72,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.687,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 30,
+        "removed": 17,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 72,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 12,
+            "newStart": 2,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\""
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "version = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "# todo!(n): update version to use workspace on next release",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "version = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "edition = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "license = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "repository = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "keywords = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "categories = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "exclude = [\"src/vk_map.bin\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "[dependencies]"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "p3-matrix = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 25,
+            "oldLines": 6,
+            "newStart": 27,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "p3-baby-bear = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 28,
+                "text": "p3-bn254-fr = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 29,
+                "text": "p3-commit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "p3-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 31,
+                "text": "bincode = \"1.3.3\""
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 32,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 33,
+                "text": "itertools = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 12,
+            "newStart": 41,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 41,
+                "text": "serial_test = \"3.1.1\""
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 42,
+                "text": "num-bigint = \"0.4.6\""
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 43,
+                "text": "thiserror = \"1.0.63\""
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "rayon = \"1.10.0\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 45,
+                "text": "lru = \"0.12.4\""
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 46,
+                "text": "eyre = \"0.6.12\""
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "enum-map = { version = \"2.7.3\" }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 49, "text": "" },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "downloader = { version = \"0.2\", default-features = false, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "  \"rustls-tls\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "  \"verify\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 54, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "sha2 = { version = \"0.10\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "hex = \"0.4\"",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 57, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 58,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 60, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 61, "text": "[[bin]]" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 62,
+                "text": "name = \"build_plonk_bn254\""
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 34,
+            "newStart": 67,
+            "newLines": 36,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 67,
+                "text": "path = \"scripts/build_groth16_bn254.rs\""
+              },
+              { "type": " ", "oldLine": 55, "newLine": 68, "text": "" },
+              { "type": " ", "oldLine": 56, "newLine": 69, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 59, "newLine": 72, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 73, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "name = \"post_trusted_setup\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "path = \"scripts/post_trusted_setup.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "name = \"find_maximal_shapes\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "path = \"scripts/find_maximal_shapes.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 63, "newLine": 76, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 77, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "name = \"find_small_shapes\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "path = \"scripts/find_small_shapes.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 67, "newLine": 80, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 81, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "name = \"find_oom_shapes\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "path = \"scripts/find_oom_shapes.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 72, "newLine": 84, "text": "" },
+              { "type": " ", "oldLine": 73, "newLine": 85, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "name = \"find_recursion_shapes\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "path = \"scripts/find_recursion_shapes.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 77, "newLine": 88, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 89, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "name = \"test_shape_fixing\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "path = \"scripts/test_shape_fixing.rs\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 92, "text": "" },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "name = \"post_trusted_setup\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "path = \"scripts/post_trusted_setup.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 83, "newLine": 96, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 97,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 98,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 100, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

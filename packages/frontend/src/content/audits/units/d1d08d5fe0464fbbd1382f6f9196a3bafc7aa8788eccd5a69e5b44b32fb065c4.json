@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d1d08d5fe0464fbbd1382f6f9196a3bafc7aa8788eccd5a69e5b44b32fb065c4",
+  "name": "MainchainBridgeManager",
+  "kind": "contract",
+  "lines": 107,
+  "source": "contract MainchainBridgeManager is BridgeManager, GovernanceRelay, GlobalGovernanceRelay {\n    uint256 private constant DEFAULT_EXPIRY_DURATION = 1 << 255;\n\n    function initialize(\n        uint256 num,\n        uint256 denom,\n        uint256 roninChainId,\n        address bridgeContract,\n        address[] memory callbackRegisters,\n        address[] memory bridgeOperators,\n        address[] memory governors,\n        uint96[] memory voteWeights,\n        GlobalProposal.TargetOption[] memory targetOptions,\n        address[] memory targets\n    ) external initializer {\n        __CoreGovernance_init(DEFAULT_EXPIRY_DURATION);\n        __GlobalCoreGovernance_init(targetOptions, targets);\n        __BridgeManager_init(\n            num, denom, roninChainId, bridgeContract, callbackRegisters, bridgeOperators, governors, voteWeights\n        );\n    }\n\n    /**\n     * @dev See `GovernanceRelay-_relayProposal`.\n     *\n     * Requirements:\n     * - The method caller is governor.\n     */\n    function relayProposal(\n        Proposal.ProposalDetail calldata proposal,\n        Ballot.VoteType[] calldata supports_,\n        Signature[] calldata signatures\n    ) external onlyGovernor {\n        _requireExecutor(proposal.executor, msg.sender);\n        _relayProposal(proposal, supports_, signatures, msg.sender);\n    }\n\n    /**\n     * @dev See `GovernanceRelay-_relayGlobalProposal`.\n     *\n     *  Requirements:\n     * - The method caller is governor.\n     */\n    function relayGlobalProposal(\n        GlobalProposal.GlobalProposalDetail calldata globalProposal,\n        Ballot.VoteType[] calldata supports_,\n        Signature[] calldata signatures\n    ) external onlyGovernor {\n        _requireExecutor(globalProposal.executor, msg.sender);\n        _relayGlobalProposal({\n            globalProposal: globalProposal,\n            supports_: supports_,\n            signatures: signatures,\n            creator: msg.sender\n        });\n    }\n\n    function _requireExecutor(address executor, address caller) internal pure {\n        if (executor != address(0) && caller != executor) {\n            revert ErrNonExecutorCannotRelay(executor, caller);\n        }\n    }\n\n    /**\n     * @dev Internal function to retrieve the minimum vote weight required for governance actions.\n     * @return minimumVoteWeight The minimum vote weight required for governance actions.\n     */\n    function _getMinimumVoteWeight() internal view override returns (uint256) {\n        return minimumVoteWeight();\n    }\n\n    /**\n     * @dev Returns the expiry duration for a new proposal.\n     */\n    function getProposalExpiryDuration() external view returns (uint256) {\n        return _proposalExpiryDuration;\n    }\n\n    /**\n     * @dev Internal function to retrieve the total weights of all governors.\n     * @return totalWeights The total weights of all governors combined.\n     */\n    function _getTotalWeight() internal view override returns (uint256) {\n        return getTotalWeight();\n    }\n\n    /**\n     * @dev Internal function to calculate the sum of weights for a given array of governors.\n     * @param governors An array containing the addresses of governors to calculate the sum of weights.\n     * @return sumWeights The sum of weights for the provided governors.\n     */\n    function _sumWeight(address[] memory governors) internal view override returns (uint256) {\n        return _sumGovernorsWeight(governors);\n    }\n\n    /**\n     * @dev Internal function to retrieve the chain type of the contract.\n     * @return chainType The chain type, indicating the type of the chain the contract operates on (e.g., Mainchain).\n     */\n    function _getChainType() internal pure override returns (ChainType) {\n        return ChainType.Mainchain;\n    }\n\n    function _proposalDomainSeparator() internal view override returns (bytes32) {\n        return DOMAIN_SEPARATOR;\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 107,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "MainchainBridgeManager",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2024-08",
+        "repository": "ronin-chain/bridge-contract",
+        "path": "src/mainchain/MainchainBridgeManager.sol",
+        "commit": "132fcc674f46cd900c2dc6bd677379654bd7f639",
+        "commitTimestamp": "2024-08-12T11:15:06Z",
+        "url": "https://github.com/ronin-chain/bridge-contract/blob/132fcc674f46cd900c2dc6bd677379654bd7f639/src/mainchain/MainchainBridgeManager.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full contract review (function-level security analysis Ronin-01..10); no issues reported.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

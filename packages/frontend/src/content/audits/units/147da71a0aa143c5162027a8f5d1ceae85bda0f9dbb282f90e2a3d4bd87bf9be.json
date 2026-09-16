@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "147da71a0aa143c5162027a8f5d1ceae85bda0f9dbb282f90e2a3d4bd87bf9be",
+  "name": "Ballot",
+  "kind": "library",
+  "lines": 22,
+  "source": "library Ballot {\n    using ECDSA for bytes32;\n\n    enum VoteType {\n        For,\n        Against\n    }\n\n    // keccak256(\"Ballot(bytes32 proposalHash,uint8 support)\");\n    bytes32 private constant BALLOT_TYPEHASH = 0xd900570327c4c0df8dd6bdd522b7da7e39145dd049d2fd4602276adcd511e3c2;\n\n    function hash(bytes32 _proposalHash, VoteType _support) internal pure returns (bytes32 digest) {\n        // return keccak256(abi.encode(BALLOT_TYPEHASH, _proposalHash, _support));\n        assembly {\n            let ptr := mload(0x40)\n            mstore(ptr, BALLOT_TYPEHASH)\n            mstore(add(ptr, 0x20), _proposalHash)\n            mstore(add(ptr, 0x40), _support)\n            digest := keccak256(ptr, 0x60)\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 22,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Ballot",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/libraries/Ballot.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/libraries/Ballot.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

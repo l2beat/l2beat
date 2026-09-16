@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1118b330a8ba8b41b59aa98dcec68be5e503a0de7d585a3b7c05843ee66c02f2",
+  "name": "IOptimismPortal2",
+  "kind": "interface",
+  "lines": 90,
+  "source": "interface IOptimismPortal2 is IProxyAdminOwnedBase {\n    error OnlyCustomGasToken();\n    error ContentLengthMismatch();\n    error EmptyItem();\n    error InvalidDataRemainder();\n    error InvalidHeader();\n    error ReinitializableBase_ZeroInitVersion();\n    error OptimismPortal_AlreadyFinalized();\n    error OptimismPortal_BadTarget();\n    error OptimismPortal_CallPaused();\n    error OptimismPortal_CalldataTooLarge();\n    error OptimismPortal_GasEstimation();\n    error OptimismPortal_GasLimitTooLow();\n    error OptimismPortal_ImproperDisputeGame();\n    error OptimismPortal_InvalidDisputeGame();\n    error OptimismPortal_InvalidMerkleProof();\n    error OptimismPortal_InvalidOutputRootProof();\n    error OptimismPortal_InvalidProofTimestamp();\n    error OptimismPortal_InvalidRootClaim();\n    error OptimismPortal_NoReentrancy();\n    error OptimismPortal_ProofNotOldEnough();\n    error OptimismPortal_Unproven();\n    error OptimismPortal_InvalidLockboxState();\n    error OptimismPortal_TransferFailed();\n    error OptimismPortal_NoValue();\n    error OptimismPortal_Unauthorized();\n    error OutOfGas();\n    error UnexpectedList();\n    error UnexpectedString();\n\n    event Initialized(uint8 version);\n    event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData);\n    event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success);\n    event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to);\n    event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter);\n\n    receive() external payable;\n\n    function anchorStateRegistry() external view returns (IAnchorStateRegistry);\n    function ethLockbox() external view returns (IETHLockbox);\n    function balance() external view returns (uint256);\n    function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) external view;\n    function depositERC20Transaction(\n        address _to,\n        uint256 _mint,\n        uint256 _value,\n        uint64 _gasLimit,\n        bool _isCreation,\n        bytes memory _data\n    ) external;\n    function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes memory _data)\n        external\n        payable;\n    function disputeGameBlacklist(IDisputeGame _disputeGame) external view returns (bool);\n    function disputeGameFactory() external view returns (IDisputeGameFactory);\n    function disputeGameFinalityDelaySeconds() external view returns (uint256);\n    function donateETH() external payable;\n    function superchainConfig() external view returns (ISuperchainConfig);\n    function finalizeWithdrawalTransaction(Types.WithdrawalTransaction memory _tx) external;\n    function finalizeWithdrawalTransactionExternalProof(Types.WithdrawalTransaction memory _tx, address _proofSubmitter)\n        external;\n    function finalizedWithdrawals(bytes32) external view returns (bool);\n    function guardian() external view returns (address);\n    function initialize(ISystemConfig _systemConfig, IAnchorStateRegistry _anchorStateRegistry) external;\n    function initVersion() external view returns (uint8);\n    function l2Sender() external view returns (address);\n    function minimumGasLimit(uint64 _byteCount) external pure returns (uint64);\n    function numProofSubmitters(bytes32 _withdrawalHash) external view returns (uint256);\n    function params() external view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum); // nosemgrep\n    function paused() external view returns (bool);\n    function proofMaturityDelaySeconds() external view returns (uint256);\n    function proofSubmitters(bytes32, uint256) external view returns (address);\n    function proveWithdrawalTransaction(\n        Types.WithdrawalTransaction memory _tx,\n        uint256 _disputeGameIndex,\n        Types.OutputRootProof memory _outputRootProof,\n        bytes[] memory _withdrawalProof\n    ) external;\n    function provenWithdrawals(bytes32, address)\n        external\n        view\n        returns (IDisputeGame disputeGameProxy, uint64 timestamp);\n    function respectedGameType() external view returns (GameType);\n    function respectedGameTypeUpdatedAt() external view returns (uint64);\n    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external;\n    function systemConfig() external view returns (ISystemConfig);\n    function version() external pure returns (string memory);\n\n    function __constructor__(uint256 _proofMaturityDelaySeconds) external;\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 76,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IOptimismPortal2",
+        "similarity": 0.911,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 14,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 76,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IOptimismPortal2 is IProxyAdminOwnedBase {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    error OnlyCustomGasToken();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    error ContentLengthMismatch();"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 4,
+                "text": "    error EmptyItem();"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    error InvalidDataRemainder();"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 6,
+            "newStart": 21,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "    error OptimismPortal_ProofNotOldEnough();"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "    error OptimismPortal_Unproven();"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "    error OptimismPortal_InvalidLockboxState();"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    error OptimismPortal_TransferFailed();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    error OptimismPortal_NoValue();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    error OptimismPortal_Unauthorized();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 27,
+                "text": "    error OutOfGas();"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 28,
+                "text": "    error UnexpectedList();"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 29,
+                "text": "    error UnexpectedString();"
+              }
+            ]
+          },
+          {
+            "oldStart": 34,
+            "oldLines": 7,
+            "newStart": 38,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 34, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 39,
+                "text": "    function anchorStateRegistry() external view returns (IAnchorStateRegistry);"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 40,
+                "text": "    function ethLockbox() external view returns (IETHLockbox);"
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function balance() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 42,
+                "text": "    function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) external view;"
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function depositERC20Transaction(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        address _to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        uint256 _mint,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        uint256 _value,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        uint64 _gasLimit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        bool _isCreation,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        bytes memory _data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    ) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 51,
+                "text": "    function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes memory _data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 52,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 53,
+                "text": "        payable;"
+              }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 6,
+            "newStart": 82,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 82,
+                "text": "        returns (IDisputeGame disputeGameProxy, uint64 timestamp);"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 83,
+                "text": "    function respectedGameType() external view returns (GameType);"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 84,
+                "text": "    function respectedGameTypeUpdatedAt() external view returns (uint64);"
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 86,
+                "text": "    function systemConfig() external view returns (ISystemConfig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 87,
+                "text": "    function version() external pure returns (string memory);"
+              },
+              { "type": " ", "oldLine": 74, "newLine": 88, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

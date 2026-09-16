@@ -146,6 +146,570 @@
         ]
       },
       "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ResourceMetering",
+        "similarity": 0.965,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable_0 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Error returned when too much gas resource is consumed."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error OutOfGas();"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "    }" },
+              { "type": " ", "oldLine": 137, "newLine": 137, "text": "" },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    ///         when L2 system transactions are generated from L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    /// @param _amount Amount of the L2 gas resource requested.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function useGas(uint32 _amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        params.prevBoughtGas += uint64(_amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 145,
+                "text": "    /// @notice Virtual function that returns the resource config."
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 146,
+                "text": "    ///         Contracts that inherit this contract must implement this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 147,
+                "text": "    /// @return ResourceConfig"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ResourceMetering",
+        "similarity": 0.965,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable_0 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Error returned when too much gas resource is consumed."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error OutOfGas();"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "    }" },
+              { "type": " ", "oldLine": 137, "newLine": 137, "text": "" },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    ///         when L2 system transactions are generated from L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    /// @param _amount Amount of the L2 gas resource requested.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function useGas(uint32 _amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        params.prevBoughtGas += uint64(_amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 145,
+                "text": "    /// @notice Virtual function that returns the resource config."
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 146,
+                "text": "    ///         Contracts that inherit this contract must implement this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 147,
+                "text": "    /// @return ResourceConfig"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ResourceMetering",
+        "similarity": 0.965,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable_0 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Error returned when too much gas resource is consumed."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error OutOfGas();"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "    }" },
+              { "type": " ", "oldLine": 137, "newLine": 137, "text": "" },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    ///         when L2 system transactions are generated from L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    /// @param _amount Amount of the L2 gas resource requested.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function useGas(uint32 _amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        params.prevBoughtGas += uint64(_amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 145,
+                "text": "    /// @notice Virtual function that returns the resource config."
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 146,
+                "text": "    ///         Contracts that inherit this contract must implement this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 147,
+                "text": "    /// @return ResourceConfig"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 154,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ResourceMetering",
+        "similarity": 0.965,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 154,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable_0 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ResourceMetering is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Error returned when too much gas resource is consumed."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error OutOfGas();"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "    }" },
+              { "type": " ", "oldLine": 137, "newLine": 137, "text": "" },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @notice Adds an amount of L2 gas consumed to the prev bought gas params. This is meant to be used",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "    ///         when L2 system transactions are generated from L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    /// @param _amount Amount of the L2 gas resource requested.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function useGas(uint32 _amount) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        params.prevBoughtGas += uint64(_amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 145,
+                "text": "    /// @notice Virtual function that returns the resource config."
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 146,
+                "text": "    ///         Contracts that inherit this contract must implement this function."
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 147,
+                "text": "    /// @return ResourceConfig"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

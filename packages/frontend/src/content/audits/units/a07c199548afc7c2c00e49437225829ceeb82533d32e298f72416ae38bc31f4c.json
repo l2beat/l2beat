@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a07c199548afc7c2c00e49437225829ceeb82533d32e298f72416ae38bc31f4c",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 5,
+  "source": "use rollup_lib::root::{root_rollup, RootRollupPrivateInputs, RootRollupPublicInputs};\n\nfn main(inputs: RootRollupPrivateInputs) -> pub RootRollupPublicInputs {\n    root_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

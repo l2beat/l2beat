@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "10fd590554c791f67719a96199c3662300cb57a72f905ba631ab0d479b62886a",
+  "name": "ed25519Fr.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "use crate::bignum::BigNum;\nuse crate::bignum::derive_bignum;\nuse crate::params::BigNumParams;\n\npub global ED25519_Fr_PARAMS: BigNumParams<3, 253> = BigNumParams {\n    has_multiplicative_inverse: true,\n    modulus: [0xdef9dea2f79cd65812631a5cf5d3ed, 0x14, 0x1000],\n    double_modulus: [\n        0x01bdf3bd45ef39acb024c634b9eba7da,\n        0x01000000000000000000000000000028,\n        0x1fff,\n    ],\n    redc_param: [0x06215d086329a7ed9ce5a30a2c131b, 0xffffffffffffffffffffffffffeb21, 0x0fffff],\n};\n\n#[derive_bignum(3, 253, quote { ED25519_Fr_PARAMS })]\npub struct ED25519_Fr {\n    limbs: [u128; 3],\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

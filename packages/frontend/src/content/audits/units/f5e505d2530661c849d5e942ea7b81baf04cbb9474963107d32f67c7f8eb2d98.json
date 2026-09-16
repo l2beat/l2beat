@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f5e505d2530661c849d5e942ea7b81baf04cbb9474963107d32f67c7f8eb2d98",
+  "name": "Registry",
+  "kind": "contract",
+  "lines": 73,
+  "source": "contract Registry is IRegistry, Ownable {\n    RegistryStorage internal $;\n\n    /**\n     * @dev The Owner of the registry is intended to be `Governance`.\n     * In this way, only Governance can:\n     * - add new rollup instances\n     * - update the RewardDistributor\n     * In tests, the contracts are deployed with the owner set to the deployer.\n     * Then an initial rollup instance is added, which becomes the canonical rollup.\n     * Then the owner is updated to Governance.\n     */\n    constructor(address _owner, IERC20 _rewardAsset) Ownable(_owner) {\n        $.rewardDistributor = IRewardDistributor(address(new RewardDistributor(_rewardAsset, IRegistry(address(this)))));\n        emit RewardDistributorUpdated(address($.rewardDistributor));\n    }\n\n    /**\n     * @notice Adds a new rollup instance to the registry, which becomes the new canonical rollup\n     * @param _rollup The rollup instance to add\n     */\n    function addRollup(IHaveVersion _rollup) external override(IRegistry) onlyOwner {\n        uint256 version = _rollup.getVersion();\n        require(\n            address($.versionToRollup[version]) == address(0),\n            Errors.Registry__RollupAlreadyRegistered(address(_rollup))\n        );\n        $.versionToRollup[version] = _rollup;\n        $.versions.push(version);\n\n        emit CanonicalRollupUpdated(address(_rollup), version);\n    }\n\n    function updateRewardDistributor(address _rewardDistributor) external override(IRegistry) onlyOwner {\n        $.rewardDistributor = IRewardDistributor(_rewardDistributor);\n        emit RewardDistributorUpdated(_rewardDistributor);\n    }\n\n    /**\n     * @notice Returns the address of the rollup contract\n     * @return The rollup address\n     */\n    function getCanonicalRollup() external view override(IRegistry) returns (IHaveVersion) {\n        require($.versions.length > 0, Errors.Registry__NoRollupsRegistered());\n        return $.versionToRollup[$.versions[$.versions.length - 1]];\n    }\n\n    function getRollup(uint256 _version) external view override(IRegistry) returns (IHaveVersion) {\n        IHaveVersion rollup = $.versionToRollup[_version];\n        require(address(rollup) != address(0), Errors.Registry__RollupNotRegistered(_version));\n        return rollup;\n    }\n\n    function numberOfVersions() external view override(IRegistry) returns (uint256) {\n        return $.versions.length;\n    }\n\n    function getVersion(uint256 _index) external view override(IRegistry) returns (uint256) {\n        return $.versions[_index];\n    }\n\n    /**\n     * @notice Returns the address of the governance\n     * @return The governance address\n     */\n    function getGovernance() external view override(IRegistry) returns (address) {\n        return owner();\n    }\n\n    function getRewardDistributor() external view override(IRegistry) returns (IRewardDistributor) {\n        return $.rewardDistributor;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 73,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Registry",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/Registry.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/Registry.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

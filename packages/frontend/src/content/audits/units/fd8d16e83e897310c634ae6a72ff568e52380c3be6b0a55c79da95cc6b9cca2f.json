@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd8d16e83e897310c634ae6a72ff568e52380c3be6b0a55c79da95cc6b9cca2f",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 10,
+  "source": "pub(crate) mod utils;\npub mod block_merge_rollup;\nmod tests;\n\npub(crate) use utils::{\n    merge_block_rollups::{accumulate_block_headers_hash, merge_block_rollups},\n    validate_consecutive_block_rollups::validate_consecutive_block_rollups,\n};\npub use crate::abis::BlockRollupPublicInputs;\npub use block_merge_rollup::BlockMergeRollupPrivateInputs;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

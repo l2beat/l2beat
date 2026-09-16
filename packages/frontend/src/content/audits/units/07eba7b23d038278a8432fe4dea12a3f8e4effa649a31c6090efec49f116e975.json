@@ -459,6 +459,914 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 30,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "IDelayedWETH",
+        "similarity": 0.314,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/interfaces/IDelayedWETH.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/interfaces/IDelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 28,
+        "removed": 3,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 25,
+        "unchanged": 30,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 41,
+            "newStart": 1,
+            "newLines": 58,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IDelayedWETH is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Represents a withdrawal request.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IDelayedWETH is IProxyAdminOwnedBase {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    error ReinitializableBase_ZeroInitVersion();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 4,
+                "text": "    struct WithdrawalRequest {"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "        uint256 amount;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "        uint256 timestamp;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Emitted when an unwrap is started.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param src The address that started the unwrap.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param wad The amount of WETH that was unwrapped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    event Unwrap(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    event Initialized(uint8 version);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice Returns the withdrawal delay in seconds.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @return The withdrawal delay in seconds.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function initVersion() external view returns (uint8);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    function systemConfig() external view returns (ISystemConfig);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "    function delay() external view returns (uint256);"
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function hold(address _guy) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function hold(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function initialize(ISystemConfig _systemConfig) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function recover(uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function unlock(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function withdraw(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    function withdrawals(address, address) external view returns (uint256 amount, uint256 timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    function version() external view returns (string memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    function withdraw(uint256 _wad) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 26, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @notice Returns a withdrawal request for the given address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @param _owner The address to query the withdrawal request of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @param _guy Sub-account to query the withdrawal request of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @return The withdrawal request for the given address-subaccount pair.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function withdrawals(address _owner, address _guy) external view returns (uint256, uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @notice Unlocks withdrawals for the sender's account, after a time delay.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @param _guy Sub-account to unlock.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param _wad The amount of WETH to unlock.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    function unlock(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice Extension to withdrawal, must provide a sub-account to withdraw from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param _guy Sub-account to withdraw from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @param _wad The amount of WETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function withdraw(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @notice Allows the owner to recover from error cases by pulling ETH out of the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param _wad The amount of WETH to recover.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    function recover(uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 36, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @notice Allows the owner to recover from error cases by pulling ETH from a specific owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @param _guy The address to recover the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param _wad The amount of WETH to recover.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    function hold(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    function name() external view returns (string memory);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 36, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    function symbol() external view returns (string memory);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 38, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    function decimals() external view returns (uint8);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function balanceOf(address src) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 42, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function allowance(address owner, address spender) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 44, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    function deposit() external payable;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    function totalSupply() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 48, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 50, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 52, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 54, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function config() external view returns (ISuperchainConfig);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function __constructor__(uint256 _delay) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 58, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 30,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "IDelayedWETH",
+        "similarity": 0.314,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/interfaces/IDelayedWETH.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/interfaces/IDelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 28,
+        "removed": 3,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 25,
+        "unchanged": 30,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 41,
+            "newStart": 1,
+            "newLines": 58,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IDelayedWETH is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Represents a withdrawal request.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IDelayedWETH is IProxyAdminOwnedBase {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    error ReinitializableBase_ZeroInitVersion();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 4,
+                "text": "    struct WithdrawalRequest {"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "        uint256 amount;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "        uint256 timestamp;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Emitted when an unwrap is started.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param src The address that started the unwrap.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param wad The amount of WETH that was unwrapped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    event Unwrap(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    event Initialized(uint8 version);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice Returns the withdrawal delay in seconds.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @return The withdrawal delay in seconds.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    fallback() external payable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    receive() external payable;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function initVersion() external view returns (uint8);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    function systemConfig() external view returns (ISystemConfig);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "    function delay() external view returns (uint256);"
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function hold(address _guy) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function hold(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function initialize(ISystemConfig _systemConfig) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function recover(uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function unlock(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function withdraw(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    function withdrawals(address, address) external view returns (uint256 amount, uint256 timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    function version() external view returns (string memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    function withdraw(uint256 _wad) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 26, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @notice Returns a withdrawal request for the given address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @param _owner The address to query the withdrawal request of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @param _guy Sub-account to query the withdrawal request of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @return The withdrawal request for the given address-subaccount pair.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    function withdrawals(address _owner, address _guy) external view returns (uint256, uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @notice Unlocks withdrawals for the sender's account, after a time delay.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @param _guy Sub-account to unlock.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param _wad The amount of WETH to unlock.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    function unlock(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice Extension to withdrawal, must provide a sub-account to withdraw from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param _guy Sub-account to withdraw from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @param _wad The amount of WETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function withdraw(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @notice Allows the owner to recover from error cases by pulling ETH out of the contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param _wad The amount of WETH to recover.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    function recover(uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 36, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @notice Allows the owner to recover from error cases by pulling ETH from a specific owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @param _guy The address to recover the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param _wad The amount of WETH to recover.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    function hold(address _guy, uint256 _wad) external;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    function name() external view returns (string memory);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 36, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    function symbol() external view returns (string memory);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 38, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    function decimals() external view returns (uint8);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function balanceOf(address src) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 42, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function allowance(address owner, address spender) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 44, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    function deposit() external payable;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    function totalSupply() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 48, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 50, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 52, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 54, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function config() external view returns (ISuperchainConfig);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function __constructor__(uint256 _delay) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 58, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

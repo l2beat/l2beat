@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fb2d2136d7010fa291fee55a10a8410b07ce34bb8f03d6c6ea9894c19fe23ded",
+  "name": "DepositDataCodec",
+  "kind": "library",
+  "lines": 35,
+  "source": "library DepositDataCodec {\n    uint8 internal constant RATE_FIELD_SIZE = 16;\n    uint8 internal constant TIMESTAMP_FIELD_SIZE = 5;\n\n    struct DepositData {\n        uint128 rate;\n        uint40 timestamp;\n        bytes data;\n    }\n\n    function encodeDepositData(DepositData memory depositData) internal pure returns (bytes memory) {\n        bytes memory data = bytes.concat(\n            abi.encodePacked(depositData.rate),\n            abi.encodePacked(depositData.timestamp),\n            abi.encodePacked(depositData.data)\n        );\n        return data;\n    }\n\n    function decodeDepositData(bytes calldata buffer) internal pure returns (DepositData memory) {\n        if (buffer.length < RATE_FIELD_SIZE + TIMESTAMP_FIELD_SIZE) {\n            revert ErrorDepositDataLength();\n        }\n\n        DepositData memory depositData = DepositData({\n            rate: uint128(bytes16(buffer[0:RATE_FIELD_SIZE])),\n            timestamp: uint40(bytes5(buffer[RATE_FIELD_SIZE:RATE_FIELD_SIZE + TIMESTAMP_FIELD_SIZE])),\n            data: buffer[RATE_FIELD_SIZE + TIMESTAMP_FIELD_SIZE:]\n        });\n\n        return depositData;\n    }\n\n    error ErrorDepositDataLength();\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

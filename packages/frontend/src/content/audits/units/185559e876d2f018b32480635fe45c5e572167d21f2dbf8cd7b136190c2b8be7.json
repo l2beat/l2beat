@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "185559e876d2f018b32480635fe45c5e572167d21f2dbf8cd7b136190c2b8be7",
+  "name": "IdentityGuard",
+  "kind": "abstract",
+  "lines": 108,
+  "source": "abstract contract IdentityGuard {\n    using AddressArrayUtils for address[];\n\n    /// @dev value is equal to keccak256(abi.encode())\n    /// @dev see: https://eips.ethereum.org/EIPS/eip-1052\n    bytes32 internal constant CREATED_ACCOUNT_HASH = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;\n\n    /**\n     * @dev Modifier to restrict functions to only be called by this contract.\n     * @dev Reverts if the caller is not this contract.\n     */\n    modifier onlySelfCall() virtual {\n        _requireSelfCall();\n        _;\n    }\n\n    /**\n     * @dev Modifier to ensure that the elements in the `arr` array are non-duplicates.\n     * It calls the internal `_checkDuplicate` function to perform the duplicate check.\n     *\n     * Requirements:\n     * - The elements in the `arr` array must not contain any duplicates.\n     */\n    modifier nonDuplicate(address[] memory arr) virtual {\n        _requireNonDuplicate(arr);\n        _;\n    }\n\n    /**\n     * @dev Internal method to check the method caller.\n     * @dev Reverts if the method caller is not this contract.\n     */\n    function _requireSelfCall() internal view virtual {\n        if (msg.sender != address(this)) {\n            revert ErrOnlySelfCall(msg.sig);\n        }\n    }\n\n    /**\n     * @dev Internal function to check if a contract address has code.\n     * @param addr The address of the contract to check.\n     * @dev Throws an error if the contract address has no code.\n     */\n    function _requireHasCode(address addr) internal view {\n        if (addr.code.length == 0) {\n            revert ErrZeroCodeContract(addr);\n        }\n    }\n\n    /**\n     * @dev Checks if an address is zero and reverts if it is.\n     * @param addr The address to check.\n     */\n    function _requireNonZeroAddress(address addr) internal pure {\n        if (addr == address(0)) {\n            revert ErrZeroAddress(msg.sig);\n        }\n    }\n\n    /**\n     * @dev Check if arr is empty and revert if it is.\n     * Checks if an array contains any duplicate addresses and reverts if duplicates are found.\n     * @param arr The array of addresses to check.\n     */\n    function _requireNonDuplicate(address[] memory arr) internal pure {\n        if (arr.hasDuplicate()) {\n            revert AddressArrayUtils.ErrDuplicated(msg.sig);\n        }\n    }\n\n    /**\n     * @dev Internal function to require that the provided address is a created externally owned account (EOA).\n     * This internal function is used to ensure that the provided address is a valid externally owned account (EOA).\n     * It checks the codehash of the address against a predefined constant to confirm that the address is a created EOA.\n     * @notice This method only works with non-state EOA accounts\n     */\n    function _requireCreatedEOA(address addr) internal view {\n        _requireNonZeroAddress(addr);\n        bytes32 codehash = addr.codehash;\n        if (codehash != CREATED_ACCOUNT_HASH) {\n            revert ErrAddressIsNotCreatedEOA(addr, codehash);\n        }\n    }\n\n    /**\n     * @dev Internal function to require that the specified contract supports the given interface. This method handle in\n     * both case that the callee is either or not the proxy admin of the caller. If the contract does not support the\n     * interface `interfaceId` or EIP165, a revert with the corresponding error message is triggered.\n     *\n     * @param contractAddr The address of the contract to check for interface support.\n     * @param interfaceId The interface ID to check for support.\n     */\n    function _requireSupportsInterface(address contractAddr, bytes4 interfaceId) internal view {\n        bytes memory supportsInterfaceParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));\n        (bool success, bytes memory returnOrRevertData) = contractAddr.staticcall(supportsInterfaceParams);\n        if (!success) {\n            (success, returnOrRevertData) = contractAddr.staticcall(\n                abi.encodeCall(TransparentUpgradeableProxyV2.functionDelegateCall, (supportsInterfaceParams))\n            );\n            if (!success) {\n                revert ErrUnsupportedInterface(interfaceId, contractAddr);\n            }\n        }\n        if (!abi.decode(returnOrRevertData, (bool))) {\n            revert ErrUnsupportedInterface(interfaceId, contractAddr);\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 108,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IdentityGuard",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/utils/IdentityGuard.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/utils/IdentityGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

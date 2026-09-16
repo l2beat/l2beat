@@ -311,6 +311,1227 @@
         ]
       },
       "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 168,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ERC721Bridge",
+        "similarity": 0.919,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 168,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 11,
+            "newStart": 5,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    /// @notice Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    CrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ICrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    /// @notice Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    StandardBridge public otherBridge;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    ERC721Bridge public otherBridge;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    uint256[46] private __gap;"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    /// @param _messenger   Contract of the CrossDomainMessenger on this network."
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @param _otherBridge Contract of the ERC721 bridge on the other network."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    // solhint-disable-next-line func-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function __ERC721Bridge_init(CrossDomainMessenger _messenger, StandardBridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function __ERC721Bridge_init(ICrossDomainMessenger _messenger, ERC721Bridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 62,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 63,
+                "text": "        onlyInitializing"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 64, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 71,
+            "oldLines": 7,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 70,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 71,
+                "text": "    /// @return Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 72,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function MESSENGER() external view returns (CrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function MESSENGER() external view returns (ICrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 74,
+                "text": "        return messenger;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 76, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `otherBridge` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "    /// @return Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    function OTHER_BRIDGE() external view returns (StandardBridge) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function OTHER_BRIDGE() external view returns (ERC721Bridge) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 82,
+                "text": "        return otherBridge;"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 120,
+            "oldLines": 7,
+            "newStart": 119,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 119,
+                "text": "        // the NFT if they use this function because it sends the NFT to the same address as the"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 120,
+                "text": "        // caller. This check could be bypassed by a malicious contract via initcode, but it takes"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 121,
+                "text": "        // care of the user error we want to avoid."
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        require(!Address.isContract(msg.sender), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        require(EOA.isSenderEOA(), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 125, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 168,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "ERC721Bridge",
+        "similarity": 0.919,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 168,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 11,
+            "newStart": 5,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    /// @notice Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    CrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ICrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    /// @notice Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    StandardBridge public otherBridge;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    ERC721Bridge public otherBridge;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    uint256[46] private __gap;"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    /// @param _messenger   Contract of the CrossDomainMessenger on this network."
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @param _otherBridge Contract of the ERC721 bridge on the other network."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    // solhint-disable-next-line func-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function __ERC721Bridge_init(CrossDomainMessenger _messenger, StandardBridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function __ERC721Bridge_init(ICrossDomainMessenger _messenger, ERC721Bridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 62,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 63,
+                "text": "        onlyInitializing"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 64, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 71,
+            "oldLines": 7,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 70,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 71,
+                "text": "    /// @return Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 72,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function MESSENGER() external view returns (CrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function MESSENGER() external view returns (ICrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 74,
+                "text": "        return messenger;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 76, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `otherBridge` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "    /// @return Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    function OTHER_BRIDGE() external view returns (StandardBridge) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function OTHER_BRIDGE() external view returns (ERC721Bridge) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 82,
+                "text": "        return otherBridge;"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 120,
+            "oldLines": 7,
+            "newStart": 119,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 119,
+                "text": "        // the NFT if they use this function because it sends the NFT to the same address as the"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 120,
+                "text": "        // caller. This check could be bypassed by a malicious contract via initcode, but it takes"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 121,
+                "text": "        // care of the user error we want to avoid."
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        require(!Address.isContract(msg.sender), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        require(EOA.isSenderEOA(), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 125, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 168,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC721Bridge",
+        "similarity": 0.919,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 168,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 11,
+            "newStart": 5,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    /// @notice Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    CrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ICrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    /// @notice Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    StandardBridge public otherBridge;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    ERC721Bridge public otherBridge;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    uint256[46] private __gap;"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    /// @param _messenger   Contract of the CrossDomainMessenger on this network."
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @param _otherBridge Contract of the ERC721 bridge on the other network."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    // solhint-disable-next-line func-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function __ERC721Bridge_init(CrossDomainMessenger _messenger, StandardBridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function __ERC721Bridge_init(ICrossDomainMessenger _messenger, ERC721Bridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 62,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 63,
+                "text": "        onlyInitializing"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 64, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 71,
+            "oldLines": 7,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 70,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 71,
+                "text": "    /// @return Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 72,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function MESSENGER() external view returns (CrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function MESSENGER() external view returns (ICrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 74,
+                "text": "        return messenger;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 76, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `otherBridge` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "    /// @return Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    function OTHER_BRIDGE() external view returns (StandardBridge) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function OTHER_BRIDGE() external view returns (ERC721Bridge) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 82,
+                "text": "        return otherBridge;"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 120,
+            "oldLines": 7,
+            "newStart": 119,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 119,
+                "text": "        // the NFT if they use this function because it sends the NFT to the same address as the"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 120,
+                "text": "        // caller. This check could be bypassed by a malicious contract via initcode, but it takes"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 121,
+                "text": "        // care of the user error we want to avoid."
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        require(!Address.isContract(msg.sender), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        require(EOA.isSenderEOA(), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 125, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 168,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC721Bridge",
+        "similarity": 0.919,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 168,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 11,
+            "newStart": 5,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    /// @notice Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    CrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    ICrossDomainMessenger public messenger;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    /// @notice Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    StandardBridge public otherBridge;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    ERC721Bridge public otherBridge;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    uint256[46] private __gap;"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 8,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    /// @param _messenger   Contract of the CrossDomainMessenger on this network."
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @param _otherBridge Contract of the ERC721 bridge on the other network."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    // solhint-disable-next-line func-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function __ERC721Bridge_init(CrossDomainMessenger _messenger, StandardBridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function __ERC721Bridge_init(ICrossDomainMessenger _messenger, ERC721Bridge _otherBridge)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 62,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 63,
+                "text": "        onlyInitializing"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 64, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 71,
+            "oldLines": 7,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 70,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 71,
+                "text": "    /// @return Messenger contract on this domain."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 72,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function MESSENGER() external view returns (CrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function MESSENGER() external view returns (ICrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 74,
+                "text": "        return messenger;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 76, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `otherBridge` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "    /// @return Contract of the bridge on the other network."
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    function OTHER_BRIDGE() external view returns (StandardBridge) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function OTHER_BRIDGE() external view returns (ERC721Bridge) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 82,
+                "text": "        return otherBridge;"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 83, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 120,
+            "oldLines": 7,
+            "newStart": 119,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 119,
+                "text": "        // the NFT if they use this function because it sends the NFT to the same address as the"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 120,
+                "text": "        // caller. This check could be bypassed by a malicious contract via initcode, but it takes"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 121,
+                "text": "        // care of the user error we want to avoid."
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        require(!Address.isContract(msg.sender), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        require(EOA.isSenderEOA(), \"ERC721Bridge: account is not externally owned\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "        _initiateBridgeERC721(_localToken, _remoteToken, msg.sender, msg.sender, _tokenId, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 125, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cb68b83a740598e616c54c261c3609d15c42a40cfb343623a836196e875d2f0b",
+  "name": "function_selector.nr",
+  "kind": "program",
+  "lines": 57,
+  "source": "use crate::traits::{Deserialize, Empty, FromField, Serialize, ToField};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct FunctionSelector {\n    // Low 32 bits of the poseidon2 hash of the function signature.\n    pub inner: u32,\n}\n\nimpl FromField for FunctionSelector {\n    fn from_field(field: Field) -> Self {\n        Self { inner: field as u32 }\n    }\n}\n\nimpl ToField for FunctionSelector {\n    fn to_field(self) -> Field {\n        self.inner as Field\n    }\n}\n\nimpl Empty for FunctionSelector {\n    fn empty() -> Self {\n        Self { inner: 0 as u32 }\n    }\n}\n\nimpl FunctionSelector {\n    pub fn from_u32(value: u32) -> Self {\n        Self { inner: value }\n    }\n\n    pub fn from_signature<let N: u32>(signature: str<N>) -> Self {\n        let bytes = signature.as_bytes();\n        let hash = crate::hash::poseidon2_hash_bytes(bytes);\n\n        // `hash` is automatically truncated to fit within 32 bits.\n        FunctionSelector::from_field(hash)\n    }\n\n    pub fn zero() -> Self {\n        Self { inner: 0 }\n    }\n}\n\n#[test]\nfn test_is_valid_selector() {\n    let selector = FunctionSelector::from_signature(\"IS_VALID()\");\n    assert_eq(selector.to_field(), 0x73cdda47);\n}\n\n#[test]\nfn test_long_selector() {\n    let selector =\n        FunctionSelector::from_signature(\"foo_and_bar_and_baz_and_foo_bar_baz_and_bar_foo\");\n    assert_eq(selector.to_field(), 0x7590a997);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

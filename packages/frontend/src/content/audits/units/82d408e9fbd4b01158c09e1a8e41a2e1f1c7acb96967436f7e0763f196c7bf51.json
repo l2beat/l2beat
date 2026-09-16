@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "82d408e9fbd4b01158c09e1a8e41a2e1f1c7acb96967436f7e0763f196c7bf51",
+  "name": "LivenessModule",
+  "kind": "contract",
+  "lines": 247,
+  "source": "contract LivenessModule is ISemver {\n    /// @notice Error message for failed owner removal.\n    error OwnerRemovalFailed(string);\n\n    /// @notice Emitted when an owner is removed due to insufficient liveness\n    event RemovedOwner(address indexed owner);\n\n    /// @notice Emitted when the fallback owner takes ownership\n    event OwnershipTransferredToFallback();\n\n    /// @notice Flag to indicate if the module has been deactivated\n    bool public ownershipTransferredToFallback;\n\n    /// @notice The Safe contract instance\n    GnosisSafe internal immutable SAFE;\n\n    /// @notice The LivenessGuard contract instance\n    ///         This can be updated by replacing with a new module and switching out the guard.\n    LivenessGuard internal immutable LIVENESS_GUARD;\n\n    /// @notice The interval, in seconds, during which an owner must have demonstrated liveness\n    ///         This can be updated by replacing with a new module.\n    uint256 internal immutable LIVENESS_INTERVAL;\n\n    /// @notice The minimum number of owners before ownership of the safe is transferred to the fallback owner.\n    ///         This can be updated by replacing with a new module.\n    uint256 internal immutable MIN_OWNERS;\n\n    /// @notice The percentage used to calculate the threshold for the Safe.\n    uint256 internal immutable THRESHOLD_PERCENTAGE;\n\n    /// @notice The fallback owner of the Safe\n    ///         This can be updated by replacing with a new module.\n    address internal immutable FALLBACK_OWNER;\n\n    /// @notice The storage slot used in the safe to store the guard address\n    ///         keccak256(\"guard_manager.guard.address\")\n    uint256 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.1.0\n    string public constant version = \"1.2.0\";\n\n    // Constructor to initialize the Safe and baseModule instances\n    constructor(\n        GnosisSafe _safe,\n        LivenessGuard _livenessGuard,\n        uint256 _livenessInterval,\n        uint256 _minOwners,\n        uint256 _thresholdPercentage,\n        address _fallbackOwner\n    ) {\n        SAFE = _safe;\n        LIVENESS_GUARD = _livenessGuard;\n        LIVENESS_INTERVAL = _livenessInterval;\n        THRESHOLD_PERCENTAGE = _thresholdPercentage;\n        FALLBACK_OWNER = _fallbackOwner;\n        MIN_OWNERS = _minOwners;\n        address[] memory owners = _safe.getOwners();\n        require(_minOwners <= owners.length, \"LivenessModule: minOwners must be less than the number of owners\");\n        require(_thresholdPercentage > 0, \"LivenessModule: thresholdPercentage must be greater than 0\");\n        require(_thresholdPercentage <= 100, \"LivenessModule: thresholdPercentage must be less than or equal to 100\");\n    }\n\n    /// @notice For a given number of owners, return the lowest threshold which is greater than the required percentage.\n    ///         Note: this function returns 1 for numOwners == 1.\n    function getRequiredThreshold(uint256 _numOwners) public view returns (uint256 threshold_) {\n        threshold_ = (_numOwners * THRESHOLD_PERCENTAGE + 99) / 100;\n    }\n\n    /// @notice Getter function for the Safe contract instance\n    /// @return safe_ The Safe contract instance\n    function safe() public view returns (GnosisSafe safe_) {\n        safe_ = SAFE;\n    }\n\n    /// @notice Getter function for the LivenessGuard contract instance\n    /// @return livenessGuard_ The LivenessGuard contract instance\n    function livenessGuard() public view returns (LivenessGuard livenessGuard_) {\n        livenessGuard_ = LIVENESS_GUARD;\n    }\n\n    /// @notice Getter function for the liveness interval\n    /// @return livenessInterval_ The liveness interval, in seconds\n    function livenessInterval() public view returns (uint256 livenessInterval_) {\n        livenessInterval_ = LIVENESS_INTERVAL;\n    }\n\n    /// @notice Getter function for the minimum number of owners\n    /// @return minOwners_ The minimum number of owners\n    function minOwners() public view returns (uint256 minOwners_) {\n        minOwners_ = MIN_OWNERS;\n    }\n\n    /// @notice Getter function for the required threshold percentage\n    /// @return thresholdPercentage_ The minimum number of owners\n    function thresholdPercentage() public view returns (uint256 thresholdPercentage_) {\n        thresholdPercentage_ = THRESHOLD_PERCENTAGE;\n    }\n\n    /// @notice Getter function for the fallback\n    /// @return fallbackOwner_ The fallback owner of the Safe\n    function fallbackOwner() public view returns (address fallbackOwner_) {\n        fallbackOwner_ = FALLBACK_OWNER;\n    }\n\n    /// @notice Checks if the owner can be removed\n    /// @param _owner The owner to be removed\n    /// @return canRemove_ bool indicating if the owner can be removed\n    function canRemove(address _owner) public view returns (bool canRemove_) {\n        require(SAFE.isOwner(_owner), \"LivenessModule: the owner to remove must be an owner of the Safe\");\n        canRemove_ = LIVENESS_GUARD.lastLive(_owner) + LIVENESS_INTERVAL < block.timestamp;\n    }\n\n    /// @notice This function can be called by anyone to remove a set of owners that have not signed a transaction\n    ///         during the liveness interval. If the number of owners drops below the minimum, then all owners\n    ///         must be removed.\n    /// @param _previousOwners The previous owners in the linked list of owners\n    /// @param _ownersToRemove The owners to remove\n    function removeOwners(address[] memory _previousOwners, address[] memory _ownersToRemove) external {\n        require(_previousOwners.length == _ownersToRemove.length, \"LivenessModule: arrays must be the same length\");\n        address[] memory currentOwners = SAFE.getOwners();\n        require(\n            !ownershipTransferredToFallback,\n            \"LivenessModule: The safe has been shutdown, the LivenessModule and LivenessGuard should be removed or replaced.\"\n        );\n\n        // Initialize the ownersCount count to the current number of owners, so that we can track the number of\n        // owners in the Safe after each removal. The Safe will revert if an owner cannot be removed, so it is safe\n        // keep a local count of the number of owners this way.\n        uint256 ownersCount = currentOwners.length;\n        for (uint256 i = 0; i < _previousOwners.length; i++) {\n            // Validate that the owner can be removed, which means that either:\n            //   1. the ownersCount is now less than MIN_OWNERS, in which case all owners should be removed regardless\n            //      of liveness,\n            //   2. the owner has not signed a transaction during the liveness interval.\n            if (ownersCount >= MIN_OWNERS) {\n                require(canRemove(_ownersToRemove[i]), \"LivenessModule: the owner to remove has signed recently\");\n            }\n\n            // Pre-emptively update our local count of the number of owners.\n            // This is safe because _removeOwner will bubble up any revert from the Safe if the owner cannot be removed.\n            ownersCount--;\n\n            // We now attempt remove the owner from the safe.\n            _removeOwner({\n                _prevOwner: _previousOwners[i],\n                _ownerToRemove: _ownersToRemove[i],\n                _newOwnersCount: ownersCount\n            });\n\n            // when all owners are removed and the sole owner is the fallback owner, the\n            // ownersCount variable will be incorrectly set to zero.\n            // This reflects the fact that all prior owners have been removed. The loop should naturally exit at this\n            // point, but for safety we detect this condition and force the loop to terminate.\n            if (ownersCount == 0) {\n                break;\n            }\n        }\n        _verifyFinalState();\n    }\n\n    /// @notice Removes an owner from the Safe and updates the threshold.\n    /// @param _prevOwner Owner that pointed to the owner to be removed in the linked list\n    /// @param _ownerToRemove Owner address to be removed.\n    /// @param _newOwnersCount New number of owners after removal.\n    function _removeOwner(address _prevOwner, address _ownerToRemove, uint256 _newOwnersCount) internal {\n        if (_newOwnersCount > 0) {\n            uint256 newThreshold = getRequiredThreshold(_newOwnersCount);\n            // Remove the owner and update the threshold\n            _removeOwnerSafeCall({_prevOwner: _prevOwner, _owner: _ownerToRemove, _threshold: newThreshold});\n        } else {\n            // There is only one owner left. The Safe will not allow a safe with no owners, so we will\n            // need to swap owners instead.\n            _swapToFallbackOwnerSafeCall({_prevOwner: _prevOwner, _oldOwner: _ownerToRemove});\n        }\n    }\n\n    /// @notice Sets the fallback owner as the sole owner of the Safe with a threshold of 1\n    /// @param _prevOwner Owner that pointed to the owner to be replaced in the linked list\n    /// @param _oldOwner Owner address to be replaced.\n    function _swapToFallbackOwnerSafeCall(address _prevOwner, address _oldOwner) internal {\n        (bool success, bytes memory returnData) = SAFE.execTransactionFromModuleReturnData({\n            to: address(SAFE),\n            value: 0,\n            operation: Enum.Operation.Call,\n            data: abi.encodeCall(OwnerManager.swapOwner, (_prevOwner, _oldOwner, FALLBACK_OWNER))\n        });\n        if (!success) {\n            revert OwnerRemovalFailed(string(returnData));\n        }\n\n        // Deactivate the module to prevent unintended behavior after the fallback owner has taken ownership.\n        ownershipTransferredToFallback = true;\n        emit OwnershipTransferredToFallback();\n    }\n\n    /// @notice Removes the owner `owner` from the Safe and updates the threshold to `_threshold`.\n    /// @param _prevOwner Owner that pointed to the owner to be removed in the linked list\n    /// @param _owner Owner address to be removed.\n    /// @param _threshold New threshold.\n    function _removeOwnerSafeCall(address _prevOwner, address _owner, uint256 _threshold) internal {\n        (bool success, bytes memory returnData) = SAFE.execTransactionFromModuleReturnData({\n            to: address(SAFE),\n            value: 0,\n            operation: Enum.Operation.Call,\n            data: abi.encodeCall(OwnerManager.removeOwner, (_prevOwner, _owner, _threshold))\n        });\n        if (!success) {\n            revert OwnerRemovalFailed(string(returnData));\n        }\n        emit RemovedOwner(_owner);\n    }\n\n    /// @notice A FREI-PI invariant check enforcing requirements on number of owners and threshold.\n    function _verifyFinalState() internal view {\n        address[] memory owners = SAFE.getOwners();\n        uint256 numOwners = owners.length;\n\n        // Ensure that the safe is not being left in a safe state such that either:\n        //  1. there are at least the minimum number of owners, or\n        //  2. there is a single owner and that owner is the fallback owner.\n        if (numOwners == 1) {\n            require(owners[0] == FALLBACK_OWNER, \"LivenessModule: must transfer ownership to fallback owner\");\n        } else {\n            require(\n                numOwners >= MIN_OWNERS,\n                \"LivenessModule: must remove all owners and transfer to fallback owner if numOwners < minOwners\"\n            );\n        }\n\n        // Check that\"LivenessModule: must remove all owners and transfer to fallback owner if numOwners < minOwners\"\n        // the threshold is correct. This check is also correct when there is a single\n        // owner, because getRequiredThreshold(1) returns 1.\n        uint256 threshold = SAFE.getThreshold();\n        require(\n            threshold == getRequiredThreshold(numOwners),\n            \"LivenessModule: Insufficient threshold for the number of owners\"\n        );\n\n        // Check that the guard has not been changed\n        require(\n            address(LIVENESS_GUARD) == address(uint160(uint256(bytes32(SAFE.getStorageAt(GUARD_STORAGE_SLOT, 1))))),\n            \"LivenessModule: guard has been changed\"\n        );\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 243,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "LivenessModule",
+        "similarity": 0.97,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/safe/LivenessModule.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/safe/LivenessModule.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 243,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    bool public ownershipTransferredToFallback;"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice The Safe contract instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    Safe internal immutable SAFE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    GnosisSafe internal immutable SAFE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @notice The LivenessGuard contract instance"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    ///         This can be updated by replacing with a new module and switching out the guard."
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 12,
+            "newStart": 38,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    uint256 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @custom:semver 1.3.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    string public constant version = \"1.3.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @custom:semver 1.1.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    string public constant version = \"1.2.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 43, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    // Constructor to initialize the Safe and baseModule instances"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "    constructor("
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        Safe _safe,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        GnosisSafe _safe,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        LivenessGuard _livenessGuard,"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "        uint256 _livenessInterval,"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "        uint256 _minOwners,"
+              }
+            ]
+          },
+          {
+            "oldStart": 70,
+            "oldLines": 7,
+            "newStart": 70,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "    /// @notice Getter function for the Safe contract instance"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "    /// @return safe_ The Safe contract instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    function safe() public view returns (Safe safe_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function safe() public view returns (GnosisSafe safe_) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "        safe_ = SAFE;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 75, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

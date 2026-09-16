@@ -545,6 +545,1086 @@
         ]
       },
       "warnings": []
+    },
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "StorageSlot",
+        "similarity": 0.813,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/StorageSlot.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/StorageSlot.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 16,
+        "removed": 8,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 13,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 6,
+            "newStart": 15,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        uint256 value;"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    struct Int256Slot {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        int256 value;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 21, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "    struct StringSlot {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 23,
+                "text": "        string value;"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 24, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 27,
+            "oldLines": 48,
+            "newStart": 31,
+            "newLines": 52,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 31,
+                "text": "     * @dev Returns an `AddressSlot` with member `value` located at `slot`."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 32, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 33,
+                "text": "    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 35,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 36,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 37, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 36, "newLine": 39, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     * @dev Returns an `BooleanSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 41, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 42,
+                "text": "    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 44,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 46, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 47, "text": "" },
+              { "type": " ", "oldLine": 46, "newLine": 48, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @dev Returns an `Bytes32Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 48, "newLine": 50, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 51,
+                "text": "    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 54,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 55, "text": "    }" },
+              { "type": " ", "oldLine": 55, "newLine": 56, "text": "" },
+              { "type": " ", "oldLine": 56, "newLine": 57, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @dev Returns an `Uint256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 58, "newLine": 59, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 60,
+                "text": "    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 65, "newLine": 65, "text": "" },
+              { "type": " ", "oldLine": 66, "newLine": 66, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * @dev Returns an `StringSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @dev Returns a `Int256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            r.slot := slot",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 73, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 74, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * @dev Returns a `StringSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 78,
+                "text": "    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 80,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 81,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 74, "newLine": 82, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 18,
+            "newStart": 85,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 85,
+                "text": "     * @dev Returns an `StringSlot` representation of the string storage pointer `store`."
+              },
+              { "type": " ", "oldLine": 78, "newLine": 86, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 87,
+                "text": "    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 89,
+                "text": "            r.slot := store.slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 90,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 91, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 92, "text": "" },
+              { "type": " ", "oldLine": 86, "newLine": 93, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "     * @dev Returns an `BytesSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * @dev Returns a `BytesSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 88, "newLine": 95, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 96,
+                "text": "    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 98,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 99,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 100, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 97,
+            "oldLines": 8,
+            "newStart": 103,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 103,
+                "text": "     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`."
+              },
+              { "type": " ", "oldLine": 98, "newLine": 104, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 105,
+                "text": "    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 107,
+                "text": "            r.slot := store.slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 108,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 109, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "cbbcf694abda362c": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "StorageSlot",
+        "similarity": 0.813,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/StorageSlot.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/utils/StorageSlot.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 16,
+        "removed": 8,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 13,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 6,
+            "newStart": 15,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        uint256 value;"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    struct Int256Slot {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        int256 value;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 21, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "    struct StringSlot {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 23,
+                "text": "        string value;"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 24, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 27,
+            "oldLines": 48,
+            "newStart": 31,
+            "newLines": 52,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 31,
+                "text": "     * @dev Returns an `AddressSlot` with member `value` located at `slot`."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 32, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 33,
+                "text": "    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 35,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 36,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 37, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 36, "newLine": 39, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     * @dev Returns an `BooleanSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 41, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 42,
+                "text": "    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 44,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 46, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 47, "text": "" },
+              { "type": " ", "oldLine": 46, "newLine": 48, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @dev Returns an `Bytes32Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 48, "newLine": 50, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 51,
+                "text": "    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 54,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 55, "text": "    }" },
+              { "type": " ", "oldLine": 55, "newLine": 56, "text": "" },
+              { "type": " ", "oldLine": 56, "newLine": 57, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @dev Returns an `Uint256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 58, "newLine": 59, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 60,
+                "text": "    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 65, "newLine": 65, "text": "" },
+              { "type": " ", "oldLine": 66, "newLine": 66, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     * @dev Returns an `StringSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @dev Returns a `Int256Slot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            r.slot := slot",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 73, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 74, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * @dev Returns a `StringSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 78,
+                "text": "    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 80,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 81,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 74, "newLine": 82, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 18,
+            "newStart": 85,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 85,
+                "text": "     * @dev Returns an `StringSlot` representation of the string storage pointer `store`."
+              },
+              { "type": " ", "oldLine": 78, "newLine": 86, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 87,
+                "text": "    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 89,
+                "text": "            r.slot := store.slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 90,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 91, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 92, "text": "" },
+              { "type": " ", "oldLine": 86, "newLine": 93, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "     * @dev Returns an `BytesSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * @dev Returns a `BytesSlot` with member `value` located at `slot`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 88, "newLine": 95, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 96,
+                "text": "    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 98,
+                "text": "            r.slot := slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 99,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 100, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 97,
+            "oldLines": 8,
+            "newStart": 103,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 103,
+                "text": "     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`."
+              },
+              { "type": " ", "oldLine": 98, "newLine": 104, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 105,
+                "text": "    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 107,
+                "text": "            r.slot := store.slot"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 108,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 109, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

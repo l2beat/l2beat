@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e6cb49c2a306ff201f4072f40d561cd327011a968afe0ad15744c3482923f2b0",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 6,
+  "source": "// Free functions called by structs\npub(crate) mod unconstrained_ops;\npub(crate) mod constrained_ops;\npub(crate) mod unconstrained_helpers;\npub(crate) mod expressions;\npub(crate) mod serialization;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

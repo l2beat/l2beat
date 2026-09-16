@@ -385,6 +385,772 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 11,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "IDisputeGame",
+        "similarity": 0.714,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 46,
+        "unchanged": 11,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 60,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IDisputeGame is IInitializable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Emitted when the game is resolved.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param status The status of the game after resolution.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 2,
+                "text": "    event Resolved(GameStatus indexed status);"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @notice Returns the timestamp that the DisputeGame contract was created at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @return createdAt_ The timestamp that the DisputeGame contract was created at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    function createdAt() external view returns (Timestamp createdAt_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Returns the timestamp that the DisputeGame contract was resolved at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @return resolvedAt_ The timestamp that the DisputeGame contract was resolved at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    function resolvedAt() external view returns (Timestamp resolvedAt_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @notice Returns the current status of the game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @return status_ The current status of the game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    function status() external view returns (GameStatus status_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 17, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @notice Getter for the game type.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @dev The reference impl should be entirely different depending on the type (fault, validity)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    ///      i.e. The game type should indicate the security model.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @return gameType_ The type of proof system being used.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function createdAt() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function resolvedAt() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function status() external view returns (GameStatus);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 7,
+                "text": "    function gameType() external view returns (GameType gameType_);"
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Getter for the creator of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @dev `clones-with-immutable-args` argument #1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @return creator_ The creator of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 8,
+                "text": "    function gameCreator() external pure returns (address creator_);"
+              },
+              { "type": "-", "oldLine": 28, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @notice Getter for the root claim.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @dev `clones-with-immutable-args` argument #2",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @return rootClaim_ The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 9,
+                "text": "    function rootClaim() external pure returns (Claim rootClaim_);"
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @notice Getter for the parent hash of the L1 block when the dispute game was created.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @dev `clones-with-immutable-args` argument #3",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @return l1Head_ The parent hash of the L1 block when the dispute game was created.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 10,
+                "text": "    function l1Head() external pure returns (Hash l1Head_);"
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @notice Getter for the extra data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @dev `clones-with-immutable-args` argument #4",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function l2SequenceNumber() external pure returns (uint256 l2SequenceNumber_);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 12,
+                "text": "    function extraData() external pure returns (bytes memory extraData_);"
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @notice If all necessary information has been gathered, this function should mark the game",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    ///         status as either `CHALLENGER_WINS` or `DEFENDER_WINS` and return the status of",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    ///         the resolved game. It is at this stage that the bonds should be awarded to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///         necessary parties.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @dev May only be called if the `status` is `IN_PROGRESS`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @return status_ The status of the game after resolution.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 13,
+                "text": "    function resolve() external returns (GameStatus status_);"
+              },
+              { "type": "-", "oldLine": 51, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @notice A compliant implementation of this interface should return the components of the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ///         game UUID's preimage provided in the cwia payload. The preimage of the UUID is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    ///         constructed as `keccak256(gameType . rootClaim . extraData)` where `.` denotes",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    ///         concatenation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @return gameType_ The type of proof system being used.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @return rootClaim_ The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 14,
+                "text": "    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_);"
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    function wasRespectedGameTypeWhenCreated() external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 60, "newLine": 16, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "IDisputeGame",
+        "similarity": 0.714,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 46,
+        "unchanged": 11,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 60,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IDisputeGame is IInitializable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Emitted when the game is resolved.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param status The status of the game after resolution.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 2,
+                "text": "    event Resolved(GameStatus indexed status);"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @notice Returns the timestamp that the DisputeGame contract was created at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @return createdAt_ The timestamp that the DisputeGame contract was created at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    function createdAt() external view returns (Timestamp createdAt_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Returns the timestamp that the DisputeGame contract was resolved at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @return resolvedAt_ The timestamp that the DisputeGame contract was resolved at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    function resolvedAt() external view returns (Timestamp resolvedAt_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @notice Returns the current status of the game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @return status_ The current status of the game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    function status() external view returns (GameStatus status_);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 17, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @notice Getter for the game type.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @dev The reference impl should be entirely different depending on the type (fault, validity)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    ///      i.e. The game type should indicate the security model.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @return gameType_ The type of proof system being used.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function createdAt() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function resolvedAt() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function status() external view returns (GameStatus);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 7,
+                "text": "    function gameType() external view returns (GameType gameType_);"
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Getter for the creator of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @dev `clones-with-immutable-args` argument #1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @return creator_ The creator of the dispute game.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 8,
+                "text": "    function gameCreator() external pure returns (address creator_);"
+              },
+              { "type": "-", "oldLine": 28, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @notice Getter for the root claim.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @dev `clones-with-immutable-args` argument #2",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @return rootClaim_ The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 9,
+                "text": "    function rootClaim() external pure returns (Claim rootClaim_);"
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @notice Getter for the parent hash of the L1 block when the dispute game was created.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @dev `clones-with-immutable-args` argument #3",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @return l1Head_ The parent hash of the L1 block when the dispute game was created.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 10,
+                "text": "    function l1Head() external pure returns (Hash l1Head_);"
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @notice Getter for the extra data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @dev `clones-with-immutable-args` argument #4",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function l2SequenceNumber() external pure returns (uint256 l2SequenceNumber_);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 12,
+                "text": "    function extraData() external pure returns (bytes memory extraData_);"
+              },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @notice If all necessary information has been gathered, this function should mark the game",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    ///         status as either `CHALLENGER_WINS` or `DEFENDER_WINS` and return the status of",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    ///         the resolved game. It is at this stage that the bonds should be awarded to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///         necessary parties.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @dev May only be called if the `status` is `IN_PROGRESS`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @return status_ The status of the game after resolution.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 13,
+                "text": "    function resolve() external returns (GameStatus status_);"
+              },
+              { "type": "-", "oldLine": 51, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @notice A compliant implementation of this interface should return the components of the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ///         game UUID's preimage provided in the cwia payload. The preimage of the UUID is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    ///         constructed as `keccak256(gameType . rootClaim . extraData)` where `.` denotes",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    ///         concatenation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @return gameType_ The type of proof system being used.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @return rootClaim_ The root claim of the DisputeGame.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 14,
+                "text": "    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_);"
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    function wasRespectedGameTypeWhenCreated() external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 60, "newLine": 16, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

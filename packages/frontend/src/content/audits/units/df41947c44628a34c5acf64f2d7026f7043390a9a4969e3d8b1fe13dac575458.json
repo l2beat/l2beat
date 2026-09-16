@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "df41947c44628a34c5acf64f2d7026f7043390a9a4969e3d8b1fe13dac575458",
+  "name": "L1LidoTokensBridge",
+  "kind": "contract",
+  "lines": 47,
+  "source": "contract L1LidoTokensBridge is L1ERC20ExtendedTokensBridge, TokenRateAndUpdateTimestampProvider, Versioned {\n    /// @param messenger_ L1 messenger address being used for cross-chain communications\n    /// @param l2TokenBridge_ Address of the corresponding L2 bridge\n    /// @param l1TokenNonRebasable_ Address of the bridged token in the L1 chain\n    /// @param l1TokenRebasable_ Address of the bridged token in the L1 chain\n    /// @param l2TokenNonRebasable_ Address of the token minted on the L2 chain when token bridged\n    /// @param l2TokenRebasable_ Address of the token minted on the L2 chain when token bridged\n    /// @param accountingOracle_ Address of the AccountingOracle instance to retrieve rate update timestamps\n    constructor(\n        address messenger_,\n        address l2TokenBridge_,\n        address l1TokenNonRebasable_,\n        address l1TokenRebasable_,\n        address l2TokenNonRebasable_,\n        address l2TokenRebasable_,\n        address accountingOracle_\n    )\n        L1ERC20ExtendedTokensBridge(\n            messenger_,\n            l2TokenBridge_,\n            l1TokenNonRebasable_,\n            l1TokenRebasable_,\n            l2TokenNonRebasable_,\n            l2TokenRebasable_\n        )\n        TokenRateAndUpdateTimestampProvider(l1TokenNonRebasable_, accountingOracle_)\n    {}\n\n    /// @notice Initializes the contract from scratch.\n    /// @param admin_ Address of the account to grant the DEFAULT_ADMIN_ROLE\n    function initialize(address admin_) external {\n        _initializeContractVersionTo(2);\n        _initializeBridgingManager(admin_);\n    }\n\n    /// @notice A function to finalize upgrade to v2 (from v1).\n    function finalizeUpgrade_v2() external {\n        if (!_isBridgingManagerInitialized()) {\n            revert ErrorBridgingManagerIsNotInitialized();\n        }\n        _initializeContractVersionTo(2);\n    }\n\n    function _tokenRate() internal view override returns (uint256 rate, uint256 updateTimestamp) {\n        return _getTokenRateAndUpdateTimestamp();\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

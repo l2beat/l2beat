@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3d30908a989f1a7250d9699d1f2185a618c1c906406d41fea64d96e2cd53ab43",
+  "name": "CompressedSlashRoundMath",
+  "kind": "library",
+  "lines": 9,
+  "source": "library CompressedSlashRoundMath {\n    function compress(SlashRound _round) internal pure returns (CompressedSlashRound) {\n        return CompressedSlashRound.wrap(SafeCast.toUint32(SlashRound.unwrap(_round)));\n    }\n\n    function decompress(CompressedSlashRound _round) internal pure returns (SlashRound) {\n        return SlashRound.wrap(uint256(CompressedSlashRound.unwrap(_round)));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

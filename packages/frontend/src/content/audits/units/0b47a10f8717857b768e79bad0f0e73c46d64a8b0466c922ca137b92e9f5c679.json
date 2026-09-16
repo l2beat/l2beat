@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0b47a10f8717857b768e79bad0f0e73c46d64a8b0466c922ca137b92e9f5c679",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 3,
+  "source": "mod rollup_fixture_builder;\n\npub(crate) use rollup_fixture_builder::RollupFixtureBuilder;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

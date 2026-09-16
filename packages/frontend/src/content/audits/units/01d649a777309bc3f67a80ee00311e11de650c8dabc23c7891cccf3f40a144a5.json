@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "01d649a777309bc3f67a80ee00311e11de650c8dabc23c7891cccf3f40a144a5",
+  "name": "U4096.nr",
+  "kind": "program",
+  "lines": 59,
+  "source": "use crate::bignum::BigNum;\nuse crate::bignum::derive_bignum;\nuse crate::params::BigNumParams;\n\npub global U4096_PARAMS: BigNumParams<35, 4097> = BigNumParams {\n    has_multiplicative_inverse: false,\n    modulus: [\n        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\n        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\n        0x00, 0x00, 0x00, 0x00, 0x010000,\n    ],\n    double_modulus: [\n        0x01000000000000000000000000000000,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0x01ffff,\n    ],\n    redc_param: [\n        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\n        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\n        0x00, 0x00, 0x00, 0x00, 0x01000000,\n    ],\n};\n\n#[derive_bignum(35, 4097, quote { U4096_PARAMS })]\npub struct U4096 {\n    limbs: [u128; 35],\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

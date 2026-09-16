@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f1dda40a76035d59e0c9f278164f791da9514e00f3d78f53ef808f5f05c5adb",
+  "name": "IRegistry",
+  "kind": "interface",
+  "lines": 37,
+  "source": "interface IRegistry {\n    event UpdatedRevoker(address revoker);\n    event UpdatedRevokerOperator(address revokerOperator);\n    event UpdatedExecuteAllowedAt(uint256 executeAllowedAt);\n    event UpdatedUnlockStartTime(uint256 unlockStartTime);\n    event StakerRegistered(StakerVersion version, address implementation);\n    event MilestoneAdded(MilestoneId milestoneId);\n    event MilestoneStatusUpdated(MilestoneId milestoneId, MilestoneStatus status);\n\n    error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt);\n    error InvalidUnlockStartTime(uint256 newUnlockStartTime, uint256 currentUnlockStartTime);\n    error InvalidUnlockDuration();\n    error InvalidUnlockCliffDuration();\n    error InvalidStakerImplementation(address implementation);\n\n    error UnRegisteredStaker(StakerVersion version);\n    error InvalidMilestoneId(MilestoneId milestoneId);\n    error InvalidMilestoneStatus(MilestoneId milestoneId);\n\n    function setRevoker(address _revoker) external;\n    function setRevokerOperator(address _revokerOperator) external;\n    function setExecuteAllowedAt(uint256 _executeAllowedAt) external;\n    function setUnlockStartTime(uint256 _unlockStartTime) external;\n    function registerStakerImplementation(address _implementation) external;\n    function addMilestone() external returns (MilestoneId);\n    function setMilestoneStatus(MilestoneId _milestoneId, MilestoneStatus _status) external;\n\n    function getRevoker() external view returns (address);\n    function getRevokerOperator() external view returns (address);\n    function getExecuteAllowedAt() external view returns (uint256);\n    function getUnlockStartTime() external view returns (uint256);\n    function getGlobalLockParams() external view returns (LockParams memory);\n    function getStakerImplementation(StakerVersion _version) external view returns (address);\n    function getNextStakerVersion() external view returns (StakerVersion);\n    function getMilestoneStatus(MilestoneId _milestoneId) external view returns (MilestoneStatus);\n    function getNextMilestoneId() external view returns (MilestoneId);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 6,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRegistry",
+        "similarity": 0.089,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/IRegistry.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/IRegistry.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 9,
+        "unchanged": 6,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 25,
+            "newStart": 1,
+            "newLines": 37,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IRegistry {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    event CanonicalRollupUpdated(address indexed instance, uint256 indexed version);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    event RewardDistributorUpdated(address indexed rewardDistributor);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event UpdatedRevoker(address revoker);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    event UpdatedRevokerOperator(address revokerOperator);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    event UpdatedExecuteAllowedAt(uint256 executeAllowedAt);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    event UpdatedUnlockStartTime(uint256 unlockStartTime);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    event StakerRegistered(StakerVersion version, address implementation);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    event MilestoneAdded(MilestoneId milestoneId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    event MilestoneStatusUpdated(MilestoneId milestoneId, MilestoneStatus status);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 9, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    function addRollup(IHaveVersion _rollup) external;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function updateRewardDistributor(address _rewardDistributor) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    error InvalidUnlockStartTime(uint256 newUnlockStartTime, uint256 currentUnlockStartTime);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    error InvalidUnlockDuration();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    error InvalidUnlockCliffDuration();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    error InvalidStakerImplementation(address implementation);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // docs:start:registry_get_canonical_rollup",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    function getCanonicalRollup() external view returns (IHaveVersion);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    // docs:end:registry_get_canonical_rollup",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    error UnRegisteredStaker(StakerVersion version);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    error InvalidMilestoneId(MilestoneId milestoneId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    error InvalidMilestoneStatus(MilestoneId milestoneId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // docs:start:registry_get_rollup",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    function getRollup(uint256 _chainId) external view returns (IHaveVersion);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    // docs:end:registry_get_rollup",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function setRevoker(address _revoker) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function setRevokerOperator(address _revokerOperator) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function setExecuteAllowedAt(uint256 _executeAllowedAt) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    function setUnlockStartTime(uint256 _unlockStartTime) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    function registerStakerImplementation(address _implementation) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    function addMilestone() external returns (MilestoneId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    function setMilestoneStatus(MilestoneId _milestoneId, MilestoneStatus _status) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    // docs:start:registry_number_of_versions",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    function numberOfVersions() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    // docs:end:registry_number_of_versions",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 19, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    function getGovernance() external view returns (address);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 21, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    function getRewardDistributor() external view returns (IRewardDistributor);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    function getVersion(uint256 _index) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    function getRevoker() external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    function getRevokerOperator() external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function getExecuteAllowedAt() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    function getUnlockStartTime() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    function getGlobalLockParams() external view returns (LockParams memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function getStakerImplementation(StakerVersion _version) external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    function getNextStakerVersion() external view returns (StakerVersion);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    function getMilestoneStatus(MilestoneId _milestoneId) external view returns (MilestoneStatus);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    function getNextMilestoneId() external view returns (MilestoneId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 37, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

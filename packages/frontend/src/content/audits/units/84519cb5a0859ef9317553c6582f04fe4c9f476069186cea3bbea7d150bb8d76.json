@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84519cb5a0859ef9317553c6582f04fe4c9f476069186cea3bbea7d150bb8d76",
+  "name": "IStaking",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface IStaking is IStakingCore {\n    function getConfig(address _attester) external view returns (AttesterConfig memory);\n    function getExit(address _attester) external view returns (Exit memory);\n    function getAttesterAtIndex(uint256 _index) external view returns (address);\n    function getSlasher() external view returns (address);\n    function getPendingSlasher() external view returns (address slasher, Timestamp readyAt);\n    function getLegacySlasher() external view returns (address slasher, Timestamp authorizedUntil);\n    function getLocalEjectionThreshold() external view returns (uint256);\n    function getSlasherExecutionDelay() external view returns (uint256);\n    function getLegacySlasherDrainWindow() external view returns (uint256);\n    function getStakingAsset() external view returns (IERC20);\n    function getActivationThreshold() external view returns (uint256);\n    function getEjectionThreshold() external view returns (uint256);\n    function getExitDelay() external view returns (Timestamp);\n    function getGSE() external view returns (GSE);\n    function getAttesterView(address _attester) external view returns (AttesterView memory);\n    function getStatus(address _attester) external view returns (Status);\n    function getNextFlushableEpoch() external view returns (Epoch);\n    function getEntryQueueLength() external view returns (uint256);\n    function getEntryQueueAt(uint256 _index) external view returns (DepositArgs memory);\n    function getAvailableValidatorFlushes() external view returns (uint256);\n    function getIsBootstrapped() external view returns (bool);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 1,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "IStaking",
+        "similarity": 0.065,
+        "reportId": "roninnetwork/beosin-ronin-network-2023-03",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/interfaces/staking/IStaking.sol",
+        "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
+        "commitTimestamp": "2023-03-08T05:44:18Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/staking/IStaking.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audited commit",
+        "coverage": "Final audited commit; all consensus-contract findings fixed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 22,
+        "removed": 7,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 23,
+        "unchanged": 1,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 31,
+            "newStart": 1,
+            "newLines": 23,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IStaking is IRewardPool, IBaseStaking, ICandidateStaking, IDelegatorStaking {",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Records the amount of rewards `_rewards` for the pools `_consensusAddrs`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * - The method caller must be validator contract.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * Emits the event `PoolsUpdated` once the contract recorded the rewards successfully.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "     * Emits the event `PoolsUpdateFailed` once the input array lengths are not equal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * Emits the event `PoolsUpdateConflicted` when there are some pools which already updated in the period.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 11, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * Note: This method should be called once at the period ending.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 13, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    function execRecordRewards(address[] calldata _consensusAddrs, uint256[] calldata _rewards, uint256 _period)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        payable;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Deducts from staking amount of the validator `_consensusAddr` for `_amount`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 21, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * - The method caller must be validator contract.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 24, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * Emits the event `Unstaked`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function execDeductStakingAmount(address _consensusAddr, uint256 _amount)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        returns (uint256 _actualDeductingAmount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IStaking is IStakingCore {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function getConfig(address _attester) external view returns (AttesterConfig memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    function getExit(address _attester) external view returns (Exit memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function getAttesterAtIndex(uint256 _index) external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function getSlasher() external view returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function getPendingSlasher() external view returns (address slasher, Timestamp readyAt);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function getLegacySlasher() external view returns (address slasher, Timestamp authorizedUntil);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    function getLocalEjectionThreshold() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    function getSlasherExecutionDelay() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    function getLegacySlasherDrainWindow() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function getStakingAsset() external view returns (IERC20);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function getActivationThreshold() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    function getEjectionThreshold() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function getExitDelay() external view returns (Timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    function getGSE() external view returns (GSE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    function getAttesterView(address _attester) external view returns (AttesterView memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function getStatus(address _attester) external view returns (Status);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function getNextFlushableEpoch() external view returns (Epoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function getEntryQueueLength() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function getEntryQueueAt(uint256 _index) external view returns (DepositArgs memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function getAvailableValidatorFlushes() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function getIsBootstrapped() external view returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 31, "newLine": 23, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
+    }
+  }
+}

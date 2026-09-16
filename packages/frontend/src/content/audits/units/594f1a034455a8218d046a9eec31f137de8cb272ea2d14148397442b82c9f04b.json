@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "594f1a034455a8218d046a9eec31f137de8cb272ea2d14148397442b82c9f04b",
+  "name": "IL1ScrollMessenger",
+  "kind": "interface",
+  "lines": 53,
+  "source": "interface IL1ScrollMessenger is IScrollMessenger {\n    /**\n     *\n     * Structs *\n     *\n     */\n    struct L2MessageProof {\n        // The index of the batch where the message belongs to.\n        uint256 batchIndex;\n        // Concatenation of merkle proof for withdraw merkle trie.\n        bytes merkleProof;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Relay a L2 => L1 message with message proof.\n    /// @param from The address of the sender of the message.\n    /// @param to The address of the recipient of the message.\n    /// @param value The msg.value passed to the message call.\n    /// @param nonce The nonce of the message to avoid replay attack.\n    /// @param message The content of the message.\n    /// @param proof The proof used to verify the correctness of the transaction.\n    function relayMessageWithProof(\n        address from,\n        address to,\n        uint256 value,\n        uint256 nonce,\n        bytes memory message,\n        L2MessageProof memory proof\n    ) external;\n\n    /// @notice Replay an existing message.\n    /// @param from The address of the sender of the message.\n    /// @param to The address of the recipient of the message.\n    /// @param value The msg.value passed to the message call.\n    /// @param messageNonce The nonce for the message to replay.\n    /// @param message The content of the message.\n    /// @param newGasLimit New gas limit to be used for this message.\n    /// @param refundAddress The address of account who will receive the refunded fee.\n    function replayMessage(\n        address from,\n        address to,\n        uint256 value,\n        uint256 messageNonce,\n        bytes memory message,\n        uint32 newGasLimit,\n        address refundAddress\n    ) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 52,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IL1ScrollMessenger",
+        "similarity": 0.957,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/IL1ScrollMessenger.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L1/IL1ScrollMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 52,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    /// @param from The address of the sender of the message."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    /// @param to The address of the recipient of the message."
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    /// @param value The msg.value passed to the message call."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @param queueIndex The queue index for the message to replay.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @param messageNonce The nonce for the message to replay.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    /// @param message The content of the message."
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    /// @param newGasLimit New gas limit to be used for this message."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    /// @param refundAddress The address of account who will receive the refunded fee."
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "        address from,"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "        address to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        uint256 value,"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        uint256 queueIndex,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        uint256 messageNonce,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "        bytes memory message,"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        uint32 newGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "        address refundAddress"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

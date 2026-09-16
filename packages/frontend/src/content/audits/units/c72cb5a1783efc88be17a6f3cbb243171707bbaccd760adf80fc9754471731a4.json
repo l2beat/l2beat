@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c72cb5a1783efc88be17a6f3cbb243171707bbaccd760adf80fc9754471731a4",
+  "name": "assert_transformed_array.nr",
+  "kind": "program",
+  "lines": 33,
+  "source": "use types::{traits::Empty, utils::arrays::ClaimedLengthArray};\n\n/// Validates that an array of items is correctly transformed into another array.\n///\n/// ### Arguments\n/// - `original_array`: The original array of items with a claimed length.\n/// - `transformed_array`: The array of items that have been transformed.\n/// - `assert_transformed`: A user-provided assertion function that verifies the transformation of each item.\n///\n/// ### Argument requirements:\n/// - `assert_transformed` must guarantee that the transformed value of an empty original item is also empty.\n///\n/// This function checks that:\n/// - Each item in the `original_array` is correctly transformed and placed in the `transformed_array`.\n///\n/// ### Notes\n/// - This function also checks the transformation of the items beyond `original_array.length`. The caller should ensure\n///   that the array is dense trimmed if this is desired.\n/// - This function does not mutate the input arrays; it only validates correctness.\npub fn assert_transformed_array<T, S, let N: u32, Env>(\n    original_array: ClaimedLengthArray<T, N>,\n    transformed_array: [S; N],\n    assert_transformed: fn[Env](T, S) -> (),\n)\nwhere\n    S: Empty,\n{\n    for i in 0..N {\n        let original = original_array.array[i];\n        let transformed = transformed_array[i];\n        assert_transformed(original, transformed);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

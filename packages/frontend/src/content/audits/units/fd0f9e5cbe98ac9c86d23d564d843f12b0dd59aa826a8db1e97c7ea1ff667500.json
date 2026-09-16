@@ -1,0 +1,879 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd0f9e5cbe98ac9c86d23d564d843f12b0dd59aa826a8db1e97c7ea1ff667500",
+  "name": "EscapeHatch",
+  "kind": "contract",
+  "lines": 680,
+  "source": "contract EscapeHatch is IEscapeHatch {\n    using AddressSnapshotLib for SnapshottedAddressSet;\n    using SafeERC20 for IERC20;\n    using BitMaps for BitMaps.BitMap;\n    using SafeCast for uint256;\n    using SafeCast for uint128;\n\n    // ============ Constants ============\n\n    /// @notice Number of epochs to look back from the START of the hatch for stable candidate set\n    uint256 public constant LAG_IN_EPOCHS_FOR_SET_SIZE = 2;\n\n    /// @notice Number of epochs to look back from the START of the hatch for stable RANDAO\n    uint256 public constant LAG_IN_EPOCHS_FOR_RANDAO = 1;\n\n    // ============ Immutables ============\n\n    // The rollup contract that the escape hatch belongs to\n    IInstance internal immutable ROLLUP;\n\n    // The lag defines how far in advance we pick the\n    uint256 internal immutable LAG_IN_HATCHES;\n\n    // The token used for candidate bonds\n    IERC20 internal immutable BOND_TOKEN;\n\n    // The required bond size for candidates\n    uint96 internal immutable BOND_SIZE;\n\n    // The tax applied when a candidate exits\n    uint96 internal immutable WITHDRAWAL_TAX;\n\n    // The punishment applied when a candidate fails to prove their proof submission\n    uint96 internal immutable FAILED_HATCH_PUNISHMENT;\n\n    // The frequency of escape hatches in epochs\n    uint256 internal immutable FREQUENCY;\n\n    // The duration of an escape hatch in epochs\n    uint256 internal immutable ACTIVE_DURATION;\n\n    // The additional exit delay after proposing in seconds\n    uint256 internal immutable PROPOSING_EXIT_DELAY;\n\n    // ============ Storage ============\n\n    BitMaps.BitMap internal $isHatchPrepared;\n    BitMaps.BitMap internal $isHatchValidated;\n    SnapshottedAddressSet internal $activeCandidates;\n    mapping(address candidate => CandidateInfo data) internal $candidateDatas;\n    mapping(Hatch hatch => address proposer) internal $designatedProposer;\n\n    constructor(\n        address _rollup,\n        address _bondToken,\n        uint96 _bondSize,\n        uint96 _withdrawalTax,\n        uint96 _failedHatchPunishment,\n        uint256 _frequency,\n        uint256 _activeDuration,\n        uint256 _lagInHatches,\n        uint256 _proposingExitDelay\n    ) {\n        // Validate configuration\n        // LAG_IN_EPOCHS_FOR_SET_SIZE must be greater than LAG_IN_EPOCHS_FOR_RANDAO\n        // to prevent bias from set manipulation\n        require(LAG_IN_EPOCHS_FOR_SET_SIZE > LAG_IN_EPOCHS_FOR_RANDAO, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        require(_lagInHatches >= 1, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        // ACTIVE_DURATION must be at least proofSubmissionEpochs + 1 to ensure\n        // the proposer cannot be \"rugged\" by malicious committee.\n        uint256 proofSubmissionEpochs = IInstance(_rollup).getProofSubmissionEpochs();\n        require(_activeDuration >= proofSubmissionEpochs + 1, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        // FREQUENCY must be > LAG_IN_EPOCHS_FOR_SET_SIZE to ensure valid selection window.\n        // Selection must happen in window [hatchTime(H), setSnapshotTime(H+1)).\n        // With too large a lag `setSnapshotTime(H+1) < hatchTime(H)`\n        require(_frequency > LAG_IN_EPOCHS_FOR_SET_SIZE, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        require(_frequency > _activeDuration, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        // BOND_SIZE must be non-zero to ensure \"something at stake\"\n        require(_bondSize > 0, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        // FAILED_HATCH_PUNISHMENT must be <= BOND_SIZE to avoid underflow\n        require(_failedHatchPunishment <= _bondSize, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        // WITHDRAWAL_TAX must be <= BOND_SIZE to ensure valid refund calculation\n        require(_withdrawalTax <= _bondSize, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        require(_proposingExitDelay <= 30 days, Errors_1.EscapeHatch__InvalidConfiguration());\n\n        ROLLUP = IInstance(_rollup);\n        BOND_TOKEN = IERC20(_bondToken);\n        BOND_SIZE = _bondSize;\n        WITHDRAWAL_TAX = _withdrawalTax;\n        FAILED_HATCH_PUNISHMENT = _failedHatchPunishment;\n        FREQUENCY = _frequency;\n        ACTIVE_DURATION = _activeDuration;\n        LAG_IN_HATCHES = _lagInHatches;\n        PROPOSING_EXIT_DELAY = _proposingExitDelay;\n    }\n\n    /**\n     * @notice Join the escape hatch candidate set by depositing the required bond\n     *\n     * @dev Transfers BOND_SIZE tokens from the caller\n     *\n     * @custom:reverts EscapeHatch__HatchTooEarly if called during early period when exit would revert\n     * @custom:reverts EscapeHatch__AlreadyInCandidateSet if caller is already in the candidate set\n     * @custom:reverts EscapeHatch__InvalidStatus if caller has a non-NONE status\n     */\n    function joinCandidateSet() external override(IEscapeHatchCore) {\n        // Ensure exit path is viable (reverts with EscapeHatch__HatchTooEarly during early period)\n        getSetTimestamp(getCurrentHatch() + Hatch.wrap(LAG_IN_HATCHES));\n\n        address candidate = msg.sender;\n\n        require(!$activeCandidates.contains(candidate), Errors_1.EscapeHatch__AlreadyInCandidateSet(candidate));\n\n        CandidateInfo storage data = $candidateDatas[candidate];\n        require(data.status == Status.NONE, Errors_1.EscapeHatch__InvalidStatus(Status.NONE, data.status));\n\n        $activeCandidates.add(candidate);\n\n        data.status = Status.ACTIVE;\n        data.amount = BOND_SIZE;\n\n        BOND_TOKEN.safeTransferFrom(candidate, address(this), BOND_SIZE);\n\n        emit CandidateJoined(candidate);\n    }\n\n    /**\n     * @notice Initiate exit from the candidate set\n     *\n     * @dev The exit may be immediate or delayed depending on timing relative to next hatch.\n     *\n     *      Calls selectCandidates() first, which may select the caller as the designated\n     *      proposer for an upcoming hatch. If the caller is selected, their status transitions\n     *      to PROPOSING and they are removed from $activeCandidates, causing the subsequent\n     *      checks to revert. This is intentional - a designated proposer cannot exit and must\n     *      instead follow the PROPOSING -> validateProofSubmission -> EXITING -> leaveCandidateSet\n     *      flow.\n     *\n     * @custom:reverts EscapeHatch__NotInCandidateSet if caller is not in the candidate set\n     *                 (including when caller was just selected as proposer by selectCandidates)\n     * @custom:reverts EscapeHatch__InvalidStatus if caller's status is not ACTIVE\n     */\n    function initiateExit() external override(IEscapeHatchCore) {\n        // Prepare the current hatch. If this selects the caller as designated proposer, their\n        // status becomes PROPOSING and they are removed from $activeCandidates. The requires\n        // below will then revert, preventing a designated proposer from exiting.\n        selectCandidates();\n\n        address candidate = msg.sender;\n        require($activeCandidates.contains(candidate), Errors_1.EscapeHatch__NotInCandidateSet(candidate));\n\n        CandidateInfo storage data = $candidateDatas[candidate];\n        require(data.status == Status.ACTIVE, Errors_1.EscapeHatch__InvalidStatus(Status.ACTIVE, data.status));\n\n        $activeCandidates.remove(candidate);\n        data.status = Status.EXITING;\n\n        // Calculate exit time based on whether we're before or after the next freeze\n        // If before the freeze we are free to leave, otherwise we will be in the snapshot\n        // and will need to wait until we know we have not been chosen, or have the selection\n        // update the exitableAt time.\n        Hatch nextTargetHatch = getCurrentHatch() + Hatch.wrap(1 + LAG_IN_HATCHES);\n        uint32 nextFreezeTs = getSetTimestamp(nextTargetHatch);\n\n        if (block.timestamp < nextFreezeTs) {\n            data.exitableAt = block.timestamp.toUint32();\n        } else {\n            data.exitableAt = getSetTimestamp(nextTargetHatch + Hatch.wrap(1));\n        }\n\n        emit CandidateExitInitiated(candidate, data.exitableAt);\n    }\n\n    /**\n     * @notice Complete exit from the candidate set and reclaim bond minus tax\n     *\n     * @dev Only callable after exitableAt timestamp has passed\n     *\n     * @custom:reverts EscapeHatch__InvalidStatus if caller's status is not EXITING\n     * @custom:reverts EscapeHatch__NotExitableYet if exitableAt has not been reached\n     */\n    function leaveCandidateSet() external override(IEscapeHatchCore) {\n        address candidate = msg.sender;\n        CandidateInfo storage data = $candidateDatas[candidate];\n\n        require(data.status == Status.EXITING, Errors_1.EscapeHatch__InvalidStatus(Status.EXITING, data.status));\n\n        require(\n            block.timestamp >= data.exitableAt, Errors_1.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)\n        );\n\n        uint256 refund = uint256(data.amount);\n        if (refund > WITHDRAWAL_TAX) {\n            refund -= WITHDRAWAL_TAX;\n        } else {\n            refund = 0;\n        }\n\n        delete $candidateDatas[candidate];\n\n        if (refund > 0) {\n            BOND_TOKEN.safeTransfer(candidate, refund);\n        }\n\n        emit CandidateExited(candidate, refund);\n    }\n\n    /**\n     * @notice Update the last submitted archive for a proposer during escape hatch\n     *\n     * @param _proposer The escape hatch proposer\n     * @param _checkpointNumber The checkpoint number being proposed, safely downcasted to 32 bits\n     * @param _archive The archive root of the proposed checkpoint\n     *\n     * @custom:reverts EscapeHatch__OnlyRollup if caller is not the Rollup contract\n     */\n    function updateSubmittedArchive(address _proposer, uint128 _checkpointNumber, bytes32 _archive)\n        external\n        override(IEscapeHatchCore)\n    {\n        require(msg.sender == address(ROLLUP), Errors_1.EscapeHatch__OnlyRollup(msg.sender, address(ROLLUP)));\n\n        CandidateInfo storage data = $candidateDatas[_proposer];\n        data.lastCheckpointNumber = _checkpointNumber.toUint32();\n        data.lastSubmittedArchive = _archive;\n\n        emit ArchiveUpdated(_proposer, _checkpointNumber, _archive);\n    }\n\n    /**\n     * @notice Validate that the designated proposer fulfilled their duty\n     *\n     * @dev Checks that blocks were proposed and proven. Applies punishment if not.\n     *      This is the ONLY way to transition from PROPOSING to EXITING.\n     *\n     * @param _hatch The hatch to validate\n     *\n     * @custom:reverts EscapeHatch__AlreadyValidated if the hatch has already been validated\n     * @custom:reverts EscapeHatch__NoDesignatedProposer if no proposer was designated for the hatch\n     * @custom:reverts EscapeHatch__InvalidStatus if proposer's status is not PROPOSING\n     * @custom:reverts EscapeHatch__NotExitableYet if called before exitableAt timestamp\n     */\n    function validateProofSubmission(Hatch _hatch) external override(IEscapeHatchCore) {\n        require(!$isHatchValidated.get(Hatch.unwrap(_hatch)), Errors_1.EscapeHatch__AlreadyValidated(_hatch));\n\n        address proposer = $designatedProposer[_hatch];\n        require(proposer != address(0), Errors_1.EscapeHatch__NoDesignatedProposer(_hatch));\n\n        CandidateInfo storage data = $candidateDatas[proposer];\n        require(data.status == Status.PROPOSING, Errors_1.EscapeHatch__InvalidStatus(Status.PROPOSING, data.status));\n\n        require(\n            block.timestamp >= data.exitableAt, Errors_1.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)\n        );\n\n        // Check if this contract was the active escape hatch for the entire active period.\n        // If not, the proposer may have been unable to fulfill duties due to governance change.\n        Epoch firstActiveEpoch = _getFirstEpoch(_hatch);\n        bool wasActiveEntirePeriod = true;\n        for (uint256 i = 0; i < ACTIVE_DURATION; i++) {\n            Epoch epoch = firstActiveEpoch + Epoch.wrap(i);\n            if (address(ROLLUP.getEscapeHatchForEpoch(epoch)) != address(this)) {\n                wasActiveEntirePeriod = false;\n                break;\n            }\n        }\n\n        bool success = true;\n        uint256 punishment = 0;\n\n        if (!wasActiveEntirePeriod && data.lastCheckpointNumber == 0) {\n            // Escape hatch was deactivated during the active window and proposer did nothing.\n            // This is acceptable - they couldn't (or chose not to) propose during disruption.\n            // Skip punishment, transition to EXITING.\n        } else {\n            // Normal validation: either was active the entire time, or proposer proposed something\n            // (if they proposed, they're on the hook regardless of escape hatch changes,\n            // since proofs go to the rollup directly and are unaffected by escape hatch changes).\n\n            // 1. Something must have been proposed\n            if (data.lastCheckpointNumber == 0) {\n                success = false;\n            }\n\n            // 2. Proofs must have been submitted at least up to this checkpoint\n            if (success && ROLLUP.getProvenCheckpointNumber() < data.lastCheckpointNumber) {\n                success = false;\n            }\n\n            // 3. The checkpoint archive must still be in the chain (not pruned)\n            if (success && ROLLUP.archiveAt(data.lastCheckpointNumber) != data.lastSubmittedArchive) {\n                success = false;\n            }\n\n            if (!success) {\n                punishment = FAILED_HATCH_PUNISHMENT;\n                data.amount -= FAILED_HATCH_PUNISHMENT;\n            }\n        }\n\n        data.status = Status.EXITING;\n        data.lastCheckpointNumber = 0;\n        data.lastSubmittedArchive = bytes32(0);\n\n        $isHatchValidated.set(Hatch.unwrap(_hatch));\n\n        emit ProofValidated(_hatch, proposer, success, punishment);\n    }\n\n    /**\n     * @notice Check if an epoch is within an open escape hatch period\n     *\n     * @param _epoch The epoch to check\n     *\n     * @return isOpen True if the epoch is within the escape hatch active duration\n     * @return proposer The designated proposer for this hatch (address(0) if none or not open)\n     */\n    function isHatchOpen(Epoch _epoch) external view override(IEscapeHatch) returns (bool isOpen, address proposer) {\n        uint256 epochInHatch = Epoch.unwrap(_epoch) % FREQUENCY;\n        if (epochInHatch >= ACTIVE_DURATION) {\n            return (false, address(0));\n        }\n\n        Hatch hatch = _getHatch(_epoch);\n        proposer = $designatedProposer[hatch];\n\n        return (proposer != address(0), proposer);\n    }\n\n    /**\n     * @notice Convert an epoch to its corresponding hatch number\n     *\n     * @param _epoch The epoch\n     *\n     * @return The hatch number\n     */\n    function getHatch(Epoch _epoch) external view override(IEscapeHatch) returns (Hatch) {\n        return _getHatch(_epoch);\n    }\n\n    /**\n     * @notice Get the first epoch of a hatch\n     *\n     * @param _hatch The hatch number\n     *\n     * @return The first epoch of the hatch\n     */\n    function getFirstEpoch(Hatch _hatch) external view override(IEscapeHatch) returns (Epoch) {\n        return _getFirstEpoch(_hatch);\n    }\n\n    /**\n     * @notice Get the designated proposer for a hatch\n     *\n     * @param _hatch The hatch number\n     *\n     * @return The designated proposer address (address(0) if none)\n     */\n    function getDesignatedProposer(Hatch _hatch) external view override(IEscapeHatch) returns (address) {\n        return $designatedProposer[_hatch];\n    }\n\n    /**\n     * @notice Check if a hatch has been prepared\n     *\n     * @param _hatch The hatch number\n     *\n     * @return True if the hatch has been prepared\n     */\n    function isHatchPrepared(Hatch _hatch) external view override(IEscapeHatch) returns (bool) {\n        return $isHatchPrepared.get(Hatch.unwrap(_hatch));\n    }\n\n    /**\n     * @notice Check if a hatch has been validated\n     *\n     * @param _hatch The hatch number\n     *\n     * @return True if the hatch has been validated\n     */\n    function isHatchValidated(Hatch _hatch) external view override(IEscapeHatch) returns (bool) {\n        return $isHatchValidated.get(Hatch.unwrap(_hatch));\n    }\n\n    /**\n     * @notice Get information about a candidate\n     *\n     * @param _candidate The candidate address\n     *\n     * @return The candidate's information\n     */\n    function getCandidateInfo(address _candidate) external view override(IEscapeHatch) returns (CandidateInfo memory) {\n        return $candidateDatas[_candidate];\n    }\n\n    /**\n     * @notice Get the current number of active candidates\n     *\n     * @return The number of candidates in the active set\n     */\n    function getCandidateCount() external view override(IEscapeHatch) returns (uint256) {\n        return $activeCandidates.length();\n    }\n\n    /**\n     * @notice Get the number of candidates in the snapshot for a target hatch\n     *\n     * @param _hatch The target hatch (the one being prepared/proposed for)\n     *\n     * @return The number of candidates in the snapshot for this hatch\n     */\n    function getCandidateCountForHatch(Hatch _hatch) external view override(IEscapeHatch) returns (uint256) {\n        uint32 freezeTs = getSetTimestamp(_hatch);\n        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(_hatch));\n        return $activeCandidates.lengthAtTimestamp(freezeTs);\n    }\n\n    /**\n     * @notice Get the candidate address at a given index in the current active set\n     *\n     * @param _index The index in the candidate set\n     *\n     * @return The candidate address at the given index\n     */\n    function getCandidateAtIndex(uint256 _index) external view override(IEscapeHatch) returns (address) {\n        return $activeCandidates.at(_index);\n    }\n\n    /**\n     * @notice Get the candidate address at a given index in the snapshot for a target hatch\n     *\n     * @param _index The index in the snapshot\n     * @param _hatch The target hatch (the one being prepared/proposed for)\n     *\n     * @return The candidate address at the given index in the snapshot\n     */\n    function getCandidateAtIndexForHatch(uint256 _index, Hatch _hatch)\n        external\n        view\n        override(IEscapeHatch)\n        returns (address)\n    {\n        uint32 freezeTs = getSetTimestamp(_hatch);\n        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(_hatch));\n        return $activeCandidates.getAddressFromIndexAtTimestamp(_index, freezeTs);\n    }\n\n    /**\n     * @notice Check if an address is in the candidate set\n     *\n     * @param _candidate The address to check\n     *\n     * @return True if the address is in the active candidate set\n     */\n    function isCandidate(address _candidate) external view override(IEscapeHatch) returns (bool) {\n        return $activeCandidates.contains(_candidate);\n    }\n\n    /**\n     * @notice Get the rollup contract address\n     *\n     * @return The rollup contract address\n     */\n    function getRollup() external view override(IEscapeHatch) returns (address) {\n        return address(ROLLUP);\n    }\n\n    /**\n     * @notice Get the bond token address\n     *\n     * @return The ERC20 token used for candidate bonds\n     */\n    function getBondToken() external view override(IEscapeHatch) returns (address) {\n        return address(BOND_TOKEN);\n    }\n\n    /**\n     * @notice Get the required bond size for candidates\n     *\n     * @return The amount of tokens required to join the candidate set\n     */\n    function getBondSize() external view override(IEscapeHatch) returns (uint96) {\n        return BOND_SIZE;\n    }\n\n    /**\n     * @notice Get the withdrawal tax applied when exiting\n     *\n     * @return The amount deducted from bond on exit\n     */\n    function getWithdrawalTax() external view override(IEscapeHatch) returns (uint96) {\n        return WITHDRAWAL_TAX;\n    }\n\n    /**\n     * @notice Get the punishment for failing to fulfill proposer duties\n     *\n     * @return The amount deducted from bond on failed hatch\n     */\n    function getFailedHatchPunishment() external view override(IEscapeHatch) returns (uint96) {\n        return FAILED_HATCH_PUNISHMENT;\n    }\n\n    /**\n     * @notice Get the frequency of escape hatches in epochs\n     *\n     * @return The number of epochs between escape hatch windows\n     */\n    function getFrequency() external view override(IEscapeHatch) returns (uint256) {\n        return FREQUENCY;\n    }\n\n    /**\n     * @notice Get the active duration of each escape hatch in epochs\n     *\n     * @return The number of epochs an escape hatch remains open\n     */\n    function getActiveDuration() external view override(IEscapeHatch) returns (uint256) {\n        return ACTIVE_DURATION;\n    }\n\n    /**\n     * @notice Get the lag in hatches for candidate selection\n     *\n     * @return The number of hatches ahead candidates are selected for\n     */\n    function getLagInHatches() external view override(IEscapeHatch) returns (uint256) {\n        return LAG_IN_HATCHES;\n    }\n\n    /**\n     * @notice Get the additional exit delay after proposing\n     *\n     * @return The additional seconds a proposer must wait after hatch ends before exiting\n     */\n    function getProposingExitDelay() external view override(IEscapeHatch) returns (uint256) {\n        return PROPOSING_EXIT_DELAY;\n    }\n\n    /**\n     * @notice Prepare the designated proposer for an upcoming escape hatch\n     *\n     * @dev Called permissionlessly to set up the next hatch. Uses snapshotted\n     *      candidate set and RANDAO for unbiased selection.\n     *\n     * @custom:reverts EscapeHatch__SetUnstable if called before the freeze timestamp (defense in depth)\n     */\n    function selectCandidates() public override(IEscapeHatchCore) {\n        // Don't select new candidates if this contract is no longer the active escape hatch.\n        // We check the latest value rather than the epoch-stable one since we sample for the future,\n        // so if the current differs, the future will as well.\n        // Early return (not revert) is important because initiateExit() calls selectCandidates() internally.\n        if (address(ROLLUP.getEscapeHatch()) != address(this)) {\n            return;\n        }\n\n        Hatch currentHatch = getCurrentHatch();\n        Hatch targetHatch = currentHatch + Hatch.wrap(LAG_IN_HATCHES);\n\n        if ($isHatchPrepared.get(Hatch.unwrap(targetHatch))) {\n            return;\n        }\n\n        $isHatchPrepared.set(Hatch.unwrap(targetHatch));\n\n        // Get the freeze timestamp for this targetHatch (when candidate set was snapshotted)\n        uint32 freezeTs = getSetTimestamp(targetHatch);\n        // Defense in depth: ensure we're past the freeze timestamp\n        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(targetHatch));\n\n        uint256 setSize = $activeCandidates.lengthAtTimestamp(freezeTs);\n        if (setSize == 0) {\n            return;\n        }\n\n        // Prevent selection after the freeze timestamp for the NEXT potential sampling.\n        // If we select after this timestamp, the selected candidate would still be in\n        // the next snapshot, allowing potential re-selection with reduced bond.\n        // We return early (no-op) rather than revert to allow initiateExit to proceed\n        // even when we're past the selection window.\n        uint32 nextFreezeTs = getSetTimestamp(targetHatch + Hatch.wrap(1));\n        if (block.timestamp >= nextFreezeTs) {\n            return;\n        }\n\n        // Get the seed timestamp and sample RANDAO\n        uint32 seedTs = getSeedTimestamp(targetHatch);\n        uint256 seed = ROLLUP.getSampleSeedAt(Timestamp.wrap(seedTs));\n        uint256 index = uint256(keccak256(abi.encode(targetHatch, seed))) % setSize;\n        address proposer = $activeCandidates.getAddressFromIndexAtTimestamp(index, freezeTs);\n\n        $designatedProposer[targetHatch] = proposer;\n\n        CandidateInfo storage data = $candidateDatas[proposer];\n\n        // At snapshot time, the candidate must have been ACTIVE, but could have been changed to EXITING,\n        // if the candidate called `initiateExit` after the freeze. In that case, skip removal as already\n        // done. Any other status indicates a broken invariant and remove() will revert.\n        if (data.status != Status.EXITING) {\n            $activeCandidates.remove(proposer);\n        }\n\n        data.status = Status.PROPOSING;\n\n        // exitableAt = end of hatch opening + proof submission window + proposing exit delay\n        Epoch exitableEpoch =\n            _getFirstEpoch(targetHatch) + Epoch.wrap(ACTIVE_DURATION) + Epoch.wrap(ROLLUP.getProofSubmissionEpochs());\n        data.exitableAt =\n            (Timestamp.unwrap(ROLLUP.getTimestampForEpoch(exitableEpoch)) + PROPOSING_EXIT_DELAY).toUint32();\n\n        emit CandidateSelected(targetHatch, proposer);\n    }\n\n    /**\n     * @notice Get the current hatch based on the current epoch\n     *\n     * @return The current hatch number\n     */\n    function getCurrentHatch() public view override(IEscapeHatch) returns (Hatch) {\n        return _getHatch(ROLLUP.getCurrentEpoch());\n    }\n\n    /**\n     * @notice Get the freeze timestamp for a target hatch's candidate snapshot\n     *\n     * @dev The snapshot taken at this timestamp determines who was eligible to be\n     *      selected as proposer for this hatch.\n     *\n     * @param _hatch The target hatch (the one being prepared/proposed for)\n     *\n     * @return The timestamp at which the candidate set was frozen for this hatch\n     */\n    function getSetTimestamp(Hatch _hatch) public view override(IEscapeHatch) returns (uint32) {\n        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors_1.EscapeHatch__HatchTooEarly(_hatch));\n\n        Epoch firstEpoch = _getFirstEpoch(_hatch - Hatch.wrap(LAG_IN_HATCHES));\n        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_SET_SIZE, Errors_1.EscapeHatch__HatchTooEarly(_hatch));\n\n        Epoch freezeEpoch = firstEpoch - Epoch.wrap(LAG_IN_EPOCHS_FOR_SET_SIZE);\n        return Timestamp.unwrap(ROLLUP.getTimestampForEpoch(freezeEpoch)).toUint32();\n    }\n\n    /**\n     * @notice Get the seed timestamp for a target hatch's RANDAO sampling\n     *\n     * @dev This is after the freeze timestamp to prevent manipulation of the\n     *      candidate set based on known RANDAO values.\n     *\n     * @param _hatch The target hatch (the one being prepared/proposed for)\n     *\n     * @return The timestamp at which the RANDAO seed is sampled for this hatch\n     */\n    function getSeedTimestamp(Hatch _hatch) public view override(IEscapeHatch) returns (uint32) {\n        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors_1.EscapeHatch__HatchTooEarly(_hatch));\n\n        Hatch samplingHatch = _hatch - Hatch.wrap(LAG_IN_HATCHES);\n        Epoch firstEpoch = _getFirstEpoch(samplingHatch);\n        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_RANDAO, Errors_1.EscapeHatch__HatchTooEarly(_hatch));\n\n        Epoch seedEpoch = firstEpoch - Epoch.wrap(LAG_IN_EPOCHS_FOR_RANDAO);\n        return Timestamp.unwrap(ROLLUP.getTimestampForEpoch(seedEpoch)).toUint32();\n    }\n\n    // ============ Internal Functions ============\n    function _getHatch(Epoch _epoch) internal view returns (Hatch) {\n        return Hatch.wrap(Epoch.unwrap(_epoch) / FREQUENCY);\n    }\n\n    function _getFirstEpoch(Hatch _hatch) internal view returns (Epoch) {\n        return Epoch.wrap(Hatch.unwrap(_hatch) * FREQUENCY);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 653,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "EscapeHatch",
+        "similarity": 0.908,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/EscapeHatch.sol",
+        "commit": "495fc284073d909b54946fbd3f473723f80e5548",
+        "commitTimestamp": "2026-02-16T12:42:46Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/495fc284073d909b54946fbd3f473723f80e5548/l1-contracts/src/core/EscapeHatch.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified CandidateJoined event change (PR 20423 commit)",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 27,
+        "removed": 27,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 653,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 64,
+            "oldLines": 32,
+            "newStart": 64,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "        // Validate configuration"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 65,
+                "text": "        // LAG_IN_EPOCHS_FOR_SET_SIZE must be greater than LAG_IN_EPOCHS_FOR_RANDAO"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "        // to prevent bias from set manipulation"
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        require(LAG_IN_EPOCHS_FOR_SET_SIZE > LAG_IN_EPOCHS_FOR_RANDAO, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(LAG_IN_EPOCHS_FOR_SET_SIZE > LAG_IN_EPOCHS_FOR_RANDAO, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        require(_lagInHatches >= 1, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        require(_lagInHatches >= 1, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "        // ACTIVE_DURATION must be at least proofSubmissionEpochs + 1 to ensure"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "        // the proposer cannot be \"rugged\" by malicious committee."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "        uint256 proofSubmissionEpochs = IInstance(_rollup).getProofSubmissionEpochs();"
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        require(_activeDuration >= proofSubmissionEpochs + 1, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        require(_activeDuration >= proofSubmissionEpochs + 1, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 75, "newLine": 75, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "        // FREQUENCY must be > LAG_IN_EPOCHS_FOR_SET_SIZE to ensure valid selection window."
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        // Selection must happen in window [hatchTime(H), setSnapshotTime(H+1))."
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "        // With too large a lag `setSnapshotTime(H+1) < hatchTime(H)`"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        require(_frequency > LAG_IN_EPOCHS_FOR_SET_SIZE, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        require(_frequency > LAG_IN_EPOCHS_FOR_SET_SIZE, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        require(_frequency > _activeDuration, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        require(_frequency > _activeDuration, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "        // BOND_SIZE must be non-zero to ensure \"something at stake\""
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        require(_bondSize > 0, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        require(_bondSize > 0, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 85, "newLine": 85, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "        // FAILED_HATCH_PUNISHMENT must be <= BOND_SIZE to avoid underflow"
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        require(_failedHatchPunishment <= _bondSize, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        require(_failedHatchPunishment <= _bondSize, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 88, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "        // WITHDRAWAL_TAX must be <= BOND_SIZE to ensure valid refund calculation"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        require(_withdrawalTax <= _bondSize, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        require(_withdrawalTax <= _bondSize, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 91, "newLine": 91, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        require(_proposingExitDelay <= 30 days, Errors.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        require(_proposingExitDelay <= 30 days, Errors_1.EscapeHatch__InvalidConfiguration());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 93, "newLine": 93, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 94,
+                "text": "        ROLLUP = IInstance(_rollup);"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "        BOND_TOKEN = IERC20(_bondToken);"
+              }
+            ]
+          },
+          {
+            "oldStart": 117,
+            "oldLines": 10,
+            "newStart": 117,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "        address candidate = msg.sender;"
+              },
+              { "type": " ", "oldLine": 119, "newLine": 119, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        require(!$activeCandidates.contains(candidate), Errors.EscapeHatch__AlreadyInCandidateSet(candidate));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        require(!$activeCandidates.contains(candidate), Errors_1.EscapeHatch__AlreadyInCandidateSet(candidate));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 121, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 122,
+                "text": "        CandidateInfo storage data = $candidateDatas[candidate];"
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        require(data.status == Status.NONE, Errors.EscapeHatch__InvalidStatus(Status.NONE, data.status));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        require(data.status == Status.NONE, Errors_1.EscapeHatch__InvalidStatus(Status.NONE, data.status));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 124, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 125,
+                "text": "        $activeCandidates.add(candidate);"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 126, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 155,
+            "oldLines": 10,
+            "newStart": 155,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "        selectCandidates();"
+              },
+              { "type": " ", "oldLine": 156, "newLine": 156, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "        address candidate = msg.sender;"
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "        require($activeCandidates.contains(candidate), Errors.EscapeHatch__NotInCandidateSet(candidate));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "        require($activeCandidates.contains(candidate), Errors_1.EscapeHatch__NotInCandidateSet(candidate));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 159, "newLine": 159, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 160,
+                "text": "        CandidateInfo storage data = $candidateDatas[candidate];"
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "        require(data.status == Status.ACTIVE, Errors.EscapeHatch__InvalidStatus(Status.ACTIVE, data.status));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "        require(data.status == Status.ACTIVE, Errors_1.EscapeHatch__InvalidStatus(Status.ACTIVE, data.status));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 162, "newLine": 162, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "        $activeCandidates.remove(candidate);"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "        data.status = Status.EXITING;"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 10,
+            "newStart": 191,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 191,
+                "text": "        address candidate = msg.sender;"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 192,
+                "text": "        CandidateInfo storage data = $candidateDatas[candidate];"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 193, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "        require(data.status == Status.EXITING, Errors.EscapeHatch__InvalidStatus(Status.EXITING, data.status));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        require(data.status == Status.EXITING, Errors_1.EscapeHatch__InvalidStatus(Status.EXITING, data.status));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 195, "newLine": 195, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 196,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            block.timestamp >= data.exitableAt, Errors.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            block.timestamp >= data.exitableAt, Errors_1.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 198,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 199, "newLine": 199, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 200,
+                "text": "        uint256 refund = uint256(data.amount);"
+              }
+            ]
+          },
+          {
+            "oldStart": 226,
+            "oldLines": 7,
+            "newStart": 226,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 226,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 227,
+                "text": "        override(IEscapeHatchCore)"
+              },
+              { "type": " ", "oldLine": 228, "newLine": 228, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "        require(msg.sender == address(ROLLUP), Errors.EscapeHatch__OnlyRollup(msg.sender, address(ROLLUP)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "        require(msg.sender == address(ROLLUP), Errors_1.EscapeHatch__OnlyRollup(msg.sender, address(ROLLUP)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 230, "newLine": 230, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 231,
+                "text": "        CandidateInfo storage data = $candidateDatas[_proposer];"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 232,
+                "text": "        data.lastCheckpointNumber = _checkpointNumber.toUint32();"
+              }
+            ]
+          },
+          {
+            "oldStart": 249,
+            "oldLines": 16,
+            "newStart": 249,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 249,
+                "text": "     * @custom:reverts EscapeHatch__NotExitableYet if called before exitableAt timestamp"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 250,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 251,
+                "text": "    function validateProofSubmission(Hatch _hatch) external override(IEscapeHatchCore) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "        require(!$isHatchValidated.get(Hatch.unwrap(_hatch)), Errors.EscapeHatch__AlreadyValidated(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        require(!$isHatchValidated.get(Hatch.unwrap(_hatch)), Errors_1.EscapeHatch__AlreadyValidated(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 253, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 254,
+                "text": "        address proposer = $designatedProposer[_hatch];"
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "        require(proposer != address(0), Errors.EscapeHatch__NoDesignatedProposer(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        require(proposer != address(0), Errors_1.EscapeHatch__NoDesignatedProposer(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 256, "newLine": 256, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 257,
+                "text": "        CandidateInfo storage data = $candidateDatas[proposer];"
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "        require(data.status == Status.PROPOSING, Errors.EscapeHatch__InvalidStatus(Status.PROPOSING, data.status));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "        require(data.status == Status.PROPOSING, Errors_1.EscapeHatch__InvalidStatus(Status.PROPOSING, data.status));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 259, "newLine": 259, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 260,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            block.timestamp >= data.exitableAt, Errors.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "            block.timestamp >= data.exitableAt, Errors_1.EscapeHatch__NotExitableYet(data.exitableAt, block.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 262,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 263, "newLine": 263, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 264,
+                "text": "        // Check if this contract was the active escape hatch for the entire active period."
+              }
+            ]
+          },
+          {
+            "oldStart": 419,
+            "oldLines": 7,
+            "newStart": 419,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 419,
+                "newLine": 419,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 420,
+                "newLine": 420,
+                "text": "    function getCandidateCountForHatch(Hatch _hatch) external view override(IEscapeHatch) returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 421,
+                "newLine": 421,
+                "text": "        uint32 freezeTs = getSetTimestamp(_hatch);"
+              },
+              {
+                "type": "-",
+                "oldLine": 422,
+                "text": "        require(freezeTs < block.timestamp, Errors.EscapeHatch__SetUnstable(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 422,
+                "text": "        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 423,
+                "newLine": 423,
+                "text": "        return $activeCandidates.lengthAtTimestamp(freezeTs);"
+              },
+              { "type": " ", "oldLine": 424, "newLine": 424, "text": "    }" },
+              { "type": " ", "oldLine": 425, "newLine": 425, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 449,
+            "oldLines": 7,
+            "newStart": 449,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 449,
+                "newLine": 449,
+                "text": "        returns (address)"
+              },
+              { "type": " ", "oldLine": 450, "newLine": 450, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 451,
+                "newLine": 451,
+                "text": "        uint32 freezeTs = getSetTimestamp(_hatch);"
+              },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "        require(freezeTs < block.timestamp, Errors.EscapeHatch__SetUnstable(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 453,
+                "newLine": 453,
+                "text": "        return $activeCandidates.getAddressFromIndexAtTimestamp(_index, freezeTs);"
+              },
+              { "type": " ", "oldLine": 454, "newLine": 454, "text": "    }" },
+              { "type": " ", "oldLine": 455, "newLine": 455, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 574,
+            "oldLines": 7,
+            "newStart": 574,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 574,
+                "newLine": 574,
+                "text": "        // Get the freeze timestamp for this targetHatch (when candidate set was snapshotted)"
+              },
+              {
+                "type": " ",
+                "oldLine": 575,
+                "newLine": 575,
+                "text": "        uint32 freezeTs = getSetTimestamp(targetHatch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 576,
+                "newLine": 576,
+                "text": "        // Defense in depth: ensure we're past the freeze timestamp"
+              },
+              {
+                "type": "-",
+                "oldLine": 577,
+                "text": "        require(freezeTs < block.timestamp, Errors.EscapeHatch__SetUnstable(targetHatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 577,
+                "text": "        require(freezeTs < block.timestamp, Errors_1.EscapeHatch__SetUnstable(targetHatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 578, "newLine": 578, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 579,
+                "newLine": 579,
+                "text": "        uint256 setSize = $activeCandidates.lengthAtTimestamp(freezeTs);"
+              },
+              {
+                "type": " ",
+                "oldLine": 580,
+                "newLine": 580,
+                "text": "        if (setSize == 0) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 639,
+            "oldLines": 10,
+            "newStart": 639,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 639,
+                "newLine": 639,
+                "text": "     * @return The timestamp at which the candidate set was frozen for this hatch"
+              },
+              {
+                "type": " ",
+                "oldLine": 640,
+                "newLine": 640,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 641,
+                "newLine": 641,
+                "text": "    function getSetTimestamp(Hatch _hatch) public view override(IEscapeHatch) returns (uint32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 642,
+                "text": "        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 642,
+                "text": "        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors_1.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 643, "newLine": 643, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 644,
+                "newLine": 644,
+                "text": "        Epoch firstEpoch = _getFirstEpoch(_hatch - Hatch.wrap(LAG_IN_HATCHES));"
+              },
+              {
+                "type": "-",
+                "oldLine": 645,
+                "text": "        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_SET_SIZE, Errors.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 645,
+                "text": "        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_SET_SIZE, Errors_1.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 646, "newLine": 646, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 647,
+                "newLine": 647,
+                "text": "        Epoch freezeEpoch = firstEpoch - Epoch.wrap(LAG_IN_EPOCHS_FOR_SET_SIZE);"
+              },
+              {
+                "type": " ",
+                "oldLine": 648,
+                "newLine": 648,
+                "text": "        return Timestamp.unwrap(ROLLUP.getTimestampForEpoch(freezeEpoch)).toUint32();"
+              }
+            ]
+          },
+          {
+            "oldStart": 659,
+            "oldLines": 11,
+            "newStart": 659,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 659,
+                "newLine": 659,
+                "text": "     * @return The timestamp at which the RANDAO seed is sampled for this hatch"
+              },
+              {
+                "type": " ",
+                "oldLine": 660,
+                "newLine": 660,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 661,
+                "newLine": 661,
+                "text": "    function getSeedTimestamp(Hatch _hatch) public view override(IEscapeHatch) returns (uint32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 662,
+                "text": "        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 662,
+                "text": "        require(Hatch.unwrap(_hatch) >= LAG_IN_HATCHES, Errors_1.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 663, "newLine": 663, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 664,
+                "newLine": 664,
+                "text": "        Hatch samplingHatch = _hatch - Hatch.wrap(LAG_IN_HATCHES);"
+              },
+              {
+                "type": " ",
+                "oldLine": 665,
+                "newLine": 665,
+                "text": "        Epoch firstEpoch = _getFirstEpoch(samplingHatch);"
+              },
+              {
+                "type": "-",
+                "oldLine": 666,
+                "text": "        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_RANDAO, Errors.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 666,
+                "text": "        require(Epoch.unwrap(firstEpoch) >= LAG_IN_EPOCHS_FOR_RANDAO, Errors_1.EscapeHatch__HatchTooEarly(_hatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 667, "newLine": 667, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 668,
+                "newLine": 668,
+                "text": "        Epoch seedEpoch = firstEpoch - Epoch.wrap(LAG_IN_EPOCHS_FOR_RANDAO);"
+              },
+              {
+                "type": " ",
+                "oldLine": 669,
+                "newLine": 669,
+                "text": "        return Timestamp.unwrap(ROLLUP.getTimestampForEpoch(seedEpoch)).toUint32();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

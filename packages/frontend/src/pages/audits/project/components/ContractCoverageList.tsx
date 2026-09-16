@@ -1,5 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { Switch } from '~/components/core/Switch'
 import {
   Tooltip,
   TooltipContent,
@@ -43,10 +44,15 @@ export function ContractCoverageList({ contracts }: Props) {
   )
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState<Set<string>>(() => new Set())
+  const [hideIgnoredChanges, setHideIgnoredChanges] = useState(true)
+  const needle = search.trim().toLowerCase()
+  const isSearching = needle !== ''
 
+  // While a name filter is typed every contract is expanded and contracts
+  // without a matching unit are hidden; clearing the filter restores the
+  // manual expand state.
   const filtered = useMemo(() => {
-    const needle = search.trim().toLowerCase()
-    return contracts.map((contract) => ({
+    const rows = contracts.map((contract) => ({
       contract,
       files: contract.files.map((file) => ({
         file,
@@ -59,7 +65,10 @@ export function ContractCoverageList({ contracts }: Props) {
         ),
       })),
     }))
-  }, [contracts, statuses, search])
+    return isSearching
+      ? rows.filter((r) => r.files.some((f) => f.units.length > 0))
+      : rows
+  }, [contracts, statuses, needle, isSearching])
 
   function toggleStatus(status: AuditUnitStatus) {
     setStatuses((prev) => {
@@ -83,7 +92,33 @@ export function ContractCoverageList({ contracts }: Props) {
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-bold text-lg">Deployed contracts</h2>
-        <div className="flex gap-2 text-xs">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
+          <label
+            htmlFor="hide-ignored-changes"
+            className={cn(
+              'flex cursor-pointer select-none items-center gap-2 rounded-full border px-3 py-1 font-medium transition-colors',
+              hideIgnoredChanges
+                ? 'border-brand bg-brand/10 text-brand'
+                : 'border-divider bg-surface-secondary text-primary',
+            )}
+          >
+            <Switch
+              id="hide-ignored-changes"
+              name="audits-hide-ignored-changes"
+              checked={hideIgnoredChanges}
+              onCheckedChange={setHideIgnoredChanges}
+            />
+            Hide ignored changes in diffs
+            <Tooltip>
+              <TooltipTrigger className="text-secondary">ⓘ</TooltipTrigger>
+              <TooltipContent className="max-w-[360px]">
+                Hides changed lines that do not count towards the unit status or
+                the covered lines: comments and the string messages of require /
+                revert. Only the expanded diffs are affected; the statuses, the
+                +/− counts and the coverage numbers stay the same.
+              </TooltipContent>
+            </Tooltip>
+          </label>
           <button
             type="button"
             className="text-secondary hover:text-primary"
@@ -128,11 +163,17 @@ export function ContractCoverageList({ contracts }: Props) {
           className="ml-auto min-w-[200px] rounded-md border border-divider bg-surface-secondary px-2 py-1 text-xs"
         />
       </div>
+      {isSearching && (
+        <p className="text-secondary text-xs">
+          Showing {filtered.length} of {contracts.length} contracts with
+          matching units.
+        </p>
+      )}
 
       <div className="flex flex-col gap-2">
         {filtered.map(({ contract, files }) => {
           const key = rowKey(contract)
-          const isOpen = open.has(key)
+          const isOpen = isSearching || open.has(key)
           const visibleUnits = files.reduce((n, f) => n + f.units.length, 0)
           const allUnits = contract.files.flatMap((f) => f.units)
           const majorFindingUnits = allUnits.filter(
@@ -280,19 +321,20 @@ export function ContractCoverageList({ contracts }: Props) {
                   {files.map(({ file, units }) =>
                     units.length === 0 ? null : (
                       <div key={file.path}>
-                        <div className="flex items-center gap-2 bg-surface-secondary px-3 py-1 font-mono text-secondary text-xs">
-                          {file.path}
-                          {file.role !== 'implementation' && (
-                            <span className="rounded border border-divider px-1 font-medium font-sans text-[10px] uppercase">
-                              {file.role}
-                            </span>
-                          )}
-                          <span className="ml-auto font-sans">
-                            {formatInteger(file.lines)} lines
-                          </span>
+                        <div className="hidden bg-surface-secondary px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
+                          <span>Type</span>
+                          <span>Name</span>
+                          <span>Status</span>
+                          <span>Audited source</span>
+                          <span className="text-right">Diff</span>
+                          <span />
                         </div>
                         {units.map((unit) => (
-                          <UnitRow key={unit.id} unit={unit} />
+                          <UnitRow
+                            key={unit.id}
+                            unit={unit}
+                            hideIgnoredChanges={hideIgnoredChanges}
+                          />
                         ))}
                       </div>
                     ),

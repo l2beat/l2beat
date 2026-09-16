@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "22274913f9456922830077d77062a4520afd2af7c2239478b378eb7cd6c36242",
+  "name": "BatchHeaderV0Codec",
+  "kind": "library",
+  "lines": 195,
+  "source": "library BatchHeaderV0Codec {\n    /// @dev Thrown when the length of batch header is smaller than 89\n    error ErrorBatchHeaderV0LengthTooSmall();\n\n    /// @dev Thrown when the length of skippedL1MessageBitmap is incorrect.\n    error ErrorIncorrectBitmapLengthV0();\n\n    /// @dev The length of fixed parts of the batch header.\n    uint256 internal constant BATCH_HEADER_FIXED_LENGTH = 89;\n\n    /// @notice Load batch header in calldata to memory.\n    /// @param _batchHeader The encoded batch header bytes in calldata.\n    /// @return batchPtr The start memory offset of the batch header in memory.\n    /// @return length The length in bytes of the batch header.\n    function loadAndValidate(bytes calldata _batchHeader) internal pure returns (uint256 batchPtr, uint256 length) {\n        length = _batchHeader.length;\n        if (length < BATCH_HEADER_FIXED_LENGTH) {\n            revert ErrorBatchHeaderV0LengthTooSmall();\n        }\n\n        // copy batch header to memory.\n        assembly {\n            batchPtr := mload(0x40)\n            calldatacopy(batchPtr, _batchHeader.offset, length)\n            mstore(0x40, add(batchPtr, length))\n        }\n\n        // check batch header length\n        uint256 _l1MessagePopped = getL1MessagePopped(batchPtr);\n\n        unchecked {\n            if (length != BATCH_HEADER_FIXED_LENGTH + ((_l1MessagePopped + 255) / 256) * 32) {\n                revert ErrorIncorrectBitmapLengthV0();\n            }\n        }\n    }\n\n    /// @notice Get the version of the batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _version The version of the batch header.\n    function getVersion(uint256 batchPtr) internal pure returns (uint256 _version) {\n        assembly {\n            _version := shr(248, mload(batchPtr))\n        }\n    }\n\n    /// @notice Get the batch index of the batch.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _batchIndex The batch index of the batch.\n    function getBatchIndex(uint256 batchPtr) internal pure returns (uint256 _batchIndex) {\n        assembly {\n            _batchIndex := shr(192, mload(add(batchPtr, 1)))\n        }\n    }\n\n    /// @notice Get the number of L1 messages of the batch.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _l1MessagePopped The number of L1 messages of the batch.\n    function getL1MessagePopped(uint256 batchPtr) internal pure returns (uint256 _l1MessagePopped) {\n        assembly {\n            _l1MessagePopped := shr(192, mload(add(batchPtr, 9)))\n        }\n    }\n\n    /// @notice Get the number of L1 messages popped before this batch.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _totalL1MessagePopped The number of L1 messages popped before this batch.\n    function getTotalL1MessagePopped(uint256 batchPtr) internal pure returns (uint256 _totalL1MessagePopped) {\n        assembly {\n            _totalL1MessagePopped := shr(192, mload(add(batchPtr, 17)))\n        }\n    }\n\n    /// @notice Get the data hash of the batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _dataHash The data hash of the batch header.\n    function getDataHash(uint256 batchPtr) internal pure returns (bytes32 _dataHash) {\n        assembly {\n            _dataHash := mload(add(batchPtr, 25))\n        }\n    }\n\n    /// @notice Get the parent batch hash of the batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _parentBatchHash The parent batch hash of the batch header.\n    function getParentBatchHash(uint256 batchPtr) internal pure returns (bytes32 _parentBatchHash) {\n        assembly {\n            _parentBatchHash := mload(add(batchPtr, 57))\n        }\n    }\n\n    /// @notice Get the start memory offset for skipped L1 messages bitmap.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @return _bitmapPtr the start memory offset for skipped L1 messages bitmap.\n    function getSkippedBitmapPtr(uint256 batchPtr) internal pure returns (uint256 _bitmapPtr) {\n        assembly {\n            _bitmapPtr := add(batchPtr, BATCH_HEADER_FIXED_LENGTH)\n        }\n    }\n\n    /// @notice Get the skipped L1 messages bitmap.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param index The index of bitmap to load.\n    /// @return _bitmap The bitmap from bits `index * 256` to `index * 256 + 255`.\n    function getSkippedBitmap(uint256 batchPtr, uint256 index) internal pure returns (uint256 _bitmap) {\n        assembly {\n            batchPtr := add(batchPtr, BATCH_HEADER_FIXED_LENGTH)\n            _bitmap := mload(add(batchPtr, mul(index, 32)))\n        }\n    }\n\n    /// @notice Store the version of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _version The version of batch header.\n    function storeVersion(uint256 batchPtr, uint256 _version) internal pure {\n        assembly {\n            mstore8(batchPtr, _version)\n        }\n    }\n\n    /// @notice Store the batch index of batch header.\n    /// @dev Because this function can overwrite the subsequent fields, it must be called before\n    /// `storeL1MessagePopped`, `storeTotalL1MessagePopped`, and `storeDataHash`.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _batchIndex The batch index.\n    function storeBatchIndex(uint256 batchPtr, uint256 _batchIndex) internal pure {\n        assembly {\n            mstore(add(batchPtr, 1), shl(192, _batchIndex))\n        }\n    }\n\n    /// @notice Store the number of L1 messages popped in current batch to batch header.\n    /// @dev Because this function can overwrite the subsequent fields, it must be called before\n    /// `storeTotalL1MessagePopped` and `storeDataHash`.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _l1MessagePopped The number of L1 messages popped in current batch.\n    function storeL1MessagePopped(uint256 batchPtr, uint256 _l1MessagePopped) internal pure {\n        assembly {\n            mstore(add(batchPtr, 9), shl(192, _l1MessagePopped))\n        }\n    }\n\n    /// @notice Store the total number of L1 messages popped after current batch to batch header.\n    /// @dev Because this function can overwrite the subsequent fields, it must be called before\n    /// `storeDataHash`.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _totalL1MessagePopped The total number of L1 messages popped after current batch.\n    function storeTotalL1MessagePopped(uint256 batchPtr, uint256 _totalL1MessagePopped) internal pure {\n        assembly {\n            mstore(add(batchPtr, 17), shl(192, _totalL1MessagePopped))\n        }\n    }\n\n    /// @notice Store the data hash of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _dataHash The data hash.\n    function storeDataHash(uint256 batchPtr, bytes32 _dataHash) internal pure {\n        assembly {\n            mstore(add(batchPtr, 25), _dataHash)\n        }\n    }\n\n    /// @notice Store the parent batch hash of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _parentBatchHash The parent batch hash.\n    function storeParentBatchHash(uint256 batchPtr, bytes32 _parentBatchHash) internal pure {\n        assembly {\n            mstore(add(batchPtr, 57), _parentBatchHash)\n        }\n    }\n\n    /// @notice Store the skipped L1 message bitmap of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _skippedL1MessageBitmap The skipped L1 message bitmap.\n    function storeSkippedBitmap(uint256 batchPtr, bytes calldata _skippedL1MessageBitmap) internal pure {\n        assembly {\n            calldatacopy(\n                add(batchPtr, BATCH_HEADER_FIXED_LENGTH), _skippedL1MessageBitmap.offset, _skippedL1MessageBitmap.length\n            )\n        }\n    }\n\n    /// @notice Compute the batch hash.\n    /// @dev Caller should make sure that the encoded batch header is correct.\n    ///\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param length The length of the batch.\n    /// @return _batchHash The hash of the corresponding batch.\n    function computeBatchHash(uint256 batchPtr, uint256 length) internal pure returns (bytes32 _batchHash) {\n        // in the current version, the hash is: keccak(BatchHeader without timestamp)\n        assembly {\n            _batchHash := keccak256(batchPtr, length)\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 191,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "BatchHeaderV0Codec",
+        "similarity": 0.962,
+        "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/codec/BatchHeaderV0Codec.sol",
+        "commit": "8bd4277c13ec17670963848a24e4e1b135504f3f",
+        "commitTimestamp": "2024-03-22T10:02:02Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/8bd4277c13ec17670963848a24e4e1b135504f3f/contracts/src/libraries/codec/BatchHeaderV0Codec.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit between base commit 02415a6 and this head commit (pull request #1179, EIP-4844 support); only the diff was reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 191,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library BatchHeaderV0Codec {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @dev Thrown when the length of batch header is smaller than 89"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    error ErrorBatchHeaderLengthTooSmall();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    error ErrorBatchHeaderV0LengthTooSmall();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @dev Thrown when the length of skippedL1MessageBitmap is incorrect."
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    error ErrorIncorrectBitmapLength();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    error ErrorIncorrectBitmapLengthV0();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @dev The length of fixed parts of the batch header."
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    uint256 internal constant BATCH_HEADER_FIXED_LENGTH = 89;"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    function loadAndValidate(bytes calldata _batchHeader) internal pure returns (uint256 batchPtr, uint256 length) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        length = _batchHeader.length;"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        if (length < BATCH_HEADER_FIXED_LENGTH) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "            revert ErrorBatchHeaderLengthTooSmall();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "            revert ErrorBatchHeaderV0LengthTooSmall();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        // copy batch header to memory."
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 7,
+            "newStart": 30,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "            if (length != BATCH_HEADER_FIXED_LENGTH + ((_l1MessagePopped + 255) / 256) * 32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "                revert ErrorIncorrectBitmapLength();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "                revert ErrorIncorrectBitmapLengthV0();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 64,
+            "oldLines": 7,
+            "newStart": 64,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 64, "newLine": 64, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 65,
+                "text": "    /// @notice Get the number of L1 messages popped before this batch."
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    /// @param batchPtr The start memory offset of the batch header in memory."
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    /// @return _totalL1MessagePopped The the number of L1 messages popped before this batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /// @return _totalL1MessagePopped The number of L1 messages popped before this batch.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "    function getTotalL1MessagePopped(uint256 batchPtr) internal pure returns (uint256 _totalL1MessagePopped) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "            _totalL1MessagePopped := shr(192, mload(add(batchPtr, 17)))"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -185,6 +185,186 @@
         ]
       },
       "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 355,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "KailuaTreasury",
+        "similarity": 0.987,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaTreasury.sol",
+        "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+        "commitTimestamp": "2026-02-06T13:05:10Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/ccf2771857721a9cda5f7943ed7ef1d236c20bbd/crates/contracts/foundry/src/KailuaTreasury.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Veridise review on commit ccf2771 of boundless-xyz/kailua limited to the changes made to this file since commit 7eb9869 (fault proof permit system and its integration). No fixed findings located here; Warnings V-KLA-VUL-004/006 (locked bonds) acknowledged without fix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 355,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        uint64 _proposalOutputCount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        uint64 _outputBlockSpan,"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        GameType _gameType,"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        OptimismPortal2 _optimismPortal,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        IOptimismPortal2 _optimismPortal,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        Claim _rootClaim,"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        uint64 _l2BlockNumber"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    )" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 7,
+            "newStart": 39,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // IInitializable implementation"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    // ------------------------------"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @inheritdoc IInitializable",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 42,
+                "text": "    function initialize() external payable override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 43,
+                "text": "        super.initializeInternal();"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 44, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 253,
+            "oldLines": 8,
+            "newStart": 252,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 253, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 254, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 254,
+                "text": "    modifier onlyFactoryOwner() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "        OwnableUpgradeable factoryContract = OwnableUpgradeable(address(DISPUTE_GAME_FACTORY));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        if (msg.sender != factoryContract.owner()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        if (msg.sender != DISPUTE_GAME_FACTORY.owner()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 256,
+                "text": "            revert NotFactoryOwner();"
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 257,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 258,
+                "text": "        _;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0f5e4eb1ea53c7ad2706a8e93c1e5d393e08957b13d91599309abeed329f18f1",
+  "name": "key_validation_tests.nr",
+  "kind": "program",
+  "lines": 42,
+  "source": "use super::{KEY_VALIDATION_HINTS_LEN, TestBuilder};\nuse protocol_test_utils::{assert_array_eq, swap_items};\n\n// Note: Only a few cases are tested here to ensure that the code path to the `KeyValidationRequestsValidator` is\n// reached. More comprehensive tests for validating and propagating key validation requests can be\n// found in `reset/key_validation_request/tests`.\n\n#[test]\nfn validate_and_propagate_key_validation_requests() {\n    let mut builder = TestBuilder::new();\n\n    for i in 0..KEY_VALIDATION_HINTS_LEN {\n        builder.add_key_validation_request_and_hint(i as Field + 123);\n    }\n    // Add two more requests without hints.\n    builder.add_key_validation_request(456);\n    builder.add_key_validation_request(789);\n\n    let requests = builder.previous_kernel.scoped_key_validation_requests_and_separators.storage();\n\n    let pi = builder.execute();\n\n    // Only the 2 requests without hints should be propagated.\n    assert_eq(pi.validation_requests.scoped_key_validation_requests_and_separators.length, 2);\n    assert_array_eq(\n        pi.validation_requests.scoped_key_validation_requests_and_separators.array,\n        [requests[KEY_VALIDATION_HINTS_LEN], requests[KEY_VALIDATION_HINTS_LEN + 1]],\n    );\n}\n\n#[test(should_fail_with = \"Failed to derive matching master public key hash from the secret key\")]\nfn wrong_order_for_key_validation_request() {\n    let mut builder = TestBuilder::new();\n\n    builder.add_key_validation_request_and_hint(123);\n    builder.add_key_validation_request_and_hint(456);\n\n    // Swap the hints.\n    swap_items(&mut builder.key_validation_hints, 0, 1);\n\n    builder.failed();\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -29,6 +29,12 @@
         "TornadoCash_eth": "ETHMixer",
         "ERC20Tornado": "ERC20Mixer"
       }
+    },
+    "optimism": {
+      "slug": "op-mainnet"
+    },
+    "roninnetwork": {
+      "slug": "ronin-network"
     }
   }
 }

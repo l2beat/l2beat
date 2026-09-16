@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "00293a42edb34bdc23bed89880f1508ca31f578bd0335a04492eb155e3d0de49",
+  "name": "StakingLib",
+  "kind": "library",
+  "lines": 644,
+  "source": "library StakingLib {\n    using SafeCast for uint256;\n    using SafeERC20 for IERC20;\n    using StakingQueueLib for StakingQueue;\n    using ProposalLib for Proposal;\n    using StakingQueueConfigLib for CompressedStakingQueueConfig;\n    using StakingQueueConfigLib for StakingQueueConfig;\n    using CompressedTimeMath for CompressedTimestamp;\n    using CompressedTimeMath for Timestamp;\n    using CompressedTimeMath for CompressedEpoch;\n    using CompressedTimeMath for Epoch;\n\n    bytes32 private constant STAKING_SLOT = keccak256(\"aztec.core.staking.storage\");\n\n    /// @notice Delay between queuing a slasher replacement and being able to finalize it.\n    uint256 internal constant SLASHER_EXECUTION_DELAY = 60 days;\n    /// @notice After {finalizeSetSlasher} swaps the active slasher, the outgoing slasher retains\n    ///         the right to call {slash} for this long. The window is sized to comfortably cover\n    ///         any reasonable SlashingProposer lifetime: at the default config a round's full\n    ///         vote -> execution lifetime fits inside a few hours, so 30 days is generous.\n    ///         Rollups configured with multi-week round lifetimes should raise this -- the value\n    ///         is the only knob bounding how long an in-flight slash can drain through the old\n    ///         proposer after rotation.\n    uint256 internal constant LEGACY_SLASHER_DRAIN_WINDOW = 30 days;\n\n    function initialize(\n        IERC20 _stakingAsset,\n        GSE _gse,\n        Timestamp _exitDelay,\n        address _slasher,\n        StakingQueueConfig memory _config,\n        uint256 _localEjectionThreshold\n    ) internal {\n        StakingStorage storage store = getStorage();\n        store.stakingAsset = _stakingAsset;\n        store.gse = _gse;\n        store.exitDelay = _exitDelay.compress();\n        store.slasher = _slasher;\n        store.queueConfig = _config.compress();\n        store.entryQueue.init();\n        store.localEjectionThreshold = _localEjectionThreshold.toUint96();\n    }\n\n    function queueSetSlasher(address _slasher) internal {\n        StakingStorage storage store = getStorage();\n\n        // `Slasher.initializeProposer` is permissionless while `PROPOSER` is unset. Queuing a\n        // not-yet-initialized Slasher would let anyone claim the proposer role during the 60-day\n        // delay and gain arbitrary slash-payload authority once `finalizeSetSlasher` lands. Require\n        // the proposer to already be wired so the queued replacement is not capturable.\n        require(Slasher(_slasher).PROPOSER() != address(0), Errors.Staking__SlasherProposerNotInitialized(_slasher));\n\n        Timestamp readyAt = Timestamp.wrap(block.timestamp + SLASHER_EXECUTION_DELAY);\n        store.pendingSlasher = _slasher;\n        store.pendingSlasherReadyAt = readyAt.compress();\n\n        emit IStakingCore.PendingSlasherQueued(_slasher, Timestamp.unwrap(readyAt));\n    }\n\n    function cancelSetSlasher() internal {\n        StakingStorage storage store = getStorage();\n\n        require(CompressedTimestamp.unwrap(store.pendingSlasherReadyAt) != 0, Errors.Staking__NoPendingSlasher());\n\n        address cancelled = store.pendingSlasher;\n        store.pendingSlasher = address(0);\n        store.pendingSlasherReadyAt = CompressedTimestamp.wrap(0);\n\n        emit IStakingCore.PendingSlasherCancelled(cancelled);\n    }\n\n    function finalizeSetSlasher() internal {\n        StakingStorage storage store = getStorage();\n\n        require(CompressedTimestamp.unwrap(store.pendingSlasherReadyAt) != 0, Errors.Staking__NoPendingSlasher());\n        Timestamp readyAt = store.pendingSlasherReadyAt.decompress();\n        require(Timestamp.wrap(block.timestamp) >= readyAt, Errors.Staking__SlasherNotReady(readyAt));\n\n        address newSlasher = store.pendingSlasher;\n        // Defense in depth against state queued before the queueSetSlasher guard existed, and\n        // against a replacement whose proposer somehow regressed to zero after queueing.\n        require(Slasher(newSlasher).PROPOSER() != address(0), Errors.Staking__SlasherProposerNotInitialized(newSlasher));\n\n        address oldSlasher = store.slasher;\n        // Park the outgoing slasher in the legacy slot with a drain window so quorum-backed rounds\n        // already accumulated on the old SlashingProposer can still execute against the rollup\n        // through the old slasher. Without this, a committee just before a queued slasher takes over\n        // gets a \"free round\" to do what they like. Any prior legacy auth window is overwritten -- only\n        // one rotation can be in flight at a time, and the most recent rotation defines the\n        // currently-relevant outgoing slasher.\n        Timestamp drainUntil = Timestamp.wrap(block.timestamp + LEGACY_SLASHER_DRAIN_WINDOW);\n        store.legacySlasher = oldSlasher;\n        store.legacySlasherAuthorizedUntil = drainUntil.compress();\n\n        store.slasher = newSlasher;\n        store.pendingSlasher = address(0);\n        store.pendingSlasherReadyAt = CompressedTimestamp.wrap(0);\n\n        emit IStakingCore.SlasherUpdated(oldSlasher, newSlasher);\n        emit IStakingCore.LegacySlasherAuthorized(oldSlasher, Timestamp.unwrap(drainUntil));\n    }\n\n    /**\n     * @notice Vote on a governance proposal with the rollup's voting power\n     * @dev Only votes if:\n     *      1. This rollup is the current canonical instance according to governance proposer\n     *      2. This rollup was canonical when the proposal was created\n     *      3. The proposal was created by the governance proposer\n     * @param _proposalId The ID of the proposal to vote on\n     */\n    function vote(uint256 _proposalId) internal {\n        StakingStorage storage store = getStorage();\n        Governance gov = store.gse.getGovernance();\n\n        GovernanceProposer govProposer = GovernanceProposer(gov.governanceProposer());\n        // We only vote if we are the canonical instance\n        require(address(this) == govProposer.getInstance(), Errors.Staking__NotCanonical(address(this)));\n        address proposalProposer = govProposer.getProposalProposer(_proposalId);\n        // We only vote if we were canonical when the proposal was created\n        require(\n            address(this) == proposalProposer,\n            Errors.Staking__NotOurProposal(_proposalId, address(this), proposalProposer)\n        );\n        // We only vote if the proposal was created by the governance proposer\n        Proposal memory proposal = gov.getProposal(_proposalId);\n        require(proposal.proposer == address(govProposer), Errors.Staking__IncorrectGovProposer(_proposalId));\n\n        Timestamp ts = proposal.creation + proposal.config.votingDelay;\n\n        // Cast votes with all our power\n        uint256 vp = store.gse.getVotingPowerAt(address(this), ts);\n        store.gse.vote(_proposalId, vp, true);\n\n        // If we are the canonical at the time of the proposal we also cast those votes.\n        if (store.gse.getLatestRollupAt(ts) == address(this)) {\n            address bonusInstance = store.gse.getBonusInstanceAddress();\n            vp = store.gse.getVotingPowerAt(bonusInstance, ts);\n            store.gse.voteWithBonus(_proposalId, vp, true);\n        }\n    }\n\n    /**\n     * @notice Completes a validator's withdrawal after the exit delay period\n     * @param _attester The address of the validator completing withdrawal\n     * @dev Reverts if the attester has no valid exit request (Staking__NotExiting) or if the exit delay period has not\n     * elapsed (Staking__WithdrawalNotUnlockedYet)\n     */\n    function finalizeWithdraw(address _attester) internal {\n        StakingStorage storage store = getStorage();\n        // We load it into memory to cache it, as we will delete it before we use it.\n        Exit memory exit = store.exits[_attester];\n        require(exit.exists, Errors.Staking__NotExiting(_attester));\n        require(exit.isRecipient, Errors.Staking__InitiateWithdrawNeeded(_attester));\n        require(\n            exit.exitableAt <= Timestamp.wrap(block.timestamp),\n            Errors.Staking__WithdrawalNotUnlockedYet(Timestamp.wrap(block.timestamp), exit.exitableAt)\n        );\n\n        delete store.exits[_attester];\n\n        store.gse.finalizeWithdraw(exit.withdrawalId);\n        store.stakingAsset.safeTransfer(exit.recipientOrWithdrawer, exit.amount);\n\n        emit IStakingCore.WithdrawFinalized(_attester, exit.recipientOrWithdrawer, exit.amount);\n    }\n\n    function trySlash(address _attester, uint256 _amount) internal returns (bool) {\n        if (!isSlashable(_attester)) {\n            return false;\n        }\n        slash(_attester, _amount);\n        return true;\n    }\n\n    /**\n     * @notice Slashes a validator's stake as punishment for misbehavior\n     * @dev Only callable by the authorized slasher contract. Handles slashing for both exiting and active validators.\n     *      For exiting validators, reduces their exit amount. For active validators, the balance will be reduced and\n     *      an exit will be created if the remaining stake falls below the ejection threshold.\n     * @param _attester The address of the validator to slash\n     * @param _amount The amount of stake to slash\n     */\n    function slash(address _attester, uint256 _amount) internal {\n        StakingStorage storage store = getStorage();\n        require(_isAuthorizedSlasher(store, msg.sender), Errors.Staking__NotSlasher(store.slasher, msg.sender));\n\n        Exit storage exit = store.exits[_attester];\n\n        if (exit.exists) {\n            require(\n                exit.exitableAt > Timestamp.wrap(block.timestamp), Errors.Staking__CannotSlashExitedStake(_attester)\n            );\n\n            // If the slash amount is greater than the exit amount, bound it to the exit amount\n            uint256 slashAmount = Math.min(_amount, exit.amount);\n\n            if (exit.amount == slashAmount) {\n                // If we slash the entire thing, nuke it entirely\n                delete store.exits[_attester];\n            } else {\n                exit.amount -= slashAmount;\n            }\n\n            emit IStakingCore.Slashed(_attester, slashAmount);\n        } else {\n            // Get the effective balance of the attester\n            uint256 effectiveBalance = store.gse.effectiveBalanceOf(address(this), _attester);\n            require(effectiveBalance > 0, Errors.Staking__NoOneToSlash(_attester));\n\n            address withdrawer = store.gse.getWithdrawer(_attester);\n\n            // If the slash amount is greater than the effective balance, bound it to the effective balance\n            uint256 slashAmount = Math.min(_amount, effectiveBalance);\n            // The `localEjectionThreshold` might be stricter (larger) than the global (gse ejection threshold)\n            uint256 toWithdraw =\n                effectiveBalance - slashAmount < store.localEjectionThreshold ? effectiveBalance : slashAmount;\n\n            (uint256 amountWithdrawn, bool isRemoved, uint256 withdrawalId) = store.gse.withdraw(_attester, toWithdraw);\n\n            // The slashed amount remains in the contract permanently, effectively burning those tokens.\n            uint256 toUser = amountWithdrawn - slashAmount;\n            if (isRemoved && toUser > 0) {\n                // Only if we remove the attester AND there is something left will we create an exit\n                store.exits[_attester] = Exit({\n                    withdrawalId: withdrawalId,\n                    amount: toUser,\n                    exitableAt: Timestamp.wrap(block.timestamp) + store.exitDelay.decompress(),\n                    recipientOrWithdrawer: withdrawer,\n                    isRecipient: false,\n                    exists: true\n                });\n            }\n\n            emit IStakingCore.Slashed(_attester, slashAmount);\n        }\n    }\n\n    /**\n     * @notice Deposits stake to add a new validator to the entry queue\n     * @dev Transfers stake from the caller and adds the validator to the entry queue.\n     *      The validator must not already be exiting. The attester and withdrawer addresses\n     *      must be non-zero. The stake amount is fixed at the activation threshold.\n     *      The validator will be processed from the queue in a future flushEntryQueue call.\n     *\n     * @param _attester The address that will act as the validator (sign attestations)\n     * @param _withdrawer The address that can withdraw the stake\n     * @param _publicKeyInG1 The G1 point for the BLS public key (used for efficient signature verification in GSE)\n     * @param _publicKeyInG2 The G2 point for the BLS public key (used for BLS aggregation and pairing operations in GSE)\n     * @param _proofOfPossession The proof of possession to show that the keys in G1 and G2 share the same secret key\n     * @param _moveWithLatestRollup Whether to automatically stake on a new rollup instance after an upgrade\n     */\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) internal {\n        require(\n            _attester != address(0) && _withdrawer != address(0), Errors.Staking__InvalidDeposit(_attester, _withdrawer)\n        );\n        StakingStorage storage store = getStorage();\n        // We don't allow deposits, if we are currently exiting.\n        require(!store.exits[_attester].exists, Errors.Staking__AlreadyExiting(_attester));\n        uint256 amount = store.gse.ACTIVATION_THRESHOLD();\n\n        store.stakingAsset.safeTransferFrom(msg.sender, address(this), amount);\n        store.entryQueue.enqueue(\n            _attester, _withdrawer, _publicKeyInG1, _publicKeyInG2, _proofOfPossession, _moveWithLatestRollup\n        );\n        emit IStakingCore.ValidatorQueued(_attester, _withdrawer);\n    }\n\n    function updateAndGetAvailableFlushes() internal returns (uint256) {\n        (uint256 flushes, Epoch currentEpoch, bool shouldUpdateState) = _calculateAvailableFlushes();\n\n        if (shouldUpdateState) {\n            StakingStorage storage store = getStorage();\n            store.nextFlushableEpoch = (currentEpoch + Epoch.wrap(1)).compress();\n            store.availableValidatorFlushes = flushes.toUint32();\n        }\n\n        return flushes;\n    }\n\n    /**\n     * @notice Processes the validator entry queue to add new validators to the active set\n     * @dev Processes up to min(maxAddableValidators, _toAdd) entries from the queue,\n     *      attempting to deposit each validator into the Governance Staking Escrow (GSE).\n     *\n     *      For each validator:\n     *      - Dequeues their entry from the queue\n     *      - Attempts to deposit them into the GSE contract\n     *      - On success: emits Deposit event\n     *      - On failure: refunds their stake and emits FailedDeposit event\n     *\n     *      The function will revert if:\n     *      - A deposit fails due to out of gas (to prevent queue draining attacks)\n     *\n     *      The function approves the GSE contract to spend the total stake amount needed for all deposits,\n     *      then revokes the approval after processing is complete.\n     *      It also updates the available validator flushes\n     *\n     * @param _toAdd - The max number the caller will try to add\n     */\n    function flushEntryQueue(uint256 _toAdd) internal {\n        uint256 maxAddableValidators = updateAndGetAvailableFlushes();\n\n        if (maxAddableValidators == 0) {\n            return;\n        }\n\n        StakingStorage storage store = getStorage();\n\n        uint256 queueLength = store.entryQueue.length();\n        uint256 numToDequeue = Math.min(Math.min(maxAddableValidators, queueLength), _toAdd);\n\n        if (numToDequeue == 0) {\n            return;\n        }\n\n        // Approve the GSE to spend the total stake amount needed for all deposits.\n        uint256 amount = store.gse.ACTIVATION_THRESHOLD();\n        store.stakingAsset.approve(address(store.gse), amount * numToDequeue);\n        uint256 depositCount = 0;\n        for (uint256 i = 0; i < numToDequeue; i++) {\n            DepositArgs memory args = store.entryQueue.dequeue();\n            (bool success, bytes memory data) = address(store.gse).call(\n                abi.encodeWithSelector(\n                    IGSECore.deposit.selector,\n                    args.attester,\n                    args.withdrawer,\n                    args.publicKeyInG1,\n                    args.publicKeyInG2,\n                    args.proofOfPossession,\n                    args.moveWithLatestRollup\n                )\n            );\n            if (success) {\n                depositCount++;\n                emit IStakingCore.Deposit(\n                    args.attester,\n                    args.withdrawer,\n                    args.publicKeyInG1,\n                    args.publicKeyInG2,\n                    args.proofOfPossession,\n                    amount\n                );\n            } else {\n                // If the deposit fails, we need to handle two cases:\n                // 1. Normal failure (data.length > 0): We return the funds to the withdrawer and continue processing\n                //    the queue. This prevents a single failed deposit from blocking the entire queue.\n                // 2. Out of gas failure (data.length == 0): We revert the entire transaction. This prevents an attack\n                //    where someone could drain the queue without making any deposits.\n                //    We can safely assume data.length == 0 means out of gas since we only call trusted GSE contract.\n                require(data.length > 0, Errors.Staking__DepositOutOfGas());\n                store.stakingAsset.safeTransfer(args.withdrawer, amount);\n                emit IStakingCore.FailedDeposit(\n                    args.attester, args.withdrawer, args.publicKeyInG1, args.publicKeyInG2, args.proofOfPossession\n                );\n            }\n        }\n        store.stakingAsset.approve(address(store.gse), 0);\n\n        store.availableValidatorFlushes -= depositCount.toUint32();\n\n        // If we have reached the bootstrap size, mark it as bootstrapped such that we don't re-enter it.\n        if (\n            !store.isBootstrapped\n                && getAttesterCountAtTime(Timestamp.wrap(block.timestamp))\n                    >= store.queueConfig.decompress().bootstrapValidatorSetSize\n        ) {\n            store.isBootstrapped = true;\n        }\n    }\n\n    /**\n     * @notice Initiates withdrawal of a validator's stake\n     * @dev Can be called by the registered withdrawer to start the exit process for a validator.\n     *      Handles two cases:\n     *      1. If an exit already exists (e.g. from slashing):\n     *         - Only allows updating recipient if caller is withdrawer\n     *         - Does not update the exit delay timer\n     *      2. If no exit exists:\n     *         - Requires validator has non-zero balance\n     *         - Only allows registered withdrawer to initiate\n     *         - Withdraws stake from GSE contract\n     *         - Creates new exit with delay timer\n     * @param _attester The validator address to withdraw stake for\n     * @param _recipient The address that will receive the withdrawn stake\n     * @return True if withdrawal was successfully initiated\n     */\n    function initiateWithdraw(address _attester, address _recipient) internal returns (bool) {\n        require(_recipient != address(0), Errors.Staking__InvalidRecipient(_recipient));\n        StakingStorage storage store = getStorage();\n\n        if (store.exits[_attester].exists) {\n            // If there is already an exit, we either started it and should revert\n            // or it is because of a slash and we should update the recipient\n            // Still only if we are the withdrawer\n            // We DO NOT update the exitableAt\n            require(!store.exits[_attester].isRecipient, Errors.Staking__NothingToExit(_attester));\n            require(\n                store.exits[_attester].recipientOrWithdrawer == msg.sender,\n                Errors.Staking__NotWithdrawer(store.exits[_attester].recipientOrWithdrawer, msg.sender)\n            );\n            store.exits[_attester].recipientOrWithdrawer = _recipient;\n            store.exits[_attester].isRecipient = true;\n\n            emit IStakingCore.WithdrawInitiated(_attester, _recipient, store.exits[_attester].amount);\n        } else {\n            uint256 effectiveBalance = store.gse.effectiveBalanceOf(address(this), _attester);\n            require(effectiveBalance > 0, Errors.Staking__NothingToExit(_attester));\n\n            address withdrawer = store.gse.getWithdrawer(_attester);\n            require(msg.sender == withdrawer, Errors.Staking__NotWithdrawer(withdrawer, msg.sender));\n\n            (uint256 actualAmount, bool removed, uint256 withdrawalId) = store.gse.withdraw(_attester, effectiveBalance);\n            require(removed, Errors.Staking__WithdrawFailed(_attester));\n\n            store.exits[_attester] = Exit({\n                withdrawalId: withdrawalId,\n                amount: actualAmount,\n                exitableAt: Timestamp.wrap(block.timestamp) + store.exitDelay.decompress(),\n                recipientOrWithdrawer: _recipient,\n                isRecipient: true,\n                exists: true\n            });\n            emit IStakingCore.WithdrawInitiated(_attester, _recipient, actualAmount);\n        }\n\n        return true;\n    }\n\n    function updateStakingQueueConfig(StakingQueueConfig memory _config) internal {\n        assertValidQueueConfig(_config);\n        getStorage().queueConfig = _config.compress();\n        emit IStakingCore.StakingQueueConfigUpdated(_config);\n    }\n\n    function getNextFlushableEpoch() internal view returns (Epoch) {\n        return getStorage().nextFlushableEpoch.decompress();\n    }\n\n    function getEntryQueueLength() internal view returns (uint256) {\n        return getStorage().entryQueue.length();\n    }\n\n    function isSlashable(address _attester) internal view returns (bool) {\n        StakingStorage storage store = getStorage();\n        Exit storage exit = store.exits[_attester];\n\n        if (exit.exists) {\n            return exit.exitableAt > Timestamp.wrap(block.timestamp);\n        }\n\n        uint256 effectiveBalance = store.gse.effectiveBalanceOf(address(this), _attester);\n        return effectiveBalance > 0;\n    }\n\n    function getAttesterCountAtTime(Timestamp _timestamp) internal view returns (uint256) {\n        return getStorage().gse.getAttesterCountAtTime(address(this), _timestamp);\n    }\n\n    function getAttesterAtIndex(uint256 _index) internal view returns (address) {\n        return getStorage().gse.getAttesterFromIndexAtTime(address(this), _index, Timestamp.wrap(block.timestamp));\n    }\n\n    function getEntryQueueAt(uint256 _index) internal view returns (DepositArgs memory) {\n        return getStorage().entryQueue.at(_index);\n    }\n\n    function getAttesterFromIndexAtTime(uint256 _index, Timestamp _timestamp) internal view returns (address) {\n        return getStorage().gse.getAttesterFromIndexAtTime(address(this), _index, _timestamp);\n    }\n\n    function getAttestersFromIndicesAtTime(Timestamp _timestamp, uint256[] memory _indices)\n        internal\n        view\n        returns (address[] memory)\n    {\n        return getStorage().gse.getAttestersFromIndicesAtTime(address(this), _timestamp, _indices);\n    }\n\n    function getExit(address _attester) internal view returns (Exit memory) {\n        return getStorage().exits[_attester];\n    }\n\n    function getConfig(address _attester) internal view returns (AttesterConfig memory) {\n        return getStorage().gse.getConfig(_attester);\n    }\n\n    function getAttesterView(address _attester) internal view returns (AttesterView memory) {\n        return AttesterView({\n            status: getStatus(_attester),\n            effectiveBalance: getStorage().gse.effectiveBalanceOf(address(this), _attester),\n            exit: getExit(_attester),\n            config: getConfig(_attester)\n        });\n    }\n\n    function getStatus(address _attester) internal view returns (Status_1) {\n        Exit memory exit = getExit(_attester);\n        uint256 effectiveBalance = getStorage().gse.effectiveBalanceOf(address(this), _attester);\n\n        Status_1 status;\n        if (exit.exists) {\n            status = exit.isRecipient ? Status_1.EXITING : Status_1.ZOMBIE;\n        } else {\n            status = effectiveBalance > 0 ? Status_1.VALIDATING : Status_1.NONE;\n        }\n\n        return status;\n    }\n\n    /**\n     * @notice Determines the maximum number of validators that could be flushed from the entry queue if there were\n     * an unlimited number of validators in the queue - this function provides a theoretical limit.\n     * @dev Implements three-phase validator set management to control initial validator onboarding (called floodgates):\n     *      1. Bootstrap phase: When no active validators exist, the queue must grow to the bootstrap validator set size\n     *         constant from config before any validators can be flushed. This creates an initial \"floodgate\" that\n     *         prevents small numbers of validators from activating before reaching the desired bootstrap size.\n     *      2. Growth phase: Once the bootstrap size is reached, allows a large fixed batch size (bootstrapFlushSize) to\n     *         be flushed at once. This enables the initial large cohort of validators to activate together.\n     *      3. Normal phase: After the initial bootstrap and growth phases, returns a number proportional to the current\n     *         set size for conservative steady-state growth, unless constrained by configuration (`normalFlushSizeMin`).\n     *\n     *      The normal-phase result is clamped to `maxQueueFlushSize` at runtime; the\n     *      bootstrap-phase value is bounded by the same cap at config-acceptance time inside\n     *      {assertValidQueueConfig}, so every phase respects the cap.\n     *\n     *      The motivation for floodgates is that the whole system starts producing checkpoints with what is considered\n     *      a sufficiently decentralized set of validators.\n     *\n     *      Note that Governance has the ability to close the validator set for this instance by setting\n     *      `normalFlushSizeMin` to zero and `normalFlushSizeQuotient` to a very high value. If this is done, this\n     *      function will always return zero and no new validator can enter.\n     *\n     * @param _activeAttesterCount - The number of active attesters\n     * @return - The maximum number of validators that could be flushed from the entry queue.\n     */\n    function getEntryQueueFlushSize(uint256 _activeAttesterCount) internal view returns (uint256) {\n        StakingStorage storage store = getStorage();\n        StakingQueueConfig memory config = store.queueConfig.decompress();\n\n        uint256 queueSize = store.entryQueue.length();\n\n        // Only if there is bootstrap values configured will we look into bootstrap or growth phases.\n        if (config.bootstrapValidatorSetSize > 0 && !store.isBootstrapped) {\n            // If bootstrap:\n            if (_activeAttesterCount == 0 && queueSize < config.bootstrapValidatorSetSize) {\n                return 0;\n            }\n\n            // If growth:\n            if (_activeAttesterCount < config.bootstrapValidatorSetSize) {\n                return config.bootstrapFlushSize;\n            }\n        }\n\n        // If normal:\n        return Math.min(\n            Math.max(_activeAttesterCount / config.normalFlushSizeQuotient, config.normalFlushSizeMin),\n            config.maxQueueFlushSize\n        );\n    }\n\n    function getAvailableValidatorFlushes() internal view returns (uint256) {\n        (uint256 flushes,,) = _calculateAvailableFlushes();\n        return flushes;\n    }\n\n    function getCachedAvailableValidatorFlushes() internal view returns (uint256) {\n        return getStorage().availableValidatorFlushes;\n    }\n\n    /// @notice Enforces invariants on a {StakingQueueConfig}.\n    ///         - `normalFlushSizeMin > 0`: a zero floor can close the queue on a running rollup.\n    ///         - `normalFlushSizeQuotient > 0`: {getEntryQueueFlushSize} divides by this field.\n    ///         - `maxQueueFlushSize > 0`: a zero cap leaves the normal-phase queue impossible to\n    ///           drain (the `Math.min(..., 0)` clamp pins every flush at zero), trapping queued\n    ///           validator stake.\n    ///         - `bootstrapFlushSize > 0` whenever `bootstrapValidatorSetSize > 0`: a zero\n    ///           bootstrap flush size traps queued validators during bootstrap growth because the\n    ///           bootstrap branch returns `bootstrapFlushSize` directly.\n    ///         - `bootstrapFlushSize <= maxQueueFlushSize`: keeps {getEntryQueueFlushSize}'s\n    ///           bootstrap-phase return inside the same cap that bounds the normal phase, so the\n    ///           cap holds across every phase as documented.\n    /// @param _config The queue config to validate; reverts when any of the above is violated.\n    function assertValidQueueConfig(StakingQueueConfig memory _config) internal pure {\n        require(_config.normalFlushSizeMin > 0, Errors.Staking__InvalidStakingQueueConfig());\n        require(_config.normalFlushSizeQuotient > 0, Errors.Staking__InvalidNormalFlushSizeQuotient());\n        require(_config.maxQueueFlushSize > 0, Errors.Staking__InvalidMaxQueueFlushSize());\n        require(\n            _config.bootstrapValidatorSetSize == 0 || _config.bootstrapFlushSize > 0,\n            Errors.Staking__InvalidBootstrapFlushSize()\n        );\n        require(\n            _config.bootstrapFlushSize <= _config.maxQueueFlushSize,\n            Errors.Staking__BootstrapFlushSizeAboveMax(_config.bootstrapFlushSize, _config.maxQueueFlushSize)\n        );\n    }\n\n    function getStorage() internal pure returns (StakingStorage storage storageStruct) {\n        bytes32 position = STAKING_SLOT;\n        assembly {\n            storageStruct.slot := position\n        }\n    }\n\n    /// @notice Whether `_caller` can call {slash}.\n    /// @dev The active slasher always qualifies. The legacy slasher qualifies only while its\n    ///      drain window is still open, so quorum-backed rounds queued before a rotation can\n    ///      still execute against the rollup even though the active slasher has moved on.\n    function _isAuthorizedSlasher(StakingStorage storage _store, address _caller) private view returns (bool) {\n        if (_caller == _store.slasher) {\n            return true;\n        }\n        address legacy = _store.legacySlasher;\n        if (legacy == address(0) || _caller != legacy) {\n            return false;\n        }\n        return Timestamp.wrap(block.timestamp) <= _store.legacySlasherAuthorizedUntil.decompress();\n    }\n\n    function _calculateAvailableFlushes()\n        private\n        view\n        returns (uint256 flushes, Epoch currentEpoch, bool shouldUpdateState)\n    {\n        StakingStorage storage store = getStorage();\n        currentEpoch = TimeLib.epochFromTimestamp(Timestamp.wrap(block.timestamp));\n\n        if (store.nextFlushableEpoch.decompress() > currentEpoch) {\n            return (store.availableValidatorFlushes, currentEpoch, false);\n        }\n\n        uint256 activeAttesterCount = getAttesterCountAtTime(Timestamp.wrap(block.timestamp));\n        uint256 newFlushes = getEntryQueueFlushSize(activeAttesterCount);\n\n        return (newFlushes, currentEpoch, true);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 582,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "StakingLib",
+        "similarity": 0.896,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
+        "commit": "3887ea20a027890a3c807c41895d74fd756f6447",
+        "commitTimestamp": "2025-09-19T09:05:26Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/3887ea20a027890a3c807c41895d74fd756f6447/l1-contracts/src/core/libraries/rollup/StakingLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified queue-flushing update from PR 17067 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 62,
+        "removed": 12,
+        "ignoredAdded": 54,
+        "ignoredRemoved": 3,
+        "unchanged": 582,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 6,
+            "newStart": 12,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    bytes32 private constant STAKING_SLOT = keccak256(\"aztec.core.staking.storage\");"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Delay between queuing a slasher replacement and being able to finalize it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    uint256 internal constant SLASHER_EXECUTION_DELAY = 60 days;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @notice After {finalizeSetSlasher} swaps the active slasher, the outgoing slasher retains",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    ///         the right to call {slash} for this long. The window is sized to comfortably cover",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    ///         any reasonable SlashingProposer lifetime: at the default config a round's full",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    ///         vote -> execution lifetime fits inside a few hours, so 30 days is generous.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    ///         Rollups configured with multi-week round lifetimes should raise this -- the value",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    ///         is the only knob bounding how long an in-flight slash can drain through the old",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    ///         proposer after rotation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    uint256 internal constant LEGACY_SLASHER_DRAIN_WINDOW = 30 days;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 26,
+                "text": "    function initialize("
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 27,
+                "text": "        IERC20 _stakingAsset,"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 28,
+                "text": "        GSE _gse,"
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 24,
+            "newStart": 41,
+            "newLines": 65,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "        store.localEjectionThreshold = _localEjectionThreshold.toUint96();"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function setSlasher(address _slasher) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    function queueSetSlasher(address _slasher) internal {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "        StakingStorage storage store = getStorage();"
+              },
+              { "type": " ", "oldLine": 35, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        address oldSlasher = store.slasher;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        store.slasher = _slasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        // `Slasher.initializeProposer` is permissionless while `PROPOSER` is unset. Queuing a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        // not-yet-initialized Slasher would let anyone claim the proposer role during the 60-day",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        // delay and gain arbitrary slash-payload authority once `finalizeSetSlasher` lands. Require",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        // the proposer to already be wired so the queued replacement is not capturable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        require(Slasher(_slasher).PROPOSER() != address(0), Errors.Staking__SlasherProposerNotInitialized(_slasher));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 38, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        emit IStakingCore.SlasherUpdated(oldSlasher, _slasher);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        Timestamp readyAt = Timestamp.wrap(block.timestamp + SLASHER_EXECUTION_DELAY);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        store.pendingSlasher = _slasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        store.pendingSlasherReadyAt = readyAt.compress();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        emit IStakingCore.PendingSlasherQueued(_slasher, Timestamp.unwrap(readyAt));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 59, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    function setLocalEjectionThreshold(uint256 _localEjectionThreshold) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    function cancelSetSlasher() internal {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 61,
+                "text": "        StakingStorage storage store = getStorage();"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 62, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        uint256 oldLocalEjectionThreshold = store.localEjectionThreshold;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        store.localEjectionThreshold = _localEjectionThreshold.toUint96();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        require(CompressedTimestamp.unwrap(store.pendingSlasherReadyAt) != 0, Errors.Staking__NoPendingSlasher());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        emit IStakingCore.LocalEjectionThresholdUpdated(oldLocalEjectionThreshold, _localEjectionThreshold);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        address cancelled = store.pendingSlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        store.pendingSlasher = address(0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        store.pendingSlasherReadyAt = CompressedTimestamp.wrap(0);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        emit IStakingCore.PendingSlasherCancelled(cancelled);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 70, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 71, "text": "" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    function finalizeSetSlasher() internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        StakingStorage storage store = getStorage();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 74, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        require(CompressedTimestamp.unwrap(store.pendingSlasherReadyAt) != 0, Errors.Staking__NoPendingSlasher());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        Timestamp readyAt = store.pendingSlasherReadyAt.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        require(Timestamp.wrap(block.timestamp) >= readyAt, Errors.Staking__SlasherNotReady(readyAt));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 78, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        address newSlasher = store.pendingSlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        // Defense in depth against state queued before the queueSetSlasher guard existed, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        // against a replacement whose proposer somehow regressed to zero after queueing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        require(Slasher(newSlasher).PROPOSER() != address(0), Errors.Staking__SlasherProposerNotInitialized(newSlasher));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 83, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        address oldSlasher = store.slasher;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        // Park the outgoing slasher in the legacy slot with a drain window so quorum-backed rounds",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        // already accumulated on the old SlashingProposer can still execute against the rollup",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        // through the old slasher. Without this, a committee just before a queued slasher takes over",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        // gets a \"free round\" to do what they like. Any prior legacy auth window is overwritten -- only",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        // one rotation can be in flight at a time, and the most recent rotation defines the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        // currently-relevant outgoing slasher.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "        Timestamp drainUntil = Timestamp.wrap(block.timestamp + LEGACY_SLASHER_DRAIN_WINDOW);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        store.legacySlasher = oldSlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        store.legacySlasherAuthorizedUntil = drainUntil.compress();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 94, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        store.slasher = newSlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        store.pendingSlasher = address(0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        store.pendingSlasherReadyAt = CompressedTimestamp.wrap(0);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 98, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        emit IStakingCore.SlasherUpdated(oldSlasher, newSlasher);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        emit IStakingCore.LegacySlasherAuthorized(oldSlasher, Timestamp.unwrap(drainUntil));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 102, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 51, "newLine": 103, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 104,
+                "text": "     * @notice Vote on a governance proposal with the rollup's voting power"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 105,
+                "text": "     * @dev Only votes if:"
+              }
+            ]
+          },
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 182,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 182,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 183,
+                "text": "    function slash(address _attester, uint256 _amount) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 184,
+                "text": "        StakingStorage storage store = getStorage();"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        require(msg.sender == store.slasher, Errors.Staking__NotSlasher(store.slasher, msg.sender));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        require(_isAuthorizedSlasher(store, msg.sender), Errors.Staking__NotSlasher(store.slasher, msg.sender));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 134, "newLine": 186, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 187,
+                "text": "        Exit storage exit = store.exits[_attester];"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 188, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 382,
+            "oldLines": 6,
+            "newStart": 434,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 382, "newLine": 434, "text": "    }" },
+              { "type": " ", "oldLine": 383, "newLine": 435, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 384,
+                "newLine": 436,
+                "text": "    function updateStakingQueueConfig(StakingQueueConfig memory _config) internal {"
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "        assertValidQueueConfig(_config);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 438,
+                "text": "        getStorage().queueConfig = _config.compress();"
+              },
+              {
+                "type": " ",
+                "oldLine": 386,
+                "newLine": 439,
+                "text": "        emit IStakingCore.StakingQueueConfigUpdated(_config);"
+              },
+              { "type": " ", "oldLine": 387, "newLine": 440, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 414,
+            "oldLines": 6,
+            "newStart": 467,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 467,
+                "text": "        return getStorage().gse.getAttesterFromIndexAtTime(address(this), _index, Timestamp.wrap(block.timestamp));"
+              },
+              { "type": " ", "oldLine": 415, "newLine": 468, "text": "    }" },
+              { "type": " ", "oldLine": 416, "newLine": 469, "text": "" },
+              {
+                "type": "+",
+                "newLine": 470,
+                "text": "    function getEntryQueueAt(uint256 _index) internal view returns (DepositArgs memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 471,
+                "text": "        return getStorage().entryQueue.at(_index);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 472,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 473, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 417,
+                "newLine": 474,
+                "text": "    function getAttesterFromIndexAtTime(uint256 _index, Timestamp _timestamp) internal view returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 418,
+                "newLine": 475,
+                "text": "        return getStorage().gse.getAttesterFromIndexAtTime(address(this), _index, _timestamp);"
+              },
+              { "type": " ", "oldLine": 419, "newLine": 476, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 443,
+            "oldLines": 15,
+            "newStart": 500,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 443,
+                "newLine": 500,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 444, "newLine": 501, "text": "    }" },
+              { "type": " ", "oldLine": 445, "newLine": 502, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 446,
+                "text": "    function getStatus(address _attester) internal view returns (Status) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 503,
+                "text": "    function getStatus(address _attester) internal view returns (Status_1) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 447,
+                "newLine": 504,
+                "text": "        Exit memory exit = getExit(_attester);"
+              },
+              {
+                "type": " ",
+                "oldLine": 448,
+                "newLine": 505,
+                "text": "        uint256 effectiveBalance = getStorage().gse.effectiveBalanceOf(address(this), _attester);"
+              },
+              { "type": " ", "oldLine": 449, "newLine": 506, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 450,
+                "text": "        Status status;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 507,
+                "text": "        Status_1 status;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 451,
+                "newLine": 508,
+                "text": "        if (exit.exists) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "            status = exit.isRecipient ? Status.EXITING : Status.ZOMBIE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 509,
+                "text": "            status = exit.isRecipient ? Status_1.EXITING : Status_1.ZOMBIE;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 453,
+                "newLine": 510,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 454,
+                "text": "            status = effectiveBalance > 0 ? Status.VALIDATING : Status.NONE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 511,
+                "text": "            status = effectiveBalance > 0 ? Status_1.VALIDATING : Status_1.NONE;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 455,
+                "newLine": 512,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 456, "newLine": 513, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 457,
+                "newLine": 514,
+                "text": "        return status;"
+              }
+            ]
+          },
+          {
+            "oldStart": 469,
+            "oldLines": 9,
+            "newStart": 526,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 469,
+                "newLine": 526,
+                "text": "     *      3. Normal phase: After the initial bootstrap and growth phases, returns a number proportional to the current"
+              },
+              {
+                "type": " ",
+                "oldLine": 470,
+                "newLine": 527,
+                "text": "     *         set size for conservative steady-state growth, unless constrained by configuration (`normalFlushSizeMin`)."
+              },
+              { "type": " ", "oldLine": 471, "newLine": 528, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 472,
+                "text": "     *      All phases are subject to a hard cap of `maxQueueFlushSize`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 529,
+                "text": "     *      The normal-phase result is clamped to `maxQueueFlushSize` at runtime; the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 530,
+                "text": "     *      bootstrap-phase value is bounded by the same cap at config-acceptance time inside",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 531,
+                "text": "     *      {assertValidQueueConfig}, so every phase respects the cap.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 473, "newLine": 532, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 474,
+                "text": "     *      The motivation for floodgates is that the whole system starts producing blocks with what is considered",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 533,
+                "text": "     *      The motivation for floodgates is that the whole system starts producing checkpoints with what is considered",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 475,
+                "newLine": 534,
+                "text": "     *      a sufficiently decentralized set of validators."
+              },
+              { "type": " ", "oldLine": 476, "newLine": 535, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 477,
+                "newLine": 536,
+                "text": "     *      Note that Governance has the ability to close the validator set for this instance by setting"
+              }
+            ]
+          },
+          {
+            "oldStart": 516,
+            "oldLines": 6,
+            "newStart": 575,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 516,
+                "newLine": 575,
+                "text": "        return getStorage().availableValidatorFlushes;"
+              },
+              { "type": " ", "oldLine": 517, "newLine": 576, "text": "    }" },
+              { "type": " ", "oldLine": 518, "newLine": 577, "text": "" },
+              {
+                "type": "+",
+                "newLine": 578,
+                "text": "    /// @notice Enforces invariants on a {StakingQueueConfig}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 579,
+                "text": "    ///         - `normalFlushSizeMin > 0`: a zero floor can close the queue on a running rollup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 580,
+                "text": "    ///         - `normalFlushSizeQuotient > 0`: {getEntryQueueFlushSize} divides by this field.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 581,
+                "text": "    ///         - `maxQueueFlushSize > 0`: a zero cap leaves the normal-phase queue impossible to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 582,
+                "text": "    ///           drain (the `Math.min(..., 0)` clamp pins every flush at zero), trapping queued",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 583,
+                "text": "    ///           validator stake.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 584,
+                "text": "    ///         - `bootstrapFlushSize > 0` whenever `bootstrapValidatorSetSize > 0`: a zero",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 585,
+                "text": "    ///           bootstrap flush size traps queued validators during bootstrap growth because the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 586,
+                "text": "    ///           bootstrap branch returns `bootstrapFlushSize` directly.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 587,
+                "text": "    ///         - `bootstrapFlushSize <= maxQueueFlushSize`: keeps {getEntryQueueFlushSize}'s",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 588,
+                "text": "    ///           bootstrap-phase return inside the same cap that bounds the normal phase, so the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 589,
+                "text": "    ///           cap holds across every phase as documented.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 590,
+                "text": "    /// @param _config The queue config to validate; reverts when any of the above is violated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 591,
+                "text": "    function assertValidQueueConfig(StakingQueueConfig memory _config) internal pure {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 592,
+                "text": "        require(_config.normalFlushSizeMin > 0, Errors.Staking__InvalidStakingQueueConfig());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 593,
+                "text": "        require(_config.normalFlushSizeQuotient > 0, Errors.Staking__InvalidNormalFlushSizeQuotient());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 594,
+                "text": "        require(_config.maxQueueFlushSize > 0, Errors.Staking__InvalidMaxQueueFlushSize());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 595,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 596,
+                "text": "            _config.bootstrapValidatorSetSize == 0 || _config.bootstrapFlushSize > 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 597,
+                "text": "            Errors.Staking__InvalidBootstrapFlushSize()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 598,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 599,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 600,
+                "text": "            _config.bootstrapFlushSize <= _config.maxQueueFlushSize,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 601,
+                "text": "            Errors.Staking__BootstrapFlushSizeAboveMax(_config.bootstrapFlushSize, _config.maxQueueFlushSize)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 602,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 603,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 604, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 605,
+                "text": "    function getStorage() internal pure returns (StakingStorage storage storageStruct) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 520,
+                "newLine": 606,
+                "text": "        bytes32 position = STAKING_SLOT;"
+              },
+              {
+                "type": " ",
+                "oldLine": 521,
+                "newLine": 607,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 523,
+            "oldLines": 6,
+            "newStart": 609,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 523,
+                "newLine": 609,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 524, "newLine": 610, "text": "    }" },
+              { "type": " ", "oldLine": 525, "newLine": 611, "text": "" },
+              {
+                "type": "+",
+                "newLine": 612,
+                "text": "    /// @notice Whether `_caller` can call {slash}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 613,
+                "text": "    /// @dev The active slasher always qualifies. The legacy slasher qualifies only while its",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 614,
+                "text": "    ///      drain window is still open, so quorum-backed rounds queued before a rotation can",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 615,
+                "text": "    ///      still execute against the rollup even though the active slasher has moved on.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 616,
+                "text": "    function _isAuthorizedSlasher(StakingStorage storage _store, address _caller) private view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 617,
+                "text": "        if (_caller == _store.slasher) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 618,
+                "text": "            return true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 619,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 620,
+                "text": "        address legacy = _store.legacySlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 621,
+                "text": "        if (legacy == address(0) || _caller != legacy) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 622,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 623,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 624,
+                "text": "        return Timestamp.wrap(block.timestamp) <= _store.legacySlasherAuthorizedUntil.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 625,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 626, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 526,
+                "newLine": 627,
+                "text": "    function _calculateAvailableFlushes()"
+              },
+              {
+                "type": " ",
+                "oldLine": 527,
+                "newLine": 628,
+                "text": "        private"
+              },
+              {
+                "type": " ",
+                "oldLine": 528,
+                "newLine": 629,
+                "text": "        view"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c7e1ce2ee2047733a9d49160f4afa25ca9528d24da8b95842f18243405fdeb4e",
+  "name": "Address",
+  "kind": "library",
+  "lines": 24,
+  "source": "library Address {\n    /**\n     * @dev Returns true if `account` is a contract.\n     *\n     * This test is non-exhaustive, and there may be false-negatives: during the\n     * execution of a contract's constructor, its address will be reported as\n     * not containing a contract.\n     *\n     * > It is unsafe to assume that an address for which this function returns\n     * false is an externally-owned account (EOA) and not a contract.\n     */\n    function isContract(address account) internal view returns (bool) {\n        // This method relies in extcodesize, which returns 0 for contracts in\n        // construction, since the code is only stored at the end of the\n        // constructor execution.\n\n        uint256 size;\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            size := extcodesize(account)\n        }\n        return size > 0;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "library",
+      "coveredLines": 24,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 20,
+        "unchanged": 24,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Address {"
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns true if `account` is a contract.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * This test is non-exhaustive, and there may be false-negatives: during the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * execution of a contract's constructor, its address will be reported as",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * not containing a contract.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * > It is unsafe to assume that an address for which this function returns",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     * false is an externally-owned account (EOA) and not a contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function isContract(address account) internal view returns (bool) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        // This method relies in extcodesize, which returns 0 for contracts in",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        // construction, since the code is only stored at the end of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        // constructor execution.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 16, "text": "" },
+              { "type": "-", "oldLine": 3, "text": "  /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "   * Returns whether the target address is a contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "   * @dev This function will return false if invoked during the constructor of a contract,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "   * as the code is not actually created until after the constructor finishes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "   * @param account address of the account to check",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "   * @return whether the target address is a contract",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "   */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "  function isContract(address account) internal view returns (bool) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    uint256 size;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // XXX Currently there is no better way to check if there is a contract in an address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    // than to check the size of the code at that address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    // See https://ethereum.stackexchange.com/a/14016/36603",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    // for more details about how this works.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    // TODO Check this again before the Serenity release, because all addresses will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    // contracts then.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    // solium-disable-next-line security/no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    assembly { size := extcodesize(account) }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    return size > 0;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 21, "text": "  }", "ignored": true },
+              { "type": "-", "oldLine": 22, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        uint256 size;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            size := extcodesize(account)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        return size > 0;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 23, "newLine": 24, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

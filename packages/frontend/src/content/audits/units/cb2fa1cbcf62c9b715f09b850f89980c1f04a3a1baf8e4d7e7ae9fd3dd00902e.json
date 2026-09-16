@@ -1,0 +1,1326 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cb2fa1cbcf62c9b715f09b850f89980c1f04a3a1baf8e4d7e7ae9fd3dd00902e",
+  "name": "ProxyAdmin",
+  "kind": "contract",
+  "lines": 170,
+  "source": "contract ProxyAdmin is Ownable {\n    /// @notice The proxy types that the ProxyAdmin can manage.\n    /// @custom:value ERC1967    Represents an ERC1967 compliant transparent proxy interface.\n    /// @custom:value CHUGSPLASH Represents the Chugsplash proxy interface (legacy).\n    /// @custom:value RESOLVED   Represents the ResolvedDelegate proxy (legacy).\n    enum ProxyType {\n        ERC1967,\n        CHUGSPLASH,\n        RESOLVED\n    }\n\n    /// @notice A mapping of proxy types, used for backwards compatibility.\n    mapping(address => ProxyType) public proxyType;\n\n    /// @notice A reverse mapping of addresses to names held in the AddressManager. This must be\n    ///         manually kept up to date with changes in the AddressManager for this contract\n    ///         to be able to work as an admin for the ResolvedDelegateProxy type.\n    mapping(address => string) public implementationName;\n\n    /// @notice The address of the address manager, this is required to manage the\n    ///         ResolvedDelegateProxy type.\n    AddressManager public addressManager;\n\n    /// @notice A legacy upgrading indicator used by the old Chugsplash Proxy.\n    bool internal upgrading;\n\n    /// @param _owner Address of the initial owner of this contract.\n    constructor(address _owner) Ownable() {\n        _transferOwnership(_owner);\n    }\n\n    /// @notice Sets the proxy type for a given address. Only required for non-standard (legacy)\n    ///         proxy types.\n    /// @param _address Address of the proxy.\n    /// @param _type    Type of the proxy.\n    function setProxyType(address _address, ProxyType _type) external onlyOwner {\n        proxyType[_address] = _type;\n    }\n\n    /// @notice Sets the implementation name for a given address. Only required for\n    ///         ResolvedDelegateProxy type proxies that have an implementation name.\n    /// @param _address Address of the ResolvedDelegateProxy.\n    /// @param _name    Name of the implementation for the proxy.\n    function setImplementationName(address _address, string memory _name) external onlyOwner {\n        implementationName[_address] = _name;\n    }\n\n    /// @notice Set the address of the AddressManager. This is required to manage legacy\n    ///         ResolvedDelegateProxy type proxy contracts.\n    /// @param _address Address of the AddressManager.\n    function setAddressManager(AddressManager _address) external onlyOwner {\n        addressManager = _address;\n    }\n\n    /// @custom:legacy\n    /// @notice Set an address in the address manager. Since only the owner of the AddressManager\n    ///         can directly modify addresses and the ProxyAdmin will own the AddressManager, this\n    ///         gives the owner of the ProxyAdmin the ability to modify addresses directly.\n    /// @param _name    Name to set within the AddressManager.\n    /// @param _address Address to attach to the given name.\n    function setAddress(string memory _name, address _address) external onlyOwner {\n        addressManager.setAddress(_name, _address);\n    }\n\n    /// @custom:legacy\n    /// @notice Set the upgrading status for the Chugsplash proxy type.\n    /// @param _upgrading Whether or not the system is upgrading.\n    function setUpgrading(bool _upgrading) external onlyOwner {\n        upgrading = _upgrading;\n    }\n\n    /// @custom:legacy\n    /// @notice Legacy function used to tell ChugSplashProxy contracts if an upgrade is happening.\n    /// @return Whether or not there is an upgrade going on. May not actually tell you whether an\n    ///         upgrade is going on, since we don't currently plan to use this variable for anything\n    ///         other than a legacy indicator to fix a UX bug in the ChugSplash proxy.\n    function isUpgrading() external view returns (bool) {\n        return upgrading;\n    }\n\n    /// @notice Returns the implementation of the given proxy address.\n    /// @param _proxy Address of the proxy to get the implementation of.\n    /// @return Address of the implementation of the proxy.\n    function getProxyImplementation(address _proxy) external view returns (address) {\n        ProxyType ptype = proxyType[_proxy];\n        if (ptype == ProxyType.ERC1967) {\n            return IStaticERC1967Proxy(_proxy).implementation();\n        } else if (ptype == ProxyType.CHUGSPLASH) {\n            return IStaticL1ChugSplashProxy(_proxy).getImplementation();\n        } else if (ptype == ProxyType.RESOLVED) {\n            return addressManager.getAddress(implementationName[_proxy]);\n        } else {\n            revert(\"ProxyAdmin: unknown proxy type\");\n        }\n    }\n\n    /// @notice Returns the admin of the given proxy address.\n    /// @param _proxy Address of the proxy to get the admin of.\n    /// @return Address of the admin of the proxy.\n    function getProxyAdmin(address payable _proxy) external view returns (address) {\n        ProxyType ptype = proxyType[_proxy];\n        if (ptype == ProxyType.ERC1967) {\n            return IStaticERC1967Proxy(_proxy).admin();\n        } else if (ptype == ProxyType.CHUGSPLASH) {\n            return IStaticL1ChugSplashProxy(_proxy).getOwner();\n        } else if (ptype == ProxyType.RESOLVED) {\n            return addressManager.owner();\n        } else {\n            revert(\"ProxyAdmin: unknown proxy type\");\n        }\n    }\n\n    /// @notice Updates the admin of the given proxy address.\n    /// @param _proxy    Address of the proxy to update.\n    /// @param _newAdmin Address of the new proxy admin.\n    function changeProxyAdmin(address payable _proxy, address _newAdmin) external onlyOwner {\n        ProxyType ptype = proxyType[_proxy];\n        if (ptype == ProxyType.ERC1967) {\n            Proxy(_proxy).changeAdmin(_newAdmin);\n        } else if (ptype == ProxyType.CHUGSPLASH) {\n            L1ChugSplashProxy(_proxy).setOwner(_newAdmin);\n        } else if (ptype == ProxyType.RESOLVED) {\n            addressManager.transferOwnership(_newAdmin);\n        } else {\n            revert(\"ProxyAdmin: unknown proxy type\");\n        }\n    }\n\n    /// @notice Changes a proxy's implementation contract.\n    /// @param _proxy          Address of the proxy to upgrade.\n    /// @param _implementation Address of the new implementation address.\n    function upgrade(address payable _proxy, address _implementation) public onlyOwner {\n        ProxyType ptype = proxyType[_proxy];\n        if (ptype == ProxyType.ERC1967) {\n            Proxy(_proxy).upgradeTo(_implementation);\n        } else if (ptype == ProxyType.CHUGSPLASH) {\n            L1ChugSplashProxy(_proxy).setStorage(\n                Constants.PROXY_IMPLEMENTATION_ADDRESS, bytes32(uint256(uint160(_implementation)))\n            );\n        } else if (ptype == ProxyType.RESOLVED) {\n            string memory name = implementationName[_proxy];\n            addressManager.setAddress(name, _implementation);\n        } else {\n            // It should not be possible to retrieve a ProxyType value which is not matched by\n            // one of the previous conditions.\n            assert(false);\n        }\n    }\n\n    /// @notice Changes a proxy's implementation contract and delegatecalls the new implementation\n    ///         with some given data. Useful for atomic upgrade-and-initialize calls.\n    /// @param _proxy          Address of the proxy to upgrade.\n    /// @param _implementation Address of the new implementation address.\n    /// @param _data           Data to trigger the new implementation with.\n    function upgradeAndCall(address payable _proxy, address _implementation, bytes memory _data)\n        external\n        payable\n        onlyOwner\n    {\n        ProxyType ptype = proxyType[_proxy];\n        if (ptype == ProxyType.ERC1967) {\n            Proxy(_proxy).upgradeToAndCall{value: msg.value}(_implementation, _data);\n        } else {\n            // reverts if proxy type is unknown\n            upgrade(_proxy, _implementation);\n            (bool success,) = _proxy.call{value: msg.value}(_data);\n            require(success, \"ProxyAdmin: call to proxy after upgrade failed\");\n        }\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 169,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ProxyAdmin",
+        "similarity": 0.985,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 2,
+        "ignoredAdded": 54,
+        "ignoredRemoved": 103,
+        "unchanged": 169,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 121,
+            "newStart": 1,
+            "newLines": 86,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract ProxyAdmin is Ownable {"
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @notice The proxy types that the ProxyAdmin can manage.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @custom:value ERC1967    Represents an ERC1967 compliant transparent proxy interface.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * @custom:value CHUGSPLASH Represents the Chugsplash proxy interface (legacy).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * @custom:value RESOLVED   Represents the ResolvedDelegate proxy (legacy).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 8, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice The proxy types that the ProxyAdmin can manage.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @custom:value ERC1967    Represents an ERC1967 compliant transparent proxy interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @custom:value CHUGSPLASH Represents the Chugsplash proxy interface (legacy).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @custom:value RESOLVED   Represents the ResolvedDelegate proxy (legacy).",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 6,
+                "text": "    enum ProxyType {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 7,
+                "text": "        ERC1967,"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 8,
+                "text": "        CHUGSPLASH,"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 9,
+                "text": "        RESOLVED"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * @notice A mapping of proxy types, used for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @notice A mapping of proxy types, used for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 13,
+                "text": "    mapping(address => ProxyType) public proxyType;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * @notice A reverse mapping of addresses to names held in the AddressManager. This must be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     *         manually kept up to date with changes in the AddressManager for this contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     *         to be able to work as an admin for the ResolvedDelegateProxy type.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice A reverse mapping of addresses to names held in the AddressManager. This must be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    ///         manually kept up to date with changes in the AddressManager for this contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    ///         to be able to work as an admin for the ResolvedDelegateProxy type.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 18,
+                "text": "    mapping(address => string) public implementationName;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "     * @notice The address of the address manager, this is required to manage the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     *         ResolvedDelegateProxy type.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @notice The address of the address manager, this is required to manage the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    ///         ResolvedDelegateProxy type.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 22,
+                "text": "    AddressManager public addressManager;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     * @notice A legacy upgrading indicator used by the old Chugsplash Proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @notice A legacy upgrading indicator used by the old Chugsplash Proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 25,
+                "text": "    bool internal upgrading;"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 26, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * @param _owner Address of the initial owner of this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param _owner Address of the initial owner of this contract.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 28,
+                "text": "    constructor(address _owner) Ownable() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 29,
+                "text": "        _transferOwnership(_owner);"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 44, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * @notice Sets the proxy type for a given address. Only required for non-standard (legacy)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     *         proxy types.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 48, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * @param _address Address of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     * @param _type    Type of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @notice Sets the proxy type for a given address. Only required for non-standard (legacy)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    ///         proxy types.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// @param _address Address of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @param _type    Type of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 36,
+                "text": "    function setProxyType(address _address, ProxyType _type) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 37,
+                "text": "        proxyType[_address] = _type;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 55, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @notice Sets the implementation name for a given address. Only required for",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "     *         ResolvedDelegateProxy type proxies that have an implementation name.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 59, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @param _address Address of the ResolvedDelegateProxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @param _name    Name of the implementation for the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @notice Sets the implementation name for a given address. Only required for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    ///         ResolvedDelegateProxy type proxies that have an implementation name.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @param _address Address of the ResolvedDelegateProxy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @param _name    Name of the implementation for the proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 44,
+                "text": "    function setImplementationName(address _address, string memory _name) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 45,
+                "text": "        implementationName[_address] = _name;"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 46, "text": "    }" },
+              { "type": " ", "oldLine": 66, "newLine": 47, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "     * @notice Set the address of the AddressManager. This is required to manage legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "     *         ResolvedDelegateProxy type proxy contracts.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 70, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * @param _address Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /// @notice Set the address of the AddressManager. This is required to manage legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    ///         ResolvedDelegateProxy type proxy contracts.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /// @param _address Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 51,
+                "text": "    function setAddressManager(AddressManager _address) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 52,
+                "text": "        addressManager = _address;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @notice Set an address in the address manager. Since only the owner of the AddressManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     *         can directly modify addresses and the ProxyAdmin will own the AddressManager, this",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     *         gives the owner of the ProxyAdmin the ability to modify addresses directly.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 82, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "     * @param _name    Name to set within the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "     * @param _address Address to attach to the given name.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @notice Set an address in the address manager. Since only the owner of the AddressManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    ///         can directly modify addresses and the ProxyAdmin will own the AddressManager, this",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    ///         gives the owner of the ProxyAdmin the ability to modify addresses directly.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /// @param _name    Name to set within the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /// @param _address Address to attach to the given name.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 61,
+                "text": "    function setAddress(string memory _name, address _address) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 62,
+                "text": "        addressManager.setAddress(_name, _address);"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 63, "text": "    }" },
+              { "type": " ", "oldLine": 89, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "     * @notice Set the upgrading status for the Chugsplash proxy type.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 93, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "     * @param _upgrading Whether or not the system is upgrading.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /// @notice Set the upgrading status for the Chugsplash proxy type.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /// @param _upgrading Whether or not the system is upgrading.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 68,
+                "text": "    function setUpgrading(bool _upgrading) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 69,
+                "text": "        upgrading = _upgrading;"
+              },
+              { "type": " ", "oldLine": 98, "newLine": 70, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 71, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "     * @notice Legacy function used to tell ChugSplashProxy contracts if an upgrade is happening.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     * @return Whether or not there is an upgrade going on. May not actually tell you whether an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "     *         upgrade is going on, since we don't currently plan to use this variable for anything",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "     *         other than a legacy indicator to fix a UX bug in the ChugSplash proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    /// @notice Legacy function used to tell ChugSplashProxy contracts if an upgrade is happening.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @return Whether or not there is an upgrade going on. May not actually tell you whether an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    ///         upgrade is going on, since we don't currently plan to use this variable for anything",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    ///         other than a legacy indicator to fix a UX bug in the ChugSplash proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 77,
+                "text": "    function isUpgrading() external view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 78,
+                "text": "        return upgrading;"
+              },
+              { "type": " ", "oldLine": 110, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 111, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "     * @notice Returns the implementation of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "     * @param _proxy Address of the proxy to get the implementation of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "     * @return Address of the implementation of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    /// @notice Returns the implementation of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @param _proxy Address of the proxy to get the implementation of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @return Address of the implementation of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 84,
+                "text": "    function getProxyImplementation(address _proxy) external view returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 85,
+                "text": "        ProxyType ptype = proxyType[_proxy];"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 86,
+                "text": "        if (ptype == ProxyType.ERC1967) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 129,
+            "oldLines": 13,
+            "newStart": 94,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 94,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 130, "newLine": 95, "text": "    }" },
+              { "type": " ", "oldLine": 131, "newLine": 96, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "     * @notice Returns the admin of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "     * @param _proxy Address of the proxy to get the admin of.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "     * @return Address of the admin of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    /// @notice Returns the admin of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    /// @param _proxy Address of the proxy to get the admin of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @return Address of the admin of the proxy.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 100,
+                "text": "    function getProxyAdmin(address payable _proxy) external view returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 101,
+                "text": "        ProxyType ptype = proxyType[_proxy];"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 102,
+                "text": "        if (ptype == ProxyType.ERC1967) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 149,
+            "oldLines": 12,
+            "newStart": 110,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 110,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 150, "newLine": 111, "text": "    }" },
+              { "type": " ", "oldLine": 151, "newLine": 112, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "     * @notice Updates the admin of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "     * @param _proxy    Address of the proxy to update.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "     * @param _newAdmin Address of the new proxy admin.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    /// @notice Updates the admin of the given proxy address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "    /// @param _proxy    Address of the proxy to update.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    /// @param _newAdmin Address of the new proxy admin.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 116,
+                "text": "    function changeProxyAdmin(address payable _proxy, address _newAdmin) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 117,
+                "text": "        ProxyType ptype = proxyType[_proxy];"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 118,
+                "text": "        if (ptype == ProxyType.ERC1967) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 21,
+            "newStart": 126,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 126,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 169, "newLine": 127, "text": "    }" },
+              { "type": " ", "oldLine": 170, "newLine": 128, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "     * @notice Changes a proxy's implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "     * @param _proxy          Address of the proxy to upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "     * @param _implementation Address of the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "    /// @notice Changes a proxy's implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "    /// @param _proxy          Address of the proxy to upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    /// @param _implementation Address of the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 132,
+                "text": "    function upgrade(address payable _proxy, address _implementation) public onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 133,
+                "text": "        ProxyType ptype = proxyType[_proxy];"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 134,
+                "text": "        if (ptype == ProxyType.ERC1967) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 135,
+                "text": "            Proxy(_proxy).upgradeTo(_implementation);"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 136,
+                "text": "        } else if (ptype == ProxyType.CHUGSPLASH) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 137,
+                "text": "            L1ChugSplashProxy(_proxy).setStorage("
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "                // bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "                0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "                bytes32(uint256(uint160(_implementation)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "                Constants.PROXY_IMPLEMENTATION_ADDRESS, bytes32(uint256(uint160(_implementation)))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 139,
+                "text": "            );"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 140,
+                "text": "        } else if (ptype == ProxyType.RESOLVED) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 141,
+                "text": "            string memory name = implementationName[_proxy];"
+              }
+            ]
+          },
+          {
+            "oldStart": 194,
+            "oldLines": 14,
+            "newStart": 147,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 147,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 148, "text": "    }" },
+              { "type": " ", "oldLine": 196, "newLine": 149, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "     * @notice Changes a proxy's implementation contract and delegatecalls the new implementation",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "     *         with some given data. Useful for atomic upgrade-and-initialize calls.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "     * @param _proxy          Address of the proxy to upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "     * @param _implementation Address of the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "     * @param _data           Data to trigger the new implementation with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "    /// @notice Changes a proxy's implementation contract and delegatecalls the new implementation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "    ///         with some given data. Useful for atomic upgrade-and-initialize calls.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "    /// @param _proxy          Address of the proxy to upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "    /// @param _implementation Address of the new implementation address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "    /// @param _data           Data to trigger the new implementation with.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 155,
+                "text": "    function upgradeAndCall(address payable _proxy, address _implementation, bytes memory _data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 156,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 157,
+                "text": "        payable"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

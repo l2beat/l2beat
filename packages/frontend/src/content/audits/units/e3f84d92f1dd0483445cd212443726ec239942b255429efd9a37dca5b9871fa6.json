@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e3f84d92f1dd0483445cd212443726ec239942b255429efd9a37dca5b9871fa6",
+  "name": "ICCIPLiquidityContainer",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface ICCIPLiquidityContainer {\n    function provideLiquidity(uint64 remoteChainSelector, uint256 amount) external;\n\n    function provideLiquidity(uint256 amount) external;\n\n    function provideSiloedLiquidity(uint64 remoteChainSelector, uint256 amount) external;\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -35,6 +35,123 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 54,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "PreimageKeyLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 54,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "PreimageKeyLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 54,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "PreimageKeyLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 54,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "PreimageKeyLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

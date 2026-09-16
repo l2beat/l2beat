@@ -1,0 +1,670 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c91c49713db72ec880a94ff691052c768341448bc7737ef66a019c21f108eebe",
+  "name": "PausedL1StandardBridge",
+  "kind": "contract",
+  "lines": 363,
+  "source": "contract PausedL1StandardBridge is StandardBridge, ISemver {\n    /// @custom:legacy\n    /// @notice Emitted whenever a deposit of ETH from L1 into L2 is initiated.\n    /// @param from      Address of the depositor.\n    /// @param to        Address of the recipient on L2.\n    /// @param amount    Amount of ETH deposited.\n    /// @param extraData Extra data attached to the deposit.\n    event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @custom:legacy\n    /// @notice Emitted whenever a withdrawal of ETH from L2 to L1 is finalized.\n    /// @param from      Address of the withdrawer.\n    /// @param to        Address of the recipient on L1.\n    /// @param amount    Amount of ETH withdrawn.\n    /// @param extraData Extra data attached to the withdrawal.\n    event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @custom:legacy\n    /// @notice Emitted whenever an ERC20 deposit is initiated.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the depositor.\n    /// @param to        Address of the recipient on L2.\n    /// @param amount    Amount of the ERC20 deposited.\n    /// @param extraData Extra data attached to the deposit.\n    event ERC20DepositInitiated(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @custom:legacy\n    /// @notice Emitted whenever an ERC20 withdrawal is finalized.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the withdrawer.\n    /// @param to        Address of the recipient on L1.\n    /// @param amount    Amount of the ERC20 withdrawn.\n    /// @param extraData Extra data attached to the withdrawal.\n    event ERC20WithdrawalFinalized(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.2.0\n    string public constant version = \"2.2.0\";\n\n    /// @notice Address of the SuperchainConfig contract.\n    SuperchainConfig public superchainConfig;\n\n    /// @notice Address of the SystemConfig contract.\n    SystemConfig public systemConfig;\n\n    function onL1() internal pure override returns (bool) {\n        return true;\n    }\n\n    /// @notice Constructs the L1StandardBridge contract.\n    constructor() StandardBridge() {\n        initialize({\n            _messenger: CrossDomainMessenger(address(0)),\n            _superchainConfig: SuperchainConfig(address(0)),\n            _systemConfig: SystemConfig(address(0)),\n            _otherBridge: StandardBridge(payable(address(0)))\n        });\n    }\n\n    /// @notice Initializer.\n    /// @param _messenger        Contract for the CrossDomainMessenger on this network.\n    /// @param _superchainConfig Contract for the SuperchainConfig on this network.\n    function initialize(\n        CrossDomainMessenger _messenger,\n        SuperchainConfig _superchainConfig,\n        SystemConfig _systemConfig,\n        StandardBridge _otherBridge\n    ) public initializer {\n        superchainConfig = _superchainConfig;\n        systemConfig = _systemConfig;\n        __StandardBridge_init({_messenger: _messenger, _otherBridge: _otherBridge});\n    }\n\n    function adminWithdraw(address recipient, uint256 amount) external {\n        require(msg.sender == admin(), \"Only admin can call this function\");\n\n        weth().withdraw(amount);\n        Donateable(recipient).donateETH{value: amount}();\n    }\n\n    function admin() public pure returns (address) {\n        return 0xb2B01DeCb6cd36E7396b78D3744482627F22C525;\n    }\n\n    function weth() public view returns (IWETH) {\n        address addr;\n\n        if (block.chainid == 1) {\n            addr = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;\n        } else if (block.chainid == 11155111) {\n            addr = 0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9;\n        } else {\n            revert(\"Unsupported chain\");\n        }\n\n        return IWETH(addr);\n    }\n\n    receive() external payable override {}\n\n    /// @inheritdoc StandardBridge\n    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {\n        (addr_, decimals_) = systemConfig.gasPayingToken();\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ETH into the sender's account on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositETH(uint32 _minGasLimit, bytes calldata _extraData) external payable onlyEOA {\n        _initiateETHDeposit(msg.sender, msg.sender, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ETH into a target account on L2.\n    ///         Note that if ETH is sent to a contract on L2 and the call fails, then that ETH will\n    ///         be locked in the L2StandardBridge. ETH may be recoverable if the call can be\n    ///         successfully replayed by increasing the amount of gas supplied to the call. If the\n    ///         call will fail for any amount of gas, then the ETH will be locked permanently.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositETHTo(address _to, uint32 _minGasLimit, bytes calldata _extraData) external payable {\n        _initiateETHDeposit(msg.sender, _to, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ERC20 tokens into the sender's account on L2.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositERC20(\n        address _l1Token,\n        address _l2Token,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external virtual onlyEOA {\n        _initiateERC20Deposit(_l1Token, _l2Token, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ERC20 tokens into a target account on L2.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositERC20To(\n        address _l1Token,\n        address _l2Token,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external virtual {\n        _initiateERC20Deposit(_l1Token, _l2Token, msg.sender, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    function bridgeETHToWETH(\n        IWETH _localWeth,\n        address _remoteToken,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external payable virtual onlyEOA {\n        bridgeETHToWETHTo({\n            _localWeth: _localWeth,\n            _remoteToken: _remoteToken,\n            _to: msg.sender,\n            _amount: _amount,\n            _minGasLimit: _minGasLimit,\n            _extraData: _extraData\n        });\n    }\n\n    function bridgeETHToWETHTo(\n        IWETH _localWeth,\n        address _remoteToken,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) public payable virtual {\n        require(msg.value == _amount, \"Invalid amount\");\n        require(msg.value > 0, \"Invalid amount\");\n\n        _localWeth.deposit{value: _amount}();\n\n        _initiateBridgeERC20({\n            _localToken: address(_localWeth),\n            _remoteToken: _remoteToken,\n            _from: msg.sender,\n            _to: _to,\n            _amount: _amount,\n            _minGasLimit: _minGasLimit,\n            _extraData: _extraData,\n            _performSafeTransferFrom: false,\n            _allowMsgValue: true\n        });\n    }\n\n    /// @custom:legacy\n    /// @notice Finalizes a withdrawal of ETH from L2.\n    /// @param _from      Address of the withdrawer on L2.\n    /// @param _to        Address of the recipient on L1.\n    /// @param _amount    Amount of ETH to withdraw.\n    /// @param _extraData Optional data forwarded from L2.\n    function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes calldata _extraData)\n        external\n        payable\n    {\n        finalizeBridgeETH(_from, _to, _amount, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Finalizes a withdrawal of ERC20 tokens from L2.\n    /// @param _l1Token   Address of the token on L1.\n    /// @param _l2Token   Address of the corresponding token on L2.\n    /// @param _from      Address of the withdrawer on L2.\n    /// @param _to        Address of the recipient on L1.\n    /// @param _amount    Amount of the ERC20 to withdraw.\n    /// @param _extraData Optional data forwarded from L2.\n    function finalizeERC20Withdrawal(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _extraData\n    ) external {\n        finalizeBridgeERC20(_l1Token, _l2Token, _from, _to, _amount, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Retrieves the access of the corresponding L2 bridge contract.\n    /// @return Address of the corresponding L2 bridge contract.\n    function l2TokenBridge() external view returns (address) {\n        return address(otherBridge);\n    }\n\n    /// @notice Internal function for initiating an ETH deposit.\n    /// @param _from        Address of the sender on L1.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    function _initiateETHDeposit(address _from, address _to, uint32 _minGasLimit, bytes memory _extraData) internal {\n        _initiateBridgeETH(_from, _to, msg.value, _minGasLimit, _extraData);\n    }\n\n    /// @notice Internal function for initiating an ERC20 deposit.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _from        Address of the sender on L1.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    function _initiateERC20Deposit(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        _initiateBridgeERC20(_l1Token, _l2Token, _from, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    function _initiateBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData,\n        bool _performSafeTransferFrom,\n        bool _allowMsgValue\n    ) internal pure override {\n        revert(\"Use the fast bridge\");\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ETHDepositInitiated event followed by the ETHBridgeInitiated event.\n    ///         This is necessary for backwards compatibility with the legacy bridge.\n    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit ETHDepositInitiated(_from, _to, _amount, _extraData);\n        super._emitETHBridgeInitiated(_from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20DepositInitiated event followed by the ERC20BridgeInitiated\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit ETHWithdrawalFinalized(_from, _to, _amount, _extraData);\n        super._emitETHBridgeFinalized(_from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20WithdrawalFinalized event followed by the ERC20BridgeFinalized\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitERC20BridgeInitiated(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit ERC20DepositInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20WithdrawalFinalized event followed by the ERC20BridgeFinalized\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitERC20BridgeFinalized(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit ERC20WithdrawalFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 308,
+      "match": {
+        "origin": "own",
+        "collection": "facet",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "L1StandardBridge",
+        "similarity": 0.827,
+        "reportId": "facet/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+        "commit": "10d1a7971af7c066969038d20661a10474c05d72",
+        "commitTimestamp": "2024-10-17T16:08:45Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/10d1a7971af7c066969038d20661a10474c05d72/packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "discussion of changes made during the engagement",
+        "coverage": "change to depositWethTo to skip transferFrom and use msg.sender as the deposit sender",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 55,
+        "removed": 11,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 2,
+        "unchanged": 308,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1StandardBridge is StandardBridge, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract PausedL1StandardBridge is StandardBridge, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    /// @notice Emitted whenever a deposit of ETH from L1 into L2 is initiated."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @param from      Address of the depositor."
+              }
+            ]
+          },
+          {
+            "oldStart": 87,
+            "oldLines": 16,
+            "newStart": 87,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "        __StandardBridge_init({_messenger: _messenger, _otherBridge: _otherBridge});"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 89, "newLine": 89, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /// @inheritdoc StandardBridge",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    function paused() public view override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        return superchainConfig.paused();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    function adminWithdraw(address recipient, uint256 amount) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "        require(msg.sender == admin(), \"Only admin can call this function\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 92, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        weth().withdraw(amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        Donateable(recipient).donateETH{value: amount}();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 93, "newLine": 95, "text": "    }" },
+              { "type": " ", "oldLine": 94, "newLine": 96, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @notice Allows EOAs to bridge ETH by sending directly to the bridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    receive() external payable override onlyEOA {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        _initiateETHDeposit(msg.sender, msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    function admin() public pure returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        return 0xb2B01DeCb6cd36E7396b78D3744482627F22C525;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 98, "newLine": 99, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 100, "text": "" },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    function weth() public view returns (IWETH) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        address addr;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 103, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        if (block.chainid == 1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            addr = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        } else if (block.chainid == 11155111) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "            addr = 0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "            revert(\"Unsupported chain\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 111, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        return IWETH(addr);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 114, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    receive() external payable override {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 116, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 117,
+                "text": "    /// @inheritdoc StandardBridge"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 118,
+                "text": "    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 119,
+                "text": "        (addr_, decimals_) = systemConfig.gasPayingToken();"
+              }
+            ]
+          },
+          {
+            "oldStart": 167,
+            "oldLines": 28,
+            "newStart": 184,
+            "newLines": 46,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 184,
+                "text": "        _initiateERC20Deposit(_l1Token, _l2Token, msg.sender, _to, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 168, "newLine": 185, "text": "    }" },
+              { "type": " ", "oldLine": 169, "newLine": 186, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "    function depositWethTo(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        IWETH weth,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "    function bridgeETHToWETH(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "        IWETH _localWeth,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 189,
+                "text": "        address _remoteToken,"
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "        uint256 _amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "        uint32 _minGasLimit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "        bytes calldata _extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    ) external payable virtual onlyEOA {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        bridgeETHToWETHTo({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "            _localWeth: _localWeth,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "            _remoteToken: _remoteToken,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            _to: msg.sender,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "            _amount: _amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "            _minGasLimit: _minGasLimit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "            _extraData: _extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "        });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 203, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "    function bridgeETHToWETHTo(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        IWETH _localWeth,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "        address _remoteToken,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 207,
+                "text": "        address _to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 208,
+                "text": "        uint256 _amount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 209,
+                "text": "        uint32 _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 210,
+                "text": "        bytes calldata _extraData"
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "    ) external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "    ) public payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 212,
+                "text": "        require(msg.value == _amount, \"Invalid amount\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 213,
+                "text": "        require(msg.value > 0, \"Invalid amount\");"
+              },
+              { "type": " ", "oldLine": 180, "newLine": 214, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "        weth.deposit{value: _amount}();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "        _localWeth.deposit{value: _amount}();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 182, "newLine": 216, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 217,
+                "text": "        _initiateBridgeERC20({"
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "            _localToken: address(weth),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "            _localToken: address(_localWeth),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 219,
+                "text": "            _remoteToken: _remoteToken,"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 220,
+                "text": "            _from: msg.sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 221,
+                "text": "            _to: _to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 222,
+                "text": "            _amount: _amount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 223,
+                "text": "            _minGasLimit: _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 224,
+                "text": "            _extraData: _extraData,"
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            _performSafeTransferFrom: false",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "            _performSafeTransferFrom: false,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "            _allowMsgValue: true",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 227,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 228, "text": "    }" },
+              { "type": " ", "oldLine": 194, "newLine": 229, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 260,
+            "oldLines": 6,
+            "newStart": 295,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 295,
+                "text": "        _initiateBridgeERC20(_l1Token, _l2Token, _from, _to, _amount, _minGasLimit, _extraData);"
+              },
+              { "type": " ", "oldLine": 261, "newLine": 296, "text": "    }" },
+              { "type": " ", "oldLine": 262, "newLine": 297, "text": "" },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "    function _initiateBridgeERC20(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "        address _localToken,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "        address _remoteToken,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "        address _from,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "        address _to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "        uint256 _amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "        uint32 _minGasLimit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "        bytes memory _extraData,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "        bool _performSafeTransferFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 307,
+                "text": "        bool _allowMsgValue",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "    ) internal pure override {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "        revert(\"Use the fast bridge\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 311, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 312,
+                "text": "    /// @inheritdoc StandardBridge"
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 313,
+                "text": "    /// @notice Emits the legacy ETHDepositInitiated event followed by the ETHBridgeInitiated event."
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 314,
+                "text": "    ///         This is necessary for backwards compatibility with the legacy bridge."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

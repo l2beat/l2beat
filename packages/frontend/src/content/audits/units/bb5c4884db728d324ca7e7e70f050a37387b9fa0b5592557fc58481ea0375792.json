@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bb5c4884db728d324ca7e7e70f050a37387b9fa0b5592557fc58481ea0375792",
+  "name": "ScrollOwner",
+  "kind": "contract",
+  "lines": 145,
+  "source": "contract ScrollOwner is AccessControlEnumerable {\n    using EnumerableSet for EnumerableSet.Bytes32Set;\n\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the access to target contract is granted.\n    /// @param role The role to grant access.\n    /// @param target The address of target contract.\n    /// @param selectors The list of function selectors to grant access.\n    event GrantAccess(bytes32 indexed role, address indexed target, bytes4[] selectors);\n\n    /// @notice Emitted when the access to target contract is revoked.\n    /// @param role The role to revoke access.\n    /// @param target The address of target contract.\n    /// @param selectors The list of function selectors to revoke access.\n    event RevokeAccess(bytes32 indexed role, address indexed target, bytes4[] selectors);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from target address to selector to the list of accessible roles.\n    mapping(address => mapping(bytes4 => EnumerableSet.Bytes32Set)) private targetAccess;\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n    modifier hasAccess(address _target, bytes4 _selector, bytes32 _role) {\n        // admin has access to all methods\n        require(_role == DEFAULT_ADMIN_ROLE || targetAccess[_target][_selector].contains(_role), \"no access\");\n        _;\n    }\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor() {\n        _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return a list of roles which has access to the function.\n    /// @param _target The address of target contract.\n    /// @param _selector The function selector to query.\n    /// @return _roles The list of roles.\n    function callableRoles(address _target, bytes4 _selector) external view returns (bytes32[] memory _roles) {\n        EnumerableSet.Bytes32Set storage _lists = targetAccess[_target][_selector];\n        _roles = new bytes32[](_lists.length());\n        for (uint256 i = 0; i < _roles.length; i++) {\n            _roles[i] = _lists.at(i);\n        }\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Perform a function call from arbitrary role.\n    /// @param _target The address of target contract.\n    /// @param _value The value passing to target contract.\n    /// @param _data The calldata passing to target contract.\n    /// @param _role The expected role of the caller.\n    function execute(address _target, uint256 _value, bytes calldata _data, bytes32 _role)\n        external\n        payable\n        onlyRole(_role)\n        hasAccess(_target, bytes4(_data[0:4]), _role)\n    {\n        _execute(_target, _value, _data);\n    }\n\n    // allow others to send ether to this contract.\n    receive() external payable {}\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update the access to target contract.\n    /// @param _target The address of target contract.\n    /// @param _selectors The list of function selectors to update.\n    /// @param _role The role to change.\n    /// @param _status True if we are going to add the role, otherwise remove the role.\n    function updateAccess(address _target, bytes4[] memory _selectors, bytes32 _role, bool _status)\n        external\n        onlyRole(DEFAULT_ADMIN_ROLE)\n    {\n        if (_status) {\n            for (uint256 i = 0; i < _selectors.length; i++) {\n                targetAccess[_target][_selectors[i]].add(_role);\n            }\n\n            emit GrantAccess(_role, _target, _selectors);\n        } else {\n            for (uint256 i = 0; i < _selectors.length; i++) {\n                targetAccess[_target][_selectors[i]].remove(_role);\n            }\n\n            emit RevokeAccess(_role, _target, _selectors);\n        }\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to call contract. If the call reverted, the error will be popped up.\n    /// @param _target The address of target contract.\n    /// @param _value The value passing to target contract.\n    /// @param _data The calldata passing to target contract.\n    function _execute(address _target, uint256 _value, bytes calldata _data) private {\n        // solhint-disable-next-line avoid-low-level-calls\n        (bool success,) = _target.call{value: _value}(_data);\n        if (!success) {\n            // solhint-disable-next-line no-inline-assembly\n            assembly {\n                let ptr := mload(0x40)\n                let size := returndatasize()\n                returndatacopy(ptr, 0, size)\n                revert(ptr, size)\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 141,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ScrollOwner",
+        "similarity": 0.929,
+        "reportId": "scroll/openzeppelin-scroll-owner-rate-limiter-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/misc/ScrollOwner.sol",
+        "commit": "0bb41be065704c7a39f09ecf604458d0fca96cac",
+        "commitTimestamp": "2023-09-01T09:59:33Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/0bb41be065704c7a39f09ecf604458d0fca96cac/contracts/src/misc/ScrollOwner.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of N-05 (events on updateAccess) in pull request #908 only.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 141,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "     *" },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    constructor() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 78,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    /// @param _data The calldata passing to target contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "    /// @param _role The expected role of the caller."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "    function execute(address _target, uint256 _value, bytes calldata _data, bytes32 _role)"
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "        payable"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "        onlyRole(_role)"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "        hasAccess(_target, bytes4(_data[0:4]), _role)"
+              }
+            ]
+          },
+          {
+            "oldStart": 129,
+            "oldLines": 9,
+            "newStart": 129,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 129,
+                "text": "    /// @param _target The address of target contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "    /// @param _value The value passing to target contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "    /// @param _data The calldata passing to target contract."
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "    function _execute(address _target, uint256 _value, bytes calldata _data) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "    function _execute(address _target, uint256 _value, bytes calldata _data) private {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 133,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls"
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        (bool success,) = address(_target).call{value: _value}(_data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "        (bool success,) = _target.call{value: _value}(_data);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        if (!success) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 136,
+                "text": "            // solhint-disable-next-line no-inline-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "            assembly {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

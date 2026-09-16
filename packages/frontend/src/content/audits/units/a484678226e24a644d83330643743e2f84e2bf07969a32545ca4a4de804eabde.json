@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a484678226e24a644d83330643743e2f84e2bf07969a32545ca4a4de804eabde",
+  "name": "CeloTokenL1",
+  "kind": "contract",
+  "lines": 14,
+  "source": "contract CeloTokenL1 is ERC20Upgradeable {\n    string constant NAME = \"Celo native asset\";\n    string constant SYMBOL = \"CELO\";\n    uint256 constant TOTAL_MARKET_CAP = 1000000000e18; // 1 billion CELO\n\n    constructor() {\n        _disableInitializers();\n    }\n\n    function initialize(address portalProxyAddress) external initializer {\n        __ERC20_init(NAME, SYMBOL);\n        _mint(portalProxyAddress, TOTAL_MARKET_CAP);\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

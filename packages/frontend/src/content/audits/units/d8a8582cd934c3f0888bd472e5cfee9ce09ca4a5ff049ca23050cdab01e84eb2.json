@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d8a8582cd934c3f0888bd472e5cfee9ce09ca4a5ff049ca23050cdab01e84eb2",
+  "name": "GovernorCountingSimpleUpgradeableV2",
+  "kind": "abstract",
+  "lines": 102,
+  "source": "abstract contract GovernorCountingSimpleUpgradeableV2 is Initializable, GovernorUpgradeableV2 {\n    function __GovernorCountingSimple_init() internal onlyInitializing {}\n\n    function __GovernorCountingSimple_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev Supported vote types. Matches Governor Bravo ordering.\n     */\n\n    enum VoteType {\n        Against,\n        For,\n        Abstain\n    }\n\n    struct ProposalVote {\n        uint256 againstVotes;\n        uint256 forVotes;\n        uint256 abstainVotes;\n        mapping(address => bool) hasVoted;\n    }\n\n    mapping(uint256 => ProposalVote) internal _proposalVotes;\n\n    /**\n     * @dev See {IGovernor-COUNTING_MODE}.\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function COUNTING_MODE() public pure virtual override returns (string memory) {\n        return \"support=bravo&quorum=for,abstain\";\n    }\n\n    /**\n     * @dev See {IGovernor-hasVoted}.\n     */\n    function hasVoted(uint256 proposalId, address account) public view virtual override returns (bool) {\n        return _proposalVotes[proposalId].hasVoted[account];\n    }\n\n    /**\n     * @dev Accessor to the internal vote counts.\n     */\n    function proposalVotes(uint256 proposalId)\n        public\n        view\n        virtual\n        returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes)\n    {\n        ProposalVote storage proposalVote = _proposalVotes[proposalId];\n        return (proposalVote.againstVotes, proposalVote.forVotes, proposalVote.abstainVotes);\n    }\n\n    /**\n     * @dev See {Governor-_quorumReached}.\n     */\n    function _quorumReached(uint256 proposalId) internal view virtual override returns (bool) {\n        ProposalVote storage proposalVote = _proposalVotes[proposalId];\n\n        return quorum(proposalSnapshot(proposalId)) <= proposalVote.forVotes + proposalVote.abstainVotes;\n    }\n\n    /**\n     * @dev See {Governor-_voteSucceeded}. In this module, the forVotes must be strictly over the againstVotes.\n     */\n    function _voteSucceeded(uint256 proposalId) internal view virtual override returns (bool) {\n        ProposalVote storage proposalVote = _proposalVotes[proposalId];\n\n        return proposalVote.forVotes > proposalVote.againstVotes;\n    }\n\n    /**\n     * @dev See {Governor-_countVote}. In this module, the support follows the `VoteType` enum (from Governor Bravo).\n     */\n    function _countVote(\n        uint256 proposalId,\n        address account,\n        uint8 support,\n        uint256 weight,\n        bytes memory // params\n    ) internal virtual override {\n        ProposalVote storage proposalVote = _proposalVotes[proposalId];\n\n        require(!proposalVote.hasVoted[account], \"GovernorVotingSimple: vote already cast\");\n        proposalVote.hasVoted[account] = true;\n\n        if (support == uint8(VoteType.Against)) {\n            proposalVote.againstVotes += weight;\n        } else if (support == uint8(VoteType.For)) {\n            proposalVote.forVotes += weight;\n        } else if (support == uint8(VoteType.Abstain)) {\n            proposalVote.abstainVotes += weight;\n        } else {\n            revert(\"GovernorVotingSimple: invalid value for enum VoteType\");\n        }\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[49] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GovernorCountingSimple",
+        "similarity": 0.874,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/extensions/GovernorCountingSimple.sol",
+        "commit": "adbb8c9d27e77452bc2253397908d3d044808e62",
+        "commitTimestamp": "2023-08-16T05:33:49Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/adbb8c9d27e77452bc2253397908d3d044808e62/contracts/governance/extensions/GovernorCountingSimple.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 5 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 8,
+        "removed": 7,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 0,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract GovernorCountingSimple is Governor {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract GovernorCountingSimpleUpgradeableV2 is Initializable, GovernorUpgradeableV2 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function __GovernorCountingSimple_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function __GovernorCountingSimple_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 5, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 6,
+                "text": "     * @dev Supported vote types. Matches Governor Bravo ordering."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 7, "text": "     */" },
+              { "type": "+", "newLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 9,
+                "text": "    enum VoteType {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 10,
+                "text": "        Against,"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 11,
+                "text": "        For,"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 10,
+            "newStart": 16,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 16,
+                "text": "        uint256 againstVotes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "        uint256 forVotes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 18,
+                "text": "        uint256 abstainVotes;"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        mapping(address voter => bool) hasVoted;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        mapping(address => bool) hasVoted;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 21, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    mapping(uint256 proposalId => ProposalVote) private _proposalVotes;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    mapping(uint256 => ProposalVote) internal _proposalVotes;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 23, "text": "" },
+              { "type": " ", "oldLine": 20, "newLine": 24, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 25,
+                "text": "     * @dev See {IGovernor-COUNTING_MODE}."
+              }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 9,
+            "newStart": 79,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 79,
+                "text": "    ) internal virtual override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 80,
+                "text": "        ProposalVote storage proposalVote = _proposalVotes[proposalId];"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        if (proposalVote.hasVoted[account]) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "            revert GovernorAlreadyCastVote(account);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        require(!proposalVote.hasVoted[account], \"GovernorVotingSimple: vote already cast\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 83,
+                "text": "        proposalVote.hasVoted[account] = true;"
+              },
+              { "type": " ", "oldLine": 82, "newLine": 84, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 85,
+                "text": "        if (support == uint8(VoteType.Against)) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 87,
+            "oldLines": 7,
+            "newStart": 89,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 89,
+                "text": "        } else if (support == uint8(VoteType.Abstain)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 90,
+                "text": "            proposalVote.abstainVotes += weight;"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 91,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            revert GovernorInvalidVoteType();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            revert(\"GovernorVotingSimple: invalid value for enum VoteType\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 93,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 94, "text": "    }" },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    uint256[49] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 93, "newLine": 102, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "139d54c9069a046c04dc6fc213e4408ace24622ad60708d5afc03dde0305c8ca",
+  "name": "lib.nr",
+  "kind": "program",
+  "lines": 48,
+  "source": "pub(crate) mod constants;\n\nmod bigcurve;\nmod scalar_field;\n\n// Pre-defined curves and `BigCurve`s for people to use:\npub mod curves;\n\nmod tests;\nmod benchmarks;\nmod data;\n\n// Free functions and other utils, called by the BigCurve structs\npub(crate) mod utils;\npub(crate) mod ops;\npub(crate) mod curve_jac;\n\n// Internal functions required by derive macros for external crates\n// Exported through the `internal` submodule to make it clear they are not\n// intended for direct use by end users\npub mod internal {\n    pub use ::bignum::bignum::evaluate_quadratic_expression;\n\n    pub use crate::ops::msm::evaluate_linear_expression;\n    pub use crate::ops::msm::get_mul_transcript;\n    pub use crate::ops::msm::mul_with_hint;\n\n    pub use crate::ops::affine::add_with_hint;\n    pub use crate::ops::affine::sub_with_hint;\n}\n\n// Re-export the main structs so that users don't have to specify the paths\npub use bigcurve::BigCurve;\npub use bigcurve::BigCurveParams;\npub use bigcurve::derive_curve_impl;\npub use scalar_field::ScalarField;\n\n// Re-export the pre-defied bigcurve types, for easier access:\npub use curves::bls12_377::{BLS12_377, BLS12_377Scalar};\npub use curves::bls12_381::{BLS12_381, BLS12_381Scalar};\npub use curves::bn254::{BN254, BN254Scalar};\npub use curves::mnt4_753::{MNT4_753, MNT4_753Scalar};\npub use curves::mnt6_753::{MNT6_753, MNT6_753Scalar};\npub use curves::pallas::{Pallas, PallasScalar};\npub use curves::secp256k1::{Secp256k1, Secp256k1Scalar};\npub use curves::secp256r1::{Secp256r1, Secp256r1Scalar};\npub use curves::secp384r1::{Secp384r1, Secp384r1Scalar};\npub use curves::vesta::{Vesta, VestaScalar};",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

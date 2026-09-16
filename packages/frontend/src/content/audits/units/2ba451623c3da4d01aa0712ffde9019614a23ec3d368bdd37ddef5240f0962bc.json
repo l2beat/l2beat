@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2ba451623c3da4d01aa0712ffde9019614a23ec3d368bdd37ddef5240f0962bc",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 19,
+  "source": "[package]\nname = \"scroll-zkvm-bundle-circuit\"\nedition.workspace = true\nreadme.workspace = true\nrepository.workspace = true\nversion = \"0.7.1\"\n\n[dependencies]\nbincode.workspace = true\nscroll-zkvm-types-circuit.workspace = true\nscroll-zkvm-types-bundle.workspace = true\n\nopenvm = { workspace = true, features = [\"std\"] }\nopenvm-keccak256-guest.workspace = true\n\nalloy-primitives = { workspace = true }\n\n[features]\ndefault = []",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 14,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.625,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/bundle-circuit/Cargo.toml",
+        "commit": "3f008792538a33271d116f75beab0e137a10f176",
+        "commitTimestamp": "2025-03-17T14:08:53Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/3f008792538a33271d116f75beab0e137a10f176/crates/circuits/bundle-circuit/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of PR #85 (fix review): TOB-SCREUC-1 resolved via zip_eq in the types crate.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 5,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 14,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 19,
+            "newStart": 3,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "edition.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "repository.workspace = true"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "version.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "version = \"0.7.1\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "scroll-zkvm-circuit-input-types.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "bincode.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "scroll-zkvm-types-circuit.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "scroll-zkvm-types-bundle.workspace = true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 12, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 13,
+                "text": "openvm = { workspace = true, features = [\"std\"] }"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "openvm-algebra-guest.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "openvm-keccak256-guest.workspace = true"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "openvm-rv32im-guest.workspace = true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "alloy-primitives = { workspace = true, default-features = false, features = [\"std\", \"map-hashbrown\", \"map-fxhash\", \"rkyv\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "rkyv.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "alloy-primitives = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "[features]"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "default = []",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "euclidv2 = [\"scroll-zkvm-circuit-input-types/euclidv2\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "default = []",
+                "ignored": true
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

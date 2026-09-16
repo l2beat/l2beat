@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "487a8856f1f6023ab3e090b566bc8f81a949ff95db22be467a1984a15cb8523f",
+  "name": "lib.nr",
+  "kind": "program",
+  "lines": 9,
+  "source": "pub mod fixture_builder;\npub mod fixtures;\npub mod utils;\n\npub use fixture_builder::FixtureBuilder;\npub use utils::{\n    assert_array_eq, assert_claimed_length_array_eq, make_fixture, pad_end, pad_end_with,\n    swap_items,\n};",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

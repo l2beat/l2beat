@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a60c79a176f6b6659f98981ecac8b51a97e67a4debc7b98e5195ee92e92dd7b6",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "use rollup_lib::block_root::{\n    block_root_first_rollup, BlockRollupPublicInputs, BlockRootFirstRollupPrivateInputs,\n};\n\nfn main(inputs: BlockRootFirstRollupPrivateInputs) -> pub BlockRollupPublicInputs {\n    block_root_first_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}
