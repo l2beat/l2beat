@@ -1,7 +1,7 @@
 {
   "name": "karak",
-  "timestamp": 1789565719,
-  "configHash": "0x20c9f16c2d6a2a111ce93fdbba3e25901cd7b45a805a9485e3cb4ead33658937",
+  "timestamp": 1789567356,
+  "configHash": "0x8bad24510c03de28bb009a5dae1515f5c5ac9aa8a37a04f2a1a1a13eb130520c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -46,10 +46,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 43056000,
-        "latestOutputIndex": 5979,
-        "nextBlockNumber": 43063200,
-        "nextOutputIndex": 5980,
+        "latestBlockNumber": 43063200,
+        "latestOutputIndex": 5980,
+        "nextBlockNumber": 43070400,
+        "nextOutputIndex": 5981,
         "proposer": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "PROPOSER": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "startingBlockNumber": 0,
@@ -342,12 +342,13 @@
       "name": "L1StandardBridge",
       "address": "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
       "type": "Contract",
+      "template": "opstack/L1StandardBridge_K2_claim",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
         "0x32ea980305b615ec390e8c57663c0734c2ebf70465e6076b26eb8262e7400dba"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Exit-mode L1StandardBridge (v2.3.0, since 2026-09-15). Deposits and the standard L2->L1 withdrawal path are disabled; escrowed ERC20s can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining tokens and ETH to an arbitrary address.",
+      "description": "Exit-mode version of the L1StandardBridge: deposits and the standard withdrawal path are disabled. Escrowed ERC20 tokens can only be claimed with a Merkle proof against a root set by the OptimismPortal Guardian. While claims are paused and after the OptimismPortal's RECOVERY_TIMESTAMP, the Guardian can recover all remaining tokens and ETH to an arbitrary address.",
       "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
@@ -367,13 +368,14 @@
       },
       "fieldMeta": {
         "merkleRoot": {
-          "description": "Merkle root of the ERC20 claim tree set by the Guardian on 2026-09-16."
+          "description": "Merkle root of the ERC20 claim tree set by the Guardian."
         }
       },
       "implementationNames": {
         "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3": "L1ChugSplashProxy",
         "eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A": "L1StandardBridge"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0xBcB3EaB21eCe8864aFcC07f7613bD6D8bB5C28d3",
@@ -384,12 +386,13 @@
       "name": "OptimismPortal",
       "address": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
       "type": "Contract",
+      "template": "opstack/OptimismPortal_K2_claim",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x094c023344df46deb39df74619a815bc1bfced43ad55bb1f9dbb4e9c8718ba65"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Exit-mode OptimismPortal (v2.3.0, since 2026-09-15). Deposits and the standard proven-withdrawal finalization path are disabled; escrowed ETH can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining ETH to an arbitrary address.",
+      "description": "Exit-mode version of the OptimismPortal: deposits and the standard prove/finalize withdrawal path are disabled. Escrowed ETH can only be claimed with a Merkle proof against a root set by the Guardian. While claims are paused and after RECOVERY_TIMESTAMP, the Guardian can recover all remaining ETH to an arbitrary address.",
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
@@ -429,16 +432,17 @@
       },
       "fieldMeta": {
         "merkleRootETH": {
-          "description": "Merkle root of the ETH claim tree set by the Guardian on 2026-09-16."
+          "description": "Merkle root of the ETH claim tree set by the Guardian."
         },
         "RECOVERY_TIMESTAMP": {
-          "description": "Timestamp after which the Guardian can recover all remaining escrowed funds (2027-09-12 00:00:00 UTC)."
+          "description": "Timestamp after which the Guardian can recover all remaining escrowed funds."
         }
       },
       "implementationNames": {
         "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73": "Proxy",
         "eth:0xB1762246367681e5b335968950e8A17b0c56021D": "OptimismPortal"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -863,12 +867,14 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge_K2_claim": "0xec4afb6c17446ac6ae33a476db14f2a0be9b0ac5d3cb7dc1cf38a6a9910f593e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal_K2_claim": "0xd1314e340753c0385b972657a1befc155e3c80bb3ec8dcd61c40922d725ac187",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25990369 },
-  "permissionsConfigHash": "0x537aa594e380ca13beddd03b4d0289cbfb637d80c718a4d921f9a67c47e78d34",
+  "usedBlockNumbers": { "ethereum": 25990506 },
+  "permissionsConfigHash": "0x944e5bfa96a9923b8977ba360d0de057810e18d682a39e08217504eda63b0f9c",
   "permissions": {
     "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": {
       "directlyReceivedPermissions": [
@@ -901,7 +907,8 @@
         {
           "permission": "upgrade",
           "from": "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-          "role": "admin"
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
@@ -938,8 +945,14 @@
         {
           "permission": "interact",
           "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
-          "description": "Sets the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20s (L1StandardBridge), can pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP (2027-09-12), can recover all remaining escrowed funds to an arbitrary address.",
+          "description": "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address.",
           "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "description": "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address.",
+          "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
@@ -985,7 +998,8 @@
         {
           "permission": "upgrade",
           "from": "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-          "role": "admin",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
           "via": [
             { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]

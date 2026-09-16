@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "Exit-mode version of the OptimismPortal: deposits and the standard prove/finalize withdrawal path are disabled. Escrowed ETH can only be claimed with a Merkle proof against a root set by the Guardian. While claims are paused and after RECOVERY_TIMESTAMP, the Guardian can recover all remaining ETH to an arbitrary address.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "guardian": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address."
+        }
+      ]
+    },
+    "GUARDIAN": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address."
+        }
+      ]
+    },
+    "merkleRootETH": {
+      "description": "Merkle root of the ETH claim tree set by the Guardian."
+    },
+    "RECOVERY_TIMESTAMP": {
+      "description": "Timestamp after which the Guardian can recover all remaining escrowed funds."
+    }
+  },
+  "category": "core"
+}

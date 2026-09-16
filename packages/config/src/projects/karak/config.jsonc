@@ -2,45 +2,6 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "karak",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": [
-    "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-    "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
-  ],
-  "names": { "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920": "KarakMultisig" },
-  "overrides": {
-    // Both core proxies were upgraded on 2026-09-15 to implementations that replace the OP Stack
-    // deposit/withdrawal logic with a Merkle-claim exit mechanism (see diffHistory). They are not
-    // standard OP Stack contracts any more, so they intentionally carry no opstack template.
-    "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3": {
-      "description": "Exit-mode L1StandardBridge (v2.3.0, since 2026-09-15). Deposits and the standard L2->L1 withdrawal path are disabled; escrowed ERC20s can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining tokens and ETH to an arbitrary address.",
-      "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
-      "fields": {
-        "merkleRoot": {
-          "description": "Merkle root of the ERC20 claim tree set by the Guardian on 2026-09-16."
-        }
-      }
-    },
-    "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73": {
-      "description": "Exit-mode OptimismPortal (v2.3.0, since 2026-09-15). Deposits and the standard proven-withdrawal finalization path are disabled; escrowed ETH can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining ETH to an arbitrary address.",
-      "ignoreMethods": ["isOutputFinalized", "balance"],
-      "ignoreInWatchMode": ["params"],
-      "fields": {
-        "guardian": {
-          "handler": { "type": "call", "method": "guardian", "args": [] },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Sets the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20s (L1StandardBridge), can pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP (2027-09-12), can recover all remaining escrowed funds to an arbitrary address."
-            }
-          ]
-        },
-        "merkleRootETH": {
-          "description": "Merkle root of the ETH claim tree set by the Guardian on 2026-09-16."
-        },
-        "RECOVERY_TIMESTAMP": {
-          "description": "Timestamp after which the Guardian can recover all remaining escrowed funds (2027-09-12 00:00:00 UTC)."
-        }
-      }
-    }
-  }
+  "initialAddresses": ["eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"],
+  "names": { "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920": "KarakMultisig" }
 }
