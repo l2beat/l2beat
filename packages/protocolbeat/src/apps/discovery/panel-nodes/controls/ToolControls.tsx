@@ -53,7 +53,7 @@ export function ToolControls() {
           </span>
           <span
             aria-hidden
-            className="absolute right-1 bottom-0.5 font-medium text-2xs text-coffee-400 leading-none"
+            className="absolute right-1 bottom-0.5 font-medium text-[8px] text-coffee-400 leading-none"
           >
             {shortcut}
           </span>
