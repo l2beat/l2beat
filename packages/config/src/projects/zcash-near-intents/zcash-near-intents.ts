@@ -60,6 +60,7 @@ export const zcashNearIntents: BaseProject = {
   },
   privacyInfo: {
     tokens: [],
+    zkCatalogId: ProjectId('zcash'),
     anonymitySet: {
       type: 'not-applicable',
       description:
