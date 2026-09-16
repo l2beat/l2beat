@@ -13,25 +13,25 @@ const DOCS = 'https://docs.near-intents.org/'
 export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: "Hides which funds leaving Ethereum return as which funds, from inside Zcash's shielded pool. Everything on Ethereum and NEAR is public.",
+    text: "Hides which funds leaving Ethereum come back as which, by passing through Zcash's shielded pool. Everything on Ethereum and NEAR is public.",
   },
   cells: {
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Both legs are public up to the edge of the shielded pool: the Ethereum address, asset and amount that fund a deposit, the NEAR ledger entries that credit, swap and withdraw them, and the amount that enters or leaves the pool. Every withdrawal on NEAR names the Zcash address it pays, and the bridge builds its shielded payouts so that anyone can decrypt the paid address and amount. Nothing ties the ZEC that went in to the ZEC that comes out.',
+        'Nothing ties the ZEC that enters the shielded pool to the ZEC that leaves it. Everything up to the pool edge is public: the Ethereum deposit, the NEAR ledger entries that credit, swap and withdraw it, and the Zcash address and amount of every payout, which the bridge encrypts so that anyone can decrypt them.',
       advice:
-        'Receive the ZEC straight into a shielded address, as Zodl does with a fresh address per swap, and pay the return leg from the pool. The web app pays transparent addresses only, which adds a public shielding step.',
+        'Receive the ZEC straight into a fresh shielded address, as Zodl does per swap, and pay the return leg from the pool. The web app pays transparent addresses only, which adds a public shielding step.',
       interior: {
         sender: 'private',
         recipient: {
           verdict: 'atRisk',
-          note: 'Every payout note to Zcash is decryptable by anyone, so a reused receiving address ties payouts together.',
+          note: 'Payout notes are decryptable by anyone, so a reused address ties payouts together.',
         },
         amount: 'private',
         asset: {
           verdict: 'exposed',
-          note: 'Only ZEC exists inside the pool and the assets swapped from and back into are public on NEAR.',
+          note: 'Only ZEC exists inside the pool; the assets swapped from and to are public on NEAR.',
         },
         linkage: 'private',
       },
@@ -64,7 +64,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposure:
-        'The amount paid into the Zcash private pool and the amount later sent to a bridge deposit address are both public with their timing, and a round trip of about the same size within hours is a classic linking heuristic. Bridge deposit addresses are fresh per quote but are spent together with the bridge change address, so every exit is attributable to NEAR Intents.',
+        'The amount paid into the pool and the amount later sent to a bridge deposit address are both public with their timing, so a round trip of similar size within hours pairs them. Deposit addresses are fresh per quote but spent together with the bridge change address, so every exit is attributable to NEAR Intents.',
       advice:
         'Hold the ZEC in the pool for days, split or merge it with other shielded funds, and swap back amounts that match no payout.',
       interior: {
@@ -74,7 +74,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Round-trip amounts and timing across the pool edge pair a payout with a later deposit.',
+          note: 'Round-trip amount and timing across the pool edge pair a payout with a later deposit.',
         },
       },
       sources: [
@@ -96,9 +96,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposure:
-        'Zodl syncs through public lightwalletd servers, which see which full transactions the wallet fetches and which it broadcasts, naming the payout and the later exit of the same wallet. Tor in Zodl covers these calls and the swap requests but is off by default and does not cover block sync. Ethereum RPCs and NEAR relayers see only what is public anyway.',
+        'Zodl syncs through public lightwalletd servers, which see which transactions the wallet fetches and broadcasts, and so the payout and the later exit of the same wallet. Tor covers these calls and the swap requests but is off by default and does not cover block sync. Ethereum RPCs and NEAR relayers see only what is public anyway.',
       advice:
-        'Turn on Tor in Zodl before the first swap, pin one server or your own lightwalletd in manual mode, and use a separate wallet account for each round trip.',
+        'Turn on Tor in Zodl before the first swap, pin one server or your own lightwalletd in manual mode, and use a separate wallet account per round trip.',
       interior: {
         sender: 'private',
         recipient: 'atRisk',
@@ -106,7 +106,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'The lightwalletd server sees the wallet fetch the payout transaction and later broadcast the exit.',
+          note: 'The lightwalletd server sees the wallet fetch the payout and later broadcast the exit.',
         },
       },
       sources: [
@@ -135,9 +135,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'The Operator runs the 1Click API, the Ethereum custody and the screening, so it holds both legs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC. It screens every address with KYT vendors, can lock any account in the Verifier and can hold bridged funds. It has no key into the shielded pool, so joining the two legs still needs the IP, the session or timing.',
+        'The Operator runs the 1Click API, the Ethereum custody and the screening, so both legs sit in its logs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC. It has no key into the shielded pool, so joining the legs still needs IP, session or timing. It screens every address with KYT vendors, can lock any account and can hold bridged funds.',
       advice:
-        'Use Tor for both legs, do them from different sessions days apart, and keep the amounts small and apart.',
+        'Use Tor for both legs, and do them from different sessions days apart with amounts that do not match.',
       interior: {
         sender: 'private',
         recipient: {
@@ -148,7 +148,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'IP address, partner key and timing of both legs sit in one operator’s logs.',
+          note: "IP address, partner key and timing of both legs sit in one operator's logs.",
         },
       },
       sources: [
@@ -180,9 +180,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposure:
-        "Every payout address is public on NEAR and in the bridge's decryptable payout note, and all of an account's rotated addresses share one incoming viewing key on the Pallas curve. A quantum computer recovers that key from any one address and then decrypts every note the account ever received, including the change notes of its exits, which joins both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
+        "All of an account's rotated addresses share one incoming viewing key on the Pallas curve, and every payout address is public on NEAR. A quantum computer recovers that key from any one address and decrypts every note the account ever received, including the change notes of its exits, which joins both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
       advice:
-        'Use a separate Zodl account per round trip, so that one recovered key exposes only that trip.',
+        'Use a separate Zodl account per round trip, so one recovered key exposes only that trip.',
       interior: {
         sender: {
           verdict: 'atRisk',
