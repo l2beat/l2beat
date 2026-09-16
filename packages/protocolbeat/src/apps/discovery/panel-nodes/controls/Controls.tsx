@@ -3,6 +3,7 @@ import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { ControlGroup } from './ControlGroup'
 import { GroupControls } from './GroupControls'
+import { HandToolButton } from './HandToolButton'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
 import { LayoutLibrary } from './LayoutLibrary'
@@ -18,6 +19,9 @@ export function Controls() {
     <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
       <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
         <AlignControls />
+        <ControlGroup>
+          <HandToolButton />
+        </ControlGroup>
         <ControlGroup>
           <UndoButton />
           <RedoButton />

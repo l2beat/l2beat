@@ -3,6 +3,7 @@ import {
   BACKSPACE_KEY,
   CTRL_KEY,
   DELETE_KEY,
+  HAND_TOOL_KEY,
   SHIFT_KEY,
   SPACE_KEY,
 } from '../utils/constants'
@@ -19,6 +20,9 @@ export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
   if (event.key === DELETE_KEY || event.key === BACKSPACE_KEY) {
     return hideSelected(state)
   }
+  if (isHandToolToggle(event)) {
+    return { tool: state.tool === 'hand' ? 'select' : 'hand' }
+  }
   if (event.key === SHIFT_KEY) {
     // When shift is pressed we snap dragged nodes to an axis
     return updateNodePositions(state, {
@@ -26,4 +30,14 @@ export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
     })
   }
   return state
+}
+
+function isHandToolToggle(event: KeyboardEvent): boolean {
+  return (
+    event.key.toLowerCase() === HAND_TOOL_KEY &&
+    !event.repeat &&
+    !event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey
+  )
 }

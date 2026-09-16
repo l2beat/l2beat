@@ -16,7 +16,7 @@ export function onMouseDown(
   container: HTMLElement,
 ): Partial<State> {
   if (event.button === CLICKED_LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
-    if (state.input.spacePressed) {
+    if (state.input.spacePressed || state.tool === 'hand') {
       const [x, y] = [event.clientX, event.clientY]
       return {
         input: {
