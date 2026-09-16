@@ -4,9 +4,15 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
-import { getInteropTokenRelations } from '~/server/features/layer2s/interop/token/getInteropTokenRelations'
-import { getInteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import {
+  getInteropTokenOnchainDeployments,
+  type InteropTokenOnchainDeployment,
+} from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
+import { getInteropTokenPairStats } from '~/server/features/layer2s/interop/token/getInteropTokenPairStats'
+import {
+  getInteropTokenRelationsGraph,
+  type InteropTokenRelations,
+} from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -156,8 +162,18 @@ async function getCachedData({
   }
 }
 
-async function getDeploymentsAndRelations(tokenId: string, chainIds: string[]) {
-  const deployments = await getInteropTokenOnchainDeployments(tokenId, chainIds)
-  const relations = await getInteropTokenRelations(tokenId, deployments)
-  return { deployments, relations }
+async function getDeploymentsAndRelations(
+  tokenId: string,
+  chainIds: string[],
+): Promise<{
+  deployments: InteropTokenOnchainDeployment[]
+  relations: InteropTokenRelations
+}> {
+  const { deployments, routes } = await getInteropTokenOnchainDeployments(
+    tokenId,
+    chainIds,
+  )
+  const pairStats =
+    deployments.length > 0 ? await getInteropTokenPairStats(tokenId) : undefined
+  return { deployments, relations: { routes, pairStats } }
 }

@@ -134,14 +134,16 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
-  MintingPluginRecord,
   TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
   TokenRelationRoute,
   TokenRelationUpdateable,
 } from './repositories/TokenRelationRepository'
-export { normalizeTokenRelation } from './repositories/TokenRelationRepository'
+export {
+  isMintedAtEndpoint,
+  normalizeTokenRelation,
+} from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,
