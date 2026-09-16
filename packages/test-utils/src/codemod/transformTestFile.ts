@@ -517,6 +517,12 @@ function rewriteAsymmetricMatcher(
             `arrayContaining([${item.getText()}])`,
           ),
         )
+        context.reviews.push(
+          finding(
+            nameNode,
+            'chose arrayContaining, switch to stringContaining if the subject is a string',
+          ),
+        )
       }
       return
     case 'anything':

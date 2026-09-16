@@ -250,6 +250,16 @@ describe(transformTestFile.name, () => {
       )
     })
 
+    it('flags expect.includes, which also stands in for a substring', () => {
+      const { reviews } = transformTestFile(
+        'a.ts',
+        matcher("toEqual(expect.includes('boom'))"),
+      )
+
+      expect(reviews).toHaveLength(1)
+      expect(reviews[0]?.note).toContain('stringContaining')
+    })
+
     it('does not touch methods that merely look like matchers', () => {
       const output = run(`
         import { expect } from 'earl'
