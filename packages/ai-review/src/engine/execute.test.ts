@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { execute } from './execute.js'
 
 const options = { cwd: process.cwd(), stdin: '', timeoutMs: 10_000 }
@@ -13,7 +13,7 @@ describe(execute.name, () => {
       ],
       options,
     )
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       stdout: 'out',
       stderr: 'err',
       timedOut: false,
@@ -30,14 +30,14 @@ describe(execute.name, () => {
         stdin: 'hello',
       },
     )
-    expect(result.stdout).toEqual('hello')
-    expect(result.code).toEqual(0)
+    expect(result.stdout).toStrictEqual('hello')
+    expect(result.code).toStrictEqual(0)
   })
 
   it('settles on a spawn failure', async () => {
     const result = await execute('this-binary-does-not-exist', [], options)
-    expect(result.code).toEqual(null)
-    expect(result.stderr).toInclude('ENOENT')
+    expect(result.code).toStrictEqual(null)
+    expect(result.stderr).toContain('ENOENT')
   })
 
   it('kills the child on timeout', async () => {
@@ -49,12 +49,11 @@ describe(execute.name, () => {
         timeoutMs: 200,
       },
     )
-    expect(result.timedOut).toEqual(true)
-    expect(result.code).toEqual(null)
+    expect(result.timedOut).toStrictEqual(true)
+    expect(result.code).toStrictEqual(null)
   })
 
-  it('resolves even when a detached grandchild keeps the pipes open', async function () {
-    this.timeout(5000)
+  it('resolves even when a detached grandchild keeps the pipes open', async () => {
     const script = `
       const { spawn } = require('node:child_process')
       spawn('sleep', ['30'], { detached: true, stdio: 'inherit' }).unref()
@@ -65,8 +64,8 @@ describe(execute.name, () => {
       ...options,
       timeoutMs: 200,
     })
-    expect(result.timedOut).toEqual(true)
+    expect(result.timedOut).toStrictEqual(true)
     // Must settle on the kill grace, not on the grandchild's 30s exit.
     expect(Date.now() - start).toBeLessThan(4000)
-  })
+  }, 5000)
 })

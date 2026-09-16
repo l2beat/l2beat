@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Finding } from '../post/schema.js'
 import { rankFindings, score } from './rankFindings.js'
 
@@ -33,12 +33,12 @@ describe(rankFindings.name, () => {
         line: 3,
       }),
     ])
-    expect(ranked.map((f) => f.claim)).toEqual([
+    expect(ranked.map((f) => f.claim)).toStrictEqual([
       'major-mid',
       'blocker-low',
       'minor-high',
     ])
-    expect(score(ranked[0])).toEqual(1.4)
+    expect(score(ranked[0])).toStrictEqual(1.4)
   })
 
   it('caps at 5', () => {
@@ -52,7 +52,10 @@ describe(rankFindings.name, () => {
       finding({ claim: 'strong', confidence: 0.9 }),
       finding({ claim: 'other-category', category: 'perf' }),
     ])
-    expect(ranked.map((f) => f.claim)).toEqual(['strong', 'other-category'])
+    expect(ranked.map((f) => f.claim)).toStrictEqual([
+      'strong',
+      'other-category',
+    ])
   })
 
   it('drops findings without evidence or fix sketch', () => {
@@ -61,6 +64,6 @@ describe(rankFindings.name, () => {
       finding({ fix_sketch: '', line: 2 }),
       finding({ line: 3 }),
     ])
-    expect(ranked.map((f) => f.location?.range?.start)).toEqual([3])
+    expect(ranked.map((f) => f.location?.range?.start)).toStrictEqual([3])
   })
 })

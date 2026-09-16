@@ -1,11 +1,11 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { commentEvent, pullRequest } from '../test/fixtures/comment.js'
 import { evaluateTrigger, isCommand } from './evaluateTrigger.js'
 import type { GateSkipReason } from './types.js'
 
 describe(evaluateTrigger.name, () => {
   it('runs for an org member on an open, non-draft, non-fork, non-bot PR', () => {
-    expect(evaluateTrigger(commentEvent(), pullRequest())).toEqual({
+    expect(evaluateTrigger(commentEvent(), pullRequest())).toStrictEqual({
       run: true,
       prNumber: 42,
       headSha: 'aaa111',
@@ -15,7 +15,7 @@ describe(evaluateTrigger.name, () => {
 
   it('accepts OWNER association', () => {
     const event = commentEvent({ author_association: 'OWNER' })
-    expect(evaluateTrigger(event, pullRequest()).run).toEqual(true)
+    expect(evaluateTrigger(event, pullRequest()).run).toStrictEqual(true)
   })
 
   const skips: [string, Parameters<typeof evaluateTrigger>, GateSkipReason][] =
@@ -111,28 +111,28 @@ describe(evaluateTrigger.name, () => {
 
   for (const [name, args, reason] of skips) {
     it(`skips: ${name}`, () => {
-      expect(evaluateTrigger(...args)).toEqual({ run: false, reason })
+      expect(evaluateTrigger(...args)).toStrictEqual({ run: false, reason })
     })
   }
 
   it('membership is checked before PR properties', () => {
     const event = commentEvent({ author_association: 'NONE' })
     const result = evaluateTrigger(event, pullRequest({ draft: true }))
-    expect(result).toEqual({ run: false, reason: 'not-org-member' })
+    expect(result).toStrictEqual({ run: false, reason: 'not-org-member' })
   })
 })
 
 describe(isCommand.name, () => {
   it('matches the bare command and command with arguments', () => {
-    expect(isCommand('/ai-review')).toEqual(true)
-    expect(isCommand('  /ai-review  \n')).toEqual(true)
-    expect(isCommand('/ai-review focus on tests')).toEqual(true)
-    expect(isCommand('/ai-review\nmore context')).toEqual(true)
+    expect(isCommand('/ai-review')).toStrictEqual(true)
+    expect(isCommand('  /ai-review  \n')).toStrictEqual(true)
+    expect(isCommand('/ai-review focus on tests')).toStrictEqual(true)
+    expect(isCommand('/ai-review\nmore context')).toStrictEqual(true)
   })
 
   it('rejects prefixes and embedded mentions', () => {
-    expect(isCommand('/ai-reviewer')).toEqual(false)
-    expect(isCommand('run /ai-review')).toEqual(false)
-    expect(isCommand('')).toEqual(false)
+    expect(isCommand('/ai-reviewer')).toStrictEqual(false)
+    expect(isCommand('run /ai-review')).toStrictEqual(false)
+    expect(isCommand('')).toStrictEqual(false)
   })
 })

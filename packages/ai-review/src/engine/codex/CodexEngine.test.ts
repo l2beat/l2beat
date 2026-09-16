@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { Execute, ExecuteResult } from '../execute.js'
 import { CodexEngine } from './CodexEngine.js'
 
@@ -36,16 +36,16 @@ describe(CodexEngine.name, () => {
   it('parses a recorded transcript into output, usage and commands', async () => {
     const { engine, calls } = engineWith({ stdout: fixture('with-command') })
     const result = await engine.run(request)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       ok: true,
       output: { answer: 'ok', n: 2 },
       usage: { input: 32677, cachedInput: 15104, output: 107 },
       commands: ["/bin/zsh -lc 'echo probe'"],
     })
     expect(calls).toHaveLength(1)
-    expect(calls[0][0]).toEqual('codex')
-    expect(calls[0][1]).toInclude('--model', 'm', '-')
-    expect(calls[0][2]).toEqual({
+    expect(calls[0][0]).toStrictEqual('codex')
+    expect(calls[0][1]).toEqual(expect.arrayContaining(['--model', 'm', '-']))
+    expect(calls[0][2]).toStrictEqual({
       cwd: '/repo',
       stdin: 'review this',
       timeoutMs: 5_000,
@@ -59,7 +59,7 @@ describe(CodexEngine.name, () => {
       code: null,
     })
     const result = await engine.run(request)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       ok: false,
       reason: 'timeout',
       detail: 'killed after 5000ms',
@@ -70,7 +70,7 @@ describe(CodexEngine.name, () => {
   it('reports a non-zero exit as engine-error with stderr tail', async () => {
     const { engine } = engineWith({ code: 1, stderr: 'boom' })
     const result = await engine.run(request)
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       ok: false,
       reason: 'engine-error',
       detail: 'boom',
@@ -80,7 +80,7 @@ describe(CodexEngine.name, () => {
 
   it('rejects a missing or non-JSON final message', async () => {
     const none = await engineWith({}).engine.run(request)
-    expect(none).toEqual({
+    expect(none).toStrictEqual({
       ok: false,
       reason: 'invalid-output',
       detail: 'no final message',
@@ -90,7 +90,7 @@ describe(CodexEngine.name, () => {
       stdout:
         '{"type":"item.completed","item":{"type":"agent_message","text":"nope"}}',
     }).engine.run(request)
-    expect(garbage).toEqual({
+    expect(garbage).toStrictEqual({
       ok: false,
       reason: 'invalid-output',
       detail: 'nope',

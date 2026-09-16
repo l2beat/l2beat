@@ -1,7 +1,7 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "types": ["node", "mocha"],
+    "types": ["node"],
     "lib": ["ESNext"],
     "target": "ESNext",
     "module": "NodeNext",
@@ -11,5 +11,5 @@
     "outDir": "build",
     "rootDir": "./src"
   },
-  "exclude": ["build", "node_modules"]
+  "exclude": ["build", "node_modules", "vitest.config.ts"]
 }

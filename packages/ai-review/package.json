@@ -10,7 +10,7 @@
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "gate": "tsx src/cli/gate.ts",
     "review": "tsx src/cli/review.ts",
@@ -20,6 +20,7 @@
     "@l2beat/validate": "workspace:*"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*"
+    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/vitest-config": "workspace:*"
   }
 }
