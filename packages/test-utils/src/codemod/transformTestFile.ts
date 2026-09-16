@@ -39,9 +39,11 @@ export function transformTestFile(
     reviews: [],
     needed: new Set<string>(),
     mockVariables: collectMockVariables(file),
+    callHistory: new Set<string>(),
     shadowed: collectShadowedNames(file),
     usesCustomMatchers: false,
   }
+  context.callHistory = collectCallHistoryVariables(file, context)
 
   file.forEachDescendant((node) => {
     if (Node.isIdentifier(node)) {
@@ -53,6 +55,7 @@ export function transformTestFile(
       }
     } else if (Node.isPropertyAccessExpression(node)) {
       rewriteRecordedCalls(node, context)
+      rewriteHistoryArgs(node, context)
     }
   })
 
@@ -80,6 +83,8 @@ interface Context {
   reviews: Finding[]
   needed: Set<string>
   mockVariables: Set<string>
+  /** Names that hold a mock's call history, as `const calls = mock.calls`. */
+  callHistory: Set<string>
   /** Names the file declares itself, which vitest must not be imported over. */
   shadowed: Set<string>
   usesCustomMatchers: boolean
@@ -163,8 +168,63 @@ function rewriteRecordedCalls(
   }
   context.edits.push(replace(node.getNameNode(), 'mock.calls'))
   if (args) {
-    context.edits.push(span(args.getExpression().getEnd(), args.getEnd(), ''))
+    context.edits.push(
+      span(args.getExpression().getEnd(), args.getEnd(), optionality(args)),
+    )
   }
+}
+
+/**
+ * The same `.args` hop, reached through a local: `const calls = mock.calls`
+ * followed by `calls[0].args`. Splitting the history off into a variable is
+ * common enough that leaving these behind would strand whole test files.
+ */
+function rewriteHistoryArgs(
+  node: PropertyAccessExpression,
+  context: Context,
+): void {
+  if (node.getName() !== 'args') {
+    return
+  }
+  const indexed = node.getExpression()
+  const target = Node.isNonNullExpression(indexed)
+    ? indexed.getExpression()
+    : indexed
+  const root = Node.isElementAccessExpression(target)
+    ? rootIdentifier(target)
+    : undefined
+  if (root === undefined || !context.callHistory.has(root)) {
+    return
+  }
+  context.edits.push(span(indexed.getEnd(), node.getEnd(), optionality(node)))
+}
+
+/** Dropping `?.args` outright would drop the `?` with it, and under
+ * `noUncheckedIndexedAccess` the indexed read really can be undefined. */
+function optionality(access: PropertyAccessExpression): string {
+  return access.getQuestionDotTokenNode() ? '?.' : ''
+}
+
+function collectCallHistoryVariables(
+  file: SourceFile,
+  context: Context,
+): Set<string> {
+  const names = new Set<string>()
+  file.forEachDescendant((node) => {
+    if (!Node.isVariableDeclaration(node)) {
+      return
+    }
+    const initializer = node.getInitializer()
+    if (
+      initializer &&
+      Node.isPropertyAccessExpression(initializer) &&
+      initializer.getName() === 'calls' &&
+      isMockReceiver(initializer.getExpression(), context)
+    ) {
+      names.add(node.getName())
+    }
+  })
+  return names
 }
 
 /** Matches the `.calls[i].args`, `.calls[i]?.args` and `.calls[i]!.args` that

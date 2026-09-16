@@ -269,6 +269,16 @@ describe(transformTestFile.name, () => {
       )
     })
 
+    it('drops the args hop when the history goes through a local', () => {
+      const output = run(`
+        import { expect, mockFn } from 'earl'
+        const calls = (app.get as ReturnType<typeof mockFn>).calls
+        expect(calls[calls.length - 1]?.args[1]).toEqual(1)
+      `)
+
+      expect(output).toContain('calls[calls.length - 1]?.[1]')
+    })
+
     it('leaves calls on something that is not a mock', () => {
       const output = run(`
         import { expect } from 'earl'
