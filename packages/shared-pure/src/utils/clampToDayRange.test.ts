@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { UnixTime } from '../types/UnixTime.js'
 import { clampRangeToDay } from './clampToDayRange.js'

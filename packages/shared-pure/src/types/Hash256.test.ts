@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { Hash256 } from './Hash256.js'
 
@@ -7,7 +7,7 @@ describe(Hash256.name, () => {
     const hash = Hash256(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd12345678abcdabcd12345678',
     )
-    expect(hash).toBeA(String)
+    expect(hash).toBeTypeOf('string')
   })
 
   it('does not accept mixed case hashes', () => {
@@ -15,10 +15,16 @@ describe(Hash256.name, () => {
       Hash256(
         '0xabcdabcd12345678ABCDABCD12345678ABCDABCD12345678abcdabcd12345678',
       ),
-    ).toThrow(TypeError, 'Invalid Hash256')
+    ).toThrow(TypeError)
+    expect(() =>
+      Hash256(
+        '0xabcdabcd12345678ABCDABCD12345678ABCDABCD12345678abcdabcd12345678',
+      ),
+    ).toThrow('Invalid Hash256')
   })
 
   it('does not accept invalid strings', () => {
-    expect(() => Hash256('foo')).toThrow(TypeError, 'Invalid Hash256')
+    expect(() => Hash256('foo')).toThrow(TypeError)
+    expect(() => Hash256('foo')).toThrow('Invalid Hash256')
   })
 })

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { slidingWindow } from './slidingWindow.js'
 
 describe(slidingWindow.name, () => {

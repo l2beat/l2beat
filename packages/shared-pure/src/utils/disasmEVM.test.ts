@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { Bytes } from '../types/Bytes.js'
 import { disasmEVM, formatEVMOpcodes } from './disasmEVM.js'
 
@@ -8031,7 +8031,7 @@ describe(disasmEVM.name, () => {
 330b: PUSH25 0xa19599e20655b948fed5f38af58e64736f6c634300081e0033`
 
     const opcodes = disasmEVM(bytecode)
-    expect(opcodes).not.toBeEmpty()
+    expect(opcodes).not.toHaveLength(0)
     expect(formatEVMOpcodes(opcodes)).toEqual(expected)
   })
 })

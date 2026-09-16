@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { UnixTime } from './UnixTime.js'
 
@@ -12,24 +12,18 @@ describe(UnixTime.name, () => {
   })
 
   it('cannot be constructed from milliseconds', () => {
-    expect(() => UnixTime(Date.now())).toThrow(
-      TypeError,
-      'timestamp too large!',
-    )
+    expect(() => UnixTime(Date.now())).toThrow(TypeError)
+    expect(() => UnixTime(Date.now())).toThrow('timestamp too large!')
   })
 
   it('cannot be constructed from non-integers', () => {
-    expect(() => UnixTime(6.9)).toThrow(
-      TypeError,
-      'timestamp must be an integer',
-    )
+    expect(() => UnixTime(6.9)).toThrow(TypeError)
+    expect(() => UnixTime(6.9)).toThrow('timestamp must be an integer')
   })
 
   it('cannot be constructed from non-integers', () => {
-    expect(() => UnixTime(6.9)).toThrow(
-      TypeError,
-      'timestamp must be an integer',
-    )
+    expect(() => UnixTime(6.9)).toThrow(TypeError)
+    expect(() => UnixTime(6.9)).toThrow('timestamp must be an integer')
   })
 
   describe('maths', () => {

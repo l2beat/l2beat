@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { parseJsonc } from './parseJsonc.js'
 
 function expectJsonParseParity(input: string) {

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { formatBytes } from './formatBytes.js'
 
 describe(formatBytes.name, () => {

@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { formatAsAsciiTable } from './formatAsAsciiTable.js'
 

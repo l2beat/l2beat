@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { ChainSpecificAddress } from './ChainSpecificAddress.js'
 import { EthereumAddress } from './EthereumAddress.js'
@@ -9,21 +9,23 @@ describe(ChainSpecificAddress.name, () => {
       const address = ChainSpecificAddress(
         'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
       )
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
     })
 
     it('accepts addresses with checksum', () => {
       const address = ChainSpecificAddress(
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
     })
 
     it('checks the checksum', () => {
       expect(() =>
         ChainSpecificAddress('eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD'),
+      ).toThrow(TypeError)
+      expect(() =>
+        ChainSpecificAddress('eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD'),
       ).toThrow(
-        TypeError,
         'Invalid ChainSpecificAddress: eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
       )
     })
@@ -31,19 +33,21 @@ describe(ChainSpecificAddress.name, () => {
     it('does not accept correct addresses but without a chain', () => {
       expect(() =>
         ChainSpecificAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'),
+      ).toThrow(TypeError)
+      expect(() =>
+        ChainSpecificAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'),
       ).toThrow(
-        TypeError,
         'Incorrect ChainSpecificAddress format: 0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
     })
 
     it('does not accept invalid strings', () => {
+      expect(() => ChainSpecificAddress('foo')).toThrow(TypeError)
       expect(() => ChainSpecificAddress('foo')).toThrow(
-        TypeError,
         'Incorrect ChainSpecificAddress format: foo',
       )
+      expect(() => ChainSpecificAddress('kk:foo')).toThrow(TypeError)
       expect(() => ChainSpecificAddress('kk:foo')).toThrow(
-        TypeError,
         'Invalid ChainSpecificAddress: kk:foo',
       )
     })
@@ -61,13 +65,13 @@ describe(ChainSpecificAddress.name, () => {
   describe(ChainSpecificAddress.random.name, () => {
     it('creates a random address', () => {
       const address = ChainSpecificAddress.random()
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
       expect(ChainSpecificAddress.check(address)).toEqual(true)
     })
 
     it('creates a random address on different chain', () => {
       const address = ChainSpecificAddress.random('arb1')
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
       expect(address.startsWith('arb1:')).toEqual(true)
       expect(ChainSpecificAddress.check(address)).toEqual(true)
     })
@@ -87,7 +91,7 @@ describe(ChainSpecificAddress.name, () => {
         'eth',
         '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
       expect(ChainSpecificAddress.check(address)).toEqual(true)
       expect(address.toString()).toEqual(
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
@@ -99,7 +103,7 @@ describe(ChainSpecificAddress.name, () => {
         'base',
         '0x33D66941465ac776C38096cb1bc496C673aE7390',
       )
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
       expect(ChainSpecificAddress.check(address)).toEqual(true)
       expect(address.toString()).toEqual(
         'base:0x33D66941465ac776C38096cb1bc496C673aE7390',
@@ -113,7 +117,7 @@ describe(ChainSpecificAddress.name, () => {
         'ethereum',
         '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
-      expect(address).toBeA(String)
+      expect(address).toBeTypeOf('string')
       expect(ChainSpecificAddress.check(address)).toEqual(true)
       expect(address.toString()).toEqual(
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
@@ -126,7 +130,13 @@ describe(ChainSpecificAddress.name, () => {
           'unknown-chain',
           '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
         ),
-      ).toThrow(TypeError, 'Unknown long chain name: unknown-chain')
+      ).toThrow(TypeError)
+      expect(() =>
+        ChainSpecificAddress.fromLong(
+          'unknown-chain',
+          '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        ),
+      ).toThrow('Unknown long chain name: unknown-chain')
     })
   })
 

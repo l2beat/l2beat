@@ -1,4 +1,4 @@
-import { expect, mockFn } from 'earl'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { UnixTime } from '../types/UnixTime.js'
 import { InMemoryCache } from './InMemoryCache.js'
 
@@ -8,7 +8,7 @@ describe(InMemoryCache.name, () => {
       const now = UnixTime.now()
       const cache = new InMemoryCache({})
       cache._set(['key'], { result: 'test', timestamp: now })
-      const fallback = mockFn().resolvesTo('test2')
+      const fallback = vi.fn().mockResolvedValue('test2')
 
       const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
@@ -21,7 +21,7 @@ describe(InMemoryCache.name, () => {
       const now = UnixTime.now()
       const cache = new InMemoryCache({})
       cache._set(['key'], { result: 'test', timestamp: now - 10000 })
-      const fallback = mockFn().resolvesTo('test2')
+      const fallback = vi.fn().mockResolvedValue('test2')
 
       const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
@@ -36,7 +36,7 @@ describe(InMemoryCache.name, () => {
 
     it('should not run fallback three times if three getData calls are ongoing', async () => {
       const cache = new InMemoryCache({})
-      const fallback = mockFn().resolvesTo('test2')
+      const fallback = vi.fn().mockResolvedValue('test2')
 
       const [res1, res2, res3] = await Promise.all([
         cache.get({ key: ['key'], ttl: 1000 }, fallback),
@@ -83,7 +83,7 @@ describe(InMemoryCache.name, () => {
       first.resolve('old')
       expect(await firstRequest).toEqual('old')
 
-      const fallback = mockFn().resolvesTo('unexpected')
+      const fallback = vi.fn().mockResolvedValue('unexpected')
       const result = await cache.get(cacheOptions, fallback)
 
       expect(result).toEqual('new')
@@ -95,7 +95,7 @@ describe(InMemoryCache.name, () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
-        const fallback = mockFn().resolvesTo('fresh')
+        const fallback = vi.fn().mockResolvedValue('fresh')
 
         // First call should return stale data and trigger revalidation
         const result1 = await cache.get(
@@ -123,7 +123,7 @@ describe(InMemoryCache.name, () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
         cache._set(['key'], { result: 'stale', timestamp: now - 7000 })
-        const fallback = mockFn().resolvesTo('fresh')
+        const fallback = vi.fn().mockResolvedValue('fresh')
 
         const result = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
@@ -138,7 +138,7 @@ describe(InMemoryCache.name, () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
-        const fallback = mockFn().resolvesTo('fresh')
+        const fallback = vi.fn().mockResolvedValue('fresh')
 
         const [result1, result2, result3] = await Promise.all([
           cache.get(
@@ -213,14 +213,16 @@ describe(InMemoryCache.name, () => {
       it('should handle failed background revalidation gracefully', async () => {
         const now = UnixTime.now()
         const logger = {
-          info: mockFn().returns(undefined),
-          warn: mockFn().returns(undefined),
-          debug: mockFn().returns(undefined),
+          info: vi.fn().mockReturnValue(undefined),
+          warn: vi.fn().mockReturnValue(undefined),
+          debug: vi.fn().mockReturnValue(undefined),
           for: () => undefined as never,
         }
         const cache = new InMemoryCache({ logger })
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
-        const fallback = mockFn().rejectsWith(new Error('Revalidation failed'))
+        const fallback = vi
+          .fn()
+          .mockRejectedValue(new Error('Revalidation failed'))
 
         // First call should return stale data and trigger revalidation
         const result1 = await cache.get(
@@ -234,13 +236,12 @@ describe(InMemoryCache.name, () => {
         // Wait for background revalidation to fail
         await new Promise((resolve) => setTimeout(resolve, 10))
 
-        expect(logger.warn).toHaveBeenCalledTimes(1)
-
-        const [message, parameters] = logger.warn.calls[0]?.args ?? []
-        expect(message).toEqual('Cache revalidation failed')
-        expect((parameters as { key: string }).key).toEqual('3:key')
-        expect((parameters as { error: Error }).error.message).toEqual(
-          'Revalidation failed',
+        expect(logger.warn).toHaveBeenCalledExactlyOnceWith(
+          'Cache revalidation failed',
+          expect.objectContaining({
+            key: '3:key',
+            error: expect.objectContaining({ message: 'Revalidation failed' }),
+          }),
         )
 
         // Next request should still get stale data since revalidation failed
@@ -284,7 +285,7 @@ describe(InMemoryCache.name, () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
-        const fallback = mockFn().resolvesTo(undefined)
+        const fallback = vi.fn().mockResolvedValue(undefined)
 
         const result1 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
@@ -331,9 +332,12 @@ describe(InMemoryCache.name, () => {
         // type forbids but cannot prevent.
         const tampered = ['a', 'b'] as unknown as string
 
-        await expect(
-          cache.get({ key: ['layer2s', tampered], ttl: 1000 }, async () => 'x'),
-        ).toBeRejectedWith(TypeError, 'Cache key part is a object')
+        const result = cache.get(
+          { key: ['layer2s', tampered], ttl: 1000 },
+          async () => 'x',
+        )
+        await expect(result).rejects.toThrow(TypeError)
+        await expect(result).rejects.toThrow('Cache key part is a object')
       })
 
       it('should tell an absent key part apart from an empty one', async () => {
@@ -374,7 +378,7 @@ describe(InMemoryCache.name, () => {
     describe('nullish results', () => {
       it('should not cache undefined', async () => {
         const cache = new InMemoryCache({})
-        const fallback = mockFn().resolvesTo(undefined)
+        const fallback = vi.fn().mockResolvedValue(undefined)
 
         const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
@@ -387,7 +391,7 @@ describe(InMemoryCache.name, () => {
 
       it('should not cache null', async () => {
         const cache = new InMemoryCache({})
-        const fallback = mockFn().resolvesTo(null)
+        const fallback = vi.fn().mockResolvedValue(null)
 
         await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
@@ -397,7 +401,7 @@ describe(InMemoryCache.name, () => {
       it('should cache undefined when cacheNullish is set', async () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
-        const fallback = mockFn().resolvesTo(undefined)
+        const fallback = vi.fn().mockResolvedValue(undefined)
 
         await cache.get(
           { key: ['key'], ttl: 1000, cacheNullish: true },
@@ -489,7 +493,7 @@ describe(InMemoryCache.name, () => {
           resolve: (value: string) => void
           reject: (error: Error) => void
         }[] = []
-        const fallback = mockFn(() => {
+        const fallback = vi.fn(() => {
           return new Promise<string>((resolve, reject) => {
             controls.push({ resolve, reject })
           })
@@ -528,7 +532,7 @@ describe(InMemoryCache.name, () => {
         expect(await firstRequest).toEqual('old')
 
         cache._set(['key'], { result: 'expired', timestamp: fakeNow - 2000 })
-        const fallback = mockFn().resolvesTo('unexpected')
+        const fallback = vi.fn().mockResolvedValue('unexpected')
         const thirdRequest = cache.get(cacheOptions, fallback)
         expect(fallback).not.toHaveBeenCalled()
 
@@ -600,7 +604,7 @@ describe(InMemoryCache.name, () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
 
         cache._set(['key'], { result: 'stale', timestamp: fakeNow - 2 })
-        const fallback = mockFn().resolvesTo('unexpected')
+        const fallback = vi.fn().mockResolvedValue('unexpected')
         await cache.get(cacheOptions, fallback)
         expect(fallback).not.toHaveBeenCalled()
 

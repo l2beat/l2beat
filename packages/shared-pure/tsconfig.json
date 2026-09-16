@@ -6,9 +6,10 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": false,
+    "types": ["node"],
     "verbatimModuleSyntax": true,
     "outDir": "build",
     "rootDir": "./src"
   },
-  "exclude": ["build", "node_modules"]
+  "exclude": ["build", "node_modules", "vitest.config.ts"]
 }

@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { isDateOnly } from './dateStrings.js'
 
 describe(isDateOnly.name, () => {

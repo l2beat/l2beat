@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { undefinedIfEmpty } from './undefinedIfEmpty.js'
 
 describe(undefinedIfEmpty.name, () => {
