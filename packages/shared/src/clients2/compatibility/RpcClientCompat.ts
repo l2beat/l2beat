@@ -15,7 +15,11 @@ import type {
   EVMLog,
   EVMTransaction,
 } from '../../clients/rpc/types'
-import type { BlockClient, LogsClient } from '../../clients/types'
+import type {
+  BlockClient,
+  LogsClient,
+  LogsTopicFilter,
+} from '../../clients/types'
 import { toRetryOptions } from '../../tools'
 import {
   EthRpcClient,
@@ -69,7 +73,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]>
   getFeeHistory(
     blockCount: number,
@@ -230,14 +234,14 @@ export class RpcClientCompat implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     try {
       const logs = await this.ethRpcClient.getLogs({
         fromBlock: BigInt(from),
         toBlock: BigInt(to),
         address: addresses as EthereumAddress[] | undefined,
-        topics: topics ? [topics] : undefined,
+        topics,
       })
       return logs.map(toEVMLog)
     } catch (e) {

@@ -173,7 +173,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       blockFrom,
       blockTo,
       addresses,
-      events,
+      [events],
     )
 
     const configMap = buildPrivacyLogConfigMap(configurations)
