@@ -19,9 +19,9 @@ const preset: ViteUserConfig = {
   test: {
     include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
     env: { NODE_ENV: 'test' },
-    // Pinned rather than left to Vitest's defaults: tests inherited from Mocha
-    // lean on module-level singletons and env vars, so a fresh forked process
-    // per test file is what keeps them from leaking into each other.
+    // Pinned rather than left to Vitest's defaults: suites here lean on
+    // module-level singletons and env vars, so a fresh forked process per test
+    // file is what keeps them from leaking into each other.
     pool: 'forks',
     isolate: true,
   },

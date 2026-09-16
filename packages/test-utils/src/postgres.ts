@@ -29,8 +29,8 @@ export function postgresHarness(
         globalSetup: [globalSetupPath],
         maxWorkers: WORKERS,
         minWorkers: 1,
-        // Matches the timeout the mocha runner used: opening a connection and
-        // truncating tables is slower than Vitest's 5s default allows for.
+        // Opening a connection and truncating tables is slower than Vitest's
+        // 5s default allows for.
         testTimeout: TIMEOUT_MS,
         hookTimeout: TIMEOUT_MS,
       },

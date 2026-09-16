@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createWorkerPool } from './createWorkers'
 
-// Helper function since fake-timers don't work well with timers/promises
+// Helper function since fake timers don't work well with timers/promises
 const wait = (delay: number) =>
   new Promise((resolve) => setTimeout(resolve, delay))
 

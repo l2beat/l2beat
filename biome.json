@@ -95,8 +95,7 @@
               "assert": "Use assert from @l2beat/shared-pure",
               "node:assert": "Use assert from @l2beat/shared-pure",
               "lodash": "Use lodash/{module}",
-              "process": "Do not use process",
-              "earl": "earl is a test-only dependency. Use lodash/isEqual for deep equality or move this file under a test/ directory."
+              "process": "Do not use process"
             },
             "patterns": [
               {

@@ -6,8 +6,8 @@ it without creating a cycle.
 
 ## `mockObject`
 
-A replacement for earl's `mockObject`, built on `vi.fn()`. Function members of
-the overrides become vitest mocks, so call assertions typecheck without casts;
+Builds a stand-in for an interface out of `vi.fn()`. Function members of the
+overrides become vitest mocks, so call assertions typecheck without casts;
 reading a member that was not provided throws instead of returning `undefined`.
 
 ```ts
@@ -23,11 +23,11 @@ expect(repository.save).toThrow() // never mocked
 
 ## Matchers
 
-`toThrowWithMessage(ErrorClass, message)` and `toEqualUnsorted(items)` cover the
-two earl validators with no vitest counterpart. Register them by listing the
-setup entry in the package's vitest config, and name the package in `types` so
-that its `declare module 'vitest'` augmentation is loaded even in files that
-import nothing from it:
+`toThrowWithMessage(ErrorClass, message)` and `toEqualUnsorted(items)` are the
+two assertions this repo needs that vitest has no matcher for. Register them by
+listing the setup entry in the package's vitest config, and name the package in
+`types` so that its `declare module 'vitest'` augmentation is loaded even in
+files that import nothing from it:
 
 ```ts
 // vitest.config.ts

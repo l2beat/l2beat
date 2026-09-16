@@ -1,13 +1,15 @@
 import type { MatcherState, SyncMatcherResult } from 'vitest'
 
 /**
- * Matchers that have no vitest equivalent, kept so that assertions migrated
- * from earl keep asserting the same thing instead of being weakened.
+ * Assertions this repo makes often enough to be worth a matcher, and that
+ * vitest has no equivalent for. Spelling them out at each call site would
+ * either duplicate the subject expression or quietly weaken the assertion.
  *
- * Register them with `expect.extend(earlMatchers)` - `@l2beat/test-utils/setup`
- * does that and is meant to be listed in a package's `setupFiles`.
+ * Register them with `expect.extend(customMatchers)` -
+ * `@l2beat/test-utils/setup` does that and is meant to be listed in a
+ * package's `setupFiles`.
  */
-export const earlMatchers = {
+export const customMatchers = {
   toThrowWithMessage,
   toEqualUnsorted,
 }
@@ -21,14 +23,15 @@ declare module 'vitest' {
     T = unknown,
   > {
     /**
-     * earl's `toThrow(ErrorClass, message)` in one assertion: the thrown error
-     * must be an instance of `errorClass` and its message must contain
-     * `message` (or match it, for a RegExp).
+     * Class and message in one assertion: the thrown error must be an instance
+     * of `errorClass` and its message must contain `message` (or match it, for
+     * a RegExp). Splitting it in two would duplicate the subject expression,
+     * which here is often a multi-line arrow function.
      *
      * Also works behind the `rejects` modifier.
      */
     toThrowWithMessage(errorClass: ErrorClass, message: string | RegExp): R
-    /** earl's `toEqualUnsorted`: same items, any order, deep equality. */
+    /** Same items, any order, deep equality. */
     toEqualUnsorted(expected: T): R
   }
 }

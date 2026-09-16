@@ -1,4 +1,4 @@
 import { expect } from 'vitest'
-import { earlMatchers } from './matchers.js'
+import { customMatchers } from './matchers.js'
 
-expect.extend(earlMatchers)
+expect.extend(customMatchers)
