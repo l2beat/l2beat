@@ -40,7 +40,6 @@ export const zora: ScalingProject = opStackL2({
       other: ['https://growthepie.com/chains/zora'],
     },
   },
-  hasSuperchainScUpgrades: true,
   chainConfig: {
     name: 'zora',
     chainId: 7777777,
