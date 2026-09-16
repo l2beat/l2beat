@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { type Validator, v } from './validate.js'
 
 describe('validate', () => {
@@ -16,7 +16,7 @@ describe('validate', () => {
       position: { x: 1, y: 2 },
       otherProp: true,
     }
-    expect(NamePosition.validate(input)).toExactlyEqual(input)
+    expect(NamePosition.validate(input)).toBe(input)
   })
 
   it('parse success', () => {
@@ -25,7 +25,7 @@ describe('validate', () => {
       position: { x: 1, y: 2 },
       otherProp: true,
     }
-    expect(NamePosition.parse(input)).toEqual({
+    expect(NamePosition.parse(input)).toStrictEqual({
       name: 'bar',
       position: { x: 1, y: 2 },
     })
@@ -36,7 +36,7 @@ describe('validate', () => {
       name: 'bar',
       position: { x: true, y: 2 },
     }
-    expect(NamePosition.safeValidate(input)).toEqual({
+    expect(NamePosition.safeValidate(input)).toStrictEqual({
       success: false,
       path: '.position.x',
       message: 'Expected number, got boolean.',
@@ -51,7 +51,7 @@ describe('validate', () => {
       { x: 1, y: 2 },
       { x: 3, y: 'foo' },
     ]
-    expect(PosArray.safeValidate(input)).toEqual({
+    expect(PosArray.safeValidate(input)).toStrictEqual({
       success: false,
       path: '[1].y',
       message: 'Expected number, got string.',
@@ -60,8 +60,11 @@ describe('validate', () => {
 
   it('literal', () => {
     const Foo = v.literal('Foo')
-    expect(Foo.safeValidate('Foo')).toEqual({ success: true, data: 'Foo' })
-    expect(Foo.safeValidate('x')).toEqual({
+    expect(Foo.safeValidate('Foo')).toStrictEqual({
+      success: true,
+      data: 'Foo',
+    })
+    expect(Foo.safeValidate('x')).toStrictEqual({
       success: false,
       path: '',
       message: 'Expected exactly Foo, got string.',
@@ -70,9 +73,12 @@ describe('validate', () => {
 
   it('union', () => {
     const Foo = v.union([v.string(), v.null()])
-    expect(Foo.safeValidate(null)).toEqual({ success: true, data: null })
-    expect(Foo.safeValidate('foo')).toEqual({ success: true, data: 'foo' })
-    expect(Foo.safeValidate(1)).toEqual({
+    expect(Foo.safeValidate(null)).toStrictEqual({ success: true, data: null })
+    expect(Foo.safeValidate('foo')).toStrictEqual({
+      success: true,
+      data: 'foo',
+    })
+    expect(Foo.safeValidate(1)).toStrictEqual({
       success: false,
       path: '',
       message:
@@ -86,12 +92,12 @@ describe('validate', () => {
       v.array(v.object({ events: v.array(v.string()) })),
     ])
 
-    expect(Item.safeValidate(null)).toEqual({ success: true, data: null })
-    expect(Item.safeValidate([{ events: ['foo', 'foo'] }])).toEqual({
+    expect(Item.safeValidate(null)).toStrictEqual({ success: true, data: null })
+    expect(Item.safeValidate([{ events: ['foo', 'foo'] }])).toStrictEqual({
       success: true,
       data: [{ events: ['foo', 'foo'] }],
     })
-    expect(Item.safeValidate([{ events: ['foo', 123] }])).toEqual({
+    expect(Item.safeValidate([{ events: ['foo', 123] }])).toStrictEqual({
       success: false,
       path: '',
       message:
@@ -105,7 +111,7 @@ describe('validate', () => {
       v.number().transform((x) => x * 2),
     )
     const input = { foo: 1, bar: 2, baz: 3 }
-    expect(Foo.safeParse(input)).toEqual({
+    expect(Foo.safeParse(input)).toStrictEqual({
       success: true,
       data: { FOO: 2, BAR: 4, BAZ: 6 },
     })
@@ -113,8 +119,11 @@ describe('validate', () => {
 
   it('enum', () => {
     const Foo = v.enum(['foo', 'bar', 'baz'])
-    expect(Foo.safeValidate('foo')).toEqual({ success: true, data: 'foo' })
-    expect(Foo.safeValidate('xxx')).toEqual({
+    expect(Foo.safeValidate('foo')).toStrictEqual({
+      success: true,
+      data: 'foo',
+    })
+    expect(Foo.safeValidate('xxx')).toStrictEqual({
       success: false,
       path: '',
       message:
@@ -126,18 +135,18 @@ describe('validate', () => {
     const Foo = v.enum(['foo', 'bar'])
     const FooRecord = v.record(Foo, v.number())
 
-    expect(FooRecord.safeValidate({ foo: 1, bar: 2 })).toEqual({
+    expect(FooRecord.safeValidate({ foo: 1, bar: 2 })).toStrictEqual({
       success: true,
       data: { foo: 1, bar: 2 },
     })
-    expect(FooRecord.safeValidate({ foo: 1 })).toEqual({
+    expect(FooRecord.safeValidate({ foo: 1 })).toStrictEqual({
       success: false,
       path: '',
       message: 'Enum key bar not found.',
     })
 
     const FooRecordOptional = v.record(Foo, v.number().optional())
-    expect(FooRecordOptional.safeValidate({ foo: 1 })).toEqual({
+    expect(FooRecordOptional.safeValidate({ foo: 1 })).toStrictEqual({
       success: true,
       // TODO: is there a way to type it correctly in FooRecordOptional?
       data: { foo: 1 } as any,
@@ -151,7 +160,7 @@ describe('validate', () => {
       key3: v.enum(['foo', 'bar']).optional(),
     })
 
-    expect(Foo.safeValidate({ key1: undefined, key3: 'foo' })).toEqual({
+    expect(Foo.safeValidate({ key1: undefined, key3: 'foo' })).toStrictEqual({
       success: true,
       data: { key1: undefined, key3: 'foo' },
     })
@@ -163,7 +172,7 @@ describe('validate', () => {
       key2: v.string().optional(),
     })
 
-    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toStrictEqual({
       success: false,
       path: '.key3',
       message: 'Strict violation, unexpected key found.',
@@ -177,14 +186,14 @@ describe('validate', () => {
       key2: v.string().optional(),
     })
 
-    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toStrictEqual({
       success: true,
       data: { key1: 'bar', key3: 'foo' } as Foo,
     })
 
     expect(
       Foo.safeValidate({ key1: 'bar', key2: undefined, key3: 'foo' }),
-    ).toEqual({
+    ).toStrictEqual({
       success: true,
       data: { key1: 'bar', key2: undefined, key3: 'foo' } as Foo,
     })
@@ -192,14 +201,14 @@ describe('validate', () => {
 
   it('default - basic use', () => {
     const Foo = v.union([v.number(), v.null(), v.undefined()]).default(2)
-    expect(Foo.safeParse(3)).toEqual({ success: true, data: 3 })
-    expect(Foo.safeParse(null)).toEqual({ success: true, data: 2 })
-    expect(Foo.safeParse(undefined)).toEqual({ success: true, data: 2 })
+    expect(Foo.safeParse(3)).toStrictEqual({ success: true, data: 3 })
+    expect(Foo.safeParse(null)).toStrictEqual({ success: true, data: 2 })
+    expect(Foo.safeParse(undefined)).toStrictEqual({ success: true, data: 2 })
   })
 
   it('tuple', () => {
     const A = v.tuple([v.number(), v.string()])
-    expect(A.safeParse([1, 'foo'])).toEqual({
+    expect(A.safeParse([1, 'foo'])).toStrictEqual({
       success: true,
       data: [1, 'foo'],
     })
@@ -209,7 +218,7 @@ describe('validate', () => {
       v.string().optional(),
       v.string().optional(),
     ])
-    expect(B.safeParse([1, 'foo'])).toEqual({
+    expect(B.safeParse([1, 'foo'])).toStrictEqual({
       success: true,
       data: [1, 'foo'],
     })
@@ -219,7 +228,7 @@ describe('validate', () => {
       v.string().optional(),
       v.string().optional(),
     ])
-    expect(C.safeParse([1, undefined, 'foo'])).toEqual({
+    expect(C.safeParse([1, undefined, 'foo'])).toStrictEqual({
       success: true,
       data: [1, undefined, 'foo'],
     })
@@ -237,7 +246,7 @@ describe('validate', () => {
       }),
     )
     const list = { item: 1, next: { item: 2, next: { item: 3, next: null } } }
-    expect(List.safeParse(list)).toEqual({
+    expect(List.safeParse(list)).toStrictEqual({
       success: true,
       data: list,
     })
@@ -246,69 +255,75 @@ describe('validate', () => {
   describe('optional', () => {
     it('object missing key', () => {
       const Schema = v.object({ x: v.number().optional() })
-      expect(Schema.validate({})).toEqual({})
-      expect(Schema.parse({})).toEqual({})
+      expect(Schema.validate({})).toStrictEqual({})
+      expect(Schema.parse({})).toStrictEqual({})
     })
 
     it('object undefined key', () => {
       const Schema = v.object({ x: v.number().optional() })
-      expect(Schema.validate({ x: undefined })).toEqual({ x: undefined })
-      expect(Schema.parse({ x: undefined })).toEqual({})
+      expect(Schema.validate({ x: undefined })).toStrictEqual({ x: undefined })
+      expect(Schema.parse({ x: undefined })).toStrictEqual({})
     })
 
     it('enum record missing value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().optional())
-      expect(Schema.validate({ a: 1 })).toEqual({ a: 1 } as any)
-      expect(Schema.parse({ a: 1 })).toEqual({ a: 1 } as any)
+      expect(Schema.validate({ a: 1 })).toStrictEqual({ a: 1 } as any)
+      expect(Schema.parse({ a: 1 })).toStrictEqual({ a: 1 } as any)
     })
 
     it('tuple missing element', () => {
       const Schema = v.tuple([v.number().optional()])
-      expect(Schema.validate([])).toEqual([])
-      expect(Schema.parse([])).toEqual([])
+      expect(Schema.validate([])).toStrictEqual([])
+      expect(Schema.parse([])).toStrictEqual([])
     })
 
     it('tuple undefined element', () => {
       const Schema = v.tuple([v.number().optional()])
-      expect(Schema.validate([undefined])).toEqual([undefined])
-      expect(Schema.parse([undefined])).toEqual([undefined])
+      expect(Schema.validate([undefined])).toStrictEqual([undefined])
+      expect(Schema.parse([undefined])).toStrictEqual([undefined])
     })
   })
 
   describe('default', () => {
     it('object missing key', () => {
       const Schema = v.object({ x: v.number().default(42) })
-      expect(Schema.parse({})).toEqual({ x: 42 })
+      expect(Schema.parse({})).toStrictEqual({ x: 42 })
     })
 
     it('object undefined key', () => {
       const Schema = v.object({ x: v.number().default(42) })
-      expect(Schema.parse({ x: undefined })).toEqual({ x: 42 })
+      expect(Schema.parse({ x: undefined })).toStrictEqual({ x: 42 })
     })
 
     it('enum record missing value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().default(42))
-      expect(Schema.parse({ a: 1 })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1 })).toStrictEqual({ a: 1, b: 42 })
     })
 
     it('enum record undefined value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().default(42))
-      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: undefined })).toStrictEqual({
+        a: 1,
+        b: 42,
+      })
     })
 
     it('enum undefined value', () => {
       const Schema = v.record(v.string(), v.number().default(42))
-      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: undefined })).toStrictEqual({
+        a: 1,
+        b: 42,
+      })
     })
 
     it('tuple missing element', () => {
       const Schema = v.tuple([v.number().default(42)])
-      expect(Schema.parse([])).toEqual([42])
+      expect(Schema.parse([])).toStrictEqual([42])
     })
 
     it('tuple undefined element', () => {
       const Schema = v.tuple([v.number().default(42)])
-      expect(Schema.parse([undefined])).toEqual([42])
+      expect(Schema.parse([undefined])).toStrictEqual([42])
     })
 
     it('structuredClone', () => {
@@ -316,64 +331,70 @@ describe('validate', () => {
       const x = Foo.parse(undefined)
       x.push(1)
       const y = Foo.parse(undefined)
-      expect(y).toEqual([])
+      expect(y).toStrictEqual([])
     })
   })
 
   describe('catch', () => {
     it('object missing key', () => {
       const Schema = v.object({ x: v.number().catch(42) })
-      expect(Schema.parse({})).toEqual({ x: 42 })
+      expect(Schema.parse({})).toStrictEqual({ x: 42 })
     })
 
     it('object undefined key', () => {
       const Schema = v.object({ x: v.number().catch(42) })
-      expect(Schema.parse({ x: undefined })).toEqual({ x: 42 })
+      expect(Schema.parse({ x: undefined })).toStrictEqual({ x: 42 })
     })
 
     it('object invalid key', () => {
       const Schema = v.object({ x: v.number().catch(42) })
-      expect(Schema.parse({ x: 'red' })).toEqual({ x: 42 })
+      expect(Schema.parse({ x: 'red' })).toStrictEqual({ x: 42 })
     })
 
     it('enum record missing value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
-      expect(Schema.parse({ a: 1 })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1 })).toStrictEqual({ a: 1, b: 42 })
     })
 
     it('enum record undefined value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
-      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: undefined })).toStrictEqual({
+        a: 1,
+        b: 42,
+      })
     })
 
     it('enum record invalid value', () => {
       const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
-      expect(Schema.parse({ a: 1, b: 'red' })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: 'red' })).toStrictEqual({ a: 1, b: 42 })
     })
 
     it('enum undefined value', () => {
       const Schema = v.record(v.string(), v.number().catch(42))
-      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: undefined })).toStrictEqual({
+        a: 1,
+        b: 42,
+      })
     })
 
     it('enum invalid value', () => {
       const Schema = v.record(v.string(), v.number().catch(42))
-      expect(Schema.parse({ a: 1, b: 'red' })).toEqual({ a: 1, b: 42 })
+      expect(Schema.parse({ a: 1, b: 'red' })).toStrictEqual({ a: 1, b: 42 })
     })
 
     it('tuple missing element', () => {
       const Schema = v.tuple([v.number().catch(42)])
-      expect(Schema.parse([])).toEqual([42])
+      expect(Schema.parse([])).toStrictEqual([42])
     })
 
     it('tuple undefined element', () => {
       const Schema = v.tuple([v.number().catch(42)])
-      expect(Schema.parse([undefined])).toEqual([42])
+      expect(Schema.parse([undefined])).toStrictEqual([42])
     })
 
     it('tuple invalid element', () => {
       const Schema = v.tuple([v.number().catch(42)])
-      expect(Schema.parse(['red'])).toEqual([42])
+      expect(Schema.parse(['red'])).toStrictEqual([42])
     })
 
     it('structuredClone', () => {
@@ -381,32 +402,32 @@ describe('validate', () => {
       const x = Foo.parse('not array')
       x.push(1)
       const y = Foo.parse('not array')
-      expect(y).toEqual([])
+      expect(y).toStrictEqual([])
     })
   })
 
   describe('describe', () => {
     it('should add description', () => {
       const Foo = v.object({ x: v.number() })
-      expect(Foo.description).toEqual(undefined)
+      expect(Foo.description).toStrictEqual(undefined)
       Foo.describe('Bar')
-      expect(Foo.description).toEqual('Bar')
+      expect(Foo.description).toStrictEqual('Bar')
     })
   })
 
   describe('meta', () => {
     it('should add metadata', () => {
       const Foo = v.object({ x: v.number() })
-      expect(Foo.metadata).toEqual(undefined)
+      expect(Foo.metadata).toStrictEqual(undefined)
       Foo.meta({ description: 'Bar' })
-      expect(Foo.metadata).toEqual({ description: 'Bar' })
+      expect(Foo.metadata).toStrictEqual({ description: 'Bar' })
     })
 
     it('should merge metadata', () => {
       const Foo = v.object({ x: v.number() })
       Foo.meta({ description: 'Bar' })
       Foo.meta({ owner: 'Baz' })
-      expect(Foo.metadata).toEqual({ description: 'Bar', owner: 'Baz' })
+      expect(Foo.metadata).toStrictEqual({ description: 'Bar', owner: 'Baz' })
     })
 
     it('should reject reserved schema keys', () => {

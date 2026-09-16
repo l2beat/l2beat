@@ -6,20 +6,16 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
-
     "strict": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
-
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
     "skipLibCheck": true,
-    "types": ["node", "mocha"],
-
+    "types": ["node"],
     "outDir": "dist",
     "rootDir": "./src"
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "vitest.config.ts"]
 }
