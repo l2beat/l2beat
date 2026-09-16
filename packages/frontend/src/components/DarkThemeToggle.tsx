@@ -1,19 +1,20 @@
+import { useTheme } from 'next-themes'
 import { useRef } from 'react'
+import { flushSync } from 'react-dom'
 import { MoonIcon } from '~/icons/Moon'
 import { SunIcon } from '~/icons/Sun'
 import { cn } from '~/utils/cn'
-import { useTheme } from './ThemeProvider'
 
 interface DarkThemeToggleProps {
   className?: string
 }
 
 export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
     const button = buttonRef.current
 
     const prefersReducedMotion = matchMedia(
@@ -42,8 +43,12 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     style.setProperty('--circle-y', `${y}px`)
     style.setProperty('--circle-radius', `${radius}px`)
 
+    // flushSync required: View Transitions API needs synchronous DOM updates,
+    // but setTheme() triggers async React state updates
     document
-      .startViewTransition(() => setTheme(newTheme))
+      .startViewTransition(() => {
+        flushSync(() => setTheme(newTheme))
+      })
       .finished.finally(() => {
         style.removeProperty('--circle-x')
         style.removeProperty('--circle-y')
