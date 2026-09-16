@@ -1,3 +1,157 @@
+Generated with discovered.json: 0xe99d82d6d860655da3e35f04e78510fc0377d00a
+
+# Diff at Wed, 16 Sep 2026 13:36:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1783591047
+- current timestamp: 1789565719
+
+## Description
+
+K2 core bridge contracts replaced with a Merkle-claim exit mechanism; sequencer and batcher stopped.
+
+OptimismPortal implementation `0x3fe449Ef47228F03f979F9D955196494243cdf7E` (v1.10.0) → `0xB1762246367681e5b335968950e8A17b0c56021D` (v2.3.0), upgraded and paused by the KarakMultisig on 2026-09-15 04:45 UTC (tx `0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd`). `depositTransaction()`, `receive()`, `proveWithdrawalTransaction()` and `finalizeWithdrawalTransaction()` now revert. Escrowed ETH (1876 ETH) is claimable via `claimETH(amount, proof)` against `merkleRootETH` = `0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9`, set on 2026-09-16 04:03 UTC (tx `0x2080dbdfa4798b9003dfe3e8b5bf8ea1772143eaf44acac1217002904eef87ec`, which also unpaused the portal); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, amount))))`, claims are cumulative per address. The Guardian can pause/unpause claims and, while paused and after `RECOVERY_TIMESTAMP` = 1820707200 (2027-09-12), call `recoverETH(recipient)` for the full balance.
+https://disco.l2beat.com/diff/eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E/eth:0xB1762246367681e5b335968950e8A17b0c56021D
+
+L1StandardBridge implementation `0xC4De51792746960FC0ac78360b8e9c6E103F3B13` (v1.4.0) → `0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A` (v2.3.0) in the same tx. All deposit entrypoints and `finalizeBridgeETH()`/`finalizeBridgeERC20()` now revert. Escrowed ERC20s are claimable via `claimTokens(tokens[], amounts[], proof[])` against `merkleRoot` = `0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840` (set 2026-09-16 04:03 UTC); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, tokens, amounts))))`, cumulative per claimer and token. The Guardian (read from the portal) can call `recoverTokens(recipient, tokens[])` and `sweepETH()` under the same paused + `RECOVERY_TIMESTAMP` conditions.
+https://disco.l2beat.com/diff/eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13/eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A
+
+Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on 2026-09-15 01:22:59 UTC; L2 blocks since then are empty sequencer-window blocks. Proposer `0x4179f43f3b994e97090557363b09F403138a729e` keeps posting output roots every 7200 blocks (last 2026-09-16 09:46 UTC, L2 block 43056000). Last withdrawal initiated on L2 2026-09-13 18:51 UTC; withdrawals not finalized before the upgrade cannot be finalized. No claims executed yet; no public Merkle tree or announcement found.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+      receivedPermissions.10.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.10.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [N/A] {
+    +++ description: Exit-mode L1StandardBridge (v2.3.0, since 2026-09-15). Deposits and the standard L2->L1 withdrawal path are disabled; escrowed ERC20s can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining tokens and ETH to an arbitrary address.
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x59c3a5c6d2b22ffe8a2e4bc09e8deb308fa757230ac6f0f854c7bd1244755f8d"
++        "0x32ea980305b615ec390e8c57663c0734c2ebf70465e6076b26eb8262e7400dba"
+      values.$implementation:
+-        "eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13"
++        "eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A"
+      values.version:
+-        "1.4.0"
++        "2.3.0"
++++ description: Merkle root of the ERC20 claim tree set by the Guardian on 2026-09-16.
+      values.merkleRoot:
++        "0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840"
+      values.OPTIMISM_PORTAL:
++        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      implementationNames.eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13:
+-        "L1StandardBridge"
+      implementationNames.eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A:
++        "L1StandardBridge"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [N/A] {
+    +++ description: Exit-mode OptimismPortal (v2.3.0, since 2026-09-15). Deposits and the standard proven-withdrawal finalization path are disabled; escrowed ETH can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining ETH to an arbitrary address.
+      template:
+-        "opstack/OptimismPortal"
+      sourceHashes.1:
+-        "0x620d0104aa94a7390fc59343e3d3a822959da7dc77b3a42f65586020da2e4faf"
++        "0x094c023344df46deb39df74619a815bc1bfced43ad55bb1f9dbb4e9c8718ba65"
+      values.$implementation:
+-        "eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E"
++        "eth:0xB1762246367681e5b335968950e8A17b0c56021D"
+      values.$pastUpgrades.1:
++        ["2026-09-15T04:45:35.000Z","0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd",["eth:0xB1762246367681e5b335968950e8A17b0c56021D"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.10.0"
++        "2.3.0"
++++ description: Merkle root of the ETH claim tree set by the Guardian on 2026-09-16.
+      values.merkleRootETH:
++        "0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9"
++++ description: Timestamp after which the Guardian can recover all remaining escrowed funds (2027-09-12 00:00:00 UTC).
+      values.RECOVERY_TIMESTAMP:
++        1820707200
+      implementationNames.eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E:
+-        "OptimismPortal"
+      implementationNames.eth:0xB1762246367681e5b335968950e8A17b0c56021D:
++        "OptimismPortal"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          | 1095 +++++----------
+ .../OptimismPortal/OptimismPortal.sol              | 1472 +++-----------------
+ 2 files changed, 573 insertions(+), 1994 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783591047 (main branch discovery), not current.
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Sets the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20s (L1StandardBridge), can pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP (2027-09-12), can recover all remaining escrowed funds to an arbitrary address.","role":".guardian"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [opstack/L1StandardBridge] {
+    +++ description: Exit-mode L1StandardBridge (v2.3.0, since 2026-09-15). Deposits and the standard L2->L1 withdrawal path are disabled; escrowed ERC20s can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining tokens and ETH to an arbitrary address.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "Exit-mode L1StandardBridge (v2.3.0, since 2026-09-15). Deposits and the standard L2->L1 withdrawal path are disabled; escrowed ERC20s can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining tokens and ETH to an arbitrary address."
+      fieldMeta:
++        {"merkleRoot":{"description":"Merkle root of the ERC20 claim tree set by the Guardian on 2026-09-16."}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [opstack/OptimismPortal] {
+    +++ description: Exit-mode OptimismPortal (v2.3.0, since 2026-09-15). Deposits and the standard proven-withdrawal finalization path are disabled; escrowed ETH can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining ETH to an arbitrary address.
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "Exit-mode OptimismPortal (v2.3.0, since 2026-09-15). Deposits and the standard proven-withdrawal finalization path are disabled; escrowed ETH can only be claimed on L1 with a Merkle proof against a root set by the Guardian. After RECOVERY_TIMESTAMP (2027-09-12) and while claims are paused, the Guardian can recover all remaining ETH to an arbitrary address."
+      fieldMeta:
++        {"merkleRootETH":{"description":"Merkle root of the ETH claim tree set by the Guardian on 2026-09-16."},"RECOVERY_TIMESTAMP":{"description":"Timestamp after which the Guardian can recover all remaining escrowed funds (2027-09-12 00:00:00 UTC)."}}
+    }
+```
+
 Generated with discovered.json: 0x44eb427d1ac53c6d231597e6441a476f3fae42e0
 
 # Diff at Thu, 09 Jul 2026 09:58:51 GMT:
