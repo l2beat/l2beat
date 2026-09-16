@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe0a7e07e2784545514d6a483253a0367c708aa7a
 
 ## Description
 
-Alchemy Multisig 1: threshold lowered from `5 of 8` to `3 of 8`. Same change on settlus and shape.
+Alchemy Multisig 1: threshold lowered from `5 of 8` to `3 of 8`. Same change on settlus, shape and worldchain.
 
 ## Watched changes
 
