@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process'
 import { availableParallelism } from 'node:os'
 import { join } from 'node:path'
+import { setTimeout } from 'node:timers/promises'
 import { promisify } from 'node:util'
 import { config as dotenv } from 'dotenv'
 
@@ -145,10 +146,38 @@ function searchPath(base: string, schema: string): string {
   return `${base}?options=-c%20search_path%3D${schema}`
 }
 
+/**
+ * Deploys are serialised inside one package, but two packages migrating the
+ * same server at once - which is what `turbo run test` does - still race:
+ * Prisma takes a database-wide advisory lock for a deploy, and contending for
+ * it while creating `_prisma_migrations` deadlocks the two deploys against each
+ * other. Postgres then kills one, which by then has applied nothing, so simply
+ * asking again once the other is done is enough.
+ */
 async function migrate(prismaDir: string, url: string): Promise<void> {
-  await promisify(execFile)(
-    join(prismaDir, 'node_modules', '.bin', 'prisma'),
-    ['migrate', 'deploy'],
-    { cwd: prismaDir, env: { ...process.env, PRISMA_DB_URL: url } },
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await promisify(execFile)(
+        join(prismaDir, 'node_modules', '.bin', 'prisma'),
+        ['migrate', 'deploy'],
+        { cwd: prismaDir, env: { ...process.env, PRISMA_DB_URL: url } },
+      )
+      return
+    } catch (error) {
+      if (attempt === MIGRATE_ATTEMPTS || !lostTheRace(error)) {
+        throw error
+      }
+      await setTimeout(attempt * RETRY_DELAY_MS)
+    }
+  }
+}
+
+const MIGRATE_ATTEMPTS = 5
+const RETRY_DELAY_MS = 500
+
+function lostTheRace(error: unknown): boolean {
+  const output = String((error as { stderr?: string })?.stderr ?? error)
+  return (
+    output.includes('deadlock detected') || output.includes('advisory lock')
   )
 }
