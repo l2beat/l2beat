@@ -389,18 +389,6 @@ describe(transformTestFile.name, () => {
       expect(blockers[1]?.note).toContain('mocha timeout')
     })
 
-    it('reports a timeout chained onto the test rather than on this', () => {
-      const { blockers } = transformTestFile(
-        'a.ts',
-        [
-          "import { expect } from 'earl'",
-          'it("slow", async () => { expect(1).toEqual(1) }).timeout(15_000)',
-        ].join('\n'),
-      )
-
-      expect(blockers[0]?.note).toContain('mocha timeout')
-    })
-
     it('finds nothing in a file it fully understands', () => {
       const { blockers } = transformTestFile('a.ts', matcher('toEqual(1)'))
 

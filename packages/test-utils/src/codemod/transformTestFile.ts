@@ -923,7 +923,7 @@ const LEFTOVERS: [RegExp, string][] = [
   ],
   [/\bexpect\.(a|subset|includes)\(/, 'earl-only asymmetric matcher'],
   [
-    /(this|\))\.timeout\(/,
+    /this\.timeout\(/,
     'mocha timeout - use it(name, fn, timeout) or a testTimeout config',
   ],
   [
