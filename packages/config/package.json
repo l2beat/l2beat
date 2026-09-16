@@ -13,7 +13,7 @@
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "get-lz-data": "tsx scripts/omnichain/index.ts",
     "update-multichain": "tsx scripts/multichain/index.ts",
@@ -49,6 +49,8 @@
     "cheerio": "^1.0.0-rc.11",
     "diff": "^7.0.0",
     "dotenv": "^16.4.5",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

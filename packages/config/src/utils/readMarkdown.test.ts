@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { readMarkdown } from './readMarkdown'
 
@@ -6,8 +6,8 @@ describe(readMarkdown.name, () => {
   it('reads a markdown file relative to src and trims it', () => {
     const content = readMarkdown('utils/test/fixture.md')
 
-    expect(content.startsWith('## Fixture')).toEqual(true)
-    expect(content.endsWith('file.')).toEqual(true)
+    expect(content.startsWith('## Fixture')).toStrictEqual(true)
+    expect(content.endsWith('file.')).toStrictEqual(true)
   })
 
   it('throws with the file path when the file is missing', () => {
@@ -22,7 +22,7 @@ describe(readMarkdown.name, () => {
       threshold: 1000,
     })
 
-    expect(content).toEqual(
+    expect(content).toStrictEqual(
       'The delay is 2d 8h and the threshold is 1000 TORN. The delay is 2d 8h again.',
     )
   })

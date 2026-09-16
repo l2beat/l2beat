@@ -12,9 +12,9 @@ import {
   type ProjectId,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { describe, expect, it } from 'vitest'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -36,8 +36,8 @@ describe('getProjects', () => {
     const slugs = new Set<string>()
     for (const project of projects) {
       it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
-        expect(project.slug).toMatchRegex(/^[a-z\-\d]+$/)
-        expect(ids.has(project.id)).toEqual(false)
+        expect(project.slug).toMatch(/^[a-z\-\d]+$/)
+        expect(ids.has(project.id)).toStrictEqual(false)
         ids.add(project.id)
         if (project.slug === 'near') {
           // This project is an exception.
@@ -47,11 +47,11 @@ describe('getProjects', () => {
           return
         }
 
-        expect(slugs.has(project.slug)).toEqual(false)
+        expect(slugs.has(project.slug)).toStrictEqual(false)
         slugs.add(project.slug)
 
         const dir = `./src/projects/${project.id}/${project.id}.ts`
-        expect(existsSync(dir)).toEqual(true)
+        expect(existsSync(dir)).toStrictEqual(true)
       })
     }
   })
@@ -65,8 +65,8 @@ describe('getProjects', () => {
         continue
       }
       it(project.name, () => {
-        expect(project.statuses).not.toEqual(undefined)
-        expect(project.display).not.toEqual(undefined)
+        expect(project.statuses).not.toStrictEqual(undefined)
+        expect(project.display).not.toStrictEqual(undefined)
       })
     }
   })
@@ -126,7 +126,7 @@ describe('getProjects', () => {
     for (const project of projects) {
       if (project.display) {
         it(project.name, () => {
-          expect(project.display?.description.endsWith('.')).toEqual(true)
+          expect(project.display?.description.endsWith('.')).toStrictEqual(true)
         })
       }
     }
@@ -178,7 +178,7 @@ describe('getProjects', () => {
       )
 
       // Array comparison to have a better error message with actual names
-      expect(projectsWithoutDaBeatEntry).toEqual([])
+      expect(projectsWithoutDaBeatEntry).toStrictEqual([])
     })
 
     it('each referenced DA bridge project exists', () => {
@@ -194,7 +194,7 @@ describe('getProjects', () => {
           .map((bridgeProjId) => `${project.id} -> ${bridgeProjId}`),
       )
 
-      expect(dangling).toEqual([])
+      expect(dangling).toStrictEqual([])
     })
   })
 
@@ -212,7 +212,7 @@ describe('getProjects', () => {
         it(`${project.id} economicSecurity is supported in BE code`, () => {
           expect(
             SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
-          ).toEqual(true)
+          ).toStrictEqual(true)
         })
       }
     }
@@ -230,7 +230,7 @@ describe('getProjects', () => {
         it(`${project.id} dynamic type validators is supported in BE code`, () => {
           expect(
             SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
-          ).toEqual(true)
+          ).toStrictEqual(true)
         })
       }
     }
@@ -258,59 +258,68 @@ describe('getProjects', () => {
     }
 
     for (const project of projects) {
-      describe(project.id, () => {
-        if (!project.zkCatalogInfo) return
-        const liveTvsProjects = new Set(
-          project.zkCatalogInfo.projectsForTvs
-            ?.filter((p) => !p.untilTimestamp)
-            .map((p) => p.projectId),
-        )
+      const zkCatalogInfo = project.zkCatalogInfo
+      if (!zkCatalogInfo) continue
 
-        const usedInVerifiers = uniq(
-          project.zkCatalogInfo.verifierHashes.flatMap((v) =>
-            v.knownDeployments.flatMap(
-              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
-            ),
+      const liveTvsProjects = new Set(
+        zkCatalogInfo.projectsForTvs
+          ?.filter((p) => !p.untilTimestamp)
+          .map((p) => p.projectId),
+      )
+
+      const usedInVerifiers = uniq(
+        zkCatalogInfo.verifierHashes.flatMap((v) =>
+          v.knownDeployments.flatMap(
+            (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
           ),
-        ).filter((p): p is ProjectId => {
-          if (p === undefined) return false
+        ),
+      ).filter((p): p is ProjectId => {
+        if (p === undefined) return false
 
-          // Archived projects can keep historical verifier deployments, but
-          // they do not have to be listed as current TVS projects. Shared
-          // verifier deployments can also be attributed to another current
-          // zk catalog entry.
-          if (projectsById.get(p)?.archivedAt !== undefined) return false
+        // Archived projects can keep historical verifier deployments, but
+        // they do not have to be listed as current TVS projects. Shared
+        // verifier deployments can also be attributed to another current
+        // zk catalog entry.
+        if (projectsById.get(p)?.archivedAt !== undefined) return false
 
-          const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
-          return (
-            currentZkCatalogs === undefined ||
-            currentZkCatalogs.includes(project.id)
-          )
-        })
-        const usedInVerifiersSet = new Set(usedInVerifiers)
+        const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
+        return (
+          currentZkCatalogs === undefined ||
+          currentZkCatalogs.includes(project.id)
+        )
+      })
+      const usedInVerifiersSet = new Set(usedInVerifiers)
 
+      const currentProjectsForTvsSection = new Set(
+        [...liveTvsProjects].flatMap((tvsProject) => {
+          const tvsProjectConfig = projectsById.get(tvsProject)
+          if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
+            return []
+          }
+
+          if (tvsProjectConfig.daBridge) return []
+
+          return [tvsProject]
+        }),
+      )
+
+      if (
+        usedInVerifiers.length === 0 &&
+        currentProjectsForTvsSection.size === 0
+      ) {
+        continue
+      }
+
+      describe(project.id, () => {
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
-            expect(liveTvsProjects.has(usedIn)).toEqual(true)
+            expect(liveTvsProjects.has(usedIn)).toStrictEqual(true)
           })
         }
 
-        const currentProjectsForTvsSection = new Set(
-          [...liveTvsProjects].flatMap((tvsProject) => {
-            const tvsProjectConfig = projectsById.get(tvsProject)
-            if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
-              return []
-            }
-
-            if (tvsProjectConfig.daBridge) return []
-
-            return [tvsProject]
-          }),
-        )
-
         for (const tvsProject of currentProjectsForTvsSection) {
           it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
-            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
+            expect(usedInVerifiersSet.has(tvsProject)).toStrictEqual(true)
           })
         }
       })
@@ -352,7 +361,7 @@ describe('getProjects', () => {
       if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
       for (const verifier of project.contracts.zkVerifiers) {
         it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
-          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+          expect(zkCatalogAddresses.has(verifier)).toStrictEqual(true)
         })
       }
     }
@@ -373,7 +382,7 @@ describe('getProjects', () => {
       if (!allTvsProjectsArchived) continue
 
       it(`${project.id} should be archived because all projects using it are archived`, () => {
-        expect(project.archivedAt).not.toEqual(undefined)
+        expect(project.archivedAt).not.toStrictEqual(undefined)
       })
     }
   })
@@ -386,7 +395,7 @@ describe('getProjects', () => {
         if (dependency.type !== 'tracked') continue
 
         it(`${project.id} tracked dependency ${dependency.projectId} exists`, () => {
-          expect(projectsById.has(dependency.projectId)).toEqual(true)
+          expect(projectsById.has(dependency.projectId)).toStrictEqual(true)
         })
       }
     }
@@ -414,21 +423,21 @@ describe('getProjects', () => {
             if (amounts === undefined) continue
 
             expect(amounts.length).toBeGreaterThan(0)
-            expect(trackedBucketIds.has(bucket.id)).toEqual(false)
+            expect(trackedBucketIds.has(bucket.id)).toStrictEqual(false)
             trackedBucketIds.add(bucket.id)
 
             configuredBuckets++
             for (const amount of amounts) {
-              expect(amount).toMatchRegex(/^[1-9]\d*$/)
+              expect(amount).toMatch(/^[1-9]\d*$/)
               const seriesId = `${bucket.id}:${amount}`
-              expect(seriesIds.has(seriesId)).toEqual(false)
+              expect(seriesIds.has(seriesId)).toStrictEqual(false)
               seriesIds.add(seriesId)
             }
           }
         }
 
         if (state?.type === 'not-applicable') {
-          expect(configuredBuckets).toEqual(0)
+          expect(configuredBuckets).toStrictEqual(0)
         }
       })
     }
@@ -436,6 +445,15 @@ describe('getProjects', () => {
 
   describe('contracts', () => {
     for (const project of projects) {
+      const contracts = project.contracts?.addresses ?? {}
+      const contractRisks = project.contracts?.risks ?? []
+      if (
+        Object.values(contracts).every((perChain) => perChain.length === 0) &&
+        contractRisks.length === 0
+      ) {
+        continue
+      }
+
       describe(project.id, () => {
         const permissions = Object.values(project.permissions ?? {})
         const all = [
@@ -443,7 +461,6 @@ describe('getProjects', () => {
           ...permissions.flatMap((p) => p.actors ?? []),
         ]
 
-        const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const contract of perChain) {
             it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
@@ -509,7 +526,7 @@ describe('getProjects', () => {
           }
         }
 
-        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
+        for (const [i, risk] of contractRisks.entries()) {
           checkRisk(risk, `contracts.risks[${i}]`)
         }
       })
@@ -530,14 +547,14 @@ describe('getProjects', () => {
 
     it('every name is lowercase a-z0-9 <20 characters', () => {
       for (const chain of chains) {
-        expect(chain.name).toMatchRegex(/^[a-z0-9]{1,20}$/)
+        expect(chain.name).toMatch(/^[a-z0-9]{1,20}$/)
       }
     })
 
     it('every name is unique', () => {
       const encountered = new Set()
       for (const chain of chains) {
-        expect(encountered.has(chain.name)).toEqual(false)
+        expect(encountered.has(chain.name)).toStrictEqual(false)
         encountered.add(chain.name)
       }
     })
@@ -549,7 +566,7 @@ describe('getProjects', () => {
 
       for (const chain of chains) {
         if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
-        expect(chain.name).toEqual(chain.projectId)
+        expect(chain.name).toStrictEqual(chain.projectId)
       }
     })
 
@@ -557,7 +574,7 @@ describe('getProjects', () => {
       const encountered = new Set()
       for (const chain of chains) {
         if (encountered.has(chain.chainId)) {
-          expect(chain.chainId).toEqual(undefined)
+          expect(chain.chainId).toStrictEqual(undefined)
         }
         encountered.add(chain.chainId)
       }
@@ -566,7 +583,7 @@ describe('getProjects', () => {
     it('every explorerUrl does not end with /', () => {
       for (const chain of chains) {
         if (chain.explorerUrl) {
-          expect(chain.explorerUrl).toMatchRegex(/\w$/)
+          expect(chain.explorerUrl).toMatch(/\w$/)
         }
       }
     })
@@ -575,7 +592,7 @@ describe('getProjects', () => {
       for (const chain of chains) {
         for (const api of chain.apis) {
           if ('url' in api) {
-            expect(api.url).toMatchRegex(/^https:\/\//)
+            expect(api.url).toMatch(/^https:\/\//)
           }
         }
       }
@@ -601,7 +618,7 @@ describe('getProjects', () => {
 
       for (const [chain, contract] of contracts) {
         it(`multicall3 on ${chain}`, () => {
-          expect(contract.address).toEqual(address)
+          expect(contract.address).toStrictEqual(address)
         })
       }
     })
@@ -613,7 +630,9 @@ describe('getProjects', () => {
           continue
         }
         it(chain.name, () => {
-          expect(contracts).toEqual(contracts.slice().sort((a, b) => b - a))
+          expect(contracts).toStrictEqual(
+            contracts.slice().sort((a, b) => b - a),
+          )
         })
       }
     })
@@ -719,7 +738,7 @@ describe('getProjects', () => {
       )
       for (const link of links) {
         it(link, () => {
-          expect(link).toMatchRegex(/^https:\/\//)
+          expect(link).toMatch(/^https:\/\//)
         })
       }
     })
@@ -729,33 +748,29 @@ describe('getProjects', () => {
       for (const link of links) {
         it(link, () => {
           if (link.includes('discord')) {
-            expect(link).toMatchRegex(
+            expect(link).toMatch(
               /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
             )
           } else if (link.includes('t.me')) {
-            expect(link).toMatchRegex(
-              /^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/,
-            )
+            expect(link).toMatch(/^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/)
           } else if (link.includes('medium')) {
-            expect(link).toMatchRegex(
-              /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/,
-            )
+            expect(link).toMatch(/^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/)
           } else if (link.includes('twitter')) {
-            expect(link).toMatchRegex(/^https:\/\/twitter\.com\/[\w-]+$/)
+            expect(link).toMatch(/^https:\/\/twitter\.com\/[\w-]+$/)
           } else if (link.includes('reddit')) {
-            expect(link).toMatchRegex(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+            expect(link).toMatch(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
           } else if (link.includes('youtube')) {
             if (!link.includes('playlist')) {
-              expect(link).toMatchRegex(
+              expect(link).toMatch(
                 /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/,
               )
             }
           } else if (link.includes('twitch')) {
-            expect(link).toMatchRegex(/^https:\/\/twitch\.tv\/[\w-]+$/)
+            expect(link).toMatch(/^https:\/\/twitch\.tv\/[\w-]+$/)
           } else if (link.includes('gitter')) {
-            expect(link).toMatchRegex(/^https:\/\/gitter\.im\/[\w-/]+$/)
+            expect(link).toMatch(/^https:\/\/gitter\.im\/[\w-/]+$/)
           } else if (link.includes('instagram')) {
-            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-./]+$/)
+            expect(link).toMatch(/^https:\/\/instagram\.com\/[\w-./]+$/)
           }
         })
       }
@@ -934,7 +949,7 @@ describe('getProjects', () => {
       const associated = project.tvsConfig?.filter((t) => t.isAssociated)
       for (const a of associated) {
         it(`${project.name}: ${a.id}`, () => {
-          expect(a.category).toEqual('other')
+          expect(a.category).toStrictEqual('other')
         })
       }
     }

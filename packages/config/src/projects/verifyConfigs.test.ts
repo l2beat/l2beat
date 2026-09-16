@@ -1,5 +1,5 @@
 import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 describe('Verify Discovery config files', () => {
   const paths = getDiscoveryPaths()
@@ -11,7 +11,7 @@ describe('Verify Discovery config files', () => {
       describe(ConfigReader.prototype.readConfig.name, () => {
         it(`can read ${project} config`, () => {
           const result = configReader.readConfig(project)
-          expect(result.name).toEqual(project)
+          expect(result.name).toStrictEqual(project)
         })
       })
     })

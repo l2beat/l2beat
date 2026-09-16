@@ -8,6 +8,7 @@ import {
 import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
+import { describe, it } from 'vitest'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { layer2s } from '../processing/layer2s'
 import { layer3s } from '../processing/layer3s'

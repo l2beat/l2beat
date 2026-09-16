@@ -44,6 +44,7 @@ import type {
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
+import { layer2s } from '../processing/layer2s'
 import type {
   Badge,
   ChainConfig,
@@ -710,7 +711,6 @@ function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
-  const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
   const hostChain = templateVars.hostChain
 
   const baseChain = layer2s.find((l2) => l2.id === hostChain)

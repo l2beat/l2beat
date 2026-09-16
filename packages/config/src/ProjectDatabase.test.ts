@@ -5,15 +5,15 @@ import {
   type LegacyToken,
   ProjectId,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { unlinkSync } from 'fs'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject, ProjectScalingInfo } from './types'
 
 describe(ProjectDatabase.name, () => {
   let db: ProjectDatabase
   const TEMP_PATH = '/tmp/projectdb.sqlite'
-  before(async () => {
+  beforeAll(async () => {
     try {
       unlinkSync(TEMP_PATH)
     } catch {}
@@ -21,7 +21,7 @@ describe(ProjectDatabase.name, () => {
     db = new ProjectDatabase(TEMP_PATH)
     await db.init()
   })
-  after(() => {
+  afterAll(() => {
     unlinkSync(TEMP_PATH)
   })
 
@@ -43,7 +43,7 @@ describe(ProjectDatabase.name, () => {
       whereNull: [],
     })
 
-    expect(result).toEqual(project)
+    expect(result).toStrictEqual(project)
   })
 
   it('complex query', async () => {
@@ -80,7 +80,7 @@ describe(ProjectDatabase.name, () => {
       whereNull: [],
     })
 
-    expect(result).toEqual([projectB])
+    expect(result).toStrictEqual([projectB])
   })
 
   it('can add and retrieve a token', async () => {
@@ -99,8 +99,8 @@ describe(ProjectDatabase.name, () => {
     }
 
     await db.saveToken(token)
-    expect(await db.getToken(token.id)).toEqual(token)
-    expect(await db.getTokens()).toEqual([token])
+    expect(await db.getToken(token.id)).toStrictEqual(token)
+    expect(await db.getTokens()).toStrictEqual([token])
   })
 
   it('rolls back a failed transaction', async () => {
@@ -117,7 +117,7 @@ describe(ProjectDatabase.name, () => {
         await db.saveProject(project)
         throw new Error('test error')
       }),
-    ).toBeRejectedWith('test error')
+    ).rejects.toThrow('test error')
 
     const result = await db.getProject({
       id: project.id,
@@ -125,6 +125,6 @@ describe(ProjectDatabase.name, () => {
       whereNotNull: [],
       whereNull: [],
     })
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 })

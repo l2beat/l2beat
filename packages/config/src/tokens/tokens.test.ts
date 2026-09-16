@@ -1,6 +1,6 @@
 import { assert, ChainConverter } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
+import { describe, expect, it } from 'vitest'
 import { chains } from '../processing/chains'
 import { generateTokenNames, getTokenNamesFilePath } from './generateTokenNames'
 import { getTokenList } from './tokens'
@@ -16,13 +16,13 @@ describe('tokens', () => {
       }),
     )
     const everyUnique = tokens.every((x, i) => tokens.indexOf(x) === i)
-    expect(everyUnique).toEqual(true)
+    expect(everyUnique).toStrictEqual(true)
   })
 
   it('every token has a unique id', () => {
     const ids = tokenList.map((x) => x.id)
     const everyUnique = ids.every((x, i) => ids.indexOf(x) === i)
-    expect(everyUnique).toEqual(true)
+    expect(everyUnique).toStrictEqual(true)
   })
 
   it('every token has a chain with sinceTimestamp', () => {

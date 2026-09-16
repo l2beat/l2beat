@@ -6,6 +6,7 @@ import {
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
+import { describe, it } from 'vitest'
 
 interface RawEntrypointsFile {
   entrypoints?: Record<string, { project: string }>

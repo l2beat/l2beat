@@ -1,7 +1,0 @@
-{
-  "spec": "{src,scripts}/**/*.test.ts",
-  "node-option": ["import=tsx"],
-  "watchExtensions": "ts",
-  "extension": "ts",
-  "reporter": "progress"
-}

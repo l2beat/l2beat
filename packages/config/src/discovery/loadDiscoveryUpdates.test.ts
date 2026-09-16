@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { parseDiscoveryUpdates } from './loadDiscoveryUpdates'
 
 describe(parseDiscoveryUpdates.name, () => {
@@ -38,12 +38,12 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
+    expect(discoveryUpdates.length).toStrictEqual(1)
     const update = discoveryUpdates[0]!
-    expect(update.id).toMatchRegex(/^[0-9a-f]{8}$/)
-    expect(update.description).toEqual('A public update.')
-    expect(update.changeCount).toEqual(1)
-    expect(update.sections).toEqual([
+    expect(update.id).toMatch(/^[0-9a-f]{8}$/)
+    expect(update.description).toStrictEqual('A public update.')
+    expect(update.changeCount).toStrictEqual(1)
+    expect(update.sections).toStrictEqual([
       {
         kind: 'watched-changes',
         body: ['```diff', '+ watched', '```'].join('\n'),
@@ -106,15 +106,15 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
+    expect(discoveryUpdates.length).toStrictEqual(1)
     const update = discoveryUpdates[0]!
-    expect(update.sections).toEqual([
+    expect(update.sections).toStrictEqual([
       {
         kind: 'config-related-changes',
         body: [verifiedContract, createdContract].join('\n\n'),
       },
     ])
-    expect(update.changeCount).toEqual(3)
+    expect(update.changeCount).toStrictEqual(3)
   })
 
   it('keeps standalone contracts added through config', () => {
@@ -136,7 +136,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.sections).toEqual([
+    expect(discoveryUpdates[0]?.sections).toStrictEqual([
       {
         kind: 'config-related-changes',
         body: createdContract,
@@ -158,8 +158,10 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
-    expect(discoveryUpdates[0]?.sections[0]?.kind).toEqual('initial-discovery')
+    expect(discoveryUpdates.length).toStrictEqual(1)
+    expect(discoveryUpdates[0]?.sections[0]?.kind).toStrictEqual(
+      'initial-discovery',
+    )
   })
 
   it('marks high severity for implementation changes', () => {
@@ -178,7 +180,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toStrictEqual(true)
   })
 
   it('marks high severity from explicit severity metadata', () => {
@@ -196,7 +198,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toStrictEqual(true)
   })
 
   it('does not mark descriptions mentioning implementation as high severity', () => {
@@ -213,7 +215,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(false)
+    expect(discoveryUpdates[0]?.isHighSeverity).toStrictEqual(false)
   })
 
   it('uses current timestamp metadata when present', () => {
@@ -232,8 +234,8 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.timestamp).toEqual(1700000000)
-    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[0]?.timestamp).toStrictEqual(1700000000)
+    expect(discoveryUpdates[0]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
   })
 
   it('creates unique ids for entries with the same discovery timestamp and date', () => {
@@ -264,9 +266,9 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.id).not.toEqual(discoveryUpdates[1]?.id)
-    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
-    expect(discoveryUpdates[1]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[0]?.id).not.toStrictEqual(discoveryUpdates[1]?.id)
+    expect(discoveryUpdates[0]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[1]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
   })
 
   it('creates stable unique ids without a discovery hash', () => {
@@ -295,8 +297,8 @@ describe(parseDiscoveryUpdates.name, () => {
     const discoveryUpdates = parseDiscoveryUpdates(content)
     const repeated = parseDiscoveryUpdates(content)
 
-    expect(discoveryUpdates[0]?.id).not.toEqual(discoveryUpdates[1]?.id)
-    expect(repeated.map((update) => update.id)).toEqual(
+    expect(discoveryUpdates[0]?.id).not.toStrictEqual(discoveryUpdates[1]?.id)
+    expect(repeated.map((update) => update.id)).toStrictEqual(
       discoveryUpdates.map((update) => update.id),
     )
   })
@@ -315,7 +317,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.timestamp).toEqual(null)
-    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[0]?.timestamp).toStrictEqual(null)
+    expect(discoveryUpdates[0]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
   })
 })

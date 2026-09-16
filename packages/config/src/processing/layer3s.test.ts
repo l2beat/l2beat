@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import uniq from 'lodash/uniq'
+import { describe, expect, it } from 'vitest'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
 import { ecosystems } from './ecosystems'
@@ -16,7 +16,7 @@ describe('layer3s', () => {
         it(layer3.display.name, () => {
           const links = Object.values(layer3.display.links).flat()
           for (const link of links) {
-            expect(link).not.toInclude(' ')
+            expect(link).not.toContain(' ')
           }
         })
       }
@@ -26,7 +26,7 @@ describe('layer3s', () => {
         it(layer3.display.name, () => {
           const links = Object.values(layer3.display.links).flat()
           for (const link of links) {
-            expect(link).not.toInclude('www')
+            expect(link).not.toContain('www')
           }
         })
       }
@@ -38,7 +38,7 @@ describe('layer3s', () => {
     for (const layer3 of layer3s) {
       it(`every project with ecosystemInfo has valid ecosystem configured: ${layer3.display.name}`, () => {
         if (layer3.ecosystemInfo) {
-          expect(ecosystemIds).toInclude(layer3.ecosystemInfo.id)
+          expect(ecosystemIds).toContain(layer3.ecosystemInfo.id)
         }
       })
     }
@@ -46,15 +46,15 @@ describe('layer3s', () => {
 
   it('every layer3 has a valid config', () => {
     for (const layer3 of layer3s) {
-      expect(layer3.hostChain).not.toBeNullish()
+      expect(layer3.hostChain == null).toBe(false)
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
-      expect(hostChain).not.toBeNullish()
+      expect(hostChain == null).toBe(false)
 
-      expect(layer3.stackedRiskView).not.toBeNullish()
+      expect(layer3.stackedRiskView == null).toBe(false)
 
-      expect(layer3.config.trackedTxs).toEqual(undefined)
-      expect(layer3.config.liveness).toEqual(undefined)
-      expect(layer3.display.liveness).toEqual(undefined)
+      expect(layer3.config.trackedTxs).toStrictEqual(undefined)
+      expect(layer3.config.liveness).toStrictEqual(undefined)
+      expect(layer3.display.liveness).toStrictEqual(undefined)
     }
   })
 
@@ -76,7 +76,7 @@ describe('layer3s', () => {
               foundToken,
               `Please add token with symbol ${token} on ${escrow.chain} chain`,
             )
-            expect(foundToken).not.toBeNullish()
+            expect(foundToken == null).toBe(false)
           })
         }
       }
@@ -112,22 +112,24 @@ describe('layer3s', () => {
     describe('every description ends with a dot', () => {
       for (const layer3 of layer3s) {
         it(layer3.display.name, () => {
-          expect(layer3.display.description.endsWith('.')).toEqual(true)
+          expect(layer3.display.description.endsWith('.')).toStrictEqual(true)
         })
       }
     })
   })
 
   describe('state validation', () => {
-    describe('every description ends with a dot', () => {
+    it('every description ends with a dot', () => {
       for (const layer3 of layer3s) {
         if (!layer3.stateValidation) continue
 
         if (layer3.stateValidation.description) {
-          expect(layer3.stateValidation.description.endsWith('.')).toEqual(true)
+          expect(
+            layer3.stateValidation.description.endsWith('.'),
+          ).toStrictEqual(true)
         }
         layer3.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toEqual(true)
+          expect(category.description.endsWith('.')).toStrictEqual(true)
         })
       }
     })
@@ -139,7 +141,7 @@ describe('layer3s', () => {
         continue
       }
       it(`${layer3.display.name} does not have duplicated badges`, () => {
-        expect(layer3.badges?.length).toEqual(uniq(layer3.badges).length)
+        expect(layer3.badges?.length).toStrictEqual(uniq(layer3.badges).length)
       })
     }
   })
@@ -150,7 +152,9 @@ describe('layer3s', () => {
         const labels = layer3.reasonsForBeingOther?.map(
           (reason) => reason.label,
         )
-        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
+        expect(labels?.length).toStrictEqual(
+          labels ? uniq(labels).length : undefined,
+        )
       })
     }
 

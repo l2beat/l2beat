@@ -6,10 +6,9 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { utils } from 'ethers'
 import uniq from 'lodash/uniq'
-import { describe } from 'mocha'
+import { describe, expect, it } from 'vitest'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
 import { checkRisk } from '../test/helpers'
@@ -24,8 +23,8 @@ const tokenList = getTokenList(chains)
 describe('layer2s', () => {
   it('l2s do not have a host chain', () => {
     for (const layer2 of layer2s) {
-      expect(layer2.hostChain).toEqual(undefined)
-      expect(layer2.stackedRiskView).toEqual(undefined)
+      expect(layer2.hostChain).toStrictEqual(undefined)
+      expect(layer2.stackedRiskView).toStrictEqual(undefined)
     }
   })
 
@@ -34,7 +33,7 @@ describe('layer2s', () => {
     it('every project with ecosystemInfo has valid ecosystem configured', () => {
       for (const layer2 of layer2s) {
         if (layer2.ecosystemInfo) {
-          expect(ecosystemIds).toInclude(layer2.ecosystemInfo.id)
+          expect(ecosystemIds).toContain(layer2.ecosystemInfo.id)
         }
       }
     })
@@ -42,7 +41,9 @@ describe('layer2s', () => {
     it('uses isPartOfSuperchain only for superchain', () => {
       for (const layer2 of layer2s) {
         if (layer2.ecosystemInfo?.isPartOfSuperchain) {
-          expect(layer2.ecosystemInfo?.id).toEqual(ProjectId('superchain'))
+          expect(layer2.ecosystemInfo?.id).toStrictEqual(
+            ProjectId('superchain'),
+          )
         }
       }
     })
@@ -54,7 +55,7 @@ describe('layer2s', () => {
         it(layer2.display.name, () => {
           const links = Object.values(layer2.display.links).flat()
           for (const link of links) {
-            expect(link).not.toInclude(' ')
+            expect(link).not.toContain(' ')
           }
         })
       }
@@ -64,7 +65,7 @@ describe('layer2s', () => {
         it(layer2.display.name, () => {
           const links = Object.values(layer2.display.links).flat()
           for (const link of links) {
-            expect(link).not.toInclude('www')
+            expect(link).not.toContain('www')
           }
         })
       }
@@ -141,7 +142,7 @@ describe('layer2s', () => {
                 foundToken,
                 `Please add token with symbol ${token} on ${escrow.chain} chain`,
               )
-              expect(foundToken).not.toBeNullish()
+              expect(foundToken == null).toBe(false)
             })
           }
         }
@@ -155,7 +156,7 @@ describe('layer2s', () => {
       const exceptions = ['polygon-pos', 'apex-pro']
       if (name !== undefined && !exceptions.includes(layer2.id)) {
         it(layer2.id.toString(), () => {
-          expect(name).toEqual(layer2.id.toString())
+          expect(name).toStrictEqual(layer2.id.toString())
         })
       }
     }
@@ -177,7 +178,7 @@ describe('layer2s', () => {
               const i = new utils.Interface([c.functionSignature])
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
-              expect(calculatedSignature).toEqual(c.selector)
+              expect(calculatedSignature).toStrictEqual(c.selector)
             })
           }
         })
@@ -191,13 +192,15 @@ describe('layer2s', () => {
             const costMultipliers = project.config.trackedTxs
               ?.map((t) => t._hackCostMultiplier)
               .filter(notUndefined)
-            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
+            expect(
+              costMultipliers?.every((m) => m > 0 && m <= 1),
+            ).toStrictEqual(true)
           })
         }
       }
     })
 
-    it('every current address is present in discovery', () => {
+    describe('every current address is present in discovery', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid addresses`, () => {
           if (project.config.trackedTxs) {
@@ -259,7 +262,7 @@ describe('layer2s', () => {
           continue
         }
         it(`${id.toString()}`, () => {
-          expect(assessCount).not.toBeNullish()
+          expect(assessCount == null).toBe(false)
         })
       }
     })
@@ -296,52 +299,38 @@ describe('layer2s', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         it(layer2.display.name, () => {
-          expect(layer2.display.description.endsWith('.')).toEqual(true)
+          expect(layer2.display.description.endsWith('.')).toStrictEqual(true)
         })
       }
     })
 
     describe('technology', () => {
       for (const layer2 of layer2s) {
+        const choices = namedTechnologyChoices(layer2.technology)
+        // A project that fills in none of the checked fields has nothing to
+        // assert, and vitest fails a suite that registers no tests.
+        if (choices.length === 0) {
+          continue
+        }
+
         describe(layer2.display.name, () => {
-          type Key = Exclude<
-            keyof ProjectScalingTechnology,
-            'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
-          >
-
-          function check(key: Key) {
-            const item = layer2.technology?.[key]
-            if (Array.isArray(item)) {
-              for (const [i, x] of item.entries()) {
-                checkChoice(x, `${key}[${i}]`)
-              }
-            } else if (item) {
-              checkChoice(item, key)
-            }
-          }
-
-          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+          for (const [name, choice] of choices) {
             it(`${name}.name doesn't end with a dot`, () => {
-              expect(choice.name.endsWith('.')).toEqual(false)
+              expect(choice.name.endsWith('.')).toStrictEqual(false)
             })
 
             it(`${name}.description ends with a dot`, () => {
-              expect(choice.description.endsWith('.')).toEqual(true)
+              expect(choice.description.endsWith('.')).toStrictEqual(true)
             })
 
-            describe('risks', () => {
-              for (const [i, risk] of choice.risks.entries()) {
-                checkRisk(risk, `${name}.risks[${i}]`)
-              }
-            })
+            if (choice.risks.length > 0) {
+              describe('risks', () => {
+                for (const [i, risk] of choice.risks.entries()) {
+                  checkRisk(risk, `${name}.risks[${i}]`)
+                }
+              })
+            }
           }
-
-          check('dataAvailability')
-          check('operator')
-          check('forceTransactions')
-          check('exitMechanisms')
-          check('massExit')
-          check('otherConsiderations')
         })
       }
     })
@@ -353,7 +342,9 @@ describe('layer2s', () => {
         const labels = layer2.reasonsForBeingOther?.map(
           (reason) => reason.label,
         )
-        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
+        expect(labels?.length).toStrictEqual(
+          labels ? uniq(labels).length : undefined,
+        )
       })
     }
 
@@ -402,7 +393,7 @@ describe('layer2s', () => {
               continue
             }
             it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
-              expect(milestone.description?.endsWith('.')).toEqual(true)
+              expect(milestone.description?.endsWith('.')).toStrictEqual(true)
             })
           }
         }
@@ -411,7 +402,7 @@ describe('layer2s', () => {
             continue
           }
           it(`Milestone: ${milestone.title} (main page) description ends with a dot`, () => {
-            expect(milestone.description?.endsWith('.')).toEqual(true)
+            expect(milestone.description?.endsWith('.')).toStrictEqual(true)
           })
         }
       })
@@ -451,13 +442,15 @@ describe('layer2s', () => {
         for (const milestone of allMilestones ?? []) {
           expect(
             UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toEqual(true)
+          ).toStrictEqual(true)
         }
       })
 
       it('is correct', () => {
         for (const milestone of allMilestones ?? []) {
-          expect(new Date(milestone.date).getTime()).not.toEqual(Number.NaN)
+          expect(new Date(milestone.date).getTime()).not.toStrictEqual(
+            Number.NaN,
+          )
         }
       })
     })
@@ -478,7 +471,7 @@ describe('layer2s', () => {
               continue
             }
             it(req.description, () => {
-              expect(req.description.endsWith('.')).toEqual(true)
+              expect(req.description.endsWith('.')).toStrictEqual(true)
             })
           }
         }
@@ -487,15 +480,17 @@ describe('layer2s', () => {
   })
 
   describe('state validation', () => {
-    describe('every description ends with a dot', () => {
+    it('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         if (!layer2.stateValidation) continue
 
         if (layer2.stateValidation.description) {
-          expect(layer2.stateValidation.description.endsWith('.')).toEqual(true)
+          expect(
+            layer2.stateValidation.description.endsWith('.'),
+          ).toStrictEqual(true)
         }
         layer2.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toEqual(true)
+          expect(category.description.endsWith('.')).toStrictEqual(true)
         })
       }
     })
@@ -507,8 +502,36 @@ describe('layer2s', () => {
         continue
       }
       it(`${layer2.display.name} does not have duplicated badges`, () => {
-        expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
+        expect(layer2.badges?.length).toStrictEqual(uniq(layer2.badges).length)
       })
     }
   })
 })
+
+type TechnologyKey = Exclude<
+  keyof ProjectScalingTechnology,
+  'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
+>
+
+const TECHNOLOGY_KEYS: TechnologyKey[] = [
+  'dataAvailability',
+  'operator',
+  'forceTransactions',
+  'exitMechanisms',
+  'massExit',
+  'otherConsiderations',
+]
+
+/** Every technology choice worth checking, paired with the name it is reported
+ * under. A key holding an array contributes one entry per element. */
+function namedTechnologyChoices(
+  technology: ProjectScalingTechnology | undefined,
+): [string, ProjectTechnologyChoice][] {
+  return TECHNOLOGY_KEYS.flatMap((key): [string, ProjectTechnologyChoice][] => {
+    const item = technology?.[key]
+    if (Array.isArray(item)) {
+      return item.map((x, i) => [`${key}[${i}]`, x])
+    }
+    return item ? [[key, item]] : []
+  })
+}

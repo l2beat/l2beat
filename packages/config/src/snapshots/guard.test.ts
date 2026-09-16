@@ -1,3 +1,4 @@
+import { describe, it } from 'vitest'
 import { compareProject, duplicateIdsMessage } from './compare'
 import { SNAPSHOT_DOMAINS } from './registry'
 import { readSnapshot } from './types'

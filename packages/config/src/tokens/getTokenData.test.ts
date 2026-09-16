@@ -1,6 +1,7 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
 import isEqual from 'lodash/isEqual'
 import { join } from 'path'
+import { describe, it } from 'vitest'
 import { chains } from '../processing/chains'
 import type { GeneratedToken } from './types'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'

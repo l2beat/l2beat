@@ -1,33 +1,33 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { asArray, emptyArrayToUndefined } from './utils'
 
 describe(asArray.name, () => {
   it('handles undefined inputs', () => {
-    expect(asArray(undefined)).toEqual([])
+    expect(asArray(undefined)).toStrictEqual([])
 
-    expect(asArray('value')).toEqual(['value'])
+    expect(asArray('value')).toStrictEqual(['value'])
 
     const original = ['a', 'b']
     const result = asArray(original)
 
-    expect(result).toEqual(['a', 'b'])
+    expect(result).toStrictEqual(['a', 'b'])
 
     original.push('c')
-    expect(result).toEqual(['a', 'b', 'c'])
+    expect(result).toStrictEqual(['a', 'b', 'c'])
   })
 })
 
 describe(emptyArrayToUndefined.name, () => {
   it('returns undefined for empty arrays', () => {
-    expect(emptyArrayToUndefined([])).toEqual(undefined)
+    expect(emptyArrayToUndefined([])).toStrictEqual(undefined)
 
     const original = ['x']
     const result = emptyArrayToUndefined(original)
 
-    expect(result).toEqual(['x'])
+    expect(result).toStrictEqual(['x'])
 
     original.push('y')
-    expect(result).toEqual(['x', 'y'])
+    expect(result).toStrictEqual(['x', 'y'])
   })
 })

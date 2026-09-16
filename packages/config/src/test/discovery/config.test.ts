@@ -11,8 +11,8 @@ import {
   TemplateService,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
+import { describe, expect, it } from 'vitest'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
 import { refactored } from '../../processing/refactored'
@@ -70,7 +70,7 @@ describe('discovery config.jsonc', () => {
         .filter((c) => c.name !== 'hop')
         .map((c) => c.name) ?? []
 
-    expect(notCorresponding).toBeEmpty()
+    expect(notCorresponding).toHaveLength(0)
     if (notCorresponding.length > 0) {
       console.log(
         'Following projects do not have the same name as ProjectIds: ' +
@@ -90,7 +90,7 @@ describe('discovery config.jsonc', () => {
       }
     }
 
-    expect(notEqual).toBeEmpty()
+    expect(notEqual).toHaveLength(0)
     notEqual.forEach((p) => {
       console.log(
         `Following projects do not have the same name in config and discovery.json. Run "l2b discover <config.name>" - ${p}`,
@@ -132,7 +132,7 @@ describe('discovery config.jsonc', () => {
         `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
-  }).timeout(10_000)
+  }, 10_000)
 
   describe('shape addresses are unique', () => {
     const shapes = templateService.listAllTemplates()
@@ -288,7 +288,7 @@ describe('discovery config.jsonc', () => {
         // const defaultDescriptionRediscover =
         //   'Discovery rerun on the same block number with only config-related changes.'
 
-        expect(description).not.toEqual(defaultDescriptionDiscover)
+        expect(description).not.toStrictEqual(defaultDescriptionDiscover)
       })
   })
 
@@ -333,7 +333,7 @@ describe('discovery config.jsonc', () => {
                 value.handler?.type === 'accessControl' &&
                 value.handler.pickRoleMembers === undefined
               ) {
-                expect(key).toEqual('accessControl')
+                expect(key).toStrictEqual('accessControl')
               }
             }
           }
@@ -373,7 +373,7 @@ describe('discovery config.jsonc', () => {
         } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
     }
-  }).timeout(10_000)
+  }, 10_000)
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {
@@ -415,7 +415,7 @@ describe('discovery config.jsonc', () => {
         ].join('\n\n'),
       )
     }
-  }).timeout(10_000)
+  }, 10_000)
 })
 
 function compareLeftKeysInRight(

@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import type { ProjectDaTrackingConfig } from '../../types'
 import type { SnapshotIdentity } from '../types'
 import { freezeSnippet } from './identities'
@@ -23,7 +23,7 @@ describe(freezeSnippet.name, () => {
           sequencers: ['0xBB', '0xCC'],
         }),
       ),
-    ).toEqual(
+    ).toStrictEqual(
       [
         '    {',
         "      type: 'ethereum',",
@@ -52,7 +52,7 @@ describe(freezeSnippet.name, () => {
           topics: ['0xT1'],
         }),
       ),
-    ).toEqual(
+    ).toStrictEqual(
       [
         '    {',
         "      type: 'ethereum',",
@@ -73,7 +73,7 @@ describe(freezeSnippet.name, () => {
           namespace: 'AAAA=',
         }),
       ),
-    ).toInclude("      namespace: 'AAAA=',")
+    ).toContain("      namespace: 'AAAA=',")
     expect(
       freezeSnippet(
         identity({
@@ -83,7 +83,7 @@ describe(freezeSnippet.name, () => {
           appIds: ['17', '36'],
         }),
       ),
-    ).toInclude("      appIds: ['17', '36'],")
+    ).toContain("      appIds: ['17', '36'],")
     expect(
       freezeSnippet(
         identity({
@@ -93,7 +93,7 @@ describe(freezeSnippet.name, () => {
           sinceTimestamp: UnixTime(1700000000),
         }),
       ),
-    ).toEqual(
+    ).toStrictEqual(
       [
         '    {',
         "      type: 'eigen-da',",

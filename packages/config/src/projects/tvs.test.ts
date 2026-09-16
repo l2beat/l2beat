@@ -1,5 +1,5 @@
 import { assert, ProjectId, TokenId } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getProjects } from '../processing/getProjects'
 import {
   type AmountFormula,

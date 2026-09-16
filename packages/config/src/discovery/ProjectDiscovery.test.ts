@@ -4,7 +4,8 @@ import {
   type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
@@ -21,7 +22,9 @@ describe(ProjectDiscovery.name, () => {
     it('should return contract for given address', () => {
       const contract = discovery.getContract(contractStub.address.toString())
 
-      expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
+      expect(JSON.stringify(contract)).toStrictEqual(
+        JSON.stringify(contractStub),
+      )
     })
 
     it('should throw an error if contract with given address does not exist', () => {
@@ -38,7 +41,9 @@ describe(ProjectDiscovery.name, () => {
       assert(contractStub.name !== undefined)
       const contract = discovery.getContract(contractStub.name)
 
-      expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
+      expect(JSON.stringify(contract)).toStrictEqual(
+        JSON.stringify(contractStub),
+      )
     })
 
     it('should throw an error if contract for given name does not exist', () => {
@@ -65,7 +70,9 @@ describe(ProjectDiscovery.name, () => {
         contractStub.name,
         'CHILD_BLOCK_INTERVAL',
       )
-      expect(value).toEqual(contractStub.values?.CHILD_BLOCK_INTERVAL as number)
+      expect(value).toStrictEqual(
+        contractStub.values?.CHILD_BLOCK_INTERVAL as number,
+      )
     })
 
     it('should throw an error if given contract value does not exist', () => {
@@ -82,7 +89,7 @@ describe(ProjectDiscovery.name, () => {
     const discovery = new ProjectDiscovery('ExampleProject', configReader)
     const contract = discovery.getContract(contractStub.address.toString())
 
-    expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
+    expect(JSON.stringify(contract)).toStrictEqual(JSON.stringify(contractStub))
   })
 
   describe(ProjectDiscovery.prototype.replaceAddressesWithNames.name, () => {
@@ -90,7 +97,7 @@ describe(ProjectDiscovery.name, () => {
       const replaced = discovery.replaceAddressesWithNames(
         'Can be updated by eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac, eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
-      expect(replaced).toEqual(
+      expect(replaced).toStrictEqual(
         'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
     })
@@ -130,7 +137,7 @@ describe(ProjectDiscovery.name, () => {
 
       expect(actors.raw).toHaveLength(1)
       expect(actors.linkable).toHaveLength(1)
-      expect(actors.linkable[0]?.name).toEqual('OwnName')
+      expect(actors.linkable[0]?.name).toStrictEqual('OwnName')
     })
 
     it('should return empty arrays when no EOAs have permissions', () => {
@@ -150,7 +157,7 @@ describe(ProjectDiscovery.name, () => {
 
       const result = discoveryEmpty.getEoaActors()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         raw: [],
         linkable: [],
         grouped: [],
@@ -203,8 +210,8 @@ describe(ProjectDiscovery.name, () => {
       expect(result.raw).toHaveLength(1)
       expect(result.linkable).toHaveLength(1)
       expect(result.grouped).toHaveLength(1)
-      expect(result.linkable[0].name).toEqual('TestEOA')
-      expect(result.grouped[0].name).toEqual('TestEOA')
+      expect(result.linkable[0].name).toStrictEqual('TestEOA')
+      expect(result.grouped[0].name).toStrictEqual('TestEOA')
     })
 
     it('should group EOAs with same description but different chains', () => {
@@ -299,14 +306,16 @@ describe(ProjectDiscovery.name, () => {
       const ethGroup = result.grouped.find((g) => g.chain === 'ethereum')
       const arbGroup = result.grouped.find((g) => g.chain === 'arbitrum')
 
-      expect(ethGroup).not.toEqual(undefined)
-      expect(arbGroup).not.toEqual(undefined)
+      expect(ethGroup).not.toStrictEqual(undefined)
+      expect(arbGroup).not.toStrictEqual(undefined)
       expect(ethGroup?.accounts ?? []).toHaveLength(2)
       expect(arbGroup?.accounts ?? []).toHaveLength(1)
-      expect(ethGroup?.name).toEqual('MultiSigMember1 and MultiSigMember3')
-      expect(ethGroup?.id).toEqual('MultiSigMember1-and-MultiSigMember3')
-      expect(arbGroup?.name).toEqual('MultiSigMember2')
-      expect(arbGroup?.id).toEqual('MultiSigMember2')
+      expect(ethGroup?.name).toStrictEqual(
+        'MultiSigMember1 and MultiSigMember3',
+      )
+      expect(ethGroup?.id).toStrictEqual('MultiSigMember1-and-MultiSigMember3')
+      expect(arbGroup?.name).toStrictEqual('MultiSigMember2')
+      expect(arbGroup?.id).toStrictEqual('MultiSigMember2')
     })
   })
 })

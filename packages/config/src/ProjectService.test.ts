@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { unlinkSync } from 'fs'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ProjectDatabase } from './ProjectDatabase'
 import { ProjectService } from './ProjectService'
 import type { BaseProject, ProjectScalingInfo } from './types'
@@ -27,8 +27,8 @@ describe(ProjectService.name, () => {
   ]
 
   let db: ProjectDatabase
-  const TEMP_PATH = '/tmp/projectdb.sqlite'
-  before(async () => {
+  const TEMP_PATH = '/tmp/projectdb-service.sqlite'
+  beforeAll(async () => {
     try {
       unlinkSync(TEMP_PATH)
     } catch {}
@@ -39,7 +39,7 @@ describe(ProjectService.name, () => {
       await db.saveProject(project)
     }
   })
-  after(() => {
+  afterAll(() => {
     unlinkSync(TEMP_PATH)
   })
 
@@ -48,7 +48,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('foo'),
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
@@ -62,7 +62,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
-    expect(result).toEqual(undefined)
+    expect(result).toStrictEqual(undefined)
   })
 
   it('returns selected items', async () => {
@@ -72,7 +72,7 @@ describe(ProjectService.name, () => {
       select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
@@ -89,7 +89,7 @@ describe(ProjectService.name, () => {
       select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         id: ProjectId('foo'),
         slug: 'foochain',

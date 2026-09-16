@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { getProjects } from '../processing/getProjects'
 import { CROP_ATTESTATIONS } from './attestations'
 
@@ -16,11 +16,11 @@ describe('crop attestations', () => {
   )
 
   it('exactly one attestation is live under the current schema', () => {
-    expect(current.length).toEqual(1)
+    expect(current.length).toStrictEqual(1)
   })
 
   it('the live attestation names exactly the projects with crop evaluations', () => {
     const attested = [...(current[0]?.projectIds ?? [])].sort()
-    expect(attested).toEqual(reviewed)
+    expect(attested).toStrictEqual(reviewed)
   })
 })

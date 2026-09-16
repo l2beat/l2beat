@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { layer2aWithDups } from '../test/stubs/layer2aWithDups'
 import { getChainNames } from './chains'
@@ -8,6 +8,6 @@ describe(getChainNames.name, () => {
     const chains = getChainNames(layer2aWithDups)
 
     chains.sort()
-    expect(chains).toEqual(['ethereum', 'optimism'])
+    expect(chains).toStrictEqual(['ethereum', 'optimism'])
   })
 })

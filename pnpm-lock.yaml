@@ -520,9 +520,15 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
+      '@l2beat/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       '@types/diff':
         specifier: ^7.0.2
         version: 7.0.2
