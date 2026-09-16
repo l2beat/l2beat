@@ -1,18 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rangeToResolution } from './range'
 
 describe(rangeToResolution.name, () => {
-  let time: InstalledClock
-
   beforeEach(() => {
-    time = install()
-    time.setSystemTime(new Date('2026-04-15T12:00:00.000Z'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-04-15T12:00:00.000Z'))
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   it('returns hour for the exact 7d boundary', () => {

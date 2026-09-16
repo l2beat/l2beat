@@ -1,17 +1,14 @@
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { EventTracker } from './EventTracker'
 
 describe(EventTracker.name, () => {
-  let time: InstalledClock
-
   beforeEach(() => {
-    time = install()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    time.uninstall()
+    vi.useRealTimers()
   })
 
   it('has empty history by default', () => {
@@ -51,11 +48,11 @@ describe(EventTracker.name, () => {
 
     tracker.record('a')
     tracker.record('b')
-    time.tick(1000 * 60 * 30)
+    vi.advanceTimersByTime(1000 * 60 * 30)
     tracker.record('b')
     tracker.record('b')
     tracker.record('c')
-    time.tick(1000)
+    vi.advanceTimersByTime(1000)
     tracker.record('c')
 
     expect(tracker.getStatus()).toStrictEqual({
@@ -85,7 +82,7 @@ describe(EventTracker.name, () => {
     tracker.record('a')
     tracker.record('b')
     tracker.record('c')
-    time.tick(historySize)
+    vi.advanceTimersByTime(historySize)
     tracker.record('d')
 
     expect(tracker.getStatus()).toStrictEqual({
@@ -114,7 +111,7 @@ describe(EventTracker.name, () => {
 
     expect(tracker.getEventsCount()).toStrictEqual(3)
 
-    time.tick(historySize)
+    vi.advanceTimersByTime(historySize)
 
     expect(tracker.getEventsCount()).toStrictEqual(0)
 
@@ -123,7 +120,7 @@ describe(EventTracker.name, () => {
 
     expect(tracker.getEventsCount()).toStrictEqual(2)
 
-    time.tick(historySize)
+    vi.advanceTimersByTime(historySize)
 
     expect(tracker.getEventsCount()).toStrictEqual(0)
   })
