@@ -32,7 +32,10 @@ export const robinhood: ScalingProject = orbitStackL2({
         'https://portal.arbitrum.io/bridge?destinationChain=robinhood-chain&sourceChain=ethereum',
       ],
       documentation: ['https://docs.robinhood.com/chain'],
-      explorers: ['https://robinhoodchain.blockscout.com'],
+      explorers: [
+        'https://robinhoodchain.blockscout.com',
+        'https://robin.etherscan.io',
+      ],
       socialMedia: ['https://x.com/RobinhoodApp'],
     },
   },
