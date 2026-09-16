@@ -42,7 +42,7 @@ export function L2SummaryOthersTable({ entries }: Props) {
     [isLoading],
   )
 
-  const table = useTable('L2SummaryOthersTable', {
+  const table = useTable({
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),

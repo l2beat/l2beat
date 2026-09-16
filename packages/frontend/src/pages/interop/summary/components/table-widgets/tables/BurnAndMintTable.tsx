@@ -16,7 +16,7 @@ export function BurnAndMintTable({
     () => getBurnAndMintColumns(selectedChains),
     [selectedChains],
   )
-  const table = useTable<BurnAndMintProtocolRow>('BurnAndMintTable', {
+  const table = useTable<BurnAndMintProtocolRow>({
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

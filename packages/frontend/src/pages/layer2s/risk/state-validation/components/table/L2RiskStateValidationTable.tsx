@@ -19,7 +19,7 @@ export function L2RiskValidityTable({
   entries: L2RiskStateValidationValidityEntry[]
 }) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable('L2RiskValidityTable', {
+  const table = useTable({
     data: entries,
     columns: l2RiskStateValidationValidityColumns,
     getCoreRowModel: getCoreRowModel(),
@@ -45,7 +45,7 @@ export function L2RiskOptimisticTable({
   entries: L2RiskStateValidationOptimisticEntry[]
 }) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable('L2RiskOptimisticTable', {
+  const table = useTable({
     data: entries,
     columns: l2RiskStateValidationOptimisticColumns,
     getCoreRowModel: getCoreRowModel(),
@@ -71,7 +71,7 @@ export function L2RiskNoProofsTable({
   entries: L2RiskStateValidationNoProofsEntry[]
 }) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable('L2RiskNoProofsTable', {
+  const table = useTable({
     data: entries,
     columns: l2RiskStateValidationNoProofsColumns,
     getCoreRowModel: getCoreRowModel(),

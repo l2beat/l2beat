@@ -49,7 +49,7 @@ export function L2TvsTable({ tab, entries, breakdownType }: Props) {
     [breakdownType, display, isTvsLoading],
   )
 
-  const table = useTable('L2TvsTable', {
+  const table = useTable({
     data: tableRows,
     columns,
     getCoreRowModel: getCoreRowModel(),

@@ -12,7 +12,7 @@ export function DaRiskTable({
   items: DaRiskEntry[]
   excludeBridge?: boolean
 }) {
-  const table = useTable('DaRiskTable', {
+  const table = useTable({
     columns: excludeBridge ? customColumns : publicColumns,
     data: items,
     getCoreRowModel: getCoreRowModel(),

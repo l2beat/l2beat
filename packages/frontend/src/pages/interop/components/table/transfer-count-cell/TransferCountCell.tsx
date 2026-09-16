@@ -163,7 +163,7 @@ export function TransferDetailsDialog({
     }
   }, [canLoadMore, fetchNextPage])
 
-  const table = useTable<TransferRow>('TransferDetailsDialog', {
+  const table = useTable<TransferRow>({
     data: transferRows,
     columns: getTransferColumns(selectedChains),
     getCoreRowModel: getCoreRowModel(),

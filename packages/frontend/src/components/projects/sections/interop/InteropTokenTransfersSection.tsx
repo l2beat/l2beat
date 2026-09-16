@@ -82,7 +82,7 @@ export function InteropTokenTransfersSection({
     [selectedFrom, selectedTo],
   )
 
-  const table = useTable<TransferRow>('InteropTokenTransfersSection', {
+  const table = useTable<TransferRow>({
     data: fetchedItems,
     columns,
     getCoreRowModel: getCoreRowModel(),

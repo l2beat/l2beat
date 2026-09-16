@@ -36,7 +36,7 @@ export function L2CostsTable({ entries }: Props) {
 
   const columns = useMemo(() => getL2CostsColumns(metric), [metric])
 
-  const table = useTable('L2CostsTable', {
+  const table = useTable({
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),

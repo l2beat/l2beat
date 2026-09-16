@@ -42,7 +42,7 @@ export function L2SummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     [isLoading],
   )
 
-  const table = useTable('L2SummaryValidiumsAndOptimiumsTable', {
+  const table = useTable({
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),
