@@ -6,7 +6,8 @@ import type {
   TemplateService,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { getProject } from './getProject'
 
 const PROJECT = 'abstract'
@@ -33,11 +34,11 @@ describe(getProject.name, () => {
 
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
-    expect(addressesOf(response.entries[0])).toEqual([
+    expect(addressesOf(response.entries[0])).toStrictEqual([
       PROJECT_CONTRACT,
       SHARED_EOA,
     ])
-    expect(addressesOf(response.entries[1])).toEqual([SHARED_CONTRACT])
+    expect(addressesOf(response.entries[1])).toStrictEqual([SHARED_CONTRACT])
   })
 
   it('scopes an EOA shared by two modules to the first of them', () => {
@@ -52,8 +53,8 @@ describe(getProject.name, () => {
 
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
-    expect(addressesOf(response.entries[1])).toEqual([SHARED_EOA])
-    expect(response.entries.length).toEqual(2)
+    expect(addressesOf(response.entries[1])).toStrictEqual([SHARED_EOA])
+    expect(response.entries.length).toStrictEqual(2)
   })
 
   it('drops entries nothing in the project references', () => {
@@ -71,7 +72,7 @@ describe(getProject.name, () => {
 
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
-    expect(addressesOf(response.entries[1])).toEqual([SHARED_CONTRACT])
+    expect(addressesOf(response.entries[1])).toStrictEqual([SHARED_CONTRACT])
   })
 
   it('dims entries past maxDepth instead of dropping them', () => {
@@ -89,8 +90,11 @@ describe(getProject.name, () => {
     const response = getProject(configReader, mockTemplateService(), PROJECT, 0)
 
     const shared = response.entries[1]
-    expect(addressesOf(shared)).toEqual([UNLINKED_CONTRACT, SHARED_CONTRACT])
-    expect(shared.discoveredContracts.map((x) => x.isReachable)).toEqual([
+    expect(addressesOf(shared)).toStrictEqual([
+      UNLINKED_CONTRACT,
+      SHARED_CONTRACT,
+    ])
+    expect(shared.discoveredContracts.map((x) => x.isReachable)).toStrictEqual([
       false,
       true,
     ])
@@ -104,8 +108,8 @@ describe(getProject.name, () => {
 
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
-    expect(response.entries.length).toEqual(1)
-    expect(addressesOf(response.entries[0])).toEqual([PROJECT_CONTRACT])
+    expect(response.entries.length).toStrictEqual(1)
+    expect(addressesOf(response.entries[0])).toStrictEqual([PROJECT_CONTRACT])
   })
 
   it('never returns the same address twice', () => {
@@ -123,7 +127,7 @@ describe(getProject.name, () => {
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
     const addresses = response.entries.flatMap(addressesOf)
-    expect(addresses.length).toEqual(new Set(addresses).size)
+    expect(addresses.length).toStrictEqual(new Set(addresses).size)
   })
 })
 

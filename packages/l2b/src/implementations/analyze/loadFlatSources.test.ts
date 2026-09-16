@@ -1,7 +1,8 @@
 import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import mock from 'mock-fs'
+import { afterEach, describe, expect, it } from 'vitest'
 import {
   loadAnalyzerSourceInput,
   loadFlatEntrypointSourceInput,
@@ -52,8 +53,10 @@ describe(loadAnalyzerSourceInput.name, () => {
       entrypoint: 'contracts/Implementation.sol',
     })
 
-    expect(result.entrypoint).toEqual('Proxy/contracts/Implementation.sol')
-    expect(Object.keys(result.files).sort()).toEqual([
+    expect(result.entrypoint).toStrictEqual(
+      'Proxy/contracts/Implementation.sol',
+    )
+    expect(Object.keys(result.files).sort()).toStrictEqual([
       'Direct.sol',
       'Proxy/Proxy.p.sol',
       'Proxy/contracts/Implementation.sol',
@@ -62,7 +65,7 @@ describe(loadAnalyzerSourceInput.name, () => {
       Buffer.from(
         result.files['Proxy/contracts/Implementation.sol']!,
       ).toString(),
-    ).toEqual('contract Implementation {}')
+    ).toStrictEqual('contract Implementation {}')
   })
 
   it('loads the full .flat folder for a direct contract entrypoint', async () => {
@@ -74,13 +77,13 @@ describe(loadAnalyzerSourceInput.name, () => {
       entrypoint: 'Direct.sol',
     })
 
-    expect(result.entrypoint).toEqual('Direct.sol')
-    expect(Object.keys(result.files).sort()).toEqual([
+    expect(result.entrypoint).toStrictEqual('Direct.sol')
+    expect(Object.keys(result.files).sort()).toStrictEqual([
       'Direct.sol',
       'Proxy/Proxy.p.sol',
       'Proxy/contracts/Implementation.sol',
     ])
-    expect(Buffer.from(result.files['Direct.sol']!).toString()).toEqual(
+    expect(Buffer.from(result.files['Direct.sol']!).toString()).toStrictEqual(
       'contract Direct {}',
     )
   })
@@ -94,7 +97,7 @@ describe(loadAnalyzerSourceInput.name, () => {
         address: ADDRESS,
         entrypoint: 'Missing.sol',
       }),
-    ).toBeRejectedWith('Entrypoint not found')
+    ).rejects.toThrow('Entrypoint not found')
   })
 })
 
@@ -110,13 +113,13 @@ describe(loadFlatEntrypointSourceInput.name, () => {
       `${PROJECT_PATH}/.flat/Direct.sol`,
     )
 
-    expect(result.entrypoint).toEqual('Direct.sol')
-    expect(Object.keys(result.files).sort()).toEqual([
+    expect(result.entrypoint).toStrictEqual('Direct.sol')
+    expect(Object.keys(result.files).sort()).toStrictEqual([
       'Direct.sol',
       'Proxy/Proxy.p.sol',
       'Proxy/contracts/Implementation.sol',
     ])
-    expect(Buffer.from(result.files['Direct.sol']!).toString()).toEqual(
+    expect(Buffer.from(result.files['Direct.sol']!).toString()).toStrictEqual(
       'contract Direct {}',
     )
   })
@@ -128,8 +131,10 @@ describe(loadFlatEntrypointSourceInput.name, () => {
       `${PROJECT_PATH}/.flat/Proxy/contracts/Implementation.sol`,
     )
 
-    expect(result.entrypoint).toEqual('Proxy/contracts/Implementation.sol')
-    expect(Object.keys(result.files).sort()).toEqual([
+    expect(result.entrypoint).toStrictEqual(
+      'Proxy/contracts/Implementation.sol',
+    )
+    expect(Object.keys(result.files).sort()).toStrictEqual([
       'Direct.sol',
       'Proxy/Proxy.p.sol',
       'Proxy/contracts/Implementation.sol',
@@ -138,7 +143,7 @@ describe(loadFlatEntrypointSourceInput.name, () => {
       Buffer.from(
         result.files['Proxy/contracts/Implementation.sol']!,
       ).toString(),
-    ).toEqual('contract Implementation {}')
+    ).toStrictEqual('contract Implementation {}')
   })
 
   it('rejects entrypoints outside a .flat folder', async () => {
@@ -150,7 +155,7 @@ describe(loadFlatEntrypointSourceInput.name, () => {
 
     await expect(
       loadFlatEntrypointSourceInput(`${PROJECT_PATH}/Contract.sol`),
-    ).toBeRejectedWith('Entrypoint path must be inside a .flat')
+    ).rejects.toThrow('Entrypoint path must be inside a .flat')
   })
 })
 

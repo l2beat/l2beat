@@ -1,4 +1,5 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import {
   type AnalyzeRunner,
   AnalyzeRunnerUnavailableError,
@@ -16,7 +17,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toEqual({ runner: 'cli', result: 'cli' })
+    expect(result).toStrictEqual({ runner: 'cli', result: 'cli' })
   })
 
   it('falls back to api in auto mode when cli is unavailable', async () => {
@@ -34,7 +35,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toEqual({ runner: 'api', result: 'api' })
+    expect(result).toStrictEqual({ runner: 'api', result: 'api' })
   })
 
   it('does not fall back in cli mode', async () => {
@@ -52,7 +53,7 @@ describe(runWithSelectedRunner.name, () => {
           api: runner('api'),
         },
       ),
-    ).toBeRejectedWith('missing')
+    ).rejects.toThrow('missing')
   })
 
   it('uses only api in api mode', async () => {
@@ -65,7 +66,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toEqual({ runner: 'api', result: 'api' })
+    expect(result).toStrictEqual({ runner: 'api', result: 'api' })
   })
 })
 

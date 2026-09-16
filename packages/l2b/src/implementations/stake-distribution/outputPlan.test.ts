@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import {
   type ProjectStakeDistribution,
   planStakeDistributionOutput,
@@ -32,7 +32,7 @@ describe(planStakeDistributionOutput.name, () => {
       [polygon, gnosis],
     )
 
-    expect(plan).toEqual([
+    expect(plan).toStrictEqual([
       {
         path: '/repo/discovery/polygon-pos/stake-distribution.json',
         data: polygon.distribution,
@@ -51,7 +51,7 @@ describe(planStakeDistributionOutput.name, () => {
       [polygon, gnosis],
     )
 
-    expect(plan).toEqual([
+    expect(plan).toStrictEqual([
       {
         path: '/tmp/all.json',
         data: [
@@ -69,7 +69,7 @@ describe(planStakeDistributionOutput.name, () => {
       [gnosis],
     )
 
-    expect(plan).toEqual([
+    expect(plan).toStrictEqual([
       { path: '/tmp/gnosis.json', data: gnosis.distribution },
     ])
   })

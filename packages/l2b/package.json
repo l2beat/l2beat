@@ -20,7 +20,7 @@
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha"
+    "test": "vitest run"
   },
   "dependencies": {
     "@ethereum-sourcify/bytecode-utils": "^1.5.1",
@@ -50,13 +50,12 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "@types/mocha": "^10.0.6",
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/readline-sync": "^1.4.8",
-    "earl": "^1.1.0",
-    "mocha": "^10.2.0",
     "mock-fs": "^5.2.0",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

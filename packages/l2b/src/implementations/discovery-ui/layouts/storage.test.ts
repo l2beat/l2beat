@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import mock from 'mock-fs'
+import { afterEach, describe, expect, it } from 'vitest'
 import {
   LayoutStorageError,
   listProjectLayouts,
@@ -40,7 +40,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(listProjectLayouts(PROJECT_PATH)).toEqual([
+    expect(listProjectLayouts(PROJECT_PATH)).toStrictEqual([
       { name: 'alpha', description: 'First layout' },
       { name: 'beta', description: 'Second layout' },
     ])
@@ -55,7 +55,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(listProjectLayouts(PROJECT_PATH)).toEqual([
+    expect(listProjectLayouts(PROJECT_PATH)).toStrictEqual([
       { name: 'broken', description: undefined },
     ])
   })
@@ -79,7 +79,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(written).toEqual({
+    expect(written).toStrictEqual({
       version: 3,
       projectId: PROJECT,
       metadata: {
@@ -89,7 +89,7 @@ describe('layout storage', () => {
     })
 
     const parsed = readProjectLayout(PROJECT_PATH, 'research-layout')
-    expect(parsed).toEqual(written)
+    expect(parsed).toStrictEqual(written)
   })
 
   it('drops invalid metadata description instead of rejecting the layout', () => {
@@ -111,7 +111,9 @@ describe('layout storage', () => {
       },
     })
 
-    expect(readProjectLayout(PROJECT_PATH, 'invalid description')).toEqual({
+    expect(
+      readProjectLayout(PROJECT_PATH, 'invalid description'),
+    ).toStrictEqual({
       version: 3,
       projectId: PROJECT,
       locations: {},

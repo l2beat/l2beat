@@ -1,6 +1,6 @@
 import type { DiscoveryOutput } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { orderProjectsForModelling } from './orderProjectsForModelling'
 
 describe(orderProjectsForModelling.name, () => {
@@ -12,14 +12,14 @@ describe(orderProjectsForModelling.name, () => {
       discovery('d'),
       discovery('e'),
     ]
-    expect(orderProjectsForModelling(discoveries)).toEqual([
+    expect(orderProjectsForModelling(discoveries)).toStrictEqual([
       'd',
       'b',
       'c',
       'a',
       'e',
     ])
-    expect(orderProjectsForModelling(discoveries.reverse())).toEqual([
+    expect(orderProjectsForModelling(discoveries.reverse())).toStrictEqual([
       'd',
       'b',
       'c',

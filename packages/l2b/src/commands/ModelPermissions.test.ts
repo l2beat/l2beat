@@ -1,7 +1,6 @@
 import { type DiscoveryOutput, getDiscoveryPaths } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { execFileSync, spawnSync } from 'child_process'
-import { expect } from 'earl'
 import {
   copyFileSync,
   mkdirSync,
@@ -12,6 +11,7 @@ import {
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
+import { describe, expect, it } from 'vitest'
 
 describe('model-permissions all', () => {
   it('stops after a history failure before modelling or writing the next project', () => {
@@ -81,14 +81,14 @@ describe('model-permissions all', () => {
         { cwd: root, encoding: 'utf8' },
       )
 
-      expect(result.status).toEqual(1)
-      expect(result.stderr).toInclude('higher than current discovery timestamp')
-      expect(result.stdout).not.toInclude('Modelling: b')
-      expect(readFileSync(nextPath, 'utf8')).toEqual(nextBefore)
+      expect(result.status).toStrictEqual(1)
+      expect(result.stderr).toContain('higher than current discovery timestamp')
+      expect(result.stdout).not.toContain('Modelling: b')
+      expect(readFileSync(nextPath, 'utf8')).toStrictEqual(nextBefore)
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
-  }).timeout(15_000)
+  }, 15_000)
 
   it('records the module version actually used, warns when it is uncommitted, and permits updating just one consumer', () => {
     const root = mkdtempSync(join(tmpdir(), 'model-permissions-order-'))
@@ -174,14 +174,14 @@ describe('model-permissions all', () => {
         )
       const staleWarning = 'A mismatch has been detected'
 
-      expect(run('all')).not.toInclude(staleWarning)
+      expect(run('all')).not.toContain(staleWarning)
       const module = read('z')
-      expect(module.permissionsConfigHash).not.toEqual(Hash256.ZERO)
-      expect('modelledAgainst' in module).toEqual(false)
-      expect(read('a').modelledAgainst).toEqual({
+      expect(module.permissionsConfigHash).not.toStrictEqual(Hash256.ZERO)
+      expect('modelledAgainst' in module).toStrictEqual(false)
+      expect(read('a').modelledAgainst).toStrictEqual({
         z: module.permissionsConfigHash!,
       })
-      expect(read('b').modelledAgainst).toEqual({
+      expect(read('b').modelledAgainst).toStrictEqual({
         z: module.permissionsConfigHash!,
       })
 
@@ -192,21 +192,21 @@ describe('model-permissions all', () => {
         'provenanceVersion(2).',
       )
       const consumerFirst = run('a')
-      expect(consumerFirst).toInclude(staleWarning)
-      expect(consumerFirst).toInclude('l2b model-permissions z')
-      expect(read('a').modelledAgainst.z).not.toEqual(
+      expect(consumerFirst).toContain(staleWarning)
+      expect(consumerFirst).toContain('l2b model-permissions z')
+      expect(read('a').modelledAgainst.z).not.toStrictEqual(
         module.permissionsConfigHash!,
       )
-      expect(run('z')).not.toInclude(staleWarning)
-      expect(read('z').permissionsConfigHash).not.toEqual(
+      expect(run('z')).not.toContain(staleWarning)
+      expect(read('z').permissionsConfigHash).not.toStrictEqual(
         module.permissionsConfigHash,
       )
-      expect(read('a').modelledAgainst).toEqual({
+      expect(read('a').modelledAgainst).toStrictEqual({
         z: read('z').permissionsConfigHash!,
       })
-      expect(readFileSync(untouchedPath, 'utf8')).toEqual(untouched)
+      expect(readFileSync(untouchedPath, 'utf8')).toStrictEqual(untouched)
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
-  }).timeout(30_000)
+  }, 30_000)
 })

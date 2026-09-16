@@ -1,7 +1,8 @@
 import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import mock from 'mock-fs'
+import { afterEach, describe, expect, it } from 'vitest'
 import { getCodePaths } from '../discovery/getCodePaths'
 
 const PROJECT = 'zora'
@@ -59,7 +60,7 @@ describe(getCodePaths.name, () => {
 
     const result = getCodePaths(configReader, PROJECT, ADDRESS)
 
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       entryName: 'Proxy',
       codePaths: [
         {

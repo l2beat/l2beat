@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { strFromU8, strToU8, unzipSync } from 'fflate'
+import { describe, expect, it } from 'vitest'
 import { createSourcesArchive } from './AnalyzeClient'
 
 describe(createSourcesArchive.name, () => {
@@ -10,11 +10,11 @@ describe(createSourcesArchive.name, () => {
     })
 
     const files = unzipSync(archive)
-    expect(Object.keys(files).sort()).toEqual([
+    expect(Object.keys(files).sort()).toStrictEqual([
       'contracts/token/Token.sol',
       'interfaces/IERC20.sol',
     ])
-    expect(strFromU8(files['contracts/token/Token.sol']!)).toEqual(
+    expect(strFromU8(files['contracts/token/Token.sol']!)).toStrictEqual(
       'contract Token {}',
     )
   })
