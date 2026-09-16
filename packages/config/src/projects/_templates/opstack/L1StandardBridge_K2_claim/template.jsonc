@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1StandardBridge",
-  "description": "Exit-mode version of the L1StandardBridge: deposits and the standard withdrawal path are disabled. Escrowed ERC20 tokens can only be claimed with a Merkle proof against a root set by the OptimismPortal Guardian. While claims are paused and after the OptimismPortal's RECOVERY_TIMESTAMP, the Guardian can recover all remaining tokens and ETH to an arbitrary address.",
+  "description": "Modified L1StandardBridge: deposits and finalizing withdrawals are disabled. ERC20 tokens held by the contract can only be claimed with a Merkle proof against merkleRoot. After the recovery timestamp and while claims are paused (both read from OPTIMISM_PORTAL), the guardian can withdraw all tokens and ETH.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {
     "$admin": {
@@ -12,8 +12,22 @@
         }
       ]
     },
+    "guardian": {
+      "handler": {
+        "type": "call",
+        "method": "function guardian() view returns (address)",
+        "args": [],
+        "address": "{{ OPTIMISM_PORTAL }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set merkleRoot and, after the recovery timestamp while claims are paused, withdraw all tokens and ETH."
+        }
+      ]
+    },
     "merkleRoot": {
-      "description": "Merkle root of the ERC20 claim tree set by the Guardian."
+      "description": "Root of the Merkle tree of (address, tokens, cumulative amounts) ERC20 claims."
     }
   },
   "category": "bridge-canonical"

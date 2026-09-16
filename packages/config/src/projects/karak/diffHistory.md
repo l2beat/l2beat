@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xea075f6f3bae73804e986d93b8079951196bbe8e
+Generated with discovered.json: 0x79d526aaf80a7f07340d7586c73e3e393dc2c095
 
-# Diff at Wed, 16 Sep 2026 14:03:39 GMT:
+# Diff at Wed, 16 Sep 2026 14:09:12 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1783591047
-- current timestamp: 1789567356
+- current timestamp: 1789567688
 
 ## Description
 
@@ -23,18 +23,20 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
 ```diff
     contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
     +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","description":"set merkleRoot and, after the recovery timestamp while claims are paused, withdraw all tokens and ETH.","role":".guardian"}
       receivedPermissions.3.description:
 -        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
-+        "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address."
++        "set merkleRootETH, pause and unpause claims, and after RECOVERY_TIMESTAMP (while paused) withdraw the whole ETH balance."
       receivedPermissions.4.description:
 -        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
-+        "set the Merkle roots that define who can claim the escrowed ETH (OptimismPortal) and ERC20 tokens (L1StandardBridge), pause and unpause claims, and, while claims are paused and after RECOVERY_TIMESTAMP, recover all remaining escrowed funds to an arbitrary address."
++        "set merkleRootETH, pause and unpause claims, and after RECOVERY_TIMESTAMP (while paused) withdraw the whole ETH balance."
     }
 ```
 
 ```diff
     contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [opstack/L1StandardBridge_K2_claim] {
-    +++ description: Exit-mode version of the L1StandardBridge: deposits and the standard withdrawal path are disabled. Escrowed ERC20 tokens can only be claimed with a Merkle proof against a root set by the OptimismPortal Guardian. While claims are paused and after the OptimismPortal's RECOVERY_TIMESTAMP, the Guardian can recover all remaining tokens and ETH to an arbitrary address.
+    +++ description: Modified L1StandardBridge: deposits and finalizing withdrawals are disabled. ERC20 tokens held by the contract can only be claimed with a Merkle proof against merkleRoot. After the recovery timestamp and while claims are paused (both read from OPTIMISM_PORTAL), the guardian can withdraw all tokens and ETH.
       template:
 -        "opstack/L1StandardBridge"
 +        "opstack/L1StandardBridge_K2_claim"
@@ -43,14 +45,16 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
 +        "0x32ea980305b615ec390e8c57663c0734c2ebf70465e6076b26eb8262e7400dba"
       description:
 -        "The main entry point to deposit ERC20 tokens from host chain to this chain."
-+        "Exit-mode version of the L1StandardBridge: deposits and the standard withdrawal path are disabled. Escrowed ERC20 tokens can only be claimed with a Merkle proof against a root set by the OptimismPortal Guardian. While claims are paused and after the OptimismPortal's RECOVERY_TIMESTAMP, the Guardian can recover all remaining tokens and ETH to an arbitrary address."
++        "Modified L1StandardBridge: deposits and finalizing withdrawals are disabled. ERC20 tokens held by the contract can only be claimed with a Merkle proof against merkleRoot. After the recovery timestamp and while claims are paused (both read from OPTIMISM_PORTAL), the guardian can withdraw all tokens and ETH."
       values.$implementation:
 -        "eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13"
 +        "eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A"
       values.version:
 -        "1.4.0"
 +        "2.3.0"
-+++ description: Merkle root of the ERC20 claim tree set by the Guardian.
+      values.guardian:
++        "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
++++ description: Root of the Merkle tree of (address, tokens, cumulative amounts) ERC20 claims.
       values.merkleRoot:
 +        "0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840"
       values.OPTIMISM_PORTAL:
@@ -60,13 +64,13 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
       implementationNames.eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A:
 +        "L1StandardBridge"
       fieldMeta:
-+        {"merkleRoot":{"description":"Merkle root of the ERC20 claim tree set by the Guardian."}}
++        {"merkleRoot":{"description":"Root of the Merkle tree of (address, tokens, cumulative amounts) ERC20 claims."}}
     }
 ```
 
 ```diff
     contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [opstack/OptimismPortal_K2_claim] {
-    +++ description: Exit-mode version of the OptimismPortal: deposits and the standard prove/finalize withdrawal path are disabled. Escrowed ETH can only be claimed with a Merkle proof against a root set by the Guardian. While claims are paused and after RECOVERY_TIMESTAMP, the Guardian can recover all remaining ETH to an arbitrary address.
+    +++ description: Modified OptimismPortal: deposits, proving and finalizing withdrawals are disabled. ETH held by the contract can only be claimed with a Merkle proof against merkleRootETH. After RECOVERY_TIMESTAMP and while claims are paused, the guardian can withdraw the whole ETH balance.
       template:
 -        "opstack/OptimismPortal"
 +        "opstack/OptimismPortal_K2_claim"
@@ -75,7 +79,7 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
 +        "0x094c023344df46deb39df74619a815bc1bfced43ad55bb1f9dbb4e9c8718ba65"
       description:
 -        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-+        "Exit-mode version of the OptimismPortal: deposits and the standard prove/finalize withdrawal path are disabled. Escrowed ETH can only be claimed with a Merkle proof against a root set by the Guardian. While claims are paused and after RECOVERY_TIMESTAMP, the Guardian can recover all remaining ETH to an arbitrary address."
++        "Modified OptimismPortal: deposits, proving and finalizing withdrawals are disabled. ETH held by the contract can only be claimed with a Merkle proof against merkleRootETH. After RECOVERY_TIMESTAMP and while claims are paused, the guardian can withdraw the whole ETH balance."
       values.$implementation:
 -        "eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E"
 +        "eth:0xB1762246367681e5b335968950e8A17b0c56021D"
@@ -87,10 +91,10 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
       values.version:
 -        "1.10.0"
 +        "2.3.0"
-+++ description: Merkle root of the ETH claim tree set by the Guardian.
++++ description: Root of the Merkle tree of (address, cumulative amount) ETH claims.
       values.merkleRootETH:
 +        "0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9"
-+++ description: Timestamp after which the Guardian can recover all remaining escrowed funds.
++++ description: Timestamp after which the guardian can withdraw the whole ETH balance.
       values.RECOVERY_TIMESTAMP:
 +        1820707200
       implementationNames.eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E:
@@ -98,7 +102,7 @@ Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on
       implementationNames.eth:0xB1762246367681e5b335968950e8A17b0c56021D:
 +        "OptimismPortal"
       fieldMeta:
-+        {"merkleRootETH":{"description":"Merkle root of the ETH claim tree set by the Guardian."},"RECOVERY_TIMESTAMP":{"description":"Timestamp after which the Guardian can recover all remaining escrowed funds."}}
++        {"merkleRootETH":{"description":"Root of the Merkle tree of (address, cumulative amount) ETH claims."},"RECOVERY_TIMESTAMP":{"description":"Timestamp after which the guardian can withdraw the whole ETH balance."}}
     }
 ```
 
