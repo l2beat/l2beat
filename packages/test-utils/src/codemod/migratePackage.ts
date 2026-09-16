@@ -87,7 +87,7 @@ function convertPackageConfig(
   const mocha = readMochaConfig(packageDir, loaded)
   const includes = (
     mocha.specs.length > 0 ? mocha.specs : [DEFAULT_TEST_GLOB]
-  ).filter((glob) => !PRESET_INCLUDES.includes(glob))
+  ).filter((glob) => !coveredByPreset(glob))
 
   for (const name of readdirSync(packageDir)) {
     if (!name.startsWith('.mocharc')) {
@@ -339,6 +339,26 @@ export function rewriteScripts(
  */
 function loadedMochaConfig(packageDir: string): string | undefined {
   return readdirSync(packageDir).find((it) => it.startsWith('.mocharc.'))
+}
+
+/**
+ * A mocharc spec like `{src,scripts}/**\/*.test.ts` names exactly what the
+ * preset already includes. Repeating it would only add a third pattern that
+ * matches the same files, because the preset merges arrays by concatenation.
+ */
+function coveredByPreset(testGlob: string): boolean {
+  return expandBraces(testGlob).every((it) => PRESET_INCLUDES.includes(it))
+}
+
+function expandBraces(glob: string): string[] {
+  const match = /^(.*)\{([^{}]*)\}(.*)$/.exec(glob)
+  if (!match) {
+    return [glob]
+  }
+  const [, prefix = '', alternatives = '', suffix = ''] = match
+  return alternatives
+    .split(',')
+    .flatMap((it) => expandBraces(`${prefix}${it}${suffix}`))
 }
 
 function withoutMochaAndEarl(
