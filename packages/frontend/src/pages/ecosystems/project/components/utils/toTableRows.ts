@@ -29,12 +29,9 @@ export function toTableRows({
         tvsData: excludeRwaRestrictedTokens
           ? withoutRwaRestricted
           : withRwaRestricted,
-        tvsOrder: excludeRwaRestrictedTokens
-          ? (withoutRwaRestricted?.breakdown.total ?? -1)
-          : (withRwaRestricted?.breakdown.total ?? -1),
       }
     })
-    .sort(compareTvs)
+    .sort(compareTvs((row) => row.tvsData?.breakdown.total))
 }
 
 export type EcosystemProjectsTableRow = ReturnType<typeof toTableRows>[number]

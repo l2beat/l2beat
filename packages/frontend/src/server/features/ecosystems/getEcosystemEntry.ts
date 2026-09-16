@@ -247,7 +247,6 @@ export async function getEcosystemEntry(
       const entry = getL2SummaryEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvs.projects[project.id.toString()],
         projectsActivity[project.id.toString()],
         !!projectsOngoingAnomalies[project.id.toString()],
         zkCatalogProjects,

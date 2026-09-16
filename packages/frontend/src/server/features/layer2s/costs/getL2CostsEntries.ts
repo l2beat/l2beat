@@ -34,13 +34,12 @@ export async function getL2CostsEntries(helpers: SsrHelpers) {
         costs[project.id],
       ),
     )
-    .sort(compareCosts)
+    .sort(compareCosts((entry) => getCostPerUop(costs[entry.id])))
   return groupByL2Tabs(entries)
 }
 
 export interface L2CostsEntry extends CommonL2Entry {
   costsWarning: WarningWithSentiment | undefined
-  costOrder: number
 }
 
 function getL2CostEntry(
@@ -51,11 +50,6 @@ function getL2CostEntry(
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
 ): L2CostsEntry {
-  const costPerUop =
-    costs?.uopsCount && costs.usd.total
-      ? costs.usd.total / costs.uopsCount
-      : Number.POSITIVE_INFINITY
-
   return {
     ...getCommonL2Entry({
       project,
@@ -63,6 +57,11 @@ function getL2CostEntry(
       changes,
     }),
     costsWarning: project.costsInfo.warning,
-    costOrder: costPerUop,
   }
+}
+
+function getCostPerUop(costs: CostsTableData[string] | undefined): number {
+  return costs?.uopsCount && costs.usd.total
+    ? costs.usd.total / costs.uopsCount
+    : Number.POSITIVE_INFINITY
 }

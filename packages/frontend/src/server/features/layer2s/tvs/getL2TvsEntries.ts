@@ -9,7 +9,6 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonL2Entry } from '../getCommonL2Entry'
 import { getCommonL2Entry } from '../getCommonL2Entry'
-import type { ProjectSevenDayTvsBreakdown } from './get7dTvsBreakdown'
 import { get7dTvsBreakdown } from './get7dTvsBreakdown'
 import { compareTvs } from './utils/compareTvs'
 
@@ -27,14 +26,10 @@ export async function getL2TvsEntries() {
 
   const entries = projects
     .map((project) =>
-      getL2TvsEntry(
-        project,
-        projectsChangeReport.getChanges(project.id),
-        tvs.projects[project.id.toString()],
-      ),
+      getL2TvsEntry(project, projectsChangeReport.getChanges(project.id)),
     )
     .filter((entry) => entry !== undefined)
-    .sort(compareTvs)
+    .sort(compareTvs((entry) => tvs.projects[entry.id]?.breakdown.total))
 
   return groupByL2Tabs(entries)
 }
@@ -44,7 +39,6 @@ export interface L2TvsEntry extends CommonL2Entry {
     associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
   }
-  tvsOrder: number
 }
 
 function getL2TvsEntry(
@@ -53,7 +47,6 @@ function getL2TvsEntry(
     'contracts'
   >,
   changes: ProjectChanges,
-  data: ProjectSevenDayTvsBreakdown | undefined,
 ): L2TvsEntry | undefined {
   return {
     ...getCommonL2Entry({ project, changes }),
@@ -61,6 +54,5 @@ function getL2TvsEntry(
       associatedTokens: project.tvsInfo.associatedTokens,
       warnings: project.tvsInfo.warnings,
     },
-    tvsOrder: data?.breakdown.total ?? -1,
   }
 }

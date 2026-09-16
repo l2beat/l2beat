@@ -25,7 +25,6 @@ import { getActivitySyncWarning } from '../activity/utils/syncStatus'
 import type { CommonL2Entry } from '../getCommonL2Entry'
 import { getCommonL2Entry } from '../getCommonL2Entry'
 import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
-import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
@@ -73,13 +72,12 @@ export async function getL2SummaryData() {
       getL2SummaryEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvs.projects[project.id.toString()],
         projectsActivity[project.id.toString()],
         !!projectsOngoingAnomalies[project.id.toString()],
         zkCatalogProjects,
       ),
     )
-    .sort(compareTvs)
+    .sort(compareTvs((entry) => tvs.projects[entry.id]?.breakdown.total))
 
   return { tabs: groupByL2Tabs(entries), sevenDayTvsBreakdown: tvs }
 }
@@ -104,7 +102,6 @@ export interface L2SummaryEntry extends CommonL2Entry {
         isSynced: boolean
       }
     | undefined
-  tvsOrder: number
   risks: RosetteValue[]
 }
 
@@ -114,7 +111,6 @@ export function getL2SummaryEntry(
     'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig' | 'contracts'
   >,
   changes: ProjectChanges,
-  latestTvs: ProjectSevenDayTvsBreakdown | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
   ongoingAnomaly: boolean,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
@@ -151,7 +147,6 @@ export function getL2SummaryEntry(
       changePeriod: activity.changePeriod,
       isSynced: !activitySyncWarning,
     },
-    tvsOrder: latestTvs?.breakdown.total ?? -1,
     risks: getL2Risks(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),

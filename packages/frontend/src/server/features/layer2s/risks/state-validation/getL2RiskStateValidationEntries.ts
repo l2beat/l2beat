@@ -102,10 +102,13 @@ export async function getL2RiskStateValidationEntries() {
     ),
   )
 
+  const byTvs = compareTvs(
+    (entry: CommonL2Entry) => tvs.projects[entry.id]?.breakdown.total,
+  )
   return {
-    validity: validityEntries.sort(compareTvs),
-    optimistic: optimisticEntries.sort(compareTvs),
-    noProofs: noProofsEntries.sort(compareTvs),
+    validity: validityEntries.sort(byTvs),
+    optimistic: optimisticEntries.sort(byTvs),
+    noProofs: noProofsEntries.sort(byTvs),
   }
 }
 
@@ -120,7 +123,6 @@ export interface TvsData {
 }
 
 export interface L2RiskStateValidationValidityEntry extends CommonL2Entry {
-  tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
   trustedSetups: Pick<
@@ -176,7 +178,6 @@ function getL2RiskStateValidationValidityEntry(
   const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonL2Entry({ project, changes }),
-    tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: getProofSystemWithName(proofSystem, zkCatalogProjects),
     isa: isas.length > 0 ? isas.join(' / ') : undefined,
     trustedSetups,
@@ -189,7 +190,6 @@ function getL2RiskStateValidationValidityEntry(
 }
 
 export interface L2RiskStateValidationOptimisticEntry extends CommonL2Entry {
-  tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
@@ -272,7 +272,6 @@ function getL2RiskStateValidationOptimisticEntry(
   const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonL2Entry({ project, changes }),
-    tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: getProofSystemWithName(proofSystem, zkCatalogProjects),
     executionDelay: stateValidation?.executionDelay,
     executionDelayMode: stateValidation?.executionDelayMode,
@@ -286,7 +285,6 @@ function getL2RiskStateValidationOptimisticEntry(
 }
 
 export interface L2RiskStateValidationNoProofsEntry extends CommonL2Entry {
-  tvsOrder: number
   tvs: TvsData
 }
 
@@ -301,7 +299,6 @@ function getL2RiskStateValidationNoProofsEntry(
   const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonL2Entry({ project, changes }),
-    tvsOrder: projectTvs?.breakdown?.total ?? -1,
     tvs: getTvsData(project, projectTvs),
   }
 }

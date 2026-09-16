@@ -31,20 +31,15 @@ export async function getL2RiskEntries() {
 
   const entries = projects
     .map((project) =>
-      getL2RiskEntry(
-        project,
-        projectsChangeReport.getChanges(project.id),
-        tvs.projects[project.id]?.breakdown.total,
-      ),
+      getL2RiskEntry(project, projectsChangeReport.getChanges(project.id)),
     )
-    .sort(compareTvs)
+    .sort(compareTvs((entry) => tvs.projects[entry.id]?.breakdown.total))
 
   return groupByL2Tabs(entries)
 }
 
 export interface L2RiskEntry extends CommonL2Entry {
   risks: ProjectRiskView
-  tvsOrder: number
   hasStateValidationSection: boolean
   hasDataAvailabilitySection: boolean
   hasWithdrawalsSection: boolean
@@ -62,12 +57,10 @@ function getL2RiskEntry(
     'customDa' | 'scalingDa' | 'contracts'
   >,
   changes: ProjectChanges,
-  tvs: number | undefined,
 ): L2RiskEntry {
   return {
     ...getCommonL2Entry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvsOrder: tvs ?? -1,
     hasStateValidationSection: !!project.scalingTechnology?.stateValidation,
     hasDataAvailabilitySection: !!getDataAvailabilitySection(project),
     hasWithdrawalsSection: !!getWithdrawalsSection(project),

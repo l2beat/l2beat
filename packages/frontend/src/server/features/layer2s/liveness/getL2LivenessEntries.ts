@@ -61,13 +61,12 @@ export async function getL2LivenessEntries() {
         project,
         projectsChangeReport,
         liveness[project.id.toString()],
-        tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
         !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .filter((x) => x !== undefined)
-    .sort(compareTvs)
+    .sort(compareTvs((entry) => tvs.projects[entry.id]?.breakdown.total))
 
   return groupByL2Tabs(entries)
 }
@@ -81,7 +80,6 @@ export interface L2LivenessEntry extends CommonL2Entry {
   anomalies: LivenessAnomaly[]
   dataAvailabilityMode: TableReadyValue[] | undefined
   hasTrackedContractsChanged: boolean
-  tvsOrder: number
 }
 
 function getL2LivenessEntry(
@@ -95,7 +93,6 @@ function getL2LivenessEntry(
   >,
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessProject | undefined,
-  tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   ongoingAnomaly: boolean,
 ): L2LivenessEntry | undefined {
@@ -129,7 +126,6 @@ function getL2LivenessEntry(
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
     dataAvailabilityMode: project.scalingDa?.map((da) => da.mode),
-    tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }
 }

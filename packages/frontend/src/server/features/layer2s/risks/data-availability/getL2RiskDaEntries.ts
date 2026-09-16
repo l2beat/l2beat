@@ -89,13 +89,12 @@ export async function getL2RiskDaEntries() {
         risks,
         daLayers,
         projectsChangeReport.getChanges(project.id),
-        tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
         dataPostedByProject[project.id],
       )
     })
     .filter((entry) => entry !== undefined)
-    .sort(compareTvs)
+    .sort(compareTvs((entry) => tvs.projects[entry.id]?.breakdown.total))
 
   return groupByL2Tabs(entries)
 }
@@ -106,7 +105,6 @@ export interface L2RiskDaEntry extends CommonL2Entry {
     daHref?: L2RiskDaEntryHref
   })[]
   stacks: ProjectScalingStack[] | undefined
-  tvsOrder: number
   dataPosted: ProjectDataPosted | undefined
   risks:
     | (EntryRisks & {
@@ -123,7 +121,6 @@ function getL2RiskDaEntry(
   risks: L2RiskDaEntry['risks'] | undefined,
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
-  tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   dataPosted: ProjectDataPosted | undefined,
 ): L2RiskDaEntry {
@@ -140,7 +137,6 @@ function getL2RiskDaEntry(
     stacks: project.scalingInfo.stacks,
     dataPosted,
     risks,
-    tvsOrder: tvs ?? -1,
   }
 }
 
