@@ -1,4 +1,5 @@
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type {
   CountedBlock,
   CountedOperation,
@@ -26,16 +27,19 @@ describe(NameService.name, () => {
 
       const nameService = createNameService()
 
-      const fillMethodNamesMock =
-        mockFn<(operation: CountedOperation) => Promise<void>>().resolvesTo()
+      const fillMethodNamesMock = vi
+        .fn<(operation: CountedOperation) => Promise<void>>()
+        .mockResolvedValue()
       nameService.fillMethodNames = fillMethodNamesMock
 
-      const fillContractNamesMock =
-        mockFn<(operation: CountedOperation) => Promise<void>>().resolvesTo()
+      const fillContractNamesMock = vi
+        .fn<(operation: CountedOperation) => Promise<void>>()
+        .mockResolvedValue()
       nameService.fillContractNames = fillContractNamesMock
 
-      const fillImplementationNameMock =
-        mockFn<(tx: CountedTransaction) => Promise<void>>().resolvesTo()
+      const fillImplementationNameMock = vi
+        .fn<(tx: CountedTransaction) => Promise<void>>()
+        .mockResolvedValue()
       nameService.fillImplementationName = fillImplementationNameMock
 
       await nameService.fillNames(mockBlock)
@@ -54,13 +58,16 @@ describe(NameService.name, () => {
       }
 
       const mockSignatureClient1 = mockObject<SignatureClient>({
-        getSignature: mockFn().resolvesToOnce('name2').resolvesToOnce(''),
-        getName: mockFn().returns('client1'),
+        getSignature: vi
+          .fn()
+          .mockResolvedValueOnce('name2')
+          .mockResolvedValueOnce(''),
+        getName: vi.fn().mockReturnValue('client1'),
       })
 
       const mockSignatureClient2 = mockObject<SignatureClient>({
-        getSignature: mockFn().resolvesToOnce('name3'),
-        getName: mockFn().returns('client2'),
+        getSignature: vi.fn().mockResolvedValueOnce('name3'),
+        getName: vi.fn().mockReturnValue('client2'),
       })
 
       const mockOperation: CountedOperation = mockObject<CountedOperation>({
@@ -100,7 +107,7 @@ describe(NameService.name, () => {
         'selector3',
       )
 
-      expect(mockDB.METHODS).toEqual(
+      expect(mockDB.METHODS).toStrictEqual(
         new Map([
           ['selector1', 'name1'],
           ['selector2', 'name2'],
@@ -108,9 +115,9 @@ describe(NameService.name, () => {
         ]),
       )
 
-      expect(mockOperation.children[0].methodName).toEqual('name1')
-      expect(mockOperation.children[1].methodName).toEqual('name2')
-      expect(mockOperation.children[2].methodName).toEqual('name3')
+      expect(mockOperation.children[0].methodName).toStrictEqual('name1')
+      expect(mockOperation.children[1].methodName).toStrictEqual('name2')
+      expect(mockOperation.children[2].methodName).toStrictEqual('name3')
     })
   })
 
@@ -123,7 +130,7 @@ describe(NameService.name, () => {
       }
 
       const mockContractClient = mockObject<ContractClient>({
-        getName: mockFn().resolvesToOnce('name2'),
+        getName: vi.fn().mockResolvedValueOnce('name2'),
       })
 
       const mockOperation: CountedOperation = mockObject<CountedOperation>({
@@ -149,15 +156,15 @@ describe(NameService.name, () => {
 
       expect(mockContractClient.getName).toHaveBeenCalledWith('address2')
 
-      expect(mockDB.CONTRACTS).toEqual(
+      expect(mockDB.CONTRACTS).toStrictEqual(
         new Map([
           ['address1', 'name1'],
           ['address2', 'name2'],
         ]),
       )
 
-      expect(mockOperation.children[0].contractName).toEqual('name1')
-      expect(mockOperation.children[1].contractName).toEqual('name2')
+      expect(mockOperation.children[0].contractName).toStrictEqual('name1')
+      expect(mockOperation.children[1].contractName).toStrictEqual('name2')
     })
   })
 
@@ -174,7 +181,7 @@ describe(NameService.name, () => {
       }
 
       const mockCodeClient = mockObject<RpcCodeClient>({
-        getCodeHash: mockFn().resolvesToOnce(mockCodeHash),
+        getCodeHash: vi.fn().mockResolvedValueOnce(mockCodeHash),
       })
 
       const mockTransaction = mockObject<CountedTransaction>({
@@ -193,7 +200,7 @@ describe(NameService.name, () => {
 
       expect(mockCodeClient.getCodeHash).toHaveBeenCalledWith(mockAddress)
 
-      expect(mockTransaction.type).toEqual(
+      expect(mockTransaction.type).toStrictEqual(
         `EIP-712 (${mockImplementationName})`,
       )
     })

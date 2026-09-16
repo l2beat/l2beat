@@ -15,7 +15,8 @@ import {
   SAFE_methods,
 } from '@l2beat/shared/uops'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type {
   CountedBlock,
   CountedOperation,
@@ -49,12 +50,13 @@ describe(RpcCounter.name, () => {
 
       const counter = new RpcCounter()
 
-      counter.mapTransaction = mockFn()
-        .returnsOnce(expectedResult.transactions[0])
-        .returnsOnce(expectedResult.transactions[1])
+      counter.mapTransaction = vi
+        .fn()
+        .mockReturnValueOnce(expectedResult.transactions[0])
+        .mockReturnValueOnce(expectedResult.transactions[1])
 
       const result = counter.countForBlock(mockBlock)
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
   })
 
@@ -85,21 +87,23 @@ describe(RpcCounter.name, () => {
         ['unknown', 1],
       ])
 
-      counter.generateSmartAccountUsageForBlock = mockFn()
-        .returnsOnce(mockSmartAccountUsageForBlock1)
-        .returnsOnce(mockSmartAccountUsageForBlock2)
-        .returnsOnce(mockSmartAccountUsageForBlock3)
+      counter.generateSmartAccountUsageForBlock = vi
+        .fn()
+        .mockReturnValueOnce(mockSmartAccountUsageForBlock1)
+        .mockReturnValueOnce(mockSmartAccountUsageForBlock2)
+        .mockReturnValueOnce(mockSmartAccountUsageForBlock3)
 
-      counter.mapTransaction = mockFn()
-        .returnsOnce(createCountedTransaction(2, false))
-        .returnsOnce(createCountedTransaction(1, false))
-        .returnsOnce(createCountedTransaction(3, true))
-        .returnsOnce(createCountedTransaction(3, false))
-        .returnsOnce(createCountedTransaction(1, true))
-        .returnsOnce(createCountedTransaction(1, false))
+      counter.mapTransaction = vi
+        .fn()
+        .mockReturnValueOnce(createCountedTransaction(2, false))
+        .mockReturnValueOnce(createCountedTransaction(1, false))
+        .mockReturnValueOnce(createCountedTransaction(3, true))
+        .mockReturnValueOnce(createCountedTransaction(3, false))
+        .mockReturnValueOnce(createCountedTransaction(1, true))
+        .mockReturnValueOnce(createCountedTransaction(1, false))
 
       const result = counter.countForBlocks(mockBlocks)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         dateStart: UnixTime.toDate(start),
         dateEnd: UnixTime.toDate(end),
         numberOfTransactions: 6,
@@ -145,7 +149,7 @@ describe(RpcCounter.name, () => {
         type: '0',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'Legacy',
         hash: 'tx.hash',
@@ -165,9 +169,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -180,7 +184,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'ERC-4337 Entry Point 0.6.0',
         hash: 'tx.hash',
@@ -202,9 +206,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -217,7 +221,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'Safe: Multi Send Call Only 1.3.0',
         hash: 'tx.hash',
@@ -239,9 +243,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -254,7 +258,7 @@ describe(RpcCounter.name, () => {
         type: EIP712_TX_TYPE,
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'EIP-712',
         hash: 'tx.hash',
@@ -276,9 +280,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -291,7 +295,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'Multicall v3',
         hash: 'tx.hash',
@@ -313,9 +317,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -328,7 +332,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'ERC-20 Router',
         hash: 'tx.hash',
@@ -350,9 +354,9 @@ describe(RpcCounter.name, () => {
         children: [],
       } as CountedOperation
 
-      counter.countUserOperations = mockFn().returns(mockOperation)
+      counter.countUserOperations = vi.fn().mockReturnValue(mockOperation)
 
-      counter.checkOperations = mockFn().returns({
+      counter.checkOperations = vi.fn().mockReturnValue({
         includesBatch: false,
         includesUnknown: false,
       })
@@ -365,7 +369,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         from: 'tx.from',
         type: 'EIP-7821',
         hash: 'tx.hash',
@@ -453,7 +457,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count GnosisSafe user operations', () => {
@@ -566,7 +570,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count EIP-712 user operations', () => {
@@ -611,7 +615,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count Multicall v3 user operations', () => {
@@ -672,7 +676,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count ERC20Router user operations', () => {
@@ -732,7 +736,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count EIP-7821 user operations', () => {
@@ -785,7 +789,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should count WhiteBIT user operations', () => {
@@ -1119,7 +1123,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('should handle malformed calldata and count as 1', () => {
@@ -1148,7 +1152,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
   })
 
@@ -1191,7 +1195,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         includesBatch: true,
         includesUnknown: false,
       })
@@ -1225,7 +1229,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         includesBatch: true,
         includesUnknown: false,
       })
@@ -1254,7 +1258,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         includesBatch: false,
         includesUnknown: true,
       })
@@ -1310,7 +1314,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.generateSmartAccountUsageForBlock(mockCountedBlock)
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         new Map([
           ['execute(address,uint256,bytes)', 2],
           ['unknown', 1],
