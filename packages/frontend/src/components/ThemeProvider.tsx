@@ -6,10 +6,9 @@ import {
   useState,
 } from 'react'
 
-// The initial theme is applied before first paint by an inline script in
-// index.html; keep both in sync.
-const STORAGE_KEY = 'l2beat-theme'
-const DARK_QUERY = '(prefers-color-scheme: dark)'
+// The initial theme is applied before first paint by ThemeScript.
+export const THEME_STORAGE_KEY = 'l2beat-theme'
+export const THEME_DARK_QUERY = '(prefers-color-scheme: dark)'
 
 type Theme = 'light' | 'dark'
 
@@ -23,12 +22,12 @@ const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Read from the DOM so the first client render already matches the theme
-  // applied by index.html and the context does not change right after mount.
+  // applied by ThemeScript and the context does not change right after mount.
   const [theme, setThemeState] = useState(readAppliedTheme)
 
   const setTheme = useCallback((theme: Theme) => {
     try {
-      localStorage.setItem(STORAGE_KEY, theme)
+      localStorage.setItem(THEME_STORAGE_KEY, theme)
     } catch {}
     // Applied synchronously so callers like startViewTransition see the change.
     applyTheme(theme)
@@ -37,14 +36,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Follow OS theme changes and theme toggles made in other tabs.
   useEffect(() => {
-    const media = window.matchMedia(DARK_QUERY)
+    const media = window.matchMedia(THEME_DARK_QUERY)
     const sync = () => {
       const preferred = readPreferredTheme()
       applyTheme(preferred)
       setThemeState(preferred)
     }
     const onStorage = (event: StorageEvent) => {
-      if (event.key === STORAGE_KEY) sync()
+      if (event.key === THEME_STORAGE_KEY) sync()
     }
 
     media.addEventListener('change', sync)
@@ -78,10 +77,10 @@ function readAppliedTheme(): Theme | undefined {
 function readPreferredTheme(): Theme {
   let stored: string | null = null
   try {
-    stored = localStorage.getItem(STORAGE_KEY)
+    stored = localStorage.getItem(THEME_STORAGE_KEY)
   } catch {}
   if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light'
+  return window.matchMedia(THEME_DARK_QUERY).matches ? 'dark' : 'light'
 }
 
 function applyTheme(theme: Theme) {
