@@ -218,6 +218,15 @@ describe(transformTestFile.name, () => {
       expect(run(matcher('toBeRejected()'))).toContain('rejects.toThrow()')
     })
 
+    it('moves the modifier in front of a negated rejection', () => {
+      expect(run(matcher('not.toBeRejected()'))).toContain(
+        'expect(subject).resolves.not.toThrow()',
+      )
+      expect(run(matcher("not.toBeRejectedWith(TypeError, 'nope')"))).toContain(
+        "expect(subject).resolves.not.toThrowWithMessage(TypeError, 'nope')",
+      )
+    })
+
     it('maps the asymmetric matchers', () => {
       expect(run(matcher('toEqual(expect.a(String))'))).toContain(
         'expect.any(String)',

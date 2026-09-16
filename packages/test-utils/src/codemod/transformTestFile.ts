@@ -283,14 +283,14 @@ function rewriteMatcher(
       return
     case 'toBeRejectedWith':
       if (args.length === 2) {
-        context.edits.push(replace(nameNode, 'rejects.toThrowWithMessage'))
         context.usesCustomMatchers = true
+        rewriteRejection(nameNode, receiver, 'toThrowWithMessage', context)
       } else {
-        context.edits.push(replace(nameNode, 'rejects.toThrow'))
+        rewriteRejection(nameNode, receiver, 'toThrow', context)
       }
       return
     case 'toBeRejected':
-      context.edits.push(replace(nameNode, 'rejects.toThrow'))
+      rewriteRejection(nameNode, receiver, 'toThrow', context)
       return
     case 'toBeCloseTo':
       if (args.length === 2) {
@@ -313,6 +313,34 @@ function rewriteMatcher(
     default:
       return
   }
+}
+
+/**
+ * vitest reads `rejects` off the assertion, not off a negation, so
+ * `expect(p).not.rejects` throws at runtime. Negating a rejection is really a
+ * claim that the promise settles, which is what `resolves.not` says.
+ */
+function rewriteRejection(
+  nameNode: Node,
+  receiver: Node,
+  matcher: string,
+  context: Context,
+): void {
+  const negation = negationOf(receiver)
+  if (!negation) {
+    context.edits.push(replace(nameNode, `rejects.${matcher}`))
+    return
+  }
+  context.edits.push(
+    span(negation.getStart(), nameNode.getEnd(), `resolves.not.${matcher}`),
+  )
+}
+
+function negationOf(receiver: Node): Node | undefined {
+  return Node.isPropertyAccessExpression(receiver) &&
+    receiver.getName() === 'not'
+    ? receiver.getNameNode()
+    : undefined
 }
 
 function rewriteToBeA(
