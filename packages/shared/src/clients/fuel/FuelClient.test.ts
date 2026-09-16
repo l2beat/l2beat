@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Block } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
@@ -35,7 +36,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.getBlockWithTransactions(100)
 
-      expect(result).toEqual(mockFuelBlock)
+      expect(result).toStrictEqual(mockFuelBlock)
     })
   })
 
@@ -48,7 +49,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toEqual(100)
+      expect(result).toStrictEqual(100)
     })
   })
 
@@ -65,8 +66,8 @@ describe(FuelClient.name, () => {
 
       const result = await client.query(query, variables)
 
-      expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual('data-returned-from-api')
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +94,7 @@ describe(FuelClient.name, () => {
         ],
       } as FuelError)
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toStrictEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
@@ -102,7 +103,7 @@ describe(FuelClient.name, () => {
         data: 'success',
       })
 
-      expect(isValid).toEqual({ success: true })
+      expect(isValid).toStrictEqual({ success: true })
     })
   })
 })

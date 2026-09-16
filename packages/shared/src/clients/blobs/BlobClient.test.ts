@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import type { RpcClient } from '../rpc/RpcClient'
 import { BlobClient } from './BlobClient'
@@ -24,7 +25,7 @@ describe(BlobClient.name, () => {
         const versionedHash1 =
           '0x01' + utils.sha256(kzgCommitment1).substring(4)
         const client = mockClient({})
-        client.getBlockSidecar = mockFn().resolvesTo([
+        client.getBlockSidecar = vi.fn().mockResolvedValue([
           {
             kzg_commitment: kzgCommitment1,
             data: 'blob1',
@@ -39,7 +40,7 @@ describe(BlobClient.name, () => {
           [versionedHash1],
           1,
         )
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           blockNumber: 1,
           blobs: [
             {
@@ -54,7 +55,7 @@ describe(BlobClient.name, () => {
         const kzgCommitment1 = generateKzgCommitment()
         const kzgCommitment2 = generateKzgCommitment()
         const client = mockClient({})
-        client.getBlockSidecar = mockFn().resolvesTo([
+        client.getBlockSidecar = vi.fn().mockResolvedValue([
           {
             kzg_commitment: kzgCommitment1,
             data: 'blob1',
@@ -69,7 +70,7 @@ describe(BlobClient.name, () => {
           [],
           1,
         )
-        expect(result).toEqual({
+        expect(result).toStrictEqual({
           blockNumber: 1,
           blobs: [],
         })
@@ -80,7 +81,7 @@ describe(BlobClient.name, () => {
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
       const rpcClient = mockObject<RpcClient>({
-        getTransaction: mockFn().returns({
+        getTransaction: vi.fn().mockReturnValue({
           type: '0x2',
           blockNumber: 1,
         }),
@@ -88,7 +89,7 @@ describe(BlobClient.name, () => {
       const client = mockClient({ rpcClient })
 
       const result = await client.getRelevantBlobs('txHash')
-      expect(result).toEqual({ blobs: [], blockNumber: 1 })
+      expect(result).toStrictEqual({ blobs: [], blockNumber: 1 })
     })
 
     it('should return blobs for type 3 transaction', async () => {
@@ -106,7 +107,7 @@ describe(BlobClient.name, () => {
       }
 
       const rpcClient = mockObject<RpcClient>({
-        getTransaction: mockFn().returns({
+        getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
           blobVersionedHashes: [versionedHash1, versionedHash2],
@@ -124,19 +125,19 @@ describe(BlobClient.name, () => {
       ]
 
       const result = await client.getRelevantBlobs('txHash')
-      expect(result).toEqual({ blockNumber: 1, blobs: [blob1, blob2] })
+      expect(result).toStrictEqual({ blockNumber: 1, blobs: [blob1, blob2] })
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
       const rpcClient = mockObject<RpcClient>({
-        getTransaction: mockFn().returns({
+        getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
         }),
       })
       const client = mockClient({ rpcClient })
 
-      await expect(client.getRelevantBlobs('txHash')).toBeRejectedWith(
+      await expect(client.getRelevantBlobs('txHash')).rejects.toThrow(
         'Type 3 transaction missing blobVersionedHashes',
       )
     })
@@ -168,10 +169,10 @@ describe(BlobClient.name, () => {
 
       const result = await client.getBlockSidecar(1)
 
-      expect(http.fetch.calls[0].args[0]).toEqual(
+      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           kzg_commitment,
           data: blob,
@@ -189,8 +190,10 @@ describe(BlobClient.name, () => {
 
       const result = await client.call('/eth/blob')
 
-      expect(result).toEqual({ result: 'result' })
-      expect(http.fetch.calls[0].args[0]).toEqual('BEACON_API_URL/eth/blob')
+      expect(result).toStrictEqual({ result: 'result' })
+      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+        'BEACON_API_URL/eth/blob',
+      )
     })
 
     it('should throw on beacon error', async () => {
@@ -202,7 +205,7 @@ describe(BlobClient.name, () => {
       })
       const client = mockClient({ http })
 
-      await expect(client.call('/eth/blob')).toBeRejectedWith(
+      await expect(client.call('/eth/blob')).rejects.toThrow(
         'Response validation failed',
       )
     })
@@ -216,7 +219,7 @@ describe(BlobClient.name, () => {
         message: 'Error',
       })
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toStrictEqual({ success: false })
     })
   })
 })

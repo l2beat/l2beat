@@ -1,4 +1,5 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type {
   BeaconChainClient,
   CelestiaRpcClient,
@@ -28,7 +29,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('ethereum')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
         numberOfValidators: 1,
@@ -54,7 +55,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('near-da')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 800n,
         thresholdStake: 533n, // (800n * 200n) / 300n = 533n
         numberOfValidators: 2,
@@ -80,7 +81,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('celestia')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 300000000n, // (100 + 200) * 10^6
         thresholdStake: 200000000n, // (300000000n * 200n) / 300n
         numberOfValidators: 2,
@@ -105,7 +106,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('avail')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
         numberOfValidators: 2,
@@ -132,7 +133,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('espresso')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 3000n,
         thresholdStake: 2000n, // (3000n * 200n) / 300n = 2000n
         numberOfValidators: 2,
@@ -148,7 +149,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getStats('unknown')).toBeRejectedWith(
+      await expect(provider.getStats('unknown')).rejects.toThrow(
         'Stats provider not implemented for: unknown',
       )
     })
@@ -173,7 +174,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEthereumStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 32000000000000000000000n,
         thresholdStake: 21333333333333333333333n,
         numberOfValidators: 2,
@@ -189,7 +190,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getEthereumStats()).toBeRejectedWith(
+      await expect(provider.getEthereumStats()).rejects.toThrow(
         'Beacon chain client not found',
       )
     })
@@ -219,7 +220,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getNearStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 2250000000000000000000000n,
         thresholdStake: 1500000000000000000000000n,
         numberOfValidators: 3,
@@ -245,7 +246,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getNearStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 0n,
         thresholdStake: 0n,
         numberOfValidators: 0,
@@ -261,7 +262,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getNearStats()).toBeRejectedWith(
+      await expect(provider.getNearStats()).rejects.toThrow(
         'Near client not found',
       )
     })
@@ -287,7 +288,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getCelestiaStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 3000000000n, // (1000 + 2000) * 10^6
         thresholdStake: 2000000000n,
         numberOfValidators: 2,
@@ -299,7 +300,7 @@ describe(DaBeatStatsProvider.name, () => {
       const mockCelestiaClient = mockObject<CelestiaRpcClient>({
         getValidatorsInfo: async ({ page, perPage }: any) => {
           callCount++
-          expect(perPage).toEqual(100)
+          expect(perPage).toStrictEqual(100)
 
           if (page === 1) {
             return {
@@ -333,8 +334,8 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getCelestiaStats()
 
-      expect(callCount).toEqual(2)
-      expect(result).toEqual({
+      expect(callCount).toStrictEqual(2)
+      expect(result).toStrictEqual({
         totalStake: 20000000000n, // (100 * 100 + 50 * 200) * 10^6
         thresholdStake: 13333333333n,
         numberOfValidators: 150,
@@ -350,7 +351,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getCelestiaStats()).toBeRejectedWith(
+      await expect(provider.getCelestiaStats()).rejects.toThrow(
         'Celestia client not found',
       )
     })
@@ -382,7 +383,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getAvailStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 3500000000000000000n,
         thresholdStake: 2333333333333333333n,
         numberOfValidators: 3,
@@ -404,7 +405,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getAvailStats()).toBeRejectedWith(
+      await expect(provider.getAvailStats()).rejects.toThrow(
         'Connection failed',
       )
     })
@@ -418,7 +419,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getAvailStats()).toBeRejectedWith(
+      await expect(provider.getAvailStats()).rejects.toThrow(
         'Avail client not found',
       )
     })
@@ -447,7 +448,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEspressoStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 6150n,
         thresholdStake: (6150n * 2n) / 3n,
         numberOfValidators: 4,
@@ -471,7 +472,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEspressoStats()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 0n,
         thresholdStake: 0n,
         numberOfValidators: 0,
@@ -487,7 +488,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
       )
 
-      await expect(provider.getEspressoStats()).toBeRejectedWith(
+      await expect(provider.getEspressoStats()).rejects.toThrow(
         'Espresso client not found',
       )
     })

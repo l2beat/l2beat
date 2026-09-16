@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import {
   STARKEX_BI_API_V2,
@@ -34,7 +35,7 @@ describe(StarkexClient.name, () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(body),
-          timeout: expect.a(Number),
+          timeout: expect.any(Number),
         },
       )
     })
@@ -49,7 +50,7 @@ describe(StarkexClient.name, () => {
 
       const response = await starkexClient.query(API_URL, '/', 'foo')
 
-      expect(response).toEqual({ count: 11 })
+      expect(response).toStrictEqual({ count: 11 })
     })
   })
 
@@ -60,7 +61,7 @@ describe(StarkexClient.name, () => {
         message: 'error',
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toStrictEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -69,7 +70,7 @@ describe(StarkexClient.name, () => {
         count: 1,
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toStrictEqual(true)
     })
   })
 
@@ -87,10 +88,10 @@ describe(StarkexClient.name, () => {
 
       const httpClient = mockObject<HttpClient>({
         async fetch(url, init) {
-          expect(url).toEqual(
+          expect(url).toStrictEqual(
             STARKEX_BI_API_V2 + '/aggregations/count' + `?key=${API_KEY}`,
           )
-          expect(init?.body).toEqual(JSON.stringify(body))
+          expect(init?.body).toStrictEqual(JSON.stringify(body))
 
           return { count: 45 }
         },
@@ -115,10 +116,10 @@ describe(StarkexClient.name, () => {
 
       const httpClient = mockObject<HttpClient>({
         async fetch(url, init) {
-          expect(url).toEqual(
+          expect(url).toStrictEqual(
             STARKEX_BI_API_V3 + '/aggregations/count' + `?key=${API_KEY}`,
           )
-          expect(init?.body).toEqual(JSON.stringify(body))
+          expect(init?.body).toStrictEqual(JSON.stringify(body))
 
           return { count: 45 }
         },
@@ -142,7 +143,7 @@ describe(StarkexClient.name, () => {
         http: httpClient,
       })
 
-      expect(await starkexClient.getDailyCount(1, 'dydx')).toEqual(2137)
+      expect(await starkexClient.getDailyCount(1, 'dydx')).toStrictEqual(2137)
     })
   })
 })

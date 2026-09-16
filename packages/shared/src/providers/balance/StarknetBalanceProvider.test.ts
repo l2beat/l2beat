@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { StarknetClient } from '../../clients'
 import {
   STARKNET_BALANCE_OF_SELECTOR,
@@ -18,10 +19,11 @@ describe(StarknetBalanceProvider.name, () => {
   describe(StarknetBalanceProvider.prototype.getBalances.name, () => {
     it('performs a balanceOf call for each token and decodes u256 values', async () => {
       const client = mockObject<StarknetClient>({
-        call: mockFn()
-          .resolvesToOnce(['0x1'])
-          .resolvesToOnce(['0x2', '0x1'])
-          .resolvesToOnce([]),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(['0x1'])
+          .mockResolvedValueOnce(['0x2', '0x1'])
+          .mockResolvedValueOnce([]),
         chain: CHAIN,
       })
       const balanceProvider = new StarknetBalanceProvider(
@@ -58,15 +60,16 @@ describe(StarknetBalanceProvider.name, () => {
         },
         BLOCK,
       )
-      expect(result).toEqual([1n, 2n + (1n << 128n), 0n])
+      expect(result).toStrictEqual([1n, 2n + (1n << 128n), 0n])
     })
 
     it('throws if any call fails', async () => {
       const client = mockObject<StarknetClient>({
-        call: mockFn()
-          .resolvesToOnce(['0x1'])
-          .resolvesToOnce(['0x2'])
-          .rejectsWithOnce(new Error('RPC failure')),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(['0x1'])
+          .mockResolvedValueOnce(['0x2'])
+          .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
       })
       const balanceProvider = new StarknetBalanceProvider(
@@ -76,7 +79,7 @@ describe(StarknetBalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(BALANCES, BLOCK, CHAIN),
-      ).toBeRejectedWith('RPC failure')
+      ).rejects.toThrow('RPC failure')
     })
 
     it('throws if there is no client for the chain', () => {

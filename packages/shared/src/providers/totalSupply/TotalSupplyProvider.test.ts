@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import { encodeTotalSupply, TotalSupplyProvider } from './TotalSupplyProvider'
 
@@ -17,7 +18,7 @@ describe(TotalSupplyProvider.name, () => {
     it('uses multicall if possible', async () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           {
             success: true,
             data: Bytes.fromNumber(123_456),
@@ -45,7 +46,7 @@ describe(TotalSupplyProvider.name, () => {
         CHAIN,
       )
 
-      expect(rpc.multicall).toHaveBeenOnlyCalledWith(
+      expect(rpc.multicall).toHaveBeenCalledExactlyOnceWith(
         [
           encodeTotalSupply(TOKENS[0]),
           encodeTotalSupply(TOKENS[1]),
@@ -53,16 +54,17 @@ describe(TotalSupplyProvider.name, () => {
         ],
         BLOCK,
       )
-      expect(result).toEqual([123_456n, 654_321n, 0n])
+      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
     })
 
     it('performs single calls if multicall not deployed', async () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(123_456))
-          .resolvesToOnce(Bytes.fromNumber(654_321))
-          .resolvesToOnce(Bytes.fromHex('0x')),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(123_456))
+          .mockResolvedValueOnce(Bytes.fromNumber(654_321))
+          .mockResolvedValueOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
       })
 
@@ -92,13 +94,13 @@ describe(TotalSupplyProvider.name, () => {
         encodeTotalSupply(TOKENS[2]),
         BLOCK,
       )
-      expect(result).toEqual([123_456n, 654_321n, 0n])
+      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
     })
 
     it('throws when a totalSupply call reverts', async () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123_456) },
           { success: false, data: Bytes.fromHex('0x') },
           { success: true, data: Bytes.fromNumber(654_321) },
@@ -110,24 +112,26 @@ describe(TotalSupplyProvider.name, () => {
 
       await expect(
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith('Failed to fetch totalSupply')
+      ).rejects.toThrow('Failed to fetch totalSupply')
     })
 
     it('tries next RPC client if a single call fails', async () => {
       const failingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(123_456))
-          .rejectsWithOnce(new Error('RPC failure')),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(123_456))
+          .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
       })
 
       const workingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(123))
-          .resolvesToOnce(Bytes.fromNumber(456))
-          .resolvesToOnce(Bytes.fromNumber(789)),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(123))
+          .mockResolvedValueOnce(Bytes.fromNumber(456))
+          .mockResolvedValueOnce(Bytes.fromNumber(789)),
         chain: CHAIN,
       })
 
@@ -142,19 +146,19 @@ describe(TotalSupplyProvider.name, () => {
         CHAIN,
       )
 
-      expect(result).toEqual([123n, 456n, 789n])
+      expect(result).toStrictEqual([123n, 456n, 789n])
     })
 
     it('tries next RPC client if first one fails', async () => {
       const failingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().rejectsWithOnce(new Error('Connection error')),
+        multicall: vi.fn().mockRejectedValueOnce(new Error('Connection error')),
         chain: CHAIN,
       })
 
       const workingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           {
             success: true,
             data: Bytes.fromNumber(123_456),
@@ -184,19 +188,19 @@ describe(TotalSupplyProvider.name, () => {
 
       expect(failingRpc.multicall).toHaveBeenCalledTimes(1)
       expect(workingRpc.multicall).toHaveBeenCalledTimes(1)
-      expect(result).toEqual([123_456n, 654_321n, 789_012n])
+      expect(result).toStrictEqual([123_456n, 654_321n, 789_012n])
     })
 
     it('throws error if all RPC clients fail', async () => {
       const error = new Error('All RPCs failed')
       const rpc1 = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().rejectsWithOnce(error),
+        multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
       })
       const rpc2 = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
-        multicall: mockFn().rejectsWithOnce(error),
+        multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
       })
 
@@ -207,7 +211,7 @@ describe(TotalSupplyProvider.name, () => {
 
       await expect(
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejected()
+      ).rejects.toThrow()
     })
 
     it('throws error if no RPC client for chain', async () => {
@@ -218,7 +222,7 @@ describe(TotalSupplyProvider.name, () => {
 
       await expect(
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith(`Missing RpcClient for ${CHAIN}`)
+      ).rejects.toThrow(`Missing RpcClient for ${CHAIN}`)
     })
   })
 })

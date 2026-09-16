@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../../clients'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
 
@@ -59,7 +60,7 @@ describe(BlockscoutV2Client.name, () => {
   describe(BlockscoutV2Client.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo({ status: '1', message: 'OK' }),
+        fetch: vi.fn().mockResolvedValue({ status: '1', message: 'OK' }),
       })
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
@@ -81,14 +82,14 @@ describe(BlockscoutV2Client.name, () => {
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       const result = await blockscoutClient.call('mod', 'id', 'act')
-      expect(result).toEqual(responseMock)
+      expect(result).toStrictEqual(responseMock)
     })
   })
 
   describe(BlockscoutV2Client.prototype.getInternalTransactions.name, () => {
     it('correctly parser api response', async () => {
       const address = EthereumAddress.random()
-      const callMock = mockFn().resolvesTo(responseMock)
+      const callMock = vi.fn().mockResolvedValue(responseMock)
       const blockscoutClient = new BlockscoutV2Client(
         mockObject<HttpClient>(),
         API_URL,
@@ -103,12 +104,14 @@ describe(BlockscoutV2Client.name, () => {
         'internal-transactions',
       )
 
-      expect(result).toEqual([{ ...responseMock.items[0], timestamp: NOW }])
+      expect(result).toStrictEqual([
+        { ...responseMock.items[0], timestamp: NOW },
+      ])
     })
 
     it('throws if schema is not correct', async () => {
       const address = EthereumAddress.random()
-      const callMock = mockFn().resolvesTo({})
+      const callMock = vi.fn().mockResolvedValue({})
       const blockscoutClient = new BlockscoutV2Client(
         mockObject<HttpClient>(),
         API_URL,
@@ -117,7 +120,7 @@ describe(BlockscoutV2Client.name, () => {
 
       await expect(() =>
         blockscoutClient.getInternalTransactions(address),
-      ).toBeRejectedWith('At .items: Expected array, got undefined.')
+      ).rejects.toThrow('At .items: Expected array, got undefined.')
     })
   })
 })

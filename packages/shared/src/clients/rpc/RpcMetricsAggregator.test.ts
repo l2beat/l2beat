@@ -1,11 +1,11 @@
 import { Logger, type LoggerTransport } from '@l2beat/backend-tools'
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import { RpcMetricsAggregator } from './RpcMetricsAggregator'
 import { withRpcMetricsContext } from './RpcMetricsContext'
 
 class TestTransport implements LoggerTransport {
-  log = mockFn<LoggerTransport['log']>().returns()
-  flush = mockFn<LoggerTransport['flush']>().returns()
+  log = vi.fn<LoggerTransport['log']>().mockReturnValue()
+  flush = vi.fn<LoggerTransport['flush']>().mockReturnValue()
 }
 
 describe(RpcMetricsAggregator.name, () => {
@@ -43,7 +43,7 @@ describe(RpcMetricsAggregator.name, () => {
 
     aggregator.flush()
 
-    expect(transport.log).toHaveBeenOnlyCalledWith({
+    expect(transport.log).toHaveBeenCalledExactlyOnceWith({
       level: 'INFO',
       message: 'Rpc metrics',
       parameters: {
@@ -81,6 +81,6 @@ describe(RpcMetricsAggregator.name, () => {
 
     aggregator.flush()
 
-    expect(transport.log.calls[0]?.args[0]?.parameters.count).toEqual(3)
+    expect(transport.log.mock.calls[0][0]?.parameters.count).toStrictEqual(3)
   })
 })

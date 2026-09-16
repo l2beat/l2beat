@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { NearClient } from './NearClient'
 
@@ -22,8 +23,8 @@ describe(NearClient.name, () => {
 
       const result = await client.getValidatorsInfo()
 
-      expect(result).toEqual(mockValidatorsResult)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual(mockValidatorsResult)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ describe(NearClient.name, () => {
       })
       const client = mockClient({ http })
 
-      await expect(client.getValidatorsInfo()).toBeRejected()
+      await expect(client.getValidatorsInfo()).rejects.toThrow()
     })
   })
 
@@ -60,8 +61,8 @@ describe(NearClient.name, () => {
 
       const result = await client.call('test_method', ['param1', 'param2'])
 
-      expect(result).toEqual(mockResponse)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual(mockResponse)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,8 +86,8 @@ describe(NearClient.name, () => {
 
       const result = await client.call('test_method', [])
 
-      expect(result).toEqual(mockResponse)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual(mockResponse)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,8 +111,8 @@ describe(NearClient.name, () => {
 
       const result = await client.call('validators', [null])
 
-      expect(result).toEqual(mockResponse)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual(mockResponse)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,7 +139,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toStrictEqual(false)
     })
 
     it('returns true for response without error', () => {
@@ -151,7 +152,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toStrictEqual(true)
     })
   })
 })

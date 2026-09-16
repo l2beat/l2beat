@@ -1,5 +1,5 @@
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { EventTracker } from './EventTracker'
 
@@ -17,7 +17,7 @@ describe(EventTracker.name, () => {
   it('has empty history by default', () => {
     const tracker = new EventTracker()
 
-    expect(tracker.getStatus()).toEqual({
+    expect(tracker.getStatus()).toStrictEqual({
       lastSecond: {},
       lastFiveSeconds: {},
       lastMinuteAverage: {},
@@ -30,7 +30,7 @@ describe(EventTracker.name, () => {
 
     tracker.record('a')
 
-    expect(tracker.getStatus()).toEqual({
+    expect(tracker.getStatus()).toStrictEqual({
       lastSecond: {
         a: 1,
       },
@@ -58,7 +58,7 @@ describe(EventTracker.name, () => {
     time.tick(1000)
     tracker.record('c')
 
-    expect(tracker.getStatus()).toEqual({
+    expect(tracker.getStatus()).toStrictEqual({
       lastSecond: {
         c: 1,
       },
@@ -88,7 +88,7 @@ describe(EventTracker.name, () => {
     time.tick(historySize)
     tracker.record('d')
 
-    expect(tracker.getStatus()).toEqual({
+    expect(tracker.getStatus()).toStrictEqual({
       lastSecond: {
         d: 1,
       },
@@ -112,19 +112,19 @@ describe(EventTracker.name, () => {
     tracker.record('b')
     tracker.record('c')
 
-    expect(tracker.getEventsCount()).toEqual(3)
+    expect(tracker.getEventsCount()).toStrictEqual(3)
 
     time.tick(historySize)
 
-    expect(tracker.getEventsCount()).toEqual(0)
+    expect(tracker.getEventsCount()).toStrictEqual(0)
 
     tracker.record('d')
     tracker.record('e')
 
-    expect(tracker.getEventsCount()).toEqual(2)
+    expect(tracker.getEventsCount()).toStrictEqual(2)
 
     time.tick(historySize)
 
-    expect(tracker.getEventsCount()).toEqual(0)
+    expect(tracker.getEventsCount()).toStrictEqual(0)
   })
 })

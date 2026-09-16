@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { EigenApiClient } from './EigenApiClient'
 
@@ -21,8 +22,8 @@ describe(EigenApiClient.name, () => {
 
       const result = await client.getMetrics(from, to)
 
-      expect(result).toEqual({ total_bytes_posted: 12345678 })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(result).toStrictEqual({ total_bytes_posted: 12345678 })
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'https://api.test.com/v2/metrics/summary?start=1640995200&end=1641081600',
         {},
       )
@@ -41,7 +42,7 @@ describe(EigenApiClient.name, () => {
       const from = 1640995200
       const to = 1641081600
 
-      await expect(client.getMetrics(from, to)).toBeRejected()
+      await expect(client.getMetrics(from, to)).rejects.toThrow()
     })
   })
 
@@ -52,7 +53,7 @@ describe(EigenApiClient.name, () => {
 {"datetime":"2022-01-01T14:00:00","customer_id":"project1","total_size_mb":150.25}`
 
       const http = mockObject<HttpClient>({
-        fetchRaw: mockFn().resolvesTo({
+        fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockJsonLines,
         }),
       })
@@ -63,15 +64,15 @@ describe(EigenApiClient.name, () => {
       const result = await client.getByProjectData(until)
 
       expect(result).toHaveLength(3)
-      expect(result[0]).toEqual({
+      expect(result[0]).toStrictEqual({
         datetime: UnixTime.fromDate(new Date('2022-01-01T12:00:00Z')), // adds Z to ensure it's UTC time
         customer_id: 'project1',
         total_size_mb: 100.5,
       })
-      expect(result[1].customer_id).toEqual('project2')
-      expect(result[2].customer_id).toEqual('project1')
+      expect(result[1].customer_id).toStrictEqual('project2')
+      expect(result[2].customer_id).toStrictEqual('project1')
 
-      expect(http.fetchRaw).toHaveBeenOnlyCalledWith(
+      expect(http.fetchRaw).toHaveBeenCalledExactlyOnceWith(
         'https://project.test.com/v2/stats/2022-01-01.json',
         {},
       )
@@ -85,7 +86,7 @@ describe(EigenApiClient.name, () => {
 </Error>`
 
       const http = mockObject<HttpClient>({
-        fetchRaw: mockFn().resolvesTo({
+        fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockErrorResponse,
         }),
       })
@@ -93,7 +94,7 @@ describe(EigenApiClient.name, () => {
       const client = mockClient({ http })
       const until = 1640995200
 
-      await expect(client.getByProjectData(until)).toBeRejectedWith(
+      await expect(client.getByProjectData(until)).rejects.toThrow(
         'Assertion Error: No EigenDA data for projects for 2022-01-01T00:00:00.000Z',
       )
     })
@@ -104,7 +105,7 @@ describe(EigenApiClient.name, () => {
 {"datetime":"2022-01-01T14:00:00","customer_id":"project2","total_size_mb":150.25}`
 
       const http = mockObject<HttpClient>({
-        fetchRaw: mockFn().resolvesTo({
+        fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockMalformedJson,
         }),
       })
@@ -113,7 +114,7 @@ describe(EigenApiClient.name, () => {
       const until = 1640995200
 
       // Should fail when trying to parse the malformed line
-      await expect(client.getByProjectData(until)).toBeRejected()
+      await expect(client.getByProjectData(until)).rejects.toThrow()
     })
   })
 })

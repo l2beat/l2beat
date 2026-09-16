@@ -1,16 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import { RetryHandler } from './RetryHandler'
 
 describe(RetryHandler.name, () => {
   it('retries until function succeeds', async () => {
     const retryHandler = mockHandler({ maxRetries: 5 })
 
-    const fn = mockFn()
-      .rejectsWithOnce(new Error())
-      .rejectsWithOnce(new Error())
-      .rejectsWithOnce(new Error())
-      .resolvesToOnce('success')
+    const fn = vi
+      .fn()
+      .mockRejectedValueOnce(new Error())
+      .mockRejectedValueOnce(new Error())
+      .mockRejectedValueOnce(new Error())
+      .mockResolvedValueOnce('success')
 
     await retryHandler.retry(() => fn())
 
@@ -20,9 +21,9 @@ describe(RetryHandler.name, () => {
   it('retries until maxRetries is reached', async () => {
     const retryHandler = mockHandler({ maxRetries: 2 })
 
-    const fn = mockFn().rejectsWith(new Error())
+    const fn = vi.fn().mockRejectedValue(new Error())
 
-    await expect(() => retryHandler.retry(() => fn())).toBeRejected()
+    await expect(() => retryHandler.retry(() => fn())).rejects.toThrow()
 
     expect(fn).toHaveBeenCalledTimes(2)
   })
@@ -33,9 +34,12 @@ describe(RetryHandler.name, () => {
       maxRetryDelayMs: 1, // without this line test would timeout
     })
 
-    const fn = mockFn().rejectsWithOnce(new Error()).resolvesToOnce('success')
+    const fn = vi
+      .fn()
+      .mockRejectedValueOnce(new Error())
+      .mockResolvedValueOnce('success')
 
-    await expect(() => retryHandler.retry(() => fn())).not.toBeRejected()
+    await expect(retryHandler.retry(() => fn())).resolves.not.toThrow()
   })
 })
 

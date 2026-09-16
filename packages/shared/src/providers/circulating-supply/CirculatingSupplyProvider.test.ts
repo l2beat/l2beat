@@ -1,5 +1,6 @@
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 import { CirculatingSupplyProvider } from './CirculatingSupplyProvider'
 
@@ -20,7 +21,7 @@ describe(CirculatingSupplyProvider.name, () => {
         ]
 
         const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getCirculatingSupplies: mockFn().resolvesToOnce(expectedResult),
+          getCirculatingSupplies: vi.fn().mockResolvedValueOnce(expectedResult),
         })
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
@@ -29,8 +30,8 @@ describe(CirculatingSupplyProvider.name, () => {
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenOnlyCalledWith(coingeckoId, range)
-        expect(result).toEqual(expectedResult)
+        ).toHaveBeenCalledExactlyOnceWith(coingeckoId, range)
+        expect(result).toStrictEqual(expectedResult)
       })
 
       it('propagates errors from CoingeckoQueryService', async () => {
@@ -42,14 +43,14 @@ describe(CirculatingSupplyProvider.name, () => {
         const error = new Error('API rate limit exceeded')
 
         const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getCirculatingSupplies: mockFn().rejectsWithOnce(error),
+          getCirculatingSupplies: vi.fn().mockRejectedValueOnce(error),
         })
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
         await expect(
           provider.getCirculatingSupplies(coingeckoId, range),
-        ).toBeRejectedWith('API rate limit exceeded')
+        ).rejects.toThrow('API rate limit exceeded')
       })
     },
   )
@@ -71,7 +72,7 @@ describe(CirculatingSupplyProvider.name, () => {
         ])
 
         const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getLatestMarketData: mockFn().resolvesToOnce(marketData),
+          getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
         })
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
@@ -80,8 +81,8 @@ describe(CirculatingSupplyProvider.name, () => {
 
         expect(
           coingeckoQueryService.getLatestMarketData,
-        ).toHaveBeenOnlyCalledWith(coingeckoIds)
-        expect(result).toEqual(expectedResult)
+        ).toHaveBeenCalledExactlyOnceWith(coingeckoIds)
+        expect(result).toStrictEqual(expectedResult)
       })
 
       it('handles empty market data', async () => {
@@ -91,14 +92,14 @@ describe(CirculatingSupplyProvider.name, () => {
         const expectedResult = new Map<string, number>()
 
         const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getLatestMarketData: mockFn().resolvesToOnce(marketData),
+          getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
         })
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
         const result = await provider.getLatestCirculatingSupplies(coingeckoIds)
 
-        expect(result).toEqual(expectedResult)
+        expect(result).toStrictEqual(expectedResult)
       })
 
       it('propagates errors from CoingeckoQueryService', async () => {
@@ -107,14 +108,14 @@ describe(CirculatingSupplyProvider.name, () => {
         const error = new Error('API rate limit exceeded')
 
         const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getLatestMarketData: mockFn().rejectsWithOnce(error),
+          getLatestMarketData: vi.fn().mockRejectedValueOnce(error),
         })
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
         await expect(
           provider.getLatestCirculatingSupplies(coingeckoIds),
-        ).toBeRejectedWith('API rate limit exceeded')
+        ).rejects.toThrow('API rate limit exceeded')
       })
     },
   )
@@ -132,7 +133,7 @@ describe(CirculatingSupplyProvider.name, () => {
 
       const expected = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
-      expect(result).toEqual(expected)
+      expect(result).toStrictEqual(expected)
     })
   })
 })

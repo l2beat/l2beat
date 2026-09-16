@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { BlockClient, RpcClient } from '../../clients'
 import { BlockProvider } from './BlockProvider'
 
@@ -13,16 +14,16 @@ describe(BlockProvider.name, () => {
 
       const result = await provider.getBlockWithTransactions(1)
 
-      expect(rpc.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
-      expect(result).toEqual(block(1))
+      expect(rpc.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(1)
+      expect(result).toStrictEqual(block(1))
     })
 
     it('calls other client when there are errors', async () => {
       const rpc_one = mockObject<RpcClient>({
-        getBlockWithTransactions: mockFn().rejectsWith(new Error()),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_two = mockObject<RpcClient>({
-        getBlockWithTransactions: mockFn().rejectsWith(new Error()),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_three = mockObject<RpcClient>({
         getBlockWithTransactions: async () => block(1),
@@ -32,33 +33,45 @@ describe(BlockProvider.name, () => {
 
       const result = await provider.getBlockWithTransactions(1)
 
-      expect(rpc_one.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
-      expect(rpc_two.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
-      expect(rpc_three.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
+      expect(rpc_one.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(
+        1,
+      )
+      expect(rpc_two.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(
+        1,
+      )
+      expect(
+        rpc_three.getBlockWithTransactions,
+      ).toHaveBeenCalledExactlyOnceWith(1)
 
-      expect(result).toEqual(block(1))
+      expect(result).toStrictEqual(block(1))
     })
 
     it('throws when ran out of fallbacks', async () => {
       const rpc_one = mockObject<RpcClient>({
-        getBlockWithTransactions: mockFn().rejectsWith(new Error()),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_two = mockObject<RpcClient>({
-        getBlockWithTransactions: mockFn().rejectsWith(new Error()),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_three = mockObject<RpcClient>({
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('ERROR')),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error('ERROR')),
       })
 
       const provider = new BlockProvider('chain', [rpc_one, rpc_two, rpc_three])
 
-      await expect(() => provider.getBlockWithTransactions(1)).toBeRejectedWith(
+      await expect(() => provider.getBlockWithTransactions(1)).rejects.toThrow(
         'ERROR',
       )
 
-      expect(rpc_one.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
-      expect(rpc_two.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
-      expect(rpc_three.getBlockWithTransactions).toHaveBeenOnlyCalledWith(1)
+      expect(rpc_one.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(
+        1,
+      )
+      expect(rpc_two.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(
+        1,
+      )
+      expect(
+        rpc_three.getBlockWithTransactions,
+      ).toHaveBeenCalledExactlyOnceWith(1)
     })
   })
 
@@ -76,16 +89,16 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toStrictEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
     it('probes timestamps without transaction bodies when the client supports it', async () => {
-      const getBlockTimestamp = mockFn(async (n: number) => n * 100)
+      const getBlockTimestamp = vi.fn(async (n: number) => n * 100)
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
         getBlockTimestamp,
-        getBlockWithTransactions: mockFn(),
+        getBlockWithTransactions: vi.fn(),
       })
 
       const provider = new BlockProvider('chain', [client])
@@ -94,7 +107,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toStrictEqual(800)
       expect(getBlockTimestamp).toHaveBeenCalled()
       expect(client.getBlockWithTransactions).not.toHaveBeenCalled()
     })
@@ -103,7 +116,7 @@ describe(BlockProvider.name, () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
         getBlockTimestamp: undefined,
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
+        getBlockWithTransactions: vi.fn().mockRejectedValue(new Error('error')),
       })
 
       const client2 = mockObject<BlockClient>({
@@ -118,7 +131,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toStrictEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
@@ -137,26 +150,26 @@ describe(BlockProvider.name, () => {
         800,
       )
 
-      expect(blockNumber).toEqual(300)
+      expect(blockNumber).toStrictEqual(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
     it('throws error when run out of fallbacks', async () => {
       const client = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('1')),
+        getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('1')),
       })
       const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('2')),
+        getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('2')),
       })
       const client3 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('3')),
+        getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('3')),
       })
 
       const provider = new BlockProvider('chain', [client, client2, client3])
 
       await expect(
         async () => await provider.getBlockNumberAtOrBefore(UnixTime(800)),
-      ).toBeRejectedWith('3')
+      ).rejects.toThrow('3')
 
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)

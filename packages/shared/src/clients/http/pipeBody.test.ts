@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { pipeBody } from './pipeBody'
 
 describe(pipeBody.name, () => {
@@ -8,14 +8,14 @@ describe(pipeBody.name, () => {
       headers: { 'x-test': 'yes' },
     })
     const piped = pipeBody(response, upperCase())
-    expect(await piped.text()).toEqual('ABC')
-    expect(piped.status).toEqual(201)
-    expect(piped.headers.get('x-test')).toEqual('yes')
+    expect(await piped.text()).toStrictEqual('ABC')
+    expect(piped.status).toStrictEqual(201)
+    expect(piped.headers.get('x-test')).toStrictEqual('yes')
   })
 
   it('returns a bodiless response untouched', () => {
     const response = new Response(null, { status: 204 })
-    expect(pipeBody(response, upperCase())).toExactlyEqual(response)
+    expect(pipeBody(response, upperCase())).toBe(response)
   })
 })
 

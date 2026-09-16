@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { CelestiaRpcClient } from './CelestiaRpcClient'
 
@@ -24,8 +25,8 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getLatestBlockNumber()
 
-      expect(result).toEqual(Number(mockBlockHeight))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block', {
+      expect(result).toStrictEqual(Number(mockBlockHeight))
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL/block', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -53,7 +54,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockWithTransactions(Number(mockBlockHeight))
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -61,7 +62,7 @@ describe(CelestiaRpcClient.name, () => {
         transactions: [],
       })
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/block?height=12345',
         {
           method: 'GET',
@@ -90,7 +91,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockWithTransactions('latest')
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -98,7 +99,7 @@ describe(CelestiaRpcClient.name, () => {
         transactions: [],
       })
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block', {
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL/block', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -124,11 +125,14 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockTimestamp(100)
 
-      expect(result).toEqual(UnixTime.fromDate(new Date(mockTimestamp)))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block?height=100', {
-        method: 'GET',
-        redirect: 'follow',
-      })
+      expect(result).toStrictEqual(UnixTime.fromDate(new Date(mockTimestamp)))
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
+        'API_URL/block?height=100',
+        {
+          method: 'GET',
+          redirect: 'follow',
+        },
+      )
     })
   })
 
@@ -162,11 +166,11 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockResult(100)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         height: '100',
         txs_results: mockResults,
       })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/block_results?height=100',
         {
           method: 'GET',
@@ -188,8 +192,8 @@ describe(CelestiaRpcClient.name, () => {
         param2: 'value2',
       })
 
-      expect(result).toEqual({ result: 'success' })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(result).toStrictEqual({ result: 'success' })
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/test_method?param1=value1&param2=value2',
         {
           method: 'GET',
@@ -206,11 +210,14 @@ describe(CelestiaRpcClient.name, () => {
 
       await rpc.query('test_method', {})
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/test_method', {
-        method: 'GET',
-        redirect: 'follow',
-        timeout: 30_000,
-      })
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
+        'API_URL/test_method',
+        {
+          method: 'GET',
+          redirect: 'follow',
+          timeout: 30_000,
+        },
+      )
     })
   })
 
@@ -235,7 +242,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getValidatorsInfo({ page: 1 })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         validators: [
           {
             voting_power: 1000000,
@@ -244,7 +251,7 @@ describe(CelestiaRpcClient.name, () => {
         count: 1,
         total: 1,
       })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/validators?page=1&per_page=100',
         {
           method: 'GET',
@@ -272,12 +279,12 @@ describe(CelestiaRpcClient.name, () => {
         perPage: 50,
       })
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         validators: [],
         count: 0,
         total: 50,
       })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/validators?page=2&per_page=50',
         {
           method: 'GET',
@@ -298,7 +305,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toStrictEqual(false)
     })
 
     it('returns true for valid response', () => {
@@ -309,7 +316,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toStrictEqual(true)
     })
   })
 })

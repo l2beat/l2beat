@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { withServer } from '../../test/withServer'
 import { HttpClient } from '../http/HttpClient'
 import { BeaconChainClient } from './BeaconChainClient'
@@ -28,10 +29,10 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.getBlockSidecar('root')
 
-      expect(http.fetch.calls[0].args[0]).toEqual(
+      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           kzg_commitment,
           data: blob,
@@ -52,7 +53,7 @@ describe(BeaconChainClient.name, () => {
 
       const result = await withServer(
         (req, res) => {
-          expect(req.url).toEqual(
+          expect(req.url).toStrictEqual(
             '/eth/v1/beacon/states/head/validators?status=active',
           )
           res.setHeader('Content-Type', 'application/json')
@@ -70,7 +71,7 @@ describe(BeaconChainClient.name, () => {
         },
       )
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         totalStake: 63_000_000_000_000_000_000n,
         numberOfValidators: 2,
       })
@@ -86,8 +87,10 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.call('/eth/blob')
 
-      expect(result).toEqual({ result: 'result' })
-      expect(http.fetch.calls[0].args[0]).toEqual('BEACON_API_URL/eth/blob')
+      expect(result).toStrictEqual({ result: 'result' })
+      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+        'BEACON_API_URL/eth/blob',
+      )
     })
 
     it('should throw on beacon error', async () => {
@@ -99,7 +102,7 @@ describe(BeaconChainClient.name, () => {
       })
       const client = mockClient({ http })
 
-      await expect(client.call('/eth/blob')).toBeRejectedWith(
+      await expect(client.call('/eth/blob')).rejects.toThrow(
         'Response validation failed',
       )
     })
@@ -113,7 +116,7 @@ describe(BeaconChainClient.name, () => {
         message: 'Error',
       })
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toStrictEqual({ success: false })
     })
   })
 })

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { getBlockNumberAtOrBefore } from './getBlockNumberAtOrBefore'
 
@@ -20,7 +20,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(lhs)
+    expect(res).toStrictEqual(lhs)
   })
 
   it('returns rhsBlock when timestamp ≥ rhsTimestamp', async () => {
@@ -33,7 +33,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(rhs)
+    expect(res).toStrictEqual(rhs)
   })
 
   it('returns exact block when timestamp matches one inside the range', async () => {
@@ -47,7 +47,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(target)
+    expect(res).toStrictEqual(target)
   })
 
   it('returns closest lower block when timestamp falls strictly between two blocks', async () => {
@@ -60,7 +60,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(37)
+    expect(res).toStrictEqual(37)
   })
 
   it('handles the minimal searchable interval (rhs = lhs + 1)', async () => {
@@ -73,7 +73,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(lhs)
+    expect(res).toStrictEqual(lhs)
   })
 
   it('works for very large ranges and non‑zero offset', async () => {
@@ -89,7 +89,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(target)
+    expect(res).toStrictEqual(target)
   })
 
   it('performs logarithmic‑like number of timestamp queries', async () => {
@@ -105,13 +105,13 @@ describe(getBlockNumberAtOrBefore.name, async () => {
   it('returns lhsBlock when target equals lhsTimestamp and lhs is unique', async () => {
     const getBlock = linear(10, 100)
     const res = await getBlockNumberAtOrBefore(UnixTime(100), 0, 50, getBlock)
-    expect(res).toEqual(0)
+    expect(res).toStrictEqual(0)
   })
 
   it('returns rhsBlock when target equals rhsTimestamp exactly', async () => {
     const getBlock = linear(10)
     const res = await getBlockNumberAtOrBefore(UnixTime(500), 0, 50, getBlock)
-    expect(res).toEqual(50)
+    expect(res).toStrictEqual(50)
   })
 
   // Flat region then a massive spike — interpolation initially undershoots and
@@ -122,7 +122,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       timestamp: n <= 900 ? n : 900 + (n - 900) * 10_000,
     })
     const res = await getBlockNumberAtOrBefore(UnixTime(500), 0, 1000, getBlock)
-    expect(res).toEqual(500)
+    expect(res).toStrictEqual(500)
   })
 
   // On linear data interpolation should resolve in a handful of calls. The
@@ -141,6 +141,6 @@ describe(getBlockNumberAtOrBefore.name, async () => {
   it('handles degenerate range where lhsBlock === rhsBlock', async () => {
     const getBlock = linear(10)
     const res = await getBlockNumberAtOrBefore(UnixTime(50), 42, 42, getBlock)
-    expect(res).toEqual(42)
+    expect(res).toStrictEqual(42)
   })
 })

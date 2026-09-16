@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { AztecRpcClient } from './AztecRpcClient'
 
@@ -7,14 +8,14 @@ describe(AztecRpcClient.name, () => {
   describe(AztecRpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns the latest block number', async () => {
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce({ result: 123 }),
+        fetch: vi.fn().mockResolvedValueOnce({ result: 123 }),
       })
       const client = mockClient({ http })
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toEqual(123)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
+      expect(result).toStrictEqual(123)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -32,7 +33,7 @@ describe(AztecRpcClient.name, () => {
   describe(AztecRpcClient.prototype.getBlocks.name, () => {
     it('returns block timestamps and transaction effect counts', async () => {
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce({
+        fetch: vi.fn().mockResolvedValueOnce({
           result: [
             {
               number: 100,
@@ -46,20 +47,20 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getBlocks(100, 1)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         { number: 100, timestamp: 1234567890, txEffectsCount: 2 },
       ])
     })
 
     it('requests blocks with transaction effects included', async () => {
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce({ result: [] }),
+        fetch: vi.fn().mockResolvedValueOnce({ result: [] }),
       })
       const client = mockClient({ http })
 
       await client.getBlocks(100, 50)
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -77,7 +78,7 @@ describe(AztecRpcClient.name, () => {
   describe(AztecRpcClient.prototype.getBlockHeaders.name, () => {
     it('returns block headers without transaction effects', async () => {
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce({
+        fetch: vi.fn().mockResolvedValueOnce({
           result: [
             {
               number: 100,
@@ -90,8 +91,8 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getBlockHeaders(100, 1)
 
-      expect(result).toEqual([{ number: 100, timestamp: 1234567890 }])
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
+      expect(result).toStrictEqual([{ number: 100, timestamp: 1234567890 }])
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -114,7 +115,7 @@ describe(AztecRpcClient.name, () => {
         client.validateResponse({
           error: { code: -32601, message: 'Method not found' },
         }),
-      ).toEqual({ success: false })
+      ).toStrictEqual({ success: false })
     })
   })
 })

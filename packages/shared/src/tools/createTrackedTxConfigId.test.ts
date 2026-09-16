@@ -1,5 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { createTrackedTxId } from './createTrackedTxConfigId'
 import type { TrackedTxConfigEntryWithoutId } from './TrackedTxsConfig'
 
@@ -48,9 +48,9 @@ describe(createTrackedTxId.name, () => {
       const post = createTrackedTxId(mock({ [f.key]: f.newValue }))
 
       if (f.shouldUpdateHash) {
-        expect(pre).not.toEqual(post)
+        expect(pre).not.toStrictEqual(post)
       } else {
-        expect(pre).toEqual(post)
+        expect(pre).toStrictEqual(post)
       }
     })
   }
@@ -79,8 +79,8 @@ describe(createTrackedTxId.name, () => {
       groupBy: { type: 'functionCallParameter', path: [0, 1] },
     })
 
-    expect(grouped).not.toEqual(perTransaction)
-    expect(groupedByAnotherParameter).not.toEqual(grouped)
+    expect(grouped).not.toStrictEqual(perTransaction)
+    expect(groupedByAnotherParameter).not.toStrictEqual(grouped)
   })
 })
 

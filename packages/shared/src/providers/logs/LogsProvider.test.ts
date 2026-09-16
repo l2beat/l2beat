@@ -1,5 +1,6 @@
 import type { Log } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import { LogsProvider } from './LogsProvider'
 
@@ -13,16 +14,21 @@ describe(LogsProvider.name, () => {
 
       const result = await provider.getLogs(1, 1)
 
-      expect(rpc.getLogs).toHaveBeenOnlyCalledWith(1, 1, undefined, undefined)
-      expect(result).toEqual([log(1)])
+      expect(rpc.getLogs).toHaveBeenCalledExactlyOnceWith(
+        1,
+        1,
+        undefined,
+        undefined,
+      )
+      expect(result).toStrictEqual([log(1)])
     })
 
     it('calls other client when there are errors', async () => {
       const rpc_one = mockObject<RpcClient>({
-        getLogs: mockFn().rejectsWith(new Error()),
+        getLogs: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_two = mockObject<RpcClient>({
-        getLogs: mockFn().rejectsWith(new Error()),
+        getLogs: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_three = mockObject<RpcClient>({
         getLogs: async () => [log(1)],
@@ -32,56 +38,56 @@ describe(LogsProvider.name, () => {
 
       const result = await provider.getLogs(1, 1)
 
-      expect(rpc_one.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_one.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,
         undefined,
       )
-      expect(rpc_two.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_two.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,
         undefined,
       )
-      expect(rpc_three.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_three.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,
         undefined,
       )
 
-      expect(result).toEqual([log(1)])
+      expect(result).toStrictEqual([log(1)])
     })
 
     it('throws when ran out of fallbacks', async () => {
       const rpc_one = mockObject<RpcClient>({
-        getLogs: mockFn().rejectsWith(new Error()),
+        getLogs: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_two = mockObject<RpcClient>({
-        getLogs: mockFn().rejectsWith(new Error()),
+        getLogs: vi.fn().mockRejectedValue(new Error()),
       })
       const rpc_three = mockObject<RpcClient>({
-        getLogs: mockFn().rejectsWith(new Error('ERROR')),
+        getLogs: vi.fn().mockRejectedValue(new Error('ERROR')),
       })
 
       const provider = new LogsProvider('chain', [rpc_one, rpc_two, rpc_three])
 
-      await expect(() => provider.getLogs(1, 1)).toBeRejectedWith('ERROR')
+      await expect(() => provider.getLogs(1, 1)).rejects.toThrow('ERROR')
 
-      expect(rpc_one.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_one.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,
         undefined,
       )
-      expect(rpc_two.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_two.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,
         undefined,
       )
-      expect(rpc_three.getLogs).toHaveBeenOnlyCalledWith(
+      expect(rpc_three.getLogs).toHaveBeenCalledExactlyOnceWith(
         1,
         1,
         undefined,

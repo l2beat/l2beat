@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { StarknetClient } from '../../clients'
 import {
   STARKNET_TOTAL_SUPPLY_SELECTOR,
@@ -14,10 +15,11 @@ describe(StarknetTotalSupplyProvider.name, () => {
   describe(StarknetTotalSupplyProvider.prototype.getTotalSupplies.name, () => {
     it('performs call for each address', async () => {
       const client = mockObject<StarknetClient>({
-        call: mockFn()
-          .resolvesToOnce(['0x1'])
-          .resolvesToOnce(['0x2'])
-          .resolvesToOnce(['0x0']),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(['0x1'])
+          .mockResolvedValueOnce(['0x2'])
+          .mockResolvedValueOnce(['0x0']),
         chain: CHAIN,
       })
 
@@ -59,15 +61,16 @@ describe(StarknetTotalSupplyProvider.name, () => {
         },
         BLOCK,
       )
-      expect(result).toEqual([1n, 2n, 0n])
+      expect(result).toStrictEqual([1n, 2n, 0n])
     })
 
     it('throws if any call fails', async () => {
       const client = mockObject<StarknetClient>({
-        call: mockFn()
-          .resolvesToOnce(['0x1'])
-          .resolvesToOnce(['0x2'])
-          .rejectsWithOnce(new Error('RPC failure')),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(['0x1'])
+          .mockResolvedValueOnce(['0x2'])
+          .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
       })
 
@@ -78,7 +81,7 @@ describe(StarknetTotalSupplyProvider.name, () => {
 
       await expect(
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith('RPC failure')
+      ).rejects.toThrow('RPC failure')
     })
 
     it('throws error if no client for chain', async () => {

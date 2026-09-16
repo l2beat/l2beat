@@ -36,7 +36,7 @@
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -55,6 +55,8 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.12",
     "@types/stream-chain": "^2.1.0",
-    "@types/stream-json": "^1.7.7"
+    "@types/stream-json": "^1.7.7",
+    "@l2beat/vitest-config": "workspace:*",
+    "@l2beat/test-utils": "workspace:*"
   }
 }

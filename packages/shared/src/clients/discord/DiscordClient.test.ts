@@ -1,4 +1,5 @@
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { DiscordClient } from './DiscordClient'
 
@@ -9,7 +10,7 @@ describe(DiscordClient.name, () => {
     it('sends to the configured webhook', async () => {
       const httpClient = mockObject<HttpClient>({
         fetchRaw: async (url) => {
-          expect(url).toEqual(`${webhookUrl}?wait=true`)
+          expect(url).toStrictEqual(`${webhookUrl}?wait=true`)
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
@@ -22,7 +23,7 @@ describe(DiscordClient.name, () => {
       const message = 'Example message'
       const httpClient = mockObject<HttpClient>({
         async fetchRaw(_, init) {
-          expect(init?.body).toEqual(JSON.stringify({ content: message }))
+          expect(init?.body).toStrictEqual(JSON.stringify({ content: message }))
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
@@ -34,7 +35,7 @@ describe(DiscordClient.name, () => {
     it('adds headers', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetchRaw(_, init) {
-          expect(init?.headers).toEqual({
+          expect(init?.headers).toStrictEqual({
             'Content-Type': 'application/json; charset=UTF-8',
           })
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
@@ -49,7 +50,7 @@ describe(DiscordClient.name, () => {
       const discord = new DiscordClient(webhookUrl)
 
       const message = 'a'.repeat(2001)
-      await expect(discord.sendMessage(message)).toBeRejectedWith(
+      await expect(discord.sendMessage(message)).rejects.toThrow(
         'Discord error: Message size exceeded (2000 characters)',
       )
     })
@@ -65,7 +66,7 @@ describe(DiscordClient.name, () => {
       })
       const discord = mockClient('', httpClient)
 
-      await expect(discord.sendMessage('message')).toBeRejectedWith(
+      await expect(discord.sendMessage('message')).rejects.toThrow(
         'HTTP error: 400 Bad Request',
       )
     })

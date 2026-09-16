@@ -1,4 +1,5 @@
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { AztecBlockClient } from '../../clients'
 import { AztecBlockProvider } from './AztecBlockProvider'
 
@@ -7,7 +8,7 @@ describe(AztecBlockProvider.name, () => {
     it('returns a complete consecutive block range', async () => {
       const client = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getBlocks: mockFn().resolvesToOnce([
+        getBlocks: vi.fn().mockResolvedValueOnce([
           { number: 10, timestamp: 1, txEffectsCount: 0 },
           { number: 11, timestamp: 2, txEffectsCount: 1 },
         ]),
@@ -16,7 +17,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlocks(10, 2)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         { number: 10, timestamp: 1, txEffectsCount: 0 },
         { number: 11, timestamp: 2, txEffectsCount: 1 },
       ])
@@ -25,13 +26,15 @@ describe(AztecBlockProvider.name, () => {
     it('rejects incomplete responses', async () => {
       const client = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getBlocks: mockFn().resolvesToOnce([
-          { number: 10, timestamp: 1, txEffectsCount: 0 },
-        ]),
+        getBlocks: vi
+          .fn()
+          .mockResolvedValueOnce([
+            { number: 10, timestamp: 1, txEffectsCount: 0 },
+          ]),
       })
       const provider = new AztecBlockProvider('aztecnetwork', [client])
 
-      await expect(provider.getBlocks(10, 2)).toBeRejectedWith(
+      await expect(provider.getBlocks(10, 2)).rejects.toThrow(
         'Expected 2 blocks starting from 10, got 1',
       )
     })
@@ -39,15 +42,16 @@ describe(AztecBlockProvider.name, () => {
     it('chunks requests above the Aztec RPC cap', async () => {
       const client = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getBlocks: mockFn()
-          .resolvesToOnce(blocks(10, 50))
-          .resolvesToOnce(blocks(60, 1)),
+        getBlocks: vi
+          .fn()
+          .mockResolvedValueOnce(blocks(10, 50))
+          .mockResolvedValueOnce(blocks(60, 1)),
       })
       const provider = new AztecBlockProvider('aztecnetwork', [client])
 
       const result = await provider.getBlocks(10, 51)
 
-      expect(result).toEqual([...blocks(10, 50), ...blocks(60, 1)])
+      expect(result).toStrictEqual([...blocks(10, 50), ...blocks(60, 1)])
       expect(client.getBlocks).toHaveBeenCalledWith(10, 50)
       expect(client.getBlocks).toHaveBeenCalledWith(60, 1)
     })
@@ -57,7 +61,7 @@ describe(AztecBlockProvider.name, () => {
     it('uses header-only requests and resets an out-of-range start', async () => {
       const client = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getLatestBlockNumber: mockFn().resolvesToOnce(500),
+        getLatestBlockNumber: vi.fn().mockResolvedValueOnce(500),
         getBlockHeaders: async (number: number) => [
           { number, timestamp: number * 100 },
         ],
@@ -66,7 +70,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000, 800)
 
-      expect(result).toEqual(300)
+      expect(result).toStrictEqual(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client.getBlockHeaders).toHaveBeenCalled()
     })
@@ -74,12 +78,12 @@ describe(AztecBlockProvider.name, () => {
     it('falls back when a header request fails', async () => {
       const failingClient = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getLatestBlockNumber: mockFn().resolvesToOnce(500),
-        getBlockHeaders: mockFn().rejectsWith(new Error('error')),
+        getLatestBlockNumber: vi.fn().mockResolvedValueOnce(500),
+        getBlockHeaders: vi.fn().mockRejectedValue(new Error('error')),
       })
       const workingClient = mockObject<AztecBlockClient>({
         chain: 'aztecnetwork',
-        getLatestBlockNumber: mockFn().resolvesToOnce(500),
+        getLatestBlockNumber: vi.fn().mockResolvedValueOnce(500),
         getBlockHeaders: async (number: number) => [
           { number, timestamp: number * 100 },
         ],
@@ -91,7 +95,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000)
 
-      expect(result).toEqual(300)
+      expect(result).toStrictEqual(300)
       expect(failingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(workingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })

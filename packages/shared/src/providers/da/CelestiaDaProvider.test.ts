@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { CelestiaRpcClient } from '../../clients'
 import { CelestiaDaProvider } from './CelestiaDaProvider'
 
@@ -28,7 +29,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515203, 6515204)
 
-      expect(blobs).toEqual([
+      expect(blobs).toStrictEqual([
         {
           type: 'celestia',
           daLayer: 'celestia',
@@ -91,7 +92,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515201, 6515202)
 
-      expect(blobs).toEqual([
+      expect(blobs).toStrictEqual([
         {
           type: 'celestia',
           daLayer: 'celestia',
@@ -139,7 +140,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(1, 1)
 
-      expect(blobs).toEqual([])
+      expect(blobs).toStrictEqual([])
     })
 
     it('filters out non-blob events', async () => {
@@ -168,25 +169,29 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515204, 6515204)
 
-      expect(blobs).toEqual([])
+      expect(blobs).toStrictEqual([])
     })
   })
 
   describe(CelestiaDaProvider.prototype.getBlockTimestamp.name, () => {
     it('returns the timestamp of the block', async () => {
       const rpcClientMock = mockObject<CelestiaRpcClient>({
-        getBlockTimestamp: mockFn().resolvesTo(
-          UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
-        ),
+        getBlockTimestamp: vi
+          .fn()
+          .mockResolvedValue(
+            UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+          ),
       })
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
 
       const timestamp = await provider.getBlockTimestamp(6515203)
 
-      expect(timestamp).toEqual(
+      expect(timestamp).toStrictEqual(
         UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
       )
-      expect(rpcClientMock.getBlockTimestamp).toHaveBeenOnlyCalledWith(6515203)
+      expect(rpcClientMock.getBlockTimestamp).toHaveBeenCalledExactlyOnceWith(
+        6515203,
+      )
     })
   })
 })

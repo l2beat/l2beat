@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { EthRpcClient, RpcBlock } from '../EthRpcClient'
 import { RpcClientCompat } from './RpcClientCompat'
 
@@ -13,7 +14,7 @@ describe(RpcClientCompat.name, () => {
         logsBloom: '0x',
         transactions: [],
       } as unknown as RpcBlock
-      const getBlockByNumber = mockFn().resolvesTo(header)
+      const getBlockByNumber = vi.fn().mockResolvedValue(header)
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({ getBlockByNumber }),
         'chain',
@@ -21,14 +22,14 @@ describe(RpcClientCompat.name, () => {
 
       const timestamp = await client.getBlockTimestamp(100)
 
-      expect(timestamp).toEqual(1_000)
-      expect(getBlockByNumber).toHaveBeenOnlyCalledWith(100n, false)
+      expect(timestamp).toStrictEqual(1_000)
+      expect(getBlockByNumber).toHaveBeenCalledExactlyOnceWith(100n, false)
     })
   })
 
   describe(RpcClientCompat.prototype.getLogs.name, () => {
     it('passes positional topic filters through unchanged', async () => {
-      const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
+      const getLogs = vi.fn<EthRpcClient['getLogs']>().mockResolvedValue([])
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({ getLogs }),
         'ethereum',
@@ -44,7 +45,7 @@ describe(RpcClientCompat.name, () => {
 
       await client.getLogs(100, 200, addresses, topics)
 
-      expect(getLogs).toHaveBeenOnlyCalledWith({
+      expect(getLogs).toHaveBeenCalledExactlyOnceWith({
         fromBlock: 100n,
         toBlock: 200n,
         address: addresses,
@@ -59,12 +60,12 @@ describe(RpcClientCompat.name, () => {
       const firstBatch = new Promise<void>((resolve) => {
         releaseFirstBatch = resolve
       })
-      const getBlockByNumber = mockFn().executes(
-        async (blockNumber: bigint) => {
+      const getBlockByNumber = vi
+        .fn()
+        .mockImplementation(async (blockNumber: bigint) => {
           if (blockNumber <= 25n) await firstBatch
           return block(Number(blockNumber))
-        },
-      )
+        })
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({ getBlockByNumber }),
         'ethereum',
@@ -79,7 +80,7 @@ describe(RpcClientCompat.name, () => {
 
       const result = await resultPromise
       expect(getBlockByNumber).toHaveBeenCalledTimes(26)
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         new Map(blockNumbers.map((number) => [number, number * 100])),
       )
     })
@@ -87,12 +88,12 @@ describe(RpcClientCompat.name, () => {
     it('rejects a mismatched block number', async () => {
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({
-          getBlockByNumber: mockFn().resolvesTo(block(2)),
+          getBlockByNumber: vi.fn().mockResolvedValue(block(2)),
         }),
         'ethereum',
       )
 
-      await expect(() => client.getBlockTimestamps([1])).toBeRejectedWith(
+      await expect(() => client.getBlockTimestamps([1])).rejects.toThrow(
         'Invalid response: expected block number 1, got 2',
       )
     })

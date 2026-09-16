@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { PolkadotRpcClient } from '../../clients'
 import { AvailDaProvider } from './AvailDaProvider'
 import type { AvailBlob } from './types'
@@ -8,16 +9,17 @@ describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlobs.name, () => {
     it('return blobs for given block range', async () => {
       const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn()
-          .resolvesToOnce(mockBlockResponse([1, 2]))
-          .resolvesToOnce(mockBlockResponse([])),
+        getBlock: vi
+          .fn()
+          .mockResolvedValueOnce(mockBlockResponse([1, 2]))
+          .mockResolvedValueOnce(mockBlockResponse([])),
       })
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -39,38 +41,38 @@ describe(AvailDaProvider.name, () => {
 
     it('return no blobs if no extrinsics', async () => {
       const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn().resolvesTo(mockBlockResponse([1, 2], [])),
+        getBlock: vi.fn().mockResolvedValue(mockBlockResponse([1, 2], [])),
       })
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('return no blobs if no apps', async () => {
       const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn().resolvesTo(mockBlockResponse([])),
+        getBlock: vi.fn().mockResolvedValue(mockBlockResponse([])),
       })
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
 
     it('return 1 blob per id that has an avail extrinsic', async () => {
       const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn().resolvesTo(mockRealBlockData()),
+        getBlock: vi.fn().mockResolvedValue(mockRealBlockData()),
       })
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1768867, 1768867)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -84,23 +86,25 @@ describe(AvailDaProvider.name, () => {
 
     it('return multiple blobs per id that has an avail extrinsic', async () => {
       const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn().resolvesTo(
-          mockBlockResponseForHeight(
-            1768872,
-            [31],
-            [
-              '0x8e4c0700840042ddd31a9c9a7313634a024b6993767b6c44acb6235abf440bb33066e688d335016c78fadcaf0d53c0637f5e295c5b71706073856c9c60b40c78e9d90a5eb62c59b0a75f26ada2e4c2c07fda550bb8e5a044c5c055a19ecabc97f4ef7d123f4f8300cd2a004c1d01d64a0700001d8bbdb748cac63d4d280fa513f13f4400000001d29d78daacb083779deff7047a4e7262dbb66d35b66ddbb6d1d8361a348d6d36b693c6361a3b77f5f3fdddfb17dc67bdeb5dfbd9cfecd933d30177',
-              '0xc65d19008400a891d6a177f2cf5fa2128b53f8e932cc72f02b275e943fb554c5ab1ec5bbe84b01ce118276d825199b7d909812696d897797b5a517d4210fa252239ecb0dcd885873d30a5715b2f2863693754668b80444051e99751bb8ffb2f3028ff59a23df8e00c200010000441d01065c1900000000000000000000000000010656f004259e900d6b6c4fa122d0608c1db4fa818eb568239d14203f5021ca6ce8f01e2ef31f0901ded52c4d3c090e4136716e2a',
-            ],
+        getBlock: vi
+          .fn()
+          .mockResolvedValue(
+            mockBlockResponseForHeight(
+              1768872,
+              [31],
+              [
+                '0x8e4c0700840042ddd31a9c9a7313634a024b6993767b6c44acb6235abf440bb33066e688d335016c78fadcaf0d53c0637f5e295c5b71706073856c9c60b40c78e9d90a5eb62c59b0a75f26ada2e4c2c07fda550bb8e5a044c5c055a19ecabc97f4ef7d123f4f8300cd2a004c1d01d64a0700001d8bbdb748cac63d4d280fa513f13f4400000001d29d78daacb083779deff7047a4e7262dbb66d35b66ddbb6d1d8361a348d6d36b693c6361a3b77f5f3fdddfb17dc67bdeb5dfbd9cfecd933d30177',
+                '0xc65d19008400a891d6a177f2cf5fa2128b53f8e932cc72f02b275e943fb554c5ab1ec5bbe84b01ce118276d825199b7d909812696d897797b5a517d4210fa252239ecb0dcd885873d30a5715b2f2863693754668b80444051e99751bb8ffb2f3028ff59a23df8e00c200010000441d01065c1900000000000000000000000000010656f004259e900d6b6c4fa122d0608c1db4fa818eb568239d14203f5021ca6ce8f01e2ef31f0901ded52c4d3c090e4136716e2a',
+              ],
+            ),
           ),
-        ),
       })
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1768872, 1768872)
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -131,7 +135,7 @@ describe(AvailDaProvider.name, () => {
       const timestamp = await provider.getBlockTimestamp(291)
 
       // the blobs of block 291 above carry this timestamp
-      expect(timestamp).toEqual(UnixTime(1720092420))
+      expect(timestamp).toStrictEqual(UnixTime(1720092420))
     })
   })
 })

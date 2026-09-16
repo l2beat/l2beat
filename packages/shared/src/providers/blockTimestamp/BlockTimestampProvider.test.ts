@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { BlockIndexerClient } from '../../clients'
 import type { BlockProvider } from '../block/BlockProvider'
 import { BlockTimestampProvider } from './BlockTimestampProvider'
@@ -15,12 +16,12 @@ describe(BlockTimestampProvider.name, () => {
       it('uses indexer client if available', async () => {
         const indexerClient = mockObject<BlockIndexerClient>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
+          getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
         })
 
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: vi.fn(),
         })
 
         const provider = new BlockTimestampProvider({
@@ -30,24 +31,24 @@ describe(BlockTimestampProvider.name, () => {
 
         const result = await provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN)
 
-        expect(indexerClient.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-          TIMESTAMP,
-        )
+        expect(
+          indexerClient.getBlockNumberAtOrBefore,
+        ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
         expect(blockProvider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
-        expect(result).toEqual(BLOCK_NUMBER)
+        expect(result).toStrictEqual(BLOCK_NUMBER)
       })
 
       it('falls back to block provider if indexer client fails', async () => {
         const indexerClient = mockObject<BlockIndexerClient>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn().rejectsWithOnce(
-            new Error('Indexer error'),
-          ),
+          getBlockNumberAtOrBefore: vi
+            .fn()
+            .mockRejectedValueOnce(new Error('Indexer error')),
         })
 
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
+          getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
         })
 
         const provider = new BlockTimestampProvider({
@@ -58,21 +59,21 @@ describe(BlockTimestampProvider.name, () => {
         const result = await provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN)
 
         expect(indexerClient.getBlockNumberAtOrBefore).toHaveBeenCalledTimes(1)
-        expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-          TIMESTAMP,
-        )
-        expect(result).toEqual(BLOCK_NUMBER)
+        expect(
+          blockProvider.getBlockNumberAtOrBefore,
+        ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
+        expect(result).toStrictEqual(BLOCK_NUMBER)
       })
 
       it('uses block provider if no indexer client for chain', async () => {
         const otherChainIndexer = mockObject<BlockIndexerClient>({
           chain: 'other-chain',
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: vi.fn(),
         })
 
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
+          getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
         })
 
         const provider = new BlockTimestampProvider({
@@ -85,23 +86,23 @@ describe(BlockTimestampProvider.name, () => {
         expect(
           otherChainIndexer.getBlockNumberAtOrBefore,
         ).not.toHaveBeenCalled()
-        expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-          TIMESTAMP,
-        )
-        expect(result).toEqual(BLOCK_NUMBER)
+        expect(
+          blockProvider.getBlockNumberAtOrBefore,
+        ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
+        expect(result).toStrictEqual(BLOCK_NUMBER)
       })
 
       it('throws error if indexer fails and no block provider available', async () => {
         const indexerClient = mockObject<BlockIndexerClient>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn().rejectsWithOnce(
-            new Error('Indexer error'),
-          ),
+          getBlockNumberAtOrBefore: vi
+            .fn()
+            .mockRejectedValueOnce(new Error('Indexer error')),
         })
 
         const otherChainProvider = mockObject<BlockProvider>({
           chain: 'other-chain',
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: vi.fn(),
         })
 
         const provider = new BlockTimestampProvider({
@@ -111,18 +112,18 @@ describe(BlockTimestampProvider.name, () => {
 
         await expect(
           provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN),
-        ).toBeRejectedWith('Indexer error')
+        ).rejects.toThrow('Indexer error')
       })
 
       it('throws error if no data sources available for chain', async () => {
         const otherChainIndexer = mockObject<BlockIndexerClient>({
           chain: 'other-chain',
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: vi.fn(),
         })
 
         const otherChainProvider = mockObject<BlockProvider>({
           chain: 'other-chain',
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: vi.fn(),
         })
 
         const provider = new BlockTimestampProvider({
@@ -132,7 +133,7 @@ describe(BlockTimestampProvider.name, () => {
 
         await expect(
           provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN),
-        ).toBeRejectedWith(
+        ).rejects.toThrow(
           `Missing BlockTimestamp data sources for chain ${CHAIN}`,
         )
       })

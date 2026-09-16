@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { EspressoClient } from './EspressoClient'
 
@@ -29,8 +30,8 @@ describe(EspressoClient.name, () => {
 
       const result = await client.getStakeTable()
 
-      expect(result).toEqual(mockResponse)
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
+      expect(result).toStrictEqual(mockResponse)
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         `${apiUrl}/v0/node/stake-table/current`,
         {
           method: 'GET',
@@ -47,7 +48,7 @@ describe(EspressoClient.name, () => {
       })
       const client = mockClient({ http })
 
-      await expect(client.getStakeTable()).toBeRejected()
+      await expect(client.getStakeTable()).rejects.toThrow()
     })
   })
 
@@ -61,7 +62,7 @@ describe(EspressoClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toStrictEqual(false)
     })
 
     it('returns true for response without error', () => {
@@ -71,7 +72,7 @@ describe(EspressoClient.name, () => {
         stake_table: [],
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toStrictEqual(true)
     })
   })
 })

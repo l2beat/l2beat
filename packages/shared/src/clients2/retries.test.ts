@@ -1,9 +1,9 @@
-import { expect, mockFn } from 'earl'
+import { describe, expect, it, vi } from 'vitest'
 import { retry, withRetries } from './retries'
 
 describe(retry.name, () => {
   it('retries up to maxAttempts 1', async () => {
-    const fn = mockFn().rejectsWith(new Error('oops'))
+    const fn = vi.fn().mockRejectedValue(new Error('oops'))
     await retry(fn, {
       initialTimeoutMs: 1,
       maxTimeoutMs: 1,
@@ -13,7 +13,7 @@ describe(retry.name, () => {
   })
 
   it('retries up to maxAttempts 10', async () => {
-    const fn = mockFn().rejectsWith(new Error('oops'))
+    const fn = vi.fn().mockRejectedValue(new Error('oops'))
     await retry(fn, {
       initialTimeoutMs: 1,
       maxTimeoutMs: 1,
@@ -23,7 +23,7 @@ describe(retry.name, () => {
   })
 
   it('sleeps for correct times', async () => {
-    const fn = mockFn().rejectsWith(new Error('oops'))
+    const fn = vi.fn().mockRejectedValue(new Error('oops'))
     const _setTimeout = globalThis.setTimeout
     const calls: number[] = []
     globalThis.setTimeout = ((cb: () => void, ms: number) => {
@@ -37,7 +37,7 @@ describe(retry.name, () => {
     }).catch(() => 0)
     globalThis.setTimeout = _setTimeout
     expect(fn).toHaveBeenCalledTimes(10)
-    expect(calls).toEqual([1, 2, 4, 8, 16, 32, 64, 100, 100])
+    expect(calls).toStrictEqual([1, 2, 4, 8, 16, 32, 64, 100, 100])
   })
 })
 
@@ -71,10 +71,10 @@ describe(withRetries.name, () => {
       initialTimeoutMs: 1,
       maxAttempts: 2,
     })
-    expect(await fooService.getFoo()).toEqual('foo')
-    expect(await fooService.getBar()).toEqual('bar')
-    expect(fooService.notAsync()).toEqual(42)
+    expect(await fooService.getFoo()).toStrictEqual('foo')
+    expect(await fooService.getBar()).toStrictEqual('bar')
+    expect(fooService.notAsync()).toStrictEqual(42)
     expect(() => fooService.notAsyncThrow()).toThrow('oops')
-    expect(fooService.toString()).toEqual('[object Object]')
+    expect(fooService.toString()).toStrictEqual('[object Object]')
   })
 })

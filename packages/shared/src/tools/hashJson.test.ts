@@ -1,12 +1,12 @@
 import { Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 
 import { hashJson } from './hashJson'
 
 describe(hashJson.name, () => {
   it('returns a known hash', () => {
     const hash = hashJson({ x: 'foo', y: 'bar' })
-    expect(hash).toEqual(
+    expect(hash).toStrictEqual(
       Hash256(
         '0x4f38d2bd43161918292b972fb077c7915193a5aa62fda799aa2cf5aa1f4fabf0',
       ),
@@ -16,18 +16,18 @@ describe(hashJson.name, () => {
   it('returns same hash for similar objects', () => {
     const hashA = hashJson({ foo: 1, bar: 2 })
     const hashB = hashJson({ foo: 1, bar: 2 })
-    expect(hashA).toEqual(hashB)
+    expect(hashA).toStrictEqual(hashB)
   })
 
   it('returns different hash for different objects', () => {
     const hashA = hashJson({ foo: 1, bar: 2 })
     const hashB = hashJson({ foo: 123 })
-    expect(hashA).not.toEqual(hashB)
+    expect(hashA).not.toStrictEqual(hashB)
   })
 
   it('key order matters', () => {
     const hashA = hashJson({ foo: 1, bar: 2 })
     const hashB = hashJson({ bar: 2, foo: 1 })
-    expect(hashA).not.toEqual(hashB)
+    expect(hashA).not.toStrictEqual(hashB)
   })
 })

@@ -1,5 +1,6 @@
 import { Logger, type RateLimiter } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 
 describe(ClientMetricsAggregator.name, () => {
@@ -12,7 +13,7 @@ describe(ClientMetricsAggregator.name, () => {
       { duration: 5, size: 50, label: 'b' },
     ])
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         label: 'a',
         count: 2,
@@ -66,7 +67,7 @@ describe(ClientMetricsAggregator.name, () => {
       { duration: 10, size: 100, label: 'a' },
     ])
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         label: 'a',
         count: 1,
@@ -101,6 +102,6 @@ describe(ClientMetricsAggregator.name, () => {
 
   it('returns nothing when there is no data', () => {
     const aggregator = new ClientMetricsAggregator({ logger: Logger.SILENT })
-    expect(aggregator.aggregate([])).toEqual([])
+    expect(aggregator.aggregate([])).toStrictEqual([])
   })
 })

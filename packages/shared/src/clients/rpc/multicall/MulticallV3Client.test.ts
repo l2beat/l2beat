@@ -1,6 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { utils } from 'ethers'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { MulticallV3Client, multicallInterface } from './MulticallV3Client'
 
 describe(MulticallV3Client.name, () => {
@@ -28,7 +28,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toEqual(1)
+      expect(result.length).toStrictEqual(1)
 
       const expectedCalldata = multicallInterface.encodeFunctionData(
         'tryAggregate',
@@ -41,8 +41,8 @@ describe(MulticallV3Client.name, () => {
         ],
       )
 
-      expect(result[0].to).toEqual(address)
-      expect(result[0].input).toEqual(Bytes.fromHex(expectedCalldata))
+      expect(result[0].to).toStrictEqual(address)
+      expect(result[0].input).toStrictEqual(Bytes.fromHex(expectedCalldata))
     })
 
     it('splits requests into multiple batches when exceeding batch size', () => {
@@ -53,7 +53,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toEqual(3)
+      expect(result.length).toStrictEqual(3)
 
       // First batch should have 3 items
       const firstBatchCalldata = multicallInterface.encodeFunctionData(
@@ -88,14 +88,14 @@ describe(MulticallV3Client.name, () => {
         ],
       )
 
-      expect(result[0].input).toEqual(Bytes.fromHex(firstBatchCalldata))
-      expect(result[1].input).toEqual(Bytes.fromHex(secondBatchCalldata))
-      expect(result[2].input).toEqual(Bytes.fromHex(thirdBatchCalldata))
+      expect(result[0].input).toStrictEqual(Bytes.fromHex(firstBatchCalldata))
+      expect(result[1].input).toStrictEqual(Bytes.fromHex(secondBatchCalldata))
+      expect(result[2].input).toStrictEqual(Bytes.fromHex(thirdBatchCalldata))
     })
 
     it('returns empty array for empty requests', () => {
       const result = client.encodeBatches([])
-      expect(result).toEqual([])
+      expect(result).toStrictEqual([])
     })
   })
 
@@ -120,7 +120,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         {
           success: true,
           data: Bytes.fromHex(
@@ -152,7 +152,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toEqual([
+      expect(result).toStrictEqual([
         { success: false, data: Bytes.fromHex('0x') },
         {
           success: true,
@@ -175,7 +175,9 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toEqual([{ success: true, data: Bytes.fromHex('0x') }])
+      expect(result).toStrictEqual([
+        { success: true, data: Bytes.fromHex('0x') },
+      ])
     })
   })
 
@@ -190,8 +192,8 @@ describe(MulticallV3Client.name, () => {
         [holder],
       )
 
-      expect(result.to).toEqual(address)
-      expect(result.input).toEqual(Bytes.fromHex(expectedCalldata))
+      expect(result.to).toStrictEqual(address)
+      expect(result.input).toStrictEqual(Bytes.fromHex(expectedCalldata))
     })
   })
 })

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { type Block, type Transaction, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { StarknetClient } from './StarknetClient'
 import type {
@@ -38,7 +39,7 @@ describe(StarknetClient.name, () => {
 
       const result = await client.getBlockWithTransactions(100)
 
-      expect(result).toEqual(mockStarknetBlock)
+      expect(result).toStrictEqual(mockStarknetBlock)
     })
   })
 
@@ -51,23 +52,24 @@ describe(StarknetClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toEqual(100)
+      expect(result).toStrictEqual(100)
     })
   })
 
   describe(StarknetClient.prototype.getBlockTimestamps.name, () => {
     it('returns timestamps keyed by block number', async () => {
       const client = mockClient({})
-      const getBlockWithTransactions = mockFn()
-        .returnsOnce({ number: 100, timestamp: 1_000 })
-        .returnsOnce({ number: 200, timestamp: 2_000 })
+      const getBlockWithTransactions = vi
+        .fn()
+        .mockReturnValueOnce({ number: 100, timestamp: 1_000 })
+        .mockReturnValueOnce({ number: 200, timestamp: 2_000 })
       client.getBlockWithTransactions = getBlockWithTransactions
 
       const result = await client.getBlockTimestamps([100, 200])
 
       expect(getBlockWithTransactions).toHaveBeenNthCalledWith(1, 100)
       expect(getBlockWithTransactions).toHaveBeenNthCalledWith(2, 200)
-      expect(result).toEqual(
+      expect(result).toStrictEqual(
         new Map([
           [100, 1_000],
           [200, 2_000],
@@ -89,7 +91,7 @@ describe(StarknetClient.name, () => {
 
       const client = mockClient({ http })
 
-      const mockQuery = mockFn().returns({
+      const mockQuery = vi.fn().mockReturnValue({
         jsonrpc: '2.0',
         id: 1,
         result: rpcResult,
@@ -103,18 +105,21 @@ describe(StarknetClient.name, () => {
         { block_number: 100 },
       ])
 
-      expect(result).toEqual(rpcResult)
+      expect(result).toStrictEqual(rpcResult)
     })
   })
 
   describe(StarknetClient.prototype.getEvents.name, () => {
     it('fetches every response page', async () => {
       const client = mockClient({})
-      const query = mockFn()
-        .returnsOnce(
+      const query = vi
+        .fn()
+        .mockReturnValueOnce(
           mockStarknetGetEventsResponse([mockStarknetEvent(1)], 'next'),
         )
-        .returnsOnce(mockStarknetGetEventsResponse([mockStarknetEvent(2)]))
+        .mockReturnValueOnce(
+          mockStarknetGetEventsResponse([mockStarknetEvent(2)]),
+        )
       client.query = query
 
       const result = await client.getEvents(10, 20, '0x1234', [
@@ -141,21 +146,23 @@ describe(StarknetClient.name, () => {
           continuation_token: 'next',
         },
       ])
-      expect(result).toEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
+      expect(result).toStrictEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
     })
 
     it('assigns a deterministic index when the RPC omits event_index', async () => {
       const client = mockClient({})
-      client.query = mockFn().returnsOnce(
-        mockStarknetGetEventsResponse([
-          mockStarknetEventWithoutIndex('0xtx'),
-          mockStarknetEventWithoutIndex('0xtx'),
-        ]),
-      )
+      client.query = vi
+        .fn()
+        .mockReturnValueOnce(
+          mockStarknetGetEventsResponse([
+            mockStarknetEventWithoutIndex('0xtx'),
+            mockStarknetEventWithoutIndex('0xtx'),
+          ]),
+        )
 
       const result = await client.getEvents(10, 20, '0x1234', ['0x5678'])
 
-      expect(result.map((event) => event.event_index)).toEqual([0, 1])
+      expect(result.map((event) => event.event_index)).toStrictEqual([0, 1])
     })
   })
 
@@ -172,8 +179,8 @@ describe(StarknetClient.name, () => {
 
       const result = await client.query(method, params)
 
-      expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual('data-returned-from-api')
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
           ['Content-Type']: 'application/json',
@@ -200,14 +207,14 @@ describe(StarknetClient.name, () => {
         },
       } as StarknetErrorResponse)
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toStrictEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
       const client = mockClient({})
       const isValid = client.validateResponse(mockStarknetGetBlockResponse(100))
 
-      expect(isValid).toEqual({ success: true })
+      expect(isValid).toStrictEqual({ success: true })
     })
   })
 })

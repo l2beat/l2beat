@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import {
   UNCATEGORIZED_METRICS_LABEL,
@@ -38,18 +39,18 @@ describe(Http.name, () => {
 
     expect(logger.info).toHaveBeenCalledWith(
       'Http metrics',
-      expect.subset({
+      expect.objectContaining({
         label: 'tvs.amount',
         count: 1,
         durationTotal: 10,
         sizeTotal: 100,
-        waitMax: expect.a(Number),
+        waitMax: expect.any(Number),
         callsPerMinute: 100_000,
       }),
     )
     expect(logger.info).toHaveBeenCalledWith(
       'Http metrics',
-      expect.subset({ label: UNCATEGORIZED_METRICS_LABEL, count: 1 }),
+      expect.objectContaining({ label: UNCATEGORIZED_METRICS_LABEL, count: 1 }),
     )
   })
 })

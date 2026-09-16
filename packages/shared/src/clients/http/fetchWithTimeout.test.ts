@@ -1,4 +1,4 @@
-import { expect } from 'earl'
+import { describe, expect, it } from 'vitest'
 import { withServer } from '../../test/withServer'
 import { fetchWithTimeout, HttpTimeoutError } from './fetchWithTimeout'
 
@@ -14,8 +14,8 @@ describe(fetchWithTimeout.name, () => {
         const error = await fetchWithTimeout(url, { timeout: 20 }).catch(
           (e: unknown) => e,
         )
-        expect(error).toBeA(HttpTimeoutError)
-        expect((error as Error).message).toInclude('for 20ms')
+        expect(error).toBeInstanceOf(HttpTimeoutError)
+        expect((error as Error).message).toContain('for 20ms')
       },
     )
   })
@@ -29,7 +29,7 @@ describe(fetchWithTimeout.name, () => {
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout: SLACK_MS })
         const error = await response.text().catch((e: unknown) => e)
-        expect(error).toBeA(HttpTimeoutError)
+        expect(error).toBeInstanceOf(HttpTimeoutError)
       },
     )
   })
@@ -55,7 +55,7 @@ describe(fetchWithTimeout.name, () => {
       },
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout })
-        expect(await response.text()).toEqual('x'.repeat(chunks))
+        expect(await response.text()).toStrictEqual('x'.repeat(chunks))
       },
     )
   })
@@ -65,7 +65,7 @@ describe(fetchWithTimeout.name, () => {
       (_, res) => setTimeout(() => res.end('ok'), 30),
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout: 0 })
-        expect(await response.text()).toEqual('ok')
+        expect(await response.text()).toStrictEqual('ok')
       },
     )
   })
@@ -81,9 +81,9 @@ describe(fetchWithTimeout.name, () => {
         const response = await fetchWithTimeout(url, {
           signal: controller.signal,
         })
-        expect(response.status).toEqual(201)
-        expect(response.headers.get('x-test')).toEqual('yes')
-        expect(await response.text()).toEqual('ok')
+        expect(response.status).toStrictEqual(201)
+        expect(response.headers.get('x-test')).toStrictEqual('yes')
+        expect(await response.text()).toStrictEqual('ok')
       },
     )
   })
@@ -95,8 +95,8 @@ describe(fetchWithTimeout.name, () => {
       async (url) => url,
     )
     const error = await fetchWithTimeout(closedUrl, {}).catch((e: unknown) => e)
-    expect(error).toBeA(Error)
-    expect((error as Error).message).toInclude('ECONNREFUSED')
+    expect(error).toBeInstanceOf(Error)
+    expect((error as Error).message).toContain('ECONNREFUSED')
   })
 
   it('handles responses without a body', async () => {
@@ -104,7 +104,7 @@ describe(fetchWithTimeout.name, () => {
       (_, res) => res.writeHead(204).end(),
       async (url) => {
         const response = await fetchWithTimeout(url, {})
-        expect(response.status).toEqual(204)
+        expect(response.status).toStrictEqual(204)
       },
     )
   })
@@ -123,12 +123,12 @@ describe(fetchWithTimeout.name, () => {
         },
         async (url) => {
           const response = await fetchWithTimeout(url, { timeout: SLACK_MS })
-          expect(response.ok).toEqual(true)
+          expect(response.ok).toStrictEqual(true)
           await new Promise((resolve) => setTimeout(resolve, SLACK_MS * 2))
         },
       )
       await new Promise((resolve) => setImmediate(resolve))
-      expect(rejections).toEqual([])
+      expect(rejections).toStrictEqual([])
     } finally {
       process.off('unhandledRejection', onRejection)
     }

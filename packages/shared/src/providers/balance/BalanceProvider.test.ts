@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import {
   type MulticallV3Client,
@@ -39,7 +40,7 @@ describe(BalanceProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           {
             success: true,
             data: Bytes.fromNumber(123_456),
@@ -63,10 +64,10 @@ describe(BalanceProvider.name, () => {
 
       const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
 
-      expect(multicallClient.encodeGetEthBalance).toHaveBeenOnlyCalledWith(
-        QUERIES[0].holder,
-      )
-      expect(rpc.multicall).toHaveBeenOnlyCalledWith(
+      expect(
+        multicallClient.encodeGetEthBalance,
+      ).toHaveBeenCalledExactlyOnceWith(QUERIES[0].holder)
+      expect(rpc.multicall).toHaveBeenCalledExactlyOnceWith(
         [
           multicallClient.encodeGetEthBalance(QUERIES[0].holder),
           encodeErc20Balance(
@@ -80,16 +81,17 @@ describe(BalanceProvider.name, () => {
         ],
         BLOCK,
       )
-      expect(result).toEqual([123_456n, 654_321n, 0n])
+      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
     })
 
     it('performs single calls if multicall not deployed', async () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123_456)),
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(654_321))
-          .resolvesToOnce(Bytes.fromHex('0x')),
+        getBalance: vi.fn().mockResolvedValueOnce(Bytes.fromNumber(123_456)),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(654_321))
+          .mockResolvedValueOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
       })
 
@@ -100,7 +102,10 @@ describe(BalanceProvider.name, () => {
 
       const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
 
-      expect(rpc.getBalance).toHaveBeenOnlyCalledWith(QUERIES[0].holder, BLOCK)
+      expect(rpc.getBalance).toHaveBeenCalledExactlyOnceWith(
+        QUERIES[0].holder,
+        BLOCK,
+      )
       expect(rpc.call).toHaveBeenCalledTimes(2)
       expect(rpc.call).toHaveBeenNthCalledWith(
         1,
@@ -118,7 +123,7 @@ describe(BalanceProvider.name, () => {
         ),
         BLOCK,
       )
-      expect(result).toEqual([123_456n, 654_321n, 0n])
+      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
     })
 
     it('throws when multicall returns empty data for a native balance', async () => {
@@ -131,7 +136,7 @@ describe(BalanceProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromHex('0x') },
           { success: true, data: Bytes.fromNumber(654_321) },
           { success: true, data: Bytes.fromNumber(123_456) },
@@ -143,7 +148,7 @@ describe(BalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
-      ).toBeRejectedWith('Failed to fetch balance')
+      ).rejects.toThrow('Failed to fetch balance')
     })
 
     it('throws when an ERC20 balance call reverts', async () => {
@@ -156,7 +161,7 @@ describe(BalanceProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123_456) },
           { success: false, data: Bytes.fromHex('0x') },
           { success: true, data: Bytes.fromNumber(654_321) },
@@ -168,25 +173,27 @@ describe(BalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
-      ).toBeRejectedWith('Failed to fetch balance')
+      ).rejects.toThrow('Failed to fetch balance')
     })
 
     it('tries next RPC client if a single call fails', async () => {
       const failingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        getBalance: mockFn().rejectsWithOnce(new Error('RPC failure')),
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(654_321))
-          .resolvesToOnce(Bytes.fromNumber(123_456)),
+        getBalance: vi.fn().mockRejectedValueOnce(new Error('RPC failure')),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(654_321))
+          .mockResolvedValueOnce(Bytes.fromNumber(123_456)),
         chain: CHAIN,
       })
 
       const workingRpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123)),
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(456))
-          .resolvesToOnce(Bytes.fromNumber(789)),
+        getBalance: vi.fn().mockResolvedValueOnce(Bytes.fromNumber(123)),
+        call: vi
+          .fn()
+          .mockResolvedValueOnce(Bytes.fromNumber(456))
+          .mockResolvedValueOnce(Bytes.fromNumber(789)),
         chain: CHAIN,
       })
 
@@ -197,7 +204,7 @@ describe(BalanceProvider.name, () => {
 
       const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
 
-      expect(result).toEqual([123n, 456n, 789n])
+      expect(result).toStrictEqual([123n, 456n, 789n])
     })
 
     it('tries next RPC client if first one fails', async () => {
@@ -209,7 +216,7 @@ describe(BalanceProvider.name, () => {
             input: Bytes.fromHex('0x'),
           }),
         }),
-        multicall: mockFn().rejectsWithOnce(new Error('RPC failure')),
+        multicall: vi.fn().mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
       })
 
@@ -223,7 +230,7 @@ describe(BalanceProvider.name, () => {
             ),
           }),
         }),
-        multicall: mockFn().resolvesToOnce([
+        multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123) },
           { success: true, data: Bytes.fromNumber(456) },
           { success: true, data: Bytes.fromNumber(789) },
@@ -240,7 +247,7 @@ describe(BalanceProvider.name, () => {
 
       expect(failingRpc.multicall).toHaveBeenCalledTimes(1)
       expect(workingRpc.multicall).toHaveBeenCalledTimes(1)
-      expect(result).toEqual([123n, 456n, 789n])
+      expect(result).toStrictEqual([123n, 456n, 789n])
     })
 
     it('throws error if all RPC clients fail', async () => {
@@ -253,7 +260,7 @@ describe(BalanceProvider.name, () => {
             input: Bytes.fromHex('0x'),
           }),
         }),
-        multicall: mockFn().rejectsWithOnce(error),
+        multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
       })
 
@@ -265,7 +272,7 @@ describe(BalanceProvider.name, () => {
             input: Bytes.fromHex('0x'),
           }),
         }),
-        multicall: mockFn().rejectsWithOnce(error),
+        multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
       })
 
@@ -276,7 +283,7 @@ describe(BalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
-      ).toBeRejected()
+      ).rejects.toThrow()
 
       expect(failingRpc1.multicall).toHaveBeenCalledTimes(1)
       expect(failingRpc2.multicall).toHaveBeenCalledTimes(1)
@@ -291,7 +298,7 @@ describe(BalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
-      ).toBeRejectedWith(`Missing RpcClient for ${CHAIN}`)
+      ).rejects.toThrow(`Missing RpcClient for ${CHAIN}`)
     })
   })
 })

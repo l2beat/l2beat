@@ -1,5 +1,6 @@
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 import { PriceProvider } from './PriceProvider'
 
@@ -17,7 +18,7 @@ describe(PriceProvider.name, () => {
       ]
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getUsdPriceHistoryHourly: mockFn().resolvesToOnce(expectedResult),
+        getUsdPriceHistoryHourly: vi.fn().mockResolvedValueOnce(expectedResult),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
@@ -30,8 +31,8 @@ describe(PriceProvider.name, () => {
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
-      ).toHaveBeenOnlyCalledWith(coingeckoId, from, to)
-      expect(result).toEqual(expectedResult)
+      ).toHaveBeenCalledExactlyOnceWith(coingeckoId, from, to)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
@@ -42,14 +43,14 @@ describe(PriceProvider.name, () => {
       const error = new Error('API rate limit exceeded')
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getUsdPriceHistoryHourly: mockFn().rejectsWithOnce(error),
+        getUsdPriceHistoryHourly: vi.fn().mockRejectedValueOnce(error),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
       await expect(
         provider.getUsdPriceHistoryHourly(coingeckoId, from, to),
-      ).toBeRejectedWith('API rate limit exceeded')
+      ).rejects.toThrow('API rate limit exceeded')
     })
   })
 
@@ -68,7 +69,7 @@ describe(PriceProvider.name, () => {
       ])
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(marketData),
+        getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
@@ -77,8 +78,8 @@ describe(PriceProvider.name, () => {
 
       expect(
         coingeckoQueryService.getLatestMarketData,
-      ).toHaveBeenOnlyCalledWith(coingeckoIds)
-      expect(result).toEqual(expectedResult)
+      ).toHaveBeenCalledExactlyOnceWith(coingeckoIds)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('handles zero prices correctly', async () => {
@@ -98,14 +99,14 @@ describe(PriceProvider.name, () => {
       ])
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(marketData),
+        getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
       const result = await provider.getLatestPrices(coingeckoIds)
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
@@ -113,12 +114,12 @@ describe(PriceProvider.name, () => {
       const error = new Error('Failed to fetch latest prices')
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().rejectsWithOnce(error),
+        getLatestMarketData: vi.fn().mockRejectedValueOnce(error),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
-      await expect(provider.getLatestPrices(coingeckoIds)).toBeRejectedWith(
+      await expect(provider.getLatestPrices(coingeckoIds)).rejects.toThrow(
         'Failed to fetch latest prices',
       )
     })
@@ -129,14 +130,14 @@ describe(PriceProvider.name, () => {
       const expectedResult = new Map()
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(marketData),
+        getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
       const result = await provider.getLatestPrices(coingeckoIds)
 
-      expect(result).toEqual(expectedResult)
+      expect(result).toStrictEqual(expectedResult)
     })
   })
 
@@ -154,7 +155,7 @@ describe(PriceProvider.name, () => {
         UnixTime(to),
       )
 
-      expect(result).toEqual(expected)
+      expect(result).toStrictEqual(expected)
     })
   })
 
@@ -168,7 +169,7 @@ describe(PriceProvider.name, () => {
       ].map(CoingeckoId)
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getAllCoingeckoIds: mockFn().resolvesToOnce(expectedResult),
+        getAllCoingeckoIds: vi.fn().mockResolvedValueOnce(expectedResult),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
@@ -177,20 +178,20 @@ describe(PriceProvider.name, () => {
 
       expect(
         coingeckoQueryService.getAllCoingeckoIds,
-      ).toHaveBeenOnlyCalledWith()
-      expect(result).toEqual(expectedResult)
+      ).toHaveBeenCalledExactlyOnceWith()
+      expect(result).toStrictEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
       const error = new Error('Failed to fetch coin list')
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getAllCoingeckoIds: mockFn().rejectsWithOnce(error),
+        getAllCoingeckoIds: vi.fn().mockRejectedValueOnce(error),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
-      await expect(provider.getAllCoingeckoIds()).toBeRejectedWith(
+      await expect(provider.getAllCoingeckoIds()).rejects.toThrow(
         'Failed to fetch coin list',
       )
     })

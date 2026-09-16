@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { VoyagerClient } from './VoyagerClient'
 
@@ -20,7 +21,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyUops()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         [UnixTime.fromDate(new Date('2024-01-01'))]: 1000,
         [UnixTime.fromDate(new Date('2024-01-02'))]: 2000,
         [UnixTime.fromDate(new Date('2024-01-03'))]: 3000,
@@ -42,7 +43,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyUops()
 
-      expect(result).toEqual({})
+      expect(result).toStrictEqual({})
     })
 
     it('validates response structure', async () => {
@@ -54,7 +55,7 @@ describe(VoyagerClient.name, () => {
 
       const client = mockClient({ http })
 
-      await expect(client.getDailyUops()).toBeRejected()
+      await expect(client.getDailyUops()).rejects.toThrow()
     })
   })
 
@@ -72,7 +73,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         [UnixTime.fromDate(new Date('2024-01-01'))]: 5000,
         [UnixTime.fromDate(new Date('2024-01-02'))]: 6000,
       })
@@ -93,7 +94,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
 
-      expect(result).toEqual({})
+      expect(result).toStrictEqual({})
     })
   })
 
@@ -151,14 +152,14 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({})
       const result = client.validateResponse({ data: 'test' })
 
-      expect(result).toEqual({ success: true })
+      expect(result).toStrictEqual({ success: true })
     })
 
     it('returns failure for error response', () => {
       const client = mockClient({})
       const result = client.validateResponse({ message: 'Error occurred' })
 
-      expect(result).toEqual({ success: false })
+      expect(result).toStrictEqual({ success: false })
     })
   })
 })

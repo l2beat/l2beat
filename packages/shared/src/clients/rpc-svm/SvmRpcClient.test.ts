@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { SvmRpcClient } from './SvmRpcClient'
 
@@ -22,13 +23,13 @@ describe(SvmRpcClient.name, () => {
       }
 
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce(mockResponse),
+        fetch: vi.fn().mockResolvedValueOnce(mockResponse),
       })
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getLatestSlotNumber()
 
-      expect(result).toEqual(Number(mockSlotNumber))
+      expect(result).toStrictEqual(Number(mockSlotNumber))
     })
   })
 
@@ -51,13 +52,13 @@ describe(SvmRpcClient.name, () => {
       }
 
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce(mockResponse),
+        fetch: vi.fn().mockResolvedValueOnce(mockResponse),
       })
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
 
-      expect(result).toEqual({
+      expect(result).toStrictEqual({
         number: 123,
         hash: 'EEnTYznmKb9S1k3kbE9qa7RabkUUj3Q49H1Yp4DfJq6C',
         timestamp: blockTime,
@@ -74,13 +75,13 @@ describe(SvmRpcClient.name, () => {
       }
 
       const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce(mockResponse),
+        fetch: vi.fn().mockResolvedValueOnce(mockResponse),
       })
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
 
-      expect(result).toEqual(undefined)
+      expect(result).toStrictEqual(undefined)
     })
   })
 
@@ -89,36 +90,38 @@ describe(SvmRpcClient.name, () => {
       const mockTime = UnixTime.now()
 
       const http = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce({ result: null })
-          .resolvesToOnce({ result: mockTime }),
+        fetch: vi
+          .fn()
+          .mockResolvedValueOnce({ result: null })
+          .mockResolvedValueOnce({ result: mockTime }),
       })
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
 
-      expect(result).toEqual({ timestamp: mockTime })
+      expect(result).toStrictEqual({ timestamp: mockTime })
     })
 
     it('handles skipped slot error and tries previous slot', async () => {
       const mockTime = UnixTime.now()
 
       const http = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce({
+        fetch: vi
+          .fn()
+          .mockResolvedValueOnce({
             error: {
               code: -32009,
               message:
                 'Slot 123 was skipped, or missing due to ledger jump to recent snapshot',
             },
           })
-          .resolvesToOnce({ result: mockTime }),
+          .mockResolvedValueOnce({ result: mockTime }),
       })
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
 
-      expect(result).toEqual({ timestamp: mockTime })
+      expect(result).toStrictEqual({ timestamp: mockTime })
     })
   })
 
@@ -132,8 +135,8 @@ describe(SvmRpcClient.name, () => {
 
       const result = await client.query('rpc_method', ['a', 1, true])
 
-      expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(result).toStrictEqual('data-returned-from-api')
+      expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
           params: ['a', 1, true],
@@ -158,7 +161,7 @@ describe(SvmRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toStrictEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -167,7 +170,7 @@ describe(SvmRpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toStrictEqual(true)
     })
   })
 })

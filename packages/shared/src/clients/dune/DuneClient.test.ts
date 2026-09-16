@@ -1,4 +1,5 @@
-import { expect, mockFn, mockObject } from 'earl'
+import { mockObject } from '@l2beat/test-utils'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { DuneClient } from './DuneClient'
 
@@ -16,7 +17,7 @@ describe(DuneClient.name, () => {
     it('calls fetch with correct parameters and returns execution_id', async () => {
       const executionId = 'exec-123'
       const mockHttp = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo({
+        fetch: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
         }),
@@ -39,7 +40,7 @@ describe(DuneClient.name, () => {
           }),
         },
       )
-      expect(result.execution_id).toEqual(executionId)
+      expect(result.execution_id).toStrictEqual(executionId)
     })
   })
 
@@ -58,7 +59,7 @@ describe(DuneClient.name, () => {
       }
 
       const mockHttp = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(statusResponse),
+        fetch: vi.fn().mockResolvedValue(statusResponse),
       })
 
       const client = createClient(mockHttp)
@@ -75,8 +76,8 @@ describe(DuneClient.name, () => {
           body: undefined,
         },
       )
-      expect(result.execution_id).toEqual(executionId)
-      expect(result.state).toEqual('QUERY_STATE_COMPLETED')
+      expect(result.execution_id).toStrictEqual(executionId)
+      expect(result.state).toStrictEqual('QUERY_STATE_COMPLETED')
     })
   })
 
@@ -90,7 +91,7 @@ describe(DuneClient.name, () => {
       }
 
       const mockHttp = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(resultResponse),
+        fetch: vi.fn().mockResolvedValue(resultResponse),
       })
 
       const client = createClient(mockHttp)
@@ -107,7 +108,7 @@ describe(DuneClient.name, () => {
           body: undefined,
         },
       )
-      expect(result.result.rows).toEqual(resultResponse.result.rows)
+      expect(result.result.rows).toStrictEqual(resultResponse.result.rows)
     })
   })
 })
