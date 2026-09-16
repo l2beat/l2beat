@@ -46,7 +46,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "cd packages/backend && pnpm start",
-    "test": "turbo run test -- --reporter dot",
+    "test": "turbo run test",
     "test:exclude-backend": "turbo run test --filter=!@l2beat/backend --filter=!@l2beat/database",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
