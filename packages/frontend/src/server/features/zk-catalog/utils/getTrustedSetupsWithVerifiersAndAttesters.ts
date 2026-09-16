@@ -58,6 +58,8 @@ export type TrustedSetupsByProofSystem = Record<
       successful?: UsedInProjectWithIcon[]
       unsuccessful?: UsedInProjectWithIcon[]
       notVerified?: UsedInProjectWithIcon[]
+      /** Projects linking this ZK Catalog entry from config, without an onchain verifier. */
+      linked?: UsedInProjectWithIcon[]
     }
   }
 >
@@ -84,6 +86,9 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
     project.zkCatalogInfo.trustedSetups,
     (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
   )
+  const linkedProjects = getLinkedProjectsUsedIn(project.id, allProjects).sort(
+    tvsComparatorWithDaBridges(allProjects, tvs),
+  )
   return Object.fromEntries(
     Object.entries(grouped).flatMap(([key, trustedSetups]) => {
       const verifiersWithUsedIn = getVerifiersWithProcessedUsedIn(
@@ -108,6 +113,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
         filteredVerifiers,
         (v) => v.verifier.verificationStatus,
       )
+      const verifierUsedIn = filteredVerifiers.flatMap((v) => v.usedIn)
+      const linkedOnly = linkedProjects.filter(
+        (p) => !verifierUsedIn.some((u) => u.id === p.id),
+      )
 
       return [
         [
@@ -126,7 +135,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
             verifiers: getVerifierStatuses(verifiersByStatus),
             projectsUsedIn:
               uniqAndSortProjectsUsedIn(
-                filteredVerifiers.flatMap((v) => v.usedIn),
+                [...verifierUsedIn, ...linkedOnly],
                 allProjects,
                 tvs,
               ) ?? [],
@@ -146,6 +155,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
                 allProjects,
                 tvs,
               ),
+              linked: linkedOnly.length > 0 ? linkedOnly : undefined,
             },
           },
         ] as const,
@@ -163,6 +173,23 @@ function uniqAndSortProjectsUsedIn(
 
   return uniqBy(usedIn, (project) => project.id).sort(
     tvsComparatorWithDaBridges(allProjects, tvs),
+  )
+}
+
+/**
+ * Projects that point at this ZK Catalog entry through config (currently
+ * privacyInfo.zkCatalogId). They use the proof system without an onchain
+ * verifier that discovery could match, e.g. Zcash via NEAR Intents.
+ */
+function getLinkedProjectsUsedIn(
+  zkCatalogId: ProjectId,
+  allProjects: ProjectWithPageMetadata[],
+) {
+  return getProjectsUsedIn(
+    allProjects
+      .filter((p) => p.privacyInfo?.zkCatalogId === zkCatalogId)
+      .map((p) => p.id),
+    allProjects,
   )
 }
 

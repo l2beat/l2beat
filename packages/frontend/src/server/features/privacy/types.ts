@@ -21,6 +21,8 @@ export type PrivacyProject = Project<
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
+  /** Slug of the ZK Catalog project the trusted setups come from. */
+  zkCatalogSlug?: string
 }
 export interface PrivacyDepositedValueUsd {
   total: number

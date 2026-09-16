@@ -3,12 +3,14 @@ import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { VERIFIER_STATUS_ORDER } from './VerifiedCountWithDetails'
 
+const USED_IN_ORDER = [...VERIFIER_STATUS_ORDER, 'linked'] as const
+
 interface Props {
   data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['projectsUsedInByStatus']
 }
 
 export function ProjectsUsedInByStatus({ data }: Props) {
-  const statuses = VERIFIER_STATUS_ORDER.filter((status) => data[status])
+  const statuses = USED_IN_ORDER.filter((status) => data[status])
 
   if (statuses.length === 0) {
     return <NotApplicableBadge />

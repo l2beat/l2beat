@@ -9,11 +9,17 @@ describe(attachTrustedSetups.name, () => {
   ] as unknown as ProjectZkCatalogInfo['trustedSetups']
   const zkCatalogProject = {
     id: ProjectId('zk'),
+    slug: 'zk',
     zkCatalogInfo: { trustedSetups },
   } as unknown as Project<'zkCatalogInfo'>
 
   function privacyProject(privacyInfo: object, zkCatalogInfo?: object) {
-    return { id: ProjectId('p'), privacyInfo, zkCatalogInfo } as never
+    return {
+      id: ProjectId('p'),
+      slug: 'p',
+      privacyInfo,
+      zkCatalogInfo,
+    } as never
   }
 
   it('prefers own zkCatalogInfo', () => {
@@ -30,6 +36,7 @@ describe(attachTrustedSetups.name, () => {
       [zkCatalogProject],
     )
     expect(result?.trustedSetups).toEqual(own)
+    expect(result?.zkCatalogSlug).toEqual('p')
   })
 
   it('borrows trusted setups from the linked zk catalog project', () => {
@@ -38,10 +45,12 @@ describe(attachTrustedSetups.name, () => {
       [zkCatalogProject],
     )
     expect(result?.trustedSetups).toEqual(trustedSetups)
+    expect(result?.zkCatalogSlug).toEqual('zk')
   })
 
   it('returns no trusted setups when nothing is linked', () => {
     const [result] = attachTrustedSetups([privacyProject({})], [])
     expect(result?.trustedSetups).toEqual([])
+    expect(result?.zkCatalogSlug).toEqual(undefined)
   })
 })

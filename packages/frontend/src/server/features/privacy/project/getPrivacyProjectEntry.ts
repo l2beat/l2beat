@@ -331,7 +331,7 @@ export async function getPrivacyProjectEntry(
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
-      getPrivacyTrustedSetup(details.trustedSetups),
+      getPrivacyTrustedSetup(details.trustedSetups, details.zkCatalogSlug),
     ),
     adversaries: toPrivacyAdversariesSummary(details.adversaries),
     reproducibility: details.reproducibility,

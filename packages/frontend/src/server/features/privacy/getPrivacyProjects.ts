@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import type { PrivacyProject } from './types'
 
-type RawPrivacyProject = Omit<PrivacyProject, 'trustedSetups'>
+type RawPrivacyProject = Omit<PrivacyProject, 'trustedSetups' | 'zkCatalogSlug'>
 
 const SELECT = ['display', 'privacyInfo', 'statuses'] as const
 const OPTIONAL = [
@@ -54,10 +54,13 @@ export function attachTrustedSetups(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): PrivacyProject[] {
   return projects.map((project) => {
-    const zkCatalogInfo =
-      project.zkCatalogInfo ??
-      zkCatalogProjects.find((p) => p.id === project.privacyInfo.zkCatalogId)
-        ?.zkCatalogInfo
-    return { ...project, trustedSetups: zkCatalogInfo?.trustedSetups ?? [] }
+    const zkCatalogProject = project.zkCatalogInfo
+      ? project
+      : zkCatalogProjects.find((p) => p.id === project.privacyInfo.zkCatalogId)
+    return {
+      ...project,
+      trustedSetups: zkCatalogProject?.zkCatalogInfo?.trustedSetups ?? [],
+      zkCatalogSlug: zkCatalogProject?.slug,
+    }
   })
 }

@@ -50,6 +50,7 @@ export interface PrivacyProjectDetails {
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
+  zkCatalogSlug?: string
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
@@ -260,6 +261,7 @@ export async function getPrivacyProjectDetails(
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,
     trustedSetups: project.trustedSetups,
+    zkCatalogSlug: project.zkCatalogSlug,
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,

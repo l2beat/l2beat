@@ -22,9 +22,24 @@ describe(getPrivacyTrustedSetup.name, () => {
       longDescription: 'Long trusted setup description.',
     }
 
-    expect(getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }])).toEqual(
-      trustedSetup,
-    )
+    expect(getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }])).toEqual({
+      ...trustedSetup,
+      href: undefined,
+    })
+  })
+
+  it('links the ZK Catalog page when a slug is given', () => {
+    const trustedSetup: TrustedSetup = {
+      id: 'trusted-setup-id',
+      name: 'Trusted setup name',
+      risk: 'green',
+      shortDescription: 'Trusted setup description.',
+      longDescription: 'Long trusted setup description.',
+    }
+
+    expect(
+      getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }], 'zk').href,
+    ).toEqual('/zk-catalog/zk')
   })
 
   it('falls back to No setup when there are no trusted setups', () => {
@@ -32,6 +47,7 @@ describe(getPrivacyTrustedSetup.name, () => {
     expect(trustedSetup.id).toEqual('NoSetup')
     expect(trustedSetup.name).toEqual('No setup')
     expect(trustedSetup.risk).toEqual('None')
+    expect(trustedSetup.href).toEqual(undefined)
   })
 })
 
@@ -51,6 +67,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
       sentiment: 'good',
       description: 'Trusted setup name: Trusted setup description.',
       risk: 'green',
+      href: undefined,
     })
   })
 

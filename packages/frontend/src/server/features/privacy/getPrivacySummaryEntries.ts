@@ -157,7 +157,10 @@ function getPrivacySummaryBaseEntry(
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
-    trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
+    trustedSetup: getPrivacyTrustedSetup(
+      project.trustedSetups,
+      project.zkCatalogSlug,
+    ),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),

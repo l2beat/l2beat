@@ -45,7 +45,13 @@ export function PrivacyProjectRiskProfile({
       <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."
-        value={<RiskValue value={trustedSetup} risk={trustedSetup.risk} />}
+        value={
+          <RiskValue
+            value={trustedSetup}
+            risk={trustedSetup.risk}
+            href={trustedSetup.href}
+          />
+        }
       />
       <ProjectSummaryStat
         title="Exit window"
@@ -83,23 +89,40 @@ function RiskValue({
   value,
   risk,
   walkawayTest,
+  href,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
   risk: TrustedSetupRisk
   walkawayTest?: PrivacyWalkawayTest
+  href?: string
 }) {
+  const content = (
+    <>
+      <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
+      <span>{value.value}</span>
+      {walkawayTest && <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />}
+    </>
+  )
   return (
     <Tooltip>
-      <TooltipTrigger
-        className="flex items-center gap-2"
-        aria-label={value.value}
-      >
-        <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
-        <span>{value.value}</span>
-        {walkawayTest && (
-          <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
-        )}
-      </TooltipTrigger>
+      {href === undefined ? (
+        <TooltipTrigger
+          className="flex items-center gap-2"
+          aria-label={value.value}
+        >
+          {content}
+        </TooltipTrigger>
+      ) : (
+        <TooltipTrigger asChild>
+          <a
+            href={href}
+            className="flex items-center gap-2 hover:underline"
+            aria-label={value.value}
+          >
+            {content}
+          </a>
+        </TooltipTrigger>
+      )}
       <TooltipContent className="max-w-[320px]">
         <ProjectRiskTooltipContent risk={value} variant="table" />
         {walkawayTest && (

@@ -9,10 +9,13 @@ import type { TrustedSetupRisk } from '~/pages/zk-catalog/v2/components/TrustedS
 /** A trusted setup, or the 'None' placeholder for projects without a ZK system. */
 export type PrivacyTrustedSetup = Omit<TrustedSetup, 'risk'> & {
   risk: TrustedSetupRisk
+  /** ZK Catalog page of the proving system, when it has one. */
+  href?: string
 }
 
 export type PrivacyTrustedSetupSummary = PrivacySummaryValue & {
   risk: TrustedSetupRisk
+  href?: string
 }
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
@@ -38,6 +41,7 @@ const NO_SETUP: PrivacyTrustedSetup = {
 
 export function getPrivacyTrustedSetup(
   trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
+  zkCatalogSlug?: string,
 ): PrivacyTrustedSetup {
   const trustedSetup = trustedSetups[0]
   if (!trustedSetup) {
@@ -45,7 +49,10 @@ export function getPrivacyTrustedSetup(
   }
 
   const { proofSystem: _proofSystem, ...result } = trustedSetup
-  return result
+  return {
+    ...result,
+    href: zkCatalogSlug && `/zk-catalog/${zkCatalogSlug}`,
+  }
 }
 
 export function toTrustedSetupSummaryValue(
@@ -59,5 +66,6 @@ export function toTrustedSetupSummaryValue(
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
     risk: trustedSetup.risk,
+    href: trustedSetup.href,
   }
 }
