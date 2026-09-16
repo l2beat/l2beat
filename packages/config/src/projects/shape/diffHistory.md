@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe0a7e07e2784545514d6a483253a0367c708aa7a
+
+# Diff at Wed, 16 Sep 2026 12:51:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1789044600
+- current timestamp: 1789563001
+
+## Description
+
+Alchemy Multisig 1: threshold lowered from `5 of 8` to `3 of 8`. Same change on settlus and shape.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0xbf7301edb8b177212013483a39ffd8dcb2a66942
 
 # Diff at Thu, 10 Sep 2026 12:51:29 GMT:
