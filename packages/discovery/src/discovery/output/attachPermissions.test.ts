@@ -88,6 +88,7 @@ function output(
     abis: {},
     configHash: HASH,
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
     permissions,
   }

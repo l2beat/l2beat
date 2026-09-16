@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMegapoolPenalties",
+  "category": "core",
+  "description": "Penalty voting for the pooled per-node validator contracts. Members of the oracle set submit an ETH amount against one node's contract; it is applied once submissions reach {{ penaltyThreshold }}% of the set. Each penalty is capped at {{ maximumPenalty }} ETH, and the same cap is enforced as a running total over a rolling window whose length is a constant in the contract's code. A penalty reduces the node operator's share, not the pooled depositors'.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "megapoolSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsMegapool")
+          "0x050542cbc919928ae1e180204ac202686dff54c5e7cec1d4c169340aca42e679"
+        ]
+      }
+    },
+    "penaltyThreshold": {
+      "handler": {
+        "type": "call",
+        "address": "{{ megapoolSettings }}",
+        "method": "function getPenaltyThreshold() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    },
+    "maximumPenalty": {
+      "handler": {
+        "type": "call",
+        "address": "{{ megapoolSettings }}",
+        "method": "function getMaximumEthPenalty() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can charge an ETH penalty against one node operator, once submissions from its members reach {{ penaltyThreshold }}% of the set, capped at {{ maximumPenalty }} ETH per penalty and at the same figure across a rolling window fixed in the contract's code."
+        }
+      ]
+    }
+  }
+}

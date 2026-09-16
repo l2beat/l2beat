@@ -20,6 +20,7 @@ import {
 } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { railgunAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -28,8 +29,18 @@ const RAILGUN_DEPOSIT_EVENT =
 const RAILGUN_WITHDRAWAL_EVENT =
   '0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284'
 
-const TRACKED_TOKENS = [
-  { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH' },
+interface TrackedToken {
+  address: string
+  symbol: string
+  minimumAmounts?: string[]
+}
+
+const TRACKED_TOKENS: TrackedToken[] = [
+  {
+    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    symbol: 'WETH',
+    minimumAmounts: ['100000000000000000', '10000000000000000000'],
+  },
   { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', symbol: 'USDT' },
   { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', symbol: 'USDC' },
   { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI' },
@@ -125,6 +136,10 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
           railgunCore.sinceTimestamp ?? 0,
           resolved.coingeckoListingTimestamp,
         ),
+        anonymitySet:
+          token.minimumAmounts === undefined
+            ? undefined
+            : { minimumAmounts: token.minimumAmounts },
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',
@@ -245,22 +260,13 @@ export const railgun: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
-    privacy: {
-      value: 'Optional compliance',
-      sentiment: 'good',
-      description:
-        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
-    },
-    noteDiscovery: {
-      description:
-        "To find incoming transfers and rebuild the balance, a wallet downloads every new commitment emitted by the Railgun contract and tries to decrypt each one locally with the user's viewing key; successful decryptions are saved as the user's notes. Because every commitment is requested, the RPC provider does not learn which notes belong to the user from the queries alone.",
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: railgunAdversaries,
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
@@ -285,5 +291,6 @@ export const railgun: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [discovery.getContract('RailgunSmartWallet').address],
   },
 }

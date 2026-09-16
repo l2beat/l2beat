@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProposal",
+  "category": "gov",
+  "description": "Shared proposal store for the two member-based bodies, the oracle set and the security council. It records the payload, the vote counts, and the schedule, and executes the payload against the proposing body once the vote count reaches the required threshold. A proposal becomes executable the instant it reaches its threshold, so the voting window is an upper bound, not a delay.",
+  "ignoreMethods": [
+    "getMessage",
+    "getPayload",
+    "getProposer",
+    "getDAO",
+    "getStart",
+    "getEnd",
+    "getExpires",
+    "getCreated",
+    "getVotesFor",
+    "getVotesAgainst",
+    "getVotesRequired",
+    "getCancelled",
+    "getExecuted"
+  ],
+  "ignoreInWatchMode": ["getTotal"]
+}

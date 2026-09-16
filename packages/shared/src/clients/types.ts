@@ -4,6 +4,11 @@ import type { SvmBlock } from './rpc-svm/types'
 export interface BlockClient {
   getLatestBlockNumber(): Promise<number>
   getBlockWithTransactions(blockNumber: number | 'latest'): Promise<Block>
+  /** Optional capability: fetch a block timestamp without transaction bodies.
+   *  Optional only for compatibility with clients that have no header-only
+   *  call (Fuel, Starknet); RpcClient, which backs every EVM chain, implements
+   *  it, so BlockProvider timestamp probes use it wherever it matters. */
+  getBlockTimestamp?(blockNumber: number): Promise<number>
   /** Optional capability: batch-fetch block timestamps. Implementations are
    *  expected to chunk requests internally. */
   getBlockTimestamps?(blockNumbers: number[]): Promise<Map<number, number>>
@@ -35,12 +40,19 @@ export interface AztecBlockClient {
   chain: string
 }
 
+/**
+ * eth_getLogs topic filter: entries are positional starting at topic0, an
+ * array entry matches any of its values at that position and null matches
+ * anything at that position.
+ */
+export type LogsTopicFilter = (string | string[] | null)[]
+
 export interface LogsClient {
   getLogs(
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<Log[]>
   chain: string
 }

@@ -27,7 +27,9 @@ locally. To install dependencies do the following.
    [fnm](https://github.com/Schniz/fnm).
 2. In the repository root, run `node --version > .node-version` to set the node version. Please do not commit this file.
 3. Install [pnpm](https://pnpm.io/installation#using-corepack), preferably using Corepack
-   `corepack enable pnpm`
+   `corepack enable pnpm`. pnpm 12 requires Corepack 0.36 or newer; if `pnpm --version` fails with
+   a missing `bin/pnpm.cjs` error, run `npm install -g corepack@latest` and delete
+   `~/.cache/node/corepack/v1/pnpm/12.*`.
 4. In the repository root, run `pnpm install` to install project specific dependencies.
 5. In the repository root, run `pnpm build:dependencies` to build the dependencies.
 

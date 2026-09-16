@@ -15,6 +15,7 @@ import type {
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
   ProjectContracts,
+  ProjectCrops,
   ProjectCustomColors,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
@@ -38,6 +39,7 @@ import type {
   ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
+  ProjectSequencingTechnologyChoice,
   ProjectTechnologyChoice,
   ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
@@ -107,6 +109,8 @@ export interface ScalingProject {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
+  /** CROPS framework evaluation, shown in the garden */
+  crops?: ProjectCrops
   /** Privacy data - if defined, the project is also shown on the privacy dashboard */
   privacyInfo?: ProjectPrivacyInfo
 }
@@ -173,7 +177,7 @@ export interface ProjectScalingTechnology {
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
   /** What are the details about project sequencing */
-  sequencing?: ProjectTechnologyChoice
+  sequencing?: ProjectSequencingTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */

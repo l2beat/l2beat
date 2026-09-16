@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsMinipool",
+  "category": "gov",
+  "description": "Parameters of the legacy validator contracts: launch timeout, bond-reduction and withdrawable-submission switches, and the window in which anyone may distribute. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.",
+  "ignoreMethods": [
+    "hasUserDistributeWindowPassed",
+    "isWithinUserDistributeWindow"
+  ]
+}

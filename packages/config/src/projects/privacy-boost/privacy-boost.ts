@@ -5,14 +5,16 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { privacyBoostAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
@@ -49,14 +51,68 @@ function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
 }
 
+// topic0 of the standard ERC-20 Transfer(address,address,uint256)
+const ERC20_TRANSFER_EVENT =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+
+const poolAddress = ChainSpecificAddress.address(pool.address)
+
 const registeredTokens = discovery
   .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
   .map((token) => {
     const address = ChainSpecificAddress.address(
       token.tokenAddress as ChainSpecificAddress,
     )
-    return getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID).symbol
+    return {
+      address,
+      tokenInfo: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
+    }
   })
+
+// The pool's own events carry no usable amounts: epoch withdrawals settle in
+// batches without per-withdrawal events, and the deposit event signature
+// changed with the September 2026 upgrade. Flows are therefore tracked as
+// gross ERC-20 transfers across the pool boundary. What that includes is
+// spelled out for users in detailedDescription.md.
+const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
+  ({ address, tokenInfo }) => {
+    // Prices must cover the whole bucket range, so never start before listing.
+    const sinceTimestamp = Math.max(
+      PRIVACY_BOOST_SINCE_TIMESTAMP,
+      tokenInfo.coingeckoListingTimestamp,
+    )
+
+    return {
+      token: {
+        address: address.toString(),
+        iconUrl: tokenInfo.iconUrl,
+        symbol: tokenInfo.symbol,
+        decimals: tokenInfo.decimals,
+        priceId: tokenInfo.coingeckoId,
+        sinceTimestamp,
+      },
+      buckets: [
+        {
+          id: `privacy-boost-${tokenInfo.symbol}`,
+          type: 'pool',
+          label: tokenInfo.symbol,
+          address: pool.address,
+          sinceTimestamp,
+          deposit: {
+            event: ERC20_TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            params: { to: poolAddress },
+          },
+          withdrawal: {
+            event: ERC20_TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            params: { from: poolAddress },
+          },
+        },
+      ],
+    }
+  },
+)
 
 export const privacyBoost: BaseProject = {
   id: ProjectId('privacy-boost'),
@@ -102,10 +158,10 @@ export const privacyBoost: BaseProject = {
   },
   escrows: [
     {
-      address: ChainSpecificAddress.address(pool.address),
+      address: poolAddress,
       chain: ChainSpecificAddress.longChain(pool.address),
       sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokens: registeredTokens,
+      tokens: registeredTokens.map((token) => token.tokenInfo.symbol),
     },
   ],
   tvsInfo: {
@@ -137,12 +193,12 @@ export const privacyBoost: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: 'Privacy Boost epoch verifier 03.09.2026',
-        name: 'Privacy Boost epoch verifier (September 2026)',
+        hash: 'Privacy Boost epoch verifier 09.09.2026',
+        name: 'Privacy Boost epoch verifier, 13 circuits',
         description:
-          'Verifies private transfer and withdrawal epochs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+          'Verifies the batched private transfer and withdrawal proofs.',
         sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/epoch_circuit.go',
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/9e3f34e1a91c20497bc7d8f47492761bc868843c/frontend/epoch_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -151,15 +207,19 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-epoch-09.09.2026',
+        ),
       },
       {
-        hash: 'Privacy Boost deposit verifier 03.09.2026',
-        name: 'Privacy Boost deposit verifier (September 2026)',
-        description:
-          'Verifies deposit epochs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        hash: 'Privacy Boost deposit verifier 09.09.2026',
+        name: 'Privacy Boost deposit verifier, 3 circuits',
+        description: 'Verifies the batched deposit epoch proofs.',
         sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/deposit_epoch_circuit.go',
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/9e3f34e1a91c20497bc7d8f47492761bc868843c/frontend/deposit_epoch_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -168,15 +228,19 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-deposit-09.09.2026',
+        ),
       },
       {
-        hash: 'Privacy Boost forced withdrawal verifier 03.09.2026',
-        name: 'Privacy Boost forced withdrawal verifier (September 2026)',
-        description:
-          'Verifies forced withdrawals. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        hash: 'Privacy Boost forced withdrawal verifier 09.09.2026',
+        name: 'Privacy Boost forced withdrawal verifier, 1 circuit',
+        description: 'Verifies the client-side forced withdrawal proofs.',
         sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/forced_withdraw_circuit.go',
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/9e3f34e1a91c20497bc7d8f47492761bc868843c/frontend/forced_withdraw_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -185,15 +249,20 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-forced-09.09.2026',
+        ),
       },
       {
-        hash: 'Privacy Boost portal deposit verifier 03.09.2026',
-        name: 'Privacy Boost portal deposit verifier (September 2026)',
+        hash: 'Privacy Boost portal deposit verifier 09.09.2026',
+        name: 'Privacy Boost portal deposit verifier, 2 circuits',
         description:
-          'Verifies portal deposits. The deployed verification keys have not yet been reproduced by L2BEAT.',
+          'Verifies the batched hidden-recipient portal deposit proofs.',
         sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/deposit_portal_circuit.go',
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/9e3f34e1a91c20497bc7d8f47492761bc868843c/frontend/deposit_portal_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -202,15 +271,20 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-portal-09.09.2026',
+        ),
       },
       {
-        hash: 'Privacy Boost gift claim verifier 03.09.2026',
-        name: 'Privacy Boost gift claim verifier (September 2026)',
+        hash: 'Privacy Boost gift claim verifier 09.09.2026',
+        name: 'Privacy Boost gift claim verifier, 2 circuits',
         description:
-          'Verifies gift settlements and public gift exits. The deployed verification keys have not yet been reproduced by L2BEAT.',
+          'Verifies the batched gift claim, refund and public gift exit proofs.',
         sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/gift_claim_circuit.go',
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/9e3f34e1a91c20497bc7d8f47492761bc868843c/frontend/gift_claim_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -219,17 +293,17 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-gift-09.09.2026',
+        ),
       },
     ],
   },
   privacyInfo: {
-    // TODO: Proposed tracking: deposits from DepositRequested (has tokenId + totalAmount),
-    // withdrawals from ERC-20 Transfer logs with from == pool (epoch withdrawals emit no pool event).
-    // Needs: (1) indexed-topic (topic1/2) filter support in LogsProvider/PrivacyFlowIndexerConfig,
-    // (2) new extractors: privacyBoostDeposit (params: tokenId) and generic erc20TransferOut (params: pool).
-    // Accepted errors: cancelled deposits overcounted; refunds/fee legs/relay fee exits count as withdrawals.
-    tokens: [],
+    tokens: privacyTokens,
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
@@ -243,16 +317,10 @@ export const privacyBoost: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Not verified',
+      value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'Circuit sources are published, but the verification keys deployed in September 2026 have not yet been reproduced by L2BEAT. TEE sources are not published, so the privacy logic has not been verified.',
-    },
-    privacy: {
-      value: 'Admin API',
-      sentiment: 'bad',
-      description:
-        "Registered 'auditors' can query the TEE's Audit API to retrieve the balance and transaction history of any address. These queries can be logged publicly on the AuditGateway smart contract, but there is no verifiable guarantee that all queries are logged.",
+        'ZK circuits guaranteeing user fund security are published and reproduced, however the TEE sources guaranteeing privacy are not yet published. TEE logic could not be verified for correctness.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -261,6 +329,7 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: privacyBoostAdversaries,
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {

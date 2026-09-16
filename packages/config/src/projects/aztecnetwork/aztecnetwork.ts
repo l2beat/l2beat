@@ -7,12 +7,14 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  CROP_NOTES,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   OPERATOR,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   SOA,
   STATE_VALIDATION,
 } from '../../common'
@@ -26,7 +28,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import stakeDistribution from './stake-distribution.json'
+import { readStakeDistribution } from '../../utils/readStakeDistribution'
+import stakeDistributionJson from './stake-distribution.json'
+
+const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -55,6 +60,14 @@ const activationThreshold = discovery.getContractValueBigInt(
 const escapeHatchBond = discovery.getContractValueBigInt(
   'EscapeHatch',
   'getBondSize',
+)
+const escapeHatchWithdrawalTax = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getWithdrawalTax',
+)
+const escapeHatchFailedPunishment = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getFailedHatchPunishment',
 )
 const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
@@ -206,6 +219,12 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
+const escapeHatchWithdrawalTaxString = formatAztecAmount(
+  escapeHatchWithdrawalTax,
+)
+const escapeHatchFailedPunishmentString = formatAztecAmount(
+  escapeHatchFailedPunishment,
+)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -520,7 +539,8 @@ export const aztecnetwork: ScalingProject = {
         targetCommitteeSize,
         activeSequencerCount,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: {
           value: `${formatSeconds(l2BlockTime)}`,
           description:
@@ -532,37 +552,46 @@ export const aztecnetwork: ScalingProject = {
           description:
             'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
         },
-        sequencerCount: { value: `${activeSequencerCount} sequencers` },
-        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        sequencerCount: {
+          value: `${activeSequencerCount} sequencers`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
+        blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          value: `${entryQueueFlushSize} sequencers / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
-        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(),
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
+          secondLine: `${escapeHatchBondString}; every ${escapeHatchFrequencyString}`,
           sentiment: 'good',
+          description: `Escape hatch: ${escapeHatchBondString} bond to enter a set from which one proposer is periodically selected every ${escapeHatchFrequencyString} to bypass the regular committee, include transactions, and prove the resulting checkpoints. ${escapeHatchWithdrawalTaxString} proposal tax. Private transactions: allow users to cheaply resist censorship based on transaction content while the chain is live.`,
         },
+        inclusionDelayChart: {
+          type: 'committeelike',
+          validatorCount: activeSequencerCount,
+          committeeSize: targetCommitteeSize,
+          epochSlots,
+          slotSeconds: slotDuration,
+          blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
+          target: 0.99,
+          maxCensorFraction: 0.5,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },
-      inclusionDelayChart: {
-        type: 'committeelike',
-        validatorCount: activeSequencerCount,
-        committeeSize: targetCommitteeSize,
-        epochSlots,
-        slotSeconds: slotDuration,
-        blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
-        target: 0.99,
-        maxCensorFraction: 0.5,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       censorshipResistance: readProjectMarkdown(
         'aztecnetwork',
         'censorshipResistance',
-        { escapeHatchBondString, escapeHatchFrequencyString },
+        {
+          escapeHatchBondString,
+          escapeHatchFailedPunishmentString,
+          escapeHatchFrequencyString,
+        },
       ),
       references: [
         {
@@ -816,4 +845,49 @@ export const aztecnetwork: ScalingProject = {
       type: 'general',
     },
   ],
+  crops: {
+    censorshipResistance: {
+      sentiment: 'warning',
+      points: [
+        'Sequencing is permissionless with no single privileged actor.',
+        'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
+        'Exit window is infinite due to immutable core contracts + Escape Hatch.',
+        CROP_NOTES.passesWalkawayTest(),
+      ],
+      missing: [
+        'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      license: 'Apache-2.0',
+      points: [
+        'Onchain verifier has been reproduced.',
+        'Rollup is forkable onchain by design.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Programmable privacy: private state, private and public smart contracts are protocol-native.',
+        'Private transactions are proven client-side (private inputs do not leave the device).',
+      ],
+      missing: [
+        'The complicated execution environment might leak some metadata.',
+      ],
+    },
+    security: {
+      sentiment: 'bad',
+      points: ['All state is validated with validity proofs on Ethereum.'],
+      missing: [
+        'The current proof system has known critical vulnerabilities',
+        'No multiproof system.',
+        'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
+      ],
+      notReviewed: [
+        CROP_NOTES.notReviewed.quantumSafety,
+        CROP_NOTES.notReviewed.circuitBreakers,
+      ],
+    },
+  },
 }

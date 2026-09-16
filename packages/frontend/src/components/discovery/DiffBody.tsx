@@ -1,5 +1,7 @@
 import { cn } from '~/utils/cn'
-import { extractDiffBlockSpans } from '~/utils/diffHistory/diffHistoryMarkdown'
+
+const DIFF_FENCE_OPEN = '```diff\n'
+const DIFF_FENCE_CLOSE = '```'
 
 interface DiffLine {
   marker: ' ' | '+' | '-' | 'meta' | 'hunk'
@@ -31,8 +33,30 @@ export function DiffBody({ body }: { body: string }) {
   )
 }
 
+interface DiffFenceSpan {
+  content: string
+  start: number
+  end: number
+}
+
+function findDiffFences(body: string): DiffFenceSpan[] {
+  const spans: DiffFenceSpan[] = []
+  let searchFrom = 0
+  while (searchFrom < body.length) {
+    const start = body.indexOf(DIFF_FENCE_OPEN, searchFrom)
+    if (start === -1) break
+    const contentStart = start + DIFF_FENCE_OPEN.length
+    const contentEnd = body.indexOf(DIFF_FENCE_CLOSE, contentStart)
+    if (contentEnd === -1) break
+    const end = contentEnd + DIFF_FENCE_CLOSE.length
+    spans.push({ content: body.slice(contentStart, contentEnd), start, end })
+    searchFrom = end
+  }
+  return spans
+}
+
 function splitDiffBody(body: string): DiffBodySegment[] {
-  const spans = extractDiffBlockSpans(body)
+  const spans = findDiffFences(body)
   if (spans.length === 0) {
     const text = body.trim()
     return text.length > 0 ? [{ type: 'text', content: text }] : []

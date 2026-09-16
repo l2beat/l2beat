@@ -1,6 +1,6 @@
 {
   "name": "across",
-  "timestamp": 1787647766,
+  "timestamp": 1789471699,
   "configHash": "0x618d1a49eb3199ff7d4e43dbfa8e8c569d53cef596a92f9f5620533ac4191365",
   "entries": [
     {
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "19215415535804528176482159",
+        "cumulativeStake": "19439343805001380796963240",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10345,
+        "getCurrentRoundId": 10355,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 12,
-          "numberResolvedPriceRequests": 4387
+          "numberPendingPriceRequests": 71,
+          "numberResolvedPriceRequests": 4633
         },
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 10345,
-        "lastUpdateTime": 1787647763,
+        "getVotePhase": 1,
+        "lastRoundIdProcessed": 10355,
+        "lastUpdateTime": 1789467611,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 12,
+        "nextPendingIndexToProcess": 66,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "853256554296957030",
-        "rewardPerTokenStored": "853256554296957030",
+        "rewardPerToken": "865562327944597895",
+        "rewardPerTokenStored": "865535043072982860",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -750,7 +750,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1787647763,
+        "getCurrentTime": 1789471691,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -1014,11 +1014,11 @@
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
         "gateway": "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-        "getCurrentTime": 1787647763,
+        "getCurrentTime": 1789471691,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 4372639,
+        "numberOfDeposits": 4576871,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1202,7 +1202,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1787647763,
+        "getCurrentTime": 1789471691,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1245,7 +1245,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 1009,
+        "nonce": 1014,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1400,7 +1400,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1787647763,
+        "getCurrentTime": 1789471691,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1499,7 +1499,31 @@
     {
       "address": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x3818b9766109877e09a9c427e7b310cde355550731129529095a7e6b02cf55ab",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "Solana_Adapter",
@@ -1658,7 +1682,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 483,
+        "nonce": 489,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2263,19 +2287,19 @@
           "Mode": [
             {
               "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "destinationToken": "eth:0xd988097fb8612cc24eeC14542bC03424c656005f"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-              "destinationToken": "eth:0xf0F161fDA2712DB8b566946122a5af183995e2eD"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-              "destinationToken": "eth:0xcDd475325D6F564d27247D1DddBb0DAc6fA0a5CF"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             }
           ],
           "Aleph Zero": [
@@ -2418,13 +2442,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x4c45b26e1d9b127b8d01ed0ff469c5ad685600d7ce5a7eef35dc5e88b4aec041",
-          "relayerRefundRoot": "0xa8f8427d5612e167638143f6bdba17b9963ad19eebf294793f577db7def2250a",
-          "slowRelayRoot": "0x05084d570da724d8728f351e7a004f2497022e7fb12874efa08e98ca3caac61c",
+          "poolRebalanceRoot": "0xeb24b431d0e344c3ccdc4964880200d6d2084809d91e5f080a06559d3a538c05",
+          "relayerRefundRoot": "0x96214eb74c66f601e80a1d49e79523619b17bec90540d86c932bb8f32dcfe27a",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 18,
-          "challengePeriodEndTimestamp": 1787649011
+          "unclaimedPoolRebalanceLeafCount": 16,
+          "challengePeriodEndTimestamp": 1789472603
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3201,7 +3225,7 @@
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
         "proposers": ["eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
-        "totalSupply": "40864500000000000000"
+        "totalSupply": "42591000000000000000"
       },
       "fieldMeta": { "proposers": { "severity": "HIGH" } },
       "implementationNames": {
@@ -3494,14 +3518,14 @@
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
         "gateway": "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-        "getCurrentTime": 1787647765,
+        "getCurrentTime": 1789471699,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "l1Gas": 5000000,
         "l2Eth": "oeth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
         "MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
-        "numberOfDeposits": 3739792,
+        "numberOfDeposits": 3787721,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "pausedDeposits": false,
@@ -4286,6 +4310,58 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": [
       "constructor(address _store, address _l1Usdc, address _cctpTokenMessenger, uint32 _cctpDestinationDomainId, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
@@ -5322,7 +5398,7 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 25831121, "optimism": 156024494 },
+  "usedBlockNumbers": { "ethereum": 25982563, "optimism": 156936461 },
   "permissionsConfigHash": "0xf530192448d50d82206f92b43d92750e52be30a2a47c16b9b8a593773e1bb5a6",
   "permissions": {
     "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25": {

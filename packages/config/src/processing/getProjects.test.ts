@@ -15,6 +15,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { PRIVACY_FIELDS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -401,11 +402,70 @@ describe('getProjects', () => {
           project.zkCatalogInfo?.trustedSetups.length ?? 0,
         ).toBeLessThanOrEqual(1)
       })
+
+      it(`${project.id} has valid anonymity-set configuration`, () => {
+        const state = project.privacyInfo?.anonymitySet
+        const trackedBucketIds = new Set<string>()
+        const seriesIds = new Set<string>()
+        let configuredBuckets = 0
+
+        for (const token of project.privacyInfo?.tokens ?? []) {
+          for (const bucket of token.buckets) {
+            const amounts = bucket.anonymitySet?.minimumAmounts
+            if (amounts === undefined) continue
+
+            expect(amounts.length).toBeGreaterThan(0)
+            expect(trackedBucketIds.has(bucket.id)).toEqual(false)
+            trackedBucketIds.add(bucket.id)
+
+            configuredBuckets++
+            for (const amount of amounts) {
+              expect(amount).toMatchRegex(/^[1-9]\d*$/)
+              const seriesId = `${bucket.id}:${amount}`
+              expect(seriesIds.has(seriesId)).toEqual(false)
+              seriesIds.add(seriesId)
+            }
+          }
+        }
+
+        if (state?.type === 'not-applicable') {
+          expect(configuredBuckets).toEqual(0)
+        }
+      })
+
+      const adversaries = project.privacyInfo.adversaries
+      if (adversaries) {
+        const baseline = adversaries.cells.publicObserver
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          it(`${project.id} ${adversaryId} interior map is complete and matches the baseline`, () => {
+            expect(cell.interior !== undefined).toEqual(
+              baseline.interior !== undefined,
+            )
+            if (cell.interior) {
+              expect(Object.keys(cell.interior).sort()).toEqual(
+                Object.keys(PRIVACY_FIELDS).sort(),
+              )
+            }
+          })
+
+          const contractNames = new Set(
+            Object.values(project.contracts?.addresses ?? {})
+              .flat()
+              .map((c) => c.name),
+          )
+          for (const source of cell.sources ?? []) {
+            if (!('contract' in source)) continue
+            it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {
+              expect(contractNames.has(source.contract)).toEqual(true)
+            })
+          }
+        }
+      }
     }
   })
 
   describe('contracts', () => {
-    for (const project of getProjects()) {
+    for (const project of projects) {
       describe(project.id, () => {
         const permissions = Object.values(project.permissions ?? {})
         const all = [

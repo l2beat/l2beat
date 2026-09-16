@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
 
 export interface LZData {

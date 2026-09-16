@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
-import type { RequestInit } from 'node-fetch'
+import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import {
   UNCATEGORIZED_METRICS_LABEL,
   withRpcMetricsContext,
@@ -11,7 +11,7 @@ import { Http, type HttpResponse, makeHttpResponse } from './Http'
 class StubHttp extends Http {
   protected override async _fetch(
     _url: string,
-    _init: RequestInit,
+    _init: FetchInit,
     label: string,
   ): Promise<HttpResponse> {
     this._trackMetrics(label, 10, 100)

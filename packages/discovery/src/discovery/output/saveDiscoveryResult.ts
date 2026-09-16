@@ -84,7 +84,17 @@ export async function saveDiscoveredJson(
   rootPath: string,
   discoveryFilename: string | undefined = undefined,
 ): Promise<void> {
-  const json = formatJson(discoveryOutput)
+  const { permissionsConfigHash, modelledAgainst, permissions, ...rest } =
+    discoveryOutput
+  const json = formatJson({
+    ...rest,
+    permissionsConfigHash,
+    modelledAgainst:
+      Object.keys(modelledAgainst ?? {}).length > 0
+        ? modelledAgainst
+        : undefined,
+    permissions,
+  })
   const outputPath = discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, outputPath), json)
 }

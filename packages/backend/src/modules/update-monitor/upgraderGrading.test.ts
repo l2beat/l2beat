@@ -139,6 +139,7 @@ function discovery(
     abis: {},
     configHash: Hash256.random(),
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
     permissions:
       permissions.length === 0

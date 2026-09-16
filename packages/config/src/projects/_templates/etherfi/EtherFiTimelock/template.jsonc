@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiTimelock",
+  "category": "gov",
+  "description": "OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock."
+}

@@ -8,10 +8,24 @@ import type {
   SyncerState,
 } from './InteropEventSyncer'
 
+// Resync and wipe requests come from the backoffice. They are honoured by
+// CatchingUpState, so noticing them a few seconds late only costs a few more
+// rows in a range that is about to be replaced. The check cannot rely on the
+// checkStatus tick alone: that tick is skipped while a block is being processed.
+const RESYNC_CHECK_INTERVAL_MS = 10_000
+
 export class FollowingState implements BlockProcessorState {
   type = 'blockProcessor' as const
   name = 'following'
   status = 'starting'
+
+  // The syncer is the only writer of its synced range while following, so the
+  // last committed range is kept here instead of being read for every block.
+  // Catch-up and wipe both go through CatchingUpState, which creates a new
+  // FollowingState afterwards and thereby drops this cache.
+  private syncedRangeLoaded = false
+  private syncedRange?: BlockRangeWithTimestamps
+  private resyncCheckedAt = Number.NEGATIVE_INFINITY
 
   constructor(
     private readonly syncer: InteropEventSyncer,
@@ -19,9 +33,7 @@ export class FollowingState implements BlockProcessorState {
   ) {}
 
   async checkStatus(): Promise<SyncerState> {
-    const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-
-    if (wipeRequired || resyncFrom !== undefined) {
+    if (await this.isResyncRequested()) {
       return new CatchingUpState(this.syncer, this.logger)
     }
 
@@ -35,20 +47,14 @@ export class FollowingState implements BlockProcessorState {
     const start = performance.now()
     let cpuMs = 0
     try {
-      const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-
-      if (wipeRequired) {
+      const resyncCheckDue =
+        Date.now() - this.resyncCheckedAt >= RESYNC_CHECK_INTERVAL_MS
+      if (resyncCheckDue && (await this.isResyncRequested())) {
         return new CatchingUpState(this.syncer, this.logger)
       }
 
-      const resyncRequested = resyncFrom !== undefined
-      const lastSyncedRecord = resyncRequested
-        ? undefined
-        : await this.syncer.getLastSyncedRange()
-
       const decision = decideFollowingAction({
-        resyncRequested,
-        lastSyncedRecord,
+        lastSyncedRecord: await this.getSyncedRange(),
         blockNumber: BigInt(block.number),
         blockTimestamp: block.timestamp,
       })
@@ -96,13 +102,29 @@ export class FollowingState implements BlockProcessorState {
         fulfilledCreatorEvents,
         checkedInHistoryEvents,
       )
+      this.syncedRange = updatedSyncedRange
 
-      this.syncer.clearChainSyncError()
       this.status = 'idle'
       return this
     } finally {
       this.syncer.blockProcessingStats.record(performance.now() - start, cpuMs)
     }
+  }
+
+  private async isResyncRequested(): Promise<boolean> {
+    const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
+    this.resyncCheckedAt = Date.now()
+    return wipeRequired || resyncFrom !== undefined
+  }
+
+  private async getSyncedRange(): Promise<
+    BlockRangeWithTimestamps | undefined
+  > {
+    if (!this.syncedRangeLoaded) {
+      this.syncedRange = await this.syncer.getLastSyncedRange()
+      this.syncedRangeLoaded = true
+    }
+    return this.syncedRange
   }
 
   // If Syncer runs for the first time on existing data,
@@ -134,15 +156,10 @@ export type FollowingDecision =
   | { type: 'process'; updatedSyncedRange: BlockRangeWithTimestamps }
 
 export function decideFollowingAction(params: {
-  resyncRequested: boolean
   lastSyncedRecord?: BlockRangeWithTimestamps
   blockNumber: bigint
   blockTimestamp: UnixTime
 }): FollowingDecision {
-  if (params.resyncRequested) {
-    return { type: 'catchUp' } // CatchingUp state takes care of resync requests
-  }
-
   if (!params.lastSyncedRecord) {
     return { type: 'bootstrap' } // Looks like a first run ever, see if we already are synced
   }

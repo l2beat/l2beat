@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkPenalties",
+  "category": "core",
+  "description": "Penalty voting for the legacy per-validator contracts. Members of the oracle set submit a penalty against one validator contract and a rate is recorded once submissions reach the governed share. The effect is capped separately by the penalty-cap contract, which is outside this registry's reach.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can vote a penalty rate against a legacy validator contract; how much of the rewards that actually diverts is bounded by the separate penalty-cap contract."
+        }
+      ]
+    }
+  }
+}

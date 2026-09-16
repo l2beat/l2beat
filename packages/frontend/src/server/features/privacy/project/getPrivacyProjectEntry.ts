@@ -8,10 +8,9 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  countRecentDiscoveryUpdates,
-  getDiscoveryUpdates,
-} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -22,14 +21,18 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import {
   EMPTY_TVS_BREAKDOWN,
   get7dTvsBreakdown,
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
-import type { PrivacyRelayerStat } from '../types'
+import {
+  type PrivacyAdversariesSummary,
+  type PrivacyRelayerStat,
+  toPrivacyAdversariesSummary,
+} from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -59,13 +62,15 @@ export interface ProjectPrivacyEntry {
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
-  privacy: PrivacySummaryValue
+  adversaries: PrivacyAdversariesSummary
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number | undefined
+    totalValueLockedChange7d: number | undefined
     deposits: {
       total: number
       last7d: number
+      change7d: number
       last30d: number
     }
     relayerStat?: PrivacyRelayerStat
@@ -85,22 +90,20 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
-    await Promise.all([
-      getContractUtils(),
-      ps.getProjects({
-        optional: [
-          'display',
-          'daBridge',
-          'scalingInfo',
-          'daLayer',
-          'privacyInfo',
-          'defiInfo',
-        ],
-      }),
-      get7dTvsBreakdown({ type: 'all' }),
-      getTotalValueLockedUsd(details, helpers, defaultChartRange),
-    ])
+  const [contractUtils, allProjects, tvs] = await Promise.all([
+    getContractUtils(),
+    ps.getProjects({
+      optional: [
+        'display',
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+        'defiInfo',
+      ],
+    }),
+    get7dTvsBreakdown({ type: 'all' }),
+  ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -138,9 +141,14 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
-  const discoveryUpdates = getDiscoveryUpdates(details.id)
+  const discoveryUpdates = details.discoveryUpdates ?? []
 
   const sections: ProjectDetailsSection[] = []
+
+  const gardenCropsSection = getGardenCropsSection(details.crops)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
+  }
 
   if (details.detailedDescription) {
     sections.push({
@@ -154,20 +162,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.noteDiscovery) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'note-discovery',
-        title: 'Note discovery',
-        content: details.noteDiscovery.description,
-        risks: details.noteDiscovery.risks?.map((text) => ({
-          text,
-          isCritical: false,
-        })),
-      },
-    })
-  }
+  sections.push({
+    type: 'PrivacyAdversariesSection',
+    props: {
+      id: 'privacy-adversaries',
+      title: 'Privacy against adversaries',
+      adversaries: details.adversaries,
+    },
+  })
 
   const chartProject = {
     id: details.id,
@@ -276,7 +278,11 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        updates: discoveryUpdates,
+        ...(await getUpdatesSectionProps(
+          helpers,
+          details.id,
+          discoveryUpdates,
+        )),
       },
     })
   }
@@ -327,10 +333,15 @@ export async function getPrivacyProjectEntry(
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
-    privacy: details.privacy,
+    adversaries: toPrivacyAdversariesSummary(details.adversaries),
     reproducibility: details.reproducibility,
     summary: {
-      totalValueLockedUsd,
+      totalValueLockedUsd: details.hasTvl
+        ? tvs.projects[details.id]?.breakdown.total
+        : undefined,
+      totalValueLockedChange7d: details.hasTvl
+        ? tvs.projects[details.id]?.change.total
+        : undefined,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
@@ -343,38 +354,4 @@ export async function getPrivacyProjectEntry(
     },
     sections,
   }
-}
-
-async function getTotalValueLockedUsd(
-  details: PrivacyProjectDetails,
-  helpers: SsrHelpers,
-  range: ChartRange,
-): Promise<number | undefined> {
-  const flowsPrefetch =
-    details.assets.length > 0
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.privacy.flowsChart.queryOptions({
-            projectIds: [details.id],
-            range,
-          }),
-        )
-      : undefined
-
-  if (!details.hasTvl) {
-    await flowsPrefetch
-    return undefined
-  }
-
-  // The flows chart prefetch rides along so both charts are dehydrated for the client
-  const [tvlChart] = await Promise.all([
-    helpers.queryClient.fetchQuery(
-      helpers.trpc.tvs.chartByProjects.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
-    flowsPrefetch,
-  ])
-
-  return tvlChart.chart.at(-1)?.[1][details.id] ?? undefined
 }

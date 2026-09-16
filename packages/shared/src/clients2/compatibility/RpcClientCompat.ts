@@ -1,5 +1,5 @@
 import { MetricsAggregator } from '@l2beat/backend-tools'
-import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import type { ClientCoreDependencies } from '../../clients/ClientCore'
 import type {
   MulticallV3Client,
@@ -15,7 +15,11 @@ import type {
   EVMLog,
   EVMTransaction,
 } from '../../clients/rpc/types'
-import type { BlockClient, LogsClient } from '../../clients/types'
+import type {
+  BlockClient,
+  LogsClient,
+  LogsTopicFilter,
+} from '../../clients/types'
 import { toRetryOptions } from '../../tools'
 import {
   EthRpcClient,
@@ -26,6 +30,8 @@ import {
 } from '../EthRpcClient'
 import { Http } from '../Http'
 import { withRetries } from '../retries'
+
+const BLOCK_TIMESTAMP_BATCH_SIZE = 25
 
 export interface Receipt {
   logs: {
@@ -49,12 +55,14 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<EVMBlockWithTransactions>
+  getBlockTimestamp(blockNumber: number): Promise<number>
   getBlockParentBeaconRoot(blockNumber: number): Promise<string>
   getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
   getBlock(
     blockNumber: 'latest' | number,
     includeTxs: true,
   ): Promise<EVMBlockWithTransactions>
+  getBlockTimestamps(blockNumbers: number[]): Promise<Map<number, number>>
   getTransaction(txHash: string): Promise<EVMTransaction>
   getTransactionReceipt(txHash: string): Promise<Receipt>
   getBalance(
@@ -65,7 +73,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]>
   getFeeHistory(
     blockCount: number,
@@ -130,6 +138,11 @@ export class RpcClientCompat implements IRpcClient {
     return await this.getBlock(blockNumber, true)
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<number> {
+    const block = await this.getBlock(blockNumber, false)
+    return block.timestamp
+  }
+
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const block = await this.getBlock(blockNumber, false)
     if (!block.parentBeaconBlockRoot) {
@@ -152,6 +165,38 @@ export class RpcClientCompat implements IRpcClient {
       ? await this.ethRpcClient.getBlockByNumber(bnParam, true)
       : await this.ethRpcClient.getBlockByNumber(bnParam, false)
     return toEVMBlock(blockNumber, block)
+  }
+
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const result = new Map<number, number>()
+
+    for (
+      let start = 0;
+      start < blockNumbers.length;
+      start += BLOCK_TIMESTAMP_BATCH_SIZE
+    ) {
+      const batch = blockNumbers.slice(
+        start,
+        start + BLOCK_TIMESTAMP_BATCH_SIZE,
+      )
+      const blocks = await Promise.all(
+        batch.map((blockNumber) => this.getBlock(blockNumber, false)),
+      )
+
+      for (const [index, block] of blocks.entries()) {
+        const expectedBlockNumber = batch[index]
+        assert(expectedBlockNumber !== undefined)
+        assert(
+          block.number === expectedBlockNumber,
+          `Invalid response: expected block number ${expectedBlockNumber}, got ${block.number}`,
+        )
+        result.set(expectedBlockNumber, block.timestamp)
+      }
+    }
+
+    return result
   }
 
   async getTransaction(txHash: string): Promise<EVMTransaction> {
@@ -189,14 +234,14 @@ export class RpcClientCompat implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     try {
       const logs = await this.ethRpcClient.getLogs({
         fromBlock: BigInt(from),
         toBlock: BigInt(to),
         address: addresses as EthereumAddress[] | undefined,
-        topics: topics,
+        topics,
       })
       return logs.map(toEVMLog)
     } catch (e) {

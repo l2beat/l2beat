@@ -331,6 +331,9 @@
   },
   "usedBlockNumbers": { "ethereum": 23783849 },
   "permissionsConfigHash": "0xd86e4b69c1a21c9f673988a39b42d8ce4e00e76d261bc9dc2a4b5f8ccb8900f9",
+  "modelledAgainst": {
+    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27"
+  },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
       "directlyReceivedPermissions": [

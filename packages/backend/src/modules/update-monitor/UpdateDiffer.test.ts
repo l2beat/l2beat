@@ -585,6 +585,7 @@ const mockProject: DiscoveryOutput = {
   entries: COMMITTED,
   abis: {},
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 

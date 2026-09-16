@@ -8,6 +8,7 @@ import { DERIVATION } from '../../common'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getOpStackDaTracking,
@@ -18,7 +19,9 @@ import {
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
-
+const l2BlockTimeSeconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS
+const flashblockIntervalMilliseconds =
+  HARDCODED.BASE.FLASHBLOCK_INTERVAL_MILLISECONDS
 const securityCouncilStats = discovery.getMultisigStats('Base Security Council')
 const coordinatorStats = discovery.getMultisigStats('Base Coordinator Multisig')
 const governanceStats = discovery.getMultisigStats('Base Governance Multisig')
@@ -274,6 +277,48 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
+  centralizedSequencing: {
+    hardcoded: HARDCODED.BASE,
+    description:
+      'Base uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Base nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
+    trustedPreconfirmationDescription: `The centralized builder streams cumulative Flashblock preconfirmations about every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and a preconfirmation can be absent or reorged.`,
+    sequencer: {
+      value: 'Centralized',
+      secondLine: '5-instance Raft HA',
+      sentiment: 'bad',
+      description:
+        'The Base operator controls real-time ordering. They document five sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
+      orderHint: 1,
+    },
+    censorshipResistance:
+      'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
+    references: [
+      {
+        title: 'Base documentation - Flashblocks',
+        url: 'https://docs.base.org/base-chain/flashblocks/faq',
+      },
+      {
+        title: 'Base engineering - Sequencer architecture',
+        url: 'https://blog.base.dev/flashblocks-deep-dive',
+      },
+      {
+        title: 'Base source code - Mainnet chain configuration',
+        url: 'https://github.com/base/base/blob/5761d838af8ae52e4904a74af2f3d8b490f56fec/crates/common/chains/src/config.rs#L402-L409',
+      },
+      {
+        title: 'Base Beryl - Reduced withdrawal delay',
+        url: 'https://blog.base.dev/introducing-base-beryl',
+      },
+      {
+        title: 'OptimismPortal2 - source code',
+        url: 'https://etherscan.io/address/0x66d94eE8F529b683ED6013729784e8bb44697A64#code',
+      },
+      {
+        title: 'AggregateVerifier - source code',
+        url: 'https://etherscan.io/address/0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2#code',
+      },
+    ],
+  },
   stage: getRollupStage(
     {
       stage0: {

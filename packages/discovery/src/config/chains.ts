@@ -134,7 +134,10 @@ export const chains: ChainConfig[] = [
     chainId: 100,
     shortName: 'gno',
     multicall: getMulticall3Config(21022491),
-    explorer: { type: 'etherscan' },
+    explorer: [
+      { type: 'etherscan' },
+      { type: 'blockscout', url: 'https://gnosis.blockscout.com/api' },
+    ],
   },
   {
     name: 'zksync2',

@@ -113,5 +113,6 @@ export const discoveredJsonStub: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }

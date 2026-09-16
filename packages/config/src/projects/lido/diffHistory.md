@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xefc38e89d331b128b3b43a669c189000a021c2c4
+
+# Diff at Tue, 15 Sep 2026 12:10:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1788534406
+- current timestamp: 1789473742
+
+## Description
+
+The Curated Module v1 -> v2 validator consolidation started: 22 source/target operator pairs were allowed through EasyTrack, each naming the node operator address permitted to submit that pair's consolidation batches to the ConsolidationBus. Config change: submitters are no longer followed into discovery.
+
+## Watched changes
+
+```diff
+    contract ConsolidationMigrator (eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7) [lido/ConsolidationMigrator] {
+    +++ description: Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.0:
++        {"sourceOperatorId":4,"targetOperatorId":19,"submitter":"eth:0x987Cc5111389a1f58BC7f678C95f485631205Ec3"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.1:
++        {"sourceOperatorId":29,"targetOperatorId":0,"submitter":"eth:0xcd51df5142156BD92E7A9494Dd2b9362f5078D64"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.2:
++        {"sourceOperatorId":20,"targetOperatorId":29,"submitter":"eth:0xEd95f777FDF439f2bea0B26ed4e37b95a851d131"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.3:
++        {"sourceOperatorId":18,"targetOperatorId":12,"submitter":"eth:0x6d1d325bE40726Ef8c88F009b62d2135d9b38b11"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.4:
++        {"sourceOperatorId":22,"targetOperatorId":22,"submitter":"eth:0x765c6a8f20c842E8C826B0D9425015784F982aFc"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.5:
++        {"sourceOperatorId":14,"targetOperatorId":18,"submitter":"eth:0xd9faE181C6BD5b4CD361b0F08926226a3af274Db"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.6:
++        {"sourceOperatorId":38,"targetOperatorId":34,"submitter":"eth:0xcA6817DAb36850D58375A10c78703CE49d41D25a"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.7:
++        {"sourceOperatorId":24,"targetOperatorId":9,"submitter":"eth:0x8845D7F2Bbfe82249c3B95e378A6eD039Dd953F5"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.8:
++        {"sourceOperatorId":16,"targetOperatorId":2,"submitter":"eth:0x1EC3Cbe8fb1D8019092500CcA2111C158a35bC82"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.9:
++        {"sourceOperatorId":34,"targetOperatorId":10,"submitter":"eth:0x944849824A88ffeA23eF7e53b8A6793D88CE7581"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.10:
++        {"sourceOperatorId":34,"targetOperatorId":11,"submitter":"eth:0x944849824A88ffeA23eF7e53b8A6793D88CE7581"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.11:
++        {"sourceOperatorId":13,"targetOperatorId":16,"submitter":"eth:0xa9995734C3e182aC5FfeFC2a399fb92F971BB1A6"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.12:
++        {"sourceOperatorId":25,"targetOperatorId":8,"submitter":"eth:0xC6AACba3a2dF56169aaA93c2947BF7Cea346fDA5"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.13:
++        {"sourceOperatorId":6,"targetOperatorId":31,"submitter":"eth:0x904A289145b1FE0B672682db895bAde2EB186126"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.14:
++        {"sourceOperatorId":6,"targetOperatorId":32,"submitter":"eth:0x904A289145b1FE0B672682db895bAde2EB186126"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.15:
++        {"sourceOperatorId":23,"targetOperatorId":42,"submitter":"eth:0x98B2D0988c4f69303be834C9d0b5DdacD8257880"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.16:
++        {"sourceOperatorId":26,"targetOperatorId":36,"submitter":"eth:0x29d5a9917A82Dbb77e3362128C425d3a63eE8E6F"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.17:
++        {"sourceOperatorId":15,"targetOperatorId":17,"submitter":"eth:0x5A934D6822a372CFe221C8D2bB02B6DfCd683578"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.18:
++        {"sourceOperatorId":21,"targetOperatorId":6,"submitter":"eth:0xF45C77EadD434612fCD93db978B3E36B0D58eC99"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.19:
++        {"sourceOperatorId":30,"targetOperatorId":27,"submitter":"eth:0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.20:
++        {"sourceOperatorId":30,"targetOperatorId":28,"submitter":"eth:0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.21:
++        {"sourceOperatorId":10,"targetOperatorId":44,"submitter":"eth:0x1d8A932E727331a5e4EAB41b565aFDA9A100476B"}
+    }
+```
+
 Generated with discovered.json: 0x0b810eadde077ea2392ddb811ab0f00804d87238
 
 # Diff at Fri, 04 Sep 2026 15:07:58 GMT:

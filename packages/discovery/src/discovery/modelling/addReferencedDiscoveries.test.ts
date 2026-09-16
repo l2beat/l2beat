@@ -145,6 +145,7 @@ function output(name: string, entries: EntryParameters[]): DiscoveryOutput {
     abis: {},
     configHash: Hash256.random(),
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }

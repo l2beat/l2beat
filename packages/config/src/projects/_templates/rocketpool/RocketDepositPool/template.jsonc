@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDepositPool",
+  "category": "core",
+  "description": "Entry point for user deposits and the queue that matches them to validators. A deposit is permissionless while the deposit flag is on; it must be at least {{ minimumDeposit }} ETH, must leave the pool within the {{ maximumPoolSize }} ETH cap after queue assignments, pays a fee of {{ depositFee }}% of the amount, and mints the liquid staking token for the remainder. Deposited ETH is held by the custody contract under this contract's name until it is assigned to a validator or withdrawn back as redemption collateral.",
+  "ignoreMethods": ["getQueueTop"],
+  "ignoreInWatchMode": [
+    "getBalance",
+    "getExcessBalance",
+    "getNodeBalance",
+    "getUserBalance",
+    "getMaximumDepositAmount",
+    "getQueueIndex",
+    "getTotalQueueLength",
+    "getExpressQueueLength",
+    "getStandardQueueLength",
+    "getMinipoolQueueLength"
+  ],
+  "fields": {
+    "depositSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsDeposit")
+          "0x876d8a498b5341a6b5897a8239bfb0347e2b8d81fe9401d355c1e4b0ecebedaa"
+        ]
+      },
+      "description": "Settings contract this contract reads its deposit limits from."
+    },
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "minimumDeposit": {
+      "handler": {
+        "type": "call",
+        "address": "{{ depositSettings }}",
+        "method": "function getMinimumDeposit() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "maximumPoolSize": {
+      "handler": {
+        "type": "call",
+        "address": "{{ depositSettings }}",
+        "method": "function getMaximumDepositPoolSize() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "depositFee": {
+      "handler": {
+        "type": "call",
+        "address": "{{ depositSettings }}",
+        "method": "function getDepositFee() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    }
+  }
+}

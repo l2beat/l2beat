@@ -13,6 +13,7 @@ import {
   positional,
   string,
 } from 'cmd-ts'
+import { orderProjectsForModelling } from '../implementations/discovery/orderProjectsForModelling'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const ModelPermissions = command({
@@ -45,7 +46,11 @@ export const ModelPermissions = command({
 
     let projects = [args.project]
     if (args.project === 'all') {
-      projects = configReader.readAllDiscoveredProjects()
+      projects = orderProjectsForModelling(
+        configReader
+          .readAllDiscoveredProjects()
+          .map((project) => configReader.readDiscovery(project)),
+      )
     }
     for (const project of projects) {
       await modelPermissionsCommand(

@@ -84,6 +84,7 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 
@@ -101,6 +102,7 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 
@@ -117,6 +119,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 
@@ -702,6 +705,7 @@ const mockProject: DiscoveryOutput = {
   entries: COMMITTED,
   abis: {},
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 

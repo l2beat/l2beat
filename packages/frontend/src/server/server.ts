@@ -19,6 +19,7 @@ import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
+import { loadPagePreloads } from './PagePreloads'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
@@ -47,6 +48,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const productionTemplate = options.dev
     ? undefined
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
+  const pagePreloads = loadPagePreloads(!options.dev)
 
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter())
@@ -72,7 +74,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     const template = await getTemplate(options, url, productionTemplate)
 
     return template
-      .replace('<!--app-head-->', rendered.head)
+      .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
@@ -93,6 +95,13 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
 
+  app.use('/', createApiRouter())
+
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
+  // Last, because the page router ends with a catch-all 404 page.
   if (options.dev) {
     app.use(
       '/',
@@ -101,12 +110,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   } else {
     app.use('/', createServerPageRouter(manifest, renderToHtml))
   }
-
-  app.use('/', createApiRouter())
-
-  app.get('/health', (_, res) => {
-    res.status(200).send('OK')
-  })
 
   if (!options.dev) {
     app.use(ErrorHandler(baseLogger))

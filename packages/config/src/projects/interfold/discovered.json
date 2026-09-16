@@ -1,6 +1,6 @@
 {
   "name": "interfold",
-  "timestamp": 1788789718,
+  "timestamp": 1789471922,
   "configHash": "0xc3d5f09d2de7bfeceebab5e9521501800176f07aa32e677bd84b0ad7a6b348e1",
   "entries": [
     {
@@ -20,7 +20,7 @@
       "values": {
         "$immutable": true,
         "checkpoints": "eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963",
-        "clock": 1788789707,
+        "clock": 1789471919,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
@@ -89,13 +89,13 @@
         ],
         "$upgradeCount": 1,
         "clock": "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166",
-        "currentEpochStart": 1787788800,
+        "currentEpochStart": 1788998400,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "enableUpdateVotingPowerHook": true,
-        "epochId": 1478,
-        "epochStart": 1788998400,
-        "epochVoteEnd": 1788789707,
-        "epochVoteStart": 1789002000,
+        "epochId": 1479,
+        "epochStart": 1790208000,
+        "epochVoteEnd": 1789599600,
+        "epochVoteStart": 1789471919,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
         "GAUGE_ADMIN_ROLE": "0xfda1ae526c1fb38407f23e8b7712f7cfacc146f3e340a04221488331e0d42014",
         "gaugeList": [],
@@ -117,7 +117,7 @@
         "SET_TARGET_CONFIG_PERMISSION_ID": "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
         "totalVotingPowerCast": 0,
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
-        "votingActive": false
+        "votingActive": true
       },
       "fieldMeta": {
         "dao": {
@@ -219,7 +219,11 @@
           "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513",
           "eth:0x59461947EC279863138fae477C35B0c551A5c3a6",
           "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671",
-          "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe"
+          "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe",
+          "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6",
+          "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F"
         ],
         "authorizedDistributorCount": 2,
         "authorizedDistributors": [
@@ -263,10 +267,13 @@
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706",
           "eth:0x998f207845419ca45fDf25A0950d156b96bAB1fb": "eth:0x998f207845419ca45fDf25A0950d156b96bAB1fb",
           "eth:0xa9499065732D4319F732f8F60F8E2632904b5dc9": "eth:0xa9499065732D4319F732f8F60F8E2632904b5dc9",
-          "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "eth:0x59461947EC279863138fae477C35B0c551A5c3a6",
+          "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "eth:0x81a196AF5cB4b16743e70C6122871b60511B2911",
           "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe": "eth:0x3794ab82cd6512D289B0d8d6787eF209cDbfDDbB",
           "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "eth:0xa9499065732D4319F732f8F60F8E2632904b5dc9",
-          "eth:0x3794ab82cd6512D289B0d8d6787eF209cDbfDDbB": "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe"
+          "eth:0x3794ab82cd6512D289B0d8d6787eF209cDbfDDbB": "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6": "eth:0x97843608a00e2bbc75ab0C1911387E002565DEDE",
+          "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F": "eth:0x155583C5a945B410f66f3ab0b9E334606c6e8390",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": "eth:0x8577fBE7bb7A2c1ca7616d50E9adE57ebebD8e79"
         },
         "ciphernodeBondActiveBps": 8000,
         "ciphernodeBonds": {
@@ -289,7 +296,10 @@
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": "32000000000000000000000",
           "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "32000000000000000000000",
           "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe": "32000000000000000000000",
-          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "44444000000000000000000"
+          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "44444000000000000000000",
+          "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F": "32000000000000000000000",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6": "32000000000000000000000",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": "32000000000000000000000"
         },
         "ciphernodeBondToken": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
         "eligibilityConfigurationVersion": 5,
@@ -301,8 +311,8 @@
         "MAX_EXIT_DELAY": 7776000,
         "MIN_EXIT_DELAY": 86400,
         "minTicketBalance": 1,
-        "numActiveOperators": 14,
-        "numRegisteredOperators": 18,
+        "numActiveOperators": 19,
+        "numRegisteredOperators": 21,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "registry": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
@@ -327,15 +337,18 @@
           "eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C": "1000000000000000000000",
           "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": "3000000000000000000000",
           "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190": "2000000000000000000000",
-          "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513": "2000000000000000000000",
+          "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513": "5000000000000000000000",
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": "1000000000000000000000",
-          "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "3000000000000000000000",
+          "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "8000000000000000000000",
           "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe": "1000000000000000000000",
-          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "4000000000000000000000"
+          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "8000000000000000000000",
+          "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F": "5000000000000000000000",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6": "1000000000000000000000",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": "2000000000000000000000"
         },
         "ticketPrice": "1000000000000000000000",
         "ticketToken": "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D",
-        "totalCiphernodeBondLiability": "620549000000000000000000",
+        "totalCiphernodeBondLiability": "716549000000000000000000",
         "unresolvedCommitteeCount": 0
       },
       "fieldMeta": {
@@ -504,6 +517,11 @@
     },
     {
       "address": "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x222D696D0242194457eD491b0c52aBbF9250342F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -815,7 +833,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 53,
+        "nonce": 55,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -844,6 +862,11 @@
     },
     {
       "address": "eth:0x59461947EC279863138fae477C35B0c551A5c3a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1229,7 +1252,7 @@
         "ESCROW_ADMIN_ROLE": "0x5153bc4ddea3acc82e49822cf2356cf42e16e0ba80c942840692ca4dd7db5995",
         "implementation": "eth:0x201d4c1cd48F2fC1297eEa56B14A29a039164a91",
         "ivotesAdapter": "eth:0x8f141B4D294d39e7D1530916A3eD65B3970C6FEc",
-        "lastLockId": 20,
+        "lastLockId": 30,
         "lockNFT": "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E",
         "minDeposit": "1000000000000000000",
         "paused": false,
@@ -1238,8 +1261,8 @@
         "SPLIT_WHITELIST_ANY_ADDRESS": "eth:0x89203EDb30c2eCF12612E709afB87C85a170dA0a",
         "SWEEPER_ROLE": "0xfdecf383ad5026ade6d21db07b04781efb7ede2811d8b5fe299044cc4bb91fc9",
         "token": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
-        "totalLocked": "2424618805070955587431464",
-        "totalVotingPower": "2419618805070955587431464",
+        "totalLocked": "2508570171285653957498366",
+        "totalVotingPower": "2503570171285653957498366",
         "voter": "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0"
       },
       "fieldMeta": {
@@ -1462,7 +1485,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "clock": 1788789707,
+        "clock": 1789471919,
         "CLOCK_MODE": "mode=timestamp",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "DELEGATION_ADMIN_ROLE": "0xc4a19b785a540c2c44664ee81553e51ce4d2ff785f770bea0ef0e33e9fc2e896",
@@ -2285,7 +2308,7 @@
       "sinceBlock": 25786372,
       "values": {
         "$immutable": true,
-        "clock": 1788789707,
+        "clock": 1789471919,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "eip712Domain": {
@@ -2307,7 +2330,7 @@
         "REGISTRY_CHANGE_DELAY": 86400,
         "registryLocked": true,
         "symbol": "tFOLD",
-        "totalSupply": "32000000000000000000000",
+        "totalSupply": "52000000000000000000000",
         "underlying": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
       },
       "fieldMeta": {
@@ -2390,7 +2413,10 @@
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706",
           "eth:0x59461947EC279863138fae477C35B0c551A5c3a6",
           "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe",
-          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671"
+          "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671",
+          "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F"
         ],
         "$pastUpgrades": [
           [
@@ -2410,7 +2436,7 @@
         "accusationVoteValidity": 1800,
         "bondingRegistry": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
         "CIPHERNODE_TREE_WARNING_THRESHOLD": 838860,
-        "ciphernodes": { "maxIndex": 1048575, "numberOfLeaves": 18 },
+        "ciphernodes": { "maxIndex": 1048575, "numberOfLeaves": 21 },
         "DEFAULT_ACCUSATION_VOTE_VALIDITY": 1800,
         "DKG_FOLD_VERIFIER_TIMELOCK": 172800,
         "dkgFoldAttestationVerifier": "eth:0xE5657c0756B772B600D6c73eDbF046f32129c770",
@@ -2421,7 +2447,7 @@
         "MAX_COMMITTEE_PUBLIC_KEY_BYTES": 262144,
         "MAX_SORTITION_SUBMISSION_WINDOW": 86400,
         "MIN_SORTITION_SUBMISSION_WINDOW": 60,
-        "numCiphernodes": 18,
+        "numCiphernodes": 21,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingAccusationVoteValidity": 0,
         "pendingAccusationVoteValidityAt": 0,
@@ -2430,12 +2456,12 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "randomnessProvider": "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712",
         "randomnessRequestTimeout": 3600,
-        "root": "19032770974846579836408483782135571674608099202818965047890237164996579407629",
+        "root": "1150192347350269815714802101227632646146258388575924883627482345885104563410",
         "selectedCommitteeSize": 3,
         "slashingManager": "eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9",
         "sortitionSubmissionWindow": 600,
         "TREE_DEPTH": 20,
-        "treeSize": 18,
+        "treeSize": 21,
         "unreleasedCommitteeCount": 0
       },
       "fieldMeta": {
@@ -2536,24 +2562,24 @@
         "$upgradeCount": 1,
         "checkpointInterval": 604800,
         "CLOCK_ADMIN_ROLE": "0x440d025ee487c9fe654894f3750aeb18132e334d52d7a9c0a3f6a5c77450a9b5",
-        "currentEpoch": 1478,
+        "currentEpoch": 1479,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-        "elapsedInEpoch": 1000907,
+        "elapsedInEpoch": 473519,
         "epochDuration": 1209600,
-        "epochNextCheckpointIn": 208693,
-        "epochNextCheckpointTs": 1788998400,
-        "epochPrevCheckpointElapsed": 396107,
-        "epochPrevCheckpointTs": 1788393600,
-        "epochStartsIn": 208693,
-        "epochStartTs": 1788998400,
-        "epochVoteEndsIn": 0,
-        "epochVoteEndTs": 1788789707,
-        "epochVoteStartsIn": 212293,
-        "epochVoteStartTs": 1789002000,
+        "epochNextCheckpointIn": 131281,
+        "epochNextCheckpointTs": 1789603200,
+        "epochPrevCheckpointElapsed": 473519,
+        "epochPrevCheckpointTs": 1788998400,
+        "epochStartsIn": 736081,
+        "epochStartTs": 1790208000,
+        "epochVoteEndsIn": 127681,
+        "epochVoteEndTs": 1789599600,
+        "epochVoteStartsIn": 0,
+        "epochVoteStartTs": 1789471919,
         "implementation": "eth:0xEC0162045B44C5506954E3A04dbbcdfe39f64f21",
         "voteDuration": 604800,
         "voteWindowBuffer": 3600,
-        "votingActive": false
+        "votingActive": true
       },
       "fieldMeta": {
         "dao": {
@@ -2697,7 +2723,7 @@
       "sinceBlock": 25786391,
       "values": {
         "$immutable": true,
-        "clock": 1788789707,
+        "clock": 1789471919,
         "CLOCK_MODE": "mode=timestamp",
         "registry": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F"
       },
@@ -2705,6 +2731,11 @@
         "eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963": "BondedCheckpoints"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xdBEd503093A01EA08f21144114542E53594536D6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "VotingEscrowMultisig",
@@ -2839,7 +2870,7 @@
         "CCA_END": 1783692000,
         "CCA_START": 1783346400,
         "CLAIM_SOURCE": "eth:0x687Cc38d8279dF3352b64cF3EC1fe8e033933595",
-        "clock": 1788789707,
+        "clock": 1789471919,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2961,7 +2992,7 @@
         "CURVE_ADMIN_ROLE": "0x065385aea91ea94bccc193b44dcdc1da3bcab7e7328692e0b12cda00df64eac4",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
-        "globalPointLatestIndex": 23,
+        "globalPointLatestIndex": 34,
         "implementation": "eth:0x59417A78C133a6Fddf8a3b5e751378aF8d42e249",
         "maxTime": 62899200,
         "warmupPeriod": 0
@@ -3135,7 +3166,7 @@
         "LOCK_ADMIN_ROLE": "0x54e26bc44f032b9c63f050973076cd279ea75ee2dceeaee6367075804fd03838",
         "name": "Vote Escrow FOLD",
         "symbol": "veFOLD",
-        "totalSupply": 20,
+        "totalSupply": 30,
         "WHITELIST_ANY_ADDRESS": "eth:0x95A53aa925FDd6f1733830EbB7A586B33CbD4355"
       },
       "fieldMeta": {
@@ -5718,8 +5749,8 @@
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8"
   },
-  "usedBlockNumbers": { "ethereum": 25925940 },
-  "permissionsConfigHash": "0x35b1c9690d5f388b622fd3cc56802fcbd17d3752cd3bfd47c47e8fa57b9c0aed",
+  "usedBlockNumbers": { "ethereum": 25982582 },
+  "permissionsConfigHash": "0x4fddccc73fb55087a4e4cf628b5dc0c5d31549ed55d37424f03befd70839ba8c",
   "permissions": {
     "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": {
       "receivedPermissions": [
@@ -5761,6 +5792,12 @@
     },
     "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": {
       "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
         {
           "permission": "member",
           "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
@@ -5828,6 +5865,22 @@
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
           "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
           "role": ".activeOperators"
+        }
+      ]
+    },
+    "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
         }
       ]
     },
@@ -6362,6 +6415,22 @@
       ]
     },
     "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F": {
       "receivedPermissions": [
         {
           "permission": "member",
@@ -8360,6 +8429,22 @@
       ]
     },
     "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xdBEd503093A01EA08f21144114542E53594536D6": {
       "receivedPermissions": [
         {
           "permission": "member",

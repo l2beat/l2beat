@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketTokenRETH",
+  "category": "core",
+  "description": "Liquid staking token ({{ symbol }}). Minting is restricted to the deposit-pool contract. Burning is open to any holder with no admin gate and no pause switch, but it pays out only from the ETH held here plus the deposit pool's unassigned surplus, so large redemptions depend on that buffer rather than on the staked balance. The redemption price is the ratio of two values written by the balance oracle, so this contract asserts no price of its own and has no staleness check. Governance targets a buffer of {{ targetCollateralRate }}% of the token's backing. Transfers are blocked for a configured number of blocks after the holder deposits, currently {{ transferDelayBlocks }}. The registry refuses to repoint this name, so the token address is fixed.",
+  "ignoreMethods": ["getEthValue", "getRethValue"],
+  "ignoreInWatchMode": [
+    "totalSupply",
+    "getExchangeRate",
+    "getTotalCollateral",
+    "getCollateralRate"
+  ],
+  "fields": {
+    "targetCollateralRate": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getTargetRethCollateralRate() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    },
+    "transferDelayBlocks": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getRethDepositDelay() view returns (uint256)",
+        "args": []
+      }
+    },
+    "networkSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNetwork")
+          "0x282fd49dacaf2128d6f069f81013ec59ae7081a236fbad29f69dd2383662ce5c"
+        ]
+      },
+      "description": "Settings contract this token reads its buffer target and transfer delay from."
+    },
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      },
+      "description": "Deployment arguments; the registry address this contract resolves its siblings through is fixed here."
+    }
+  }
+}

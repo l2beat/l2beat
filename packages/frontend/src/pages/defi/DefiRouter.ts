@@ -5,6 +5,7 @@ import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getDefiProjectData } from './project/getDefiProjectData'
 import { getDefiSummaryData } from './summary/getDefiSummaryData'
 
@@ -52,7 +53,7 @@ export function createDefiRouter(
       )
 
       if (!data) {
-        res.status(404).send('Not found')
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
 

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkVoting",
+  "category": "gov",
+  "description": "Computes an address's voting power at a past block from its staked collateral and its share of the validator bond, and records vote delegation. It reads the snapshot history rather than holding balances of its own."
+}

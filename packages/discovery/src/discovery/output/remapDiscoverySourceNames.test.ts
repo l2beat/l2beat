@@ -48,6 +48,7 @@ describe(remapDiscoverySourceNames.name, () => {
       ],
       abis: {},
       usedTemplates: {},
+      modelledAgainst: {},
       usedBlockNumbers: {},
     }
 
