@@ -15,7 +15,7 @@ describe(evaluateTrigger.name, () => {
 
   it('accepts OWNER association', () => {
     const event = commentEvent({ author_association: 'OWNER' })
-    expect(evaluateTrigger(event, pullRequest()).run).toEqual(true)
+    expect(evaluateTrigger(event, pullRequest()).run).toBe(true)
   })
 
   const skips: [string, Parameters<typeof evaluateTrigger>, GateSkipReason][] =
@@ -124,15 +124,15 @@ describe(evaluateTrigger.name, () => {
 
 describe(isCommand.name, () => {
   it('matches the bare command and command with arguments', () => {
-    expect(isCommand('/ai-review')).toEqual(true)
-    expect(isCommand('  /ai-review  \n')).toEqual(true)
-    expect(isCommand('/ai-review focus on tests')).toEqual(true)
-    expect(isCommand('/ai-review\nmore context')).toEqual(true)
+    expect(isCommand('/ai-review')).toBe(true)
+    expect(isCommand('  /ai-review  \n')).toBe(true)
+    expect(isCommand('/ai-review focus on tests')).toBe(true)
+    expect(isCommand('/ai-review\nmore context')).toBe(true)
   })
 
   it('rejects prefixes and embedded mentions', () => {
-    expect(isCommand('/ai-reviewer')).toEqual(false)
-    expect(isCommand('run /ai-review')).toEqual(false)
-    expect(isCommand('')).toEqual(false)
+    expect(isCommand('/ai-reviewer')).toBe(false)
+    expect(isCommand('run /ai-review')).toBe(false)
+    expect(isCommand('')).toBe(false)
   })
 })

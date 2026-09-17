@@ -101,22 +101,22 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
   describe(AggregatedL2CostRepository.prototype.checkIfExists.name, () => {
     it('is true when the project has any record', async () => {
       await repository.upsertMany([record({ projectId: ProjectId('a') })])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+      expect(await repository.checkIfExists(ProjectId('a'))).toBe(true)
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([record({ projectId: ProjectId('a') })])
-      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('b'))).toBe(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
       await repository.upsertMany([
         record({ projectId: ProjectId('a'), timestamp: NOW - UnixTime.DAY }),
       ])
-      expect(await repository.checkIfExists(ProjectId('a'), NOW)).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('a'), NOW)).toBe(false)
       expect(
         await repository.checkIfExists(ProjectId('a'), NOW - UnixTime.DAY),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -165,7 +165,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           ProjectId('missing'),
         ])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
 
       it('returns undefined for an empty project list', async () => {
@@ -173,7 +173,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByProjects([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )

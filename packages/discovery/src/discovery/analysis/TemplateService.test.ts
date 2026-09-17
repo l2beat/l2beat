@@ -104,7 +104,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
   })
 
   it('asks for a refresh when the referenced entrypoint is gone', () => {
-    expect(entrypointReasons([reference], {}).length).toEqual(1)
+    expect(entrypointReasons([reference], {}).length).toBe(1)
   })
 
   it('asks for a refresh when the referenced entrypoint became legacy', () => {
@@ -112,7 +112,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
       }).length,
-    ).toEqual(1)
+    ).toBe(1)
   })
 
   it('asks for a refresh when the entrypoint owner changed', () => {
@@ -120,7 +120,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: 'someone-else' },
       }).length,
-    ).toEqual(1)
+    ).toBe(1)
   })
 
   it("asks for a refresh when a discovered entry became another project's entrypoint", () => {
@@ -128,7 +128,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: OWNER },
       }).length,
-    ).toEqual(1)
+    ).toBe(1)
   })
 
   it("is quiet when a discovered entry is the project's own entrypoint", () => {

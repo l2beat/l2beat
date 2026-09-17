@@ -12,25 +12,25 @@ describe('BLIP env operator', () => {
 
   describe('reading values', () => {
     it('reads blockNumber', () => {
-      expect(executeBlip({}, ['env', 'blockNumber'], env)).toEqual(21_000_000)
+      expect(executeBlip({}, ['env', 'blockNumber'], env)).toBe(21_000_000)
     })
 
     it('reads timestamp', () => {
-      expect(executeBlip({}, ['env', 'timestamp'], env)).toEqual(1_700_000_000)
+      expect(executeBlip({}, ['env', 'timestamp'], env)).toBe(1_700_000_000)
     })
 
     it('reads chainName', () => {
-      expect(executeBlip({}, ['env', 'chainName'], env)).toEqual('ethereum')
+      expect(executeBlip({}, ['env', 'chainName'], env)).toBe('ethereum')
     })
 
     it('reads address', () => {
-      expect(executeBlip({}, ['env', 'address'], env)).toEqual(
+      expect(executeBlip({}, ['env', 'address'], env)).toBe(
         '0x1234567890123456789012345678901234567890',
       )
     })
 
     it('ignores the piped input value', () => {
-      expect(executeBlip({ timestamp: 1 }, ['env', 'timestamp'], env)).toEqual(
+      expect(executeBlip({ timestamp: 1 }, ['env', 'timestamp'], env)).toBe(
         1_700_000_000,
       )
     })
@@ -40,10 +40,10 @@ describe('BLIP env operator', () => {
     it('compares an env value against a literal', () => {
       expect(
         executeBlip({}, ['=', ['env', 'chainName'], 'ethereum'], env),
-      ).toEqual(true)
+      ).toBe(true)
       expect(
         executeBlip({}, ['=', ['env', 'chainName'], 'arbitrum'], env),
-      ).toEqual(false)
+      ).toBe(false)
     })
 
     it('sets an object field to an env value', () => {
@@ -57,12 +57,12 @@ describe('BLIP env operator', () => {
     })
 
     it('compares a copied field against env timestamp (hasExpired pattern)', () => {
-      expect(
-        executeBlip(1_699_000_000, ['<', ['env', 'timestamp']], env),
-      ).toEqual(true)
-      expect(
-        executeBlip(1_800_000_000, ['<', ['env', 'timestamp']], env),
-      ).toEqual(false)
+      expect(executeBlip(1_699_000_000, ['<', ['env', 'timestamp']], env)).toBe(
+        true,
+      )
+      expect(executeBlip(1_800_000_000, ['<', ['env', 'timestamp']], env)).toBe(
+        false,
+      )
     })
 
     it('compares address against a discovered field', () => {
@@ -72,7 +72,7 @@ describe('BLIP env operator', () => {
           ['=', ['env', 'address'], ['get', 'owner']],
           env,
         ),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -98,8 +98,8 @@ describe('BLIP env operator', () => {
 
   describe('$-prefixed strings are always literals', () => {
     it('leaves a $-prefixed discovery key such as $admin as a literal', () => {
-      expect(executeBlip({}, '$admin', env)).toEqual('$admin')
-      expect(executeBlip({}, '$$timestamp', env)).toEqual('$$timestamp')
+      expect(executeBlip({}, '$admin', env)).toBe('$admin')
+      expect(executeBlip({}, '$$timestamp', env)).toBe('$$timestamp')
     })
 
     it('picks a $-prefixed key from an object', () => {
@@ -114,7 +114,7 @@ describe('BLIP env operator', () => {
       // ['$admin', value] is the shape of an entry produced by to_entries
       expect(
         executeBlip(['$admin', 'x'], ['=', '$admin', ['get', 0]], env),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 })

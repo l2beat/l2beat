@@ -32,7 +32,7 @@ describe(InMemoryEventDb.name, () => {
     events.forEach((e) => db.addEvent(e))
 
     expect(db.find(EventA, { a: 'three' })).toEqual(events[2])
-    expect(db.find(EventA, { a: 'four' })).toEqual(undefined)
+    expect(db.find(EventA, { a: 'four' })).toBe(undefined)
   })
 
   it('can query events at a logIndex offset in the same tx', () => {
@@ -81,7 +81,7 @@ describe(InMemoryEventDb.name, () => {
       db.find(EventA, {
         sameTxAtOffset: { event: baseEvent, offset: 1 },
       }),
-    ).toEqual(undefined)
+    ).toBe(undefined)
   })
 
   it('can find a new event after the first query', () => {
@@ -114,7 +114,7 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeEvents([events[0]])
 
-    expect(db.find(EventA, { a: 'one' })).toEqual(undefined)
+    expect(db.find(EventA, { a: 'one' })).toBe(undefined)
   })
 
   it('can remove expired events', () => {
@@ -143,7 +143,7 @@ describe(InMemoryEventDb.name, () => {
     db.removeExpired(10)
 
     expect(db.getEvents(EventA.type)).toEqual([])
-    expect(db.getEventCount()).toEqual(0)
+    expect(db.getEventCount()).toBe(0)
   })
 
   it('can remove events for a specific plugin', () => {
@@ -160,7 +160,7 @@ describe(InMemoryEventDb.name, () => {
 
     expect(db.getEvents(EventA.type)).toEqual([events[1]])
     expect(db.getEvents(EventB.type)).toEqual([events[3]])
-    expect(db.getEventCount()).toEqual(2)
+    expect(db.getEventCount()).toBe(2)
   })
 
   it('can remove multiple expired events leaving one', () => {
@@ -176,7 +176,7 @@ describe(InMemoryEventDb.name, () => {
     db.removeExpired(10)
 
     expect(db.getEvents(EventA.type)).toEqual([events[3]])
-    expect(db.getEventCount()).toEqual(1)
+    expect(db.getEventCount()).toBe(1)
   })
 
   it('maintains the event cap', () => {

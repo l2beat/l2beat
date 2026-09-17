@@ -411,16 +411,16 @@ describe('validate', () => {
   describe('describe', () => {
     it('should add description', () => {
       const Foo = v.object({ x: v.number() })
-      expect(Foo.description).toEqual(undefined)
+      expect(Foo.description).toBe(undefined)
       Foo.describe('Bar')
-      expect(Foo.description).toEqual('Bar')
+      expect(Foo.description).toBe('Bar')
     })
   })
 
   describe('meta', () => {
     it('should add metadata', () => {
       const Foo = v.object({ x: v.number() })
-      expect(Foo.metadata).toEqual(undefined)
+      expect(Foo.metadata).toBe(undefined)
       Foo.meta({ description: 'Bar' })
       expect(Foo.metadata).toEqual({ description: 'Bar' })
     })

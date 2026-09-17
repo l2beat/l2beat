@@ -140,42 +140,42 @@ describe(UnixTime.name, () => {
   describe(UnixTime.isFull.name, () => {
     it('full day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
-      expect(UnixTime.isFull(time, 'day')).toEqual(true)
+      expect(UnixTime.isFull(time, 'day')).toBe(true)
     })
 
     it('not full day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-08T10:13:51Z'))
-      expect(UnixTime.isFull(time, 'day')).toEqual(false)
+      expect(UnixTime.isFull(time, 'day')).toBe(false)
     })
 
     it('full hour', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
-      expect(UnixTime.isFull(time, 'hour')).toEqual(true)
+      expect(UnixTime.isFull(time, 'hour')).toBe(true)
     })
 
     it('not full hour', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:01:10Z'))
-      expect(UnixTime.isFull(time, 'hour')).toEqual(false)
+      expect(UnixTime.isFull(time, 'hour')).toBe(false)
     })
 
     it('full minute', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:00Z'))
-      expect(UnixTime.isFull(time, 'minute')).toEqual(true)
+      expect(UnixTime.isFull(time, 'minute')).toBe(true)
     })
 
     it('not full minute', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
-      expect(UnixTime.isFull(time, 'minute')).toEqual(false)
+      expect(UnixTime.isFull(time, 'minute')).toBe(false)
     })
 
     it('full six hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:00:00Z'))
-      expect(UnixTime.isFull(time, 'six hours')).toEqual(true)
+      expect(UnixTime.isFull(time, 'six hours')).toBe(true)
     })
 
     it('not full six hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:01:01Z'))
-      expect(UnixTime.isFull(time, 'six hours')).toEqual(false)
+      expect(UnixTime.isFull(time, 'six hours')).toBe(false)
     })
   })
 
@@ -215,25 +215,25 @@ describe(UnixTime.name, () => {
     it('formats timestamp as YYYY-MM-DDTHH:MM', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const formatted = UnixTime.toYYYYMMDDHHMM(time)
-      expect(formatted).toEqual('2021-09-07T12:34')
+      expect(formatted).toBe('2021-09-07T12:34')
     })
 
     it('formats timestamp with single digit month and day', () => {
       const time = UnixTime.fromDate(new Date('2021-01-05T09:07:00Z'))
       const formatted = UnixTime.toYYYYMMDDHHMM(time)
-      expect(formatted).toEqual('2021-01-05T09:07')
+      expect(formatted).toBe('2021-01-05T09:07')
     })
 
     it('formats timestamp at midnight', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const formatted = UnixTime.toYYYYMMDDHHMM(time)
-      expect(formatted).toEqual('2021-09-07T00:00')
+      expect(formatted).toBe('2021-09-07T00:00')
     })
 
     it('formats timestamp at end of day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T23:59:59Z'))
       const formatted = UnixTime.toYYYYMMDDHHMM(time)
-      expect(formatted).toEqual('2021-09-07T23:59')
+      expect(formatted).toBe('2021-09-07T23:59')
     })
   })
 })

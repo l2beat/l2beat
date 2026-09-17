@@ -36,7 +36,7 @@ describe(getItemsToCapture.name, () => {
     ])
     expect(logsToCapture[0]?.txLogs).toEqual(txsToCapture[0]?.txLogs)
     expect(logsToCapture[0]?.block).toEqual(block)
-    expect(logsToCapture[0]?.chain).toEqual('ethereum')
+    expect(logsToCapture[0]?.chain).toBe('ethereum')
   })
 
   it('shares the prepared items for the same block and logs objects', () => {

@@ -39,9 +39,9 @@ describe(InteropTransferAnalyzer.name, () => {
       .mock.calls[0][1]
 
     expect(suspiciousTransfers).toHaveLength(1)
-    expect(suspiciousTransfers?.[0]?.transferId).toEqual('msg1')
-    expect(suspiciousTransfers?.[0]?.valueRatio).toEqual(6)
-    expect(suspiciousTransfers?.[0]?.dominantSide).toEqual('src')
+    expect(suspiciousTransfers?.[0]?.transferId).toBe('msg1')
+    expect(suspiciousTransfers?.[0]?.valueRatio).toBe(6)
+    expect(suspiciousTransfers?.[0]?.dominantSide).toBe('src')
   })
 })
 

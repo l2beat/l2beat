@@ -38,9 +38,9 @@ describe(buildDefiSummaryEntries.name, () => {
       'chainlink',
       'uniswapv3',
     ])
-    expect(entries[0]?.totalValueLockedUsd).toEqual(1_000)
-    expect(entries[1]?.totalValueLockedUsd).toEqual(undefined)
-    expect(entries[2]?.totalValueLockedUsd).toEqual(undefined)
+    expect(entries[0]?.totalValueLockedUsd).toBe(1_000)
+    expect(entries[1]?.totalValueLockedUsd).toBe(undefined)
+    expect(entries[2]?.totalValueLockedUsd).toBe(undefined)
   })
 
   it('sorts by TVL descending and puts missing values last', () => {
@@ -181,7 +181,7 @@ describe(buildDefiSummaryEntries.name, () => {
       },
     ])
     expect(uni?.dependencies).toEqual([])
-    expect(link?.dependencies).toEqual(undefined)
+    expect(link?.dependencies).toBe(undefined)
   })
 })
 
@@ -215,9 +215,9 @@ describe(getDefiSummaryEntries.name, () => {
     ])
 
     const byId = new Map(entries.map((entry) => [entry.id, entry]))
-    expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toEqual(undefined)
-    expect(byId.get('chainlink')?.totalValueLockedUsd).toEqual(undefined)
-    expect(byId.get('uniswapv3')?.totalValueLockedUsd).toEqual(undefined)
+    expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toBe(undefined)
+    expect(byId.get('chainlink')?.totalValueLockedUsd).toBe(undefined)
+    expect(byId.get('uniswapv3')?.totalValueLockedUsd).toBe(undefined)
   })
 })
 

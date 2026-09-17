@@ -28,7 +28,7 @@ describe(CatchingUpState.name, () => {
       const nextState = await state.catchUp()
 
       expect(nextState).toEqual(state)
-      expect(state.status).toEqual('waiting for block number')
+      expect(state.status).toBe('waiting for block number')
       expect(getResyncState).toHaveBeenCalled()
     })
 
@@ -89,8 +89,8 @@ describe(CatchingUpState.name, () => {
       const nextState = await state.catchUp()
 
       expect(nextState).toEqual(state)
-      expect(state.status).toEqual('waiting for wipe')
-      expect(syncer.waitingForWipe).toEqual(true)
+      expect(state.status).toBe('waiting for wipe')
+      expect(syncer.waitingForWipe).toBe(true)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
@@ -107,8 +107,8 @@ describe(CatchingUpState.name, () => {
       const nextState = await state.catchUp()
 
       expect(nextState).toEqual(state)
-      expect(state.status).toEqual('waiting for wipe')
-      expect(syncer.waitingForWipe).toEqual(true)
+      expect(state.status).toBe('waiting for wipe')
+      expect(syncer.waitingForWipe).toBe(true)
     })
 
     it('switches to following when already synced to latest block', async () => {
@@ -174,9 +174,7 @@ describe(CatchingUpState.name, () => {
       const catchUpPromise = state.catchUp()
       await flushAsyncWork()
 
-      expect(state.status).toEqual(
-        'saving events 10-10 (0 behind tip, 0 events)',
-      )
+      expect(state.status).toBe('saving events 10-10 (0 behind tip, 0 events)')
 
       resolveSaveProducedInteropEvents()
       const nextState = await catchUpPromise
@@ -527,18 +525,18 @@ describe(CatchingUpState.name, () => {
       const firstState = await state.catchUp()
 
       expect(firstState).toEqual(state)
-      expect(state.status).toEqual('retrying smaller range [/2]')
-      expect(syncer.logRangeDivider).toEqual(1)
+      expect(state.status).toBe('retrying smaller range [/2]')
+      expect(syncer.logRangeDivider).toBe(1)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
 
       const secondState = await state.catchUp()
 
       expect(secondState).toEqual(state)
-      expect(state.status).toEqual('retrying smaller range [/4]')
-      expect(syncer.logRangeDivider).toEqual(2)
+      expect(state.status).toBe('retrying smaller range [/4]')
+      expect(syncer.logRangeDivider).toBe(2)
       const secondCall = getLogs.mock.calls[1][0]
-      expect(secondCall?.fromBlock).toEqual(1n)
-      expect(secondCall?.toBlock).toEqual(5_000n)
+      expect(secondCall?.fromBlock).toBe(1n)
+      expect(secondCall?.toBlock).toBe(5_000n)
     })
 
     it('throws after too many log range divider increments', async () => {

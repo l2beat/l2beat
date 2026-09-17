@@ -138,7 +138,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true for response without error', () => {
@@ -151,7 +151,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 })

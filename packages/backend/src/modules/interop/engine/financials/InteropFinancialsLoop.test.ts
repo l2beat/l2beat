@@ -40,7 +40,7 @@ describe(getTokenInfos.name, () => {
 
     const result = await getTokenInfos([id], tokenDb, Logger.SILENT)
 
-    expect(result.size).toEqual(0)
+    expect(result.size).toBe(0)
   })
 })
 
@@ -972,10 +972,10 @@ describe(InteropFinancialsLoop.name, () => {
         .mock.calls[0][0]
 
       expect(processedTransfers).toHaveLength(2)
-      expect(processedTransfers?.[0]?.transferId).toEqual('msg1')
-      expect(processedTransfers?.[0]?.srcValueUsd).toEqual(600)
-      expect(processedTransfers?.[0]?.dstValueUsd).toEqual(100)
-      expect(processedTransfers?.[1]?.transferId).toEqual('msg2')
+      expect(processedTransfers?.[0]?.transferId).toBe('msg1')
+      expect(processedTransfers?.[0]?.srcValueUsd).toBe(600)
+      expect(processedTransfers?.[0]?.dstValueUsd).toBe(100)
+      expect(processedTransfers?.[1]?.transferId).toBe('msg2')
       expect(
         interopRecentPrices.getClosestPricesAtOrBefore,
       ).toHaveBeenCalledWith(

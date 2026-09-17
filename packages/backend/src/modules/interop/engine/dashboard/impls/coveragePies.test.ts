@@ -23,9 +23,9 @@ describe(buildInteropCoveragePieCharts.name, () => {
     ])
 
     expect(chart == null).toBe(false)
-    expect(chart?.totalCount).toEqual(93)
-    expect(chart?.supportedCount).toEqual(82)
-    expect(chart?.unsupportedCount).toEqual(11)
+    expect(chart?.totalCount).toBe(93)
+    expect(chart?.supportedCount).toBe(82)
+    expect(chart?.unsupportedCount).toBe(11)
     expect(chart?.slices.map((slice) => slice.label)).toEqual([
       'monad',
       'ethereum',
@@ -82,9 +82,9 @@ describe(buildInteropCoveragePieCharts.name, () => {
       },
     ])
 
-    expect(chart?.totalCount).toEqual(100)
-    expect(chart?.supportedCount).toEqual(95)
-    expect(chart?.unsupportedCount).toEqual(5)
+    expect(chart?.totalCount).toBe(100)
+    expect(chart?.supportedCount).toBe(95)
+    expect(chart?.unsupportedCount).toBe(5)
     expect(
       chart?.slices.map((slice) => ({
         label: slice.label,

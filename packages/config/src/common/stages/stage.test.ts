@@ -86,12 +86,12 @@ describe(createGetStage.name, () => {
       ),
     )
     // There is no way to get Stage 99 IRL but for test purposes it is ok
-    expect(result.stage).toEqual('Stage 99' as Stage)
-    expect(result.message).toEqual(undefined)
-    expect(result.downgradePending).toEqual(undefined)
+    expect(result.stage).toBe('Stage 99' as Stage)
+    expect(result.message).toBe(undefined)
+    expect(result.downgradePending).toBe(undefined)
     expect(result.summary).toHaveLength(100)
-    expect(result.missing).toEqual(undefined)
-    expect(result.additionalConsiderations).toEqual(undefined)
+    expect(result.missing).toBe(undefined)
+    expect(result.additionalConsiderations).toBe(undefined)
   })
 
   it('goes up to the last stage until requirement is not met', () => {
@@ -578,9 +578,9 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 1')
-      expect(result.downgradePending).toEqual(undefined)
-      expect(result.missing).toEqual(undefined)
+      expect(result.stage).toBe('Stage 1')
+      expect(result.downgradePending).toBe(undefined)
+      expect(result.missing).toBe(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
       expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
@@ -601,13 +601,13 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 1')
+      expect(result.stage).toBe('Stage 1')
       expect(result.downgradePending).toEqual({
         expiresAt: FUTURE_TIME,
         reasons: ['UPCOMING_A_FALSE', 'UPCOMING_B_FALSE'],
         toStage: 'Stage 0',
       })
-      expect(result.missing).toEqual(undefined)
+      expect(result.missing).toBe(undefined)
     })
 
     it('not expired + some failing + regular requirements also failing → missing set, no downgradePending', () => {
@@ -622,14 +622,14 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 0')
+      expect(result.stage).toBe('Stage 0')
       expect(result.missing).toEqual({
         nextStage: 'Stage 1',
         requirements: ['ESCAPE_HATCH_FALSE'],
         principle: undefined,
       })
       // downgradePending should NOT be set because there's already a missing
-      expect(result.downgradePending).toEqual(undefined)
+      expect(result.downgradePending).toBe(undefined)
     })
 
     it('expired + some failing → added to missing, project downgraded', () => {
@@ -644,13 +644,13 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 0')
+      expect(result.stage).toBe('Stage 0')
       expect(result.missing).toEqual({
         nextStage: 'Stage 1',
         requirements: ['UPCOMING_A_FALSE'],
         principle: undefined,
       })
-      expect(result.downgradePending).toEqual(undefined)
+      expect(result.downgradePending).toBe(undefined)
     })
 
     it('expired + all satisfied → no effect, requirements shown without upcoming flag', () => {
@@ -665,9 +665,9 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 1')
-      expect(result.downgradePending).toEqual(undefined)
-      expect(result.missing).toEqual(undefined)
+      expect(result.stage).toBe('Stage 1')
+      expect(result.downgradePending).toBe(undefined)
+      expect(result.missing).toBe(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
       expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
@@ -688,9 +688,9 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toEqual('Stage 1')
-      expect(result.downgradePending).toEqual(undefined)
-      expect(result.missing).toEqual(undefined)
+      expect(result.stage).toBe('Stage 1')
+      expect(result.downgradePending).toBe(undefined)
+      expect(result.missing).toBe(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
       expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },

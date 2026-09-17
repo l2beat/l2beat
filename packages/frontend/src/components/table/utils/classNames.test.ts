@@ -19,13 +19,13 @@ describe('classNames', () => {
         isPinned: false,
       })
 
-      expect(visibleGroupClassName.includes('rounded-t-lg')).toEqual(true)
-      expect(visibleGroupClassName.includes('px-6')).toEqual(true)
-      expect(visibleGroupClassName.includes('pt-4')).toEqual(true)
+      expect(visibleGroupClassName.includes('rounded-t-lg')).toBe(true)
+      expect(visibleGroupClassName.includes('px-6')).toBe(true)
+      expect(visibleGroupClassName.includes('pt-4')).toBe(true)
 
-      expect(placeholderClassName.includes('rounded-t-lg')).toEqual(false)
-      expect(placeholderClassName.includes('px-6')).toEqual(false)
-      expect(placeholderClassName.includes('pt-4')).toEqual(false)
+      expect(placeholderClassName.includes('rounded-t-lg')).toBe(false)
+      expect(placeholderClassName.includes('px-6')).toBe(false)
+      expect(placeholderClassName.includes('pt-4')).toBe(false)
     })
   })
 
@@ -51,10 +51,10 @@ describe('classNames', () => {
         headClassName: undefined,
       })
 
-      expect(noTitleClassName.includes('rounded-tl-lg')).toEqual(true)
-      expect(noTitleClassName.includes('rounded-tr-lg')).toEqual(true)
-      expect(titledClassName.includes('rounded-tl-lg')).toEqual(false)
-      expect(titledClassName.includes('rounded-tr-lg')).toEqual(false)
+      expect(noTitleClassName.includes('rounded-tl-lg')).toBe(true)
+      expect(noTitleClassName.includes('rounded-tr-lg')).toBe(true)
+      expect(titledClassName.includes('rounded-tl-lg')).toBe(false)
+      expect(titledClassName.includes('rounded-tr-lg')).toBe(false)
     })
 
     it('keeps custom head class', () => {
@@ -68,7 +68,7 @@ describe('classNames', () => {
         headClassName: 'custom-head-class',
       })
 
-      expect(className.includes('custom-head-class')).toEqual(true)
+      expect(className.includes('custom-head-class')).toBe(true)
     })
   })
 
@@ -102,9 +102,9 @@ describe('classNames', () => {
         cellClassName: undefined,
       })
 
-      expect(leftAlignedClassName.includes('pl-10')).toEqual(true)
-      expect(rightAlignedClassName.includes('pl-10')).toEqual(false)
-      expect(rightAlignedClassName.includes('pl-4')).toEqual(false)
+      expect(leftAlignedClassName.includes('pl-10')).toBe(true)
+      expect(rightAlignedClassName.includes('pl-10')).toBe(false)
+      expect(rightAlignedClassName.includes('pl-4')).toBe(false)
     })
 
     it('adds highlight class only for pinned highlighted cells', () => {
@@ -129,10 +129,10 @@ describe('classNames', () => {
 
       expect(
         highlightedPinnedClassName.includes('animate-row-highlight-no-opacity'),
-      ).toEqual(true)
+      ).toBe(true)
       expect(
         nonPinnedClassName.includes('animate-row-highlight-no-opacity'),
-      ).toEqual(false)
+      ).toBe(false)
     })
 
     it('keeps custom cell class', () => {
@@ -146,7 +146,7 @@ describe('classNames', () => {
         cellClassName: 'custom-cell-class',
       })
 
-      expect(className.includes('custom-cell-class')).toEqual(true)
+      expect(className.includes('custom-cell-class')).toBe(true)
     })
   })
 })

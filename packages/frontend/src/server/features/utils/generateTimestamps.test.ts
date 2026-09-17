@@ -8,17 +8,17 @@ describe('generateTimestamps', () => {
 
   it('generates hourly timestamps', () => {
     const timestamps = generateTimestamps([from, to], 'hour')
-    expect(timestamps.length).toEqual(73) // 72 hours + 1 for the start
+    expect(timestamps.length).toBe(73) // 72 hours + 1 for the start
   })
 
   it('generates six-hourly timestamps', () => {
     const timestamps = generateTimestamps([from, to], 'six hours')
-    expect(timestamps.length).toEqual(13) // 12 six-hour periods + 1 for the start
+    expect(timestamps.length).toBe(13) // 12 six-hour periods + 1 for the start
   })
 
   it('generates daily timestamps', () => {
     const timestamps = generateTimestamps([from, to], 'day')
-    expect(timestamps.length).toEqual(4) // 3 days + 1 for the start
+    expect(timestamps.length).toBe(4) // 3 days + 1 for the start
   })
 
   it('adds target timestamp if addTarget is true and last generated is not target', () => {
@@ -26,8 +26,8 @@ describe('generateTimestamps', () => {
     const timestamps = generateTimestamps([from, to], 'day', {
       addTarget: true,
     })
-    expect(timestamps.length).toEqual(5) // 3 days + 1 for the start + 1 for the target
-    expect(timestamps.at(-1) === to).toEqual(true)
+    expect(timestamps.length).toBe(5) // 3 days + 1 for the start + 1 for the target
+    expect(timestamps.at(-1) === to).toBe(true)
   })
 
   it('does not add target timestamp if addTarget is false', () => {
@@ -35,6 +35,6 @@ describe('generateTimestamps', () => {
     const timestamps = generateTimestamps([from, to], 'day', {
       addTarget: false,
     })
-    expect(timestamps.length).toEqual(4) // 3 days + 1 for the start
+    expect(timestamps.length).toBe(4) // 3 days + 1 for the start
   })
 })

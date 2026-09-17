@@ -23,8 +23,8 @@ const tokenList = getTokenList(chains)
 describe('layer2s', () => {
   it('l2s do not have a host chain', () => {
     for (const layer2 of layer2s) {
-      expect(layer2.hostChain).toEqual(undefined)
-      expect(layer2.stackedRiskView).toEqual(undefined)
+      expect(layer2.hostChain).toBe(undefined)
+      expect(layer2.stackedRiskView).toBe(undefined)
     }
   })
 
@@ -190,7 +190,7 @@ describe('layer2s', () => {
             const costMultipliers = project.config.trackedTxs
               ?.map((t) => t._hackCostMultiplier)
               .filter(notUndefined)
-            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
+            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toBe(true)
           })
         }
       }
@@ -295,7 +295,7 @@ describe('layer2s', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         it(layer2.display.name, () => {
-          expect(layer2.display.description.endsWith('.')).toEqual(true)
+          expect(layer2.display.description.endsWith('.')).toBe(true)
         })
       }
     })
@@ -312,11 +312,11 @@ describe('layer2s', () => {
         describe(layer2.display.name, () => {
           for (const [name, choice] of choices) {
             it(`${name}.name doesn't end with a dot`, () => {
-              expect(choice.name.endsWith('.')).toEqual(false)
+              expect(choice.name.endsWith('.')).toBe(false)
             })
 
             it(`${name}.description ends with a dot`, () => {
-              expect(choice.description.endsWith('.')).toEqual(true)
+              expect(choice.description.endsWith('.')).toBe(true)
             })
 
             if (choice.risks.length > 0) {
@@ -387,7 +387,7 @@ describe('layer2s', () => {
               continue
             }
             it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
-              expect(milestone.description?.endsWith('.')).toEqual(true)
+              expect(milestone.description?.endsWith('.')).toBe(true)
             })
           }
         }
@@ -396,7 +396,7 @@ describe('layer2s', () => {
             continue
           }
           it(`Milestone: ${milestone.title} (main page) description ends with a dot`, () => {
-            expect(milestone.description?.endsWith('.')).toEqual(true)
+            expect(milestone.description?.endsWith('.')).toBe(true)
           })
         }
       })
@@ -436,7 +436,7 @@ describe('layer2s', () => {
         for (const milestone of allMilestones ?? []) {
           expect(
             UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toEqual(true)
+          ).toBe(true)
         }
       })
 
@@ -463,7 +463,7 @@ describe('layer2s', () => {
               continue
             }
             it(req.description, () => {
-              expect(req.description.endsWith('.')).toEqual(true)
+              expect(req.description.endsWith('.')).toBe(true)
             })
           }
         }
@@ -477,10 +477,10 @@ describe('layer2s', () => {
         if (!layer2.stateValidation) continue
 
         if (layer2.stateValidation.description) {
-          expect(layer2.stateValidation.description.endsWith('.')).toEqual(true)
+          expect(layer2.stateValidation.description.endsWith('.')).toBe(true)
         }
         layer2.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toEqual(true)
+          expect(category.description.endsWith('.')).toBe(true)
         })
       }
     })

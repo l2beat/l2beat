@@ -41,7 +41,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(discovery.entries.at(1)?.receivedPermissions).toEqual(undefined)
+    expect(discovery.entries.at(1)?.receivedPermissions).toBe(undefined)
     expect(discovery.permissions).toEqual({
       [PROXY_ADMIN]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
@@ -125,7 +125,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       [...discovery.entries, contract(COUNCIL), contract(unrelated)],
     )
 
-    expect(discovery.permissions).toEqual(undefined)
+    expect(discovery.permissions).toBe(undefined)
   })
 
   it('clears a map left over by a previous run', () => {
@@ -142,7 +142,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       discovery.entries,
     )
 
-    expect(discovery.permissions).toEqual(undefined)
+    expect(discovery.permissions).toBe(undefined)
   })
 
   it('sorts the map by address', () => {
@@ -181,7 +181,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       ],
     )
 
-    expect(discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions).toEqual(
+    expect(discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions).toBe(
       undefined,
     )
     expect(

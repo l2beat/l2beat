@@ -35,7 +35,7 @@ describe(extractStarknetPrivacyFlow.name, () => {
       event(['0xdeposit', '0xuser', '0x456'], ['0x1234']),
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 })
 

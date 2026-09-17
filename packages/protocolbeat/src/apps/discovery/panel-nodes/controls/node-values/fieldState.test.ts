@@ -18,20 +18,20 @@ const MEMBERS = entry(TREE, '$members')
 
 describe(getFieldState.name, () => {
   it('reads a single value as shown or hidden', () => {
-    expect(getFieldState(THRESHOLD, EMPTY)).toEqual('on')
+    expect(getFieldState(THRESHOLD, EMPTY)).toBe('on')
     expect(
       getFieldState(THRESHOLD, { ...EMPTY, hiddenFields: ['$threshold'] }),
-    ).toEqual('off')
+    ).toBe('off')
   })
 
   it('reads a group as compressed, mixed, or compressed by its parent', () => {
     expect(
       getFieldState(MEMBERS, { ...EMPTY, compressedRows: ['$members'] }),
-    ).toEqual('compress')
+    ).toBe('compress')
     expect(
       getFieldState(MEMBERS, { ...EMPTY, hiddenFields: ['$members[0]'] }),
-    ).toEqual('mixed')
-    expect(getFieldState(member(), EMPTY, '$members')).toEqual('compress')
+    ).toBe('mixed')
+    expect(getFieldState(member(), EMPTY, '$members')).toBe('compress')
   })
 })
 
@@ -84,7 +84,7 @@ describe(setFieldState.name, () => {
     )
 
     expect(result.compressedRows).toEqual(['$members'])
-    expect(getFieldState(MEMBERS, result)).toEqual('mixed')
+    expect(getFieldState(MEMBERS, result)).toBe('mixed')
   })
 })
 

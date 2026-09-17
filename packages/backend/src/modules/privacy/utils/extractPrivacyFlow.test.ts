@@ -93,7 +93,7 @@ describe(extractPrivacyFlow.name, () => {
         0n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toBe(undefined)
     })
 
     it('ignores self transfers', () => {
@@ -103,7 +103,7 @@ describe(extractPrivacyFlow.name, () => {
         1500n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toBe(undefined)
     })
 
     it('ignores transfers whose recipient is not the configured `to`', () => {
@@ -113,7 +113,7 @@ describe(extractPrivacyFlow.name, () => {
         1500n,
       ])
 
-      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+      expect(extractPrivacyFlow(config, log)).toBe(undefined)
     })
 
     it('ignores transfers whose sender is not the configured `from`', () => {
@@ -125,7 +125,7 @@ describe(extractPrivacyFlow.name, () => {
 
       expect(
         extractPrivacyFlow({ ...config, params: { from: ADDRESS } }, log),
-      ).toEqual(undefined)
+      ).toBe(undefined)
     })
   })
 
@@ -288,7 +288,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns undefined when no commitments match', () => {
@@ -296,7 +296,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -340,7 +340,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns undefined when token address does not match', () => {
@@ -357,7 +357,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -394,7 +394,7 @@ describe(extractPrivacyFlow.name, () => {
         announcement(OTHER_TOKEN_ADDRESS, 42n),
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('extracts amount from matching TokenWithdrawal event', () => {
@@ -426,7 +426,7 @@ describe(extractPrivacyFlow.name, () => {
         log,
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('counts an ETH Announcement as both a deposit and a withdrawal', () => {

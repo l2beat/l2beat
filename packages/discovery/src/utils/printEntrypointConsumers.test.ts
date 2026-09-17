@@ -20,7 +20,7 @@ describe(ownsEntrypoints.name, () => {
       ownsEntrypoints(
         structure(PROVIDER, { [ChainSpecificAddress.random()]: PROVIDER }),
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 
   it('is false when every entrypoint belongs to another project', () => {
@@ -31,11 +31,11 @@ describe(ownsEntrypoints.name, () => {
           [ChainSpecificAddress.random()]: OTHER_PROVIDER,
         }),
       ),
-    ).toEqual(false)
+    ).toBe(false)
   })
 
   it('is false when there are no entrypoints at all', () => {
-    expect(ownsEntrypoints(structure('abstract', {}))).toEqual(false)
+    expect(ownsEntrypoints(structure('abstract', {}))).toBe(false)
   })
 })
 

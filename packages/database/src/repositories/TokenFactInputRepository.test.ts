@@ -137,9 +137,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(2)
       const actual = result.map(withoutId)
-      expect(sortByArguments(actual)).toEqual(
-        sortByArguments(matchingRecords),
-      )
+      expect(sortByArguments(actual)).toEqual(sortByArguments(matchingRecords))
     })
   })
 
@@ -152,7 +150,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const deleted = await repository.deleteAll()
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
       expect(await repository.getAll()).toEqual([])
     })
   })

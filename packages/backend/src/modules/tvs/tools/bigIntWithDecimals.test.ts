@@ -9,7 +9,7 @@ describe(BigIntWithDecimals.name, () => {
 
       const result = BigIntWithDecimals(value, decimals)
 
-      expect(result).toEqual(100123400000000000000n)
+      expect(result).toBe(100123400000000000000n)
     })
 
     it('aligns to the desired precision - from lower', async () => {
@@ -18,7 +18,7 @@ describe(BigIntWithDecimals.name, () => {
 
       const result = BigIntWithDecimals(value, decimals)
 
-      expect(result).toEqual(100000000000000000000n)
+      expect(result).toBe(100000000000000000000n)
     })
   })
 
@@ -28,7 +28,7 @@ describe(BigIntWithDecimals.name, () => {
 
       const result = BigIntWithDecimals.fromNumber(value)
 
-      expect(result).toEqual(100123400000000000000n)
+      expect(result).toBe(100123400000000000000n)
     })
   })
 
@@ -38,7 +38,7 @@ describe(BigIntWithDecimals.name, () => {
 
       const result = BigIntWithDecimals.toNumber(value)
 
-      expect(result).toEqual(100.12)
+      expect(result).toBe(100.12)
     })
   })
 
@@ -52,7 +52,7 @@ describe(BigIntWithDecimals.name, () => {
         BigIntWithDecimals.multiply(value1, value2),
       )
 
-      expect(result).toEqual(500)
+      expect(result).toBe(500)
     })
   })
 })

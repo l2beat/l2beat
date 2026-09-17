@@ -42,7 +42,7 @@ describe(resolveInteropTransferTimeRange.name, () => {
       'all',
     )
 
-    expect(range).toEqual(undefined)
+    expect(range).toBe(undefined)
   })
 
   it('does not turn a missing promoted aggregate into an unbounded query', async () => {

@@ -22,14 +22,14 @@ function assertWellFormed(root: LayoutNode): void {
   validateLayout(root)
   for (const node of iterNodes(root)) {
     if (node.kind !== 'split') continue
-    expect(node.children.length >= 2).toEqual(true)
+    expect(node.children.length >= 2).toBe(true)
     for (const child of node.children) {
       if (child.kind === 'split') {
-        expect(child.direction === node.direction).toEqual(false)
+        expect(child.direction === node.direction).toBe(false)
       }
     }
     for (const size of node.sizes) {
-      expect(size > 0).toEqual(true)
+      expect(size > 0).toBe(true)
     }
   }
 }
@@ -44,11 +44,9 @@ describe('docking/tree', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const next = splitLeaf(root, 'b', 'right', 'c')
       assertWellFormed(next)
-      expect(next.kind).toEqual('split')
+      expect(next.kind).toBe('split')
       const split = next as Extract<LayoutNode, { kind: 'split' }>
-      expect(split.children.every((child) => child.kind === 'leaf')).toEqual(
-        true,
-      )
+      expect(split.children.every((child) => child.kind === 'leaf')).toBe(true)
       expect(allKeys(next)).toEqual(['a', 'b', 'c'])
     })
 
@@ -78,7 +76,7 @@ describe('docking/tree', () => {
         active = tab
       }
       assertWellFormed(tree)
-      expect(leafCount(tree)).toEqual(23)
+      expect(leafCount(tree)).toBe(23)
 
       const sizes: number[] = []
       for (const node of iterNodes(tree)) {
@@ -87,7 +85,7 @@ describe('docking/tree', () => {
       const min = Math.min(...sizes)
       const max = Math.max(...sizes)
       // Old behavior pushed this ratio past 1e5 within ~20 adds.
-      expect(max / min < 4).toEqual(true)
+      expect(max / min < 4).toBe(true)
     })
   })
 
@@ -111,8 +109,8 @@ describe('docking/tree', () => {
         { kind: 'split' }
       >
       assertWellFormed(result)
-      expect(result.children.length).toEqual(2)
-      expect(result.children[1]?.kind).toEqual('split')
+      expect(result.children.length).toBe(2)
+      expect(result.children[1]?.kind).toBe('split')
     })
   })
 
@@ -142,7 +140,7 @@ describe('docking/tree', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const next = removeLeaf(root, 'a')
       assertWellFormed(next)
-      expect(next.kind).toEqual('leaf')
+      expect(next.kind).toBe('leaf')
       expect(allKeys(next)).toEqual(['b'])
     })
 

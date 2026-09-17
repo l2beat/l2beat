@@ -134,7 +134,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toEqual(3) // Should delete record2, record3, record5
+        expect(deleted).toBe(3) // Should delete record2, record3, record5
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -208,7 +208,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         // Should delete record2 (day1Mid), but keep record1 (earliest of day1)
         // Should keep record3 (earliest of day2) and record4 (at timestamp boundary)
         // Should keep record5 (after timestamp)
-        expect(deleted).toEqual(1)
+        expect(deleted).toBe(1)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(4)
@@ -221,7 +221,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
 
       it('returns 0 when all records are after timestamp', async () => {
@@ -254,7 +254,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(50),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -303,7 +303,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(500 + 2 * UnixTime.DAY),
         )
         // All records are earliest of their day, so nothing to delete
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(records.length)
@@ -354,7 +354,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(500),
         )
         // Should keep earliest (record1), delete others
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
@@ -412,7 +412,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -444,7 +444,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -452,7 +452,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
     },
   )

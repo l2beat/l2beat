@@ -45,7 +45,7 @@ describe(getSearchBarEntries.name, () => {
     const result = await getSearchBarEntries('jtsrm')
 
     expect(result.map((entry) => entry.name)).toEqual(['Jetstream'])
-    expect(result[0]?.searchMatchKind).toEqual('fuzzy')
+    expect(result[0]?.searchMatchKind).toBe('fuzzy')
   })
 
   it('allows searching interop tokens by symbol', async () => {
@@ -54,10 +54,10 @@ describe(getSearchBarEntries.name, () => {
     const result = await getSearchBarEntries('usdc')
 
     expect(result).toHaveLength(1)
-    expect(result[0]?.type).toEqual('token')
-    expect(result[0]?.category).toEqual('tokens')
-    expect(result[0]?.name).toEqual('USDC')
-    expect(result[0]?.searchMatchKind).toEqual('direct')
+    expect(result[0]?.type).toBe('token')
+    expect(result[0]?.category).toBe('tokens')
+    expect(result[0]?.name).toBe('USDC')
+    expect(result[0]?.searchMatchKind).toBe('direct')
   })
 })
 

@@ -61,6 +61,6 @@ describe(partition.name, () => {
       calls++
       return n > 15
     })
-    expect(calls).toEqual(4)
+    expect(calls).toBe(4)
   })
 })

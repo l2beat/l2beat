@@ -187,7 +187,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           record.chain,
         )
 
-        expect(updated).toEqual(1)
+        expect(updated).toBe(1)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
@@ -216,7 +216,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           record.chain,
         )
 
-        expect(updated).toEqual(0)
+        expect(updated).toBe(0)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
@@ -230,7 +230,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'ethereum',
         )
-        expect(updated).toEqual(0)
+        expect(updated).toBe(0)
       })
     },
   )
@@ -264,7 +264,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           },
         )
 
-        expect(updated).toEqual(1)
+        expect(updated).toBe(1)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
@@ -287,7 +287,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           },
         )
 
-        expect(updated).toEqual(0)
+        expect(updated).toBe(0)
       })
     },
   )
@@ -307,7 +307,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           wipeRequired: true,
         })
 
-        expect(updated).toEqual(2)
+        expect(updated).toBe(2)
 
         const pluginA = await repository.findByPluginName('plugin-a')
         expect(pluginA).toHaveLength(2)
@@ -350,7 +350,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'arbitrum',
         )
-        expect(found).toEqual(undefined)
+        expect(found).toBe(undefined)
       })
     },
   )
@@ -406,7 +406,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       )
 
       const deleted = await repository.deleteAll()
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
 
       const all = await repository.getAll()
       expect(all).toEqual([])
@@ -430,7 +430,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toEqual(1)
+        expect(deleted).toBe(1)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(3)
@@ -446,15 +446,15 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInPluginNames([])
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const all = await repository.getAll()
-        expect(all.length).toEqual(2)
+        expect(all.length).toBe(2)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteNotInPluginNames(['plugin-a'])
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -467,7 +467,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(2)
@@ -493,7 +493,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'ethereum',
           'arbitrum',
         ])
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(2)
@@ -506,10 +506,10 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInChains([])
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const all = await repository.getAll()
-        expect(all.length).toEqual(1)
+        expect(all.length).toBe(1)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -517,7 +517,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         await repository.upsert(a1)
 
         const deleted = await repository.deleteNotInChains(['ethereum'])
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const all = await repository.getAll()
         expect(all).toEqual([a1])

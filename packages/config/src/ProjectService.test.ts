@@ -62,7 +62,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('returns selected items', async () => {

@@ -9,7 +9,7 @@ const WASM_STACK_BYTES = 1024 * 1024
 describe(runClingo.name, () => {
   it('runs clingo on passed program', async () => {
     const result = await runClingo(VALID_PROGRAM)
-    expect(result.Result).toEqual('SATISFIABLE')
+    expect(result.Result).toBe('SATISFIABLE')
     if (result.Result === 'ERROR') return
     expect(result.Call?.[0]?.Witnesses?.[0]?.Value).toEqual(['a', 'b'])
   })
@@ -34,7 +34,7 @@ describe(runClingoForSingleModel.name, () => {
     const message = await rejectionMessage(
       runClingoForSingleModel(programOfSize(WASM_STACK_BYTES + 64 * 1024)),
     )
-    expect(message).not.toEqual('')
+    expect(message).not.toBe('')
   })
 
   it('recovers after a syntax error', async () => {
@@ -67,8 +67,8 @@ describe(runClingoForSingleModel.name, () => {
       runClingoForSingleModel(VALID_PROGRAM),
     ])
     expect(results[0]).toEqual({ status: 'fulfilled', value: ['a', 'b'] })
-    expect(results[1]?.status).toEqual('rejected')
-    expect(results[2]?.status).toEqual('rejected')
+    expect(results[1]?.status).toBe('rejected')
+    expect(results[2]?.status).toBe('rejected')
     expect(results[3]).toEqual({ status: 'fulfilled', value: ['a', 'b'] })
   })
 })

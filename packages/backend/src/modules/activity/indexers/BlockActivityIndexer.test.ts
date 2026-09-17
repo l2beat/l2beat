@@ -31,7 +31,7 @@ describe(BlockActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
-      expect(newSafeHeight).toEqual(50)
+      expect(newSafeHeight).toBe(50)
     })
 
     it('gets blocks counts, sum with current counts, saves to db and updates sync metadata', async () => {
@@ -83,7 +83,7 @@ describe(BlockActivityIndexer.name, () => {
         START + 2 * UnixTime.DAY,
         10,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toBe(10)
     })
 
     it('handle cases with block with 0 txs', async () => {
@@ -133,7 +133,7 @@ describe(BlockActivityIndexer.name, () => {
         START,
         10,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toBe(10)
     })
   })
 

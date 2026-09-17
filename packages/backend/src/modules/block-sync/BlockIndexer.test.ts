@@ -101,7 +101,7 @@ describe(BlockIndexer.name, () => {
 
       const result = await indexer.update(10, 12)
 
-      expect(result).toEqual(11)
+      expect(result).toBe(11)
       expect(processBlock).toHaveBeenCalledTimes(2)
       expect(processBlock).toHaveBeenCalledWith(block1, [log1])
       expect(processBlock).toHaveBeenCalledWith(block2, [log2])

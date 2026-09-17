@@ -259,10 +259,10 @@ describe(commitTokenChanges.name, () => {
 
       expect(insert).toHaveBeenCalledTimes(2)
       for (const call of insert.mock.calls) {
-        expect(call[0].source).toEqual('ingestion')
-        expect(call[0].userEmail).toEqual(null)
-        expect(call[0].intent).toEqual(null)
-        expect(call[0].ingestionLog).toEqual('step 1\nstep 2\nOutcome: write')
+        expect(call[0].source).toBe('ingestion')
+        expect(call[0].userEmail).toBe(null)
+        expect(call[0].intent).toBe(null)
+        expect(call[0].ingestionLog).toBe('step 1\nstep 2\nOutcome: write')
       }
     })
 
@@ -286,8 +286,8 @@ describe(commitTokenChanges.name, () => {
         { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
-      expect(insert.mock.calls[0]![0].ingestionLog).toEqual(null)
-      expect(insert.mock.calls[0]![0].intent).toEqual(null)
+      expect(insert.mock.calls[0]![0].ingestionLog).toBe(null)
+      expect(insert.mock.calls[0]![0].intent).toBe(null)
     })
   })
 })

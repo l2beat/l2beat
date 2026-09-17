@@ -36,7 +36,7 @@ describe(linkAddresses.name, () => {
     it('should replace known contract address with link', () => {
       const input = `The contract at ${mockContractAddress.toString()} is important.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toBe(
         'The contract at [TestContract](#TestContract) is important.',
       )
     })
@@ -50,7 +50,7 @@ describe(linkAddresses.name, () => {
     it('should replace multiple occurrences of the same address', () => {
       const input = `See ${mockContractAddress.toString()} and also ${mockContractAddress.toString()}.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toBe(
         'See [TestContract](#TestContract) and also [TestContract](#TestContract).',
       )
     })
@@ -80,7 +80,7 @@ describe(linkAddresses.name, () => {
 
       const input = `First: ${mockContractAddress.toString()}, Second: ${secondAddress.toString()}.`
       const output = linkAddresses(input, contractsWithMultiple, undefined)
-      expect(output).toEqual(
+      expect(output).toBe(
         'First: [Contract1](#Contract1), Second: [Contract2](#Contract2).',
       )
     })
@@ -163,7 +163,7 @@ describe(linkAddresses.name, () => {
 
       const input = `See ${mockPermissionAddress.toString()}.`
       const output = linkAddresses(input, undefined, permissionsWithActors)
-      expect(output).toEqual('See [Test Actor](#actor-id).')
+      expect(output).toBe('See [Test Actor](#actor-id).')
     })
   })
 
@@ -206,7 +206,7 @@ describe(linkAddresses.name, () => {
 
       const input = `ETH: ${ethAddress.toString()}, ARB: ${arbAddress.toString()}.`
       const output = linkAddresses(input, contracts, undefined)
-      expect(output).toEqual(
+      expect(output).toBe(
         'ETH: [EthereumContract](#EthereumContract), ARB: [ArbitrumContract](#ArbitrumContract).',
       )
     })

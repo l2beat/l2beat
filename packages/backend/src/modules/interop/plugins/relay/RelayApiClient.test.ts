@@ -150,8 +150,8 @@ describe(RelayApiClient.name, () => {
 
       const result = await createClient(httpClient, logger).getRequests()
 
-      expect(result.requests[0]?.sourceCurrency?.amount).toEqual(undefined)
-      expect(result.requests[0]?.sourceCurrency?.currency?.address).toEqual(
+      expect(result.requests[0]?.sourceCurrency?.amount).toBe(undefined)
+      expect(result.requests[0]?.sourceCurrency?.currency?.address).toBe(
         '0xsource',
       )
       expect(warn).toHaveBeenCalledExactlyOnceWith(
@@ -176,7 +176,7 @@ describe(RelayApiClient.name, () => {
 
       const result = await createClient(httpClient).getRequests()
 
-      expect(result.requests[0]?.status).toEqual(undefined)
+      expect(result.requests[0]?.status).toBe(undefined)
     })
   })
 
@@ -193,7 +193,7 @@ describe(RelayApiClient.name, () => {
       const result = await client.getAllRequests({ limit: 500 })
 
       expect(result.requests.map((r) => r.id)).toEqual(['a', 'b'])
-      expect(result.continuation).toEqual(undefined)
+      expect(result.continuation).toBe(undefined)
     })
 
     it('reports the cursor when the request limit is reached', async () => {
@@ -207,7 +207,7 @@ describe(RelayApiClient.name, () => {
       const result = await client.getAllRequests({ limit: 1 })
 
       expect(result.requests.map((r) => r.id)).toEqual(['a'])
-      expect(result.continuation).toEqual('cursor-1')
+      expect(result.continuation).toBe('cursor-1')
     })
 
     it('always sorts by updatedAt ascending', async () => {

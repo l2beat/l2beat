@@ -10,9 +10,9 @@ import {
 
 describe(normalizeId.name, () => {
   it('properly normalizes ids', () => {
-    expect(normalizeId('ContractA')).toEqual('contractA')
-    expect(normalizeId('tEST.eth-L2BEAT')).toEqual('tEST_eth_L2BEAT')
-    expect(normalizeId('One.two&Three')).toEqual('one_two_Three')
+    expect(normalizeId('ContractA')).toBe('contractA')
+    expect(normalizeId('tEST.eth-L2BEAT')).toBe('tEST_eth_L2BEAT')
+    expect(normalizeId('One.two&Three')).toBe('one_two_Three')
   })
 })
 
@@ -22,16 +22,12 @@ describe(tryCastingToName.name, () => {
       '0x123': 'ContractA',
       '0x456': 'ContractB',
     }
-    expect(tryCastingToName('0x123', addressToNameMap, false)).toEqual(
-      'contractA',
-    )
-    expect(tryCastingToName('0x456', addressToNameMap, false)).toEqual(
-      'contractB',
-    )
-    expect(tryCastingToName('0xlalala', addressToNameMap, false)).toEqual(
+    expect(tryCastingToName('0x123', addressToNameMap, false)).toBe('contractA')
+    expect(tryCastingToName('0x456', addressToNameMap, false)).toBe('contractB')
+    expect(tryCastingToName('0xlalala', addressToNameMap, false)).toBe(
       '0xlalala',
     )
-    expect(tryCastingToName('A&B', addressToNameMap, false)).toEqual('A&B')
+    expect(tryCastingToName('A&B', addressToNameMap, false)).toBe('A&B')
   })
 })
 
@@ -120,7 +116,7 @@ describe(interpolateModelTemplate.name, () => {
 
     const values = contractValuesForInterpolation('ethereum', contract)
     const result = interpolateModelTemplate(modelTemplate, values, {})
-    expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
+    expect(result).toBe('msg1("hello, world!").msg2("hello, world!").')
   })
 
   it('fails for missing values', () => {

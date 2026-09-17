@@ -28,7 +28,7 @@ describe(getSearchBarTokenEntries.name, () => {
       token({ id: 'eth001', symbol: 'ETH', issuer: null, iconUrl: null }),
     ])
 
-    expect(entries[0]?.href).toEqual('/interop/tokens/eth001/eth')
+    expect(entries[0]?.href).toBe('/interop/tokens/eth001/eth')
     expect(entries[0]?.iconUrl).toEqual(TOKEN_PLACEHOLDER_ICON_URL)
   })
 

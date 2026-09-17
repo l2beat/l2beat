@@ -12,9 +12,9 @@ describe('FIND_OUTPUT_SCHEMA', () => {
         }
       }
     }
-    expect(schema.additionalProperties).toEqual(false)
+    expect(schema.additionalProperties).toBe(false)
     expect(schema.required).toEqual(['intent', 'findings'])
-    expect(schema.properties.findings.items.additionalProperties).toEqual(false)
+    expect(schema.properties.findings.items.additionalProperties).toBe(false)
     expect(schema.properties.findings.items.required).toEqual([
       'file',
       'line_start',
@@ -46,8 +46,8 @@ describe('FIND_OUTPUT_SCHEMA', () => {
           },
         ],
       }),
-    ).toEqual(true)
-    expect(FindOutput.isValid({ intent: 'x', findings: [], extra: 1 })).toEqual(
+    ).toBe(true)
+    expect(FindOutput.isValid({ intent: 'x', findings: [], extra: 1 })).toBe(
       false,
     )
   })

@@ -83,7 +83,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('ignores a Tornado Cash self-withdrawal with the zero relayer address', () => {
@@ -99,7 +99,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 })
 

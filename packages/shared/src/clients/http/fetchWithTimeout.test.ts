@@ -55,7 +55,7 @@ describe(fetchWithTimeout.name, () => {
       },
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout })
-        expect(await response.text()).toEqual('x'.repeat(chunks))
+        expect(await response.text()).toBe('x'.repeat(chunks))
       },
     )
   })
@@ -65,7 +65,7 @@ describe(fetchWithTimeout.name, () => {
       (_, res) => setTimeout(() => res.end('ok'), 30),
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout: 0 })
-        expect(await response.text()).toEqual('ok')
+        expect(await response.text()).toBe('ok')
       },
     )
   })
@@ -81,9 +81,9 @@ describe(fetchWithTimeout.name, () => {
         const response = await fetchWithTimeout(url, {
           signal: controller.signal,
         })
-        expect(response.status).toEqual(201)
-        expect(response.headers.get('x-test')).toEqual('yes')
-        expect(await response.text()).toEqual('ok')
+        expect(response.status).toBe(201)
+        expect(response.headers.get('x-test')).toBe('yes')
+        expect(await response.text()).toBe('ok')
       },
     )
   })
@@ -104,7 +104,7 @@ describe(fetchWithTimeout.name, () => {
       (_, res) => res.writeHead(204).end(),
       async (url) => {
         const response = await fetchWithTimeout(url, {})
-        expect(response.status).toEqual(204)
+        expect(response.status).toBe(204)
       },
     )
   })
@@ -123,7 +123,7 @@ describe(fetchWithTimeout.name, () => {
         },
         async (url) => {
           const response = await fetchWithTimeout(url, { timeout: SLACK_MS })
-          expect(response.ok).toEqual(true)
+          expect(response.ok).toBe(true)
           await new Promise((resolve) => setTimeout(resolve, SLACK_MS * 2))
         },
       )

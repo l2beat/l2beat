@@ -304,7 +304,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true for valid response', () => {
@@ -315,7 +315,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 })

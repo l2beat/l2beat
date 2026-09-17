@@ -30,7 +30,7 @@ describe(mostCommonDeployedSymbol.name, () => {
         node('arbitrum:1', 'USDC'),
         missingNode('optimism:1'),
       ]),
-    ).toEqual('USDC')
+    ).toBe('USDC')
   })
 
   it('uses symbol order as a stable tie-breaker', () => {
@@ -39,11 +39,11 @@ describe(mostCommonDeployedSymbol.name, () => {
         node('ethereum:1', 'WETH'),
         node('base:1', 'ETH'),
       ]),
-    ).toEqual('ETH')
+    ).toBe('ETH')
   })
 
   it('preserves the symbol casing', () => {
-    expect(mostCommonDeployedSymbol([node('ethereum:1', 'stETH')])).toEqual(
+    expect(mostCommonDeployedSymbol([node('ethereum:1', 'stETH')])).toBe(
       'stETH',
     )
   })
@@ -59,7 +59,7 @@ describe(mostCommonAbstractTokenId.name, () => {
         node('optimism:1', 'USDC'),
         missingNode('linea:1'),
       ]),
-    ).toEqual('AT-USDC')
+    ).toBe('AT-USDC')
   })
 
   it('uses id order as a stable tie-breaker', () => {
@@ -68,11 +68,11 @@ describe(mostCommonAbstractTokenId.name, () => {
         node('ethereum:1', 'WETH', 'AT-WETH'),
         node('base:1', 'ETH', 'AT-ETH'),
       ]),
-    ).toEqual('AT-ETH')
+    ).toBe('AT-ETH')
   })
 
   it('returns undefined when nothing is assigned', () => {
-    expect(mostCommonAbstractTokenId([node('ethereum:1', 'USDC')])).toEqual(
+    expect(mostCommonAbstractTokenId([node('ethereum:1', 'USDC')])).toBe(
       undefined,
     )
   })
@@ -152,15 +152,15 @@ describe(filterTokensWithoutRelations.name, () => {
 
 describe(getClusterLabelOpacity.name, () => {
   it('keeps labels visible at overview and zoomed-in scales', () => {
-    expect(getClusterLabelOpacity(0.3)).toEqual(0.8)
-    expect(getClusterLabelOpacity(1)).toEqual(0.8)
-    expect(getClusterLabelOpacity(2)).toEqual(0.8)
+    expect(getClusterLabelOpacity(0.3)).toBe(0.8)
+    expect(getClusterLabelOpacity(1)).toBe(0.8)
+    expect(getClusterLabelOpacity(2)).toBe(0.8)
   })
 
   it('fades labels away at extreme zoom-out', () => {
     // The exact fade thresholds are tuning knobs; the contract is only that
     // labels are gone once the zoom-out is extreme enough.
-    expect(getClusterLabelOpacity(0.01)).toEqual(0)
+    expect(getClusterLabelOpacity(0.01)).toBe(0)
   })
 
   it('rejects invalid scales', () => {
@@ -172,9 +172,9 @@ describe(getClusterLabelOpacity.name, () => {
 
 describe(getNodeVisualScale.name, () => {
   it('caps node growth above 1.2x zoom', () => {
-    expect(getNodeVisualScale(0.5)).toEqual(1)
-    expect(getNodeVisualScale(1.2)).toEqual(1)
-    expect(getNodeVisualScale(2.4)).toEqual(0.5)
+    expect(getNodeVisualScale(0.5)).toBe(1)
+    expect(getNodeVisualScale(1.2)).toBe(1)
+    expect(getNodeVisualScale(2.4)).toBe(0.5)
   })
 })
 
@@ -184,12 +184,12 @@ describe(relationIsDirectional.name, () => {
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
       ),
-    ).toEqual(true)
+    ).toBe(true)
     expect(
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
       ),
-    ).toEqual(false)
+    ).toBe(false)
     // Drawing an arrow here would mean guessing which token is the original.
     expect(
       relationIsDirectional(
@@ -203,7 +203,7 @@ describe(relationIsDirectional.name, () => {
           null,
         ),
       ),
-    ).toEqual(false)
+    ).toBe(false)
   })
 })
 
@@ -255,10 +255,10 @@ describe(relationRoleLabel.name, () => {
       'B',
     )
 
-    expect(
-      relationRoleLabel(lockAndMint, tokenId('ethereum', '0xaaa')),
-    ).toEqual('Locked')
-    expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toEqual(
+    expect(relationRoleLabel(lockAndMint, tokenId('ethereum', '0xaaa'))).toBe(
+      'Locked',
+    )
+    expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toBe(
       'Minted',
     )
     // A burn-and-mint pair is symmetric, so each endpoint's role is Minted;
@@ -268,7 +268,7 @@ describe(relationRoleLabel.name, () => {
         relation('base', '0xbbb', 'ethereum', '0xaaa', 'burn', 'burnAndMint'),
         tokenId('base', '0xbbb'),
       ),
-    ).toEqual('Minted')
+    ).toBe('Minted')
     expect(
       relationRoleLabel(
         relation(
@@ -282,7 +282,7 @@ describe(relationRoleLabel.name, () => {
         ),
         tokenId('base', '0xbbb'),
       ),
-    ).toEqual('Unknown role')
+    ).toBe('Unknown role')
   })
 })
 
@@ -318,13 +318,13 @@ describe(getExistingRelationGraphSelection.name, () => {
         type: 'node',
         id: 'missing:node',
       }),
-    ).toEqual(undefined)
+    ).toBe(undefined)
     expect(
       getExistingRelationGraphSelection(graph, {
         type: 'relation',
         id: 'missing:relation',
       }),
-    ).toEqual(undefined)
+    ).toBe(undefined)
   })
 
   it('clears a relation selection that was deleted from the graph view', () => {
@@ -344,7 +344,7 @@ describe(getExistingRelationGraphSelection.name, () => {
         selection,
         new Set([relationId(deletedRelation)]),
       ),
-    ).toEqual(undefined)
+    ).toBe(undefined)
   })
 })
 

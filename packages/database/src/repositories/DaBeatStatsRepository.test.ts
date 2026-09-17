@@ -22,7 +22,7 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
     it('returns undefined for nonexistent records', async () => {
       await repository.upsert(saved('A', 1n, 2n, null))
       const records = await repository.findById('B')
-      expect(records).toEqual(undefined)
+      expect(records).toBe(undefined)
     })
   })
 

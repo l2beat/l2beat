@@ -60,7 +60,7 @@ describe(StarkexClient.name, () => {
         message: 'error',
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true otherwise', async () => {
@@ -69,7 +69,7 @@ describe(StarkexClient.name, () => {
         count: 1,
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 
@@ -142,7 +142,7 @@ describe(StarkexClient.name, () => {
         http: httpClient,
       })
 
-      expect(await starkexClient.getDailyCount(1, 'dydx')).toEqual(2137)
+      expect(await starkexClient.getDailyCount(1, 'dydx')).toBe(2137)
     })
   })
 })

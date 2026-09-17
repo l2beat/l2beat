@@ -44,7 +44,7 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer()
 
       expect(syncer.state).toBeInstanceOf(FollowingState)
-      expect(syncer.state.type).toEqual('blockProcessor')
+      expect(syncer.state.type).toBe('blockProcessor')
     })
   })
 
@@ -102,7 +102,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(7), [])
 
-      expect(syncer.latestBlockNumber).toEqual(7n)
+      expect(syncer.latestBlockNumber).toBe(7n)
       expect(processNewestBlock).toHaveBeenCalled()
     })
 
@@ -113,7 +113,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(9), [])
 
-      expect(syncer.latestBlockNumber).toEqual(9n)
+      expect(syncer.latestBlockNumber).toBe(9n)
       expect(run).not.toHaveBeenCalled()
     })
 
@@ -148,8 +148,8 @@ describe(InteropEventSyncer.name, () => {
 
       await new Promise<void>((resolve) => setImmediate(resolve))
 
-      expect(finished).toEqual(true)
-      expect(syncer.latestBlockNumber).toEqual(7n)
+      expect(finished).toBe(true)
+      expect(syncer.latestBlockNumber).toBe(7n)
 
       pending.resolve(timeLoopState)
       await Promise.all([runPromise, blockPromise])
@@ -244,7 +244,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.run()
 
-      expect(setLastError.mock.calls.length).toEqual(1)
+      expect(setLastError.mock.calls.length).toBe(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
@@ -264,7 +264,7 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(2), [])
       await syncer.processNewestBlock(makeBlock(3), [])
 
-      expect(setLastError.mock.calls.length).toEqual(1)
+      expect(setLastError.mock.calls.length).toBe(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
 
@@ -286,11 +286,11 @@ describe(InteropEventSyncer.name, () => {
         throw new Error('boom')
       })
       await syncer.processNewestBlock(makeBlock(2), [])
-      expect(syncer.hasError).toEqual(true)
+      expect(syncer.hasError).toBe(true)
       await syncer.processNewestBlock(makeBlock(3), [])
       await syncer.processNewestBlock(makeBlock(4), [])
 
-      expect(syncer.hasError).toEqual(false)
+      expect(syncer.hasError).toBe(false)
       expect(setLastError.mock.calls.map((c) => c[2])).toEqual([
         null,
         expect.stringContaining('boom'),
@@ -320,7 +320,7 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(2), [])
 
       expect(syncer.state as SyncerState).toEqual(timeLoopState)
-      expect(setLastError.mock.calls.length).toEqual(1)
+      expect(setLastError.mock.calls.length).toBe(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
@@ -372,7 +372,7 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(1), [])
       await syncer.run()
 
-      expect(setLastError.mock.calls.length).toEqual(1)
+      expect(setLastError.mock.calls.length).toBe(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
   })
@@ -431,7 +431,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureLog({} as unknown as LogToCapture)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -537,7 +537,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureTx({} as unknown as TxToCapture)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
       expect(getCreatorEvents).not.toHaveBeenCalled()
     })
   })
@@ -663,7 +663,7 @@ describe(InteropEventSyncer.name, () => {
         [fulfilledCreatorEvent],
       )
 
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toBe(1)
       expect(saveNewEvents).toHaveBeenCalled()
       expect(updateDerivedFulfilled).toHaveBeenCalledWith([
         fulfilledCreatorEvent,
@@ -703,13 +703,13 @@ describe(InteropEventSyncer.name, () => {
 
       // a stored error may exist after start-up, so the first save clears it
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toBe(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
 
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
 
-      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(syncer.runInTransactionCalls).toBe(1)
       expect(saveNewEvents).toHaveBeenCalledTimes(1)
       expect(setLastError).toHaveBeenCalledTimes(1)
       expect(upsert).toHaveBeenCalledTimes(3)
@@ -719,13 +719,13 @@ describe(InteropEventSyncer.name, () => {
         [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
       )
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toBe(2)
 
       // so does a stored error
       await syncer.saveChainSyncError(new Error('boom'))
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(3)
-      expect(setLastError.mock.calls.at(-1)?.[2]).toEqual(null)
+      expect(syncer.runInTransactionCalls).toBe(3)
+      expect(setLastError.mock.calls.at(-1)?.[2]).toBe(null)
     })
 
     it('still considers the error stored when the transaction rolls back after the clear', async () => {
@@ -753,13 +753,13 @@ describe(InteropEventSyncer.name, () => {
 
       // the clear was rolled back with the transaction, so it is written again
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toBe(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
-      expect(setLastError.mock.calls[1][2]).toEqual(null)
+      expect(setLastError.mock.calls[1][2]).toBe(null)
 
       // and only now is it considered cleared
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(syncer.runInTransactionCalls).toBe(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
     })
   })
@@ -838,7 +838,7 @@ describe(InteropEventSyncer.name, () => {
       }
       expect(
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
-      ).toEqual(true)
+      ).toBe(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(
@@ -847,8 +847,8 @@ describe(InteropEventSyncer.name, () => {
         toEventSelector(extraSignature),
         toEventSelector(extraSignatureTwo),
       ])
-      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
-      expect(query.isEmpty()).toEqual(false)
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toBe(true)
+      expect(query.isEmpty()).toBe(false)
     })
 
     it('includes topics without address filter when addresses are wildcard', () => {
@@ -868,9 +868,9 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
-      expect(query.addresses).toEqual('*')
+      expect(query.addresses).toBe('*')
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
-      expect(query.isEmpty()).toEqual(false)
+      expect(query.isEmpty()).toBe(false)
     })
 
     it('is empty when no addresses match the chain', () => {
@@ -897,10 +897,10 @@ describe(InteropEventSyncer.name, () => {
       if (query.addresses === '*') {
         throw new Error('Expected address filter to be a set')
       }
-      expect(query.isEmpty()).toEqual(true)
+      expect(query.isEmpty()).toBe(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
-      expect(query.topicToTxEvents.size).toEqual(0)
+      expect(query.topicToTxEvents.size).toBe(0)
     })
 
     it('throws when addresses list is empty', () => {

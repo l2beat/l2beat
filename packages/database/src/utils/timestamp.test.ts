@@ -12,12 +12,12 @@ describe('timestamp utilities', () => {
 
     it('returns null when input is null', () => {
       const result = fromTimestamp(null)
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
     })
 
     it('returns undefined when input is undefined', () => {
       const result = fromTimestamp(undefined)
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('handles epoch timestamp', () => {
@@ -42,7 +42,7 @@ describe('timestamp utilities', () => {
 
     it('returns null when input is null', () => {
       const result = toTimestamp(null)
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
     })
 
     it('handles epoch date', () => {
@@ -76,7 +76,7 @@ describe('timestamp utilities', () => {
     it('handles null through round-trip', () => {
       const date = fromTimestamp(null)
       const result = toTimestamp(date)
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
     })
   })
 })

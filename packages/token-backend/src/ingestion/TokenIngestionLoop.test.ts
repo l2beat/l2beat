@@ -472,7 +472,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markConflict.mock.calls[0][1]).toEqual(
+      expect(markConflict.mock.calls[0][1]).toBe(
         'Non-swapping transfers point to multiple abstract tokens: FIRST1:FOO, SECOND:BAR.',
       )
     })
@@ -608,7 +608,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markError.mock.calls[0][1]).toEqual(
+      expect(markError.mock.calls[0][1]).toBe(
         'Missing required deployed-token facts: deploymentTimestamp. RPC lookup returned no value.',
       )
     })
@@ -1046,7 +1046,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markConflict.mock.calls[0][1]).toEqual(
+      expect(markConflict.mock.calls[0][1]).toBe(
         'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
       )
       expect(abstractInsert).toHaveBeenCalledTimes(0)

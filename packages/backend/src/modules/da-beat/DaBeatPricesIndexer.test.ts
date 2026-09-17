@@ -71,7 +71,7 @@ describe(DaBeatPricesIndexer.name, () => {
         ],
       )
 
-      expect(result).toEqual(200)
+      expect(result).toBe(200)
     })
 
     it('returns early when no prices found', async () => {
@@ -102,7 +102,7 @@ describe(DaBeatPricesIndexer.name, () => {
       ])
 
       expect(currentPriceRepository.upsertMany).not.toHaveBeenCalled()
-      expect(result).toEqual(200)
+      expect(result).toBe(200)
     })
 
     it('handles price provider errors', async () => {

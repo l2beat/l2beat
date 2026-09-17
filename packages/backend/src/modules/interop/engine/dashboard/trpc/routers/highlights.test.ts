@@ -388,7 +388,7 @@ describe(createHighlightsRouter.name, () => {
       increase: 30,
       increasePercent: 150,
     })
-    expect(result.largestTvsIncreaseByChain).toEqual(null)
+    expect(result.largestTvsIncreaseByChain).toBe(null)
   })
 
   it('uses configured interop projects when selecting UOPS timestamp', async () => {
@@ -910,9 +910,9 @@ describe(createHighlightsRouter.name, () => {
 
     expect(getTransferByTimestamp).not.toHaveBeenCalled()
     expect(getTokenByTimestamp).not.toHaveBeenCalled()
-    expect(result.largestVolumeIncreaseByChain).toEqual(null)
-    expect(result.largestVolumeIncreaseByToken).toEqual(null)
-    expect(result.largestVolumeIncreaseByProtocol).toEqual(null)
+    expect(result.largestVolumeIncreaseByChain).toBe(null)
+    expect(result.largestVolumeIncreaseByToken).toBe(null)
+    expect(result.largestVolumeIncreaseByProtocol).toBe(null)
   })
 })
 

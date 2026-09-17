@@ -95,7 +95,7 @@ describe(SvmBlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toBe(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
     })
 
@@ -116,7 +116,7 @@ describe(SvmBlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toBe(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestSlotNumber).toHaveBeenCalledTimes(1)
     })

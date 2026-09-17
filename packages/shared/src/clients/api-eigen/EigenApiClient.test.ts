@@ -68,8 +68,8 @@ describe(EigenApiClient.name, () => {
         customer_id: 'project1',
         total_size_mb: 100.5,
       })
-      expect(result[1].customer_id).toEqual('project2')
-      expect(result[2].customer_id).toEqual('project1')
+      expect(result[1].customer_id).toBe('project2')
+      expect(result[2].customer_id).toBe('project1')
 
       expect(http.fetchRaw).toHaveBeenCalledExactlyOnceWith(
         'https://project.test.com/v2/stats/2022-01-01.json',

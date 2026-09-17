@@ -15,12 +15,12 @@ describe(SyncOptimizer.name, () => {
 
     it('returns true when timestamp is already the aligned sync target', () => {
       const ts = syncOptimizer.getTimestampToSync(LAST_HOUR - 1 * UnixTime.HOUR)
-      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(true)
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toBe(true)
     })
 
     it('returns false when timestamp is not the aligned sync target', () => {
       const ts = LAST_HOUR - 1 * UnixTime.HOUR + 123
-      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(false)
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toBe(false)
     })
   })
 

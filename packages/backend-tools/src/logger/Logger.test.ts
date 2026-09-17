@@ -22,9 +22,9 @@ describe(Logger.name, () => {
   describe('configuration', () => {
     it('can be reconfigured', () => {
       let logger = new Logger({ level: 'INFO' })
-      expect(logger.options.level).toEqual('INFO')
+      expect(logger.options.level).toBe('INFO')
       logger = logger.configure({ level: 'ERROR' })
-      expect(logger.options.level).toEqual('ERROR')
+      expect(logger.options.level).toBe('ERROR')
     })
 
     it('supports tags', () => {

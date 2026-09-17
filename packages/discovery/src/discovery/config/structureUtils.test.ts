@@ -29,7 +29,7 @@ describe(makeEntryStructureConfig.name, () => {
     it('keeps a template wildcard when the override sets no ignoreRelatives', () => {
       const config = mergeTemplateIntoOverride({}, { ignoreRelatives: true })
 
-      expect(config.ignoreRelatives).toEqual(true)
+      expect(config.ignoreRelatives).toBe(true)
     })
 
     it('keeps a template wildcard over an override field list', () => {
@@ -38,7 +38,7 @@ describe(makeEntryStructureConfig.name, () => {
         { ignoreRelatives: true },
       )
 
-      expect(config.ignoreRelatives).toEqual(true)
+      expect(config.ignoreRelatives).toBe(true)
     })
 
     it('keeps an override wildcard over a template field list', () => {
@@ -47,7 +47,7 @@ describe(makeEntryStructureConfig.name, () => {
         { ignoreRelatives: ['getTransmitters'] },
       )
 
-      expect(config.ignoreRelatives).toEqual(true)
+      expect(config.ignoreRelatives).toBe(true)
     })
 
     it('keeps the wildcard when both sides set it', () => {
@@ -56,7 +56,7 @@ describe(makeEntryStructureConfig.name, () => {
         { ignoreRelatives: true },
       )
 
-      expect(config.ignoreRelatives).toEqual(true)
+      expect(config.ignoreRelatives).toBe(true)
     })
 
     it('takes a template field list when the override sets no ignoreRelatives', () => {
@@ -88,8 +88,8 @@ describe(makeEntryStructureConfig.name, () => {
         },
       )
 
-      expect(config.ignoreRelatives).toEqual(true)
-      expect(config.ignoreDiscovery).toEqual(true)
+      expect(config.ignoreRelatives).toBe(true)
+      expect(config.ignoreDiscovery).toBe(true)
       expect(config.ignoreMethods).toEqual(['fromOverride'])
       expect(config.address).toEqual(ADDRESS)
     })

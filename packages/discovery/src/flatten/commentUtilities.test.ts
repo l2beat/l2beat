@@ -20,7 +20,7 @@ describe(findLeadingCommentStart.name, () => {
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toBe(0)
   })
 
   it('finds multi-line NatSpec comment start', () => {
@@ -29,7 +29,7 @@ contract Foo {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toBe(0)
   })
 
   it('finds block comment start', () => {
@@ -39,7 +39,7 @@ contract Foo {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toBe(0)
   })
 
   it('does not include trailing comment from previous code', () => {
@@ -57,7 +57,7 @@ contract B {}`
 contract Foo {}`
     const start = source.indexOf('contract')
     const result = findLeadingCommentStart(source, start)
-    expect(result).toEqual(0)
+    expect(result).toBe(0)
   })
 
   it('stops at code line before comments', () => {

@@ -48,8 +48,8 @@ describe('squarify', () => {
       for (let j = i + 1; j < tiles.length; j++) {
         const a = tiles[i]
         const b = tiles[j]
-        expect(a).not.toEqual(undefined)
-        expect(b).not.toEqual(undefined)
+        expect(a).not.toBe(undefined)
+        expect(b).not.toBe(undefined)
         if (a === undefined || b === undefined) {
           continue
         }

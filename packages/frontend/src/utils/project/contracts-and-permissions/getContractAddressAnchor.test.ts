@@ -55,7 +55,7 @@ describe(createAddressAnchors.name, () => {
     expect(getAddressAnchor(contractAddress)).toEqual(
       getContractAddressAnchor('contracts', contractAddress),
     )
-    expect(getAddressAnchor(contractAddress)).toEqual(undefined)
+    expect(getAddressAnchor(contractAddress)).toBe(undefined)
     expect(getAddressAnchor(adminAddress)).toEqual(
       getContractAddressAnchor('contracts', adminAddress),
     )
@@ -184,8 +184,8 @@ describe(createAddressAnchors.name, () => {
         target: undefined,
       },
     ])
-    expect(contract.addresses[1]?.anchorId).toEqual(undefined)
-    expect(contract.admins[0]?.anchorId).toEqual(undefined)
+    expect(contract.addresses[1]?.anchorId).toBe(undefined)
+    expect(contract.admins[0]?.anchorId).toBe(undefined)
   })
 })
 

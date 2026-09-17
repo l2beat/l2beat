@@ -100,7 +100,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           },
         )
 
-        expect(updatedRows).toEqual(1)
+        expect(updatedRows).toBe(1)
 
         const stored = await repository.findByChainAndAddress(record)
         expect(stored).toEqual({
@@ -648,7 +648,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         toPrimaryKey(first),
         toPrimaryKey(third),
       ])
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toEqual([second])

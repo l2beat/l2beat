@@ -19,8 +19,8 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         timestamp: UnixTime(100),
         status: 'promoted',
       })
-      expect(inserted).toEqual(true)
-      expect((await repository.getByTimestamp(UnixTime(100)))?.status).toEqual(
+      expect(inserted).toBe(true)
+      expect((await repository.getByTimestamp(UnixTime(100)))?.status).toBe(
         'promoted',
       )
 
@@ -29,11 +29,11 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         status: 'blocked',
         reasons: [{ rule: 'maxLaneVolume' }],
       })
-      expect(updated).toEqual(true)
+      expect(updated).toBe(true)
 
       const row = await repository.getByTimestamp(UnixTime(100))
-      expect(row?.status).toEqual('blocked')
-      expect(row?.promotedBy).toEqual('auto')
+      expect(row?.status).toBe('blocked')
+      expect(row?.promotedBy).toBe('auto')
       expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
     })
 
@@ -50,10 +50,10 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
       })
 
       // the write was a no-op — the caller must not act on a verdict it didn't record
-      expect(applied).toEqual(false)
+      expect(applied).toBe(false)
       const row = await repository.getByTimestamp(UnixTime(100))
-      expect(row?.status).toEqual('promoted')
-      expect(row?.promotedBy).toEqual('ops@l2beat.com')
+      expect(row?.status).toBe('promoted')
+      expect(row?.promotedBy).toBe('ops@l2beat.com')
     })
   })
 
@@ -72,10 +72,10 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           'ops@l2beat.com',
         )
 
-        expect(applied).toEqual(true)
+        expect(applied).toBe(true)
         const row = await repository.getByTimestamp(UnixTime(100))
-        expect(row?.status).toEqual('promoted')
-        expect(row?.promotedBy).toEqual('ops@l2beat.com')
+        expect(row?.status).toBe('promoted')
+        expect(row?.promotedBy).toBe('ops@l2beat.com')
         // reasons kept as the audit trail of why it was blocked
         expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
       })
@@ -92,10 +92,10 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         )
 
         // stays an auto verdict so the engine can still block it if the gate fails
-        expect(applied).toEqual(false)
+        expect(applied).toBe(false)
         const row = await repository.getByTimestamp(UnixTime(100))
-        expect(row?.status).toEqual('promoted')
-        expect(row?.promotedBy).toEqual('auto')
+        expect(row?.status).toBe('promoted')
+        expect(row?.promotedBy).toBe('auto')
       })
 
       it('is a no-op when no status row exists (returns false)', async () => {
@@ -104,10 +104,8 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           'ops@l2beat.com',
         )
 
-        expect(applied).toEqual(false)
-        expect(await repository.getByTimestamp(UnixTime(100))).toEqual(
-          undefined,
-        )
+        expect(applied).toBe(false)
+        expect(await repository.getByTimestamp(UnixTime(100))).toBe(undefined)
       })
     },
   )
@@ -140,7 +138,7 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
           status: 'blocked',
         })
 
-        expect(await repository.getLatestPromotedTimestamp()).toEqual(undefined)
+        expect(await repository.getLatestPromotedTimestamp()).toBe(undefined)
       })
     },
   )
@@ -170,9 +168,9 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         const day = UnixTime(UnixTime.DAY + 100)
         await repository.upsertAuto({ timestamp: day, status: 'blocked' })
 
-        expect(
-          await repository.getEarliestPromotedTimestampForDay(day),
-        ).toEqual(undefined)
+        expect(await repository.getEarliestPromotedTimestampForDay(day)).toBe(
+          undefined,
+        )
       })
     },
   )
@@ -200,14 +198,12 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
 
         const deleted = await repository.deleteOrphaned()
 
-        expect(deleted).toEqual(1)
-        expect(await repository.getByTimestamp(UnixTime(100))).not.toEqual(
+        expect(deleted).toBe(1)
+        expect(await repository.getByTimestamp(UnixTime(100))).not.toBe(
           undefined,
         )
-        expect(await repository.getByTimestamp(UnixTime(200))).toEqual(
-          undefined,
-        )
-        expect(await repository.getByTimestamp(UnixTime(300))).not.toEqual(
+        expect(await repository.getByTimestamp(UnixTime(200))).toBe(undefined)
+        expect(await repository.getByTimestamp(UnixTime(300))).not.toBe(
           undefined,
         )
       })

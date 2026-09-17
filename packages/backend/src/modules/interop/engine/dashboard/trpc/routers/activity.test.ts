@@ -46,13 +46,13 @@ describe(createActivityRouter.name, () => {
     expect(getDailySeries).toHaveBeenCalledTimes(1)
     expect(result.aggregatedItems).toHaveLength(1)
     const row = result.aggregatedItems[0]
-    expect(row?.id).toEqual('across')
-    expect(row?.bridgeType).toEqual('nonMinting')
-    expect(row?.srcChain).toEqual('ethereum')
-    expect(row?.dstChain).toEqual('arbitrum')
+    expect(row?.id).toBe('across')
+    expect(row?.bridgeType).toBe('nonMinting')
+    expect(row?.srcChain).toBe('ethereum')
+    expect(row?.dstChain).toBe('arbitrum')
     expect(row?.interpretation.length).toBeGreaterThan(0)
-    expect(result.aggregateSideMismatchDiffPercent).toEqual(50)
-    expect(result.aggregateSideMismatchMinVolumeUsd).toEqual(2_000_000)
+    expect(result.aggregateSideMismatchDiffPercent).toBe(50)
+    expect(result.aggregateSideMismatchMinVolumeUsd).toBe(2_000_000)
   })
 
   it('returns aggregate details for a selected route', async () => {
@@ -98,9 +98,9 @@ describe(createActivityRouter.name, () => {
       'ethereum',
       'arbitrum',
     )
-    expect(result.id).toEqual('stargate')
-    expect(result.bridgeType).toEqual('nonMinting')
-    expect(result.items[0]?.avgDuration).toEqual(60)
-    expect(result.items[0]?.day).toEqual('2023-11-14')
+    expect(result.id).toBe('stargate')
+    expect(result.bridgeType).toBe('nonMinting')
+    expect(result.items[0]?.avgDuration).toBe(60)
+    expect(result.items[0]?.day).toBe('2023-11-14')
   })
 })

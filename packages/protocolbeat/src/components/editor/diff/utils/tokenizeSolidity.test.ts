@@ -84,9 +84,9 @@ describe('tokenizeSolidity', () => {
   it('preserves whitespace inside strings verbatim', () => {
     const a = tokenizeSolidity('"a   b"')
     const b = tokenizeSolidity('"a b"')
-    expect(a[0]?.content).toEqual('"a   b"')
-    expect(b[0]?.content).toEqual('"a b"')
-    expect(a[0]?.content === b[0]?.content).toEqual(false)
+    expect(a[0]?.content).toBe('"a   b"')
+    expect(b[0]?.content).toBe('"a b"')
+    expect(a[0]?.content === b[0]?.content).toBe(false)
   })
 
   it('treats hex"..." as identifier followed by string', () => {
@@ -116,17 +116,17 @@ describe('tokenizeSolidity', () => {
 
   it('unterminated block comment extends to EOF', () => {
     const tokens = tokenizeSolidity('/* never ends\nstill going')
-    expect(tokens.length).toEqual(1)
-    expect(tokens[0]?.type).toEqual('comment')
-    expect(tokens[0]?.startLine).toEqual(1)
-    expect(tokens[0]?.endLine).toEqual(2)
+    expect(tokens.length).toBe(1)
+    expect(tokens[0]?.type).toBe('comment')
+    expect(tokens[0]?.startLine).toBe(1)
+    expect(tokens[0]?.endLine).toBe(2)
   })
 
   it('unterminated string extends to EOF', () => {
     const tokens = tokenizeSolidity('"never ends')
-    expect(tokens.length).toEqual(1)
-    expect(tokens[0]?.type).toEqual('structural')
-    expect(tokens[0]?.content).toEqual('"never ends')
+    expect(tokens.length).toBe(1)
+    expect(tokens[0]?.type).toBe('structural')
+    expect(tokens[0]?.content).toBe('"never ends')
   })
 
   it('splits numeric literal with dot into separate tokens', () => {

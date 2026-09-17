@@ -333,7 +333,7 @@ describe('discovery config.jsonc', () => {
                 value.handler?.type === 'accessControl' &&
                 value.handler.pickRoleMembers === undefined
               ) {
-                expect(key).toEqual('accessControl')
+                expect(key).toBe('accessControl')
               }
             }
           }

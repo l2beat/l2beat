@@ -31,7 +31,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
 
     it('proveBatches', () => {
@@ -45,7 +45,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
 
     it('executeBatches', () => {
@@ -59,7 +59,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
   })
 
@@ -75,7 +75,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
   })
 
@@ -91,7 +91,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
 
     it('executeBatches with incorrect chainAddress', () => {
@@ -105,7 +105,7 @@ describe(isFistParameterMatching.name, () => {
         mockSharedBridgeConfig,
       )
 
-      expect(result).toEqual(false)
+      expect(result).toBe(false)
     })
   })
 })

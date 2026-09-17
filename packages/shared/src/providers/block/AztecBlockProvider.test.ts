@@ -69,7 +69,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000, 800)
 
-      expect(result).toEqual(300)
+      expect(result).toBe(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client.getBlockHeaders).toHaveBeenCalled()
     })
@@ -94,7 +94,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000)
 
-      expect(result).toEqual(300)
+      expect(result).toBe(300)
       expect(failingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(workingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })

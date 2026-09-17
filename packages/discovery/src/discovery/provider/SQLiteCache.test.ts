@@ -50,7 +50,7 @@ describe('SQLiteCache', () => {
 
       assert(result)
 
-      expect(resultRaw.length).toEqual(1)
+      expect(resultRaw.length).toBe(1)
       expect(result.key).toEqual(key)
       expect(result.value).toEqual(newValue)
     }))

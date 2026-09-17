@@ -17,7 +17,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
   describe(PrivacyRelayerActivityRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const initial = activity(1, START)
-      expect(await repository.upsertMany([initial])).toEqual(1)
+      expect(await repository.upsertMany([initial])).toBe(1)
 
       const updated = {
         ...initial,
@@ -25,13 +25,13 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
           '0x4444444444444444444444444444444444444444',
         ),
       }
-      expect(await repository.upsertMany([updated])).toEqual(1)
+      expect(await repository.upsertMany([updated])).toBe(1)
 
       expect(await repository.getAll()).toEqual([updated])
     })
 
     it('handles an empty array', async () => {
-      expect(await repository.upsertMany([])).toEqual(0)
+      expect(await repository.upsertMany([])).toBe(0)
     })
   })
 
@@ -57,7 +57,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
 
         expect(
           await repository.getActiveRelayerCount('project', START, to),
-        ).toEqual(2)
+        ).toBe(2)
       })
     },
   )
@@ -82,7 +82,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
             UnixTime(START + 1),
             UnixTime(START + 2),
           ),
-        ).toEqual(2)
+        ).toBe(2)
 
         const actual = await repository.getAll()
         expect(actual).toHaveLength(2)
@@ -105,12 +105,12 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
         ]
         await repository.upsertMany(records)
 
-        expect(await repository.deleteByConfigIds([configA])).toEqual(1)
+        expect(await repository.deleteByConfigIds([configA])).toBe(1)
         expect(await repository.getAll()).toEqual([records[1]!])
       })
 
       it('handles an empty array', async () => {
-        expect(await repository.deleteByConfigIds([])).toEqual(0)
+        expect(await repository.deleteByConfigIds([])).toBe(0)
       })
     },
   )

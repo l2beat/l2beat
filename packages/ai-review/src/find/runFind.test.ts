@@ -41,15 +41,15 @@ describe(runFind.name, () => {
       StubEngine.withOutput({ intent: 'does x', findings }),
       input,
     )
-    expect(ReviewOutput.isValid(review)).toEqual(true)
+    expect(ReviewOutput.isValid(review)).toBe(true)
     expect(review.findings).toHaveLength(5)
     expect(review.findings.map((f) => f.claim).slice(0, 3)).toEqual([
       'c2',
       'c3',
       'c1',
     ])
-    expect(review.intent).toEqual('does x')
-    expect(review.aborted).toEqual(undefined)
+    expect(review.intent).toBe('does x')
+    expect(review.aborted).toBe(undefined)
   })
 
   it('marks the review aborted when the engine fails', async () => {
@@ -59,18 +59,16 @@ describe(runFind.name, () => {
         Promise.resolve({ ok: false, reason: 'timeout', detail: '9 > 1' }),
     }
     const { review } = await runFind(failing, input)
-    expect(review.aborted).toEqual('timeout: 9 > 1')
+    expect(review.aborted).toBe('timeout: 9 > 1')
     expect(review.findings).toEqual([])
-    expect(ReviewOutput.isValid(review)).toEqual(true)
+    expect(ReviewOutput.isValid(review)).toBe(true)
   })
 
   it('passes a failing stub engine through as an aborted review', async () => {
     const { review, usage } = await runFind(StubEngine.unavailable(), input)
-    expect(review.aborted?.startsWith('engine-error: stub engine')).toEqual(
-      true,
-    )
+    expect(review.aborted?.startsWith('engine-error: stub engine')).toBe(true)
     expect(review.findings).toEqual([])
-    expect(usage).toEqual(undefined)
+    expect(usage).toBe(undefined)
   })
 
   it('marks the review aborted on schema-invalid engine output', async () => {
@@ -79,7 +77,7 @@ describe(runFind.name, () => {
       input,
     )
     expect(review.aborted).toBeTypeOf('string')
-    expect(review.aborted?.startsWith('invalid-output')).toEqual(true)
+    expect(review.aborted?.startsWith('invalid-output')).toBe(true)
   })
 
   it('normalizes reversed and non-positive line ranges', async () => {

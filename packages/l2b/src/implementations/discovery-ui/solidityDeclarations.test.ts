@@ -38,15 +38,15 @@ interface IVault {
   it('keeps the license/pragma/imports preamble as an unnamed segment', () => {
     const segments = splitSolidityDeclarations(SOURCE)
     const preamble = segments[0]
-    expect(preamble?.name).toEqual(null)
-    expect(preamble?.content.includes('SPDX-License-Identifier')).toEqual(true)
-    expect(preamble?.content.includes('pragma solidity')).toEqual(true)
+    expect(preamble?.name).toBe(null)
+    expect(preamble?.content.includes('SPDX-License-Identifier')).toBe(true)
+    expect(preamble?.content.includes('pragma solidity')).toBe(true)
   })
 
   it('attaches leading NatSpec to its declaration', () => {
     const segments = splitSolidityDeclarations(SOURCE)
     const vault = segments.find((s) => s.name === 'Vault')
-    expect(vault?.content.includes('/// @notice The vault')).toEqual(true)
+    expect(vault?.content.includes('/// @notice The vault')).toBe(true)
   })
 
   it('returns the whole input as one unnamed segment when empty of declarations', () => {
@@ -69,8 +69,8 @@ contract Counter {
     // The whole source is still recoverable byte-for-byte...
     expect(segments.map((s) => s.content).join('')).toEqual(source)
     // ...the `using` line is folded into an unnamed segment...
-    expect(segments.some((s) => s.name === 'add')).toEqual(false)
+    expect(segments.some((s) => s.name === 'add')).toBe(false)
     // ...and the following contract is still split out normally.
-    expect(segments.some((s) => s.name === 'Counter')).toEqual(true)
+    expect(segments.some((s) => s.name === 'Counter')).toBe(true)
   })
 })

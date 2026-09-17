@@ -18,12 +18,12 @@ describe(scopeRecordsToToken.name, () => {
 
     if (!result) throw new Error('Expected scoped record')
 
-    expect(result.volume).toEqual(100)
-    expect(result.transferCount).toEqual(2)
-    expect(result.identifiedCount).toEqual(2)
+    expect(result.volume).toBe(100)
+    expect(result.transferCount).toBe(2)
+    expect(result.identifiedCount).toBe(2)
     expect(result.tokens.map((token) => token.abstractTokenId)).toEqual(['eth'])
-    expect('srcValueUsd' in result).toEqual(false)
-    expect('dstValueUsd' in result).toEqual(false)
+    expect('srcValueUsd' in result).toBe(false)
+    expect('dstValueUsd' in result).toBe(false)
   })
 
   it('asserts when one aggregate has duplicate token rows', () => {

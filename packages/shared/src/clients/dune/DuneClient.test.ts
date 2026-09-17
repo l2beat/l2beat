@@ -76,7 +76,7 @@ describe(DuneClient.name, () => {
         },
       )
       expect(result.execution_id).toEqual(executionId)
-      expect(result.state).toEqual('QUERY_STATE_COMPLETED')
+      expect(result.state).toBe('QUERY_STATE_COMPLETED')
     })
   })
 

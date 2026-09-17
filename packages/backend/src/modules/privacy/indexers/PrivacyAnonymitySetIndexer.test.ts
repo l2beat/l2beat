@@ -300,7 +300,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
           extractor: 'fixedAmount',
           params: { amount: '1000000000000000000' },
         }),
-      ).toEqual('c33ffb1b7442')
+      ).toBe('c33ffb1b7442')
     })
   })
 })

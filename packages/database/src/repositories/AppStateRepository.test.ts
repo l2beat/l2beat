@@ -15,7 +15,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -78,7 +78,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -96,7 +96,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 })

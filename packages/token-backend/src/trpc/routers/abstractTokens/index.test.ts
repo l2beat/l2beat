@@ -274,7 +274,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getById('TK9999')
 
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
     })
   })
 
@@ -325,11 +325,11 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result?.error).toEqual(undefined)
-      expect(result?.data?.id).toEqual('bitcoin')
-      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
-      expect(result?.data?.symbol).toEqual('BTC')
-      expect(result?.data?.listingTimestamp).not.toEqual(undefined)
+      expect(result?.error).toBe(undefined)
+      expect(result?.data?.id).toBe('bitcoin')
+      expect(result?.data?.iconUrl).toBe('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toBe('BTC')
+      expect(result?.data?.listingTimestamp).not.toBe(undefined)
       expect(mockGetCoinDataById).toHaveBeenCalledWith('bitcoin')
     })
 
@@ -384,11 +384,11 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result?.error).toEqual(undefined)
-      expect(result?.data?.id).toEqual('bitcoin')
-      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
-      expect(result?.data?.symbol).toEqual('BTC')
-      expect(result?.data?.listingTimestamp).toEqual(undefined)
+      expect(result?.error).toBe(undefined)
+      expect(result?.data?.id).toBe('bitcoin')
+      expect(result?.data?.iconUrl).toBe('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toBe('BTC')
+      expect(result?.data?.listingTimestamp).toBe(undefined)
     })
   })
 })

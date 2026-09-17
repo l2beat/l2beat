@@ -27,21 +27,21 @@ describe(PageCacheMiddleware.name, () => {
   it('does not set the header on other methods', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`, { method: 'POST' })
-      expect(response.headers.get('cache-control')).toEqual(null)
+      expect(response.headers.get('cache-control')).toBe(null)
     })
   })
 
   it('lets a route override the header later in the chain', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/no-cache`)
-      expect(response.headers.get('cache-control')).toEqual('no-cache')
+      expect(response.headers.get('cache-control')).toBe('no-cache')
     })
   })
 
   it('clears the header for requests no page route handled', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/api/not-a-page`)
-      expect(response.headers.get('cache-control')).toEqual(null)
+      expect(response.headers.get('cache-control')).toBe(null)
     })
   })
 })

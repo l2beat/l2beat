@@ -34,8 +34,8 @@ describe('changelog whats new selection', () => {
       now,
     )
 
-    expect(result?.id).toEqual('changelog-new-active')
-    expect(result?.image).toEqual('/new.png')
+    expect(result?.id).toBe('changelog-new-active')
+    expect(result?.image).toBe('/new.png')
   })
 
   it('skips expired and future widgets', () => {
@@ -53,7 +53,7 @@ describe('changelog whats new selection', () => {
 
     const result = selectActiveChangelogWhatsNewWidget([expired, future], now)
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('selects an entry only within its active window', () => {
@@ -69,10 +69,8 @@ describe('changelog whats new selection', () => {
       expiresAt: '2026-03-01T00:00:00.000Z',
     })
 
-    expect(selectActiveWhatsNewEntry([expired, active], now)?.id).toEqual(
-      'active',
-    )
-    expect(selectActiveWhatsNewEntry([expired], now)).toEqual(undefined)
+    expect(selectActiveWhatsNewEntry([expired, active], now)?.id).toBe('active')
+    expect(selectActiveWhatsNewEntry([expired], now)).toBe(undefined)
   })
 
   it('falls back to changelog anchor link when href is missing', () => {
@@ -86,7 +84,7 @@ describe('changelog whats new selection', () => {
 
     const result = selectActiveChangelogWhatsNewWidget([active], now)
 
-    expect(result?.href).toEqual('/changelog#anchor-test')
+    expect(result?.href).toBe('/changelog#anchor-test')
     expect(result?.disabledOnMatches).toEqual(['/interop', '/bridges'])
   })
 })

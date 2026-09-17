@@ -22,7 +22,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
       ]
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toBe(2)
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
@@ -31,7 +31,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.insertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toBe(0)
     })
 
     it('performs batch insert when more than 2000 records', async () => {
@@ -49,7 +49,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
       }
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2500)
+      expect(inserted).toBe(2500)
     })
   })
 
@@ -83,8 +83,8 @@ describeDatabase(InteropEventRepository.name, (db) => {
         ['event1', 'event4'].sort(),
       )
       result.forEach((event) => {
-        expect(event.matched).toEqual(false)
-        expect(event.unsupported).toEqual(false)
+        expect(event.matched).toBe(false)
+        expect(event.unsupported).toBe(false)
       })
     })
   })
@@ -116,7 +116,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
           'chainA',
         )
 
-        expect(result?.eventId).toEqual('event4')
+        expect(result?.eventId).toBe('event4')
       })
 
       it('returns undefined when there are no events for plugin and chain', async () => {
@@ -134,7 +134,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
           'chainA',
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
 
       it('returns undefined when plugin list is empty', async () => {
@@ -143,7 +143,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
           'chainA',
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -189,7 +189,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getByType('deposit', { matched: true })
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.eventId).toEqual('event2')
+      expect(result[0]?.eventId).toBe('event2')
     })
 
     it('filters by unsupported status when provided', async () => {
@@ -198,7 +198,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.eventId).toEqual('event3')
+      expect(result[0]?.eventId).toBe('event3')
     })
 
     it('filters by old cutoff when provided', async () => {
@@ -419,9 +419,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const event2 = events.find((e) => e.eventId === 'event2')
       const event3 = events.find((e) => e.eventId === 'event3')
 
-      expect(event1?.matched).toEqual(true)
-      expect(event2?.matched).toEqual(false)
-      expect(event3?.matched).toEqual(true)
+      expect(event1?.matched).toBe(true)
+      expect(event2?.matched).toBe(false)
+      expect(event3?.matched).toBe(true)
     })
 
     it('handles empty array', async () => {
@@ -429,7 +429,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const events = await repository.getAll()
       events.forEach((event) => {
-        expect(event.matched).toEqual(false)
+        expect(event.matched).toBe(false)
       })
     })
 
@@ -452,7 +452,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const events = await repository.getAll()
       events.forEach((event) => {
-        expect(event.matched).toEqual(true)
+        expect(event.matched).toBe(true)
       })
     })
   })
@@ -480,9 +480,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const event2 = events.find((e) => e.eventId === 'event2')
       const event3 = events.find((e) => e.eventId === 'event3')
 
-      expect(event1?.unsupported).toEqual(true)
-      expect(event2?.unsupported).toEqual(false)
-      expect(event3?.unsupported).toEqual(true)
+      expect(event1?.unsupported).toBe(true)
+      expect(event2?.unsupported).toBe(false)
+      expect(event3?.unsupported).toBe(true)
     })
 
     it('handles empty array', async () => {
@@ -490,7 +490,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const events = await repository.getAll()
       events.forEach((event) => {
-        expect(event.unsupported).toEqual(false)
+        expect(event.unsupported).toBe(false)
       })
     })
 
@@ -513,7 +513,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const events = await repository.getAll()
       events.forEach((event) => {
-        expect(event.unsupported).toEqual(true)
+        expect(event.unsupported).toBe(true)
       })
     })
   })
@@ -541,9 +541,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const event2 = events.find((e) => e.eventId === 'event2')
       const event3 = events.find((e) => e.eventId === 'event3')
 
-      expect(event1?.derivedFulfilled).toEqual(true)
-      expect(event2?.derivedFulfilled).toEqual(false)
-      expect(event3?.derivedFulfilled).toEqual(true)
+      expect(event1?.derivedFulfilled).toBe(true)
+      expect(event2?.derivedFulfilled).toBe(false)
+      expect(event3?.derivedFulfilled).toBe(true)
     })
   })
 
@@ -558,11 +558,11 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const deleted = await repository.deleteExpired(UnixTime(350))
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toBe(3)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining[0]?.eventId).toEqual('event4')
+      expect(remaining[0]?.eventId).toBe('event4')
     })
 
     it('returns 0 when no events are expired', async () => {
@@ -573,7 +573,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const deleted = await repository.deleteExpired(UnixTime(100))
 
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -590,11 +590,11 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const deleted = await repository.deleteAllForPlugin('plugin1')
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining[0]?.eventId).toEqual('event3')
+      expect(remaining[0]?.eventId).toBe('event3')
     })
 
     it('returns 0 when no events match the plugin', async () => {
@@ -604,7 +604,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const deleted = await repository.deleteAllForPlugin('plugin2')
 
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
@@ -628,7 +628,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.args).toEqual(123456789012345678901234567890n)
+      expect(result[0]?.args).toBe(123456789012345678901234567890n)
     })
 
     it('handles bigints inside args object', async () => {

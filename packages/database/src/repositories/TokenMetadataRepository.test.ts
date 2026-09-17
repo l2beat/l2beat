@@ -25,7 +25,7 @@ describeDatabase(TokenMetadataRepository.name, (db) => {
       ]
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2)
+      expect(inserted).toBe(2)
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
@@ -34,7 +34,7 @@ describeDatabase(TokenMetadataRepository.name, (db) => {
 
     it('handles empty array', async () => {
       const inserted = await repository.insertMany([])
-      expect(inserted).toEqual(0)
+      expect(inserted).toBe(0)
     })
   })
 

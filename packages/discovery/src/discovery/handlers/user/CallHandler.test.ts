@@ -111,7 +111,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function foo(uint256 i) view returns (uint256)',
       )
     })
@@ -154,7 +154,7 @@ describe(CallHandler.name, () => {
         'function someName() view returns (uint256)',
       ])
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function someName() view returns (uint256)',
       )
     })
@@ -171,7 +171,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function someName(uint256 a, uint256 b) view returns (uint256)',
       )
     })
@@ -202,9 +202,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toEqual(
-        'function bar() view returns (uint256)',
-      )
+      expect(handler.getMethod()).toBe('function bar() view returns (uint256)')
     })
 
     it('throws if it cannot find the method by method name', () => {

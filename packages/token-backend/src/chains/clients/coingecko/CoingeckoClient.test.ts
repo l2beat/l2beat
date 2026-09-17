@@ -30,7 +30,7 @@ describe(CoingeckoClient.name, () => {
         platforms: { ethereum: '0x1234' },
       },
     ])
-    expect(fetch.mock.calls[0][0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toBe(
       'https://api.coingecko.com/api/v3/coins/list?include_platform=true',
     )
     expect(fetch.mock.calls[0][1]).toEqual({ headers: {} })
@@ -50,7 +50,7 @@ describe(CoingeckoClient.name, () => {
 
     await client.getCoinDataById('usd-coin')
 
-    expect(fetch.mock.calls[0][0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toBe(
       'https://pro-api.coingecko.com/api/v3/coins/usd-coin?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false',
     )
     expect(fetch.mock.calls[0][1]).toEqual({
@@ -73,7 +73,7 @@ describe(CoingeckoClient.name, () => {
       UnixTime(1622577232),
     )
 
-    expect(fetch.mock.calls[0][0]).toEqual(
+    expect(fetch.mock.calls[0][0]).toBe(
       'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=2020-06-19&to=2021-06-01',
     )
     expect(result).toEqual({

@@ -23,7 +23,7 @@ describe(getLivenessGroupingKey.name, () => {
       path: [0, 0],
     })
 
-    expect(result).toEqual('123')
+    expect(result).toBe('123')
   })
 
   it('rejects a path ending at a tuple', () => {

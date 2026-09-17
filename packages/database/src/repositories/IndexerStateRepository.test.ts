@@ -14,7 +14,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
   describe(IndexerStateRepository.prototype.findByIndexerId.name, () => {
     it('returns undefined if no record exists', async () => {
       const indexerState = await repository.findByIndexerId('indexer')
-      expect(indexerState).toEqual(undefined)
+      expect(indexerState).toBe(undefined)
     })
 
     it('returns the indexer state if a record exists', async () => {
@@ -119,7 +119,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       const updated = await repository.updateSafeHeight('indexer1', AFTER)
       const indexerState = await repository.findByIndexerId('indexer1')
 
-      expect(updated).toEqual(1)
+      expect(updated).toBe(1)
       expect(indexerState).toEqual({ ...record, safeHeight: AFTER })
     })
 
@@ -137,7 +137,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       const updated = await repository.updateSafeHeight('indexer2', AFTER)
       const indexerState = await repository.findByIndexerId('indexer1')
 
-      expect(updated).toEqual(0)
+      expect(updated).toBe(0)
       expect(indexerState).toEqual({ ...record })
     })
   })

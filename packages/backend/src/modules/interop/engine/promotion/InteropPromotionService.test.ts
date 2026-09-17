@@ -63,8 +63,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toBe('promoted')
+      expect(result.notify).toBe(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -78,8 +78,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
+      expect(result.status).toBe('blocked')
+      expect(result.notify).toBe(true)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -100,8 +100,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toBe('blocked')
+      expect(result.notify).toBe(false)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -137,9 +137,9 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
-      expect(result.reasons[0]?.rule).toEqual('engineError')
+      expect(result.status).toBe('blocked')
+      expect(result.notify).toBe(true)
+      expect(result.reasons[0]?.rule).toBe('engineError')
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'blocked',
@@ -156,8 +156,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toBe('promoted')
+      expect(result.notify).toBe(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -171,11 +171,11 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
-      expect(result.notify).toEqual(true)
+      expect(result.status).toBe('blocked')
+      expect(result.notify).toBe(true)
       expect(result.reasons).toHaveLength(1)
-      expect(result.reasons[0]?.rule).toEqual('brokenRule')
-      expect(result.reasons[0]?.message).toEqual(
+      expect(result.reasons[0]?.rule).toBe('brokenRule')
+      expect(result.reasons[0]?.message).toBe(
         'rule "brokenRule" failed to evaluate: kaboom',
       )
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
@@ -190,7 +190,7 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('blocked')
+      expect(result.status).toBe('blocked')
       expect(result.reasons.map((r) => r.rule)).toEqual([
         'brokenRule',
         'maxTotalVolume',
@@ -204,8 +204,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toBe('promoted')
+      expect(result.notify).toBe(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -219,8 +219,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toEqual('promoted')
-      expect(result.notify).toEqual(false)
+      expect(result.status).toBe('promoted')
+      expect(result.notify).toBe(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',

@@ -88,11 +88,11 @@ describe('getTokenFrameworksData helpers', () => {
       ])
 
       const item = result.get('oft')
-      expect(item?.symbol).toEqual('Unknown')
-      expect(item?.frameworkId).toEqual('oft')
-      expect(item?.isUnknown).toEqual(true)
-      expect(item?.volume).toEqual(140)
-      expect(item?.transferCount).toEqual(8)
+      expect(item?.symbol).toBe('Unknown')
+      expect(item?.frameworkId).toBe('oft')
+      expect(item?.isUnknown).toBe(true)
+      expect(item?.volume).toBe(140)
+      expect(item?.transferCount).toBe(8)
     })
 
     it('ignores records that have at least one minted/burned token', () => {
@@ -110,7 +110,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toBe(0)
     })
 
     it('ignores non-lockAndMint records', () => {
@@ -125,7 +125,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toBe(0)
     })
 
     it('skips records with no volume and no transfers', () => {
@@ -140,7 +140,7 @@ describe('getTokenFrameworksData helpers', () => {
         }),
       ])
 
-      expect(result.size).toEqual(0)
+      expect(result.size).toBe(0)
     })
   })
 
@@ -181,7 +181,7 @@ describe('getTokenFrameworksData helpers', () => {
         tokensDetailsMap,
       )
 
-      expect(result[0]?.frameworkId).toEqual('ntt')
+      expect(result[0]?.frameworkId).toBe('ntt')
     })
 
     it('skips tokens missing details metadata', () => {
@@ -220,8 +220,8 @@ describe('getTokenFrameworksData helpers', () => {
         tokensDetailsMap,
       )
 
-      expect(result[0]?.topRoute?.src.id).toEqual('c')
-      expect(result[0]?.topRoute?.dst.id).toEqual('d')
+      expect(result[0]?.topRoute?.src.id).toBe('c')
+      expect(result[0]?.topRoute?.dst.id).toBe('d')
     })
   })
 
@@ -356,12 +356,12 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, undefined, undefined)
 
-      expect(result.volume).toEqual(1000)
-      expect(result.transferCount).toEqual(20)
-      expect(result.averageValue).toEqual(100)
-      expect(result.averageDurationSeconds).toEqual(250)
-      expect(result.previousVolume).toEqual(null)
-      expect(result.previousTransferCount).toEqual(null)
+      expect(result.volume).toBe(1000)
+      expect(result.transferCount).toBe(20)
+      expect(result.averageValue).toBe(100)
+      expect(result.averageDurationSeconds).toBe(250)
+      expect(result.previousVolume).toBe(null)
+      expect(result.previousTransferCount).toBe(null)
     })
 
     it('returns null averageDurationSeconds when the project marks transfer time as unknown', () => {
@@ -375,7 +375,7 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, project, undefined)
 
-      expect(result.averageDurationSeconds).toEqual(null)
+      expect(result.averageDurationSeconds).toBe(null)
     })
 
     it('returns null averageValue when identifiedTransferCount is zero', () => {
@@ -386,7 +386,7 @@ describe('getTokenFrameworksData helpers', () => {
 
       const result = buildFrameworkEntry(framework, data, undefined, undefined)
 
-      expect(result.averageValue).toEqual(null)
+      expect(result.averageValue).toBe(null)
     })
   })
 })

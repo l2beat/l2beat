@@ -88,7 +88,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toBe(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
@@ -106,7 +106,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toBe(800)
       expect(getBlockTimestamp).toHaveBeenCalled()
       expect(client.getBlockWithTransactions).not.toHaveBeenCalled()
     })
@@ -130,7 +130,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toEqual(800)
+      expect(blockNumber).toBe(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
@@ -149,7 +149,7 @@ describe(BlockProvider.name, () => {
         800,
       )
 
-      expect(blockNumber).toEqual(300)
+      expect(blockNumber).toBe(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 

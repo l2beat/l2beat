@@ -8,43 +8,43 @@ import {
 
 describe(getReferencedName.name, () => {
   it('returns the field name of a flat reference', () => {
-    expect(getReferencedName('{{ owner }}')).toEqual('owner')
+    expect(getReferencedName('{{ owner }}')).toBe('owner')
   })
 
   it('returns only the base field of a nested reference', () => {
-    expect(getReferencedName('{{ constructorArgs._owner }}')).toEqual(
+    expect(getReferencedName('{{ constructorArgs._owner }}')).toBe(
       'constructorArgs',
     )
   })
 
   it('returns only the base field of a deeply nested reference', () => {
-    expect(getReferencedName('{{ foo.bar.baz }}')).toEqual('foo')
+    expect(getReferencedName('{{ foo.bar.baz }}')).toBe('foo')
   })
 
   it('returns the base field of a $-prefixed reference', () => {
-    expect(getReferencedName('{{ $.address }}')).toEqual('$')
+    expect(getReferencedName('{{ $.address }}')).toBe('$')
   })
 
   it('returns undefined for a value that is not a reference', () => {
-    expect(getReferencedName('owner')).toEqual(undefined)
-    expect(getReferencedName('{owner}')).toEqual(undefined)
-    expect(getReferencedName(123)).toEqual(undefined)
+    expect(getReferencedName('owner')).toBe(undefined)
+    expect(getReferencedName('{owner}')).toBe(undefined)
+    expect(getReferencedName(123)).toBe(undefined)
   })
 })
 
 describe(getReferencedPath.name, () => {
   it('keeps the whole path of a nested reference', () => {
-    expect(getReferencedPath('{{ constructorArgs._owner }}')).toEqual(
+    expect(getReferencedPath('{{ constructorArgs._owner }}')).toBe(
       'constructorArgs._owner',
     )
   })
 
   it('equals the field name for a flat reference', () => {
-    expect(getReferencedPath('{{ owner }}')).toEqual('owner')
+    expect(getReferencedPath('{{ owner }}')).toBe('owner')
   })
 
   it('returns undefined for a value that is not a reference', () => {
-    expect(getReferencedPath('owner')).toEqual(undefined)
+    expect(getReferencedPath('owner')).toBe(undefined)
   })
 })
 
@@ -54,7 +54,7 @@ describe(resolveReference.name, () => {
       constructorArgs: { _owner: 'alice' },
     })
 
-    expect(resolved).toEqual('alice')
+    expect(resolved).toBe('alice')
   })
 
   it('throws when the sub-path is missing', () => {
@@ -90,17 +90,17 @@ describe('references', () => {
       key: 123,
       keyToZero: 0,
     })
-    expect(result1).toEqual(123)
-    expect(result2).toEqual(0)
+    expect(result1).toBe(123)
+    expect(result2).toBe(0)
   })
 
   it('ignores if in single braces', () => {
     const result = resolveReferenceFromValues('{lorem}', {})
-    expect(result).toEqual('{lorem}')
+    expect(result).toBe('{lorem}')
   })
 
   it('ignores if not in braces', () => {
     const result = resolveReferenceFromValues('lorem', {})
-    expect(result).toEqual('lorem')
+    expect(result).toBe('lorem')
   })
 })

@@ -118,7 +118,7 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result.totalCount).toEqual(12)
+      expect(result.totalCount).toBe(12)
       expect(result.rows).toEqual([
         {
           entry: symbolConflictEntry,

@@ -54,13 +54,13 @@ describe(HttpClient.name, () => {
 
   describe(sanitizeUrl.name, () => {
     it('redacts sensitive query param values', () => {
-      expect(
-        sanitizeUrl('https://api.starkex.com/v1/blocks?key=secret'),
-      ).toEqual('https://api.starkex.com/v1/blocks?key=REDACTED')
+      expect(sanitizeUrl('https://api.starkex.com/v1/blocks?key=secret')).toBe(
+        'https://api.starkex.com/v1/blocks?key=REDACTED',
+      )
     })
 
     it('preserves non-sensitive query params', () => {
-      expect(sanitizeUrl('https://api/feed?from=1&to=2&apiKey=secret')).toEqual(
+      expect(sanitizeUrl('https://api/feed?from=1&to=2&apiKey=secret')).toBe(
         'https://api/feed?from=1&to=2&apiKey=REDACTED',
       )
     })
@@ -70,7 +70,7 @@ describe(HttpClient.name, () => {
         sanitizeUrl(
           'https://eth-mainnet.g.alchemy.com/v2/AbCdEf0123456789AbCdEf0123456789',
         ),
-      ).toEqual('https://eth-mainnet.g.alchemy.com/v2/REDACTED')
+      ).toBe('https://eth-mainnet.g.alchemy.com/v2/REDACTED')
     })
 
     it('preserves 0x-prefixed identifiers and normal path segments', () => {
@@ -80,7 +80,7 @@ describe(HttpClient.name, () => {
     })
 
     it('returns the input unchanged when it is not a valid url', () => {
-      expect(sanitizeUrl('not a url')).toEqual('not a url')
+      expect(sanitizeUrl('not a url')).toBe('not a url')
     })
   })
 })

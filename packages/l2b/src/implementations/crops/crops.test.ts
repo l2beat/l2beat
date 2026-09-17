@@ -118,14 +118,14 @@ describe('crop attestations', () => {
 
   describe(setMatches.name, () => {
     it('ignores order, checked against a reversed copy', () => {
-      expect(setMatches(IDS, [...IDS].reverse())).toEqual(true)
+      expect(setMatches(IDS, [...IDS].reverse())).toBe(true)
     })
 
     it('notices a different member and a different size', () => {
-      expect(
-        setMatches(IDS, ['aztecnetwork', 'tornado-cash', 'umbra']),
-      ).toEqual(false)
-      expect(setMatches(IDS, IDS.slice(1))).toEqual(false)
+      expect(setMatches(IDS, ['aztecnetwork', 'tornado-cash', 'umbra'])).toBe(
+        false,
+      )
+      expect(setMatches(IDS, IDS.slice(1))).toBe(false)
     })
   })
 
@@ -326,7 +326,7 @@ describe('crop attestations', () => {
         now,
       })
       expect(plan).toMatchObject({ kind: 'attest' })
-      expect(plan.kind === 'attest' && plan.payload.revision).toEqual(8)
+      expect(plan.kind === 'attest' && plan.payload.revision).toBe(8)
     })
   })
 
@@ -372,7 +372,7 @@ describe('crop attestations', () => {
         ledger([entry()]),
         new Map([[UID, chain]]),
       )
-      expect(problems.length).toEqual(2)
+      expect(problems.length).toBe(2)
       expect(problems[0]).toContain('attested by')
       expect(problems[1]).toContain('attested under schema')
     })

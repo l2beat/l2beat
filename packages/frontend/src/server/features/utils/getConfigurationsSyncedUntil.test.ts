@@ -8,7 +8,7 @@ const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 describe(getConfigurationsSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
     const result = getConfigurationsSyncedUntil([])
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
@@ -19,7 +19,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
       } as unknown as IndexerConfigurationRecord,
     ])
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {

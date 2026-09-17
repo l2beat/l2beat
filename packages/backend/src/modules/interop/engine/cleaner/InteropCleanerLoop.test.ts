@@ -77,7 +77,7 @@ describe(InteropCleanerLoop.name, () => {
 
       const messageCutoff = deleteMessageBefore.mock.calls[0][0] as number
       const transferCutoff = deleteTransferBefore.mock.calls[0][0] as number
-      expect(messageCutoff - transferCutoff).toEqual(6 * UnixTime.DAY)
+      expect(messageCutoff - transferCutoff).toBe(6 * UnixTime.DAY)
       expect(deleteConfigs).toHaveBeenCalledWith(KEEP_LATEST)
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
         'plugin-a',

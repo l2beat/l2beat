@@ -21,7 +21,7 @@ describe(RpcClientCompat.name, () => {
 
       const timestamp = await client.getBlockTimestamp(100)
 
-      expect(timestamp).toEqual(1_000)
+      expect(timestamp).toBe(1_000)
       expect(getBlockByNumber).toHaveBeenCalledExactlyOnceWith(100n, false)
     })
   })

@@ -63,8 +63,8 @@ describe('rendered table columns', () => {
     const row = table.getRowModel().rows[0]
     assert(row, 'expected a row')
 
-    expect(groupHeader.colSpan).toEqual(2)
-    expect(getRenderedColSpan(groupHeader)).toEqual(1)
+    expect(groupHeader.colSpan).toBe(2)
+    expect(getRenderedColSpan(groupHeader)).toBe(1)
     expect(
       getRenderedHeaders(actualHeader.headers).map(
         (header) => header.column.id,

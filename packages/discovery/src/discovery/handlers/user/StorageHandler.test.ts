@@ -12,7 +12,7 @@ describe(StorageHandler.name, () => {
       const provider = {
         getStorage: vi.fn(async (passedAddress, slot) => {
           expect(passedAddress).toEqual(address)
-          expect(slot).toEqual(1n)
+          expect(slot).toBe(1n)
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
@@ -25,7 +25,7 @@ describe(StorageHandler.name, () => {
         type: 'storage',
         slot: 1,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
@@ -53,7 +53,7 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'number',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
@@ -85,7 +85,7 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'address',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
@@ -112,7 +112,7 @@ describe(StorageHandler.name, () => {
         slot: 1,
         returnType: 'uint8',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({

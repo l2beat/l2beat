@@ -101,26 +101,26 @@ describe('exit window descriptions', () => {
     const result = EXIT_WINDOW_NITRO(60, 120, 60, 60, 60, true)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toEqual('None')
+    expect(result.regular?.value).toBe('None')
     expect(description).toContain('users have only no time to exit')
-    expect(result.warning).toEqual(undefined)
+    expect(result.warning).toBe(undefined)
   })
 
   it('does not use None as a prose exit window for Permissionless BoLD', () => {
     const result = EXIT_WINDOW_PERMISSIONLESS_BOLD(60, 120, 30)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toEqual('None')
+    expect(result.regular?.value).toBe('None')
     expect(description).toContain('users have no time to exit')
-    expect(result.warning).toEqual(undefined)
+    expect(result.warning).toBe(undefined)
   })
 
   it('does not use None as a prose exit window for Starknet', () => {
     const result = EXIT_WINDOW_STARKNET(60)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toEqual('None')
+    expect(result.regular?.value).toBe('None')
     expect(description).toContain('leaving users no time to exit')
-    expect(result.warning).toEqual(undefined)
+    expect(result.warning).toBe(undefined)
   })
 })

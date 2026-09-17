@@ -56,7 +56,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds([])
-        expect(deletedCount).toEqual(0)
+        expect(deletedCount).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -69,7 +69,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['A', 'B'])
-        expect(deletedCount).toEqual(2)
+        expect(deletedCount).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
@@ -80,7 +80,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['X', 'Y'])
-        expect(deletedCount).toEqual(0)
+        expect(deletedCount).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)

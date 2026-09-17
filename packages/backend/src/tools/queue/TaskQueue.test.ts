@@ -88,7 +88,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(queue.isStopped()).toEqual(true)
+    expect(queue.isStopped()).toBe(true)
     expect(completed).toEqual([0]) // everything after task '1' was dropped
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
@@ -253,7 +253,7 @@ describe(TaskQueue.name, () => {
 
     await queue.waitTillEmpty()
 
-    expect(queue.length).toEqual(0)
+    expect(queue.length).toBe(0)
   })
 })
 

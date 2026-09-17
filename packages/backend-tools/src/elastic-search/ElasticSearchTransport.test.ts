@@ -273,7 +273,7 @@ describe(ElasticSearchTransport.name, () => {
     const recoveryDoc = recoveryDocs[0] as Record<string, unknown>
     expect(recoveryDoc.id).toEqual(id)
     const ecs = recoveryDoc as { log: { level: string }; message: string }
-    expect(ecs.log.level).toEqual('ERROR')
+    expect(ecs.log.level).toBe('ERROR')
     expect(ecs.message).toMatch(/not valid JSON|Unexpected token/i)
   })
 

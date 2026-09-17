@@ -3,7 +3,7 @@ import { undefinedIfEmpty } from './undefinedIfEmpty.js'
 
 describe(undefinedIfEmpty.name, () => {
   it('returns undefined if array is empty', () => {
-    expect(undefinedIfEmpty([])).toEqual(undefined)
+    expect(undefinedIfEmpty([])).toBe(undefined)
   })
 
   it('returns array if array has one element', () => {

@@ -78,7 +78,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         comment: 'updated comment',
       })
 
-      expect(updatedRows).toEqual(1)
+      expect(updatedRows).toBe(1)
 
       const stored = await repository.findById(record.id)
       expect(stored).toEqual({
@@ -108,7 +108,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: null,
       })
 
-      expect(updatedRows).toEqual(1)
+      expect(updatedRows).toBe(1)
 
       const stored = await repository.findById(record.id)
       expect(stored).toEqual({
@@ -160,7 +160,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       )
 
       const found = await repository.findByCoingeckoId('ethereum')
-      expect(found).toEqual(undefined)
+      expect(found).toBe(undefined)
     })
   })
 
@@ -226,7 +226,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       await repository.insert(abstractToken({ id: 'TK0003' }))
 
       const deleted = await repository.deleteByIds(['TK0001', 'TK0003'])
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toEqual([abstractToken({ id: 'TK0002' })])

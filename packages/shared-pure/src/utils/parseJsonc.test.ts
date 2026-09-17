@@ -48,7 +48,7 @@ describe(parseJsonc.name, () => {
     })
 
     it('preserves negative zero', () => {
-      expect(Object.is(parseJsonc('-0'), -0)).toEqual(true)
+      expect(Object.is(parseJsonc('-0'), -0)).toBe(true)
     })
   })
 
@@ -122,7 +122,7 @@ describe(parseJsonc.name, () => {
     })
 
     it('supports a block comment after a top-level primitive', () => {
-      expect(parseJsonc('true /* trailing comment */')).toEqual(true)
+      expect(parseJsonc('true /* trailing comment */')).toBe(true)
     })
 
     it('does not treat comment markers inside strings as comments', () => {

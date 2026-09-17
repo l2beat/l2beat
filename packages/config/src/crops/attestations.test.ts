@@ -16,7 +16,7 @@ describe('crop attestations', () => {
   )
 
   it('exactly one attestation is live under the current schema', () => {
-    expect(current.length).toEqual(1)
+    expect(current.length).toBe(1)
   })
 
   it('the live attestation names exactly the projects with crop evaluations', () => {

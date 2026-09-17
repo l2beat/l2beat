@@ -109,19 +109,19 @@ describe(EventTracker.name, () => {
     tracker.record('b')
     tracker.record('c')
 
-    expect(tracker.getEventsCount()).toEqual(3)
+    expect(tracker.getEventsCount()).toBe(3)
 
     vi.advanceTimersByTime(historySize)
 
-    expect(tracker.getEventsCount()).toEqual(0)
+    expect(tracker.getEventsCount()).toBe(0)
 
     tracker.record('d')
     tracker.record('e')
 
-    expect(tracker.getEventsCount()).toEqual(2)
+    expect(tracker.getEventsCount()).toBe(2)
 
     vi.advanceTimersByTime(historySize)
 
-    expect(tracker.getEventsCount()).toEqual(0)
+    expect(tracker.getEventsCount()).toBe(0)
   })
 })

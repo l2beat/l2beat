@@ -61,7 +61,7 @@ describe(buildActivityProjectChartStats.name, () => {
       },
     })
 
-    expect(result.uops.totalCount).toEqual(undefined)
+    expect(result.uops.totalCount).toBe(undefined)
     expect(result.tps.totalCount).toEqual({
       value: 100,
       sinceTimestamp: SINCE,

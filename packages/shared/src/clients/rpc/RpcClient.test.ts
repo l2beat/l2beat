@@ -16,7 +16,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getLatestBlockNumber()
 
-      expect(result).toEqual(100)
+      expect(result).toBe(100)
       expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_blockNumber',
@@ -92,7 +92,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getBlockTimestamp(100)
 
-      expect(result).toEqual(100)
+      expect(result).toBe(100)
       expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
@@ -509,8 +509,8 @@ describe(RpcClient.name, () => {
         multicallClient,
       })
 
-      expect(rpc.isMulticallDeployed(1000)).toEqual(true)
-      expect(rpc.isMulticallDeployed(1001)).toEqual(true)
+      expect(rpc.isMulticallDeployed(1000)).toBe(true)
+      expect(rpc.isMulticallDeployed(1001)).toBe(true)
     })
 
     it('returns false when multicall client is configured but block number is before deployment', () => {
@@ -530,7 +530,7 @@ describe(RpcClient.name, () => {
         multicallClient,
       })
 
-      expect(rpc.isMulticallDeployed(999)).toEqual(false)
+      expect(rpc.isMulticallDeployed(999)).toBe(false)
     })
 
     it('returns false when multicall client is not configured', () => {
@@ -543,7 +543,7 @@ describe(RpcClient.name, () => {
         logger: Logger.SILENT,
       })
 
-      expect(rpc.isMulticallDeployed(1000)).toEqual(false)
+      expect(rpc.isMulticallDeployed(1000)).toBe(false)
     })
   })
 
@@ -786,7 +786,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
-      expect(result).toEqual('data-returned-from-api')
+      expect(result).toBe('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
@@ -815,7 +815,7 @@ describe(RpcClient.name, () => {
       await rpc.query('rpc_method', ['a', 1, true])
 
       expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
-      expect(rpcMetrics.record.mock.calls[0][0]?.method).toEqual('rpc_method')
+      expect(rpcMetrics.record.mock.calls[0][0]?.method).toBe('rpc_method')
     })
   })
 
@@ -899,8 +899,8 @@ describe(RpcClient.name, () => {
       ])
 
       expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
-      expect(rpcMetrics.record.mock.calls[0][0]?.method).toEqual('rpc_method')
-      expect(rpcMetrics.record.mock.calls[0][0]?.count).toEqual(2)
+      expect(rpcMetrics.record.mock.calls[0][0]?.method).toBe('rpc_method')
+      expect(rpcMetrics.record.mock.calls[0][0]?.count).toBe(2)
     })
   })
 
@@ -915,7 +915,7 @@ describe(RpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true otherwise', async () => {
@@ -924,7 +924,7 @@ describe(RpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 })

@@ -28,7 +28,7 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.getBlockSidecar('root')
 
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toBe(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
       expect(result).toEqual([
@@ -52,7 +52,7 @@ describe(BeaconChainClient.name, () => {
 
       const result = await withServer(
         (req, res) => {
-          expect(req.url).toEqual(
+          expect(req.url).toBe(
             '/eth/v1/beacon/states/head/validators?status=active',
           )
           res.setHeader('Content-Type', 'application/json')
@@ -87,7 +87,7 @@ describe(BeaconChainClient.name, () => {
       const result = await client.call('/eth/blob')
 
       expect(result).toEqual({ result: 'result' })
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toBe(
         'BEACON_API_URL/eth/blob',
       )
     })

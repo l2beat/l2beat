@@ -128,7 +128,7 @@ describe(TvsCleaner.name, () => {
 
       const result = await indexer.invalidate(123)
 
-      expect(result).toEqual(123)
+      expect(result).toBe(123)
     })
   })
 })

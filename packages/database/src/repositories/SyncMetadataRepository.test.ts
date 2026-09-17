@@ -215,7 +215,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'activity',
         'nonexistent',
       )
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('should return undefined for existing feature but non-existing id', async () => {
@@ -233,7 +233,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'activity',
         'nonexistent',
       )
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 

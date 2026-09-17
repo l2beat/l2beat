@@ -24,15 +24,15 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectEthereumLikeInclusionDelayChart
 
     it('returns one slot when nobody censors', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 0)).toEqual(10 / 86_400)
+      expect(calculateEthereumLikeDelayDays(chart, 0)).toBe(10 / 86_400)
     })
 
     it('uses the honest proposer probability', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 4)).toEqual(60 / 86_400)
+      expect(calculateEthereumLikeDelayDays(chart, 4)).toBe(60 / 86_400)
     })
 
     it('returns no finite delay without honest majority', () => {
-      expect(calculateEthereumLikeDelayDays(chart, 5)).toEqual(null)
+      expect(calculateEthereumLikeDelayDays(chart, 5)).toBe(null)
     })
   })
 
@@ -47,15 +47,15 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectSpanLikeInclusionDelayChart
 
     it('returns one block when nobody censors', () => {
-      expect(calculateSpanLikeDelayDays(chart, 0)).toEqual(2 / 86_400)
+      expect(calculateSpanLikeDelayDays(chart, 0)).toBe(2 / 86_400)
     })
 
     it('uses span-level proposer probability', () => {
-      expect(calculateSpanLikeDelayDays(chart, 1)).toEqual(62 / 86_400)
+      expect(calculateSpanLikeDelayDays(chart, 1)).toBe(62 / 86_400)
     })
 
     it('returns no finite delay below the attestation threshold', () => {
-      expect(calculateSpanLikeDelayDays(chart, 2)).toEqual(null)
+      expect(calculateSpanLikeDelayDays(chart, 2)).toBe(null)
     })
   })
 
@@ -72,11 +72,11 @@ describe('calculateInclusionDelay', () => {
     } satisfies ProjectCommitteeLikeInclusionDelayChart
 
     it('returns one slot when nobody censors', () => {
-      expect(calculateCommitteeLikeDelayDays(chart, 0)).toEqual(10 / 86_400)
+      expect(calculateCommitteeLikeDelayDays(chart, 0)).toBe(10 / 86_400)
     })
 
     it('combines committee blocking probability across epochs', () => {
-      expect(calculateCommitteeLikeDelayDays(chart, 1)).toEqual(30 / 86_400)
+      expect(calculateCommitteeLikeDelayDays(chart, 1)).toBe(30 / 86_400)
     })
   })
 
@@ -212,7 +212,7 @@ describe('calculateInclusionDelay', () => {
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
       const [entry] = getInclusionDelayData(chart).entityLegendEntries
-      expect(entry?.stakeFraction).toEqual(0.154)
+      expect(entry?.stakeFraction).toBe(0.154)
     })
 
     it('samples at a fixed 0.1% resolution regardless of validator count', () => {
@@ -226,11 +226,11 @@ describe('calculateInclusionDelay', () => {
 
       const { projectPoints } = getInclusionDelayData(chart)
       // 0 to 0.5 in 0.001 steps => 501 evenly-spaced samples.
-      expect(projectPoints.length).toEqual(501)
-      expect(projectPoints[0]?.censoringFraction).toEqual(0)
-      expect(projectPoints[1]?.censoringFraction).toEqual(0.001)
+      expect(projectPoints.length).toBe(501)
+      expect(projectPoints[0]?.censoringFraction).toBe(0)
+      expect(projectPoints[1]?.censoringFraction).toBe(0.001)
       const last = projectPoints[projectPoints.length - 1]
-      expect(last?.censoringFraction).toEqual(0.5)
+      expect(last?.censoringFraction).toBe(0.5)
     })
 
     it('produces a single sample when maxCensorFraction is 0', () => {

@@ -28,28 +28,28 @@ describe(fileExistsCaseSensitive.name, () => {
   it('matches the exact basename only', () => {
     writeFileSync(join(root, 'README.md'), '')
 
-    expect(fileExistsCaseSensitive(join(root, 'README.md'))).toEqual(true)
-    expect(fileExistsCaseSensitive(join(root, 'readme.md'))).toEqual(false)
+    expect(fileExistsCaseSensitive(join(root, 'README.md'))).toBe(true)
+    expect(fileExistsCaseSensitive(join(root, 'readme.md'))).toBe(false)
   })
 
   it('sees entries added after the directory was listed', () => {
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toBe(false)
 
     mkdirSync(join(root, 'project'))
     bumpMtime(root)
 
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toBe(true)
   })
 
   it('sees entries renamed after the directory was listed', () => {
     mkdirSync(join(root, 'Project'))
-    expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'Project'))).toBe(true)
 
     renameSync(join(root, 'Project'), join(root, 'project'))
     bumpMtime(root)
 
-    expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(false)
-    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+    expect(fileExistsCaseSensitive(join(root, 'Project'))).toBe(false)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toBe(true)
   })
 })
 

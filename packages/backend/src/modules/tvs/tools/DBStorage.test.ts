@@ -62,11 +62,11 @@ describe(DBStorage.name, () => {
       )
 
       const prices = (storage as any).prices
-      expect(prices.size).toEqual(2)
-      expect(prices.get(timestamp1)?.get(configId1)).toEqual(1000)
-      expect(prices.get(timestamp1)?.get(configId2)).toEqual(20000)
-      expect(prices.get(timestamp2)?.get(configId1)).toEqual(1100)
-      expect(prices.get(timestamp2)?.get(configId2)).toEqual(21000)
+      expect(prices.size).toBe(2)
+      expect(prices.get(timestamp1)?.get(configId1)).toBe(1000)
+      expect(prices.get(timestamp1)?.get(configId2)).toBe(20000)
+      expect(prices.get(timestamp2)?.get(configId1)).toBe(1100)
+      expect(prices.get(timestamp2)?.get(configId2)).toBe(21000)
     })
 
     it('handles empty result from database', async () => {
@@ -87,8 +87,8 @@ describe(DBStorage.name, () => {
       await storage.preloadPrices([configId], [timestamp])
 
       const prices = (storage as any).prices
-      expect(prices.size).toEqual(1)
-      expect(prices.get(timestamp)?.size).toEqual(0)
+      expect(prices.size).toBe(1)
+      expect(prices.get(timestamp)?.size).toBe(0)
     })
   })
 
@@ -149,11 +149,11 @@ describe(DBStorage.name, () => {
       )
 
       const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(2)
-      expect(amounts.get(timestamp1)?.get(configId1)).toEqual(100n)
-      expect(amounts.get(timestamp1)?.get(configId2)).toEqual(200n)
-      expect(amounts.get(timestamp2)?.get(configId1)).toEqual(300n)
-      expect(amounts.get(timestamp2)?.get(configId2)).toEqual(400n)
+      expect(amounts.size).toBe(2)
+      expect(amounts.get(timestamp1)?.get(configId1)).toBe(100n)
+      expect(amounts.get(timestamp1)?.get(configId2)).toBe(200n)
+      expect(amounts.get(timestamp2)?.get(configId1)).toBe(300n)
+      expect(amounts.get(timestamp2)?.get(configId2)).toBe(400n)
     })
 
     it('handles empty result from database', async () => {
@@ -174,8 +174,8 @@ describe(DBStorage.name, () => {
       await storage.preloadAmounts([configId], [timestamp])
 
       const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(1)
-      expect(amounts.get(timestamp)?.size).toEqual(0)
+      expect(amounts.size).toBe(1)
+      expect(amounts.get(timestamp)?.size).toBe(0)
     })
   })
 
@@ -191,7 +191,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(1000)
+      expect(result).toBe(1000)
     })
 
     it('fetches price from DB when not in memory', async () => {
@@ -220,7 +220,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(900)
+      expect(result).toBe(900)
       expect(tvsPrice.getPrice).toHaveBeenCalledWith(configId, timestamp)
     })
 
@@ -243,7 +243,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
       expect(tvsPrice.getPrice).not.toHaveBeenCalled()
     })
 
@@ -274,7 +274,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getPrice(configId, timestamp)
 
-      expect(result).toEqual(900)
+      expect(result).toBe(900)
       expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
         configId,
         timestamp,
@@ -294,7 +294,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(100n)
+      expect(result).toBe(100n)
     })
 
     it('fetches amount from DB when not in memory', async () => {
@@ -323,7 +323,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(200n)
+      expect(result).toBe(200n)
       expect(tvsAmount.getAmount).toHaveBeenCalledWith(configId, timestamp)
     })
 
@@ -354,7 +354,7 @@ describe(DBStorage.name, () => {
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(200n)
+      expect(result).toBe(200n)
       expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
         configId,
         timestamp,

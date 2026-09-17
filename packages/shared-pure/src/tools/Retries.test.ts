@@ -11,7 +11,7 @@ describe('Retries', () => {
         maxDistanceMs: Number.POSITIVE_INFINITY,
         notifyAfterAttempts: Number.POSITIVE_INFINITY,
       })(1)
-      expect(result.shouldStop).toEqual(true)
+      expect(result.shouldStop).toBe(true)
     })
 
     it('can respect max distance', () => {

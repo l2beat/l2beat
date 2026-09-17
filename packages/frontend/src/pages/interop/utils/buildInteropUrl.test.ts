@@ -8,7 +8,7 @@ describe(buildInteropUrl.name, () => {
       to: ['base'],
     })
 
-    expect(result).toEqual('/interop/summary?from=ethereum%2Carbitrum&to=base')
+    expect(result).toBe('/interop/summary?from=ethereum%2Carbitrum&to=base')
   })
 
   it('returns path without query when selection is empty', () => {
@@ -17,6 +17,6 @@ describe(buildInteropUrl.name, () => {
       to: [],
     })
 
-    expect(result).toEqual('/interop/summary')
+    expect(result).toBe('/interop/summary')
   })
 })

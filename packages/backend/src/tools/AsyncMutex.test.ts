@@ -46,7 +46,7 @@ describe(AsyncMutex.name, () => {
       calls.push('second:start')
     })
 
-    expect(skipped).toEqual(undefined)
+    expect(skipped).toBe(undefined)
     expect(calls).toEqual(['first:start'])
 
     first.resolve()
@@ -68,7 +68,7 @@ describe(AsyncMutex.name, () => {
       return 'ok'
     })
 
-    expect(result).toEqual('ok')
+    expect(result).toBe('ok')
     expect(calls).toEqual(['first', 'second'])
   })
 })

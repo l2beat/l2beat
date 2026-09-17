@@ -81,7 +81,7 @@ describe('model-permissions all', () => {
         { cwd: root, encoding: 'utf8' },
       )
 
-      expect(result.status).toEqual(1)
+      expect(result.status).toBe(1)
       expect(result.stderr).toContain('higher than current discovery timestamp')
       expect(result.stdout).not.toContain('Modelling: b')
       expect(readFileSync(nextPath, 'utf8')).toEqual(nextBefore)
@@ -177,7 +177,7 @@ describe('model-permissions all', () => {
       expect(run('all')).not.toContain(staleWarning)
       const module = read('z')
       expect(module.permissionsConfigHash).not.toEqual(Hash256.ZERO)
-      expect('modelledAgainst' in module).toEqual(false)
+      expect('modelledAgainst' in module).toBe(false)
       expect(read('a').modelledAgainst).toEqual({
         z: module.permissionsConfigHash!,
       })

@@ -20,7 +20,7 @@ describe(SimpleMethodHandler.name, () => {
     const method = 'function balanceOf() view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
-    expect(handler.field).toEqual('balanceOf')
+    expect(handler.field).toBe('balanceOf')
 
     const result = await handler.execute(provider, address)
     expect(result).toEqual({

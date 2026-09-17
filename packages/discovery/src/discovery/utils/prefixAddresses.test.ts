@@ -5,13 +5,13 @@ describe(prefixAddresses.name, () => {
   const CHAIN = 'ethereum'
 
   it('does nothing to primitives', () => {
-    expect(prefixAddresses(CHAIN, 'foo')).toEqual('foo')
-    expect(prefixAddresses(CHAIN, 1)).toEqual(1)
-    expect(prefixAddresses(CHAIN, 0)).toEqual(0)
-    expect(prefixAddresses(CHAIN, -0)).toEqual(-0)
-    expect(prefixAddresses(CHAIN, -1)).toEqual(-1)
-    expect(prefixAddresses(CHAIN, false)).toEqual(false)
-    expect(prefixAddresses(CHAIN, true)).toEqual(true)
+    expect(prefixAddresses(CHAIN, 'foo')).toBe('foo')
+    expect(prefixAddresses(CHAIN, 1)).toBe(1)
+    expect(prefixAddresses(CHAIN, 0)).toBe(0)
+    expect(prefixAddresses(CHAIN, -0)).toBe(-0)
+    expect(prefixAddresses(CHAIN, -1)).toBe(-1)
+    expect(prefixAddresses(CHAIN, false)).toBe(false)
+    expect(prefixAddresses(CHAIN, true)).toBe(true)
   })
 
   it('does nothing to arrays with primitives', () => {
@@ -26,7 +26,7 @@ describe(prefixAddresses.name, () => {
 
   it('prefixes a string address', () => {
     const address = '0x33D66941465ac776C38096cb1bc496C673aE7390'
-    expect(prefixAddresses(CHAIN, address)).toEqual(
+    expect(prefixAddresses(CHAIN, address)).toBe(
       'eth:0x33D66941465ac776C38096cb1bc496C673aE7390',
     )
   })
@@ -39,7 +39,7 @@ describe(prefixAddresses.name, () => {
     ]
 
     for (const address of addresses) {
-      expect(prefixAddresses(CHAIN, address)).toEqual(
+      expect(prefixAddresses(CHAIN, address)).toBe(
         'eth:0x33D66941465ac776C38096cb1bc496C673aE7390',
       )
     }

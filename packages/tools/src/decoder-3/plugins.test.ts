@@ -20,9 +20,9 @@ describe('packed argument plugin', () => {
     })
     const decoded = decode(calldata, [], 1, FACTORY)
 
-    expect(decoded?.functionName).toEqual('setImplementation')
+    expect(decoded?.functionName).toBe('setImplementation')
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('tuple')
+    expect(args?.type).toBe('tuple')
     expect(args?.members?.map(({ name, value }) => ({ name, value }))).toEqual([
       {
         name: 'absolutePrestate',
@@ -59,7 +59,7 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('bytes')
+    expect(args?.type).toBe('bytes')
     expect(args?.value).toEqual(GAME_ARGS)
   })
 
@@ -72,7 +72,7 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toEqual('bytes')
-    expect(args?.value).toEqual('0xdeadbeef')
+    expect(args?.type).toBe('bytes')
+    expect(args?.value).toBe('0xdeadbeef')
   })
 })

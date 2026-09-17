@@ -35,9 +35,9 @@ describe(layoutRelationGraph.name, () => {
     ) {
       throw new Error('Expected four graph clusters')
     }
-    expect(first.x < second.x).toEqual(true)
-    expect(first.y < third.y).toEqual(true)
-    expect(third.x < fourth.x).toEqual(true)
+    expect(first.x < second.x).toBe(true)
+    expect(first.y < third.y).toBe(true)
+    expect(third.x < fourth.x).toBe(true)
   })
 })
 

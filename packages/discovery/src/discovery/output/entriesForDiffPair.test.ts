@@ -19,7 +19,7 @@ describe(entriesForDiffPair.name, () => {
       }),
     )
 
-    expect(entries.length).toEqual(1)
+    expect(entries.length).toBe(1)
     expect(entries.at(0)?.receivedPermissions).toEqual([perm(COUNCIL)])
   })
 
@@ -33,7 +33,7 @@ describe(entriesForDiffPair.name, () => {
       }),
     )
 
-    expect(entries.length).toEqual(2)
+    expect(entries.length).toBe(2)
     expect(entries.at(1)).toEqual({
       type: 'Reference',
       address: COUNCIL,
@@ -53,10 +53,10 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toEqual(1)
+    expect(diff.length).toBe(1)
     expect(diff.at(0)?.address).toEqual(COUNCIL)
-    expect(diff.at(0)?.type).toEqual(undefined)
-    expect(diff.at(0)?.diff?.at(0)?.key).toEqual('receivedPermissions')
+    expect(diff.at(0)?.type).toBe(undefined)
+    expect(diff.at(0)?.diff?.at(0)?.key).toBe('receivedPermissions')
   })
 
   it('reports a removed external permission the same way', () => {
@@ -67,12 +67,12 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toEqual(1)
+    expect(diff.length).toBe(1)
     expect(diff.at(0)?.address).toEqual(COUNCIL)
-    expect(diff.at(0)?.type).toEqual(undefined)
+    expect(diff.at(0)?.type).toBe(undefined)
     // Rendered as `external contract`, so the reader can tell it apart from
     // something this project discovered itself.
-    expect(diff.at(0)?.addressType).toEqual('Reference')
+    expect(diff.at(0)?.addressType).toBe('Reference')
   })
 
   it('says nothing when the external holder is unchanged', () => {
@@ -100,10 +100,10 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toEqual(1)
+    expect(diff.length).toBe(1)
     expect(diff.at(0)?.address).toEqual(COUNCIL)
-    expect(diff.at(0)?.type).toEqual('created')
-    expect(diff.at(0)?.addressType).toEqual('Contract')
+    expect(diff.at(0)?.type).toBe('created')
+    expect(diff.at(0)?.addressType).toBe('Contract')
   })
 
   it('leaves a removed contract a deletion, permission or not', () => {
@@ -114,8 +114,8 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toEqual(1)
-    expect(diff.at(0)?.type).toEqual('deleted')
+    expect(diff.length).toBe(1)
+    expect(diff.at(0)?.type).toBe('deleted')
   })
 
   it('never lists an address twice', () => {
@@ -141,8 +141,8 @@ describe(entriesForDiffPair.name, () => {
 
       const diff = diffDiscovery(...entriesForDiffPair(previous, current))
 
-      expect(diff.length).toEqual(1)
-      expect(diff[0]?.type).toEqual(undefined)
+      expect(diff.length).toBe(1)
+      expect(diff[0]?.type).toBe(undefined)
       expect(diff[0]?.diff?.map((field) => field.key) ?? []).toContain(
         'receivedPermissions',
       )

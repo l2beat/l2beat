@@ -16,11 +16,11 @@ describe(createPrivacyAnonymitySetConfigurationId.name, () => {
         extractor: 'fixedAmount',
         params: { amount: '1000000000000000000' },
       }),
-    ).toEqual('c33ffb1b7442')
+    ).toBe('c33ffb1b7442')
   })
 
   it('serializes parameters in key order', () => {
-    expect(stringifyPrivacyConfigurationParams({ z: 1, a: 'two' })).toEqual(
+    expect(stringifyPrivacyConfigurationParams({ z: 1, a: 'two' })).toBe(
       'a=two,z=1',
     )
   })

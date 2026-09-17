@@ -13,7 +13,7 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toEqual(123)
+      expect(result).toBe(123)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

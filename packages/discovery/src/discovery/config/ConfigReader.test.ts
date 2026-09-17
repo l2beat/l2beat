@@ -60,7 +60,7 @@ describe('resolveImports', () => {
     })
 
     const result = reader.resolveImports('/base', ['parent.jsonc'], new Set())
-    expect((result as any).maxDepth).toEqual(123)
+    expect((result as any).maxDepth).toBe(123)
   })
 })
 
@@ -80,8 +80,8 @@ describe('config and discovery resolution', () => {
 
       const reader = new ConfigReader('/base')
 
-      expect(reader.resolveProjectPath('project1')).toEqual('/base/project1')
-      expect(reader.resolveProjectPath('project2')).toEqual('/base/project2')
+      expect(reader.resolveProjectPath('project1')).toBe('/base/project1')
+      expect(reader.resolveProjectPath('project2')).toBe('/base/project2')
     })
 
     it('should throw error when project not found', () => {
@@ -173,8 +173,8 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
       const config = reader.readConfig('usdc')
 
-      expect(config.structure.name).toEqual('usdc')
-      expect(config.structure.maxAddresses).toEqual(10)
+      expect(config.structure.name).toBe('usdc')
+      expect(config.structure.maxAddresses).toBe(10)
     })
   })
 

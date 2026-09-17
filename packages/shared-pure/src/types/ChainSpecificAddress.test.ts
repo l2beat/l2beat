@@ -66,14 +66,14 @@ describe(ChainSpecificAddress.name, () => {
     it('creates a random address', () => {
       const address = ChainSpecificAddress.random()
       expect(address).toBeTypeOf('string')
-      expect(ChainSpecificAddress.check(address)).toEqual(true)
+      expect(ChainSpecificAddress.check(address)).toBe(true)
     })
 
     it('creates a random address on different chain', () => {
       const address = ChainSpecificAddress.random('arb1')
       expect(address).toBeTypeOf('string')
-      expect(address.startsWith('arb1:')).toEqual(true)
-      expect(ChainSpecificAddress.check(address)).toEqual(true)
+      expect(address.startsWith('arb1:')).toBe(true)
+      expect(ChainSpecificAddress.check(address)).toBe(true)
     })
 
     it('creates different addresses', () => {
@@ -92,8 +92,8 @@ describe(ChainSpecificAddress.name, () => {
         '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
       expect(address).toBeTypeOf('string')
-      expect(ChainSpecificAddress.check(address)).toEqual(true)
-      expect(address.toString()).toEqual(
+      expect(ChainSpecificAddress.check(address)).toBe(true)
+      expect(address.toString()).toBe(
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
     })
@@ -104,8 +104,8 @@ describe(ChainSpecificAddress.name, () => {
         '0x33D66941465ac776C38096cb1bc496C673aE7390',
       )
       expect(address).toBeTypeOf('string')
-      expect(ChainSpecificAddress.check(address)).toEqual(true)
-      expect(address.toString()).toEqual(
+      expect(ChainSpecificAddress.check(address)).toBe(true)
+      expect(address.toString()).toBe(
         'base:0x33D66941465ac776C38096cb1bc496C673aE7390',
       )
     })
@@ -118,8 +118,8 @@ describe(ChainSpecificAddress.name, () => {
         '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
       expect(address).toBeTypeOf('string')
-      expect(ChainSpecificAddress.check(address)).toEqual(true)
-      expect(address.toString()).toEqual(
+      expect(ChainSpecificAddress.check(address)).toBe(true)
+      expect(address.toString()).toBe(
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
       )
     })
@@ -143,12 +143,12 @@ describe(ChainSpecificAddress.name, () => {
   describe(ChainSpecificAddress.chain.name, () => {
     it('eth', () => {
       const address = ChainSpecificAddress.random('eth')
-      expect(ChainSpecificAddress.chain(address)).toEqual('eth')
+      expect(ChainSpecificAddress.chain(address)).toBe('eth')
     })
 
     it('arb1', () => {
       const address = ChainSpecificAddress.random('arb1')
-      expect(ChainSpecificAddress.chain(address)).toEqual('arb1')
+      expect(ChainSpecificAddress.chain(address)).toBe('arb1')
     })
   })
 

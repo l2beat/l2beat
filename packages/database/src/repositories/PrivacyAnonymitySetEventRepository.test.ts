@@ -19,7 +19,7 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     await repository.upsertMany([initial])
 
     const updated = { ...initial, sender: 'bob', amount: 20n }
-    expect(await repository.upsertMany([updated])).toEqual(1)
+    expect(await repository.upsertMany([updated])).toBe(1)
     expect(await repository.getAll()).toEqual([updated])
   })
 
@@ -73,7 +73,7 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
         START,
         START + UnixTime.HOUR,
       ),
-    ).toEqual(2)
+    ).toBe(2)
 
     const actual = await repository.getAll()
     expect(actual).toHaveLength(2)

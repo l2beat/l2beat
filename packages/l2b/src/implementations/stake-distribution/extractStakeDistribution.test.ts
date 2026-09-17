@@ -20,16 +20,16 @@ describe(extractStakeDistribution.name, () => {
   it('keeps source metadata so regeneration never drops it', () => {
     const output = extractStakeDistribution(dataset, 10)
 
-    expect(output.validatorCount).toEqual(105)
-    expect(output.stakeToken).toEqual('POL')
-    expect(output.totalStake).toEqual(3_500_000_000)
+    expect(output.validatorCount).toBe(105)
+    expect(output.stakeToken).toBe('POL')
+    expect(output.totalStake).toBe(3_500_000_000)
   })
 
   it('stamps the fetch time when the source has no snapshot date', () => {
     const before = Date.now()
     const output = extractStakeDistribution(dataset, 10)
 
-    expect(output.dateType).toEqual('fetched')
+    expect(output.dateType).toBe('fetched')
     const fetchedAt = Date.parse(output.date)
     expect(fetchedAt).toBeGreaterThanOrEqual(before)
     expect(fetchedAt).toBeLessThanOrEqual(Date.now())
@@ -41,8 +41,8 @@ describe(extractStakeDistribution.name, () => {
       10,
     )
 
-    expect(output.dateType).toEqual('snapshot')
-    expect(output.date).toEqual('2026-08-05')
+    expect(output.dateType).toBe('snapshot')
+    expect(output.date).toBe('2026-08-05')
   })
 
   it('sorts entities by stake and applies the limit', () => {
@@ -60,6 +60,6 @@ describe(extractStakeDistribution.name, () => {
       10,
     )
 
-    expect('entities' in output).toEqual(false)
+    expect('entities' in output).toBe(false)
   })
 })

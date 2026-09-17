@@ -37,7 +37,7 @@ describe('getProjects', () => {
     for (const project of projects) {
       it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
         expect(project.slug).toMatch(/^[a-z\-\d]+$/)
-        expect(ids.has(project.id)).toEqual(false)
+        expect(ids.has(project.id)).toBe(false)
         ids.add(project.id)
         if (project.slug === 'near') {
           // This project is an exception.
@@ -47,11 +47,11 @@ describe('getProjects', () => {
           return
         }
 
-        expect(slugs.has(project.slug)).toEqual(false)
+        expect(slugs.has(project.slug)).toBe(false)
         slugs.add(project.slug)
 
         const dir = `./src/projects/${project.id}/${project.id}.ts`
-        expect(existsSync(dir)).toEqual(true)
+        expect(existsSync(dir)).toBe(true)
       })
     }
   })
@@ -65,8 +65,8 @@ describe('getProjects', () => {
         continue
       }
       it(project.name, () => {
-        expect(project.statuses).not.toEqual(undefined)
-        expect(project.display).not.toEqual(undefined)
+        expect(project.statuses).not.toBe(undefined)
+        expect(project.display).not.toBe(undefined)
       })
     }
   })
@@ -126,7 +126,7 @@ describe('getProjects', () => {
     for (const project of projects) {
       if (project.display) {
         it(project.name, () => {
-          expect(project.display?.description.endsWith('.')).toEqual(true)
+          expect(project.display?.description.endsWith('.')).toBe(true)
         })
       }
     }
@@ -212,7 +212,7 @@ describe('getProjects', () => {
         it(`${project.id} economicSecurity is supported in BE code`, () => {
           expect(
             SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
-          ).toEqual(true)
+          ).toBe(true)
         })
       }
     }
@@ -230,7 +230,7 @@ describe('getProjects', () => {
         it(`${project.id} dynamic type validators is supported in BE code`, () => {
           expect(
             SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
-          ).toEqual(true)
+          ).toBe(true)
         })
       }
     }
@@ -313,13 +313,13 @@ describe('getProjects', () => {
       describe(project.id, () => {
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
-            expect(liveTvsProjects.has(usedIn)).toEqual(true)
+            expect(liveTvsProjects.has(usedIn)).toBe(true)
           })
         }
 
         for (const tvsProject of currentProjectsForTvsSection) {
           it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
-            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
+            expect(usedInVerifiersSet.has(tvsProject)).toBe(true)
           })
         }
       })
@@ -361,7 +361,7 @@ describe('getProjects', () => {
       if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
       for (const verifier of project.contracts.zkVerifiers) {
         it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
-          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+          expect(zkCatalogAddresses.has(verifier)).toBe(true)
         })
       }
     }
@@ -382,7 +382,7 @@ describe('getProjects', () => {
       if (!allTvsProjectsArchived) continue
 
       it(`${project.id} should be archived because all projects using it are archived`, () => {
-        expect(project.archivedAt).not.toEqual(undefined)
+        expect(project.archivedAt).not.toBe(undefined)
       })
     }
   })
@@ -395,7 +395,7 @@ describe('getProjects', () => {
         if (dependency.type !== 'tracked') continue
 
         it(`${project.id} tracked dependency ${dependency.projectId} exists`, () => {
-          expect(projectsById.has(dependency.projectId)).toEqual(true)
+          expect(projectsById.has(dependency.projectId)).toBe(true)
         })
       }
     }
@@ -423,21 +423,21 @@ describe('getProjects', () => {
             if (amounts === undefined) continue
 
             expect(amounts.length).toBeGreaterThan(0)
-            expect(trackedBucketIds.has(bucket.id)).toEqual(false)
+            expect(trackedBucketIds.has(bucket.id)).toBe(false)
             trackedBucketIds.add(bucket.id)
 
             configuredBuckets++
             for (const amount of amounts) {
               expect(amount).toMatch(/^[1-9]\d*$/)
               const seriesId = `${bucket.id}:${amount}`
-              expect(seriesIds.has(seriesId)).toEqual(false)
+              expect(seriesIds.has(seriesId)).toBe(false)
               seriesIds.add(seriesId)
             }
           }
         }
 
         if (state?.type === 'not-applicable') {
-          expect(configuredBuckets).toEqual(0)
+          expect(configuredBuckets).toBe(0)
         }
       })
     }
@@ -554,7 +554,7 @@ describe('getProjects', () => {
     it('every name is unique', () => {
       const encountered = new Set()
       for (const chain of chains) {
-        expect(encountered.has(chain.name)).toEqual(false)
+        expect(encountered.has(chain.name)).toBe(false)
         encountered.add(chain.name)
       }
     })
@@ -574,7 +574,7 @@ describe('getProjects', () => {
       const encountered = new Set()
       for (const chain of chains) {
         if (encountered.has(chain.chainId)) {
-          expect(chain.chainId).toEqual(undefined)
+          expect(chain.chainId).toBe(undefined)
         }
         encountered.add(chain.chainId)
       }
@@ -947,7 +947,7 @@ describe('getProjects', () => {
       const associated = project.tvsConfig?.filter((t) => t.isAssociated)
       for (const a of associated) {
         it(`${project.name}: ${a.id}`, () => {
-          expect(a.category).toEqual('other')
+          expect(a.category).toBe('other')
         })
       }
     }

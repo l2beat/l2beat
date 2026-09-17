@@ -114,9 +114,9 @@ describe(NameService.name, () => {
         ]),
       )
 
-      expect(mockOperation.children[0].methodName).toEqual('name1')
-      expect(mockOperation.children[1].methodName).toEqual('name2')
-      expect(mockOperation.children[2].methodName).toEqual('name3')
+      expect(mockOperation.children[0].methodName).toBe('name1')
+      expect(mockOperation.children[1].methodName).toBe('name2')
+      expect(mockOperation.children[2].methodName).toBe('name3')
     })
   })
 
@@ -162,8 +162,8 @@ describe(NameService.name, () => {
         ]),
       )
 
-      expect(mockOperation.children[0].contractName).toEqual('name1')
-      expect(mockOperation.children[1].contractName).toEqual('name2')
+      expect(mockOperation.children[0].contractName).toBe('name1')
+      expect(mockOperation.children[1].contractName).toBe('name2')
     })
   })
 

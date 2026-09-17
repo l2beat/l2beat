@@ -174,9 +174,9 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.transferCount).toEqual(2)
-      expect(result.transfersWithDurationCount).toEqual(1)
-      expect(result.totalDurationSum).toEqual(5000)
+      expect(result.transferCount).toBe(2)
+      expect(result.transfersWithDurationCount).toBe(1)
+      expect(result.totalDurationSum).toBe(5000)
       expect(result.transferTypeStats).toEqual({
         deposit: { transferCount: 1, totalDurationSum: 5000 },
       })
@@ -204,8 +204,8 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.srcValueUsd).toEqual(3000.23)
-      expect(result.dstValueUsd).toEqual(5001.21)
+      expect(result.srcValueUsd).toBe(3000.23)
+      expect(result.dstValueUsd).toBe(5001.21)
     })
 
     it('correctly buckets transfers by size', () => {
@@ -323,7 +323,7 @@ describe('aggregation', () => {
       //             = 10,000,000 + 18,000,000 + 6,000,000
       //             = 34,000,000
       // avgValueInFlight = 34,000,000 / 86,400 ≈ 393.52
-      expect(result.avgValueInFlight).toEqual(393.52)
+      expect(result.avgValueInFlight).toBe(393.52)
     })
 
     it('calculates average value at risk using dstValueUsd when srcValueUsd is undefined', () => {
@@ -354,7 +354,7 @@ describe('aggregation', () => {
       //             = 10,000,000 + 18,000,000
       //             = 28,000,000
       // avgValueInFlight = 28,000,000 / 86,400 ≈ 324.07
-      expect(result.avgValueInFlight).toEqual(324.07)
+      expect(result.avgValueInFlight).toBe(324.07)
     })
 
     it('sums net mint and burn for strict lock-and-mint flags', () => {
@@ -397,8 +397,8 @@ describe('aggregation', () => {
 
       // mintedValueUsd = 2000 + 1000 = 3000
       // burnedValueUsd = 2000
-      expect(result.mintedValueUsd).toEqual(3000)
-      expect(result.burnedValueUsd).toEqual(2000)
+      expect(result.mintedValueUsd).toBe(3000)
+      expect(result.burnedValueUsd).toBe(2000)
     })
 
     it('ignores transfers that are not minting or burning', () => {
@@ -440,8 +440,8 @@ describe('aggregation', () => {
       })
 
       // Only the first transfer counts (minting); no burn total → field omitted
-      expect(result.mintedValueUsd).toEqual(2000)
-      expect(result.burnedValueUsd).toEqual(undefined)
+      expect(result.mintedValueUsd).toBe(2000)
+      expect(result.burnedValueUsd).toBe(undefined)
     })
 
     it('two-sided transfers omit net mint or burn unless src/dst booleans are strict pairs', () => {
@@ -460,7 +460,7 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       ).mintedValueUsd
 
-      expect(mintNeedsExplicitNotBurn).toEqual(undefined)
+      expect(mintNeedsExplicitNotBurn).toBe(undefined)
 
       const burnNeedsExplicitNotMint = getAggregatedTransfer(
         [
@@ -477,7 +477,7 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       ).burnedValueUsd
 
-      expect(burnNeedsExplicitNotMint).toEqual(undefined)
+      expect(burnNeedsExplicitNotMint).toBe(undefined)
     })
 
     it('one-sided transfers use loose burn/mint booleans for net minted', () => {
@@ -497,7 +497,7 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       ).mintedValueUsd
 
-      expect(mintOnlyDstFlag).toEqual(10)
+      expect(mintOnlyDstFlag).toBe(10)
 
       const burnOnlySrcFlag = getAggregatedTransfer(
         [
@@ -515,7 +515,7 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       ).burnedValueUsd
 
-      expect(burnOnlySrcFlag).toEqual(10)
+      expect(burnOnlySrcFlag).toBe(10)
     })
 
     it('omits net mint and burn when both burn/mint booleans are unset', () => {
@@ -535,8 +535,8 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       )
 
-      expect(twoSided.mintedValueUsd).toEqual(undefined)
-      expect(twoSided.burnedValueUsd).toEqual(undefined)
+      expect(twoSided.mintedValueUsd).toBe(undefined)
+      expect(twoSided.burnedValueUsd).toBe(undefined)
 
       const oneSided = getAggregatedTransfer(
         [
@@ -555,8 +555,8 @@ describe('aggregation', () => {
         { calculateNetMinted: true },
       )
 
-      expect(oneSided.mintedValueUsd).toEqual(undefined)
-      expect(oneSided.burnedValueUsd).toEqual(undefined)
+      expect(oneSided.mintedValueUsd).toBe(undefined)
+      expect(oneSided.burnedValueUsd).toBe(undefined)
     })
 
     it('correctly counts identified transfers', () => {
@@ -605,7 +605,7 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.identifiedCount).toEqual(4)
+      expect(result.identifiedCount).toBe(4)
     })
 
     it('tracks duration stats separately for each transfer type', () => {
@@ -718,9 +718,9 @@ describe('aggregation', () => {
       const result = getAggregatedTokens(transfers)
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.transferCount).toEqual(2)
-      expect(result[0]?.transfersWithDurationCount).toEqual(1)
-      expect(result[0]?.totalDurationSum).toEqual(5000)
+      expect(result[0]?.transferCount).toBe(2)
+      expect(result[0]?.transfersWithDurationCount).toBe(1)
+      expect(result[0]?.totalDurationSum).toBe(5000)
       expect(result[0]?.transferTypeStats).toEqual({
         deposit: { transferCount: 1, totalDurationSum: 5000 },
       })
@@ -1062,16 +1062,16 @@ describe('aggregation', () => {
         const btcToken = result.find((t) => t.abstractTokenId === 'btc')
 
         // ETH: burned 5000, minted 1000
-        expect(ethToken?.burnedValueUsd).toEqual(5000)
-        expect(ethToken?.mintedValueUsd).toEqual(1000)
+        expect(ethToken?.burnedValueUsd).toBe(5000)
+        expect(ethToken?.mintedValueUsd).toBe(1000)
 
         // USDC: minted 4000 (from different token transfer)
-        expect(usdcToken?.mintedValueUsd).toEqual(4000)
-        expect(usdcToken?.burnedValueUsd).toEqual(0)
+        expect(usdcToken?.mintedValueUsd).toBe(4000)
+        expect(usdcToken?.burnedValueUsd).toBe(0)
 
         // BTC: minted 3000 (from same token transfer)
-        expect(btcToken?.mintedValueUsd).toEqual(3000)
-        expect(btcToken?.burnedValueUsd).toEqual(0)
+        expect(btcToken?.mintedValueUsd).toBe(3000)
+        expect(btcToken?.burnedValueUsd).toBe(0)
       })
 
       it('handles undefined USD values by using fallback values', () => {
@@ -1109,8 +1109,8 @@ describe('aggregation', () => {
         })
 
         const ethToken = result.find((t) => t.abstractTokenId === 'eth')
-        expect(ethToken?.burnedValueUsd).toEqual(1500) // uses dstValueUsd fallback
-        expect(ethToken?.mintedValueUsd).toEqual(2000) // uses srcValueUsd fallback
+        expect(ethToken?.burnedValueUsd).toBe(1500) // uses dstValueUsd fallback
+        expect(ethToken?.mintedValueUsd).toBe(2000) // uses srcValueUsd fallback
       })
 
       it('attributes net minted values to known token when opposite token is missing', () => {
@@ -1150,11 +1150,11 @@ describe('aggregation', () => {
         const axsToken = result.find((t) => t.abstractTokenId === 'axs')
         const usdcToken = result.find((t) => t.abstractTokenId === 'usdc')
 
-        expect(axsToken?.mintedValueUsd).toEqual(35.43)
-        expect(axsToken?.burnedValueUsd).toEqual(0)
+        expect(axsToken?.mintedValueUsd).toBe(35.43)
+        expect(axsToken?.burnedValueUsd).toBe(0)
 
-        expect(usdcToken?.burnedValueUsd).toEqual(12.5)
-        expect(usdcToken?.mintedValueUsd).toEqual(0)
+        expect(usdcToken?.burnedValueUsd).toBe(12.5)
+        expect(usdcToken?.mintedValueUsd).toBe(0)
       })
     })
   })
@@ -1231,9 +1231,9 @@ describe('aggregation', () => {
       const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.tokenA).toEqual('eth___')
-      expect(result[0]?.tokenB).toEqual('usdc__')
-      expect(result[0]?.transferCount).toEqual(2)
+      expect(result[0]?.tokenA).toBe('eth___')
+      expect(result[0]?.tokenB).toBe('usdc__')
+      expect(result[0]?.transferCount).toBe(2)
     })
 
     it('handles same-token pairs (ETH->ETH)', () => {
@@ -1253,9 +1253,9 @@ describe('aggregation', () => {
       const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.tokenA).toEqual('eth___')
-      expect(result[0]?.tokenB).toEqual('eth___')
-      expect(result[0]?.transferCount).toEqual(1)
+      expect(result[0]?.tokenA).toBe('eth___')
+      expect(result[0]?.tokenB).toBe('eth___')
+      expect(result[0]?.transferCount).toBe(1)
     })
 
     it('aggregates transfers with missing token IDs into unknown pair', () => {
@@ -1309,12 +1309,12 @@ describe('aggregation', () => {
       const knownPair = result.find(
         (r) => r.tokenA === 'eth___' && r.tokenB === 'usdc__',
       )
-      expect(knownPair?.transferCount).toEqual(1)
-      expect(knownPair?.volume).toEqual(3000)
+      expect(knownPair?.transferCount).toBe(1)
+      expect(knownPair?.volume).toBe(3000)
 
       const unknownPair = result.find((r) => r.tokenA === 'unknown')
-      expect(unknownPair?.transferCount).toEqual(3)
-      expect(unknownPair?.volume).toEqual(3500)
+      expect(unknownPair?.transferCount).toBe(3)
+      expect(unknownPair?.volume).toBe(3500)
     })
 
     it('tracks transfer type stats per pair', () => {

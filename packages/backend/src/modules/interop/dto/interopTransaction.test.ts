@@ -48,7 +48,7 @@ describe('interopTransaction', () => {
       )
 
       assert(tx.kind === 'bundle')
-      expect(tx.type).toEqual('118')
+      expect(tx.type).toBe('118')
       expect(tx.calls).toEqual([{ to: ADDRESS_3, value: 7n, data: '0xbeef' }])
     })
 
@@ -171,7 +171,7 @@ describe('interopTransaction', () => {
           ),
           [ADDRESS_3],
         ),
-      ).toEqual(9n)
+      ).toBe(9n)
     })
   })
 })

@@ -8,27 +8,27 @@ describe(getNetMintedValueUsd.name, () => {
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
       }),
-    ).toEqual(undefined)
+    ).toBe(undefined)
   })
 
   it('treats a missing side as zero when the other is present', () => {
     expect(
       getNetMintedValueUsd({ mintedValueUsd: 100, burnedValueUsd: undefined }),
-    ).toEqual(100)
+    ).toBe(100)
     expect(
       getNetMintedValueUsd({ mintedValueUsd: undefined, burnedValueUsd: 40 }),
-    ).toEqual(-40)
+    ).toBe(-40)
   })
 
   it('subtracts when both are present', () => {
     expect(
       getNetMintedValueUsd({ mintedValueUsd: 100, burnedValueUsd: 25 }),
-    ).toEqual(75)
+    ).toBe(75)
   })
 
   it('allows both sides to be zero', () => {
-    expect(
-      getNetMintedValueUsd({ mintedValueUsd: 0, burnedValueUsd: 0 }),
-    ).toEqual(0)
+    expect(getNetMintedValueUsd({ mintedValueUsd: 0, burnedValueUsd: 0 })).toBe(
+      0,
+    )
   })
 })
