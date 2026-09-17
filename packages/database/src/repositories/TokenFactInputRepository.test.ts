@@ -73,8 +73,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(3)
       const actual = result.map(withoutId)
-      expect(actual).toHaveLength(records.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(records))
+      expect(sortByArguments(actual)).toStrictEqual(sortByArguments(records))
     })
 
     it('handles empty array', async () => {
@@ -100,8 +99,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(1500)
       const actual = result.map(withoutId)
-      expect(actual).toHaveLength(records.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(records))
+      expect(sortByArguments(actual)).toStrictEqual(sortByArguments(records))
     })
   })
 
@@ -139,8 +137,9 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(2)
       const actual = result.map(withoutId)
-      expect(actual).toHaveLength(matchingRecords.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(matchingRecords))
+      expect(sortByArguments(actual)).toStrictEqual(
+        sortByArguments(matchingRecords),
+      )
     })
   })
 
@@ -178,4 +177,13 @@ function withoutId(
     arguments: record.arguments,
     context: record.context,
   }
+}
+
+/**
+ * Every record in these tests has unique `arguments`, so sorting on it gives a
+ * deterministic order to compare 1500-row results without a quadratic
+ * `expect.arrayContaining`, which timed out in CI.
+ */
+function sortByArguments<T extends { arguments: string }>(records: T[]): T[] {
+  return [...records].sort((a, b) => a.arguments.localeCompare(b.arguments))
 }
