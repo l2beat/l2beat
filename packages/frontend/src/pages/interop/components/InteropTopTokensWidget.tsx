@@ -13,6 +13,11 @@ import { InteropTokenRow, type InteropTokenRowData } from './InteropTokenRow'
 import type { InteropTransferDefaults } from './InteropTransferTrigger'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
+// Tabs default to `size-full flex-1`; keep these chips at their natural width
+// so a chip that wraps onto its own row does not stretch across the widget.
+const TAB_TRIGGER_CLASS_NAME =
+  'size-auto flex-none gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]'
+
 export interface TopTokensTab {
   id: string
   iconUrl: string
@@ -63,17 +68,14 @@ export function InteropTopTokensWidget({
         variant="highlighted"
       >
         <TabsList className={cn('gap-1 bg-transparent p-0', tabsListClassName)}>
-          <TabsTrigger
-            value="all"
-            className="rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
-          >
+          <TabsTrigger value="all" className={TAB_TRIGGER_CLASS_NAME}>
             All
           </TabsTrigger>
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="flex items-center gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
+              className={TAB_TRIGGER_CLASS_NAME}
             >
               <img
                 src={tab.iconUrl}
