@@ -52,7 +52,6 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
           dataKey="ratio"
           fillOpacity={1}
           fill="url(#fillRatio)"
-          strokeWidth={2}
           stroke={chartMeta.ratio.color}
           dot={false}
           isAnimationActive={false}

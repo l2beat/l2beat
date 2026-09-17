@@ -1,6 +1,6 @@
 {
   "name": "gnosis",
-  "timestamp": 1784814886,
+  "timestamp": 1789471900,
   "configHash": "0x7ab3b29a938d98485abe4a6ff516dd65df1f389827a732b2149aa7ca200dadf4",
   "entries": [
     {
@@ -11,11 +11,6 @@
     {
       "name": "Safe EOA 1",
       "address": "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -74,7 +69,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 15 (53%)",
-        "nonce": 92,
+        "nonce": 93,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -175,17 +170,17 @@
         "gasPrice": 100000000000,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20657,
+        "getCurrentDay": 20711,
         "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
         "HASHI_IS_ENABLED": true,
         "HASHI_IS_MANDATORY": false,
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49",
         "isInitialized": true,
-        "maxAvailablePerTx": "9851698511524151379386246",
+        "maxAvailablePerTx": "9999441955479143136867642",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 6533,
+        "nonce": 7041,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -244,7 +239,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -358,7 +353,41 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x38d1f93af4f5e2dfafd980746296a0d3cf287e61c748fc95f684b0ac2164a2ff",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -490,7 +519,7 @@
         "bridgeContract": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20657,
+        "getCurrentDay": 20711,
         "implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
@@ -595,6 +624,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xA2746D5eE860a6A9cbb79C34533313144d467CA8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WETHOmnibridgeRouter",
       "address": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a",
       "type": "Contract",
@@ -630,11 +664,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
       "type": "EOA",
       "proxyType": "EOA"
@@ -656,11 +685,6 @@
     },
     {
       "address": "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -724,12 +748,12 @@
         "$implementation": "eth:0x6943A218d58135793F1FE619414eD476C37ad65a",
         "$members": [
           "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
-          "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
           "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
           "eth:0x82b00cA9D162859f645B51967746E55bb6498DfC",
           "eth:0x2245bFAD58a6cD50e9e413084d4091C497281911",
           "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13",
-          "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+          "eth:0xA2746D5eE860a6A9cbb79C34533313144d467CA8",
+          "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
         ],
         "$pastUpgrades": [
           [
@@ -794,12 +818,12 @@
         "$implementation": "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
         "$members": [
           "eth:0x258667E543C913264388B33328337257aF208a8f",
-          "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
           "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
           "eth:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2",
           "eth:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55",
           "eth:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE",
-          "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+          "eth:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624",
+          "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
         ],
         "$pastUpgrades": [
           [
@@ -881,8 +905,8 @@
         ],
         "$upgradeCount": 3,
         "admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-        "get_deposit_count": "0x5697080000000000",
-        "get_deposit_root": "0x995ac9cb5953c09534c0aabff8d049fe14be66366c35135f5c6fb1fef0f0a999",
+        "get_deposit_count": "0x559c080000000000",
+        "get_deposit_root": "0x74858e1e74524f6d846d00a221d07e28cff783840766e3b0a286e427f7ba5ed5",
         "implementation": "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708",
         "paused": false,
         "stake_token": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb"
@@ -900,11 +924,6 @@
     },
     {
       "address": "gno:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -940,7 +959,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "gno:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1204,7 +1233,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 15 (53%)",
-        "nonce": 103,
+        "nonce": 104,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1259,7 +1288,7 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "GNO",
-        "totalSupply": "1432871722110512551232845",
+        "totalSupply": "1440735906645987578964733",
         "version": "1"
       },
       "fieldMeta": {
@@ -1307,12 +1336,12 @@
         "$implementation": "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791",
         "$members": [
           "gno:0x258667E543C913264388B33328337257aF208a8f",
-          "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
           "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
           "gno:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2",
           "gno:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55",
           "gno:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE",
-          "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+          "gno:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624",
+          "gno:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
         ],
         "$pastUpgrades": [
           [
@@ -1385,11 +1414,6 @@
     },
     {
       "address": "gno:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1513,7 +1537,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1593,7 +1617,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20657,
+        "getCurrentDay": 20711,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -2531,30 +2555,14 @@
     "gnosis/XDaiForeignBridge": "0xe172edcbd5dbeedf492f5d9b45aa14b91e5f43f51e3341e6f45b62e46b2bc33a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25595857, "gnosis": 47351159 },
-  "permissionsConfigHash": "0xa5f8ad297b69b49182ded935936466b3b1934fc0ba66ab65540d9640f4bb0254",
+  "usedBlockNumbers": { "ethereum": 25982580, "gnosis": 48262424 },
+  "permissionsConfigHash": "0x38b69de7f92a38e97d18050764668fa5e3caaec500bcbf160ba1a449a53f6413",
   "permissions": {
     "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
         }
@@ -2700,7 +2708,43 @@
         }
       ]
     },
+    "eth:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x82b00cA9D162859f645B51967746E55bb6498DfC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xA2746D5eE860a6A9cbb79C34533313144d467CA8": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2720,31 +2764,11 @@
         }
       ]
     },
-    "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
     "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
         }
@@ -2794,16 +2818,6 @@
         }
       ]
     },
-    "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
     "gno:0x258667E543C913264388B33328337257aF208a8f": {
       "receivedPermissions": [
         {
@@ -2815,6 +2829,26 @@
       ]
     },
     "gno:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2939,16 +2973,6 @@
       ]
     },
     "gno:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd": {
       "receivedPermissions": [
         {
           "permission": "interact",

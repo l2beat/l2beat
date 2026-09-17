@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Queues validator consolidation batches and, after an execution delay, forwards proven EIP-7251 requests to ConsolidationGateway.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }

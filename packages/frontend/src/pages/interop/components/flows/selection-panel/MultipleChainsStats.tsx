@@ -2,6 +2,12 @@ import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
@@ -204,19 +210,37 @@ function Routes({
             >
               <div className="flex items-center gap-1">
                 {srcChain && (
-                  <img
-                    src={srcChain.iconUrl}
-                    alt={srcChain.name}
-                    className="size-4"
-                  />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <img
+                        src={srcChain.iconUrl}
+                        alt={srcChain.name}
+                        className="size-4"
+                      />
+                    </TooltipTrigger>
+                    <TooltipPortal>
+                      <TooltipContent fitContent>
+                        {srcChain.name}
+                      </TooltipContent>
+                    </TooltipPortal>
+                  </Tooltip>
                 )}
                 <ArrowRightIcon className="size-4 fill-brand" />
                 {dstChain && (
-                  <img
-                    src={dstChain.iconUrl}
-                    alt={dstChain.name}
-                    className="size-4"
-                  />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <img
+                        src={dstChain.iconUrl}
+                        alt={dstChain.name}
+                        className="size-4"
+                      />
+                    </TooltipTrigger>
+                    <TooltipPortal>
+                      <TooltipContent fitContent>
+                        {dstChain.name}
+                      </TooltipContent>
+                    </TooltipPortal>
+                  </Tooltip>
                 )}
               </div>
               {isLoading ? (

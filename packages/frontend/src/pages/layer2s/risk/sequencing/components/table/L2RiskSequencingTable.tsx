@@ -1,5 +1,4 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
@@ -30,14 +29,14 @@ export function L2RiskSequencingTable({ entries }: Props) {
   })
 
   return (
-    <PrimaryCard className="mt-4">
-      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+    <>
+      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           Decentralized Sequencing
         </h2>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
       <BasicTable table={table} />
-    </PrimaryCard>
+    </>
   )
 }

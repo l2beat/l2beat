@@ -7613,7 +7613,7 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "ethereum": 25846654, "nova": 85264261 },
-  "permissionsConfigHash": "0xcf697b5973fd3945c062983ece5c3e166e1b1f784c15260587d4e8f756541531",
+  "permissionsConfigHash": "0x1f6e6050b6e564a7d70803278ca3b447086dd787ea2aa12d39bc83c6cbb85945",
   "permissions": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "directlyReceivedPermissions": [

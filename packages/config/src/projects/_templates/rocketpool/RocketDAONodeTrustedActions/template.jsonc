@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedActions",
+  "category": "gov",
+  "description": "Executes the membership changes the oracle set has voted for: accepting an invitation against a posted bond, leaving and reclaiming the bond, being removed with an optional fine, and the challenge process that removes a member who stops responding."
+}

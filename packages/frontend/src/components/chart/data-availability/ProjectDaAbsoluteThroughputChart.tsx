@@ -122,7 +122,6 @@ export function ProjectDaAbsoluteThroughputChart({
           fill={`url(#${project.id}-fill)`}
           fillOpacity={1}
           stroke={projectChartMeta.project?.color}
-          strokeWidth={2}
           isAnimationActive={false}
           dot={false}
           hide={!dataKeys.includes('project')}
@@ -132,7 +131,6 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           fillOpacity={0}
           stroke={projectChartMeta.projectTarget?.color}
-          strokeWidth={2}
           strokeDasharray={
             projectChartMeta.projectTarget?.indicatorType.strokeDasharray
           }
@@ -145,7 +143,6 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           fillOpacity={0}
           stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
           strokeDasharray={
             projectChartMeta.projectMax?.indicatorType.strokeDasharray
           }

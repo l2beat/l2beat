@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.",
+  "ignoreRelatives": ["policyEntryAt"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the guardian, install or remove external call policies, pause or unpause the gateway, and sweep stranded tokens back to the pool while paused."
+        }
+      ]
+    },
+    "guardian": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the gateway and remove external call policies."
+        }
+      ]
+    },
+    "paused": {
+      "description": "Whether new external gateway execution is paused."
+    },
+    "pool": {
+      "description": "PrivacyBoost pool authorized to execute gateway settlements.",
+      "severity": "HIGH"
+    },
+    "policyEntryAt": {
+      "handler": {
+        "type": "array",
+        "length": "{{ policyKeyCount }}",
+        "ignoreRelative": true
+      },
+      "description": "Installed external call policies: target, function selector, and allowed input/output token IDs (zero permits any token). Targets are external DeFi dependencies and are not recursively discovered.",
+      "severity": "HIGH"
+    }
+  }
+}

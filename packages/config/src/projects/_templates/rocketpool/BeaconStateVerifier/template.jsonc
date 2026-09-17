@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BeaconStateVerifier",
+  "category": "core",
+  "description": "Verifies Merkle proofs against beacon-chain state roots obtained from the consensus-layer block-root precompile. It has no owner and no configurable trust root, so validator lifecycle facts are proven rather than reported."
+}

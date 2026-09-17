@@ -410,7 +410,7 @@ export const taiko: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.mainnet.taiko.xyz',
-        callsPerMinute: 500,
+        callsPerMinute: 120,
       },
       { type: 'etherscan', chainId },
     ],

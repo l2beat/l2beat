@@ -172,6 +172,14 @@ export function FieldConfigDialog(props: Props) {
                   </SeverityButton>
                   <SeverityButton
                     onClick={() =>
+                      models.configModel.setFieldSeverity(fieldName, 'MEDIUM')
+                    }
+                    isActive={configSeverity === 'MEDIUM'}
+                  >
+                    MEDIUM
+                  </SeverityButton>
+                  <SeverityButton
+                    onClick={() =>
                       models.configModel.setFieldSeverity(fieldName, 'LOW')
                     }
                     isActive={configSeverity === 'LOW'}
@@ -272,6 +280,17 @@ export function FieldConfigDialog(props: Props) {
                         isActive={templateSeverity === 'HIGH'}
                       >
                         HIGH
+                      </SeverityButton>
+                      <SeverityButton
+                        onClick={() =>
+                          models.templateModel.setFieldSeverity(
+                            fieldName,
+                            'MEDIUM',
+                          )
+                        }
+                        isActive={templateSeverity === 'MEDIUM'}
+                      >
+                        MEDIUM
                       </SeverityButton>
                       <SeverityButton
                         onClick={() =>
@@ -428,10 +447,13 @@ const HOTKEYS = {
   severity: 's',
 } as const
 
-type Severity = 'HIGH' | 'LOW' | undefined
+type Severity = 'HIGH' | 'MEDIUM' | 'LOW' | undefined
 
 function getNextSeverity(current: Severity): Severity {
   if (current === 'HIGH') {
+    return 'MEDIUM'
+  }
+  if (current === 'MEDIUM') {
     return 'LOW'
   }
   if (current === 'LOW') {

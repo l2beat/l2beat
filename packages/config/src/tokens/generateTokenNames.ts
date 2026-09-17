@@ -1,5 +1,9 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  formatJson,
+} from '@l2beat/shared-pure'
 import { writeFileSync } from 'fs'
 import groupBy from 'lodash/groupBy'
 import path from 'path'
@@ -58,5 +62,5 @@ export function getTokenNamesFilePath() {
 }
 
 export function saveTokenNames(names: Record<string, string>) {
-  writeFileSync(getTokenNamesFilePath(), JSON.stringify({ names }, null, 2))
+  writeFileSync(getTokenNamesFilePath(), formatJson({ names }))
 }

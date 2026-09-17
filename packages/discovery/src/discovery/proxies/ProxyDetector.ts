@@ -26,6 +26,7 @@ import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getNxvProxy } from './manual/NxvProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
+import { getRailgunProxy } from './manual/RailgunProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkLighterProxy } from './manual/ZkLighterProxy'
 import { getZkLinkProxy } from './manual/ZkLinkProxy'
@@ -84,6 +85,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'ZkLink proxy': getZkLinkProxy,
   'zkLighter proxy': getZkLighterProxy,
   'NXV proxy': getNxvProxy,
+  'Railgun proxy': getRailgunProxy,
   immutable: getImmutableProxy,
 }
 

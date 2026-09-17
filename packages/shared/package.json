@@ -46,7 +46,6 @@
     "@polkadot/api": "^12.4.2",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.7",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "uuid": "^11.0.2",
@@ -55,9 +54,7 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.12",
-    "@types/node-fetch": "^2.6.2",
     "@types/stream-chain": "^2.1.0",
-    "@types/stream-json": "^1.7.7",
-    "nock": "^13.5.5"
+    "@types/stream-json": "^1.7.7"
   }
 }

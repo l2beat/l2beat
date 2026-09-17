@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreInWatchMode": ["treeCid", "treeRoot"],
   "fields": {
     "accessControl": {

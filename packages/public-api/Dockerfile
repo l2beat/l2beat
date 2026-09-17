@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG ARCH=x86_64
 ARG TURBO_TEAM
-ARG COREPACK_VERSION="^0.31.0"
+ARG COREPACK_VERSION="^0.36.0"
 
 FROM node:22.22.0 AS pruner
 ENV PNPM_HOME="/pnpm"

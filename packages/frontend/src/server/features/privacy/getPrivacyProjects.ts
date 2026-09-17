@@ -10,6 +10,8 @@ const OPTIONAL = [
   'contracts',
   'permissions',
   'discoveryInfo',
+  'discoveryUpdates',
+  'crops',
   'zkCatalogInfo',
 ] as const
 

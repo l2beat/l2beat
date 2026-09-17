@@ -107,6 +107,11 @@ export const pageLoaders = {
   PublicationPage: async () =>
     (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
+  GardenPage: async () => (await import('./garden/GardenPage')).GardenPage,
+  SubmitProtocolPage: async () =>
+    (await import('./garden/submit/SubmitProtocolPage')).SubmitProtocolPage,
+  IntegrateCropsPage: async () =>
+    (await import('./garden/integrate/IntegrateCropsPage')).IntegrateCropsPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,
   AboutUsPage: async () => (await import('./about/AboutUsPage')).AboutUsPage,
@@ -122,6 +127,8 @@ export const pageLoaders = {
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
+  NotFoundPage: async () =>
+    (await import('./not-found/NotFoundPage')).NotFoundPage,
   StagesPage: async () => (await import('./stages/StagesPage')).StagesPage,
   MonthlyUpdatePage: async () =>
     (await import('./publications/monthly-updates/MonthlyUpdatePage'))

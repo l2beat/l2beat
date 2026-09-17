@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Liquifier",
+  "category": "core",
+  "description": "Accepts whitelisted liquid staking tokens and restaked positions in exchange for eETH, later unwinding them to ETH.",
+  "ignoreMethods": ["proxiableUUID", "dummies"]
+}

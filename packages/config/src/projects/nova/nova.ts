@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
 import {
@@ -26,7 +27,7 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 const discovery = new ProjectDiscovery('nova')
 const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
 
-const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 const validatorAfkBlocks = discovery.getContractValue<number>(
   'RollupProxy',
   'validatorAfkBlocks',

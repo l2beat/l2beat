@@ -60,7 +60,7 @@ export const aevo: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
-        callsPerMinute: 800,
+        callsPerMinute: 120,
       },
       { type: 'blockscout', url: 'https://explorer.aevo.xyz/api' },
     ],

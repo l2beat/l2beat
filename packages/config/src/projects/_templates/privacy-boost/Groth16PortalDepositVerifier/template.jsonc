@@ -1,0 +1,115 @@
+{
+  // Verified storage layout: Ownable slots 0/1; vkRegistry slot 2; epochVkRegistry slot 5.
+  // Key members: IC-X array, IC-Y array, constants pointer, IC length.
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.",
+  "ignoreRelatives": ["vkInfo"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register and replace the Groth16 verification keys used to validate portal deposit epoch proofs."
+        }
+      ]
+    },
+    "supportedParams": {
+      "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "array",
+        "maxLength": 100
+      }
+    },
+    "vkInfo": {
+      "handler": {
+        "type": "array",
+        "method": "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+        "indices": "{{ supportedParams }}",
+        "ignoreRelative": true
+      },
+      "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size.",
+      "severity": "HIGH"
+    },
+    "p1_icX": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e0",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p1 (1): SSTORE2 verification key icX pointers."
+    },
+    "p1_icY": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e1",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p1 (1): SSTORE2 verification key icY pointers."
+    },
+    "p1_constants": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e2",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p1 (1): SSTORE2 verification key constants pointer."
+    },
+    "p1_icLength": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e3",
+        "returnType": "number",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p1 (1): verification key IC length."
+    },
+    "p6_icX": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0x59dd4b18488d12f51eda69757a0ed42a2010c14b564330cc74a06895e60c077b",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p6 (6): SSTORE2 verification key icX pointers."
+    },
+    "p6_icY": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0x59dd4b18488d12f51eda69757a0ed42a2010c14b564330cc74a06895e60c077c",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p6 (6): SSTORE2 verification key icY pointers."
+    },
+    "p6_constants": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x59dd4b18488d12f51eda69757a0ed42a2010c14b564330cc74a06895e60c077d",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p6 (6): SSTORE2 verification key constants pointer."
+    },
+    "p6_icLength": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x59dd4b18488d12f51eda69757a0ed42a2010c14b564330cc74a06895e60c077e",
+        "returnType": "number",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "p6 (6): verification key IC length."
+    }
+  }
+}

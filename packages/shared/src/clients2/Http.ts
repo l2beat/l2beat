@@ -1,5 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import fetch, { Headers, type RequestInit } from 'node-fetch'
+import {
+  type FetchInit,
+  fetchWithTimeout,
+} from '../clients/http/fetchWithTimeout'
+import { getRpcMetricsLabel } from '../clients/rpc/RpcMetricsContext'
 
 export interface HttpOptions {
   timeoutMs: number
@@ -7,10 +11,6 @@ export interface HttpOptions {
   metricsEnabled: boolean
   metricsFlushIntervalMs: number
   logger: Logger
-}
-
-export interface HttpRequestInit extends RequestInit {
-  metricsLabel: string
 }
 
 export interface HttpResponse {
@@ -61,30 +61,32 @@ export class Http {
     }
   }
 
-  async fetch(
-    url: string,
-    { metricsLabel, ...rest }: HttpRequestInit,
-  ): Promise<HttpResponse> {
-    const init: RequestInit = { timeout: this.timeoutMs, ...rest }
+  async fetch(url: string, init: FetchInit): Promise<HttpResponse> {
+    // Resolved here, synchronously in the caller's async context. The rate
+    // limiter dispatches later from a timer or another call's completion, so
+    // the context is not reliable inside `_fetch`.
+    const label = getRpcMetricsLabel()
+    const request: FetchInit = { timeout: this.timeoutMs, ...init }
     if (this.rateLimiter) {
-      return await this.rateLimiter.call(() =>
-        this._fetch(url, init, metricsLabel),
+      return await this.rateLimiter.call(
+        () => this._fetch(url, request, label),
+        label,
       )
     }
-    return await this._fetch(url, init, metricsLabel)
+    return await this._fetch(url, request, label)
   }
 
-  private async _fetch(
+  protected async _fetch(
     url: string,
-    init: RequestInit,
-    metricsLabel: string,
+    init: FetchInit,
+    label: string,
   ): Promise<HttpResponse> {
     const start = Date.now()
-    const res = await fetch(url, init)
+    const res = await fetchWithTimeout(url, init)
     // We need to await text because we don't know if someone wants json or not
     // and we need to actually consume the response body not just the headers
     const body = await res.text()
-    this._trackMetrics(metricsLabel, Date.now() - start, res.size)
+    this._trackMetrics(label, Date.now() - start, Buffer.byteLength(body))
     return {
       body,
       ok: res.ok,
@@ -93,13 +95,9 @@ export class Http {
     }
   }
 
-  private _trackMetrics(
-    metricsLabel: string,
-    durationMs: number,
-    size: number,
-  ) {
+  protected _trackMetrics(label: string, durationMs: number, size: number) {
     if (!this.metricsEnabled) return
-    const metrics = this.metrics[metricsLabel] ?? {
+    const metrics = this.metrics[label] ?? {
       durationTotal: 0,
       sizeTotal: 0,
       count: 0,
@@ -107,20 +105,45 @@ export class Http {
     metrics.durationTotal += durationMs
     metrics.sizeTotal += size
     metrics.count += 1
-    this.metrics[metricsLabel] = metrics
+    this.metrics[label] = metrics
   }
 
   private _flushMetrics() {
-    for (const key in this.metrics) {
-      const metrics = this.metrics[key]
-      // Note, there is no division by zero, because there are no zero count
-      // metrics
+    const rateLimiter = this.rateLimiter
+    const limiter = rateLimiter?.takeStats()
+    const labels = new Set([
+      ...Object.keys(this.metrics),
+      ...Object.keys(limiter?.labels ?? {}),
+    ])
+    for (const label of labels) {
+      const metrics = this.metrics[label] ?? {
+        durationTotal: 0,
+        sizeTotal: 0,
+        count: 0,
+      }
+      const wait = limiter?.labels[label]
       this.logger.info('Http metrics', {
+        label,
         durationTotal: metrics.durationTotal,
-        durationAvg: metrics.durationTotal / metrics.count,
+        durationAvg:
+          metrics.count > 0 ? metrics.durationTotal / metrics.count : 0,
         sizeTotal: metrics.sizeTotal,
-        sizeAvg: metrics.sizeTotal / metrics.count,
+        sizeAvg: metrics.count > 0 ? metrics.sizeTotal / metrics.count : 0,
         count: metrics.count,
+        ...(wait && {
+          waitTotal: wait.waitMsTotal,
+          waitAvg:
+            wait.dispatched > 0
+              ? Math.floor(wait.waitMsTotal / wait.dispatched)
+              : 0,
+          waitMax: wait.waitMsMax,
+          queueDepthMax: wait.queueDepthMax,
+        }),
+        ...(rateLimiter &&
+          limiter && {
+            limiterInFlightMax: limiter.inFlightMax,
+            callsPerMinute: rateLimiter.callsPerMinute,
+          }),
       })
     }
     this.metrics = {}
@@ -130,7 +153,7 @@ export class Http {
 export function makeHttpResponse(
   status: number,
   body: string,
-  headers = new Headers(),
+  headers: Headers = new Headers(),
 ): HttpResponse {
   const ok = status >= 200 && status < 300
   return { body, ok, status, headers }
@@ -138,9 +161,13 @@ export function makeHttpResponse(
 
 export class MockHttp extends Http {
   private queue: (HttpResponse | 'NETWORK_ERROR')[] = []
-  lastFetch?: { url: string; init: RequestInit }
+  lastFetch?: { url: string; init: FetchInit }
 
-  queueResponse(status: number, body: string, headers = new Headers()) {
+  queueResponse(
+    status: number,
+    body: string,
+    headers: Headers = new Headers(),
+  ) {
     this.queue.push(makeHttpResponse(status, body, headers))
     return this
   }
@@ -149,7 +176,7 @@ export class MockHttp extends Http {
     this.queue.push('NETWORK_ERROR')
   }
 
-  override fetch(url: string, init: RequestInit) {
+  override fetch(url: string, init: FetchInit) {
     this.lastFetch = { url, init }
     const res = this.queue.shift()
     if (res === 'NETWORK_ERROR') {

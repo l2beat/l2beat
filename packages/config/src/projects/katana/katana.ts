@@ -323,7 +323,7 @@ export const katana: ScalingProject = {
         forcedTxUnverifiedDescription,
       references: [
         {
-          url: 'https://etherscan.io/address/0x5decbeeefecc5353355cd79a8fecc4c03f61ce8a#code#F1#L553',
+          url: 'https://etherscan.io/address/0x3160738db14B27EAe2D0d1b622259010308f4C38#code#F1#L667',
           title:
             'depositTransaction() in OptimismPortal2 - Etherscan source code',
         },

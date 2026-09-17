@@ -38,7 +38,7 @@ export const superlumio: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.lumio.io',
-        callsPerMinute: 300,
+        callsPerMinute: 600,
       },
     ],
   },

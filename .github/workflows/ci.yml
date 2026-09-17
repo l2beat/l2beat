@@ -257,7 +257,7 @@ jobs:
         run: pnpm install
 
       - name: Test
-        run: pnpm test --reporter min
+        run: pnpm run test --reporter min
 
   test-e2e:
     name: E2E tests

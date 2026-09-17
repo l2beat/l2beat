@@ -35,6 +35,7 @@ import type { HomeL2CategoryCounts } from './components/HomeL2Card'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
+import { toHomeTopZkProver } from './toHomeTopZkProver'
 
 const TOP_CHAINS_COUNT = 5
 const TOP_PRIVACY_PROTOCOLS_COUNT = 5
@@ -187,7 +188,9 @@ async function getCachedData(manifest: Manifest) {
     topChains,
     topChainsTvsData,
     topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
-    topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
+    topZkProvers: zkCatalogEntries
+      .slice(0, TOP_ZK_PROVERS_COUNT)
+      .map(toHomeTopZkProver),
     l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,
@@ -252,7 +255,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'da' | 'zkCatalog' | 'ecosystems' | 'privacy'
+  category: 'l2' | 'da' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
   l2Category: string | undefined
 }
 
@@ -264,6 +267,7 @@ async function getRecentProjectsForHome(
       'scalingInfo',
       'daLayer',
       'ecosystemConfig',
+      'interopConfig',
       'zkCatalogInfo',
       'privacyInfo',
     ],
@@ -276,6 +280,7 @@ async function getRecentProjectsForHome(
         project.scalingInfo ||
         project.daLayer ||
         project.ecosystemConfig ||
+        project.interopConfig ||
         project.zkCatalogInfo ||
         project.privacyInfo,
     )
@@ -305,16 +310,8 @@ async function getRecentProjectsForHome(
           l2Category: undefined,
         }
       }
-      if (project.zkCatalogInfo) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/zk-catalog/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'zkCatalog' as const,
-          l2Category: undefined,
-        }
-      }
+      // Privacy is checked before the ZK Catalog: projects listed in both
+      // (e.g. Railgun, Tornado Cash) should surface as privacy projects.
       if (project.privacyInfo) {
         return {
           id: project.id.toString(),
@@ -325,12 +322,35 @@ async function getRecentProjectsForHome(
           l2Category: undefined,
         }
       }
+      if (project.zkCatalogInfo) {
+        return {
+          id: project.id.toString(),
+          name: project.name,
+          href: `/zk-catalog/${project.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+          category: 'zkCatalog' as const,
+          l2Category: undefined,
+        }
+      }
+      if (project.ecosystemConfig) {
+        return {
+          id: project.id.toString(),
+          name: project.name,
+          href: `/ecosystems/${project.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+          category: 'ecosystems' as const,
+          l2Category: undefined,
+        }
+      }
+      // Only interopConfig is left — the filter above guarantees it is set.
+      // Scaling projects that are also interop protocols are handled by the
+      // 'l2' branch, matching the redirect on /interop/protocols/:slug.
       return {
         id: project.id.toString(),
-        name: project.name,
-        href: `/ecosystems/${project.slug}`,
+        name: project.interopConfig?.name ?? project.name,
+        href: `/interop/protocols/${project.slug}`,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        category: 'ecosystems' as const,
+        category: 'interop' as const,
         l2Category: undefined,
       }
     })

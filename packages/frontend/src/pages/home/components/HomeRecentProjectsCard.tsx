@@ -6,6 +6,7 @@ import { HomeCard } from './HomeCard'
 const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   l2: 'Scaling project',
   da: 'Data Availability',
+  interop: 'Interoperability',
   zkCatalog: 'ZK Catalog',
   ecosystems: 'Ecosystem',
   privacy: 'Privacy',

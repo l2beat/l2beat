@@ -25,6 +25,8 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { etherfi } from '../projects/etherfi/etherfi'
+import { fluidkey } from '../projects/fluidkey/fluidkey'
 import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
@@ -34,6 +36,7 @@ import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lido } from '../projects/lido/lido'
 import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
@@ -51,6 +54,7 @@ import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
+import { rocketpool } from '../projects/rocketpool/rocketpool'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { stargate } from '../projects/stargate/stargate'
@@ -64,10 +68,13 @@ import { umbra } from '../projects/umbra/umbra'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { vector } from '../projects/vector/vector'
+import { wbeth } from '../projects/wbeth/wbeth'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zama } from '../projects/zama/zama'
 import { zamaCw } from '../projects/zama-cw/zama-cw'
+import { zcash } from '../projects/zcash/zcash'
+import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -92,6 +99,7 @@ export const refactored: BaseProject[] = [
   lighterprover,
   stwo,
   barretenberg,
+  zcash,
   // da-beat
   ethereum,
   avail,
@@ -141,15 +149,21 @@ export const refactored: BaseProject[] = [
   liquityv2,
   chainlink,
   uniswapv3,
+  lido,
+  etherfi,
   uniswapv4,
+  wbeth,
   polymarket,
+  rocketpool,
   // privacy
   cloaked,
+  fluidkey,
   privacyPools,
   railgun,
   strk20,
   tornadoCash,
   umbra,
   zamaCw,
+  zcashNearIntents,
   privacyBoost,
 ]

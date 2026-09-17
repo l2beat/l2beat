@@ -74,6 +74,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entries,
       abis: {},
       usedTemplates: {},
+      modelledAgainst: {},
       usedBlockNumbers: {},
     }
 

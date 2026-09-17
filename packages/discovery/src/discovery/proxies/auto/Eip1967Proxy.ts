@@ -21,7 +21,7 @@ export function getImplementation(
 }
 
 // keccak256('eip1967.proxy.admin') - 1)
-const ADMIN_SLOT = Bytes.fromHex(
+export const ADMIN_SLOT = Bytes.fromHex(
   '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103',
 )
 
@@ -32,7 +32,7 @@ export function getAdmin(
   return provider.getStorageAsAddress(address, ADMIN_SLOT)
 }
 
-async function getOwner(
+export async function getOwner(
   provider: IProvider,
   address: ChainSpecificAddress,
 ): Promise<ChainSpecificAddress> {

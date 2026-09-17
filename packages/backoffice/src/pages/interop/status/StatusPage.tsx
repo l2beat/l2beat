@@ -33,6 +33,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { RelayStatusCard } from './RelayStatusCard'
 import { PluginStatusesTable } from './table/PluginStatusesTable'
 
 const RESYNC_OPTIONS: ReadonlyArray<{
@@ -215,6 +216,8 @@ export function StatusPage() {
             </div>
           </CardContent>
         </Card>
+
+        <RelayStatusCard autoRefresh={autoRefresh} />
 
         <Card className="gap-0 py-0">
           <CardContent className="px-0">

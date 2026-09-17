@@ -1,3 +1,4 @@
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
@@ -21,6 +22,7 @@ interface Props extends AppLayoutProps {
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
   selectedUpdateId?: string
+  queryState: DehydratedState
 }
 
 export function InteropProtocolPage({
@@ -28,16 +30,19 @@ export function InteropProtocolPage({
   apiSelection,
   protocolData,
   selectedUpdateId,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <Content
-        projectEntry={projectEntry}
-        apiSelection={apiSelection}
-        protocolData={protocolData}
-        selectedUpdateId={selectedUpdateId}
-      />
+      <HydrationBoundary state={queryState}>
+        <Content
+          projectEntry={projectEntry}
+          apiSelection={apiSelection}
+          protocolData={protocolData}
+          selectedUpdateId={selectedUpdateId}
+        />
+      </HydrationBoundary>
     </AppLayout>
   )
 }

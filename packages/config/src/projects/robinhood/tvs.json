@@ -179,6 +179,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-CHUMP",
+      "priceId": "chump-coin",
+      "symbol": "CHUMP",
+      "name": "Chump Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175847/large/1000313188.jpg?1788160023",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "chump-coin",
+        "decimals": 18,
+        "sinceTimestamp": 1787702400,
+        "address": "0x0E0d2C89a5a019FE1cF762e5e33187631DACC21B",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-CLSK",
       "priceId": "cleanspark-robinhood-tokenized-stock",
       "symbol": "CLSK",
@@ -379,6 +398,63 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-HMM",
+      "priceId": "thinking-cat",
+      "symbol": "HMM",
+      "name": "Thinking Cat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174672/large/fmu02lq7zai1iyp4qqwfnmu5wr1v.?1784552285",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "thinking-cat",
+        "decimals": 18,
+        "sinceTimestamp": 1784505600,
+        "address": "0x7FE995a80075dF3Dc8Ae11A9b82c7FE4202CD87f",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-HOOKR",
+      "priceId": "hookr-fun",
+      "symbol": "HOOKR",
+      "name": "Hookr.fun",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175265/large/hookr.jpg?1786013509",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "hookr-fun",
+        "decimals": 18,
+        "sinceTimestamp": 1785990057,
+        "address": "0x18E674231A58c239Dc7DaeDcffE15Ec3A24cff5c",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-Index",
+      "priceId": "the-index",
+      "symbol": "Index",
+      "name": "The Index",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174740/large/qffiSdBd_400x400_%281%29.jpg?1784708104",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "the-index",
+        "decimals": 18,
+        "sinceTimestamp": 1784678400,
+        "address": "0x56910D4409F3a0C78C64DD8D0545FF0705389870",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-INTC",
       "priceId": "intel-robinhood-tokenized-stock",
       "symbol": "INTC",
@@ -426,6 +502,24 @@
         "chain": "robinhood",
         "decimals": 18,
         "sinceTimestamp": 1782432000
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-mGLO",
+      "priceId": "midas-fasanara-global-open",
+      "symbol": "mGLO",
+      "name": "Midas Fasanara Global Open",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174031/large/mglobal-Cm4yjVTI.png?1781967852",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFEd493F38c1aAcb4EA4e6A11F8b9287849EE0096",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1784246400
       },
       "category": "rwaPublic",
       "source": "native",
@@ -574,6 +668,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-PIPEDOG",
+      "priceId": "pipedog",
+      "symbol": "PIPEDOG",
+      "name": "pipedog",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174876/large/pipedog.png?1785289835",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "pipedog",
+        "decimals": 18,
+        "sinceTimestamp": 1785283200,
+        "address": "0x5Cb6F181081301b44905F3ae15419112ecaBd8A6",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-PLTR",
       "priceId": "palantir-technologies-robinhood-tokenized-stock",
       "symbol": "PLTR",
@@ -587,6 +700,57 @@
         "sinceTimestamp": 1782432000
       },
       "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "robinhood-PONS",
+      "priceId": "pons",
+      "symbol": "PONS",
+      "name": "Pons",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174571/large/jhitvkisdq8fhxvimdkpcw7y3dx5.?1784093932",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+            "chain": "robinhood",
+            "decimals": 18,
+            "sinceTimestamp": 1784091600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+            "chain": "robinhood",
+            "escrowAddress": "0x000000000000000000000000000000000000dEaD",
+            "decimals": 18,
+            "sinceTimestamp": 1784091600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-PROLOGUE",
+      "priceId": "prologue",
+      "symbol": "PROLOGUE",
+      "name": "Prologue",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175608/large/h1krcass1houq56whug4r5pofmsv.?1787073888",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "prologue",
+        "decimals": 18,
+        "sinceTimestamp": 1787011200,
+        "address": "0xb9972CA7188e511174947E3936a5315ac7073277",
+        "chain": "robinhood"
+      },
+      "category": "other",
       "source": "native",
       "isAssociated": false
     },
@@ -607,6 +771,32 @@
       "category": "rwaPublic",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-RAM",
+      "priceId": "ramses",
+      "symbol": "RAM",
+      "name": "Ramses",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70707/large/RAM.png?1763213034",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5173D45A1191eE33cBB7D8c7e65f21B04eD54802",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1786745882
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -769,6 +959,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-STONKBROKER",
+      "priceId": "stonkbroker",
+      "symbol": "STONKBROKER",
+      "name": "StonkBroker",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174654/large/9gwu14e3hpizobkefg65k66l70wu.?1784445702",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "stonkbroker",
+        "decimals": 18,
+        "sinceTimestamp": 1784419200,
+        "address": "0xe934e36A439C94017B64a3FecE66AF12099aBF50",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-SUSHI",
       "priceId": "sushi",
       "symbol": "SUSHI",
@@ -798,6 +1007,51 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-syrupUSDG",
+      "priceId": "syrup-usdg",
+      "symbol": "syrupUSDG",
+      "name": "syrupUSDG",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174289/large/syrupUSDG.png?1783055974",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+        "chain": "robinhood",
+        "decimals": 6,
+        "sinceTimestamp": 1783641600
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-TENDIES",
+      "priceId": "tendies-2",
+      "symbol": "TENDIES",
+      "name": "TENDIES",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174418/large/x1o0qj8dm7mlay3licerc1y75hr4.?1783667012",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "tendies-2",
+        "decimals": 18,
+        "sinceTimestamp": 1783641600,
+        "address": "0x45242320DBB855EeA8Fd36804C6487E10E97FCF9",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -994,8 +1248,16 @@
         "sinceTimestamp": 1778003991
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

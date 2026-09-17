@@ -16,10 +16,12 @@ export const superseed: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1743379200), // 2025-03-31T00:00:00Z
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
   display: {
     name: 'Superseed',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'superseed',
     headerWarning:
       'Superseed is being deprecated. See the [announcement](https://x.com/superseed/status/2079216129059283250) and make sure to bridge off your funds until August 15, 2026.',

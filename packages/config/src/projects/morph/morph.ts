@@ -241,7 +241,7 @@ export const morph: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.morphl2.io',
-        callsPerMinute: 300,
+        callsPerMinute: 600,
       },
     ],
   },

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNodeDistributorDelegate",
+  "category": "core",
+  "ignoreMethods": ["getNodeShare", "getUserShare"],
+  "description": "Shared implementation behind each node operator's fee-splitting proxy. Distribution is permissionless and pays the operator and the pool by the split recorded on-chain; nobody can redirect a share."
+}

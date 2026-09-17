@@ -6,7 +6,9 @@ import {
   type DiscoveryOutput,
   diffDiscovery,
   type EntryParameters,
-  entriesForDiff,
+  entriesForDiffPair,
+  type FieldDiff,
+  type ReceivedPermission,
 } from '@l2beat/discovery'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -102,11 +104,15 @@ export class UpdateDiffer {
     }
 
     // One join, so the diff and the grading below index the same entries.
-    const latestEntries = entriesForDiff(latestDiscovery)
-    const diff = diffDiscovery(entriesForDiff(discovery), latestEntries)
+    const [previousEntries, latestEntries] = entriesForDiffPair(
+      discovery,
+      latestDiscovery,
+    )
+    const diff = diffDiscovery(previousEntries, latestEntries)
 
     return this.getUpdateDiffs(
       diff,
+      previousEntries,
       latestEntries,
       project,
       timestamp,
@@ -123,6 +129,7 @@ export class UpdateDiffer {
 
   getUpdateDiffs(
     diff: DiscoveryDiff[],
+    previousContracts: EntryParameters[],
     latestContracts: EntryParameters[],
     projectId: string,
     timestamp: UnixTime,
@@ -142,8 +149,12 @@ export class UpdateDiffer {
         return false
       }),
     )
+    // MEDIUM counts here on purpose: it puts the project under review on the
+    // frontend without resetting the ossification clock (that stays HIGH-only).
     const fieldHighSeverityChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
+      discoveryDiff.diff?.some(
+        (f) => f.severity === 'HIGH' || f.severity === 'MEDIUM',
+      ),
     )
 
     const upgradeChanges = diff.filter((discoveryDiff) =>
@@ -151,18 +162,14 @@ export class UpdateDiffer {
         if (!f.key.startsWith('receivedPermissions')) {
           return false
         }
-
-        const indexString = f.key.split('.')[1]
-        if (indexString === undefined) {
-          return false
-        }
-        const index = Number.parseInt(indexString)
-
-        const entry = latestContracts.find(
-          (e) => e.address === discoveryDiff.address,
+        const permissionsOn = (contracts: EntryParameters[]) =>
+          contracts.find((e) => e.address === discoveryDiff.address)
+            ?.receivedPermissions ?? []
+        return involvesUpgrade(
+          f,
+          permissionsOn(previousContracts),
+          permissionsOn(latestContracts),
         )
-
-        return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
       }),
     )
 
@@ -226,5 +233,64 @@ export class UpdateDiffer {
 
   getOnDiskDiscovery(name: string): DiscoveryOutput {
     return this.configReader.readDiscovery(name)
+  }
+}
+
+const UPGRADE = 'upgrade'
+
+// `diffContracts` serialises a `receivedPermissions` change in one of three
+// shapes, and which one it is decides where the permission name can be read:
+//
+//   receivedPermissions           the whole array was added or removed
+//   receivedPermissions.N         one element was added or removed
+//   receivedPermissions.N.field   one element was modified in place
+//
+// Only the third uses an array index, and it indexes the previous array.
+// Added or removed elements must be read from their serialised values.
+function involvesUpgrade(
+  f: FieldDiff,
+  previous: ReceivedPermission[],
+  latest: ReceivedPermission[],
+): boolean {
+  const segments = f.key.split('.')
+
+  if (segments.length <= 2) {
+    return holdsUpgrade(f.before) || holdsUpgrade(f.after)
+  }
+
+  if (segments[2] === 'permission') {
+    return parseJson(f.before) === UPGRADE || parseJson(f.after) === UPGRADE
+  }
+
+  // `lcsDiff` unshifts the left-hand index onto a nested change (diff.ts, the
+  // `nested.forEach` line), so N indexes the previous array. Reading `latest[N]`
+  // asks about a different permission whenever an element was added or removed
+  // earlier in the same array - which is the norm here, because
+  // `sortReceivedPermissions` orders by JSON and "interact" sorts before
+  // "upgrade", so any non-upgrade change renumbers every upgrade after it.
+  const index = Number.parseInt(segments[1] ?? '')
+  return (previous[index] ?? latest[index])?.permission === UPGRADE
+}
+
+// The serialised value is either the whole array or a single permission.
+function holdsUpgrade(serialized: string | undefined): boolean {
+  const parsed = parseJson(serialized)
+  const elements = Array.isArray(parsed) ? parsed : [parsed]
+  return elements.some(
+    (element) =>
+      (element as { permission?: string } | null | undefined)?.permission ===
+      UPGRADE,
+  )
+}
+
+// A value that is not JSON is not a permission, so it names no upgrade.
+function parseJson(serialized: string | undefined): unknown {
+  if (serialized === undefined) {
+    return undefined
+  }
+  try {
+    return JSON.parse(serialized)
+  } catch {
+    return undefined
   }
 }

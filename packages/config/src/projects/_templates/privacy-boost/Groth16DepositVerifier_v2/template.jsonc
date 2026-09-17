@@ -1,0 +1,155 @@
+{
+  // Verified storage layout: Ownable slots 0/1; vkRegistry slot 2; epochVkRegistry slot 5.
+  // Key members: IC-X array, IC-Y array, constants pointer, IC length.
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.",
+  "ignoreRelatives": ["vkInfo"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register and replace the Groth16 verification keys used to validate deposit epoch proofs."
+        }
+      ]
+    },
+    "supportedParams": {
+      "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "array",
+        "maxLength": 100
+      }
+    },
+    "vkInfo": {
+      "handler": {
+        "type": "array",
+        "method": "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+        "indices": "{{ supportedParams }}",
+        "ignoreRelative": true
+      },
+      "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size.",
+      "severity": "HIGH"
+    },
+    "d1_icX": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e0",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d1 (1): SSTORE2 verification key icX pointers."
+    },
+    "d1_icY": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e1",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d1 (1): SSTORE2 verification key icY pointers."
+    },
+    "d1_constants": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e2",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d1 (1): SSTORE2 verification key constants pointer."
+    },
+    "d1_icLength": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e3",
+        "returnType": "number",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d1 (1): verification key IC length."
+    },
+    "d4_icX": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a6918f",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d4 (4): SSTORE2 verification key icX pointers."
+    },
+    "d4_icY": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0xee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a69190",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d4 (4): SSTORE2 verification key icY pointers."
+    },
+    "d4_constants": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a69191",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d4 (4): SSTORE2 verification key constants pointer."
+    },
+    "d4_icLength": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a69192",
+        "returnType": "number",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d4 (4): verification key IC length."
+    },
+    "d14_icX": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0x20de3dd312970f46a1d560f6c70f0e5bd10e638b9bb3836368f28838c607ea3e",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d14 (14): SSTORE2 verification key icX pointers."
+    },
+    "d14_icY": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": "0x20de3dd312970f46a1d560f6c70f0e5bd10e638b9bb3836368f28838c607ea3f",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d14 (14): SSTORE2 verification key icY pointers."
+    },
+    "d14_constants": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x20de3dd312970f46a1d560f6c70f0e5bd10e638b9bb3836368f28838c607ea40",
+        "returnType": "address",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d14 (14): SSTORE2 verification key constants pointer."
+    },
+    "d14_icLength": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x20de3dd312970f46a1d560f6c70f0e5bd10e638b9bb3836368f28838c607ea41",
+        "returnType": "number",
+        "ignoreRelative": true
+      },
+      "severity": "HIGH",
+      "description": "d14 (14): verification key IC length."
+    }
+  }
+}

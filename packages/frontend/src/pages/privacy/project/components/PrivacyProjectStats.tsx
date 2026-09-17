@@ -1,6 +1,7 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
@@ -23,12 +24,14 @@ const RELAYER_STAT_COPY: Record<
 
 interface Props {
   totalValueLockedUsd: number | undefined
+  totalValueLockedChange7d?: number
   hasTvl: boolean
   assetsCount: number
   bucketsCount: number
   deposits: {
     total: number
     last7d: number
+    change7d?: number
     last30d: number
   }
   relayerStat?: PrivacyRelayerStat
@@ -36,6 +39,7 @@ interface Props {
 
 export function PrivacyProjectStats({
   totalValueLockedUsd,
+  totalValueLockedChange7d,
   hasTvl,
   assetsCount,
   bucketsCount,
@@ -52,20 +56,13 @@ export function PrivacyProjectStats({
     />
   ) : undefined
 
-  if (!hasFlowTracking && !hasRelayerTracking) {
+  if (!hasFlowTracking && !hasRelayerTracking && !hasTvl) {
     return (
       <div className="grid gap-4 md:grid-cols-4">
-        <ProjectSummaryStat
+        <NotTrackedStat
           className="md:col-span-4"
           title="Live metrics"
-          value={
-            <div className="flex flex-col md:gap-1">
-              <span>Not tracked</span>
-              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-                Onchain monitoring is not available for this project.
-              </span>
-            </div>
-          }
+          description="Onchain monitoring is not available for this project."
         />
       </div>
     )
@@ -73,17 +70,26 @@ export function PrivacyProjectStats({
 
   if (!hasFlowTracking) {
     return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <ProjectSummaryStat
+      <div
+        className={cn(
+          'grid gap-4',
+          hasTvl && hasRelayerTracking ? 'md:grid-cols-3' : 'md:grid-cols-2',
+        )}
+      >
+        {hasTvl && (
+          <ProjectSummaryStat
+            title="Total Value Locked"
+            value={
+              <TvlValue
+                totalValueLockedUsd={totalValueLockedUsd}
+                change7d={totalValueLockedChange7d}
+              />
+            }
+          />
+        )}
+        <NotTrackedStat
           title="Live asset metrics"
-          value={
-            <div className="flex flex-col md:gap-1">
-              <span>Not tracked</span>
-              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-                Onchain asset monitoring is not available for this project.
-              </span>
-            </div>
-          }
+          description="Onchain asset monitoring is not available for this project."
         />
         {relayerStatElement}
       </div>
@@ -107,7 +113,10 @@ export function PrivacyProjectStats({
             <NoDataBadge />
           ) : (
             <div className="flex flex-col md:gap-1">
-              <span>{formatCurrency(totalValueLockedUsd, 'usd')}</span>
+              <TvlValue
+                totalValueLockedUsd={totalValueLockedUsd}
+                change7d={totalValueLockedChange7d}
+              />
               <span className="font-medium text-paragraph-12 text-secondary leading-normal">
                 across {formatInteger(assetsCount ?? 0)} assets and{' '}
                 {formatInteger(bucketsCount ?? 0)} buckets
@@ -120,12 +129,13 @@ export function PrivacyProjectStats({
         className="md:hidden"
         title="TVL"
         value={
-          !hasTvl ? (
-            <NotApplicableBadge />
-          ) : totalValueLockedUsd === undefined ? (
-            <NoDataBadge />
+          hasTvl ? (
+            <TvlValue
+              totalValueLockedUsd={totalValueLockedUsd}
+              change7d={totalValueLockedChange7d}
+            />
           ) : (
-            formatCurrency(totalValueLockedUsd, 'usd')
+            <NotApplicableBadge />
           )
         }
       />
@@ -141,7 +151,14 @@ export function PrivacyProjectStats({
       />
       <ProjectSummaryStat
         title="Deposits 7D"
-        value={formatInteger(deposits.last7d ?? 0)}
+        value={
+          <div className="flex items-center gap-2">
+            {formatInteger(deposits.last7d ?? 0)}
+            {deposits.change7d !== undefined && (
+              <PercentChange value={deposits.change7d} period="last7d" />
+            )}
+          </div>
+        }
       />
       <ProjectSummaryStat
         title="Deposits 30D"
@@ -153,5 +170,48 @@ export function PrivacyProjectStats({
       />
       {relayerStatElement}
     </div>
+  )
+}
+
+function TvlValue({
+  totalValueLockedUsd,
+  change7d,
+}: {
+  totalValueLockedUsd: number | undefined
+  change7d?: number
+}) {
+  if (totalValueLockedUsd === undefined) {
+    return <NoDataBadge />
+  }
+  return (
+    <div className="flex items-center gap-2">
+      {formatCurrency(totalValueLockedUsd, 'usd')}
+      {change7d !== undefined && <PercentChange value={change7d} period="7D" />}
+    </div>
+  )
+}
+
+function NotTrackedStat({
+  title,
+  description,
+  className,
+}: {
+  title: string
+  description: string
+  className?: string
+}) {
+  return (
+    <ProjectSummaryStat
+      className={className}
+      title={title}
+      value={
+        <div className="flex flex-col md:gap-1">
+          <span>Not tracked</span>
+          <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+            {description}
+          </span>
+        </div>
+      }
+    />
   )
 }

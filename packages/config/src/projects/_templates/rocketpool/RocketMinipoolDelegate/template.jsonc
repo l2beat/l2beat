@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolDelegate",
+  "category": "core",
+  "ignoreMethods": ["canPromote", "canStake", "userDistributeAllowed"],
+  "description": "Shared implementation behind every legacy validator contract. It holds the operator's bond and the matched pooled ETH, tracks the validator's lifecycle, and splits withdrawals between the operator and the pool by the commission recorded at creation. Distributing the contract's balance is open to any caller while the validator is staking; only distributing an already-dissolved contract is restricted to the operator. An absent operator therefore cannot hold the pooled share."
+}

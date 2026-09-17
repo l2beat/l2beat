@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -68,66 +67,40 @@ export const airbender: BaseProject = {
     ],
     verifierHashes: [
       // {
-      //   hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
+      //   // Used by ADI protocol versions v30.0 and v30.1 (until the 2026-09-09 v30.2 upgrade).
+      //   hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
+      //   name: 'Airbender Plonk Adi v30.1 verifier',
+      //   sourceLink:
+      //     'https://github.com/matter-labs/zksync-os/tree/v0.2.5/zksync_os',
       //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-      //   knownDeployments: [
-      //     {
-      //       address: EthereumAddress(
-      //         '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
-      //       ),
-      //       chain: 'ethereum',
-      //     },
-      //   ],
-      //   verificationStatus: 'notVerified',
-      // },
-      // {
-      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-      //   knownDeployments: [
-      //     {
-      //       address: EthereumAddress(
-      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
-      //       ),
-      //       chain: 'ethereum',
-      //     },
-      //   ],
-      //   verificationStatus: 'notVerified',
-      // },
-      // {
-      //   // ADI doesn't use the fflonk verifier, it is not accessible on DualVerifier level
-      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-      //   name: 'Airbender Fflonk Adi verifier',
-      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
       //   knownDeployments: [
       //     {
       //       address: ChainSpecificAddress.fromLong(
       //         'ethereum',
-      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+      //         '0x08513A4646d1Bc8c348C67A3680bb19626E7F13F',
       //       ),
       //     },
       //   ],
-      //   verificationStatus: 'notVerified',
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'airbender',
+      //     'verificationSteps-0x124ebcd5',
+      //   ),
       // },
       {
-        hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
-        name: 'Airbender Plonk Adi verifier',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-os/tree/v0.2.5/zksync_os',
+        hash: '0x194abd368017773c8a8b62fdee6885816bd30110ff293508f9ec9b58c8c10982',
+        name: 'Airbender Plonk Adi v30.2 verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x08513A4646d1Bc8c348C67A3680bb19626E7F13F',
+              '0xC1288A84C5b2c93Ed4bF712fF4Bb96D862b32aa9',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'airbender',
-          'verificationSteps-0x124ebcd5',
-        ),
+        verificationStatus: 'notVerified',
       },
     ],
   },

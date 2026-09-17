@@ -22,6 +22,7 @@ import {
   type TrustedSetupsByProofSystem,
 } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import {
   type ContractUtils,
   getContractUtils,
@@ -113,6 +114,7 @@ export interface TvsData {
   warnings: WarningWithSentiment[]
   breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
   change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
+  changePeriod: PercentageChangePeriod | undefined
   additionalTrustAssumptionsPercentage: number | undefined
   syncWarning: string | undefined
 }
@@ -121,7 +123,10 @@ export interface L2RiskStateValidationValidityEntry extends CommonL2Entry {
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetups: TrustedSetupsByProofSystem[string][]
+  trustedSetups: Pick<
+    TrustedSetupsByProofSystem[string],
+    'trustedSetups' | 'verifiers'
+  >[]
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
   permissioned: boolean | undefined
@@ -165,7 +170,7 @@ function getL2RiskStateValidationValidityEntry(
         allProjects,
         { id: project.id, contracts: project.contracts },
       ),
-    ),
+    ).map(({ trustedSetups, verifiers }) => ({ trustedSetups, verifiers })),
   )
 
   const projectTvs = tvs.projects[project.id.toString()]
@@ -316,6 +321,7 @@ function getTvsData(
     warnings: project.tvsInfo?.warnings ?? [],
     breakdown: projectTvs?.breakdown,
     change: projectTvs?.change,
+    changePeriod: projectTvs?.changePeriod,
     additionalTrustAssumptionsPercentage:
       projectTvs?.additionalTrustAssumptionsPercentage,
     syncWarning: getTvsSyncWarning(projectTvs?.syncState),

@@ -220,7 +220,6 @@ export function CostsChart({
           <Line
             yAxisId="right"
             dataKey="ethereum"
-            strokeWidth={2}
             stroke={chartMeta.ethereum.color}
             isAnimationActive={false}
             dot={false}
@@ -231,7 +230,6 @@ export function CostsChart({
           <Line
             yAxisId="right"
             dataKey="celestia"
-            strokeWidth={2}
             stroke={chartMeta.celestia.color}
             isAnimationActive={false}
             dot={false}
@@ -242,7 +240,6 @@ export function CostsChart({
           <Line
             yAxisId="right"
             dataKey="avail"
-            strokeWidth={2}
             stroke={chartMeta.avail.color}
             isAnimationActive={false}
             dot={false}
@@ -253,7 +250,6 @@ export function CostsChart({
           <Line
             yAxisId="right"
             dataKey="eigenda"
-            strokeWidth={2}
             stroke={chartMeta.eigenda.color}
             isAnimationActive={false}
             dot={false}

@@ -134,8 +134,8 @@ export const polygonzkevm: ScalingProject = agglayer({
     apis: [
       {
         type: 'rpc',
-        url: 'https://polygon-rpc.com/zkevm',
-        callsPerMinute: 500,
+        url: 'https://zkevm-rpc.com',
+        callsPerMinute: 3000,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://zkevm.blockscout.com/api/v2' },

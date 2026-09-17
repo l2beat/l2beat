@@ -18,12 +18,27 @@ const COUNCIL = address('0x333')
 const HASH = Hash256.random()
 
 describe(combinePermissionsIntoDiscovery.name, () => {
+  it('replaces the recorded module versions, including when references are removed', () => {
+    const discovery = output([])
+    discovery.modelledAgainst = { removed: Hash256.ZERO }
+    combinePermissionsIntoDiscovery(
+      discovery,
+      { ...permissions([]), modelledAgainst: { shared: HASH } },
+      [],
+    )
+    expect(discovery.modelledAgainst).toEqual({ shared: HASH })
+
+    combinePermissionsIntoDiscovery(discovery, permissions([]), [])
+    expect(discovery.modelledAgainst).toEqual({})
+  })
+
   it('stores a permission in the map, never on the entry', () => {
     const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
 
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(discovery.entries.at(1)?.receivedPermissions).toEqual(undefined)
@@ -40,6 +55,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([{ ...upgrade(COUNCIL, TIMELOCK), isFinal: false }]),
+      [...discovery.entries, contract(COUNCIL)],
     )
 
     expect(discovery.permissions).toEqual({
@@ -57,6 +73,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
@@ -70,10 +87,45 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     const stored = discovery.permissions?.[PROXY_ADMIN]
     expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
+  })
+
+  // The consumer's crawl stops at the entrypoint, so an actor inside a shared
+  // module holds a permission here without having an entry of its own.
+  it('stores a receiver that has no entry in the project', () => {
+    const discovery = output([contract(TIMELOCK), reference(PROXY_ADMIN)])
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, TIMELOCK)]),
+      // The holder is discovered by the referenced project, not by this one.
+      [...discovery.entries, contract(COUNCIL)],
+    )
+
+    expect(discovery.permissions).toEqual({
+      [COUNCIL]: {
+        receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
+      },
+    })
+  })
+
+  // A reference points at one deployment inside a shared module, so the rest of
+  // what that module discovered is not this project's to carry.
+  it('drops a holder the project entrypoints cannot reach', () => {
+    const discovery = output([contract(TIMELOCK)])
+    const unrelated = address('0x444')
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, unrelated)]),
+      [...discovery.entries, contract(COUNCIL), contract(unrelated)],
+    )
+
+    expect(discovery.permissions).toEqual(undefined)
   })
 
   it('clears a map left over by a previous run', () => {
@@ -81,9 +133,14 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
-    combinePermissionsIntoDiscovery(discovery, permissions([]))
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([]),
+      discovery.entries,
+    )
 
     expect(discovery.permissions).toEqual(undefined)
   })
@@ -98,12 +155,64 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(COUNCIL, TIMELOCK), upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([
       PROXY_ADMIN,
       COUNCIL,
     ])
+  })
+
+  it('uses the full target category even when a Reference precedes it', () => {
+    const discovery = output([reference(TIMELOCK), contract(COUNCIL)])
+    combinePermissionsIntoDiscovery(
+      discovery,
+      {
+        ...permissions([upgrade(COUNCIL, TIMELOCK)]),
+        eoasWithUpgradePermissions: [COUNCIL],
+      },
+      [
+        ...discovery.entries,
+        {
+          ...contract(TIMELOCK),
+          category: { name: 'Non-critical', priority: 0 },
+        },
+      ],
+    )
+
+    expect(discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions).toEqual(
+      undefined,
+    )
+    expect(
+      discovery.permissions?.[COUNCIL]?.receivedPermissions ?? [],
+    ).toHaveLength(1)
+  })
+
+  it('can write one model twice without reversing the caller or the first result', () => {
+    const giver = address('0x444')
+    const first = output([
+      contract(giver),
+      contract(TIMELOCK),
+      contract(PROXY_ADMIN),
+      contract(COUNCIL),
+    ])
+    const second = structuredClone(first)
+    const model = permissions([
+      {
+        ...upgrade(COUNCIL, giver),
+        via: [{ address: TIMELOCK }, { address: PROXY_ADMIN }],
+      },
+    ])
+    const original = structuredClone(model)
+
+    combinePermissionsIntoDiscovery(first, model, first.entries)
+    const stored = structuredClone(first.permissions)
+    combinePermissionsIntoDiscovery(second, model, second.entries)
+
+    expect(model).toEqual(original)
+    expect(first.permissions).toEqual(stored)
+    expect(second.permissions).toEqual(stored)
   })
 })
 
@@ -121,7 +230,7 @@ function upgrade(
 function permissions(
   permissions: PermissionsOutput['permissions'],
 ): PermissionsOutput {
-  return { permissionsConfigHash: HASH, permissions }
+  return { permissionsConfigHash: HASH, modelledAgainst: {}, permissions }
 }
 
 function output(entries: EntryParameters[]): DiscoveryOutput {
@@ -132,10 +241,15 @@ function output(entries: EntryParameters[]): DiscoveryOutput {
     abis: {},
     configHash: HASH,
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }
 
 function contract(address: ChainSpecificAddress): EntryParameters {
   return { type: 'Contract', address }
+}
+
+function reference(address: ChainSpecificAddress): EntryParameters {
+  return { type: 'Reference', address, targetProject: 'shared-zk-stack' }
 }

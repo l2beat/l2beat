@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": ["getAllowedTargets"],
   "fields": {
     "accessControl": {
@@ -37,6 +38,11 @@
         }
       ]
     },
+    // Submitters are node operator controlled addresses, usually the target
+    // operator's manager address in the target module. They are not followed
+    // into discovery, the same way NodeOperatorsRegistry.signingKeyManagers is
+    // not: otherwise the operators that happen to be mid-migration get pulled
+    // in as an arbitrary, temporary subset of Lido's node operators.
     "allowedPairs": {
       "description": "Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.",
       "handler": {
@@ -44,7 +50,8 @@
         "select": ["sourceOperatorId", "targetOperatorId", "submitter"],
         "dedupBy": ["sourceOperatorId", "targetOperatorId"],
         "add": { "event": "ConsolidationPairAllowed" },
-        "remove": { "event": "ConsolidationPairDisallowed" }
+        "remove": { "event": "ConsolidationPairDisallowed" },
+        "ignoreRelative": true
       },
       "permissions": [
         {

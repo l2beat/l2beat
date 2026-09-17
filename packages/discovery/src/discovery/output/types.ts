@@ -32,6 +32,7 @@ export interface DiscoveryOutput {
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
+  modelledAgainst: Record<string, Hash256>
   permissions?: Record<ChainSpecificAddress, PermissionEntry>
 }
 
@@ -98,6 +99,7 @@ export type StructureEntry = {
 export type ColorEntry = {
   name?: string
   description?: string
+  critical?: boolean
   fieldMeta?: Record<string, FieldMeta>
   references?: ExternalReference[]
   category?: ContractCategory
@@ -118,6 +120,7 @@ export interface ColorOutput {
 export type PermissionsOutput = {
   eoasWithUpgradePermissions?: ChainSpecificAddress[]
   permissionsConfigHash: Hash256
+  modelledAgainst: Record<string, Hash256>
   permissions: {
     receiver: ChainSpecificAddress
     permission: Permission

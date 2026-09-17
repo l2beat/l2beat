@@ -78,7 +78,12 @@ export class BlockProvider {
           timestamp,
           effectiveStart,
           end,
-          (number: number) => client.getBlockWithTransactions(number),
+          // Only the timestamp is needed, so skip transaction bodies when the
+          // client can fetch a block without them.
+          async (number: number) =>
+            client.getBlockTimestamp
+              ? { timestamp: await client.getBlockTimestamp(number) }
+              : await client.getBlockWithTransactions(number),
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error

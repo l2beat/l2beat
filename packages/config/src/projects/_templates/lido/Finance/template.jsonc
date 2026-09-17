@@ -20,7 +20,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "create one-time or recurring DAO payments."
+          "description": "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
         }
       ]
     },

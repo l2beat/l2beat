@@ -2,6 +2,9 @@ import { UnixTime } from '../types/UnixTime.js'
 
 const PROMISE_TIMEOUT = 30
 
+// Not a digit, so it can never be read as the length prefix of a string part.
+const ABSENT_KEY_PART = '-'
+
 type Logger = {
   info: (...args: unknown[]) => void
   warn: (...args: unknown[]) => void
@@ -18,7 +21,6 @@ interface CacheEntry {
 interface Config {
   logger?: Logger
   enabled?: boolean
-  initialCache?: Map<string, CacheEntry>
   promiseTimeout?: number
 }
 
@@ -26,13 +28,15 @@ interface Options {
   key: (string | null | undefined)[]
   ttl: number
   staleWhileRevalidate?: number
+  cacheNullish?: boolean
 }
 
 export class InMemoryCache {
-  private cache: Map<string, CacheEntry>
+  private cache = new Map<string, CacheEntry>()
   private enabled
   private promiseTimeout
   private logger
+  private lastSweptAt = 0
   private inFlight = new Map<
     string,
     { promise: Promise<unknown>; timestamp: number }
@@ -41,7 +45,6 @@ export class InMemoryCache {
   constructor(config: Config) {
     this.logger = config.logger
     this.enabled = config?.enabled ?? true
-    this.cache = config?.initialCache ?? new Map<string, CacheEntry>()
     this.promiseTimeout = config?.promiseTimeout ?? PROMISE_TIMEOUT
   }
 
@@ -51,9 +54,8 @@ export class InMemoryCache {
     }
 
     this.logger?.debug('Getting cache key', { key: options.key })
-    const key = this.getKey(options.key.filter(Boolean) as string[])
+    const key = this.getKey(options.key)
     const now = UnixTime.now()
-    const maxLifetime = options.ttl + (options.staleWhileRevalidate ?? 0)
 
     const result = this.cache.get(key)
 
@@ -72,7 +74,7 @@ export class InMemoryCache {
       result.timestamp + options.ttl + options.staleWhileRevalidate > now
     ) {
       this.logger?.info('Cache stale', { key })
-      void this.revalidateInBackground(key, fallback, maxLifetime)
+      void this.revalidateInBackground(key, options, fallback)
       return result.result as T
     }
 
@@ -86,31 +88,34 @@ export class InMemoryCache {
       return existingPromise.promise as Promise<T>
     }
 
-    const promise = fallback().finally(() => {
-      this.inFlight.delete(key)
-    })
+    const promise = fallback()
     this.inFlight.set(key, { promise, timestamp: now })
 
     this.logger?.info('Cache miss', { key })
 
     const start = Date.now()
-    const fallbackResult = await promise
-    const duration = Date.now() - start
+    try {
+      const fallbackResult = await promise
+      const duration = Date.now() - start
 
-    this.cache.set(key, {
-      result: fallbackResult,
-      timestamp: now,
-      maxLifetime,
-    })
-    this.logger?.info('Cache set', { key, duration })
+      const stored = this.store(key, fallbackResult, options, now)
+      this.logger?.info(stored ? 'Cache set' : 'Cache not stored', {
+        key,
+        duration,
+      })
 
-    return fallbackResult
+      return fallbackResult
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
+    }
   }
 
   private async revalidateInBackground<T>(
     key: string,
+    options: Options,
     fallback: () => Promise<T>,
-    maxLifetime: number,
   ): Promise<void> {
     const existingPromise = this.inFlight.get(key)
     if (
@@ -120,28 +125,62 @@ export class InMemoryCache {
       return
     }
 
-    const promise = fallback().finally(() => {
-      this.inFlight.delete(key)
-    })
-    this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
+    const startedAt = UnixTime.now()
+    const promise = fallback()
+    this.inFlight.set(key, { promise, timestamp: startedAt })
 
     try {
-      const result = await promise
-      this.cache.set(key, {
-        result,
-        timestamp: UnixTime.now(),
-        maxLifetime,
-      })
+      this.store(key, await promise, options, startedAt)
     } catch (error) {
       // If revalidation fails, we keep the stale data
       this.logger?.warn('Cache revalidation failed', {
         key,
         error,
       })
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
     }
   }
 
+  private store(
+    key: string,
+    result: unknown,
+    options: Options,
+    startedAt: number,
+  ): boolean {
+    if (result === undefined || result === null) {
+      if (options.cacheNullish !== true) {
+        return false
+      }
+    }
+
+    // A fallback that outlived promiseTimeout may settle after a newer one
+    // for the same key. Its data is older, so it must not replace what the
+    // newer fallback stored. It is still worth keeping when nothing newer
+    // made it into the cache, e.g. because the newer fallback failed.
+    const existing = this.cache.get(key)
+    if (existing && existing.timestamp >= startedAt) {
+      return false
+    }
+
+    this.cache.set(key, {
+      result,
+      timestamp: UnixTime.now(),
+      maxLifetime: options.ttl + (options.staleWhileRevalidate ?? 0),
+    })
+    return true
+  }
+
   private sweep(now: number) {
+    // Timestamps are whole seconds, so a second sweep within the same second
+    // cannot find anything the first one did not.
+    if (now === this.lastSweptAt) {
+      return
+    }
+    this.lastSweptAt = now
+
     for (const [key, entry] of this.cache) {
       if (
         entry.maxLifetime !== undefined &&
@@ -152,15 +191,33 @@ export class InMemoryCache {
     }
   }
 
-  _get(key: string) {
-    return this.cache.get(key)
+  _get(key: (string | null | undefined)[]) {
+    return this.cache.get(this.getKey(key))
   }
 
-  _set(key: string, value: CacheEntry) {
-    this.cache.set(key, value)
+  _set(key: (string | null | undefined)[], value: CacheEntry) {
+    this.cache.set(this.getKey(key), value)
   }
 
+  // Length-prefixed so that no combination of key parts can produce the same
+  // string as a different combination. A length prefix only delimits the part
+  // it precedes if the part really is a string, so a part that is not one is
+  // rejected here instead of being folded into an ambiguous key. Key parts
+  // often come from HTTP request parameters, which TypeScript cannot check.
   private getKey(key: (string | null | undefined)[]) {
-    return key.filter(Boolean).join('-')
+    let encoded = ''
+    for (const part of key) {
+      if (part === null || part === undefined) {
+        encoded += ABSENT_KEY_PART
+        continue
+      }
+      if (typeof part !== 'string') {
+        throw new TypeError(
+          `Cache key part is a ${typeof part}, expected a string`,
+        )
+      }
+      encoded += `${part.length}:${part}`
+    }
+    return encoded
   }
 }

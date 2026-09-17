@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }

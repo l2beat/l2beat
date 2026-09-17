@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { encodePacked, keccak256 } from 'viem'
+import { encodePacked, keccak256, stringToHex } from 'viem'
 import {
   createEventParser,
   createInteropEventType,
@@ -21,18 +21,40 @@ import {
 
 type Hex = `0x${string}`
 
-const INPUT_COMPACT = EthereumAddress(
+// LI.FI redeployed the whole OIF stack (keyless CREATE2, same address on
+// every chain) and switched the LiFiDiamond to LiFiIntentEscrowFacetV2 on
+// 2026-08-06. The V1 addresses are kept so history stays resyncable.
+// Current addresses: https://docs.li.fi/lifi-intents/architecture/overview
+const INPUT_COMPACT_V1 = EthereumAddress(
   '0x0000000000cd5f7fDEc90a03a31F79E5Fbc6A9Cf',
 )
-const INPUT_ESCROW = EthereumAddress(
+const INPUT_ESCROW_V1 = EthereumAddress(
   '0x000025c3226C00B2Cdc200005a1600509f4e00C0',
 )
-const OUTPUT_SETTLER = EthereumAddress(
+const INPUT_ESCROW_V2 = EthereumAddress(
+  '0x00fC00edbe7C003b006f870068c548940000223e',
+)
+const OUTPUT_SETTLER_V1 = EthereumAddress(
   '0x0000000000eC36B683C2E6AC89e9A75989C22a2e',
 )
-const POLYMER_ORACLE = EthereumAddress(
+const OUTPUT_SETTLER_V2 = EthereumAddress(
+  '0x75220B7600c300005038432a0000f308e0000068',
+)
+const POLYMER_ORACLE_V1 = EthereumAddress(
   '0x0000003E06000007A224AeE90052fA6bb46d43C9',
 )
+const POLYMER_ORACLE_V2 = EthereumAddress(
+  '0x008C3800F3Ad9b3B662d002E90Cc00000000eE17',
+)
+
+const INPUT_COMPACTS = [INPUT_COMPACT_V1]
+const INPUT_ESCROWS = [INPUT_ESCROW_V1, INPUT_ESCROW_V2]
+const OUTPUT_SETTLERS = [OUTPUT_SETTLER_V1, OUTPUT_SETTLER_V2]
+const POLYMER_ORACLES = [POLYMER_ORACLE_V1, POLYMER_ORACLE_V2]
+
+// V2 prefixes the fill description preimage with bytes4(keccak256("OIF.Fill"))
+// (MandateOutputEncodingLib.FILL_MAGIC). V1 has no prefix.
+const FILL_MAGIC_V2 = keccak256(stringToHex('OIF.Fill')).slice(0, 10) as Hex
 
 const LIFI_INTENTS_NETWORKS = defineNetworks('lifi-intents', [
   {
@@ -58,6 +80,48 @@ const LIFI_INTENTS_NETWORKS = defineNetworks('lifi-intents', [
   {
     chain: 'arbitrum',
     chainId: 42161,
+  },
+  // Chains added with the V2 deployment. Mantle is also live but is not an
+  // interop chain yet.
+  {
+    chain: 'gnosis',
+    chainId: 100,
+  },
+  {
+    chain: 'unichain',
+    chainId: 130,
+  },
+  {
+    chain: 'monad',
+    chainId: 143,
+  },
+  {
+    chain: 'worldchain',
+    chainId: 480,
+  },
+  {
+    chain: 'hyperevm',
+    chainId: 999,
+  },
+  {
+    chain: 'robinhood',
+    chainId: 4663,
+  },
+  {
+    chain: 'celo',
+    chainId: 42220,
+  },
+  {
+    chain: 'avalanche',
+    chainId: 43114,
+  },
+  {
+    chain: 'ink',
+    chainId: 57073,
+  },
+  {
+    chain: 'katana',
+    chainId: 747474,
   },
 ])
 
@@ -156,22 +220,22 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: intentRegisteredLog,
-        addresses: toChainSpecificAddresses(INPUT_COMPACT),
+        addresses: toChainSpecificAddresses(INPUT_COMPACTS),
       },
       {
         type: 'event',
         signature: openLog,
-        addresses: toChainSpecificAddresses(INPUT_ESCROW),
+        addresses: toChainSpecificAddresses(INPUT_ESCROWS),
       },
       {
         type: 'event',
         signature: outputFilledLog,
-        addresses: toChainSpecificAddresses(OUTPUT_SETTLER),
+        addresses: toChainSpecificAddresses(OUTPUT_SETTLERS),
       },
       {
         type: 'event',
         signature: outputProvenLog,
-        addresses: toChainSpecificAddresses(POLYMER_ORACLE),
+        addresses: toChainSpecificAddresses(POLYMER_ORACLES),
       },
     ]
   }
@@ -180,7 +244,7 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
     const network = LIFI_INTENTS_NETWORKS.find((n) => n.chain === input.chain)
     if (!network) return
 
-    const intentRegistered = parseIntentRegistered(input.log, [INPUT_COMPACT])
+    const intentRegistered = parseIntentRegistered(input.log, INPUT_COMPACTS)
     if (intentRegistered) {
       return this.captureOrder(
         input,
@@ -189,20 +253,23 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       )
     }
 
-    const open = parseOpen(input.log, [INPUT_ESCROW])
+    const open = parseOpen(input.log, INPUT_ESCROWS)
     if (open) {
       return this.captureOrder(input, open.orderId, open.order)
     }
 
-    const outputFilled = parseOutputFilled(input.log, [OUTPUT_SETTLER])
+    const outputFilled = parseOutputFilled(input.log, OUTPUT_SETTLERS)
     if (outputFilled) {
       const output = normalizeOutput(outputFilled.output)
       const outputHash = hashMandateOutput(output)
+      const isV2 =
+        input.log.address.toLowerCase() === OUTPUT_SETTLER_V2.toLowerCase()
       const payloadHash = hashFillDescription(
         normalizeBytes32(outputFilled.solver),
         normalizeBytes32(outputFilled.orderId),
         Number(outputFilled.timestamp),
         output,
+        isV2 ? FILL_MAGIC_V2 : undefined,
       )
 
       const remoteIdentifier = normalizeBytes32(output.oracle)
@@ -230,7 +297,7 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       ]
     }
 
-    const outputProven = parseOutputProven(input.log, [POLYMER_ORACLE])
+    const outputProven = parseOutputProven(input.log, POLYMER_ORACLES)
     if (outputProven) {
       return [
         LifiIntentsOutputProven.create(input, {
@@ -431,9 +498,11 @@ function createTransferMatch(
   ]
 }
 
-function toChainSpecificAddresses(address: EthereumAddress) {
-  return LIFI_INTENTS_NETWORKS.map((network) =>
-    ChainSpecificAddress.fromLong(network.chain, address),
+function toChainSpecificAddresses(addresses: EthereumAddress[]) {
+  return LIFI_INTENTS_NETWORKS.flatMap((network) =>
+    addresses.map((address) =>
+      ChainSpecificAddress.fromLong(network.chain, address),
+    ),
   )
 }
 
@@ -486,34 +555,38 @@ function hashFillDescription(
   orderId: Hex,
   timestamp: number,
   output: MandateOutput,
+  magic?: Hex,
 ): Hex {
+  const description = encodePacked(
+    [
+      'bytes32',
+      'bytes32',
+      'uint32',
+      'bytes32',
+      'uint256',
+      'bytes32',
+      'uint16',
+      'bytes',
+      'uint16',
+      'bytes',
+    ],
+    [
+      solver,
+      orderId,
+      timestamp,
+      output.token,
+      output.amount,
+      output.recipient,
+      byteLength(output.callbackData),
+      output.callbackData,
+      byteLength(output.context),
+      output.context,
+    ],
+  )
   return keccak256(
-    encodePacked(
-      [
-        'bytes32',
-        'bytes32',
-        'uint32',
-        'bytes32',
-        'uint256',
-        'bytes32',
-        'uint16',
-        'bytes',
-        'uint16',
-        'bytes',
-      ],
-      [
-        solver,
-        orderId,
-        timestamp,
-        output.token,
-        output.amount,
-        output.recipient,
-        byteLength(output.callbackData),
-        output.callbackData,
-        byteLength(output.context),
-        output.context,
-      ],
-    ),
+    magic
+      ? encodePacked(['bytes4', 'bytes'], [magic, description])
+      : description,
   )
 }
 

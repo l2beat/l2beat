@@ -60,17 +60,15 @@ async function getCachedData() {
   )
 
   const flowProjectIds = projects
-    .filter((project) =>
-      project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    .filter(
+      (project) =>
+        project.tvsConfig !== undefined ||
+        project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
     )
     .map((e) => e.id)
     .sort()
   const tvlProjectIds = projects
-    .filter(
-      (project) =>
-        project.tvsConfig !== undefined &&
-        project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
-    )
+    .filter((project) => project.tvsConfig !== undefined)
     .map((e) => e.id)
     .sort()
   const [appLayoutProps, entries] = await Promise.all([

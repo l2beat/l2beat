@@ -1,4 +1,79 @@
-Generated with discovered.json: 0x3c7cdbec7a5348f940b77fce35fc62856e500ca5
+Generated with discovered.json: 0xa44b245a39180228671ad0500cc864b0b93fcf3c
+
+# Diff at Tue, 15 Sep 2026 11:32:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1784814886
+- current timestamp: 1789471900
+
+## Description
+
+Validator signer swaps and 7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x38d1f93af4f5e2dfafd980746296a0d3cf287e61c748fc95f684b0ac2164a2ff","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract XDai Bridge Validators (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "eth:0xA2746D5eE860a6A9cbb79C34533313144d467CA8"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
+-        "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
++        "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
+    }
+```
+
+```diff
+    contract AMB Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "eth:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
+-        "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
++        "eth:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
+    }
+```
+
+```diff
+    contract HomeAMB Validators (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "gno:0x5524b7a3e2Dc024f4C9c2Ecd7FE003ee316ac624"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
+-        "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
++        "gno:0x59D3C2829900Ae20D02Ca547082b09FD27380eA6"
+    }
+```
+
+Generated with discovered.json: 0xe0d06115cd672fd5b2a9906eff93375dfc061aff
 
 # Diff at Thu, 23 Jul 2026 13:55:55 GMT:
 

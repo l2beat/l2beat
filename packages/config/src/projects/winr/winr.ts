@@ -38,7 +38,13 @@ export const winr: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'winr',
     chainId: 777777,
-    apis: [{ type: 'rpc', url: 'https://rpc.winr.games', callsPerMinute: 300 }],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-winr-mainnet-0.t.conduit.xyz',
+        callsPerMinute: 300,
+      },
+    ],
     gasTokens: ['WINR'],
   },
   associatedTokens: ['WINR'],

@@ -4,16 +4,20 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-import { useIsClient } from '~/hooks/useIsClient'
+import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
+import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {
   ChartDataIndicator,
   type ChartDataIndicatorType,
 } from './ChartDataIndicator'
-import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import {
+  legendOnboardingHintClassName,
+  useChartLegendOnboarding,
+} from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
@@ -56,6 +60,10 @@ export function useChart() {
 const chartContainerClassNames = cn(
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
   'select-none outline-none [&>svg]:outline-none [&_svg_*]:outline-none',
+  // Series strokes (Area/Line curves). Fill-only areas keep strokeWidth={0}.
+  '[&_.recharts-area-curve]:[stroke-linecap:round] [&_.recharts-area-curve]:[stroke-linejoin:round]',
+  '[&_.recharts-line-curve]:[stroke-linecap:round] [&_.recharts-line-curve]:[stroke-linejoin:round]',
+  "[&_.recharts-area-curve:not([stroke-width='0'])]:stroke-[1.75px] [&_.recharts-line-curve]:stroke-[1.75px]",
   // Tooltip cursor line
   '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
   // Tooltip cursor bar
@@ -112,8 +120,11 @@ function ChartContainer<T extends { timestamp: number }>({
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
 }) {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const isClient = useIsClient()
+  // Recharts renders nothing until it has measured its container, and every
+  // chart measuring and re-rendering right after hydration was the longest
+  // main-thread task on project pages. Mount each chart only when it is
+  // about to be seen.
+  const [ref, shouldMountChart] = useIsNearViewport()
 
   const hasData = data && data.length > 1
 
@@ -127,6 +138,9 @@ function ChartContainer<T extends { timestamp: number }>({
         <Slot
           className={cn(
             chartContainerClassNames,
+            // Chrome dispatches mouse moves as content scrolls under the
+            // pointer; each one re-renders the tooltip with forced layouts.
+            ignorePointerWhileScrollingClassName,
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
@@ -137,9 +151,9 @@ function ChartContainer<T extends { timestamp: number }>({
             (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {children}
+          {shouldMountChart ? children : <div />}
         </Slot>
-        {(!!isLoading || !isClient) && (
+        {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
@@ -148,13 +162,15 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && !(noDataSourcesSelected && isClient) && (
-          <ChartNoDataState size={size} />
-        )}
-        {noDataSourcesSelected && !isLoading && isClient && (
+        {!hasData &&
+          !isLoading &&
+          !(noDataSourcesSelected && shouldMountChart) && (
+            <ChartNoDataState size={size} />
+          )}
+        {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {isClient && size !== 'small' && (
+        {shouldMountChart && size !== 'small' && (
           <Logo
             animated={false}
             className={cn(
@@ -168,7 +184,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {isClient && size !== 'small' && project && (
+        {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
@@ -182,7 +198,7 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} ref={ref} />
+          <ChartMilestones data={data} milestones={milestones} />
         )}
       </div>
     </ChartContext.Provider>
@@ -205,7 +221,23 @@ function SimpleChartContainer({
 }
 SimpleChartContainer.displayName = 'Chart'
 
-const ChartTooltip = RechartsPrimitive.Tooltip
+function ChartTooltip(props: RechartsPrimitive.TooltipProps<number, string>) {
+  const coordinate = RechartsPrimitive.useActiveTooltipCoordinate()
+  const plotArea = RechartsPrimitive.usePlotArea()
+  const showOnLeft =
+    coordinate !== undefined &&
+    plotArea !== undefined &&
+    coordinate.x > plotArea.x + plotArea.width / 2
+
+  return (
+    <RechartsPrimitive.Tooltip
+      allowEscapeViewBox={{ x: true, y: true }}
+      reverseDirection={{ x: showOnLeft }}
+      offset={16}
+      {...props}
+    />
+  )
+}
 type CustomChartTooltipProps = Omit<
   RechartsPrimitive.DefaultTooltipContentProps<number, string>,
   'accessibilityLayer'
@@ -231,13 +263,10 @@ function ChartLegendContent({
   > & {
     nameKey?: string
   }) {
-  const id = React.useId()
-
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
 
   const {
-    currentLegendOnboardingId,
     hasFinishedOnboarding,
     setHasFinishedOnboarding,
     hasFinishedOnboardingInitial,
@@ -323,12 +352,11 @@ function ChartLegendContent({
         interactiveLegend &&
         !interactiveLegend.disableOnboarding && (
           <div
-            id={id}
             className={cn(
               '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
-              currentLegendOnboardingId !== id && 'opacity-0',
+              legendOnboardingHintClassName,
             )}
-            data-role="legend-onboarding"
+            data-legend-onboarding-hint=""
           >
             <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
             Try clicking legend items to toggle data

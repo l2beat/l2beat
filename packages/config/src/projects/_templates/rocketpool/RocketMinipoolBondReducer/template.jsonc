@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolBondReducer",
+  "category": "core",
+  "description": "Lets a node operator lower the bond on an existing legacy validator, inside a governed window and only while the feature flag is on. A quorum of the oracle set can cancel a pending reduction during the window, which is the check against an operator reducing their own exposure without exiting.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can cancel a pending bond reduction inside the governed window."
+        }
+      ]
+    }
+  }
+}

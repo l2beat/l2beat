@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsInflation",
+  "category": "gov",
+  "description": "Parameters of collateral-token issuance: the per-interval rate and the start time of the first interval. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.",
+  "ignoreInWatchMode": ["getInflationIntervalStartTime"]
+}

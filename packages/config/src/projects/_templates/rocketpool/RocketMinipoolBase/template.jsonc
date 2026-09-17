@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolBase",
+  "category": "core",
+  "description": "Proxy base every legacy validator contract runs. It delegates to a shared implementation resolved from the registry; the validator's owner chooses whether to track the latest implementation or pin the one they upgraded to, and can roll back one version. The copy registered here is the uninitialised template, so its own slots are empty."
+}

@@ -3,6 +3,7 @@ import type { Database, InteropEventContext } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
+import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
@@ -81,7 +82,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         parents: [parent],
         indexerService,
         minHeight: 1,
-        name: 'relay_indexer',
+        name: INDEXER_NAMES.INTEROP_RELAY,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,

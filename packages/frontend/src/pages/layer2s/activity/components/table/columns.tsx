@@ -16,6 +16,7 @@ import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { CommonProjectColumnsOptions } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { EM_DASH } from '~/consts/characters'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
@@ -91,34 +92,42 @@ export const getL2ActivityColumns = (
         )
       },
     }),
-    columnHelper.accessor('data.pastDayCount', {
-      header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
-      cell: (ctx) => {
-        const data = ctx.row.original.data
-        if (!data) {
-          return <NoDataBadge className="w-full" />
-        }
-        return (
-          <SyncStatusWrapper isSynced={data.isSynced}>
-            <ValueWithPercentageChange
-              change={data.pastDayCount.change}
-              changePeriod={data.pastDayCount.changePeriod}
-              className="font-medium"
-              containerClassName="justify-end"
-            >
-              {formatActivityCount(data.pastDayCount.value)}
-            </ValueWithPercentageChange>
-          </SyncStatusWrapper>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        headClassName: 'max-w-[110px]',
-        tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`,
-        colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
-      },
-    }),
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor((row) => row.data?.pastDayCount.value, {
+        id: 'pastDayCount',
+        header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
+        cell: (ctx) => {
+          const data = ctx.row.original.data
+          if (!data) {
+            return <NoDataBadge className="w-full" />
+          }
+          return (
+            <SyncStatusWrapper isSynced={data.isSynced}>
+              <ValueWithPercentageChange
+                change={data.pastDayCount.change}
+                changePeriod={data.pastDayCount.changePeriod}
+                className="font-medium"
+                containerClassName="justify-end"
+              >
+                {formatActivityCount(data.pastDayCount.value)}
+              </ValueWithPercentageChange>
+            </SyncStatusWrapper>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          headClassName: 'max-w-[110px]',
+          tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`,
+          colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
+        },
+      }),
+      (row) => ({
+        change: row.data?.pastDayCount.change,
+        period: row.data?.pastDayCount.changePeriod,
+      }),
+    ),
     columnHelper.accessor('data.maxCount.value', {
       header: `Max ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
       sortUndefined: 'last',
@@ -142,32 +151,40 @@ export const getL2ActivityColumns = (
         tooltip: `Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`,
       },
     }),
-    columnHelper.accessor('data.summedCount.value', {
-      header: '30D Count',
-      cell: (ctx) => {
-        const data = ctx.row.original.data
-        if (!data) {
-          return null
-        }
-        return (
-          <SyncStatusWrapper isSynced={data.isSynced}>
-            <ValueWithPercentageChange
-              change={data.summedCount.change}
-              changePeriod={data.summedCount.changePeriod}
-              className="font-medium"
-              containerClassName="justify-end"
-            >
-              {formatInteger(data.summedCount.value)}
-            </ValueWithPercentageChange>
-          </SyncStatusWrapper>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        hideIfNull: true,
-      },
-    }),
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor('data.summedCount.value', {
+        id: 'summedCount',
+        header: '30D Count',
+        cell: (ctx) => {
+          const data = ctx.row.original.data
+          if (!data) {
+            return null
+          }
+          return (
+            <SyncStatusWrapper isSynced={data.isSynced}>
+              <ValueWithPercentageChange
+                change={data.summedCount.change}
+                changePeriod={data.summedCount.changePeriod}
+                className="font-medium"
+                containerClassName="justify-end"
+              >
+                {formatInteger(data.summedCount.value)}
+              </ValueWithPercentageChange>
+            </SyncStatusWrapper>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          hideIfNull: true,
+        },
+      }),
+      (row) => ({
+        change: row.data?.summedCount.change,
+        period: row.data?.summedCount.changePeriod,
+      }),
+    ),
     metric === 'tps' &&
       columnHelper.accessor('data.totalCount.value', {
         header: 'Total count',

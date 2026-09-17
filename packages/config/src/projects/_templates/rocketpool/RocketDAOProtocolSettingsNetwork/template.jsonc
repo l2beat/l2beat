@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsNetwork",
+  "category": "gov",
+  "description": "Network-wide parameters: the oracle consensus share, reporting frequencies and switches, the cap on how far the redemption price may move per report, the commission bounds and demand range, the revenue split, and the target redemption buffer. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

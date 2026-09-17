@@ -73,24 +73,20 @@ export const lineaprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x29483dd4b0cd0a98968ab25795ae2363ed422fe575a20f55ac331519c3e846e1',
+        hash: '0xbe73a8003797063d70b44eba376a814caf3399361069b5e5e43660cc435c27c9',
         name: 'Linea Plonk Type 0',
-        sourceLink:
-          'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
+        // sourceLink:
+        //   'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc',
+              '0xAFF26999780901ee8B48f0a1271a177ff46fD53F',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        verificationSteps: readProjectMarkdown(
-          'lineaprover',
-          'verificationSteps-0x29483dd4',
-        ),
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

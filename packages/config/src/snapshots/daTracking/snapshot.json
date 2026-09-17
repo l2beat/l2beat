@@ -1815,7 +1815,6 @@
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 21890837,
-        "untilBlock": 24433367,
         "inbox": "0x003E40D3125591bD722aB1bB880c78e4D74d0977",
         "sequencers": ["0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57"]
       }
@@ -1826,6 +1825,7 @@
         "type": "celestia",
         "daLayer": "celestia",
         "sinceBlock": 9779673,
+        "untilBlock": 13618693,
         "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs="
       }
     }

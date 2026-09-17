@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x431a9e3de4d7752687a0e640fadbc2e9527944aa
+
+# Diff at Tue, 15 Sep 2026 11:27:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1788264785
+- current timestamp: 1789471567
+
+## Description
+
+Operator changes.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
+-        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
+Generated with discovered.json: 0xc4242f6e07f8ecb518dcc0e17a3445ff6da9a1bb
+
+# Diff at Mon, 07 Sep 2026 08:38:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1788264785
+- current timestamp: 1788264785
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788264785 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"},{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x9cd6757a716676d4360e503fd56888733d523dd3
 
 # Diff at Tue, 01 Sep 2026 12:14:34 GMT:

@@ -1667,7 +1667,7 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "base": 50171751 },
-  "permissionsConfigHash": "0xad21d3aef18a6f7b656f051422f71d0dd1e96c39fce6afdc74a73a6f50a60d7b",
+  "permissionsConfigHash": "0xc80d116758221c1f84b66bae046ec3527fa1b3fe06e9496fd46f9d2fdb9af569",
   "permissions": {
     "base:0x107c739629aCced04e3197EAa6b44CdEe0cE246c": {
       "receivedPermissions": [

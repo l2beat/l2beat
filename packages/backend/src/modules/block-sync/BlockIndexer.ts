@@ -132,7 +132,7 @@ export class BlockIndexer extends ManagedChildIndexer {
             () => processor.processBlock(block, logs),
           )
           const duration = Date.now() - start
-          this.logger.info('Processor finished', {
+          this.logger.debug('Processor finished', {
             processor: processor.constructor.name,
             durationMs: Number.parseFloat(duration.toFixed(2)),
           })
@@ -144,7 +144,7 @@ export class BlockIndexer extends ManagedChildIndexer {
           })
         }
       }
-      this.logger.info('Processed block', {
+      this.logger.debug('Processed block', {
         blockNumber: block.number,
         logs: logs.length,
       })

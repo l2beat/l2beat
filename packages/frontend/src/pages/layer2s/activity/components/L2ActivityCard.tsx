@@ -20,7 +20,7 @@ export function L2ActivityCard(props: Props) {
   const entries = props.entries.filter(filterEntries)
 
   const initialSort = {
-    id: 'data_pastDayCount',
+    id: 'pastDayCount',
     desc: true,
   }
 

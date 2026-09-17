@@ -1,0 +1,8 @@
+{
+  "Groth16DepositVerifier_20260903": {
+    "hash": "0xd33d9c34622195eadd1cfb9b95fdb679d7d004c960a9b1909cf5eebb0799b77b",
+    "address": "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5",
+    "chain": "optimism",
+    "blockNumber": 156585066
+  }
+}

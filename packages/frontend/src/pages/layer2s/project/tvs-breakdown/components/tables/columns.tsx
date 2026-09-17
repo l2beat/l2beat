@@ -10,6 +10,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
@@ -96,43 +97,57 @@ export const columns = [
       return <TokenAddressCell {...address} />
     },
   }),
-  columnHelper.accessor((row) => row.priceUsd.value, {
-    id: 'priceUsd',
-    header: 'Price',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => {
-      const { priceUsd } = ctx.row.original
-      return (
-        <div className="flex items-center justify-end gap-1">
-          <div className="font-medium text-xs">
-            {formatCurrency(priceUsd.value, 'usd')}
+  ...withChangeSort(
+    columnHelper,
+    columnHelper.accessor((row) => row.priceUsd.value, {
+      id: 'priceUsd',
+      header: 'Price',
+      meta: {
+        align: 'right',
+      },
+      cell: (ctx) => {
+        const { priceUsd } = ctx.row.original
+        return (
+          <div className="flex items-center justify-end gap-1">
+            <div className="font-medium text-xs">
+              {formatCurrency(priceUsd.value, 'usd')}
+            </div>
+            {priceUsd.change !== undefined ? (
+              <PercentChange
+                value={priceUsd.change}
+                period={priceUsd.changePeriod}
+              />
+            ) : (
+              <PercentChangeNotAvailable />
+            )}
           </div>
-          {priceUsd.change !== undefined ? (
-            <PercentChange
-              value={priceUsd.change}
-              period={priceUsd.changePeriod}
-            />
-          ) : (
-            <PercentChangeNotAvailable />
-          )}
-        </div>
-      )
-    },
-  }),
-  columnHelper.accessor((row) => row.valueForProject.value, {
-    id: 'value',
-    header: 'TVS-Adjusted Value',
-    meta: {
-      align: 'right',
-      tooltip:
-        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Percentage change compared to 7 days ago. Expand the section to learn more.',
-    },
-    cell: (ctx) => {
-      return <ProjectTokenValueCell row={ctx.row.original} />
-    },
-  }),
+        )
+      },
+    }),
+    (row) => ({
+      change: row.priceUsd.change,
+      period: row.priceUsd.changePeriod,
+    }),
+  ),
+  ...withChangeSort(
+    columnHelper,
+    columnHelper.accessor((row) => row.valueForProject.value, {
+      id: 'value',
+      header: 'TVS-Adjusted Value',
+      meta: {
+        align: 'right',
+        tooltip:
+          'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Percentage change compared to 7 days ago. Expand the section to learn more.',
+      },
+      cell: (ctx) => {
+        return <ProjectTokenValueCell row={ctx.row.original} />
+      },
+    }),
+    (row) => ({
+      change: row.valueForProject.change,
+      period: row.valueForProject.changePeriod,
+    }),
+  ),
   columnHelper.display({
     id: 'actions',
     meta: {
