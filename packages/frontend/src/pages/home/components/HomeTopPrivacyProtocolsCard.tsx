@@ -19,7 +19,7 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
-import { PrivacyAdversaryDots } from '~/pages/privacy/adversaries/PrivacyAdversaryDots'
+import { PrivacyAdversaryMergedDot } from '~/pages/privacy/adversaries/PrivacyAdversaryMergedDot'
 import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
 import {
@@ -108,7 +108,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        'Key properties of the protocol: trusted setup, exit window and reproducibility, then privacy against each adversary: public observer, chain analyst, network observer, privileged insider, future adversary. Hover over each dot for details.',
+        'Key properties of the protocol: trusted setup, exit window, reproducibility and privacy. The privacy dot folds all adversaries into one colour. Hover over each dot for details.',
     },
   }),
   columnHelper.accessor('totalValueLockedUsd', {
@@ -161,7 +161,7 @@ function PropertiesCell({ entry }: { entry: PrivacySummaryEntry }) {
         />
       </PropertyDot>
       <VerticalSeparator className="mx-1 h-4" />
-      <PrivacyAdversaryDots adversaries={entry.adversaries} />
+      <PrivacyAdversaryMergedDot adversaries={entry.adversaries} />
     </div>
   )
 }

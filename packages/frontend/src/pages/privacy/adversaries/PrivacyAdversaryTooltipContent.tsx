@@ -3,6 +3,7 @@ import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/type
 import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import {
   EXPOSURE_TEXT_CLASS,
+  getPrivacyAdversaryTitle,
   PRIVACY_EXPOSURE_LABEL,
 } from './privacyAdversaryUi'
 
@@ -16,7 +17,9 @@ export function PrivacyAdversaryTooltipContent({
 }) {
   return (
     <div className="space-y-2">
-      <div className="font-bold text-label-value-14">{cell.label}</div>
+      <div className="font-bold text-label-value-14">
+        {getPrivacyAdversaryTitle(cell.label)}
+      </div>
       <p className="text-secondary text-xs">{cell.description}</p>
       <div className="flex items-center gap-2">
         <TrustedSetupRiskDot

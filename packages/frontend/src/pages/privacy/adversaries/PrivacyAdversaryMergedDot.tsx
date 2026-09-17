@@ -1,0 +1,65 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
+import { sentimentToRiskDot } from '../sentimentToRiskDot'
+import {
+  getPrivacyAdversariesMergedSentiment,
+  getPrivacyAdversaryTitle,
+  PRIVACY_PROMISE_LABEL,
+} from './privacyAdversaryUi'
+
+/** All adversaries folded into one dot; hover lists each of them. */
+export function PrivacyAdversaryMergedDot({
+  adversaries,
+}: {
+  adversaries: PrivacyAdversariesSummary
+}) {
+  const sentiment = getPrivacyAdversariesMergedSentiment(adversaries.cells)
+  const promiseLabel = PRIVACY_PROMISE_LABEL[adversaries.promise.protects]
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        aria-label={`${PRIVACY_ASSESSMENT.title}: ${promiseLabel}`}
+      >
+        <TrustedSetupRiskDot
+          risk={sentimentToRiskDot(sentiment)}
+          size="sm"
+          className="shrink-0"
+        />
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[340px]">
+        <div className="space-y-2">
+          <div className="font-bold text-label-value-14">
+            {PRIVACY_ASSESSMENT.title}
+          </div>
+          <p className="text-secondary text-xs">{adversaries.promise.text}</p>
+          <ul className="space-y-1">
+            {adversaries.cells.map((cell) => (
+              <li key={cell.id} className="flex items-center gap-2 text-xs">
+                <TrustedSetupRiskDot
+                  risk={sentimentToRiskDot(cell.sentiment)}
+                  size="sm"
+                  className="shrink-0"
+                />
+                <span className="font-medium">
+                  {getPrivacyAdversaryTitle(cell.label)}:
+                </span>
+                <span>{cell.value}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-secondary text-xs">
+            The dot is red if any adversary except the future one is red,
+            otherwise the majority colour, green on a tie. See the privacy page
+            for the full assessment.
+          </p>
+        </div>
+      </TooltipContent>
+    </Tooltip>
+  )
+}

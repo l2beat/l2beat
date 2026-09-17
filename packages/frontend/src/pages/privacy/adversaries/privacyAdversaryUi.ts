@@ -1,5 +1,6 @@
 import type {
   PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyField,
   PrivacyFieldExposure,
@@ -54,6 +55,26 @@ export function getExposureNote(
   leak: PrivacyFieldExposure,
 ): string | undefined {
   return typeof leak === 'string' ? undefined : leak.note
+}
+
+/** Title of a hover card for one adversary, e.g. "Against public observer". */
+export function getPrivacyAdversaryTitle(label: string): string {
+  return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
+}
+
+/**
+ * One colour for all adversaries, for the homepage. The future adversary is
+ * left out: it grades a potential post-quantum world, not today's protocol.
+ * Any red cell makes the dot red. Otherwise the majority colour wins, and a
+ * tie is green.
+ */
+export function getPrivacyAdversariesMergedSentiment(
+  cells: PrivacyAdversarySummaryCell[],
+): PrivacyAdversarySentiment {
+  const graded = cells.filter((cell) => cell.id !== 'futureAdversary')
+  if (graded.some((cell) => cell.sentiment === 'bad')) return 'bad'
+  const warnings = graded.filter((cell) => cell.sentiment === 'warning').length
+  return warnings > graded.length - warnings ? 'warning' : 'good'
 }
 
 /** Anchor of an adversary block inside the project page section. */

@@ -18,12 +18,14 @@ import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
+import { PRIVACY_PROMISE_LABEL } from '../../adversaries/privacyAdversaryUi'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
 } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
+import { DotWithLabel } from '../../summary/components/DotWithLabel'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
@@ -62,7 +64,17 @@ export function PrivacyProjectRiskProfile({
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
         value={
-          <PrivacyAdversaryDots adversaries={adversaries} size="md" href="" />
+          <DotWithLabel
+            dot={
+              <PrivacyAdversaryDots
+                adversaries={adversaries}
+                size="md"
+                href=""
+              />
+            }
+            label={PRIVACY_PROMISE_LABEL[adversaries.promise.protects]}
+            className="items-end md:items-start"
+          />
         }
       />
       <ProjectSummaryStat
