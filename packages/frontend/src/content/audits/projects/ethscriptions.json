@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "ethscriptions",
   "slug": "ethscriptions",
-  "generatedAt": 1789565213,
+  "generatedAt": 1789642510,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1769601454,
   "contractSelection": "all",
@@ -93,19 +93,19 @@
     "units": {
       "identical": 2,
       "library": 50,
-      "differs": 43,
-      "unaudited": 42
+      "differs": 31,
+      "unaudited": 54
     },
     "uniqueUnits": {
       "identical": 2,
       "library": 41,
-      "differs": 32,
-      "unaudited": 30
+      "differs": 26,
+      "unaudited": 36
     },
     "lines": {
       "total": 22851,
-      "covered": 11662,
-      "uncovered": 11189
+      "covered": 11340,
+      "uncovered": 11511
     }
   },
   "reportIds": [
@@ -116,9 +116,8 @@
     "openzeppelin/contracts__audits__2024-10-v5.1",
     "openzeppelin/contracts__audits__2025-04-v5.3",
     "openzeppelin/contracts__audits__2026-02-v5.6",
-    "optimism/cantina-u18-2026-01",
-    "optimism/openzeppelin-bedrock-bridge-2022-05",
     "optimism/openzeppelin-bedrock-periphery-2022-09",
+    "optimism/openzeppelin-ovm-rollup-2021-03",
     "safe/certora-safe-1-3-0",
     "safe/nethermind-safe-allowance-v1-0-0",
     "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
@@ -179,7 +178,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "PlonkVerifier",
-                "similarity": 0.929,
+                "similarity": 0.995,
                 "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
                 "repository": "succinctlabs/sp1-contracts",
                 "path": "contracts/src/v1.0.7-testnet/PlonkVerifier.sol",
@@ -298,7 +297,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SP1Verifier",
-                "similarity": 0.929,
+                "similarity": 0.983,
                 "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
                 "repository": "succinctlabs/sp1-contracts",
                 "path": "contracts/src/v1.0.7-testnet/SP1Verifier.sol",
@@ -682,19 +681,19 @@
         "units": {
           "identical": 1,
           "library": 2,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 2,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 1343,
-          "covered": 919,
-          "uncovered": 424
+          "covered": 826,
+          "uncovered": 517
         }
       },
       "files": [
@@ -758,7 +757,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.781,
+                "similarity": 0.793,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/access/Ownable.sol",
@@ -794,34 +793,36 @@
               "status": "differs",
               "coveredLines": 41,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "library"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "ReentrancyGuard",
-                "similarity": 0.6,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/security/ReentrancyGuard.sol",
-                "commit": "adbb8c9d27e77452bc2253397908d3d044808e62",
-                "commitTimestamp": "2023-08-16T05:33:49Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/adbb8c9d27e77452bc2253397908d3d044808e62/contracts/security/ReentrancyGuard.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Full review of the file at the Phase 5 audit commit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 5
+                "rank": 1,
+                "matchedBy": "similarity",
+                "auditedName": "Lib_ReentrancyGuard",
+                "similarity": 1,
+                "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+                "repository": "ben-chain/contracts-v2",
+                "path": "contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+                "commit": "a935e276f5620b40802b52721e3474232e458f72",
+                "commitTimestamp": "2021-04-12T01:08:09Z",
+                "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+                "auditStatus": "audited_with_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+                "majorFindings": 2,
+                "findingIds": ["C02", "C04"],
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 2
               },
               "diffStats": {
                 "added": 1,
-                "removed": 13,
-                "ignoredAdded": 3,
-                "ignoredRemoved": 12,
+                "removed": 1,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
                 "unchanged": 41,
                 "ignoredOnly": false
               },
@@ -835,41 +836,9 @@
               "startLine": 163,
               "endLine": 674,
               "lines": 512,
-              "status": "differs",
-              "coveredLines": 93,
-              "match": {
-                "origin": "library",
-                "collection": "solmate",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeCastLib",
-                "similarity": 0.023,
-                "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
-                "repository": "Rari-Capital/solmate",
-                "path": "src/utils/SafeCastLib.sol",
-                "commit": "938b2d6925e24de7542bce4b08f3f03988a82245",
-                "commitTimestamp": "2021-11-19T17:44:34Z",
-                "url": "https://github.com/Rari-Capital/solmate/blob/938b2d6925e24de7542bce4b08f3f03988a82245/src/utils/SafeCastLib.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "Initial audit",
-                "coverage": "Full review of the contents of src/utils/.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 419,
-                "removed": 9,
-                "ignoredAdded": 83,
-                "ignoredRemoved": 0,
-                "unchanged": 93,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "7ec81775a58108eefaa8876d51ec0c399cc8d80a7b40e6f0325ebae2e80f9295",
@@ -1112,7 +1081,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Enum",
-                "similarity": 0.833,
+                "similarity": 0.831,
                 "reportId": "safe/nethermind-safe-allowance-v1-0-0",
                 "repository": "safe-fndn/safe-modules",
                 "path": "modules/allowances/contracts/Enum.sol",
@@ -1135,7 +1104,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": []
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",
@@ -1685,19 +1654,19 @@
         "units": {
           "identical": 0,
           "library": 6,
-          "differs": 7,
-          "unaudited": 13
+          "differs": 3,
+          "unaudited": 17
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 6,
-          "differs": 7,
-          "unaudited": 13
+          "differs": 3,
+          "unaudited": 17
         },
         "lines": {
           "total": 4653,
-          "covered": 727,
-          "uncovered": 3926
+          "covered": 630,
+          "uncovered": 4023
         }
       },
       "files": [
@@ -1761,7 +1730,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ContextUpgradeable",
-                "similarity": 0.75,
+                "similarity": 0.781,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -2059,40 +2028,8 @@
               "startLine": 2784,
               "endLine": 2802,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -2103,42 +2040,9 @@
               "startLine": 2806,
               "endLine": 2874,
               "lines": 69,
-              "status": "differs",
-              "coveredLines": 52,
-              "match": {
-                "origin": "upstream",
-                "collection": "optimism",
-                "relation": {
-                  "type": "fork_of",
-                  "repository": "ethereum-optimism/optimism"
-                },
-                "rank": 1,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.141,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 17,
-                "removed": 152,
-                "ignoredAdded": 21,
-                "ignoredRemoved": 74,
-                "unchanged": 52,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "330a740334c8d4647450818dd10c36f6eb291abd9f975875030075d027559ac3",
@@ -2148,42 +2052,9 @@
               "startLine": 2877,
               "endLine": 2882,
               "lines": 6,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "upstream",
-                "collection": "optimism",
-                "relation": {
-                  "type": "fork_of",
-                  "repository": "ethereum-optimism/optimism"
-                },
-                "rank": 1,
-                "matchedBy": "name",
-                "auditedName": "L1Block",
-                "similarity": 0.087,
-                "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
-                "repository": "ethereum-optimism/optimistic-specs",
-                "path": "packages/contracts/contracts/L2/L1Block.sol",
-                "commit": "0c054885a6fd2011503784464da1e94997251fe3",
-                "commitTimestamp": "2022-04-30T00:17:29Z",
-                "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/0c054885a6fd2011503784464da1e94997251fe3/packages/contracts/contracts/L2/L1Block.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "All production contracts reviewed for the majority of the audit. Findings are reported against the later commits; issues no longer relevant after the rewrite were disregarded.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 10
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 16,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 7,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "c519aaa7ed20bcbc8863dcf3ba52120b5c4be174eefa35c2c96106c06f30a9e3",
@@ -2217,8 +2088,40 @@
               "startLine": 2986,
               "endLine": 3068,
               "lines": 83,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 77,
+              "match": {
+                "origin": "library",
+                "collection": "solmate",
+                "relation": {
+                  "type": "library"
+                },
+                "rank": 3,
+                "matchedBy": "similarity",
+                "auditedName": "SSTORE2",
+                "similarity": 0.691,
+                "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
+                "repository": "Rari-Capital/solmate",
+                "path": "src/utils/SSTORE2.sol",
+                "commit": "fc0d77b124c200993c441d3f7612e8731837fd1c",
+                "commitTimestamp": "2021-12-18T22:54:22Z",
+                "url": "https://github.com/Rari-Capital/solmate/blob/fc0d77b124c200993c441d3f7612e8731837fd1c/src/utils/SSTORE2.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "Finding remediation review",
+                "coverage": "Review limited to the comment remediation for finding CQ.2.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 6,
+                "removed": 11,
+                "ignoredAdded": 26,
+                "ignoredRemoved": 13,
+                "unchanged": 77,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -2253,41 +2156,9 @@
               "startLine": 3409,
               "endLine": 3568,
               "lines": 160,
-              "status": "differs",
-              "coveredLines": 87,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Base64",
-                "similarity": 0.161,
-                "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Base64.sol",
-                "commit": "7e0425902611f933dfa254cd0e9509b01cf09e4e",
-                "commitTimestamp": "2024-09-03T15:08:32Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7e0425902611f933dfa254cd0e9509b01cf09e4e/contracts/utils/Base64.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Fix review of pull request #5176 (resolving N-03); only the fix changes to this file were reviewed.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 73,
-                "removed": 37,
-                "ignoredAdded": 65,
-                "ignoredRemoved": 50,
-                "unchanged": 87,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "def1b2d5917d23438b3a73acf8322bb244c2b131b9cd4dd9de8f0d1581651760",
@@ -2340,40 +2211,8 @@
               "startLine": 8,
               "endLine": 26,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -2396,7 +2235,7 @@
                 "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.812,
+                "similarity": 0.865,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -2436,19 +2275,19 @@
         "units": {
           "identical": 0,
           "library": 12,
-          "differs": 9,
-          "unaudited": 14
+          "differs": 4,
+          "unaudited": 19
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 12,
-          "differs": 9,
-          "unaudited": 14
+          "differs": 4,
+          "unaudited": 19
         },
         "lines": {
           "total": 7818,
-          "covered": 3716,
-          "uncovered": 4102
+          "covered": 3618,
+          "uncovered": 4200
         }
       },
       "files": [
@@ -2512,7 +2351,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -2753,42 +2592,9 @@
               "startLine": 3166,
               "endLine": 3234,
               "lines": 69,
-              "status": "differs",
-              "coveredLines": 52,
-              "match": {
-                "origin": "upstream",
-                "collection": "optimism",
-                "relation": {
-                  "type": "fork_of",
-                  "repository": "ethereum-optimism/optimism"
-                },
-                "rank": 1,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.141,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 17,
-                "removed": 152,
-                "ignoredAdded": 21,
-                "ignoredRemoved": 74,
-                "unchanged": 52,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "adca093c3101c5b38590e99c1fbc6907a89531034dee3dce9000b2b1da22b34c",
@@ -2798,41 +2604,9 @@
               "startLine": 3237,
               "endLine": 3239,
               "lines": 3,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "L2ToL1MessagePasser",
-                "similarity": 0.041,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 45,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 42,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "444a808109efa704fe154926e0f0d44b3ca2346c5fa4bb7a0e48d01cf61545aa",
@@ -2889,7 +2663,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ContextUpgradeable",
-                "similarity": 0.75,
+                "similarity": 0.781,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -3187,40 +2961,8 @@
               "startLine": 6021,
               "endLine": 6039,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3231,42 +2973,9 @@
               "startLine": 6042,
               "endLine": 6047,
               "lines": 6,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "upstream",
-                "collection": "optimism",
-                "relation": {
-                  "type": "fork_of",
-                  "repository": "ethereum-optimism/optimism"
-                },
-                "rank": 1,
-                "matchedBy": "name",
-                "auditedName": "L1Block",
-                "similarity": 0.087,
-                "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
-                "repository": "ethereum-optimism/optimistic-specs",
-                "path": "packages/contracts/contracts/L2/L1Block.sol",
-                "commit": "0c054885a6fd2011503784464da1e94997251fe3",
-                "commitTimestamp": "2022-04-30T00:17:29Z",
-                "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/0c054885a6fd2011503784464da1e94997251fe3/packages/contracts/contracts/L2/L1Block.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "All production contracts reviewed for the majority of the audit. Findings are reported against the later commits; issues no longer relevant after the rewrite were disregarded.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 10
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 16,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 7,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "4b68118b5b12c9ca3e05ba43e1346b1cbc1a562c2428afea88b88ec9568f9f0c",
@@ -3288,8 +2997,40 @@
               "startLine": 6145,
               "endLine": 6227,
               "lines": 83,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 77,
+              "match": {
+                "origin": "library",
+                "collection": "solmate",
+                "relation": {
+                  "type": "library"
+                },
+                "rank": 3,
+                "matchedBy": "similarity",
+                "auditedName": "SSTORE2",
+                "similarity": 0.691,
+                "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
+                "repository": "Rari-Capital/solmate",
+                "path": "src/utils/SSTORE2.sol",
+                "commit": "fc0d77b124c200993c441d3f7612e8731837fd1c",
+                "commitTimestamp": "2021-12-18T22:54:22Z",
+                "url": "https://github.com/Rari-Capital/solmate/blob/fc0d77b124c200993c441d3f7612e8731837fd1c/src/utils/SSTORE2.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "Finding remediation review",
+                "coverage": "Review limited to the comment remediation for finding CQ.2.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 6,
+                "removed": 11,
+                "ignoredAdded": 26,
+                "ignoredRemoved": 13,
+                "unchanged": 77,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -3324,41 +3065,9 @@
               "startLine": 6568,
               "endLine": 6727,
               "lines": 160,
-              "status": "differs",
-              "coveredLines": 87,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Base64",
-                "similarity": 0.161,
-                "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Base64.sol",
-                "commit": "7e0425902611f933dfa254cd0e9509b01cf09e4e",
-                "commitTimestamp": "2024-09-03T15:08:32Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7e0425902611f933dfa254cd0e9509b01cf09e4e/contracts/utils/Base64.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Fix review of pull request #5176 (resolving N-03); only the fix changes to this file were reviewed.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 73,
-                "removed": 37,
-                "ignoredAdded": 65,
-                "ignoredRemoved": 50,
-                "unchanged": 87,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "def1b2d5917d23438b3a73acf8322bb244c2b131b9cd4dd9de8f0d1581651760",
@@ -3423,40 +3132,8 @@
               "startLine": 8,
               "endLine": 26,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3479,7 +3156,7 @@
                 "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.812,
+                "similarity": 0.865,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -3519,19 +3196,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 264,
-          "covered": 225,
-          "uncovered": 39
+          "covered": 208,
+          "uncovered": 56
         }
       },
       "files": [
@@ -3559,7 +3236,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "L2ToL1MessagePasser",
-                "similarity": 0.612,
+                "similarity": 0.641,
                 "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
                 "repository": "0xFacet/facet-optimism",
                 "path": "packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
@@ -3599,40 +3276,8 @@
               "startLine": 8,
               "endLine": 26,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3655,7 +3300,7 @@
                 "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.812,
+                "similarity": 0.865,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -3695,19 +3340,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 2,
-          "unaudited": 0
+          "differs": 1,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 2,
-          "unaudited": 0
+          "differs": 1,
+          "unaudited": 1
         },
         "lines": {
           "total": 168,
-          "covered": 151,
-          "uncovered": 17
+          "covered": 134,
+          "uncovered": 34
         }
       },
       "files": [
@@ -3724,40 +3369,8 @@
               "startLine": 8,
               "endLine": 26,
               "lines": 19,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.414,
-                "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-                "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-                "commitTimestamp": "2024-10-02T15:07:32Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "primary review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 15,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 17,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3780,7 +3393,7 @@
                 "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.812,
+                "similarity": 0.865,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",

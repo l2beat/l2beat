@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "IERC1155Receiver",
-        "similarity": 1,
+        "similarity": 0.936,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC1155/IERC1155Receiver.sol",

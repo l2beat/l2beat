@@ -6,6 +6,107 @@
   "lines": 12,
   "source": "abstract contract ISignatureValidator is ISignatureValidatorConstants {\n    /**\n     * @notice Legacy EIP1271 method to validate a signature.\n     * @param _data Arbitrary length data signed on the behalf of address(this).\n     * @param _signature Signature byte array associated with _data.\n     *\n     * MUST return the bytes4 magic value 0x20c13b0b when function passes.\n     * MUST NOT modify state (using STATICCALL for solc < 0.5, view modifier for solc > 0.5)\n     * MUST allow external calls\n     */\n    function isValidSignature(bytes memory _data, bytes memory _signature) public view virtual returns (bytes4);\n}",
   "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 12,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISignatureValidator",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/ISignatureValidator.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/ISignatureValidator.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 12,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract ISignatureValidator is ISignatureValidatorConstants {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Should return whether the signature provided is valid for the provided data",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * @param _data Arbitrary length data signed on the behalf of address(this)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @param _signature Signature byte array associated with _data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Legacy EIP1271 method to validate a signature.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * @param _data Arbitrary length data signed on the behalf of address(this).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @param _signature Signature byte array associated with _data.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * MUST return the bytes4 magic value 0x20c13b0b when function passes."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * MUST NOT modify state (using STATICCALL for solc < 0.5, view modifier for solc > 0.5)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
     "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 12,
@@ -33,61 +134,34 @@
       },
       "warnings": []
     },
-    "eea968a44e5d263a": {
-      "status": "library",
-      "coveredLines": 12,
-      "match": {
-        "origin": "stack",
-        "collection": "safe",
-        "relation": { "type": "template", "template": "GnosisSafe" },
-        "rank": 2,
-        "matchedBy": "identity",
-        "auditedName": "ISignatureValidator",
-        "similarity": 1,
-        "reportId": "safe/certora-safe-1-3-0",
-        "repository": "safe-fndn/safe-smart-account",
-        "path": "contracts/interfaces/ISignatureValidator.sol",
-        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-        "commitTimestamp": "2021-11-17T16:53:12Z",
-        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/ISignatureValidator.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "Manual audit",
-        "coverage": "Full manual review of the scoped source.",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 4
-      },
-      "warnings": []
-    },
-    "d293c6ecba42b698": {
-      "status": "library",
-      "coveredLines": 12,
-      "match": {
-        "origin": "stack",
-        "collection": "safe",
-        "relation": { "type": "template", "template": "GnosisSafe" },
-        "rank": 2,
-        "matchedBy": "identity",
-        "auditedName": "ISignatureValidator",
-        "similarity": 1,
-        "reportId": "safe/certora-safe-1-3-0",
-        "repository": "safe-fndn/safe-smart-account",
-        "path": "contracts/interfaces/ISignatureValidator.sol",
-        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-        "commitTimestamp": "2021-11-17T16:53:12Z",
-        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/ISignatureValidator.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "Manual audit",
-        "coverage": "Full manual review of the scoped source.",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 4
-      },
-      "warnings": []
-    },
     "44ad4cf96e2ef6f0": {
+      "status": "library",
+      "coveredLines": 12,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISignatureValidator",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/ISignatureValidator.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/ISignatureValidator.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 12,
       "match": {
@@ -215,7 +289,7 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "library",
       "coveredLines": 12,
       "match": {
@@ -239,80 +313,6 @@
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 4
-      },
-      "diff": {
-        "added": 0,
-        "removed": 0,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 3,
-        "unchanged": 12,
-        "ignoredOnly": true,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 8,
-            "newStart": 1,
-            "newLines": 8,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "abstract contract ISignatureValidator is ISignatureValidatorConstants {"
-              },
-              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 3,
-                "text": "     * @dev Should return whether the signature provided is valid for the provided data",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 4,
-                "text": "     * @param _data Arbitrary length data signed on the behalf of address(this)",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @param _signature Signature byte array associated with _data",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 3,
-                "text": "     * @notice Legacy EIP1271 method to validate a signature.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 4,
-                "text": "     * @param _data Arbitrary length data signed on the behalf of address(this).",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 5,
-                "text": "     * @param _signature Signature byte array associated with _data.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 7,
-                "newLine": 7,
-                "text": "     * MUST return the bytes4 magic value 0x20c13b0b when function passes."
-              },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "     * MUST NOT modify state (using STATICCALL for solc < 0.5, view modifier for solc > 0.5)"
-              }
-            ]
-          }
-        ]
       },
       "warnings": []
     }

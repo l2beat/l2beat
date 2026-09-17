@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "OPSuccinctFaultDisputeGame",
-        "similarity": 0.956,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/dispute/zk/OPSuccinctFaultDisputeGame.sol",

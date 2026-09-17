@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "IL2ERC20Bridge",
-        "similarity": 0.784,
+        "similarity": 0.894,
         "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
         "repository": "ethereum-optimism/optimistic-specs",
         "path": "packages/contracts/contracts/L2/messaging/IL2ERC20Bridge.sol",

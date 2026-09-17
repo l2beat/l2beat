@@ -10,82 +10,292 @@
       "status": "differs",
       "coveredLines": 76,
       "match": {
-        "origin": "other",
-        "collection": "celo",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
         "matchedBy": "name",
         "auditedName": "IOptimismPortal2",
-        "similarity": 0.993,
-        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
-        "repository": "celo-org/optimism",
+        "similarity": 0.951,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
-        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
-        "commitTimestamp": "2026-01-20T14:26:35Z",
-        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
         "auditStatus": "audited_with_no_major_findings",
         "reviewPhase": "initial audit",
-        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
         "majorFindings": 0,
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
-        "totalVersions": 2
+        "totalVersions": 1
       },
       "diff": {
         "added": 1,
-        "removed": 0,
+        "removed": 17,
         "ignoredAdded": 0,
         "ignoredRemoved": 0,
         "unchanged": 76,
         "ignoredOnly": false,
         "hunks": [
           {
-            "oldStart": 8,
-            "oldLines": 6,
-            "newStart": 8,
-            "newLines": 7,
+            "oldStart": 17,
+            "oldLines": 27,
+            "newStart": 17,
+            "newLines": 15,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "    error OptimismPortal_BadTarget();"
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    error OptimismPortal_InvalidOutputRootProof();"
               },
               {
                 "type": " ",
-                "oldLine": 9,
-                "newLine": 9,
-                "text": "    error OptimismPortal_CallPaused();"
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    error OptimismPortal_InvalidProofTimestamp();"
               },
               {
                 "type": " ",
-                "oldLine": 10,
-                "newLine": 10,
-                "text": "    error OptimismPortal_CalldataTooLarge();"
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    error OptimismPortal_InvalidRootClaim();"
               },
               {
-                "type": "+",
-                "newLine": 11,
-                "text": "    error OptimismPortal_NotAllowedOnCGTMode();",
+                "type": "-",
+                "oldLine": 20,
+                "text": "    error OptimismPortal_MigratingToSameRegistry();",
                 "ignored": false
               },
               {
                 "type": " ",
-                "oldLine": 11,
-                "newLine": 12,
-                "text": "    error OptimismPortal_GasEstimation();"
+                "oldLine": 21,
+                "newLine": 20,
+                "text": "    error OptimismPortal_NoReentrancy();"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    error OptimismPortal_NotUsingInterop();",
+                "ignored": false
               },
               {
                 "type": " ",
-                "oldLine": 12,
-                "newLine": 13,
-                "text": "    error OptimismPortal_GasLimitTooLow();"
+                "oldLine": 23,
+                "newLine": 21,
+                "text": "    error OptimismPortal_ProofNotOldEnough();"
               },
               {
                 "type": " ",
-                "oldLine": 13,
-                "newLine": 14,
-                "text": "    error OptimismPortal_ImproperDisputeGame();"
+                "oldLine": 24,
+                "newLine": 22,
+                "text": "    error OptimismPortal_Unproven();"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    error OptimismPortal_InvalidInteropState();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 23,
+                "text": "    error OptimismPortal_InvalidLockboxState();"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    error OptimismPortal_ZeroAddress();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    error OptimismPortal_LockboxNotAuthorizedForPortal();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 24,
+                "text": "    error OutOfGas();"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 25,
+                "text": "    error UnexpectedList();"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 26,
+                "text": "    error UnexpectedString();"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 27, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 28,
+                "text": "    event Initialized(uint8 version);"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    event ETHMigrated(address indexed lockbox, uint256 balance);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    event PortalMigrated(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        IETHLockbox oldLockbox,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        IETHLockbox newLockbox,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        IAnchorStateRegistry oldAnchorStateRegistry,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        IAnchorStateRegistry newAnchorStateRegistry",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 29,
+                "text": "    event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData);"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 30,
+                "text": "    event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success);"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 31,
+                "text": "    event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to);"
+              }
+            ]
+          },
+          {
+            "oldStart": 61,
+            "oldLines": 13,
+            "newStart": 49,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 49,
+                "text": "        external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 50,
+                "text": "    function finalizedWithdrawals(bytes32) external view returns (bool);"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 51,
+                "text": "    function guardian() external view returns (address);"
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    function initialize(ISystemConfig _systemConfig, IAnchorStateRegistry _anchorStateRegistry, IETHLockbox _ethLockbox)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    function initialize(ISystemConfig _systemConfig, IAnchorStateRegistry _anchorStateRegistry) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 53,
+                "text": "    function initVersion() external view returns (uint8);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 54,
+                "text": "    function l2Sender() external view returns (address);"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    function migrateLiquidity() external;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    function migrateToSharedDisputeGame(IETHLockbox _newLockbox, IAnchorStateRegistry _newAnchorStateRegistry)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 55,
+                "text": "    function minimumGasLimit(uint64 _byteCount) external pure returns (uint64);"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 56,
+                "text": "    function numProofSubmitters(bytes32 _withdrawalHash) external view returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 57,
+                "text": "    function params() external view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum); // nosemgrep"
               }
             ]
           }

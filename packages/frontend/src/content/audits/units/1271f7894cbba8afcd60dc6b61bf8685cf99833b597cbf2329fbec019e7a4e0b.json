@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "Tick",
-        "similarity": 0.901,
+        "similarity": 0.814,
         "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
         "repository": "Uniswap/v3-core",
         "path": "contracts/libraries/Tick.sol",

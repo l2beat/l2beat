@@ -6,14 +6,14 @@
   "lines": 5,
   "source": "abstract contract Singleton {\n    // singleton always has to be the first declared variable to ensure the same location as in the Proxy contract.\n    // It should also always be ensured the address is stored alone (uses a full word)\n    address private singleton;\n}",
   "resolutions": {
-    "ba5b6c9584fb78fd": {
+    "41ad32932dea0dc9": {
       "status": "identical",
       "coveredLines": 5,
       "match": {
-        "origin": "own",
+        "origin": "other",
         "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": { "type": "name" },
+        "rank": 4,
         "matchedBy": "identity",
         "auditedName": "Singleton",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "d293c6ecba42b698": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 5,
       "match": {
-        "origin": "other",
+        "origin": "own",
         "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "Singleton",
         "similarity": 1,
@@ -114,7 +114,7 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "identical",
       "coveredLines": 5,
       "match": {

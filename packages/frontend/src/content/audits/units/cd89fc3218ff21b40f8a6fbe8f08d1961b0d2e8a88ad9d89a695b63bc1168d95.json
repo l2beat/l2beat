@@ -6,17 +6,20 @@
   "lines": 58,
   "source": "contract Lib_AddressManager is Ownable {\n    /**\n     *\n     * Events *\n     *\n     */\n    event AddressSet(string indexed _name, address _newAddress, address _oldAddress);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n    mapping(bytes32 => address) private addresses;\n\n    /**\n     *\n     * Public Functions *\n     *\n     */\n\n    /**\n     * Changes the address associated with a particular name.\n     * @param _name String name to associate an address with.\n     * @param _address Address to associate with the name.\n     */\n    function setAddress(string memory _name, address _address) external onlyOwner {\n        bytes32 nameHash = _getNameHash(_name);\n        address oldAddress = addresses[nameHash];\n        addresses[nameHash] = _address;\n\n        emit AddressSet(_name, _address, oldAddress);\n    }\n\n    /**\n     * Retrieves the address associated with a given name.\n     * @param _name Name to retrieve an address for.\n     * @return Address associated with the given name.\n     */\n    function getAddress(string memory _name) external view returns (address) {\n        return addresses[_getNameHash(_name)];\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /**\n     * Computes the hash of a name.\n     * @param _name Name to compute a hash for.\n     * @return Hash of the given name.\n     */\n    function _getNameHash(string memory _name) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(_name));\n    }\n}",
   "resolutions": {
-    "9fa846564f4071bd": {
+    "44ad4cf96e2ef6f0": {
       "status": "differs",
       "coveredLines": 51,
       "match": {
-        "origin": "own",
+        "origin": "upstream",
         "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
         "matchedBy": "name",
         "auditedName": "Lib_AddressManager",
-        "similarity": 0.6,
+        "similarity": 0.56,
         "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
         "repository": "ben-chain/contracts-v2",
         "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
@@ -189,20 +192,17 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "9fa846564f4071bd": {
       "status": "differs",
       "coveredLines": 51,
       "match": {
-        "origin": "upstream",
+        "origin": "own",
         "collection": "optimism",
-        "relation": {
-          "type": "fork_of",
-          "repository": "ethereum-optimism/optimism"
-        },
-        "rank": 1,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "name",
         "auditedName": "Lib_AddressManager",
-        "similarity": 0.6,
+        "similarity": 0.56,
         "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
         "repository": "ben-chain/contracts-v2",
         "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
@@ -388,7 +388,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Lib_AddressManager",
-        "similarity": 0.6,
+        "similarity": 0.56,
         "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
         "repository": "ben-chain/contracts-v2",
         "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",

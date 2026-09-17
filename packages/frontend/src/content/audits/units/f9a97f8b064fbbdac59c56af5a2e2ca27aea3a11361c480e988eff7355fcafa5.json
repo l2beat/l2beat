@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ERC20Votes",
-        "similarity": 0.935,
+        "similarity": 0.971,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-03",
         "repository": "Certora/openzeppelin-contracts",
         "path": "contracts/token/ERC20/extensions/ERC20Votes.sol",

@@ -7,8 +7,1702 @@
   "source": "abstract contract GovernorUpgradeableV2 is\n    Initializable,\n    ContextUpgradeable,\n    ERC165Upgradeable,\n    EIP712Upgradeable,\n    IGovernorUpgradeable,\n    IERC721ReceiverUpgradeable,\n    IERC1155ReceiverUpgradeable\n{\n    using DoubleEndedQueueUpgradeable for DoubleEndedQueueUpgradeable.Bytes32Deque;\n    using SafeCastUpgradeable for uint256;\n    using TimersUpgradeable for TimersUpgradeable.BlockNumber;\n\n    bytes32 public constant BALLOT_TYPEHASH = keccak256(\"Ballot(uint256 proposalId,uint8 support)\");\n    bytes32 public constant EXTENDED_BALLOT_TYPEHASH =\n        keccak256(\"ExtendedBallot(uint256 proposalId,uint8 support,string reason,bytes params)\");\n\n    struct ProposalCore {\n        TimersUpgradeable.BlockNumber voteStart;\n        TimersUpgradeable.BlockNumber voteEnd;\n        bool executed;\n        bool canceled;\n        address votingModule;\n        uint8 proposalType;\n    }\n\n    string private _name;\n\n    mapping(uint256 => ProposalCore) internal _proposals;\n\n    // This queue keeps track of the governor operating on itself. Calls to functions protected by the\n    // {onlyGovernance} modifier needs to be whitelisted in this queue. Whitelisting is set in {_beforeExecute},\n    // consumed by the {onlyGovernance} modifier and eventually reset in {_afterExecute}. This ensures that the\n    // execution of {onlyGovernance} protected calls can only be achieved through successful proposals.\n    DoubleEndedQueueUpgradeable.Bytes32Deque private _governanceCall;\n\n    /**\n     * @dev Restricts a function so it can only be executed through governance proposals. For example, governance\n     * parameter setters in {GovernorSettings} are protected using this modifier.\n     *\n     * The governance executing address may be different from the Governor's own address, for example it could be a\n     * timelock. This can be customized by modules by overriding {_executor}. The executor is only able to invoke these\n     * functions during the execution of the governor's {execute} function, and not under any other circumstances. Thus,\n     * for example, additional timelock proposers are not able to change governance parameters without going through the\n     * governance protocol (since v4.6).\n     */\n    modifier onlyGovernance() {\n        require(_msgSender() == _executor(), \"Governor: onlyGovernance\");\n        if (_executor() != address(this)) {\n            bytes32 msgDataHash = keccak256(_msgData());\n            // loop until popping the expected operation - throw if deque is empty (operation not authorized)\n            while (_governanceCall.popFront() != msgDataHash) {}\n        }\n        _;\n    }\n\n    /**\n     * @dev Sets the value for {name} and {version}\n     */\n    function __Governor_init(string memory name_) internal onlyInitializing {\n        __EIP712_init_unchained(name_, version());\n        __Governor_init_unchained(name_);\n    }\n\n    function __Governor_init_unchained(string memory name_) internal onlyInitializing {\n        _name = name_;\n    }\n\n    /**\n     * @dev Function to receive ETH that will be handled by the governor (disabled if executor is a third party contract)\n     */\n    receive() external payable virtual {\n        require(_executor() == address(this));\n    }\n\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId)\n        public\n        view\n        virtual\n        override(IERC165Upgradeable, ERC165Upgradeable)\n        returns (bool)\n    {\n        // In addition to the current interfaceId, also support previous version of the interfaceId that did not\n        // include the castVoteWithReasonAndParams() function as standard\n        return interfaceId\n            == (\n                type(IGovernorUpgradeable).interfaceId ^ this.castVoteWithReasonAndParams.selector\n                    ^ this.castVoteWithReasonAndParamsBySig.selector ^ this.getVotesWithParams.selector\n            ) || interfaceId == type(IGovernorUpgradeable).interfaceId\n            || interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev See {IGovernor-name}.\n     */\n    function name() public view virtual override returns (string memory) {\n        return _name;\n    }\n\n    /**\n     * @dev See {IGovernor-version}.\n     */\n    function version() public view virtual override returns (string memory) {\n        return \"1\";\n    }\n\n    /**\n     * @dev See {IGovernor-hashProposal}.\n     *\n     * The proposal id is produced by hashing the ABI encoded `targets` array, the `values` array, the `calldatas` array\n     * and the descriptionHash (bytes32 which itself is the keccak256 hash of the description string). This proposal id\n     * can be produced from the proposal data which is part of the {ProposalCreated} event. It can even be computed in\n     * advance, before the proposal is submitted.\n     *\n     * Note that the chainId and the governor address are not part of the proposal id computation. Consequently, the\n     * same proposal (with same operation and same description) will have the same id if submitted on multiple governors\n     * across multiple networks. This also means that in order to execute the same operation twice (on the same\n     * governor) the proposer will have to change the description in order to avoid proposal id conflicts.\n     */\n    function hashProposal(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) public pure virtual override returns (uint256) {\n        return uint256(keccak256(abi.encode(targets, values, calldatas, descriptionHash)));\n    }\n\n    /**\n     * @dev See {IGovernor-state}.\n     */\n    function state(uint256 proposalId) public view virtual override returns (ProposalState) {\n        ProposalCore storage proposal = _proposals[proposalId];\n\n        if (proposal.executed) {\n            return ProposalState.Executed;\n        }\n\n        if (proposal.canceled) {\n            return ProposalState.Canceled;\n        }\n\n        uint256 snapshot = proposalSnapshot(proposalId);\n\n        if (snapshot == 0) {\n            revert(\"Governor: unknown proposal id\");\n        }\n\n        if (snapshot >= block.number) {\n            return ProposalState.Pending;\n        }\n\n        uint256 deadline = proposalDeadline(proposalId);\n\n        if (deadline >= block.number) {\n            return ProposalState.Active;\n        }\n\n        if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {\n            return ProposalState.Succeeded;\n        } else {\n            return ProposalState.Defeated;\n        }\n    }\n\n    /**\n     * @dev See {IGovernor-proposalSnapshot}.\n     */\n    function proposalSnapshot(uint256 proposalId) public view virtual override returns (uint256) {\n        return _proposals[proposalId].voteStart.getDeadline();\n    }\n\n    /**\n     * @dev See {IGovernor-proposalDeadline}.\n     */\n    function proposalDeadline(uint256 proposalId) public view virtual override returns (uint256) {\n        return _proposals[proposalId].voteEnd.getDeadline();\n    }\n\n    /**\n     * @dev Part of the Governor Bravo's interface: _\"The number of votes required in order for a voter to become a proposer\"_.\n     */\n    function proposalThreshold() public view virtual returns (uint256) {\n        return 0;\n    }\n\n    /**\n     * @dev Amount of votes already cast passes the threshold limit.\n     */\n    function _quorumReached(uint256 proposalId) internal view virtual returns (bool);\n\n    /**\n     * @dev Is the proposal successful or not.\n     */\n    function _voteSucceeded(uint256 proposalId) internal view virtual returns (bool);\n\n    /**\n     * @dev Get the voting weight of `account` at a specific `blockNumber`, for a vote as described by `params`.\n     */\n    function _getVotes(address account, uint256 blockNumber, bytes memory params)\n        internal\n        view\n        virtual\n        returns (uint256);\n\n    /**\n     * @dev Register a vote for `proposalId` by `account` with a given `support`, voting `weight` and voting `params`.\n     *\n     * Note: Support is generic and can represent various things depending on the voting system used.\n     */\n    function _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes memory params)\n        internal\n        virtual;\n\n    /**\n     * @dev Default additional encoded parameters used by castVote methods that don't include them\n     *\n     * Note: Should be overridden by specific implementations to use an appropriate value, the\n     * meaning of the additional params, in the context of that implementation\n     */\n    function _defaultParams() internal view virtual returns (bytes memory) {\n        return \"\";\n    }\n\n    /**\n     * @dev See {IGovernor-propose}.\n     */\n    function propose(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        string memory description\n    ) public virtual override returns (uint256) {\n        require(\n            getVotes(_msgSender(), block.number - 1) >= proposalThreshold(),\n            \"Governor: proposer votes below proposal threshold\"\n        );\n\n        uint256 proposalId = hashProposal(targets, values, calldatas, keccak256(bytes(description)));\n\n        require(targets.length == values.length, \"Governor: invalid proposal length\");\n        require(targets.length == calldatas.length, \"Governor: invalid proposal length\");\n        require(targets.length > 0, \"Governor: empty proposal\");\n\n        ProposalCore storage proposal = _proposals[proposalId];\n        require(proposal.voteStart.isUnset(), \"Governor: proposal already exists\");\n\n        uint64 snapshot = block.number.toUint64() + votingDelay().toUint64();\n        uint64 deadline = snapshot + votingPeriod().toUint64();\n\n        proposal.voteStart.setDeadline(snapshot);\n        proposal.voteEnd.setDeadline(deadline);\n\n        emit ProposalCreated(\n            proposalId,\n            _msgSender(),\n            targets,\n            values,\n            new string[](targets.length),\n            calldatas,\n            snapshot,\n            deadline,\n            description\n        );\n\n        return proposalId;\n    }\n\n    /**\n     * @dev See {IGovernor-execute}.\n     */\n    function execute(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) public payable virtual override returns (uint256) {\n        uint256 proposalId = hashProposal(targets, values, calldatas, descriptionHash);\n\n        ProposalState status = state(proposalId);\n        require(\n            status == ProposalState.Succeeded || status == ProposalState.Queued, \"Governor: proposal not successful\"\n        );\n        _proposals[proposalId].executed = true;\n\n        emit ProposalExecuted(proposalId);\n\n        _beforeExecute(proposalId, targets, values, calldatas, descriptionHash);\n        _execute(proposalId, targets, values, calldatas, descriptionHash);\n        _afterExecute(proposalId, targets, values, calldatas, descriptionHash);\n\n        return proposalId;\n    }\n\n    /**\n     * @dev Internal execution mechanism. Can be overridden to implement different execution mechanism\n     */\n    function _execute(\n        uint256, /* proposalId */\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 /*descriptionHash*/\n    ) internal virtual {\n        string memory errorMessage = \"Governor: call reverted without message\";\n        for (uint256 i = 0; i < targets.length; ++i) {\n            (bool success, bytes memory returndata) = targets[i].call{value: values[i]}(calldatas[i]);\n            AddressUpgradeable.verifyCallResult(success, returndata, errorMessage);\n        }\n    }\n\n    /**\n     * @dev Hook before execution is triggered.\n     */\n    function _beforeExecute(\n        uint256, /* proposalId */\n        address[] memory targets,\n        uint256[] memory, /* values */\n        bytes[] memory calldatas,\n        bytes32 /*descriptionHash*/\n    ) internal virtual {\n        if (_executor() != address(this)) {\n            for (uint256 i = 0; i < targets.length; ++i) {\n                if (targets[i] == address(this)) {\n                    _governanceCall.pushBack(keccak256(calldatas[i]));\n                }\n            }\n        }\n    }\n\n    /**\n     * @dev Hook after execution is triggered.\n     */\n    function _afterExecute(\n        uint256, /* proposalId */\n        address[] memory, /* targets */\n        uint256[] memory, /* values */\n        bytes[] memory, /* calldatas */\n        bytes32 /*descriptionHash*/\n    ) internal virtual {\n        if (_executor() != address(this)) {\n            if (!_governanceCall.empty()) {\n                _governanceCall.clear();\n            }\n        }\n    }\n\n    /**\n     * @dev Internal cancel mechanism: locks up the proposal timer, preventing it from being re-submitted. Marks it as\n     * canceled to allow distinguishing it from executed proposals.\n     *\n     * Emits a {IGovernor-ProposalCanceled} event.\n     */\n    function _cancel(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) internal virtual returns (uint256) {\n        uint256 proposalId = hashProposal(targets, values, calldatas, descriptionHash);\n        ProposalState status = state(proposalId);\n\n        require(\n            status != ProposalState.Canceled && status != ProposalState.Expired && status != ProposalState.Executed,\n            \"Governor: proposal not active\"\n        );\n        _proposals[proposalId].canceled = true;\n\n        emit ProposalCanceled(proposalId);\n\n        return proposalId;\n    }\n\n    /**\n     * @dev See {IGovernor-getVotes}.\n     */\n    function getVotes(address account, uint256 blockNumber) public view virtual override returns (uint256) {\n        return _getVotes(account, blockNumber, _defaultParams());\n    }\n\n    /**\n     * @dev See {IGovernor-getVotesWithParams}.\n     */\n    function getVotesWithParams(address account, uint256 blockNumber, bytes memory params)\n        public\n        view\n        virtual\n        override\n        returns (uint256)\n    {\n        return _getVotes(account, blockNumber, params);\n    }\n\n    /**\n     * @dev See {IGovernor-castVote}.\n     */\n    function castVote(uint256 proposalId, uint8 support) public virtual override returns (uint256) {\n        address voter = _msgSender();\n        return _castVote(proposalId, voter, support, \"\");\n    }\n\n    /**\n     * @dev See {IGovernor-castVoteWithReason}.\n     */\n    function castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason)\n        public\n        virtual\n        override\n        returns (uint256)\n    {\n        address voter = _msgSender();\n        return _castVote(proposalId, voter, support, reason);\n    }\n\n    /**\n     * @dev See {IGovernor-castVoteWithReasonAndParams}.\n     */\n    function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params)\n        public\n        virtual\n        override\n        returns (uint256)\n    {\n        address voter = _msgSender();\n        return _castVote(proposalId, voter, support, reason, params);\n    }\n\n    /**\n     * @dev See {IGovernor-castVoteBySig}.\n     */\n    function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s)\n        public\n        virtual\n        override\n        returns (uint256)\n    {\n        address voter = ECDSAUpgradeable.recover(\n            _hashTypedDataV4(keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support))), v, r, s\n        );\n        return _castVote(proposalId, voter, support, \"\");\n    }\n\n    /**\n     * @dev See {IGovernor-castVoteWithReasonAndParamsBySig}.\n     */\n    function castVoteWithReasonAndParamsBySig(\n        uint256 proposalId,\n        uint8 support,\n        string calldata reason,\n        bytes memory params,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    ) public virtual override returns (uint256) {\n        address voter = ECDSAUpgradeable.recover(\n            _hashTypedDataV4(\n                keccak256(\n                    abi.encode(\n                        EXTENDED_BALLOT_TYPEHASH, proposalId, support, keccak256(bytes(reason)), keccak256(params)\n                    )\n                )\n            ),\n            v,\n            r,\n            s\n        );\n\n        return _castVote(proposalId, voter, support, reason, params);\n    }\n\n    /**\n     * @dev Internal vote casting mechanism: Check that the vote is pending, that it has not been cast yet, retrieve\n     * voting weight using {IGovernor-getVotes} and call the {_countVote} internal function. Uses the _defaultParams().\n     *\n     * Emits a {IGovernor-VoteCast} event.\n     */\n    function _castVote(uint256 proposalId, address account, uint8 support, string memory reason)\n        internal\n        virtual\n        returns (uint256)\n    {\n        return _castVote(proposalId, account, support, reason, _defaultParams());\n    }\n\n    /**\n     * @dev Internal vote casting mechanism: Check that the vote is pending, that it has not been cast yet, retrieve\n     * voting weight using {IGovernor-getVotes} and call the {_countVote} internal function.\n     *\n     * Emits a {IGovernor-VoteCast} event.\n     */\n    function _castVote(uint256 proposalId, address account, uint8 support, string memory reason, bytes memory params)\n        internal\n        virtual\n        returns (uint256)\n    {\n        ProposalCore storage proposal = _proposals[proposalId];\n        require(state(proposalId) == ProposalState.Active, \"Governor: vote not currently active\");\n\n        uint256 weight = _getVotes(account, proposal.voteStart.getDeadline(), params);\n        _countVote(proposalId, account, support, weight, params);\n\n        if (params.length == 0) {\n            emit VoteCast(account, proposalId, support, weight, reason);\n        } else {\n            emit VoteCastWithParams(account, proposalId, support, weight, reason, params);\n        }\n\n        return weight;\n    }\n\n    /**\n     * @dev Relays a transaction or function call to an arbitrary target. In cases where the governance executor\n     * is some contract other than the governor itself, like when using a timelock, this function can be invoked\n     * in a governance proposal to recover tokens or Ether that was sent to the governor contract by mistake.\n     * Note that if the executor is simply the governor itself, use of `relay` is redundant.\n     */\n    function relay(address target, uint256 value, bytes calldata data) external payable virtual onlyGovernance {\n        (bool success, bytes memory returndata) = target.call{value: value}(data);\n        AddressUpgradeable.verifyCallResult(success, returndata, \"Governor: relay reverted without message\");\n    }\n\n    /**\n     * @dev Address through which the governor executes action. Will be overloaded by module that execute actions\n     * through another contract such as a timelock.\n     */\n    function _executor() internal view virtual returns (address) {\n        return address(this);\n    }\n\n    /**\n     * @dev See {IERC721Receiver-onERC721Received}.\n     */\n    function onERC721Received(address, address, uint256, bytes memory) public virtual override returns (bytes4) {\n        return this.onERC721Received.selector;\n    }\n\n    /**\n     * @dev See {IERC1155Receiver-onERC1155Received}.\n     */\n    function onERC1155Received(address, address, uint256, uint256, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155Received.selector;\n    }\n\n    /**\n     * @dev See {IERC1155Receiver-onERC1155BatchReceived}.\n     */\n    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155BatchReceived.selector;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[46] private __gap;\n}",
   "resolutions": {
     "d293c6ecba42b698": {
-      "status": "unaudited",
-      "coveredLines": 0,
+      "status": "differs",
+      "coveredLines": 511,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Governor",
+        "similarity": 0.824,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/Governor.sol",
+        "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
+        "commitTimestamp": "2023-03-26T17:23:13Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ca822213f2275a14c26167bd387ac3522da67fe9/contracts/governance/Governor.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 16
+      },
+      "diff": {
+        "added": 59,
+        "removed": 64,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 22,
+        "unchanged": 511,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 36,
+            "newStart": 1,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Governor is Context, ERC165, EIP712, IGovernor, IERC721Receiver, IERC1155Receiver {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    using DoubleEndedQueue for DoubleEndedQueue.Bytes32Deque;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    using SafeCast for uint256;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract GovernorUpgradeableV2 is",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    Initializable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ContextUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    ERC165Upgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    EIP712Upgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    IGovernorUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    IERC721ReceiverUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    IERC1155ReceiverUpgradeable",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 9, "text": "{", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    using DoubleEndedQueueUpgradeable for DoubleEndedQueueUpgradeable.Bytes32Deque;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    using SafeCastUpgradeable for uint256;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    using TimersUpgradeable for TimersUpgradeable.BlockNumber;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 14,
+                "text": "    bytes32 public constant BALLOT_TYPEHASH = keccak256(\"Ballot(uint256 proposalId,uint8 support)\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 15,
+                "text": "    bytes32 public constant EXTENDED_BALLOT_TYPEHASH ="
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 16,
+                "text": "        keccak256(\"ExtendedBallot(uint256 proposalId,uint8 support,string reason,bytes params)\");"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // solhint-disable var-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 18,
+                "text": "    struct ProposalCore {"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        // --- start retyped from Timers.BlockNumber at offset 0x00 ---",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        uint64 voteStart;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        address proposer;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        bytes4 __gap_unused0;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        // --- start retyped from Timers.BlockNumber at offset 0x20 ---",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        uint64 voteEnd;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        bytes24 __gap_unused1;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        // --- Remaining fields starting at offset 0x40 ---------------",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        TimersUpgradeable.BlockNumber voteStart;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        TimersUpgradeable.BlockNumber voteEnd;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 21,
+                "text": "        bool executed;"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 22,
+                "text": "        bool canceled;"
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        address votingModule;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        uint8 proposalType;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 25, "text": "    }" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    // solhint-enable var-name-mixedcase",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 27,
+                "text": "    string private _name;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @custom:oz-retyped-from mapping(uint256 => Governor.ProposalCore)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    mapping(uint256 => ProposalCore) private _proposals;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    mapping(uint256 => ProposalCore) internal _proposals;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 31,
+                "text": "    // This queue keeps track of the governor operating on itself. Calls to functions protected by the"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 32,
+                "text": "    // {onlyGovernance} modifier needs to be whitelisted in this queue. Whitelisting is set in {_beforeExecute},"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 33,
+                "text": "    // consumed by the {onlyGovernance} modifier and eventually reset in {_afterExecute}. This ensures that the"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 34,
+                "text": "    // execution of {onlyGovernance} protected calls can only be achieved through successful proposals."
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    DoubleEndedQueue.Bytes32Deque private _governanceCall;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    DoubleEndedQueueUpgradeable.Bytes32Deque private _governanceCall;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "" },
+              { "type": " ", "oldLine": 35, "newLine": 37, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "     * @dev Restricts a function so it can only be executed through governance proposals. For example, governance"
+              }
+            ]
+          },
+          {
+            "oldStart": 55,
+            "oldLines": 7,
+            "newStart": 57,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 55, "newLine": 57, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 58,
+                "text": "     * @dev Sets the value for {name} and {version}"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 59, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    constructor(string memory name_) EIP712(name_, version()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    function __Governor_init(string memory name_) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        __EIP712_init_unchained(name_, version());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        __Governor_init_unchained(name_);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 63, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 64, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    function __Governor_init_unchained(string memory name_) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 66,
+                "text": "        _name = name_;"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 67, "text": "    }" },
+              { "type": " ", "oldLine": 61, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 18,
+            "newStart": 76,
+            "newLines": 21,
+            "lines": [
+              { "type": " ", "oldLine": 69, "newLine": 76, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 77,
+                "text": "     * @dev See {IERC165-supportsInterface}."
+              },
+              { "type": " ", "oldLine": 71, "newLine": 78, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    function supportsInterface(bytes4 interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        override(IERC165Upgradeable, ERC165Upgradeable)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        returns (bool)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 85, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 86,
+                "text": "        // In addition to the current interfaceId, also support previous version of the interfaceId that did not"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 87,
+                "text": "        // include the castVoteWithReasonAndParams() function as standard"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 88,
+                "text": "        return interfaceId"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 89,
+                "text": "            == ("
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                type(IGovernor).interfaceId ^ type(IERC6372).interfaceId ^ this.cancel.selector",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                    ^ this.castVoteWithReasonAndParams.selector ^ this.castVoteWithReasonAndParamsBySig.selector",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "                    ^ this.getVotesWithParams.selector",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        // Previous interface for backwards compatibility",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        || interfaceId == (type(IGovernor).interfaceId ^ type(IERC6372).interfaceId ^ this.cancel.selector)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "            || interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "                type(IGovernorUpgradeable).interfaceId ^ this.castVoteWithReasonAndParams.selector",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "                    ^ this.castVoteWithReasonAndParamsBySig.selector ^ this.getVotesWithParams.selector",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            ) || interfaceId == type(IGovernorUpgradeable).interfaceId",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "            || interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 84, "newLine": 94, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 86, "newLine": 96, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 139,
+            "oldLines": 15,
+            "newStart": 149,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 149,
+                "text": "            revert(\"Governor: unknown proposal id\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 150,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 141, "newLine": 151, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "        uint256 currentTimepoint = clock();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 143, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "        if (snapshot >= currentTimepoint) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "        if (snapshot >= block.number) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 153,
+                "text": "            return ProposalState.Pending;"
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 154,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 147, "newLine": 155, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 156,
+                "text": "        uint256 deadline = proposalDeadline(proposalId);"
+              },
+              { "type": " ", "oldLine": 149, "newLine": 157, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "        if (deadline >= currentTimepoint) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "        if (deadline >= block.number) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 159,
+                "text": "            return ProposalState.Active;"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 160,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 153, "newLine": 161, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 159,
+            "oldLines": 31,
+            "newStart": 167,
+            "newLines": 24,
+            "lines": [
+              { "type": " ", "oldLine": 159, "newLine": 167, "text": "    }" },
+              { "type": " ", "oldLine": 160, "newLine": 168, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 169,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "     * @dev Part of the Governor Bravo's interface: _\"The number of votes required in order for a voter to become a proposer\"_.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    function proposalThreshold() public view virtual returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "        return 0;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 167, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 170,
+                "text": "     * @dev See {IGovernor-proposalSnapshot}."
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 171,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 172,
+                "text": "    function proposalSnapshot(uint256 proposalId) public view virtual override returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "        return _proposals[proposalId].voteStart;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        return _proposals[proposalId].voteStart.getDeadline();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 173, "newLine": 174, "text": "    }" },
+              { "type": " ", "oldLine": 174, "newLine": 175, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 176,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 177,
+                "text": "     * @dev See {IGovernor-proposalDeadline}."
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 178,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 179,
+                "text": "    function proposalDeadline(uint256 proposalId) public view virtual override returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "        return _proposals[proposalId].voteEnd;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        return _proposals[proposalId].voteEnd.getDeadline();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 180, "newLine": 181, "text": "    }" },
+              { "type": " ", "oldLine": 181, "newLine": 182, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 183,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "     * @dev Address of the proposer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "     * @dev Part of the Governor Bravo's interface: _\"The number of votes required in order for a voter to become a proposer\"_.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 185,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    function _proposalProposer(uint256 proposalId) internal view virtual returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        return _proposals[proposalId].proposer;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "    function proposalThreshold() public view virtual returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "        return 0;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 187, "newLine": 188, "text": "    }" },
+              { "type": " ", "oldLine": 188, "newLine": 189, "text": "" },
+              { "type": " ", "oldLine": 189, "newLine": 190, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 197,
+            "oldLines": 9,
+            "newStart": 198,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 198,
+                "text": "    function _voteSucceeded(uint256 proposalId) internal view virtual returns (bool);"
+              },
+              { "type": " ", "oldLine": 198, "newLine": 199, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 200,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "     * @dev Get the voting weight of `account` at a specific `timepoint`, for a vote as described by `params`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "     * @dev Get the voting weight of `account` at a specific `blockNumber`, for a vote as described by `params`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 202,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    function _getVotes(address account, uint256 timepoint, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "    function _getVotes(address account, uint256 blockNumber, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 204,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 205,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 206,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 233,
+            "oldLines": 11,
+            "newStart": 234,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 234,
+                "text": "        bytes[] memory calldatas,"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 235,
+                "text": "        string memory description"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 236,
+                "text": "    ) public virtual override returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "        address proposer = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "        uint256 currentTimepoint = clock();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 238, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 237,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "            getVotes(proposer, currentTimepoint - 1) >= proposalThreshold(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "            getVotes(_msgSender(), block.number - 1) >= proposalThreshold(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 239,
+                "text": "            \"Governor: proposer votes below proposal threshold\""
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 240,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 243, "newLine": 241, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 246,
+            "oldLines": 24,
+            "newStart": 244,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 244,
+                "text": "        require(targets.length == values.length, \"Governor: invalid proposal length\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 245,
+                "text": "        require(targets.length == calldatas.length, \"Governor: invalid proposal length\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 246,
+                "text": "        require(targets.length > 0, \"Governor: empty proposal\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "        require(_proposals[proposalId].voteStart == 0, \"Governor: proposal already exists\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 250, "newLine": 247, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "        uint256 snapshot = currentTimepoint + votingDelay();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "        uint256 deadline = snapshot + votingPeriod();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        ProposalCore storage proposal = _proposals[proposalId];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "        require(proposal.voteStart.isUnset(), \"Governor: proposal already exists\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 253, "newLine": 250, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "        _proposals[proposalId] = ProposalCore({",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "            proposer: proposer,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "            voteStart: snapshot.toUint64(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "            voteEnd: deadline.toUint64(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "            executed: false,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "            canceled: false,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "            __gap_unused0: 0,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            __gap_unused1: 0",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "        });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "        uint64 snapshot = block.number.toUint64() + votingDelay().toUint64();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        uint64 deadline = snapshot + votingPeriod().toUint64();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 263, "newLine": 253, "text": "" },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "        proposal.voteStart.setDeadline(snapshot);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        proposal.voteEnd.setDeadline(deadline);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 256, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 257,
+                "text": "        emit ProposalCreated("
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 258,
+                "text": "            proposalId,"
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "            proposer,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "            _msgSender(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 260,
+                "text": "            targets,"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 261,
+                "text": "            values,"
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 262,
+                "text": "            new string[](targets.length),"
+              }
+            ]
+          },
+          {
+            "oldStart": 303,
+            "oldLines": 21,
+            "newStart": 296,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 303, "newLine": 296, "text": "    }" },
+              { "type": " ", "oldLine": 304, "newLine": 297, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 298,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "     * @dev See {IGovernor-cancel}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "    function cancel(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "        address[] memory targets,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "        uint256[] memory values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 311,
+                "text": "        bytes[] memory calldatas,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 312,
+                "text": "        bytes32 descriptionHash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "    ) public virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 314,
+                "text": "        uint256 proposalId = hashProposal(targets, values, calldatas, descriptionHash);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 315,
+                "text": "        require(state(proposalId) == ProposalState.Pending, \"Governor: too late to cancel\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 316,
+                "text": "        require(_msgSender() == _proposals[proposalId].proposer, \"Governor: only proposer can cancel\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 317,
+                "text": "        return _cancel(targets, values, calldatas, descriptionHash);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 318,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 319, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 299,
+                "text": "     * @dev Internal execution mechanism. Can be overridden to implement different execution mechanism"
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 300,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 301,
+                "text": "    function _execute("
+              }
+            ]
+          },
+          {
+            "oldStart": 330,
+            "oldLines": 7,
+            "newStart": 308,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 308,
+                "text": "        string memory errorMessage = \"Governor: call reverted without message\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 331,
+                "newLine": 309,
+                "text": "        for (uint256 i = 0; i < targets.length; ++i) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 332,
+                "newLine": 310,
+                "text": "            (bool success, bytes memory returndata) = targets[i].call{value: values[i]}(calldatas[i]);"
+              },
+              {
+                "type": "-",
+                "oldLine": 333,
+                "text": "            Address.verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "            AddressUpgradeable.verifyCallResult(success, returndata, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 312,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 335, "newLine": 313, "text": "    }" },
+              { "type": " ", "oldLine": 336, "newLine": 314, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 383,
+            "oldLines": 7,
+            "newStart": 361,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 383,
+                "newLine": 361,
+                "text": "        bytes32 descriptionHash"
+              },
+              {
+                "type": " ",
+                "oldLine": 384,
+                "newLine": 362,
+                "text": "    ) internal virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 363,
+                "text": "        uint256 proposalId = hashProposal(targets, values, calldatas, descriptionHash);"
+              },
+              { "type": "-", "oldLine": 386, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 387,
+                "newLine": 364,
+                "text": "        ProposalState status = state(proposalId);"
+              },
+              { "type": " ", "oldLine": 388, "newLine": 365, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 389,
+                "newLine": 366,
+                "text": "        require("
+              }
+            ]
+          },
+          {
+            "oldStart": 400,
+            "oldLines": 21,
+            "newStart": 377,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 377,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 401,
+                "newLine": 378,
+                "text": "     * @dev See {IGovernor-getVotes}."
+              },
+              {
+                "type": " ",
+                "oldLine": 402,
+                "newLine": 379,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 403,
+                "text": "    function getVotes(address account, uint256 timepoint) public view virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 404,
+                "text": "        return _getVotes(account, timepoint, _defaultParams());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 380,
+                "text": "    function getVotes(address account, uint256 blockNumber) public view virtual override returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "        return _getVotes(account, blockNumber, _defaultParams());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 405, "newLine": 382, "text": "    }" },
+              { "type": " ", "oldLine": 406, "newLine": 383, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 407,
+                "newLine": 384,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 408,
+                "newLine": 385,
+                "text": "     * @dev See {IGovernor-getVotesWithParams}."
+              },
+              {
+                "type": " ",
+                "oldLine": 409,
+                "newLine": 386,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 410,
+                "text": "    function getVotesWithParams(address account, uint256 timepoint, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "    function getVotesWithParams(address account, uint256 blockNumber, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 388,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 389,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 413,
+                "newLine": 390,
+                "text": "        virtual"
+              },
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 391,
+                "text": "        override"
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 392,
+                "text": "        returns (uint256)"
+              },
+              { "type": " ", "oldLine": 416, "newLine": 393, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 417,
+                "text": "        return _getVotes(account, timepoint, params);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 394,
+                "text": "        return _getVotes(account, blockNumber, params);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 418, "newLine": 395, "text": "    }" },
+              { "type": " ", "oldLine": 419, "newLine": 396, "text": "" },
+              { "type": " ", "oldLine": 420, "newLine": 397, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 460,
+            "oldLines": 8,
+            "newStart": 437,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 460,
+                "newLine": 437,
+                "text": "        override"
+              },
+              {
+                "type": " ",
+                "oldLine": 461,
+                "newLine": 438,
+                "text": "        returns (uint256)"
+              },
+              { "type": " ", "oldLine": 462, "newLine": 439, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 463,
+                "text": "        address voter =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 464,
+                "text": "            ECDSA.recover(_hashTypedDataV4(keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support))), v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 440,
+                "text": "        address voter = ECDSAUpgradeable.recover(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 441,
+                "text": "            _hashTypedDataV4(keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support))), v, r, s",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 442,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 465,
+                "newLine": 443,
+                "text": "        return _castVote(proposalId, voter, support, \"\");"
+              },
+              { "type": " ", "oldLine": 466, "newLine": 444, "text": "    }" },
+              { "type": " ", "oldLine": 467, "newLine": 445, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 477,
+            "oldLines": 7,
+            "newStart": 455,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 477,
+                "newLine": 455,
+                "text": "        bytes32 r,"
+              },
+              {
+                "type": " ",
+                "oldLine": 478,
+                "newLine": 456,
+                "text": "        bytes32 s"
+              },
+              {
+                "type": " ",
+                "oldLine": 479,
+                "newLine": 457,
+                "text": "    ) public virtual override returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 480,
+                "text": "        address voter = ECDSA.recover(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 458,
+                "text": "        address voter = ECDSAUpgradeable.recover(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 481,
+                "newLine": 459,
+                "text": "            _hashTypedDataV4("
+              },
+              {
+                "type": " ",
+                "oldLine": 482,
+                "newLine": 460,
+                "text": "                keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 483,
+                "newLine": 461,
+                "text": "                    abi.encode("
+              }
+            ]
+          },
+          {
+            "oldStart": 521,
+            "oldLines": 7,
+            "newStart": 499,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 521,
+                "newLine": 499,
+                "text": "        ProposalCore storage proposal = _proposals[proposalId];"
+              },
+              {
+                "type": " ",
+                "oldLine": 522,
+                "newLine": 500,
+                "text": "        require(state(proposalId) == ProposalState.Active, \"Governor: vote not currently active\");"
+              },
+              { "type": " ", "oldLine": 523, "newLine": 501, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 524,
+                "text": "        uint256 weight = _getVotes(account, proposal.voteStart, params);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 502,
+                "text": "        uint256 weight = _getVotes(account, proposal.voteStart.getDeadline(), params);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 525,
+                "newLine": 503,
+                "text": "        _countVote(proposalId, account, support, weight, params);"
+              },
+              { "type": " ", "oldLine": 526, "newLine": 504, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 527,
+                "newLine": 505,
+                "text": "        if (params.length == 0) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 541,
+            "oldLines": 7,
+            "newStart": 519,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 541,
+                "newLine": 519,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 542,
+                "newLine": 520,
+                "text": "    function relay(address target, uint256 value, bytes calldata data) external payable virtual onlyGovernance {"
+              },
+              {
+                "type": " ",
+                "oldLine": 543,
+                "newLine": 521,
+                "text": "        (bool success, bytes memory returndata) = target.call{value: value}(data);"
+              },
+              {
+                "type": "-",
+                "oldLine": 544,
+                "text": "        Address.verifyCallResult(success, returndata, \"Governor: relay reverted without message\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 522,
+                "text": "        AddressUpgradeable.verifyCallResult(success, returndata, \"Governor: relay reverted without message\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 545, "newLine": 523, "text": "    }" },
+              { "type": " ", "oldLine": 546, "newLine": 524, "text": "" },
+              { "type": " ", "oldLine": 547, "newLine": 525, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 582,
+            "oldLines": 4,
+            "newStart": 560,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 582, "newLine": 560, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 583,
+                "newLine": 561,
+                "text": "        return this.onERC1155BatchReceived.selector;"
+              },
+              { "type": " ", "oldLine": 584, "newLine": 562, "text": "    }" },
+              { "type": "+", "newLine": 563, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 564,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 565,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 566,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 567,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 568,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 569,
+                "text": "    uint256[46] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 585, "newLine": 570, "text": "}" }
+            ]
+          }
+        ]
+      },
       "warnings": []
     }
   }

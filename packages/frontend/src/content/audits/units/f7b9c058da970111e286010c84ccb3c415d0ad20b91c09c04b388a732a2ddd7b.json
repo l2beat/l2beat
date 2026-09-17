@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "RewardLib",
-        "similarity": 0.838,
+        "similarity": 0.844,
         "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",

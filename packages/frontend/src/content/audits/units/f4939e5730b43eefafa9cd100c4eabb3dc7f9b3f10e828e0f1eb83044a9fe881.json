@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "ERC20Votes",
-        "similarity": 0.829,
+        "similarity": 0.726,
         "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/extensions/ERC20Votes.sol",

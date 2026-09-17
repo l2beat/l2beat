@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "SqrtPriceMath",
-        "similarity": 0.996,
+        "similarity": 1,
         "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
         "repository": "Uniswap/v3-core",
         "path": "contracts/libraries/SqrtPriceMath.sol",

@@ -6,7 +6,7 @@
   "lines": 52,
   "source": "abstract contract AccessControlEnumerable is IAccessControlEnumerable, AccessControl {\n    using EnumerableSet for EnumerableSet.AddressSet;\n\n    mapping(bytes32 => EnumerableSet.AddressSet) private _roleMembers;\n\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IAccessControlEnumerable).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev Returns one of the accounts that have `role`. `index` must be a\n     * value between 0 and {getRoleMemberCount}, non-inclusive.\n     *\n     * Role bearers are not sorted in any particular way, and their ordering may\n     * change at any point.\n     *\n     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure\n     * you perform all queries on the same block. See the following\n     * https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]\n     * for more information.\n     */\n    function getRoleMember(bytes32 role, uint256 index) public view virtual override returns (address) {\n        return _roleMembers[role].at(index);\n    }\n\n    /**\n     * @dev Returns the number of accounts that have `role`. Can be used\n     * together with {getRoleMember} to enumerate all bearers of a role.\n     */\n    function getRoleMemberCount(bytes32 role) public view virtual override returns (uint256) {\n        return _roleMembers[role].length();\n    }\n\n    /**\n     * @dev Overload {_grantRole} to track enumerable memberships\n     */\n    function _grantRole(bytes32 role, address account) internal virtual override {\n        super._grantRole(role, account);\n        _roleMembers[role].add(account);\n    }\n\n    /**\n     * @dev Overload {_revokeRole} to track enumerable memberships\n     */\n    function _revokeRole(bytes32 role, address account) internal virtual override {\n        super._revokeRole(role, account);\n        _roleMembers[role].remove(account);\n    }\n}",
   "resolutions": {
-    "d293c6ecba42b698": {
+    "bb55951394276893": {
       "status": "differs",
       "coveredLines": 50,
       "match": {
@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "AccessControlEnumerable",
-        "similarity": 0.905,
+        "similarity": 0.957,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/access/extensions/AccessControlEnumerable.sol",
@@ -125,7 +125,7 @@
       },
       "warnings": []
     },
-    "bb55951394276893": {
+    "d293c6ecba42b698": {
       "status": "differs",
       "coveredLines": 50,
       "match": {
@@ -135,7 +135,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "AccessControlEnumerable",
-        "similarity": 0.905,
+        "similarity": 0.957,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/access/extensions/AccessControlEnumerable.sol",

@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Address",
-        "similarity": 0.975,
+        "similarity": 1,
         "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Address.sol",

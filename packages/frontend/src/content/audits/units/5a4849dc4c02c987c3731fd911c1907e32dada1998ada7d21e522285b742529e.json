@@ -6,6 +6,252 @@
   "lines": 85,
   "source": "library Strings {\n    bytes16 private constant HEX_DIGITS = \"0123456789abcdef\";\n    uint8 private constant ADDRESS_LENGTH = 20;\n\n    /**\n     * @dev The `value` string doesn't fit in the specified `length`.\n     */\n    error StringsInsufficientHexLength(uint256 value, uint256 length);\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` decimal representation.\n     */\n    function toString(uint256 value) internal pure returns (string memory) {\n        unchecked {\n            uint256 length = Math.log10(value) + 1;\n            string memory buffer = new string(length);\n            uint256 ptr;\n            /// @solidity memory-safe-assembly\n            assembly {\n                ptr := add(buffer, add(32, length))\n            }\n            while (true) {\n                ptr--;\n                /// @solidity memory-safe-assembly\n                assembly {\n                    mstore8(ptr, byte(mod(value, 10), HEX_DIGITS))\n                }\n                value /= 10;\n                if (value == 0) {\n                    break;\n                }\n            }\n            return buffer;\n        }\n    }\n\n    /**\n     * @dev Converts a `int256` to its ASCII `string` decimal representation.\n     */\n    function toStringSigned(int256 value) internal pure returns (string memory) {\n        return string.concat(value < 0 ? \"-\" : \"\", toString(SignedMath.abs(value)));\n    }\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.\n     */\n    function toHexString(uint256 value) internal pure returns (string memory) {\n        unchecked {\n            return toHexString(value, Math.log256(value) + 1);\n        }\n    }\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.\n     */\n    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {\n        uint256 localValue = value;\n        bytes memory buffer = new bytes(2 * length + 2);\n        buffer[0] = \"0\";\n        buffer[1] = \"x\";\n        for (uint256 i = 2 * length + 1; i > 1; --i) {\n            buffer[i] = HEX_DIGITS[localValue & 0xf];\n            localValue >>= 4;\n        }\n        if (localValue != 0) {\n            revert StringsInsufficientHexLength(value, length);\n        }\n        return string(buffer);\n    }\n\n    /**\n     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal\n     * representation.\n     */\n    function toHexString(address addr) internal pure returns (string memory) {\n        return toHexString(uint256(uint160(addr)), ADDRESS_LENGTH);\n    }\n\n    /**\n     * @dev Returns true if the two strings are equal.\n     */\n    function equal(string memory a, string memory b) internal pure returns (bool) {\n        return bytes(a).length == bytes(b).length && keccak256(bytes(a)) == keccak256(bytes(b));\n    }\n}",
   "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 80,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Strings",
+        "similarity": 0.96,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/utils/Strings.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 5,
+        "removed": 5,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 1,
+        "unchanged": 80,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Strings {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    bytes16 private constant _HEX_DIGITS = \"0123456789abcdef\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    uint8 private constant _ADDRESS_LENGTH = 20;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    bytes16 private constant HEX_DIGITS = \"0123456789abcdef\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    uint8 private constant ADDRESS_LENGTH = 20;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * @dev The `value` string doesn't fit in the specified `length`."
+              }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 7,
+            "newStart": 23,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "                ptr--;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "                /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "                assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "                    mstore8(ptr, byte(mod(value, 10), _HEX_DIGITS))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "                    mstore8(ptr, byte(mod(value, 10), HEX_DIGITS))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "                }"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "                value /= 10;"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "                if (value == 0) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 59,
+            "oldLines": 7,
+            "newStart": 59,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "        buffer[0] = \"0\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "        buffer[1] = \"x\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "        for (uint256 i = 2 * length + 1; i > 1; --i) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "            buffer[i] = _HEX_DIGITS[localValue & 0xf];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "            buffer[i] = HEX_DIGITS[localValue & 0xf];",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "            localValue >>= 4;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 65,
+                "text": "        if (localValue != 0) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 69,
+            "oldLines": 10,
+            "newStart": 69,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 69, "newLine": 69, "text": "    }" },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 71, "newLine": 71, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "     * representation.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 73, "newLine": 74, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 75,
+                "text": "    function toHexString(address addr) internal pure returns (string memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        return toHexString(uint256(uint160(addr)), ADDRESS_LENGTH);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 76, "newLine": 77, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 78, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 79, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
     "9fa846564f4071bd": {
       "status": "differs",
       "coveredLines": 80,
@@ -16,7 +262,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Strings",
-        "similarity": 0.907,
+        "similarity": 0.96,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Strings.sol",
@@ -262,253 +508,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Strings",
-        "similarity": 0.907,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/utils/Strings.sol",
-        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
-        "commitTimestamp": "2023-08-04T17:04:22Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/utils/Strings.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix review",
-        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 14
-      },
-      "diff": {
-        "added": 5,
-        "removed": 5,
-        "ignoredAdded": 2,
-        "ignoredRemoved": 1,
-        "unchanged": 80,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 6,
-            "newStart": 1,
-            "newLines": 6,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "library Strings {"
-              },
-              {
-                "type": "-",
-                "oldLine": 2,
-                "text": "    bytes16 private constant _HEX_DIGITS = \"0123456789abcdef\";",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 3,
-                "text": "    uint8 private constant _ADDRESS_LENGTH = 20;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 2,
-                "text": "    bytes16 private constant HEX_DIGITS = \"0123456789abcdef\";",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 3,
-                "text": "    uint8 private constant ADDRESS_LENGTH = 20;",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
-              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 6,
-                "newLine": 6,
-                "text": "     * @dev The `value` string doesn't fit in the specified `length`."
-              }
-            ]
-          },
-          {
-            "oldStart": 23,
-            "oldLines": 7,
-            "newStart": 23,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 23,
-                "newLine": 23,
-                "text": "                ptr--;"
-              },
-              {
-                "type": " ",
-                "oldLine": 24,
-                "newLine": 24,
-                "text": "                /// @solidity memory-safe-assembly"
-              },
-              {
-                "type": " ",
-                "oldLine": 25,
-                "newLine": 25,
-                "text": "                assembly {"
-              },
-              {
-                "type": "-",
-                "oldLine": 26,
-                "text": "                    mstore8(ptr, byte(mod(value, 10), _HEX_DIGITS))",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 26,
-                "text": "                    mstore8(ptr, byte(mod(value, 10), HEX_DIGITS))",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 27,
-                "newLine": 27,
-                "text": "                }"
-              },
-              {
-                "type": " ",
-                "oldLine": 28,
-                "newLine": 28,
-                "text": "                value /= 10;"
-              },
-              {
-                "type": " ",
-                "oldLine": 29,
-                "newLine": 29,
-                "text": "                if (value == 0) {"
-              }
-            ]
-          },
-          {
-            "oldStart": 59,
-            "oldLines": 7,
-            "newStart": 59,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 59,
-                "newLine": 59,
-                "text": "        buffer[0] = \"0\";"
-              },
-              {
-                "type": " ",
-                "oldLine": 60,
-                "newLine": 60,
-                "text": "        buffer[1] = \"x\";"
-              },
-              {
-                "type": " ",
-                "oldLine": 61,
-                "newLine": 61,
-                "text": "        for (uint256 i = 2 * length + 1; i > 1; --i) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 62,
-                "text": "            buffer[i] = _HEX_DIGITS[localValue & 0xf];",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 62,
-                "text": "            buffer[i] = HEX_DIGITS[localValue & 0xf];",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 63,
-                "newLine": 63,
-                "text": "            localValue >>= 4;"
-              },
-              {
-                "type": " ",
-                "oldLine": 64,
-                "newLine": 64,
-                "text": "        }"
-              },
-              {
-                "type": " ",
-                "oldLine": 65,
-                "newLine": 65,
-                "text": "        if (localValue != 0) {"
-              }
-            ]
-          },
-          {
-            "oldStart": 69,
-            "oldLines": 10,
-            "newStart": 69,
-            "newLines": 11,
-            "lines": [
-              { "type": " ", "oldLine": 69, "newLine": 69, "text": "    }" },
-              { "type": " ", "oldLine": 70, "newLine": 70, "text": "" },
-              { "type": " ", "oldLine": 71, "newLine": 71, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 72,
-                "text": "     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 73,
-                "text": "     * representation.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 73, "newLine": 74, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 74,
-                "newLine": 75,
-                "text": "    function toHexString(address addr) internal pure returns (string memory) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 75,
-                "text": "        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 76,
-                "text": "        return toHexString(uint256(uint160(addr)), ADDRESS_LENGTH);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 76, "newLine": 77, "text": "    }" },
-              { "type": " ", "oldLine": 77, "newLine": 78, "text": "" },
-              { "type": " ", "oldLine": 78, "newLine": 79, "text": "    /**" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "44ad4cf96e2ef6f0": {
-      "status": "differs",
-      "coveredLines": 80,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "Strings",
-        "similarity": 0.907,
+        "similarity": 0.96,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Strings.sol",
@@ -754,7 +754,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Strings",
-        "similarity": 0.907,
+        "similarity": 0.96,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Strings.sol",

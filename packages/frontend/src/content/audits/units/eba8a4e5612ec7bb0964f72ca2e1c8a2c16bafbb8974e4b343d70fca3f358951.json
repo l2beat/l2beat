@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ScrollChain",
-        "similarity": 0.998,
+        "similarity": 1,
         "reportId": "scroll/trailofbits-scroll-feynman-upgrade",
         "repository": "scroll-tech/scroll-contracts",
         "path": "src/L1/rollup/ScrollChain.sol",

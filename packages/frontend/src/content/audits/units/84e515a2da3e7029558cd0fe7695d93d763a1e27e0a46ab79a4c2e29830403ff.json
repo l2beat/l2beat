@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "LibFacet",
-        "similarity": 0.825,
+        "similarity": 0.768,
         "reportId": "facet/zellic-facet-bridge-2024-11-04",
         "repository": "0xFacet/facet-optimism",
         "path": "packages/contracts-bedrock/src/libraries/LibFacet.sol",

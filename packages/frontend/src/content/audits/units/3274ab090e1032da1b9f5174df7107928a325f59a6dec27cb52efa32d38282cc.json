@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ScrollStandardERC20",
-        "similarity": 0.9,
+        "similarity": 0.971,
         "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/libraries/token/ScrollStandardERC20.sol",

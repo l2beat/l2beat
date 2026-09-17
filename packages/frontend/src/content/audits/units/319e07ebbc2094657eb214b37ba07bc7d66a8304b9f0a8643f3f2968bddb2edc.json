@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "GSE",
-        "similarity": 0.992,
+        "similarity": 1,
         "reportId": "aztecnetwork/veridise-governance-2025-10-13",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/governance/GSE.sol",

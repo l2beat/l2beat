@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ReentrancyGuard",
-        "similarity": 0.55,
+        "similarity": 0.579,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/security/ReentrancyGuard.sol",

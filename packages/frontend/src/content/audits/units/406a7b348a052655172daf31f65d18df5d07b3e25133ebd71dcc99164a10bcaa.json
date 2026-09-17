@@ -6,17 +6,17 @@
   "lines": 51,
   "source": "abstract contract Ownable is Context {\n    address private _owner;\n\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    /**\n     * @dev Initializes the contract setting the deployer as the initial owner.\n     */\n    constructor() internal {\n        address msgSender = _msgSender();\n        _owner = msgSender;\n        emit OwnershipTransferred(address(0), msgSender);\n    }\n\n    /**\n     * @dev Returns the address of the current owner.\n     */\n    function owner() public view virtual returns (address) {\n        return _owner;\n    }\n\n    /**\n     * @dev Throws if called by any account other than the owner.\n     */\n    modifier onlyOwner() {\n        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");\n        _;\n    }\n\n    /**\n     * @dev Leaves the contract without owner. It will not be possible to call\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\n     *\n     * NOTE: Renouncing ownership will leave the contract without an owner,\n     * thereby removing any functionality that is only available to the owner.\n     */\n    function renounceOwnership() public virtual onlyOwner {\n        emit OwnershipTransferred(_owner, address(0));\n        _owner = address(0);\n    }\n\n    /**\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\n     * Can only be called by the current owner.\n     */\n    function transferOwnership(address newOwner) public virtual onlyOwner {\n        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n        emit OwnershipTransferred(_owner, newOwner);\n        _owner = newOwner;\n    }\n}",
   "resolutions": {
-    "43889a0aeb1d556f": {
+    "44ad4cf96e2ef6f0": {
       "status": "differs",
       "coveredLines": 43,
       "match": {
-        "origin": "library",
+        "origin": "stack",
         "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.618,
+        "similarity": 0.668,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/ownership/Ownable.sol",
@@ -430,7 +430,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.618,
+        "similarity": 0.668,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/ownership/Ownable.sol",
@@ -834,17 +834,17 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "43889a0aeb1d556f": {
       "status": "differs",
       "coveredLines": 43,
       "match": {
-        "origin": "stack",
+        "origin": "library",
         "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
+        "relation": { "type": "library" },
+        "rank": 3,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.618,
+        "similarity": 0.668,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/ownership/Ownable.sol",
@@ -1258,7 +1258,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.618,
+        "similarity": 0.668,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/ownership/Ownable.sol",

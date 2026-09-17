@@ -8,21 +8,21 @@
   "resolutions": {
     "ba5b6c9584fb78fd": {
       "status": "differs",
-      "coveredLines": 60,
+      "coveredLines": 62,
       "match": {
         "origin": "own",
         "collection": "bob",
         "relation": { "type": "own" },
         "rank": 0,
-        "matchedBy": "name",
-        "auditedName": "Ownable",
-        "similarity": 0.746,
+        "matchedBy": "similarity",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 0.83,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
         "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
         "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
         "auditStatus": "partially_audited_without_major_findings",
         "reviewPhase": "fix commit",
         "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
@@ -32,24 +32,30 @@
         "totalVersions": 3
       },
       "diff": {
-        "added": 4,
-        "removed": 13,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 11,
-        "unchanged": 60,
+        "added": 2,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 7,
+        "unchanged": 62,
         "ignoredOnly": false,
         "hunks": [
           {
             "oldStart": 1,
-            "oldLines": 26,
+            "oldLines": 4,
             "newStart": 1,
-            "newLines": 13,
+            "newLines": 4,
             "lines": [
               {
-                "type": " ",
+                "type": "-",
                 "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
                 "newLine": 1,
-                "text": "abstract contract Ownable is Context {"
+                "text": "abstract contract Ownable is Context {",
+                "ignored": false
               },
               {
                 "type": " ",
@@ -58,90 +64,46 @@
                 "text": "    address private _owner;"
               },
               { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
               {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev The caller account is not authorized to perform an operation.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          },
+          {
+            "oldStart": 6,
+            "oldLines": 11,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "    /**" },
               {
-                "type": "-",
+                "type": " ",
                 "oldLine": 7,
-                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "newLine": 7,
+                "text": "     * @dev Initializes the contract setting the deployer as the initial owner."
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    function __Ownable_init() internal onlyInitializing {",
                 "ignored": false
               },
-              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
-              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
               {
                 "type": "-",
                 "oldLine": 10,
-                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    error OwnableInvalidOwner(address owner);",
+                "text": "        __Ownable_init_unchained();",
                 "ignored": false
               },
-              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 4,
-                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
-              },
-              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
-              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
+              { "type": "-", "oldLine": 11, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 12, "text": "", "ignored": true },
               {
                 "type": "-",
-                "oldLine": 17,
-                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 7,
-                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    constructor(address initialOwner) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 20,
-                "text": "        if (initialOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 21,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 22,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 23,
-                "text": "        _transferOwnership(initialOwner);",
+                "oldLine": 13,
+                "text": "    function __Ownable_init_unchained() internal onlyInitializing {",
                 "ignored": false
               },
               {
@@ -151,991 +113,72 @@
                 "ignored": false
               },
               {
-                "type": "+",
+                "type": " ",
+                "oldLine": 14,
                 "newLine": 10,
-                "text": "        _transferOwnership(_msgSender());",
-                "ignored": false
+                "text": "        _transferOwnership(_msgSender());"
               },
-              { "type": " ", "oldLine": 24, "newLine": 11, "text": "    }" },
-              { "type": " ", "oldLine": 25, "newLine": 12, "text": "" },
-              { "type": " ", "oldLine": 26, "newLine": 13, "text": "    /**" }
+              { "type": " ", "oldLine": 15, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 12, "text": "" }
             ]
           },
           {
-            "oldStart": 42,
-            "oldLines": 17,
-            "newStart": 29,
-            "newLines": 15,
+            "oldStart": 65,
+            "oldLines": 11,
+            "newStart": 61,
+            "newLines": 4,
             "lines": [
-              {
-                "type": " ",
-                "oldLine": 42,
-                "newLine": 29,
-                "text": "     * @dev Throws if the sender is not the owner."
-              },
-              { "type": " ", "oldLine": 43, "newLine": 30, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 44,
-                "newLine": 31,
-                "text": "    function _checkOwner() internal view virtual {"
-              },
-              {
-                "type": "-",
-                "oldLine": 45,
-                "text": "        if (owner() != _msgSender()) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 46,
-                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 47,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 48, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 49, "newLine": 34, "text": "" },
-              { "type": " ", "oldLine": 50, "newLine": 35, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 36,
-                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
-              },
-              {
-                "type": "-",
-                "oldLine": 52,
-                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 53, "newLine": 38, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 39,
-                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
-              },
-              {
-                "type": "-",
-                "oldLine": 55,
-                "text": "     * thereby disabling any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "     * thereby removing any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 56, "newLine": 41, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 57,
-                "newLine": 42,
-                "text": "    function renounceOwnership() public virtual onlyOwner {"
-              },
-              {
-                "type": " ",
-                "oldLine": 58,
-                "newLine": 43,
-                "text": "        _transferOwnership(address(0));"
-              }
-            ]
-          },
-          {
-            "oldStart": 63,
-            "oldLines": 9,
-            "newStart": 48,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 63,
-                "newLine": 48,
-                "text": "     * Can only be called by the current owner."
-              },
-              { "type": " ", "oldLine": 64, "newLine": 49, "text": "     */" },
               {
                 "type": " ",
                 "oldLine": 65,
-                "newLine": 50,
-                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
-              },
-              {
-                "type": "-",
-                "oldLine": 66,
-                "text": "        if (newOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 67,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
-                "ignored": false
+                "newLine": 61,
+                "text": "        _owner = newOwner;"
               },
               {
                 "type": " ",
+                "oldLine": 66,
+                "newLine": 62,
+                "text": "        emit OwnershipTransferred(oldOwner, newOwner);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 63, "text": "    }" },
+              { "type": "-", "oldLine": 68, "text": "", "ignored": true },
+              {
+                "type": "-",
                 "oldLine": 69,
-                "newLine": 52,
-                "text": "        _transferOwnership(newOwner);"
-              },
-              { "type": " ", "oldLine": 70, "newLine": 53, "text": "    }" },
-              { "type": " ", "oldLine": 71, "newLine": 54, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "eea968a44e5d263a": {
-      "status": "differs",
-      "coveredLines": 60,
-      "match": {
-        "origin": "library",
-        "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
-        "matchedBy": "name",
-        "auditedName": "Ownable",
-        "similarity": 0.781,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/access/Ownable.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Full review of the file at the Phase 3 audit commit.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 4,
-        "removed": 10,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 11,
-        "unchanged": 60,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 23,
-            "newStart": 1,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "abstract contract Ownable is Context {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    address private _owner;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev The caller account is not authorized to perform an operation.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 7,
-                "text": "    error OwnableUnauthorizedAccount(address account);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
-              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 10,
-                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "text": "    /**",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 11,
+                "oldLine": 70,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
                 "text": "     */",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 12,
-                "text": "    error OwnableInvalidOwner(address owner);",
+                "oldLine": 74,
+                "text": "    uint256[49] private __gap;",
                 "ignored": false
               },
-              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 4,
-                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
-              },
-              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
-              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 17,
-                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 7,
-                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    constructor(address initialOwner) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 20,
-                "text": "        _transferOwnership(initialOwner);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 9,
-                "text": "    constructor() {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 10,
-                "text": "        _transferOwnership(_msgSender());",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
-              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
-              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 39,
-            "oldLines": 17,
-            "newStart": 29,
-            "newLines": 15,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 39,
-                "newLine": 29,
-                "text": "     * @dev Throws if the sender is not the owner."
-              },
-              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 41,
-                "newLine": 31,
-                "text": "    function _checkOwner() internal view virtual {"
-              },
-              {
-                "type": "-",
-                "oldLine": 42,
-                "text": "        if (owner() != _msgSender()) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 36,
-                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 39,
-                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
-              },
-              {
-                "type": "-",
-                "oldLine": 52,
-                "text": "     * thereby disabling any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "     * thereby removing any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 42,
-                "text": "    function renounceOwnership() public virtual onlyOwner {"
-              },
-              {
-                "type": " ",
-                "oldLine": 55,
-                "newLine": 43,
-                "text": "        _transferOwnership(address(0));"
-              }
-            ]
-          },
-          {
-            "oldStart": 60,
-            "oldLines": 9,
-            "newStart": 48,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 60,
-                "newLine": 48,
-                "text": "     * Can only be called by the current owner."
-              },
-              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 62,
-                "newLine": 50,
-                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "        if (newOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 52,
-                "text": "        _transferOwnership(newOwner);"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
-              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 60,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "Ownable",
-        "similarity": 0.781,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/access/Ownable.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Full review of the file at the Phase 3 audit commit.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 4,
-        "removed": 10,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 11,
-        "unchanged": 60,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 23,
-            "newStart": 1,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "abstract contract Ownable is Context {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    address private _owner;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev The caller account is not authorized to perform an operation.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 7,
-                "text": "    error OwnableUnauthorizedAccount(address account);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
-              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 10,
-                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    error OwnableInvalidOwner(address owner);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 4,
-                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
-              },
-              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
-              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 17,
-                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 7,
-                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    constructor(address initialOwner) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 20,
-                "text": "        _transferOwnership(initialOwner);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 9,
-                "text": "    constructor() {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 10,
-                "text": "        _transferOwnership(_msgSender());",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
-              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
-              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 39,
-            "oldLines": 17,
-            "newStart": 29,
-            "newLines": 15,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 39,
-                "newLine": 29,
-                "text": "     * @dev Throws if the sender is not the owner."
-              },
-              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 41,
-                "newLine": 31,
-                "text": "    function _checkOwner() internal view virtual {"
-              },
-              {
-                "type": "-",
-                "oldLine": 42,
-                "text": "        if (owner() != _msgSender()) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 36,
-                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 39,
-                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
-              },
-              {
-                "type": "-",
-                "oldLine": 52,
-                "text": "     * thereby disabling any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "     * thereby removing any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 42,
-                "text": "    function renounceOwnership() public virtual onlyOwner {"
-              },
-              {
-                "type": " ",
-                "oldLine": 55,
-                "newLine": 43,
-                "text": "        _transferOwnership(address(0));"
-              }
-            ]
-          },
-          {
-            "oldStart": 60,
-            "oldLines": 9,
-            "newStart": 48,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 60,
-                "newLine": 48,
-                "text": "     * Can only be called by the current owner."
-              },
-              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 62,
-                "newLine": 50,
-                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "        if (newOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 52,
-                "text": "        _transferOwnership(newOwner);"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
-              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "d293c6ecba42b698": {
-      "status": "differs",
-      "coveredLines": 60,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "Ownable",
-        "similarity": 0.781,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/access/Ownable.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Full review of the file at the Phase 3 audit commit.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 4,
-        "removed": 10,
-        "ignoredAdded": 1,
-        "ignoredRemoved": 9,
-        "unchanged": 60,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 23,
-            "newStart": 1,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "abstract contract Ownable is Context {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    address private _owner;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev The caller account is not authorized to perform an operation.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 7,
-                "text": "    error OwnableUnauthorizedAccount(address account);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
-              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 10,
-                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    error OwnableInvalidOwner(address owner);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 4,
-                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
-              },
-              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
-              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 17,
-                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 7,
-                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    constructor(address initialOwner) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 20,
-                "text": "        _transferOwnership(initialOwner);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 9,
-                "text": "    constructor() {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 10,
-                "text": "        _transferOwnership(_msgSender());",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
-              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
-              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 39,
-            "oldLines": 9,
-            "newStart": 29,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 39,
-                "newLine": 29,
-                "text": "     * @dev Throws if the sender is not the owner."
-              },
-              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 41,
-                "newLine": 31,
-                "text": "    function _checkOwner() internal view virtual {"
-              },
-              {
-                "type": "-",
-                "oldLine": 42,
-                "text": "        if (owner() != _msgSender()) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 60,
-            "oldLines": 9,
-            "newStart": 48,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 60,
-                "newLine": 48,
-                "text": "     * Can only be called by the current owner."
-              },
-              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 62,
-                "newLine": 50,
-                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "        if (newOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 52,
-                "text": "        _transferOwnership(newOwner);"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
-              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
+              { "type": " ", "oldLine": 75, "newLine": 64, "text": "}" }
             ]
           }
         ]
@@ -1152,7 +195,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.781,
+        "similarity": 0.793,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/access/Ownable.sol",
@@ -1434,309 +477,17 @@
       },
       "warnings": []
     },
-    "bb55951394276893": {
+    "eea968a44e5d263a": {
       "status": "differs",
       "coveredLines": 60,
       "match": {
-        "origin": "stack",
+        "origin": "library",
         "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
+        "relation": { "type": "library" },
+        "rank": 3,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.781,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/access/Ownable.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Full review of the file at the Phase 3 audit commit.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 4,
-        "removed": 10,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 11,
-        "unchanged": 60,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 23,
-            "newStart": 1,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "abstract contract Ownable is Context {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    address private _owner;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev The caller account is not authorized to perform an operation.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 7,
-                "text": "    error OwnableUnauthorizedAccount(address account);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
-              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 10,
-                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    error OwnableInvalidOwner(address owner);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 4,
-                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
-              },
-              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
-              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 17,
-                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 7,
-                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    constructor(address initialOwner) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 20,
-                "text": "        _transferOwnership(initialOwner);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 9,
-                "text": "    constructor() {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 10,
-                "text": "        _transferOwnership(_msgSender());",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
-              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
-              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 39,
-            "oldLines": 17,
-            "newStart": 29,
-            "newLines": 15,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 39,
-                "newLine": 29,
-                "text": "     * @dev Throws if the sender is not the owner."
-              },
-              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 41,
-                "newLine": 31,
-                "text": "    function _checkOwner() internal view virtual {"
-              },
-              {
-                "type": "-",
-                "oldLine": 42,
-                "text": "        if (owner() != _msgSender()) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 36,
-                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 39,
-                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
-              },
-              {
-                "type": "-",
-                "oldLine": 52,
-                "text": "     * thereby disabling any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "     * thereby removing any functionality that is only available to the owner.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 42,
-                "text": "    function renounceOwnership() public virtual onlyOwner {"
-              },
-              {
-                "type": " ",
-                "oldLine": 55,
-                "newLine": 43,
-                "text": "        _transferOwnership(address(0));"
-              }
-            ]
-          },
-          {
-            "oldStart": 60,
-            "oldLines": 9,
-            "newStart": 48,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 60,
-                "newLine": 48,
-                "text": "     * Can only be called by the current owner."
-              },
-              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 62,
-                "newLine": 50,
-                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "        if (newOwner == address(0)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "            revert OwnableInvalidOwner(address(0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        }",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 52,
-                "text": "        _transferOwnership(newOwner);"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
-              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "1f5c32d18cf7148d": {
-      "status": "differs",
-      "coveredLines": 60,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "Ownable",
-        "similarity": 0.781,
+        "similarity": 0.793,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/access/Ownable.sol",
@@ -2028,7 +779,1125 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.781,
+        "similarity": 0.793,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/Ownable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 10,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 11,
+        "unchanged": 60,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Ownable is Context {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev The caller account is not authorized to perform an operation.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    error OwnableInvalidOwner(address owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    constructor(address initialOwner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        _transferOwnership(initialOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        _transferOwnership(_msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 17,
+            "newStart": 29,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 29,
+                "text": "     * @dev Throws if the sender is not the owner."
+              },
+              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 31,
+                "text": "    function _checkOwner() internal view virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (owner() != _msgSender()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 36,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 39,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 42,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 43,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 9,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 48,
+                "text": "     * Can only be called by the current owner."
+              },
+              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 50,
+                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        if (newOwner == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            revert OwnableInvalidOwner(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 52,
+                "text": "        _transferOwnership(newOwner);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 60,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Ownable",
+        "similarity": 0.793,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/Ownable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 10,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 11,
+        "unchanged": 60,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Ownable is Context {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev The caller account is not authorized to perform an operation.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    error OwnableInvalidOwner(address owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    constructor(address initialOwner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        _transferOwnership(initialOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        _transferOwnership(_msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 17,
+            "newStart": 29,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 29,
+                "text": "     * @dev Throws if the sender is not the owner."
+              },
+              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 31,
+                "text": "    function _checkOwner() internal view virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (owner() != _msgSender()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 36,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 39,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 42,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 43,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 9,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 48,
+                "text": "     * Can only be called by the current owner."
+              },
+              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 50,
+                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        if (newOwner == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            revert OwnableInvalidOwner(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 52,
+                "text": "        _transferOwnership(newOwner);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 60,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Ownable",
+        "similarity": 0.793,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/Ownable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 10,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 11,
+        "unchanged": 60,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Ownable is Context {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev The caller account is not authorized to perform an operation.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    error OwnableInvalidOwner(address owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    constructor(address initialOwner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        _transferOwnership(initialOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        _transferOwnership(_msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 17,
+            "newStart": 29,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 29,
+                "text": "     * @dev Throws if the sender is not the owner."
+              },
+              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 31,
+                "text": "    function _checkOwner() internal view virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (owner() != _msgSender()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 36,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 50, "newLine": 38, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 39,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 41, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 42,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 43,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 9,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 48,
+                "text": "     * Can only be called by the current owner."
+              },
+              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 50,
+                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        if (newOwner == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            revert OwnableInvalidOwner(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 52,
+                "text": "        _transferOwnership(newOwner);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 60,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Ownable",
+        "similarity": 0.793,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/Ownable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/access/Ownable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 10,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 9,
+        "unchanged": 60,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 23,
+            "newStart": 1,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Ownable is Context {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev The caller account is not authorized to perform an operation.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error OwnableUnauthorizedAccount(address account);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 9, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @dev The owner is not a valid owner account. (eg. `address(0)`)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    error OwnableInvalidOwner(address owner);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 13, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 5, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 6, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @dev Initializes the contract setting the deployer as the initial owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 18, "newLine": 8, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    constructor(address initialOwner) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        _transferOwnership(initialOwner);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        _transferOwnership(_msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 13, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 9,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 29,
+                "text": "     * @dev Throws if the sender is not the owner."
+              },
+              { "type": " ", "oldLine": 40, "newLine": 30, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 31,
+                "text": "    function _checkOwner() internal view virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (owner() != _msgSender()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert OwnableUnauthorizedAccount(_msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 47, "newLine": 35, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 9,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 48,
+                "text": "     * Can only be called by the current owner."
+              },
+              { "type": " ", "oldLine": 61, "newLine": 49, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 50,
+                "text": "    function transferOwnership(address newOwner) public virtual onlyOwner {"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        if (newOwner == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            revert OwnableInvalidOwner(address(0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 52,
+                "text": "        _transferOwnership(newOwner);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 60,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Ownable",
+        "similarity": 0.793,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/access/Ownable.sol",

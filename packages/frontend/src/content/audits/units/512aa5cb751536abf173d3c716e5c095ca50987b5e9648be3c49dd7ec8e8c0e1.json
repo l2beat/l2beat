@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IL1ERC1155Gateway",
-        "similarity": 0.985,
+        "similarity": 0.999,
         "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/L1/gateways/IL1ERC1155Gateway.sol",

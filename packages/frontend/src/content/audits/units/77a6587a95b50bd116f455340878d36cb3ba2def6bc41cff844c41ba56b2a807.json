@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "contract MasterCopy is SelfAuthorized {\n    event ChangedMasterCopy(address masterCopy);\n\n    // masterCopy always needs to be first declared variable, to ensure that it is at the same location as in the Proxy contract.\n    // It should also always be ensured that the address is stored alone (uses a full word)\n    address private masterCopy;\n\n    /// @dev Allows to upgrade the contract. This can only be done via a Safe transaction.\n    /// @param _masterCopy New contract address.\n    function changeMasterCopy(address _masterCopy) public authorized {\n        // Master copy address cannot be null.\n        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n        masterCopy = _masterCopy;\n        emit ChangedMasterCopy(_masterCopy);\n    }\n}",
   "resolutions": {
-    "f9658cd3a9a22004": {
+    "9fa846564f4071bd": {
       "status": "library",
       "coveredLines": 16,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "f9658cd3a9a22004": {
       "status": "library",
       "coveredLines": 16,
       "match": {

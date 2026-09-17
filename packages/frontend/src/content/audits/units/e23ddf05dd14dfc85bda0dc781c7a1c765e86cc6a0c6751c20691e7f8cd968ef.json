@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Proxy",
-        "similarity": 0.65,
+        "similarity": 0.706,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/Proxy.sol",

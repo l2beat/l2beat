@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "uniswapv3",
   "slug": "uniswapv3",
-  "generatedAt": 1789565213,
+  "generatedAt": 1789642679,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1786913047,
   "contractSelection": "all",
@@ -73,35 +73,30 @@
     "units": {
       "identical": 113,
       "library": 11,
-      "differs": 106,
-      "unaudited": 167
+      "differs": 71,
+      "unaudited": 202
     },
     "uniqueUnits": {
       "identical": 26,
       "library": 5,
-      "differs": 56,
-      "unaudited": 129
+      "differs": 33,
+      "unaudited": 152
     },
     "lines": {
       "total": 32379,
-      "covered": 16351,
-      "uncovered": 16028
+      "covered": 14344,
+      "uncovered": 18035
     }
   },
   "reportIds": [
     "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
     "aztecnetwork/solidified-aztec-liquity-bridge-2022-06-14",
     "bob/veridise-kailua-2025-02",
-    "celo/trail-of-bits-celo-l2-2024-12-19",
     "celo/verilog-celo-monorepo-prs-9798-10159-2023-03",
-    "openzeppelin/contracts__audits__2017-03",
     "openzeppelin/contracts__audits__2018-10",
-    "openzeppelin/contracts__audits__2023-05-v4.9",
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "openzeppelin/contracts__audits__2026-02-v5.6",
-    "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
     "roninnetwork/code4rena-ronin-katana-v3-2024-10",
-    "solady/cantina-spearbit-coinbase-solady-report",
     "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
     "uniswapv3/abdk-uniswap-v3-core-2021-03",
     "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
@@ -120,19 +115,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 3,
-          "unaudited": 10
+          "differs": 0,
+          "unaudited": 13
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 3,
-          "unaudited": 10
+          "differs": 0,
+          "unaudited": 13
         },
         "lines": {
           "total": 959,
-          "covered": 95,
-          "uncovered": 864
+          "covered": 0,
+          "uncovered": 959
         }
       },
       "files": [
@@ -161,41 +156,9 @@
               "startLine": 137,
               "endLine": 169,
               "lines": 33,
-              "status": "differs",
-              "coveredLines": 17,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "EIP712",
-                "similarity": 0.145,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/cryptography/EIP712.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 5
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 55,
-                "ignoredAdded": 6,
-                "ignoredRemoved": 40,
-                "unchanged": 17,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "a7ab1ce67844df0ea414a08981eb2b9c8faf06e3f2bc4ba25bc8640e9ed06cea",
@@ -229,41 +192,9 @@
               "startLine": 229,
               "endLine": 229,
               "lines": 1,
-              "status": "differs",
+              "status": "unaudited",
               "coveredLines": 0,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "ERC20",
-                "similarity": 0,
-                "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/ERC20.sol",
-                "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
-                "commitTimestamp": "2026-02-27T15:00:00Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/ERC20.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 9
-              },
-              "diffStats": {
-                "added": 1,
-                "removed": 115,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 162,
-                "unchanged": 0,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "warnings": []
             },
             {
               "unitHash": "e5b415dda90ff33ee7fa18d7e96946a6c6fcca91d918eed2953613c5c5f4d799",
@@ -273,40 +204,8 @@
               "startLine": 235,
               "endLine": 343,
               "lines": 109,
-              "status": "differs",
-              "coveredLines": 78,
-              "match": {
-                "origin": "library",
-                "collection": "solmate",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeTransferLib",
-                "similarity": 0.397,
-                "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
-                "repository": "Rari-Capital/solmate",
-                "path": "src/utils/SafeTransferLib.sol",
-                "commit": "134f10afd9c996cee217aec6274839f56c742eac",
-                "commitTimestamp": "2021-11-24T03:52:42Z",
-                "url": "https://github.com/Rari-Capital/solmate/blob/134f10afd9c996cee217aec6274839f56c742eac/src/utils/SafeTransferLib.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "Finding remediation review",
-                "coverage": "Review limited to the remediation for finding G.1.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 31,
-                "removed": 42,
-                "ignoredAdded": 32,
-                "ignoredRemoved": 36,
-                "unchanged": 78,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -409,19 +308,19 @@
         "units": {
           "identical": 1,
           "library": 0,
-          "differs": 2,
-          "unaudited": 12
+          "differs": 1,
+          "unaudited": 13
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 0,
-          "differs": 2,
-          "unaudited": 12
+          "differs": 1,
+          "unaudited": 13
         },
         "lines": {
           "total": 832,
-          "covered": 126,
-          "uncovered": 706
+          "covered": 125,
+          "uncovered": 707
         }
       },
       "files": [
@@ -438,45 +337,9 @@
               "startLine": 5,
               "endLine": 8,
               "lines": 4,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "ERC20",
-                "similarity": 0.143,
-                "reportId": "openzeppelin/contracts__audits__2017-03",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20.sol",
-                "commit": "9c5975a706b076b7000e8179f8101e0c61024c87",
-                "commitTimestamp": "2017-03-09T21:13:27Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9c5975a706b076b7000e8179f8101e0c61024c87/contracts/token/ERC20.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
-                "majorFindings": 2,
-                "findingIds": [
-                  "Stuck Ether in Crowdsale contract",
-                  "Recursive Call in MultisigWallet"
-                ],
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 9
-              },
-              "diffStats": {
-                "added": 3,
-                "removed": 9,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 1,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "a25ddb2cd0553f70dc9a4581cae8bdc9f7327fcb008f323eec24b8b135f8cd7e",
@@ -649,7 +512,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "SafeTransferLib",
-                "similarity": 0.492,
+                "similarity": 0.598,
                 "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
                 "repository": "Rari-Capital/solmate",
                 "path": "src/utils/SafeTransferLib.sol",
@@ -726,19 +589,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 2,
-          "unaudited": 0
+          "differs": 0,
+          "unaudited": 2
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 2,
-          "unaudited": 0
+          "differs": 0,
+          "unaudited": 2
         },
         "lines": {
           "total": 292,
-          "covered": 191,
-          "uncovered": 101
+          "covered": 0,
+          "uncovered": 292
         }
       },
       "files": [
@@ -755,40 +618,8 @@
               "startLine": 20,
               "endLine": 187,
               "lines": 168,
-              "status": "differs",
-              "coveredLines": 146,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeMath",
-                "similarity": 0.45,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/math/SafeMath.sol",
-                "commit": "6d415c508be94ef8391ed6525df365452466da76",
-                "commitTimestamp": "2018-10-19T20:42:20Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 22,
-                "removed": 3,
-                "ignoredAdded": 109,
-                "ignoredRemoved": 18,
-                "unchanged": 146,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -799,42 +630,9 @@
               "startLine": 189,
               "endLine": 312,
               "lines": 124,
-              "status": "differs",
-              "coveredLines": 45,
-              "match": {
-                "origin": "library",
-                "collection": "solady",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Timelock",
-                "similarity": 0.086,
-                "reportId": "solady/cantina-spearbit-coinbase-solady-report",
-                "repository": "Vectorized/solady",
-                "path": "src/accounts/Timelock.sol",
-                "commit": "4c895b961d45c53a49ed500cfc76868b7ee1328b",
-                "commitTimestamp": "2024-12-02T19:21:46Z",
-                "url": "https://github.com/Vectorized/solady/blob/4c895b961d45c53a49ed500cfc76868b7ee1328b/src/accounts/Timelock.sol",
-                "auditStatus": "partially_audited_with_major_findings",
-                "reviewPhase": "Initial audit",
-                "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
-                "majorFindings": 1,
-                "findingIds": ["5.1.2"],
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 4
-              },
-              "diffStats": {
-                "added": 79,
-                "removed": 167,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 150,
-                "unchanged": 45,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             }
           ]
         }
@@ -852,19 +650,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 1,
-          "unaudited": 1
+          "differs": 0,
+          "unaudited": 2
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 1,
-          "unaudited": 1
+          "differs": 0,
+          "unaudited": 2
         },
         "lines": {
           "total": 569,
-          "covered": 146,
-          "uncovered": 423
+          "covered": 0,
+          "uncovered": 569
         }
       },
       "files": [
@@ -881,40 +679,8 @@
               "startLine": 22,
               "endLine": 189,
               "lines": 168,
-              "status": "differs",
-              "coveredLines": 146,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeMath",
-                "similarity": 0.45,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/math/SafeMath.sol",
-                "commit": "6d415c508be94ef8391ed6525df365452466da76",
-                "commitTimestamp": "2018-10-19T20:42:20Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 22,
-                "removed": 3,
-                "ignoredAdded": 109,
-                "ignoredRemoved": 18,
-                "unchanged": 146,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -945,19 +711,19 @@
         "units": {
           "identical": 25,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 25,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "lines": {
           "total": 2938,
-          "covered": 2757,
-          "uncovered": 181
+          "covered": 2732,
+          "uncovered": 206
         }
       },
       "files": [
@@ -1101,7 +867,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -1134,40 +900,8 @@
               "startLine": 236,
               "endLine": 265,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -1261,7 +995,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -1545,7 +1279,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Tick",
-                "similarity": 0.901,
+                "similarity": 0.814,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Tick.sol",
@@ -1777,7 +1511,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Oracle",
-                "similarity": 0.868,
+                "similarity": 0.917,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Oracle.sol",
@@ -1901,7 +1635,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UnsafeMath",
-                "similarity": 0.667,
+                "similarity": 0.704,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/UnsafeMath.sol",
@@ -1945,7 +1679,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "SqrtPriceMath",
-                "similarity": 0.996,
+                "similarity": 1,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/SqrtPriceMath.sol",
@@ -2178,7 +1912,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UniswapV3Pool",
-                "similarity": 0.882,
+                "similarity": 0.898,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/UniswapV3Pool.sol",
@@ -2452,19 +2186,19 @@
         "units": {
           "identical": 7,
           "library": 3,
-          "differs": 21,
-          "unaudited": 59
+          "differs": 13,
+          "unaudited": 67
         },
         "uniqueUnits": {
           "identical": 7,
           "library": 3,
-          "differs": 21,
-          "unaudited": 59
+          "differs": 13,
+          "unaudited": 67
         },
         "lines": {
           "total": 10195,
-          "covered": 1793,
-          "uncovered": 8402
+          "covered": 1311,
+          "uncovered": 8884
         }
       },
       "files": [
@@ -2504,7 +2238,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -2548,7 +2282,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IWETH9",
-                "similarity": 0.75,
+                "similarity": 0.817,
                 "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
                 "repository": "AztecProtocol/aztec-connect-bridges",
                 "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",
@@ -2640,7 +2374,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PaymentsImmutables",
-                "similarity": 0.75,
+                "similarity": 0.817,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/modules/PaymentsImmutables.sol",
@@ -2673,45 +2407,9 @@
               "startLine": 433,
               "endLine": 439,
               "lines": 7,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "ERC20",
-                "similarity": 0.118,
-                "reportId": "openzeppelin/contracts__audits__2017-03",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20.sol",
-                "commit": "9c5975a706b076b7000e8179f8101e0c61024c87",
-                "commitTimestamp": "2017-03-09T21:13:27Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9c5975a706b076b7000e8179f8101e0c61024c87/contracts/token/ERC20.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
-                "majorFindings": 2,
-                "findingIds": [
-                  "Stuck Ether in Crowdsale contract",
-                  "Recursive Call in MultisigWallet"
-                ],
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 9
-              },
-              "diffStats": {
-                "added": 6,
-                "removed": 9,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 1,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "e5b415dda90ff33ee7fa18d7e96946a6c6fcca91d918eed2953613c5c5f4d799",
@@ -2721,40 +2419,8 @@
               "startLine": 445,
               "endLine": 553,
               "lines": 109,
-              "status": "differs",
-              "coveredLines": 78,
-              "match": {
-                "origin": "library",
-                "collection": "solmate",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeTransferLib",
-                "similarity": 0.397,
-                "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
-                "repository": "Rari-Capital/solmate",
-                "path": "src/utils/SafeTransferLib.sol",
-                "commit": "134f10afd9c996cee217aec6274839f56c742eac",
-                "commitTimestamp": "2021-11-24T03:52:42Z",
-                "url": "https://github.com/Rari-Capital/solmate/blob/134f10afd9c996cee217aec6274839f56c742eac/src/utils/SafeTransferLib.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "Finding remediation review",
-                "coverage": "Review limited to the remediation for finding G.1.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 31,
-                "removed": 42,
-                "ignoredAdded": 32,
-                "ignoredRemoved": 36,
-                "unchanged": 78,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -2777,41 +2443,9 @@
               "startLine": 574,
               "endLine": 596,
               "lines": 23,
-              "status": "differs",
-              "coveredLines": 16,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.286,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 7,
-                "removed": 3,
-                "ignoredAdded": 13,
-                "ignoredRemoved": 0,
-                "unchanged": 16,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "a2e937dda7c9bcf4588a3c42eda6dec98762a4764f9b4afa899ae5bee8a768a7",
@@ -2844,7 +2478,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Payments",
-                "similarity": 0.901,
+                "similarity": 0.919,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/modules/Payments.sol",
@@ -2949,41 +2583,9 @@
               "startLine": 858,
               "endLine": 1005,
               "lines": 148,
-              "status": "differs",
-              "coveredLines": 106,
-              "match": {
-                "origin": "other",
-                "collection": "celo",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "UniswapV2Library",
-                "similarity": 0.364,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 42,
-                "removed": 39,
-                "ignoredAdded": 70,
-                "ignoredRemoved": 29,
-                "unchanged": 106,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "71bf6062579dab286998e124f5797a2d26511521e78e92f587c948ef85960b06",
@@ -3004,7 +2606,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "V2SwapRouter",
-                "similarity": 0.839,
+                "similarity": 0.896,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/modules/katana/v2/V2SwapRouter.sol",
@@ -3209,41 +2811,9 @@
               "startLine": 1553,
               "endLine": 1617,
               "lines": 65,
-              "status": "differs",
-              "coveredLines": 30,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "SafeCast",
-                "similarity": 0.192,
-                "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/SafeCast.sol",
-                "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-                "commitTimestamp": "2021-03-01T20:06:25Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/SafeCast.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 35,
-                "removed": 7,
-                "ignoredAdded": 20,
-                "ignoredRemoved": 3,
-                "unchanged": 30,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "d652b8178d398b2061406687eafc37ba270cd563e1dcf23d426ea699d5721576",
@@ -3464,7 +3034,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -3497,40 +3067,8 @@
               "startLine": 2857,
               "endLine": 2886,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3624,7 +3162,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -3704,7 +3242,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "V3SwapRouter",
-                "similarity": 0.857,
+                "similarity": 0.887,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",
@@ -3857,41 +3395,9 @@
               "startLine": 3723,
               "endLine": 3765,
               "lines": 43,
-              "status": "differs",
-              "coveredLines": 28,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "BitMath",
-                "similarity": 0.194,
-                "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/BitMath.sol",
-                "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-                "commitTimestamp": "2021-03-01T20:06:25Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/BitMath.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 15,
-                "removed": 68,
-                "ignoredAdded": 7,
-                "ignoredRemoved": 4,
-                "unchanged": 28,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "2f123c45a20868adbdfdf1eacb8a5180664372b40549b86f6d1c7ba9f8bdde4d",
@@ -3901,40 +3407,8 @@
               "startLine": 3770,
               "endLine": 4041,
               "lines": 272,
-              "status": "differs",
-              "coveredLines": 198,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "TickMath",
-                "similarity": 0.589,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/TickMath.sol",
-                "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-                "commitTimestamp": "2021-03-22T19:11:50Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/libraries/TickMath.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 74,
-                "removed": 75,
-                "ignoredAdded": 174,
-                "ignoredRemoved": 143,
-                "unchanged": 198,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -4004,7 +3478,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IPeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.901,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
@@ -4084,7 +3558,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC721",
-                "similarity": 0.929,
+                "similarity": 0.996,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC721/IERC721.sol",
@@ -4392,7 +3866,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Commands",
-                "similarity": 0.837,
+                "similarity": 0.84,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/libraries/Commands.sol",
@@ -4436,7 +3910,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Dispatcher",
-                "similarity": 0.727,
+                "similarity": 0.713,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-operation-contracts",
                 "path": "src/aggregate-router/base/Dispatcher.sol",
@@ -4501,19 +3975,19 @@
         "units": {
           "identical": 10,
           "library": 3,
-          "differs": 16,
-          "unaudited": 34
+          "differs": 10,
+          "unaudited": 40
         },
         "uniqueUnits": {
           "identical": 10,
           "library": 3,
-          "differs": 16,
-          "unaudited": 34
+          "differs": 10,
+          "unaudited": 40
         },
         "lines": {
           "total": 3052,
-          "covered": 1504,
-          "uncovered": 1548
+          "covered": 1344,
+          "uncovered": 1708
         }
       },
       "files": [
@@ -4741,7 +4215,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IPeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.901,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
@@ -4785,7 +4259,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.968,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/base/PeripheryImmutableState.sol",
@@ -4819,37 +4293,37 @@
               "endLine": 475,
               "lines": 70,
               "status": "differs",
-              "coveredLines": 66,
+              "coveredLines": 68,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "own",
+                "collection": "uniswapv3",
                 "relation": {
-                  "type": "library"
+                  "type": "own"
                 },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "IERC20",
-                "similarity": 0.6,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/IERC20.sol",
-                "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-                "commitTimestamp": "2023-06-06T04:08:31Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "IERC20Minimal",
+                "similarity": 0.907,
+                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+                "repository": "Uniswap/v3-core",
+                "path": "contracts/interfaces/IERC20Minimal.sol",
+                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+                "commitTimestamp": "2021-02-23T16:37:26Z",
+                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IERC20Minimal.sol",
                 "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Full review of the file at the Phase 1 audit commit.",
+                "reviewPhase": "initial audit",
+                "coverage": "full file",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 3
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 4,
-                "removed": 4,
-                "ignoredAdded": 14,
-                "ignoredRemoved": 14,
-                "unchanged": 66,
+                "added": 2,
+                "removed": 1,
+                "ignoredAdded": 54,
+                "ignoredRemoved": 28,
+                "unchanged": 68,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -4873,7 +4347,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IWETH9",
-                "similarity": 0.75,
+                "similarity": 0.817,
                 "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
                 "repository": "AztecProtocol/aztec-connect-bridges",
                 "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",
@@ -4906,41 +4380,8 @@
               "startLine": 486,
               "endLine": 527,
               "lines": 42,
-              "status": "differs",
-              "coveredLines": 31,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "TransferHelper",
-                "similarity": 0.385,
-                "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/TransferHelper.sol",
-                "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-                "commitTimestamp": "2021-03-01T20:06:25Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/TransferHelper.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 1,
-                "findingIds": ["TOB-UNI-009"],
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 1,
-                "ignoredAdded": 23,
-                "ignoredRemoved": 3,
-                "unchanged": 31,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -5079,40 +4520,8 @@
               "startLine": 770,
               "endLine": 849,
               "lines": 80,
-              "status": "differs",
-              "coveredLines": 57,
-              "match": {
-                "origin": "other",
-                "collection": "celo",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "UniswapV2Library",
-                "similarity": 0.506,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 23,
-                "removed": 33,
-                "ignoredAdded": 15,
-                "ignoredRemoved": 29,
-                "unchanged": 57,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -5123,41 +4532,9 @@
               "startLine": 853,
               "endLine": 862,
               "lines": 10,
-              "status": "differs",
-              "coveredLines": 7,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.4,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 3,
-                "removed": 3,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 0,
-                "unchanged": 7,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "472f1d4f43c2d077a82d4e69717bfd9af4f620cca9210a407b45880dd544cc39",
@@ -5167,41 +4544,9 @@
               "startLine": 866,
               "endLine": 950,
               "lines": 85,
-              "status": "differs",
-              "coveredLines": 33,
-              "match": {
-                "origin": "other",
-                "collection": "roninnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "V2SwapRouter",
-                "similarity": 0.187,
-                "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
-                "repository": "ronin-chain/katana-operation-contracts",
-                "path": "src/aggregate-router/modules/katana/v2/V2SwapRouter.sol",
-                "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
-                "commitTimestamp": "2024-10-08T04:43:53Z",
-                "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/modules/katana/v2/V2SwapRouter.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "competitive audit",
-                "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 52,
-                "removed": 59,
-                "ignoredAdded": 16,
-                "ignoredRemoved": 19,
-                "unchanged": 33,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "1aa5e62a8c0a609574f8f02715a1f5602397f4a75c84172ccc8242354b9a5d9d",
@@ -5306,7 +4651,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -5339,40 +4684,8 @@
               "startLine": 1279,
               "endLine": 1308,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -5466,7 +4779,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -5546,7 +4859,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PoolAddress",
-                "similarity": 0.857,
+                "similarity": 0.936,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/libraries/PoolAddress.sol",
@@ -5742,7 +5055,7 @@
                 "rank": 0,
                 "matchedBy": "similarity",
                 "auditedName": "SwapRouter",
-                "similarity": 0.807,
+                "similarity": 0.837,
                 "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
                 "repository": "Uniswap/v3-periphery",
                 "path": "contracts/SwapRouter.sol",
@@ -5834,7 +5147,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC721",
-                "similarity": 0.857,
+                "similarity": 0.942,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC721/IERC721.sol",
@@ -5914,7 +5227,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC721Enumerable",
-                "similarity": 0.8,
+                "similarity": 0.875,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC721/extensions/IERC721Enumerable.sol",
@@ -5983,40 +5296,8 @@
               "startLine": 3056,
               "endLine": 3077,
               "lines": 22,
-              "status": "differs",
-              "coveredLines": 9,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Multicall",
-                "similarity": 0.37,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Multicall.sol",
-                "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
-                "commitTimestamp": "2023-08-08T06:22:59Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/Multicall.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 13,
-                "removed": 4,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 4,
-                "unchanged": 9,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -6151,19 +5432,19 @@
         "units": {
           "identical": 23,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 23,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "lines": {
           "total": 2848,
-          "covered": 2667,
-          "uncovered": 181
+          "covered": 2642,
+          "uncovered": 206
         }
       },
       "files": [
@@ -6227,7 +5508,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -6260,40 +5541,8 @@
               "startLine": 154,
               "endLine": 183,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -6387,7 +5636,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -6671,7 +5920,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Tick",
-                "similarity": 0.901,
+                "similarity": 0.814,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Tick.sol",
@@ -6903,7 +6152,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Oracle",
-                "similarity": 0.868,
+                "similarity": 0.917,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Oracle.sol",
@@ -7107,7 +6356,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UnsafeMath",
-                "similarity": 0.667,
+                "similarity": 0.704,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/UnsafeMath.sol",
@@ -7151,7 +6400,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "SqrtPriceMath",
-                "similarity": 0.996,
+                "similarity": 1,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/SqrtPriceMath.sol",
@@ -7384,7 +6633,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UniswapV3Pool",
-                "similarity": 0.882,
+                "similarity": 0.898,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/UniswapV3Pool.sol",
@@ -7426,19 +6675,19 @@
         "units": {
           "identical": 10,
           "library": 4,
-          "differs": 22,
-          "unaudited": 19
+          "differs": 15,
+          "unaudited": 26
         },
         "uniqueUnits": {
           "identical": 10,
           "library": 4,
-          "differs": 22,
-          "unaudited": 19
+          "differs": 15,
+          "unaudited": 26
         },
         "lines": {
           "total": 3800,
-          "covered": 2754,
-          "uncovered": 1046
+          "covered": 1985,
+          "uncovered": 1815
         }
       },
       "files": [
@@ -7490,7 +6739,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IPeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.901,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
@@ -7570,7 +6819,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC721",
-                "similarity": 0.857,
+                "similarity": 0.942,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC721/IERC721.sol",
@@ -7650,7 +6899,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC721Enumerable",
-                "similarity": 0.8,
+                "similarity": 0.875,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC721/extensions/IERC721Enumerable.sol",
@@ -7719,40 +6968,8 @@
               "startLine": 438,
               "endLine": 459,
               "lines": 22,
-              "status": "differs",
-              "coveredLines": 9,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Multicall",
-                "similarity": 0.37,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Multicall.sol",
-                "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
-                "commitTimestamp": "2023-08-08T06:22:59Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/Multicall.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 13,
-                "removed": 4,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 4,
-                "unchanged": 9,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -7786,7 +7003,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Context",
-                "similarity": 0.706,
+                "similarity": 0.702,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Context.sol",
@@ -7830,7 +7047,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ERC165",
-                "similarity": 0.571,
+                "similarity": 0.63,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/introspection/ERC165.sol",
@@ -7863,40 +7080,8 @@
               "startLine": 554,
               "endLine": 764,
               "lines": 211,
-              "status": "differs",
-              "coveredLines": 163,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeMath",
-                "similarity": 0.33,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/math/SafeMath.sol",
-                "commit": "6d415c508be94ef8391ed6525df365452466da76",
-                "commitTimestamp": "2018-10-19T20:42:20Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 48,
-                "removed": 5,
-                "ignoredAdded": 129,
-                "ignoredRemoved": 19,
-                "unchanged": 163,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -7918,7 +7103,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.892,
+                "similarity": 0.906,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -7962,7 +7147,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.833,
+                "similarity": 0.903,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -7995,41 +7180,9 @@
               "startLine": 1288,
               "endLine": 1532,
               "lines": 245,
-              "status": "differs",
-              "coveredLines": 181,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "EnumerableMap",
-                "similarity": 0.253,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/structs/EnumerableMap.sol",
-                "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
-                "commitTimestamp": "2023-09-08T00:14:59Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/structs/EnumerableMap.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 12
-              },
-              "diffStats": {
-                "added": 64,
-                "removed": 137,
-                "ignoredAdded": 50,
-                "ignoredRemoved": 218,
-                "unchanged": 181,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "4dafcbceb37de6101d0525ceb158fbd5f46df0697ee7ab3e3a257ae5e6c712a5",
@@ -8039,41 +7192,9 @@
               "startLine": 1537,
               "endLine": 1563,
               "lines": 27,
-              "status": "differs",
-              "coveredLines": 15,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Strings",
-                "similarity": 0.254,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Strings.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 14
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 32,
-                "ignoredAdded": 5,
-                "ignoredRemoved": 34,
-                "unchanged": 15,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "eaa59fff2a79c42f0be18afdd6132e19964ff012831de5bbb8deccd0e5ad0410",
@@ -8127,46 +7248,9 @@
               "startLine": 1589,
               "endLine": 2047,
               "lines": 459,
-              "status": "differs",
-              "coveredLines": 347,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "ERC721",
-                "similarity": 0.288,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC721/ERC721.sol",
-                "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
-                "commitTimestamp": "2018-09-18T22:22:04Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/dac5bccf803696d9d98d269b8c27c7aac5fa1c5c/contracts/token/ERC721/ERC721.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full manual review of all smart contracts under contracts/ for the OpenZeppelin v2.0 release.",
-                "majorFindings": 3,
-                "findingIds": [
-                  "Avoid frontrunning by a malicious actor or the contract owner",
-                  "Stop crowdsale manipulation via reentrancy by adding the nonReentrant modifier to the buyTokens() function",
-                  "Allow for safe changes to allowances through the SafeERC20 interface"
-                ],
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 9
-              },
-              "diffStats": {
-                "added": 112,
-                "removed": 56,
-                "ignoredAdded": 242,
-                "ignoredRemoved": 106,
-                "unchanged": 347,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "4dbf144c10ae84da0335f47beb6d5b19bb2211e7639c1d580348db7348319d40",
@@ -8223,7 +7307,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.968,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/base/PeripheryImmutableState.sol",
@@ -8347,7 +7431,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -8380,40 +7464,8 @@
               "startLine": 2369,
               "endLine": 2398,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -8507,7 +7559,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -8587,7 +7639,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PoolInitializer",
-                "similarity": 0.732,
+                "similarity": 0.802,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/base/PoolInitializer.sol",
@@ -8657,37 +7709,37 @@
               "endLine": 2748,
               "lines": 70,
               "status": "differs",
-              "coveredLines": 66,
+              "coveredLines": 68,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "own",
+                "collection": "uniswapv3",
                 "relation": {
-                  "type": "library"
+                  "type": "own"
                 },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "IERC20",
-                "similarity": 0.6,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/IERC20.sol",
-                "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-                "commitTimestamp": "2023-06-06T04:08:31Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "IERC20Minimal",
+                "similarity": 0.907,
+                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+                "repository": "Uniswap/v3-core",
+                "path": "contracts/interfaces/IERC20Minimal.sol",
+                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+                "commitTimestamp": "2021-02-23T16:37:26Z",
+                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IERC20Minimal.sol",
                 "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Full review of the file at the Phase 1 audit commit.",
+                "reviewPhase": "initial audit",
+                "coverage": "full file",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 3
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 4,
-                "removed": 4,
-                "ignoredAdded": 14,
-                "ignoredRemoved": 14,
-                "unchanged": 66,
+                "added": 2,
+                "removed": 1,
+                "ignoredAdded": 54,
+                "ignoredRemoved": 28,
+                "unchanged": 68,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -8711,7 +7763,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IWETH9",
-                "similarity": 0.75,
+                "similarity": 0.817,
                 "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
                 "repository": "AztecProtocol/aztec-connect-bridges",
                 "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",
@@ -8744,41 +7796,8 @@
               "startLine": 2759,
               "endLine": 2800,
               "lines": 42,
-              "status": "differs",
-              "coveredLines": 31,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "TransferHelper",
-                "similarity": 0.385,
-                "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/TransferHelper.sol",
-                "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-                "commitTimestamp": "2021-03-01T20:06:25Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/TransferHelper.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 1,
-                "findingIds": ["TOB-UNI-009"],
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 1,
-                "ignoredAdded": 23,
-                "ignoredRemoved": 3,
-                "unchanged": 31,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -8812,7 +7831,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PoolAddress",
-                "similarity": 0.857,
+                "similarity": 0.936,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/libraries/PoolAddress.sol",
@@ -9152,7 +8171,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "NonfungiblePositionManager",
-                "similarity": 0.957,
+                "similarity": 1,
                 "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
                 "repository": "Uniswap/v3-periphery",
                 "path": "contracts/NonfungiblePositionManager.sol",
@@ -9194,19 +8213,19 @@
         "units": {
           "identical": 23,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 23,
           "library": 0,
-          "differs": 8,
-          "unaudited": 0
+          "differs": 7,
+          "unaudited": 1
         },
         "lines": {
           "total": 2848,
-          "covered": 2667,
-          "uncovered": 181
+          "covered": 2642,
+          "uncovered": 206
         }
       },
       "files": [
@@ -9270,7 +8289,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -9303,40 +8322,8 @@
               "startLine": 154,
               "endLine": 183,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -9430,7 +8417,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -9714,7 +8701,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Tick",
-                "similarity": 0.901,
+                "similarity": 0.814,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Tick.sol",
@@ -9946,7 +8933,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Oracle",
-                "similarity": 0.868,
+                "similarity": 0.917,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/Oracle.sol",
@@ -10150,7 +9137,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UnsafeMath",
-                "similarity": 0.667,
+                "similarity": 0.704,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/UnsafeMath.sol",
@@ -10194,7 +9181,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "SqrtPriceMath",
-                "similarity": 0.996,
+                "similarity": 1,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/libraries/SqrtPriceMath.sol",
@@ -10427,7 +9414,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "UniswapV3Pool",
-                "similarity": 0.882,
+                "similarity": 0.898,
                 "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/UniswapV3Pool.sol",
@@ -10469,19 +9456,19 @@
         "units": {
           "identical": 8,
           "library": 1,
-          "differs": 12,
-          "unaudited": 13
+          "differs": 9,
+          "unaudited": 16
         },
         "uniqueUnits": {
           "identical": 8,
           "library": 1,
-          "differs": 12,
-          "unaudited": 13
+          "differs": 9,
+          "unaudited": 16
         },
         "lines": {
           "total": 1654,
-          "covered": 1168,
-          "uncovered": 486
+          "covered": 1105,
+          "uncovered": 549
         }
       },
       "files": [
@@ -10553,7 +9540,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ISwapRouter",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "aztecnetwork/solidified-aztec-liquity-bridge-2022-06-14",
                 "repository": "AztecProtocol/aztec-connect-bridges",
                 "path": "src/bridges/liquity/interfaces/ISwapRouter.sol",
@@ -10597,7 +9584,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IPeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.901,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
@@ -10641,7 +9628,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PeripheryImmutableState",
-                "similarity": 0.889,
+                "similarity": 0.968,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/base/PeripheryImmutableState.sol",
@@ -10711,37 +9698,37 @@
               "endLine": 218,
               "lines": 70,
               "status": "differs",
-              "coveredLines": 66,
+              "coveredLines": 68,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "own",
+                "collection": "uniswapv3",
                 "relation": {
-                  "type": "library"
+                  "type": "own"
                 },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "IERC20",
-                "similarity": 0.6,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/IERC20.sol",
-                "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-                "commitTimestamp": "2023-06-06T04:08:31Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "IERC20Minimal",
+                "similarity": 0.907,
+                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+                "repository": "Uniswap/v3-core",
+                "path": "contracts/interfaces/IERC20Minimal.sol",
+                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+                "commitTimestamp": "2021-02-23T16:37:26Z",
+                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IERC20Minimal.sol",
                 "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Full review of the file at the Phase 1 audit commit.",
+                "reviewPhase": "initial audit",
+                "coverage": "full file",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 3
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 4,
-                "removed": 4,
-                "ignoredAdded": 14,
-                "ignoredRemoved": 14,
-                "unchanged": 66,
+                "added": 2,
+                "removed": 1,
+                "ignoredAdded": 54,
+                "ignoredRemoved": 28,
+                "unchanged": 68,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -10765,7 +9752,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "IWETH9",
-                "similarity": 0.75,
+                "similarity": 0.817,
                 "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
                 "repository": "AztecProtocol/aztec-connect-bridges",
                 "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",
@@ -10798,41 +9785,8 @@
               "startLine": 229,
               "endLine": 270,
               "lines": 42,
-              "status": "differs",
-              "coveredLines": 31,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "TransferHelper",
-                "similarity": 0.385,
-                "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/libraries/TransferHelper.sol",
-                "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-                "commitTimestamp": "2021-03-01T20:06:25Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/TransferHelper.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 1,
-                "findingIds": ["TOB-UNI-009"],
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 1,
-                "ignoredAdded": 23,
-                "ignoredRemoved": 3,
-                "unchanged": 31,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -10935,40 +9889,8 @@
               "startLine": 449,
               "endLine": 470,
               "lines": 22,
-              "status": "differs",
-              "coveredLines": 9,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "Multicall",
-                "similarity": 0.37,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Multicall.sol",
-                "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
-                "commitTimestamp": "2023-08-08T06:22:59Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/Multicall.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 13,
-                "removed": 4,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 4,
-                "unchanged": 9,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -11174,7 +10096,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -11207,40 +10129,8 @@
               "startLine": 957,
               "endLine": 986,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -11334,7 +10224,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
@@ -11414,7 +10304,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "PoolAddress",
-                "similarity": 0.857,
+                "similarity": 0.936,
                 "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
                 "repository": "ronin-chain/katana-v3-contracts",
                 "path": "src/periphery/libraries/PoolAddress.sol",
@@ -11506,7 +10396,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "SwapRouter",
-                "similarity": 0.972,
+                "similarity": 1,
                 "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
                 "repository": "Uniswap/v3-periphery",
                 "path": "contracts/SwapRouter.sol",
@@ -11547,19 +10437,19 @@
         "units": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 5
         },
         "uniqueUnits": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 5
         },
         "lines": {
           "total": 1003,
-          "covered": 440,
-          "uncovered": 563
+          "covered": 415,
+          "uncovered": 588
         }
       },
       "files": [
@@ -11739,7 +10629,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolState",
-                "similarity": 0.851,
+                "similarity": 0.887,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
@@ -11772,40 +10662,8 @@
               "startLine": 502,
               "endLine": 531,
               "lines": 30,
-              "status": "differs",
-              "coveredLines": 25,
-              "match": {
-                "origin": "own",
-                "collection": "uniswapv3",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IUniswapV3PoolDerivedState",
-                "similarity": 0.588,
-                "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
-                "repository": "Uniswap/v3-core",
-                "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
-                "commitTimestamp": "2021-02-23T16:37:26Z",
-                "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 5,
-                "removed": 2,
-                "ignoredAdded": 11,
-                "ignoredRemoved": 10,
-                "unchanged": 25,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -11863,7 +10721,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IUniswapV3PoolEvents",
-                "similarity": 0.99,
+                "similarity": 0.998,
                 "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
                 "repository": "Uniswap/v3-core",
                 "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",

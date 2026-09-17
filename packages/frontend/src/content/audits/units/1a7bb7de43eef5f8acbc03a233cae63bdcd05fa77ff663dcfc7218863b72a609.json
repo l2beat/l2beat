@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Strings",
-        "similarity": 0.936,
+        "similarity": 0.949,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Strings.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "L1ERC721Gateway",
-        "similarity": 0.906,
+        "similarity": 0.974,
         "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/L1/gateways/L1ERC721Gateway.sol",

@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "IDisputeGame",
-        "similarity": 0.714,
+        "similarity": 0.775,
         "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "EmpireBase",
-        "similarity": 0.883,
+        "similarity": 0.956,
         "reportId": "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",

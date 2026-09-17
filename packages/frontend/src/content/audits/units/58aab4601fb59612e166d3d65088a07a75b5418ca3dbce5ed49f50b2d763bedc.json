@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "IWETH9",
-        "similarity": 0.75,
+        "similarity": 0.817,
         "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
         "repository": "AztecProtocol/aztec-connect-bridges",
         "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "MerkleTreeWithHistory",
-        "similarity": 0.956,
+        "similarity": 1,
         "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
         "repository": "tornadocash/tornado-anonymity-mining",
         "path": "contracts/utils/MerkleTreeWithHistory.sol",

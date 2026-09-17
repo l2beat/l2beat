@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Proxy",
-        "similarity": 0.812,
+        "similarity": 0.865,
         "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",

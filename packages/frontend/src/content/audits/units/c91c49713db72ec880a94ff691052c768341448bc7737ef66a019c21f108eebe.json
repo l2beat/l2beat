@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "similarity",
         "auditedName": "L1StandardBridge",
-        "similarity": 0.827,
+        "similarity": 0.771,
         "reportId": "facet/zellic-facet-bridge-2024-11-04",
         "repository": "0xFacet/facet-optimism",
         "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",

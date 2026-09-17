@@ -6,7 +6,7 @@
   "lines": 45,
   "source": "contract FallbackManager is SelfAuthorized {\n    // keccak256(\"fallback_manager.handler.address\")\n    bytes32 internal constant FALLBACK_HANDLER_STORAGE_SLOT =\n        0x6c9a6c4a39284e37ed1cf53d337577d14212a4870fb976a4366c693b939918d5;\n\n    function internalSetFallbackHandler(address handler) internal {\n        bytes32 slot = FALLBACK_HANDLER_STORAGE_SLOT;\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            sstore(slot, handler)\n        }\n    }\n\n    /// @dev Allows to add a contract to handle fallback calls.\n    ///      Only fallback calls without value and with data will be forwarded.\n    ///      This can only be done via a Safe transaction.\n    /// @param handler contract to handle fallbacks calls.\n    function setFallbackHandler(address handler) public authorized {\n        internalSetFallbackHandler(handler);\n    }\n\n    function() external payable {\n        // Only calls without value and with data will be forwarded\n        if (msg.value > 0 || msg.data.length == 0) {\n            return;\n        }\n        bytes32 slot = FALLBACK_HANDLER_STORAGE_SLOT;\n        address handler;\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            handler := sload(slot)\n        }\n\n        if (handler != address(0)) {\n            // solium-disable-next-line security/no-inline-assembly\n            assembly {\n                calldatacopy(0, 0, calldatasize())\n                let success := call(gas, handler, 0, 0, calldatasize(), 0, 0)\n                returndatacopy(0, 0, returndatasize())\n                if eq(success, 0) { revert(0, returndatasize()) }\n                return(0, returndatasize())\n            }\n        }\n    }\n}",
   "resolutions": {
-    "f9658cd3a9a22004": {
+    "9fa846564f4071bd": {
       "status": "library",
       "coveredLines": 45,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "f9658cd3a9a22004": {
       "status": "library",
       "coveredLines": 45,
       "match": {

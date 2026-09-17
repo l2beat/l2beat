@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "umbra",
   "slug": "umbra",
-  "generatedAt": 1789565213,
+  "generatedAt": 1789642638,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1786959877,
   "contractSelection": "all",
@@ -73,24 +73,25 @@
     "units": {
       "identical": 1,
       "library": 0,
-      "differs": 7,
-      "unaudited": 1
+      "differs": 6,
+      "unaudited": 2
     },
     "uniqueUnits": {
       "identical": 1,
       "library": 0,
-      "differs": 7,
-      "unaudited": 1
+      "differs": 6,
+      "unaudited": 2
     },
     "lines": {
       "total": 1116,
-      "covered": 832,
-      "uncovered": 284
+      "covered": 678,
+      "uncovered": 438
     }
   },
   "reportIds": [
     "bob/veridise-kailua-2025-02",
     "openzeppelin/contracts__audits__2018-10",
+    "openzeppelin/contracts__audits__2023-05-v4.9",
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "umbra/consensys-diligence-umbra-smart-contracts-2021-03"
   ],
@@ -154,19 +155,19 @@
         "units": {
           "identical": 1,
           "library": 0,
-          "differs": 7,
-          "unaudited": 0
+          "differs": 6,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 0,
-          "differs": 7,
-          "unaudited": 0
+          "differs": 6,
+          "unaudited": 1
         },
         "lines": {
           "total": 923,
-          "covered": 832,
-          "uncovered": 91
+          "covered": 678,
+          "uncovered": 245
         }
       },
       "files": [
@@ -194,7 +195,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Context",
-                "similarity": 0.706,
+                "similarity": 0.702,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Context.sol",
@@ -238,7 +239,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.618,
+                "similarity": 0.668,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/ownership/Ownable.sol",
@@ -271,40 +272,8 @@
               "startLine": 102,
               "endLine": 312,
               "lines": 211,
-              "status": "differs",
-              "coveredLines": 163,
-              "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "library"
-                },
-                "rank": 3,
-                "matchedBy": "name",
-                "auditedName": "SafeMath",
-                "similarity": 0.33,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/math/SafeMath.sol",
-                "commit": "6d415c508be94ef8391ed6525df365452466da76",
-                "commitTimestamp": "2018-10-19T20:42:20Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 48,
-                "removed": 5,
-                "ignoredAdded": 129,
-                "ignoredRemoved": 19,
-                "unchanged": 163,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -326,7 +295,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.892,
+                "similarity": 0.906,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -370,7 +339,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.6,
+                "similarity": 0.739,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -404,7 +373,7 @@
               "endLine": 662,
               "lines": 61,
               "status": "differs",
-              "coveredLines": 44,
+              "coveredLines": 53,
               "match": {
                 "origin": "library",
                 "collection": "openzeppelin",
@@ -414,27 +383,27 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.538,
-                "reportId": "openzeppelin/contracts__audits__2018-10",
+                "similarity": 0.607,
+                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/SafeERC20.sol",
-                "commit": "6d415c508be94ef8391ed6525df365452466da76",
-                "commitTimestamp": "2018-10-19T20:42:20Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/token/ERC20/SafeERC20.sol",
+                "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+                "commitTimestamp": "2023-04-21T11:35:07Z",
+                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
                 "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+                "reviewPhase": "initial audit",
+                "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
                 "majorFindings": 0,
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 10
               },
               "diffStats": {
-                "added": 17,
-                "removed": 7,
-                "ignoredAdded": 22,
-                "ignoredRemoved": 0,
-                "unchanged": 44,
+                "added": 8,
+                "removed": 34,
+                "ignoredAdded": 5,
+                "ignoredRemoved": 43,
+                "unchanged": 53,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -494,7 +463,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Umbra",
-                "similarity": 0.993,
+                "similarity": 1,
                 "reportId": "umbra/consensys-diligence-umbra-smart-contracts-2021-03",
                 "repository": "ScopeLift/umbra-protocol",
                 "path": "contracts/contracts/Umbra.sol",

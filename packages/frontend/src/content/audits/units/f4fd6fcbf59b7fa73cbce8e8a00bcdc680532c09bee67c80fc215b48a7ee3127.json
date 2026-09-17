@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "ERC20Upgradeable",
-        "similarity": 0.898,
+        "similarity": 0.982,
         "reportId": "celo/verilog-staked-celo-prs-72-120-2023",
         "repository": "celo-org/staked-celo",
         "path": "contracts/common/ERC20Upgradeable.sol",

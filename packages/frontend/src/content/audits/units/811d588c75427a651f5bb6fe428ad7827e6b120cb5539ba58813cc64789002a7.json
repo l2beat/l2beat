@@ -16,558 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "SafeERC20",
-        "similarity": 0.8,
-        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
-        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-        "commitTimestamp": "2023-04-21T11:35:07Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 10
-      },
-      "diff": {
-        "added": 6,
-        "removed": 15,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 42,
-        "unchanged": 71,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 18,
-            "newStart": 1,
-            "newLines": 10,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "library SafeERC20 {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    using Address for address;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 4,
-                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 5,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
-              },
-              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
-              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 13,
-                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 14,
-                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 15,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 16,
-                "newLine": 8,
-                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 17,
-                "newLine": 9,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
-              },
-              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
-            ]
-          },
-          {
-            "oldStart": 35,
-            "oldLines": 45,
-            "newStart": 27,
-            "newLines": 20,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 27,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
-              },
-              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
-              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 38,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 39,
-                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 40,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 41,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 42,
-                "newLine": 30,
-                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 31,
-                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 47,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 48,
-                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 50,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 35,
-                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 52,
-                "newLine": 36,
-                "text": "        unchecked {"
-              },
-              {
-                "type": " ",
-                "oldLine": 53,
-                "newLine": 37,
-                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
-              },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 38,
-                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 55,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 39,
-                "text": "            uint256 newAllowance = oldAllowance - value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 56,
-                "newLine": 41,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
-              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 59,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 60,
-                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 61,
-                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 62,
-                "text": "     * 0 before setting it to a non-zero value.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 67,
-                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 69,
-                "text": "            _callOptionalReturn(token, approvalCall);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "        }",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
-              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 73,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 74,
-                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 75,
-                "text": "     * Revert on invalid signature.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 76,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 77,
-                "newLine": 44,
-                "text": "    function safePermit("
-              },
-              {
-                "type": " ",
-                "oldLine": 78,
-                "newLine": 45,
-                "text": "        IERC20Permit token,"
-              },
-              {
-                "type": " ",
-                "oldLine": 79,
-                "newLine": 46,
-                "text": "        address owner,"
-              }
-            ]
-          },
-          {
-            "oldStart": 98,
-            "oldLines": 28,
-            "newStart": 65,
-            "newLines": 13,
-            "lines": [
-              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 66,
-                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
-              },
-              {
-                "type": " ",
-                "oldLine": 100,
-                "newLine": 67,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
-              },
-              {
-                "type": "-",
-                "oldLine": 101,
-                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 68,
-                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 102,
-                "newLine": 69,
-                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
-              },
-              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 104,
-                "newLine": 71,
-                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 105,
-                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "        if (returndata.length > 0) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 73,
-                "text": "            // Return data is optional",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 74,
-                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 75,
-                "text": "        }",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
-              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 108,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 109,
-                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 110,
-                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 111,
-                "text": "     * @param token The token targeted by the call.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 112,
-                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 113,
-                "text": "     *",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 114,
-                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 115,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 116,
-                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 117,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 118,
-                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 119,
-                "text": "        // and not revert is the subcall reverts.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 121,
-                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 122,
-                "text": "        return",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 123,
-                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
-              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 71,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "SafeERC20",
-        "similarity": 0.8,
+        "similarity": 0.851,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/utils/SafeERC20.sol",
@@ -1118,1109 +567,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "SafeERC20",
-        "similarity": 0.8,
-        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
-        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-        "commitTimestamp": "2023-04-21T11:35:07Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 10
-      },
-      "diff": {
-        "added": 6,
-        "removed": 15,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 42,
-        "unchanged": 71,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 18,
-            "newStart": 1,
-            "newLines": 10,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "library SafeERC20 {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    using Address for address;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 4,
-                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 5,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
-              },
-              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
-              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 13,
-                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 14,
-                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 15,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 16,
-                "newLine": 8,
-                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 17,
-                "newLine": 9,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
-              },
-              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
-            ]
-          },
-          {
-            "oldStart": 35,
-            "oldLines": 45,
-            "newStart": 27,
-            "newLines": 20,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 27,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
-              },
-              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
-              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 38,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 39,
-                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 40,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 41,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 42,
-                "newLine": 30,
-                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 31,
-                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 47,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 48,
-                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 50,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 35,
-                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 52,
-                "newLine": 36,
-                "text": "        unchecked {"
-              },
-              {
-                "type": " ",
-                "oldLine": 53,
-                "newLine": 37,
-                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
-              },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 38,
-                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 55,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 39,
-                "text": "            uint256 newAllowance = oldAllowance - value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 56,
-                "newLine": 41,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
-              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 59,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 60,
-                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 61,
-                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 62,
-                "text": "     * 0 before setting it to a non-zero value.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 67,
-                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 69,
-                "text": "            _callOptionalReturn(token, approvalCall);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "        }",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
-              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 73,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 74,
-                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 75,
-                "text": "     * Revert on invalid signature.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 76,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 77,
-                "newLine": 44,
-                "text": "    function safePermit("
-              },
-              {
-                "type": " ",
-                "oldLine": 78,
-                "newLine": 45,
-                "text": "        IERC20Permit token,"
-              },
-              {
-                "type": " ",
-                "oldLine": 79,
-                "newLine": 46,
-                "text": "        address owner,"
-              }
-            ]
-          },
-          {
-            "oldStart": 98,
-            "oldLines": 28,
-            "newStart": 65,
-            "newLines": 13,
-            "lines": [
-              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 66,
-                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
-              },
-              {
-                "type": " ",
-                "oldLine": 100,
-                "newLine": 67,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
-              },
-              {
-                "type": "-",
-                "oldLine": 101,
-                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 68,
-                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 102,
-                "newLine": 69,
-                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
-              },
-              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 104,
-                "newLine": 71,
-                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 105,
-                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "        if (returndata.length > 0) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 73,
-                "text": "            // Return data is optional",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 74,
-                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 75,
-                "text": "        }",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
-              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 108,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 109,
-                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 110,
-                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 111,
-                "text": "     * @param token The token targeted by the call.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 112,
-                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 113,
-                "text": "     *",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 114,
-                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 115,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 116,
-                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 117,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 118,
-                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 119,
-                "text": "        // and not revert is the subcall reverts.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 121,
-                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 122,
-                "text": "        return",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 123,
-                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
-              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "bb55951394276893": {
-      "status": "differs",
-      "coveredLines": 71,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "SafeERC20",
-        "similarity": 0.8,
-        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
-        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-        "commitTimestamp": "2023-04-21T11:35:07Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 10
-      },
-      "diff": {
-        "added": 6,
-        "removed": 15,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 42,
-        "unchanged": 71,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 18,
-            "newStart": 1,
-            "newLines": 10,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "library SafeERC20 {"
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    using Address for address;"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 4,
-                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 5,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
-              },
-              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
-              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 13,
-                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 14,
-                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 15,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 16,
-                "newLine": 8,
-                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 17,
-                "newLine": 9,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
-              },
-              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
-            ]
-          },
-          {
-            "oldStart": 35,
-            "oldLines": 45,
-            "newStart": 27,
-            "newLines": 20,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 27,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
-              },
-              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
-              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 38,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 39,
-                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 40,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 41,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 42,
-                "newLine": 30,
-                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 44,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 31,
-                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
-              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 47,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 48,
-                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 49,
-                "text": "     * non-reverting calls are assumed to be successful.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 50,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 51,
-                "newLine": 35,
-                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 52,
-                "newLine": 36,
-                "text": "        unchecked {"
-              },
-              {
-                "type": " ",
-                "oldLine": 53,
-                "newLine": 37,
-                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
-              },
-              {
-                "type": " ",
-                "oldLine": 54,
-                "newLine": 38,
-                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 55,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 39,
-                "text": "            uint256 newAllowance = oldAllowance - value;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 56,
-                "newLine": 41,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
-              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 59,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 60,
-                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 61,
-                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 62,
-                "text": "     * 0 before setting it to a non-zero value.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 63,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 64,
-                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 65,
-                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 67,
-                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 69,
-                "text": "            _callOptionalReturn(token, approvalCall);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "        }",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
-              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 73,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 74,
-                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 75,
-                "text": "     * Revert on invalid signature.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 76,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 77,
-                "newLine": 44,
-                "text": "    function safePermit("
-              },
-              {
-                "type": " ",
-                "oldLine": 78,
-                "newLine": 45,
-                "text": "        IERC20Permit token,"
-              },
-              {
-                "type": " ",
-                "oldLine": 79,
-                "newLine": 46,
-                "text": "        address owner,"
-              }
-            ]
-          },
-          {
-            "oldStart": 98,
-            "oldLines": 28,
-            "newStart": 65,
-            "newLines": 13,
-            "lines": [
-              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 66,
-                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
-              },
-              {
-                "type": " ",
-                "oldLine": 100,
-                "newLine": 67,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
-              },
-              {
-                "type": "-",
-                "oldLine": 101,
-                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 68,
-                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 102,
-                "newLine": 69,
-                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
-              },
-              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 104,
-                "newLine": 71,
-                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
-              },
-              {
-                "type": "-",
-                "oldLine": 105,
-                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "        if (returndata.length > 0) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 73,
-                "text": "            // Return data is optional",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 74,
-                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 75,
-                "text": "        }",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
-              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 108,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 109,
-                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 110,
-                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 111,
-                "text": "     * @param token The token targeted by the call.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 112,
-                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 113,
-                "text": "     *",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 114,
-                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 115,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 116,
-                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 117,
-                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 118,
-                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 119,
-                "text": "        // and not revert is the subcall reverts.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 121,
-                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 122,
-                "text": "        return",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 123,
-                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
-              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "1f5c32d18cf7148d": {
-      "status": "differs",
-      "coveredLines": 71,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "SafeERC20",
-        "similarity": 0.8,
+        "similarity": 0.851,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/utils/SafeERC20.sol",
@@ -2771,7 +1118,1660 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "SafeERC20",
-        "similarity": 0.8,
+        "similarity": 0.851,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 6,
+        "removed": 15,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 42,
+        "unchanged": 71,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 5,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 8,
+                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 9,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 45,
+            "newStart": 27,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 27,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 30,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 35,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 36,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 41,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * 0 before setting it to a non-zero value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            _callOptionalReturn(token, approvalCall);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * Revert on invalid signature.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 44,
+                "text": "    function safePermit("
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 45,
+                "text": "        IERC20Permit token,"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 46,
+                "text": "        address owner,"
+              }
+            ]
+          },
+          {
+            "oldStart": 98,
+            "oldLines": 28,
+            "newStart": 65,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 66,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 67,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 69,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 71,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        if (returndata.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            // Return data is optional",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @param token The token targeted by the call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        // and not revert is the subcall reverts.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        return",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 71,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.851,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 6,
+        "removed": 15,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 42,
+        "unchanged": 71,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 5,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 8,
+                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 9,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 45,
+            "newStart": 27,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 27,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 30,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 35,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 36,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 41,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * 0 before setting it to a non-zero value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            _callOptionalReturn(token, approvalCall);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * Revert on invalid signature.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 44,
+                "text": "    function safePermit("
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 45,
+                "text": "        IERC20Permit token,"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 46,
+                "text": "        address owner,"
+              }
+            ]
+          },
+          {
+            "oldStart": 98,
+            "oldLines": 28,
+            "newStart": 65,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 66,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 67,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 69,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 71,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        if (returndata.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            // Return data is optional",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @param token The token targeted by the call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        // and not revert is the subcall reverts.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        return",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 71,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.851,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 6,
+        "removed": 15,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 42,
+        "unchanged": 71,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": "-", "oldLine": 4, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 4,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 5,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 8,
+                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 9,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 45,
+            "newStart": 27,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 27,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 30,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance + value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 46, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * non-reverting calls are assumed to be successful.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 35,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 36,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, oldAllowance - value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 41,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * 0 before setting it to a non-zero value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        bytes memory approvalCall = abi.encodeWithSelector(token.approve.selector, spender, value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        if (!_callOptionalReturnBool(token, approvalCall)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, 0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            _callOptionalReturn(token, approvalCall);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 71, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * Revert on invalid signature.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 44,
+                "text": "    function safePermit("
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 45,
+                "text": "        IERC20Permit token,"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 46,
+                "text": "        address owner,"
+              }
+            ]
+          },
+          {
+            "oldStart": 98,
+            "oldLines": 28,
+            "newStart": 65,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 65, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 66,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 67,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 69,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 103, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 71,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        require(returndata.length == 0 || abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        if (returndata.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            // Return data is optional",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 106, "newLine": 76, "text": "    }" },
+              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "     * @param token The token targeted by the call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * This is a variant of {_callOptionalReturn} that silents catches all reverts and returns a bool instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        // we're implementing it ourselves. We cannot use {Address-functionCall} here since this should return false",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        // and not revert is the subcall reverts.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 120, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        return",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "            success && (returndata.length == 0 || abi.decode(returndata, (bool))) && Address.isContract(address(token));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 124, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 125, "newLine": 77, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 71,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.851,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/utils/SafeERC20.sol",

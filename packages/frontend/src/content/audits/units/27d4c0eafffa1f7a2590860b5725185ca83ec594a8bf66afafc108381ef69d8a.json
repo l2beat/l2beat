@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ICoinIssuer",
-        "similarity": 0.909,
+        "similarity": 0.876,
         "reportId": "aztecnetwork/veridise-governance-2025-10-13",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/governance/interfaces/ICoinIssuer.sol",

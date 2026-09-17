@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "OptimismMintableERC20Factory",
-        "similarity": 0.933,
+        "similarity": 0.992,
         "reportId": "optimism/cantina-u17-2025-10",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",

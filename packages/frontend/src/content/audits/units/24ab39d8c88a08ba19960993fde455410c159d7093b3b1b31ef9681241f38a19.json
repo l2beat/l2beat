@@ -3,9 +3,36 @@
   "unitHash": "24ab39d8c88a08ba19960993fde455410c159d7093b3b1b31ef9681241f38a19",
   "name": "Hashing",
   "kind": "library",
-  "lines": 131,
-  "source": "library Hashing {\n    /**\n     * @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a\n     *         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2\n     *         system.\n     *\n     * @param _tx User deposit transaction to hash.\n     *\n     * @return Hash of the RLP encoded L2 deposit transaction.\n     */\n    function hashDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeDepositTransaction(_tx));\n    }\n\n    /**\n     * @notice Computes the deposit transaction's \"source hash\", a value that guarantees the hash\n     *         of the L2 transaction that corresponds to a deposit is unique and is\n     *         deterministically generated from L1 transaction data.\n     *\n     * @param _l1BlockHash Hash of the L1 block where the deposit was included.\n     * @param _logIndex    The index of the log that created the deposit transaction.\n     *\n     * @return Hash of the deposit transaction's \"source hash\".\n     */\n    function hashDepositSource(bytes32 _l1BlockHash, uint256 _logIndex) internal pure returns (bytes32) {\n        bytes32 depositId = keccak256(abi.encode(_l1BlockHash, _logIndex));\n        return keccak256(abi.encode(bytes32(0), depositId));\n    }\n\n    /**\n     * @notice Hashes the cross domain message based on the version that is encoded into the\n     *         message nonce.\n     *\n     * @param _nonce    Message nonce with version encoded into the first two bytes.\n     * @param _sender   Address of the sender of the message.\n     * @param _target   Address of the target of the message.\n     * @param _value    ETH value to send to the target.\n     * @param _gasLimit Gas limit to use for the message.\n     * @param _data     Data to send with the message.\n     *\n     * @return Hashed cross domain message.\n     */\n    function hashCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return hashCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return hashCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Hashing: unknown cross domain message version\");\n        }\n    }\n\n    /**\n     * @notice Hashes a cross domain message based on the V0 (legacy) encoding.\n     *\n     * @param _target Address of the target of the message.\n     * @param _sender Address of the sender of the message.\n     * @param _data   Data to send with the message.\n     * @param _nonce  Message nonce.\n     *\n     * @return Hashed cross domain message.\n     */\n    function hashCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes32)\n    {\n        return keccak256(Encoding.encodeCrossDomainMessageV0(_target, _sender, _data, _nonce));\n    }\n\n    /**\n     * @notice Hashes a cross domain message based on the V1 (current) encoding.\n     *\n     * @param _nonce    Message nonce.\n     * @param _sender   Address of the sender of the message.\n     * @param _target   Address of the target of the message.\n     * @param _value    ETH value to send to the target.\n     * @param _gasLimit Gas limit to use for the message.\n     * @param _data     Data to send with the message.\n     *\n     * @return Hashed cross domain message.\n     */\n    function hashCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data));\n    }\n\n    /**\n     * @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract\n     *\n     * @param _tx Withdrawal transaction to hash.\n     *\n     * @return Hashed withdrawal transaction.\n     */\n    function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));\n    }\n\n    /**\n     * @notice Hashes the various elements of an output root proof into an output root hash which\n     *         can be used to check if the proof is valid.\n     *\n     * @param _outputRootProof Output root proof which should hash to an output root.\n     *\n     * @return Hashed output root proof.\n     */\n    function hashOutputRootProof(Types.OutputRootProof memory _outputRootProof) internal pure returns (bytes32) {\n        return keccak256(\n            abi.encode(\n                _outputRootProof.version,\n                _outputRootProof.stateRoot,\n                _outputRootProof.messagePasserStorageRoot,\n                _outputRootProof.latestBlockhash\n            )\n        );\n    }\n}",
+  "lines": 103,
+  "source": "library Hashing {\n    /// @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a\n    ///         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2\n    ///         system.\n    /// @param _tx User deposit transaction to hash.\n    /// @return Hash of the RLP encoded L2 deposit transaction.\n    function hashDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeDepositTransaction(_tx));\n    }\n\n    /// @notice Computes the deposit transaction's \"source hash\", a value that guarantees the hash\n    ///         of the L2 transaction that corresponds to a deposit is unique and is\n    ///         deterministically generated from L1 transaction data.\n    /// @param _l1BlockHash Hash of the L1 block where the deposit was included.\n    /// @param _logIndex    The index of the log that created the deposit transaction.\n    /// @return Hash of the deposit transaction's \"source hash\".\n    function hashDepositSource(bytes32 _l1BlockHash, uint256 _logIndex) internal pure returns (bytes32) {\n        bytes32 depositId = keccak256(abi.encode(_l1BlockHash, _logIndex));\n        return keccak256(abi.encode(bytes32(0), depositId));\n    }\n\n    /// @notice Hashes the cross domain message based on the version that is encoded into the\n    ///         message nonce.\n    /// @param _nonce    Message nonce with version encoded into the first two bytes.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return hashCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return hashCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Hashing: unknown cross domain message version\");\n        }\n    }\n\n    /// @notice Hashes a cross domain message based on the V0 (legacy) encoding.\n    /// @param _target Address of the target of the message.\n    /// @param _sender Address of the sender of the message.\n    /// @param _data   Data to send with the message.\n    /// @param _nonce  Message nonce.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes32)\n    {\n        return keccak256(Encoding.encodeCrossDomainMessageV0(_target, _sender, _data, _nonce));\n    }\n\n    /// @notice Hashes a cross domain message based on the V1 (current) encoding.\n    /// @param _nonce    Message nonce.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data));\n    }\n\n    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract\n    /// @param _tx Withdrawal transaction to hash.\n    /// @return Hashed withdrawal transaction.\n    function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));\n    }\n\n    /// @notice Hashes the various elements of an output root proof into an output root hash which\n    ///         can be used to check if the proof is valid.\n    /// @param _outputRootProof Output root proof which should hash to an output root.\n    /// @return Hashed output root proof.\n    function hashOutputRootProof(Types.OutputRootProof memory _outputRootProof) internal pure returns (bytes32) {\n        return keccak256(\n            abi.encode(\n                _outputRootProof.version,\n                _outputRootProof.stateRoot,\n                _outputRootProof.messagePasserStorageRoot,\n                _outputRootProof.latestBlockhash\n            )\n        );\n    }\n}",
   "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "identical",
+      "coveredLines": 103,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Hashing",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
     "9fa846564f4071bd": {
       "status": "identical",
       "coveredLines": 131,
@@ -831,33 +858,6 @@
       "warnings": []
     },
     "1f5c32d18cf7148d": {
-      "status": "identical",
-      "coveredLines": 103,
-      "match": {
-        "origin": "other",
-        "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
-        "matchedBy": "identity",
-        "auditedName": "Hashing",
-        "similarity": 1,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
-      },
-      "warnings": []
-    },
-    "1daaed8c8125f2b6": {
       "status": "identical",
       "coveredLines": 103,
       "match": {

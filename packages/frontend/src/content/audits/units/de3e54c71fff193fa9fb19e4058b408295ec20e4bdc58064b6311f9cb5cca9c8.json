@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IFiatToken",
-        "similarity": 0.75,
+        "similarity": 0.817,
         "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/interfaces/IFiatToken.sol",

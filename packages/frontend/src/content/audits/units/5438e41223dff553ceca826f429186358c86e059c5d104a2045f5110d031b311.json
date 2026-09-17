@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Hashing",
-        "similarity": 0.978,
+        "similarity": 1,
         "reportId": "optimism/cantina-interop-l2-rereview-2026-06",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",

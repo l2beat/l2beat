@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "Errors",
-        "similarity": 0.793,
+        "similarity": 0.813,
         "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/Errors.sol",

@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.909,
+        "similarity": 0.99,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",

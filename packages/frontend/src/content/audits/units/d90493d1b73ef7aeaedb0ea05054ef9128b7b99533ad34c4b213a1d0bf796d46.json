@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ShortStrings",
-        "similarity": 0.92,
+        "similarity": 0.974,
         "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/ShortStrings.sol",

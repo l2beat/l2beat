@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "GasPayingToken",
-        "similarity": 0.878,
+        "similarity": 0.941,
         "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
         "repository": "0xFacet/facet-optimism",
         "path": "packages/contracts-bedrock/src/libraries/GasPayingToken.sol",

@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "similarity",
         "auditedName": "ISuperFaultDisputeGame",
-        "similarity": 0.847,
+        "similarity": 0.808,
         "reportId": "optimism/cantina-upgrade20-2026-08",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/interfaces/dispute/ISuperFaultDisputeGame.sol",

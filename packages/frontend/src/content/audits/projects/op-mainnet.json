@@ -2,9 +2,9 @@
   "schemaVersion": 2,
   "projectId": "optimism",
   "slug": "op-mainnet",
-  "generatedAt": 1789564490,
+  "generatedAt": 1789642556,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
-  "discoveryTimestamp": 1784283055,
+  "discoveryTimestamp": 1789044333,
   "contractSelection": "all",
   "context": {
     "key": "9fa846564f4071bd",
@@ -75,25 +75,24 @@
     "units": {
       "identical": 184,
       "library": 110,
-      "differs": 123,
-      "unaudited": 58
+      "differs": 107,
+      "unaudited": 74
     },
     "uniqueUnits": {
       "identical": 71,
       "library": 40,
-      "differs": 65,
-      "unaudited": 46
+      "differs": 56,
+      "unaudited": 55
     },
     "lines": {
       "total": 61161,
-      "covered": 49664,
-      "uncovered": 11497
+      "covered": 48577,
+      "uncovered": 12584
     }
   },
   "reportIds": [
     "bob/veridise-kailua-2025-02",
     "celo/hashlock-celo-optimism-superchain-2026-02",
-    "celo/oz-celo-contracts-mainnet-releases-1-3",
     "celo/trail-of-bits-celo-l2-2024-12-19",
     "openzeppelin/contracts__audits__2018-10",
     "openzeppelin/contracts__audits__2023-05-v4.9",
@@ -218,7 +217,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "LivenessModule",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/safe/LivenessModule.sol",
@@ -876,8 +875,8 @@
         },
         "lines": {
           "total": 470,
-          "covered": 258,
-          "uncovered": 212
+          "covered": 259,
+          "uncovered": 211
         }
       },
       "files": [
@@ -905,7 +904,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.892,
+                "similarity": 0.906,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -939,7 +938,7 @@
               "endLine": 276,
               "lines": 71,
               "status": "differs",
-              "coveredLines": 67,
+              "coveredLines": 68,
               "match": {
                 "origin": "own",
                 "collection": "optimism",
@@ -947,30 +946,29 @@
                   "type": "own"
                 },
                 "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "OVM_CrossDomainEnabled",
-                "similarity": 0.789,
-                "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
-                "repository": "ben-chain/contracts-v2",
-                "path": "contracts/optimistic-ethereum/libraries/bridge/OVM_CrossDomainEnabled.sol",
-                "commit": "a935e276f5620b40802b52721e3474232e458f72",
-                "commitTimestamp": "2021-04-12T01:08:09Z",
-                "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/bridge/OVM_CrossDomainEnabled.sol",
-                "auditStatus": "audited_with_major_findings",
+                "matchedBy": "similarity",
+                "auditedName": "CrossDomainEnabled",
+                "similarity": 0.9,
+                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
+                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+                "commitTimestamp": "2022-07-21T16:50:18Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
-                "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
-                "majorFindings": 2,
-                "findingIds": ["C02", "C04"],
+                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+                "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 2
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 4,
-                "removed": 4,
-                "ignoredAdded": 18,
-                "ignoredRemoved": 5,
-                "unchanged": 67,
+                "added": 3,
+                "removed": 3,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 2,
+                "unchanged": 68,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -1168,7 +1166,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "PreimageOracle",
-                "similarity": 0.965,
+                "similarity": 0.996,
                 "reportId": "optimism/code4rena-superchain-2024-08",
                 "repository": "code-423n4/2024-07-optimism",
                 "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
@@ -1262,7 +1260,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.934,
+                "similarity": 0.984,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -1313,7 +1311,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Features",
-                "similarity": 0.857,
+                "similarity": 0.908,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Features.sol",
@@ -1442,7 +1440,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Initializable",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/utils/Initializable.sol",
@@ -1486,7 +1484,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ContextUpgradeable",
-                "similarity": 0.909,
+                "similarity": 0.963,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -1530,7 +1528,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "OwnableUpgradeable",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -1610,7 +1608,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -1920,7 +1918,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -2091,7 +2089,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.852,
+                "similarity": 0.9,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -2185,7 +2183,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.971,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -2375,7 +2373,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Predeploys",
-                "similarity": 0.938,
+                "similarity": 0.939,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
@@ -2612,7 +2610,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Initializable",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/utils/Initializable.sol",
@@ -2692,7 +2690,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Types",
-                "similarity": 0.831,
+                "similarity": 0.837,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -2844,7 +2842,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "SafeCall",
-                "similarity": 0.831,
+                "similarity": 0.829,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -2888,7 +2886,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -3177,7 +3175,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "FixedPointMathLib",
-                "similarity": 0.889,
+                "similarity": 0.952,
                 "reportId": "solady/xuwinnie-solady-cbrt-proof",
                 "repository": "Vectorized/solady",
                 "path": "src/utils/FixedPointMathLib.sol",
@@ -3365,7 +3363,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Types",
-                "similarity": 0.831,
+                "similarity": 0.837,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -3867,7 +3865,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -4026,7 +4024,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.852,
+                "similarity": 0.9,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -4194,7 +4192,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.781,
+                "similarity": 0.793,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/access/Ownable.sol",
@@ -4918,7 +4916,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Predeploys",
-                "similarity": 0.938,
+                "similarity": 0.939,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
@@ -5046,7 +5044,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -5235,7 +5233,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ERC721Bridge",
-                "similarity": 0.919,
+                "similarity": 0.945,
                 "reportId": "optimism/cantina-mcp-l1-2024-02",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
@@ -5407,7 +5405,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SafeMath",
-                "similarity": 0.655,
+                "similarity": 0.795,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/math/SafeMath.sol",
@@ -5497,7 +5495,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.566,
+                "similarity": 0.576,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/SafeERC20.sol",
@@ -5778,7 +5776,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.934,
+                "similarity": 0.984,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -5819,19 +5817,19 @@
         "units": {
           "identical": 2,
           "library": 2,
-          "differs": 8,
-          "unaudited": 12
+          "differs": 6,
+          "unaudited": 14
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 2,
-          "differs": 8,
-          "unaudited": 12
+          "differs": 6,
+          "unaudited": 14
         },
         "lines": {
           "total": 1880,
-          "covered": 868,
-          "uncovered": 1012
+          "covered": 806,
+          "uncovered": 1074
         }
       },
       "files": [
@@ -5994,7 +5992,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC165",
-                "similarity": 0.8,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/introspection/ERC165.sol",
@@ -6027,41 +6025,8 @@
               "startLine": 314,
               "endLine": 372,
               "lines": 59,
-              "status": "differs",
-              "coveredLines": 39,
-              "match": {
-                "origin": "stack",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "template",
-                  "template": "global/ProxyAdmin"
-                },
-                "rank": 2,
-                "matchedBy": "name",
-                "auditedName": "Strings",
-                "similarity": 0.447,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Strings.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 14
-              },
-              "diffStats": {
-                "added": 20,
-                "removed": 25,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 21,
-                "unchanged": 39,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -6084,7 +6049,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "AccessControl",
-                "similarity": 0.917,
+                "similarity": 0.953,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-03",
                 "repository": "Certora/openzeppelin-contracts",
                 "path": "contracts/access/AccessControl.sol",
@@ -6141,41 +6106,9 @@
               "startLine": 779,
               "endLine": 816,
               "lines": 38,
-              "status": "differs",
-              "coveredLines": 23,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "CrossDomainEnabled",
-                "similarity": 0.279,
-                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
-                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
-                "commitTimestamp": "2022-07-21T16:50:18Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 15,
-                "removed": 12,
-                "ignoredAdded": 14,
-                "ignoredRemoved": 52,
-                "unchanged": 23,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "9eea652a9d0ac1628be8c06692d3135cf801a88571d3585c9cc866b0e373e1ef",
@@ -6197,7 +6130,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.6,
+                "similarity": 0.67,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/utils/SafeERC20.sol",
@@ -6321,7 +6254,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.933,
+                "similarity": 0.949,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/Proxy.sol",
@@ -6366,7 +6299,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.723,
+                "similarity": 0.796,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -6459,7 +6392,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC1967Proxy",
-                "similarity": 0.588,
+                "similarity": 0.579,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
@@ -6639,7 +6572,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -6684,7 +6617,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.944,
+                "similarity": 0.985,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -6766,7 +6699,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.907,
+                "similarity": 0.96,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -7656,7 +7589,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.852,
+                "similarity": 0.9,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -7864,7 +7797,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -8068,7 +8001,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Predeploys",
-                "similarity": 0.938,
+                "similarity": 0.939,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
@@ -8196,7 +8129,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -8350,7 +8283,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.8,
+                "similarity": 0.851,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/utils/SafeERC20.sol",
@@ -8430,7 +8363,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "SafeCall",
-                "similarity": 0.831,
+                "similarity": 0.829,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -8475,7 +8408,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC165Checker",
-                "similarity": 0.848,
+                "similarity": 0.835,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/introspection/ERC165Checker.sol",
@@ -9127,7 +9060,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "TransferHelper",
-                "similarity": 0.957,
+                "similarity": 0.986,
                 "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
                 "repository": "celo-org/celo-monorepo",
                 "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
@@ -9190,7 +9123,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "TransferHelper",
-                "similarity": 0.957,
+                "similarity": 0.986,
                 "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
                 "repository": "celo-org/celo-monorepo",
                 "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
@@ -9653,19 +9586,19 @@
         "units": {
           "identical": 18,
           "library": 1,
-          "differs": 7,
-          "unaudited": 2
+          "differs": 6,
+          "unaudited": 3
         },
         "uniqueUnits": {
           "identical": 18,
           "library": 1,
-          "differs": 7,
-          "unaudited": 2
+          "differs": 6,
+          "unaudited": 3
         },
         "lines": {
           "total": 3739,
-          "covered": 3566,
-          "uncovered": 173
+          "covered": 3530,
+          "uncovered": 209
         }
       },
       "files": [
@@ -9693,7 +9626,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Features",
-                "similarity": 0.857,
+                "similarity": 0.908,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Features.sol",
@@ -9809,7 +9742,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "SafeCall",
-                "similarity": 0.831,
+                "similarity": 0.829,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -10105,7 +10038,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Types",
-                "similarity": 0.831,
+                "similarity": 0.837,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -10221,7 +10154,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -10374,40 +10307,8 @@
               "startLine": 2144,
               "endLine": 2189,
               "lines": 46,
-              "status": "differs",
-              "coveredLines": 36,
-              "match": {
-                "origin": "other",
-                "collection": "bob",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Arithmetic",
-                "similarity": 0.615,
-                "reportId": "bob/veridise-kailua-2025-02",
-                "repository": "boundless-xyz/kailua",
-                "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-                "commitTimestamp": "2025-02-06T07:42:16Z",
-                "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix commit",
-                "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 10,
-                "removed": 0,
-                "ignoredAdded": 16,
-                "ignoredRemoved": 0,
-                "unchanged": 36,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -10509,7 +10410,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ResourceMetering",
-                "similarity": 0.965,
+                "similarity": 0.978,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -10681,7 +10582,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.934,
+                "similarity": 0.984,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -11370,7 +11271,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Context",
-                "similarity": 0.706,
+                "similarity": 0.702,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Context.sol",
@@ -11415,7 +11316,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.618,
+                "similarity": 0.668,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/ownership/Ownable.sol",
@@ -11459,7 +11360,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Lib_AddressManager",
-                "similarity": 0.6,
+                "similarity": 0.56,
                 "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
                 "repository": "ben-chain/contracts-v2",
                 "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
@@ -11757,7 +11658,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Types",
-                "similarity": 0.831,
+                "similarity": 0.837,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -11945,7 +11846,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "FixedPointMathLib",
-                "similarity": 0.889,
+                "similarity": 0.952,
                 "reportId": "solady/xuwinnie-solady-cbrt-proof",
                 "repository": "Vectorized/solady",
                 "path": "src/utils/FixedPointMathLib.sol",
@@ -12299,7 +12200,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Initializable",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/utils/Initializable.sol",
@@ -12343,7 +12244,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ContextUpgradeable",
-                "similarity": 0.909,
+                "similarity": 0.963,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -12387,7 +12288,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "OwnableUpgradeable",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -12479,7 +12380,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -12650,7 +12551,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.852,
+                "similarity": 0.9,
                 "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
@@ -13404,7 +13305,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -13544,19 +13445,19 @@
         "units": {
           "identical": 11,
           "library": 0,
-          "differs": 6,
-          "unaudited": 0
+          "differs": 5,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 11,
           "library": 0,
-          "differs": 6,
-          "unaudited": 0
+          "differs": 5,
+          "unaudited": 1
         },
         "lines": {
           "total": 1919,
-          "covered": 1841,
-          "uncovered": 78
+          "covered": 1760,
+          "uncovered": 159
         }
       },
       "files": [
@@ -13609,41 +13510,9 @@
               "startLine": 28,
               "endLine": 129,
               "lines": 102,
-              "status": "differs",
-              "coveredLines": 102,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.118,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 147,
-                "ignoredAdded": 78,
-                "ignoredRemoved": 86,
-                "unchanged": 102,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "8391b3e9bf97e50968ceb59291024a886a1058bf75ca76c5d8385eedfbefe5df",
@@ -13665,7 +13534,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -13826,7 +13695,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Initializable",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/utils/Initializable.sol",
@@ -13940,37 +13809,38 @@
               "endLine": 872,
               "lines": 207,
               "status": "differs",
-              "coveredLines": 172,
+              "coveredLines": 193,
               "match": {
-                "origin": "other",
-                "collection": "bob",
+                "origin": "own",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "own"
                 },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "RLPWriter",
-                "similarity": 0.701,
-                "reportId": "bob/veridise-kailua-2025-02",
-                "repository": "boundless-xyz/kailua",
-                "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-                "commitTimestamp": "2025-02-06T07:42:16Z",
-                "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix commit",
-                "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-                "majorFindings": 0,
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Lib_RLPWriter",
+                "similarity": 0.879,
+                "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+                "repository": "ben-chain/contracts-v2",
+                "path": "contracts/optimistic-ethereum/libraries/rlp/Lib_RLPWriter.sol",
+                "commit": "a935e276f5620b40802b52721e3474232e458f72",
+                "commitTimestamp": "2021-04-12T01:08:09Z",
+                "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/rlp/Lib_RLPWriter.sol",
+                "auditStatus": "audited_with_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+                "majorFindings": 2,
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 3
+                "totalVersions": 5
               },
               "diffStats": {
-                "added": 35,
-                "removed": 28,
-                "ignoredAdded": 79,
-                "ignoredRemoved": 34,
-                "unchanged": 172,
+                "added": 14,
+                "removed": 14,
+                "ignoredAdded": 41,
+                "ignoredRemoved": 41,
+                "unchanged": 193,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -14126,7 +13996,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.909,
+                "similarity": 0.99,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -14170,27 +14040,26 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "CrossDomainMessenger",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-                "commit": "d1651bb22645ebd41ac4bb2ab4786f9a56fc1003",
-                "commitTimestamp": "2023-12-07T09:00:26Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/d1651bb22645ebd41ac4bb2ab4786f9a56fc1003/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-                "auditStatus": "partially_audited_with_major_findings",
-                "reviewPhase": "diff audit",
-                "coverage": "Diff review of all changes to this file since the Sherlock contest commit 9b9f78c6613c6ee53b93ca43c71bb74479f4b975, with attention to gas mitigations, storage layout, reentrancy and SuperchainConfig pause integration.",
-                "majorFindings": 1,
-                "findingIds": ["TRST-H-1"],
+                "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+                "commitTimestamp": "2024-01-08T19:01:54Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "fix review",
+                "coverage": "Mitigation review commit named by the report.",
+                "majorFindings": 0,
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 11
               },
               "diffStats": {
                 "added": 1,
-                "removed": 5,
-                "ignoredAdded": 161,
-                "ignoredRemoved": 99,
+                "removed": 8,
+                "ignoredAdded": 162,
+                "ignoredRemoved": 106,
                 "unchanged": 359,
                 "ignoredOnly": false
               },
@@ -14291,19 +14160,19 @@
         "units": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 2
+          "differs": 2,
+          "unaudited": 3
         },
         "uniqueUnits": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 2
+          "differs": 2,
+          "unaudited": 3
         },
         "lines": {
           "total": 1459,
-          "covered": 1170,
-          "uncovered": 289
+          "covered": 1134,
+          "uncovered": 325
         }
       },
       "files": [
@@ -14392,40 +14261,8 @@
               "startLine": 382,
               "endLine": 427,
               "lines": 46,
-              "status": "differs",
-              "coveredLines": 36,
-              "match": {
-                "origin": "other",
-                "collection": "bob",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Arithmetic",
-                "similarity": 0.615,
-                "reportId": "bob/veridise-kailua-2025-02",
-                "repository": "boundless-xyz/kailua",
-                "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-                "commitTimestamp": "2025-02-06T07:42:16Z",
-                "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix commit",
-                "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 10,
-                "removed": 0,
-                "ignoredAdded": 16,
-                "ignoredRemoved": 0,
-                "unchanged": 36,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -14459,7 +14296,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Predeploys",
-                "similarity": 0.938,
+                "similarity": 0.939,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
@@ -14503,7 +14340,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -14671,19 +14508,19 @@
         "units": {
           "identical": 5,
           "library": 0,
-          "differs": 5,
-          "unaudited": 0
+          "differs": 4,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 5,
           "library": 0,
-          "differs": 5,
-          "unaudited": 0
+          "differs": 4,
+          "unaudited": 1
         },
         "lines": {
           "total": 1670,
-          "covered": 1635,
-          "uncovered": 35
+          "covered": 1533,
+          "uncovered": 137
         }
       },
       "files": [
@@ -14700,41 +14537,9 @@
               "startLine": 4,
               "endLine": 105,
               "lines": 102,
-              "status": "differs",
-              "coveredLines": 102,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.118,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 147,
-                "ignoredAdded": 78,
-                "ignoredRemoved": 86,
-                "unchanged": 102,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "8391b3e9bf97e50968ceb59291024a886a1058bf75ca76c5d8385eedfbefe5df",
@@ -14756,7 +14561,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -14845,7 +14650,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.8,
+                "similarity": 0.851,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/utils/SafeERC20.sol",
@@ -14970,7 +14775,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC165Checker",
-                "similarity": 0.848,
+                "similarity": 0.835,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/introspection/ERC165Checker.sol",
@@ -15014,7 +14819,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StandardBridge",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
@@ -15134,19 +14939,19 @@
         "units": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 497,
-          "covered": 476,
-          "uncovered": 21
+          "covered": 374,
+          "uncovered": 123
         }
       },
       "files": [
@@ -15218,7 +15023,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -15295,41 +15100,9 @@
               "startLine": 117,
               "endLine": 218,
               "lines": 102,
-              "status": "differs",
-              "coveredLines": 102,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.118,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 147,
-                "ignoredAdded": 78,
-                "ignoredRemoved": 86,
-                "unchanged": 102,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "b945ba6a966592b19ff96ddc6345c751bf08152f53645adb17ebef2475191f65",
@@ -15350,7 +15123,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeVault",
-                "similarity": 0.678,
+                "similarity": 0.736,
                 "reportId": "optimism/cantina-mcp-l1-2024-02",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/FeeVault.sol",
@@ -15468,7 +15241,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -15632,19 +15405,19 @@
         "units": {
           "identical": 2,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 2,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 449,
-          "covered": 426,
-          "uncovered": 23
+          "covered": 329,
+          "uncovered": 120
         }
       },
       "files": [
@@ -15661,41 +15434,9 @@
               "startLine": 4,
               "endLine": 100,
               "lines": 97,
-              "status": "differs",
-              "coveredLines": 97,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.108,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 148,
-                "ignoredAdded": 74,
-                "ignoredRemoved": 86,
-                "unchanged": 97,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "8391b3e9bf97e50968ceb59291024a886a1058bf75ca76c5d8385eedfbefe5df",
@@ -15717,7 +15458,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -15805,7 +15546,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "L1BlockNumber",
-                "similarity": 0.872,
+                "similarity": 0.854,
                 "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
                 "repository": "ethereum-optimism/optimistic-specs",
                 "path": "packages/contracts/contracts/L2/L1BlockNumber.sol",
@@ -15931,7 +15672,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC165Checker",
-                "similarity": 0.848,
+                "similarity": 0.835,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/introspection/ERC165Checker.sol",
@@ -15976,7 +15717,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -16100,7 +15841,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ERC721Bridge",
-                "similarity": 0.95,
+                "similarity": 0.996,
                 "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
@@ -16260,7 +16001,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Constants",
-                "similarity": 0.976,
+                "similarity": 1,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -16427,8 +16168,8 @@
         },
         "lines": {
           "total": 1002,
-          "covered": 941,
-          "uncovered": 61
+          "covered": 962,
+          "uncovered": 40
         }
       },
       "files": [
@@ -16490,37 +16231,38 @@
               "endLine": 288,
               "lines": 207,
               "status": "differs",
-              "coveredLines": 172,
+              "coveredLines": 193,
               "match": {
-                "origin": "other",
-                "collection": "bob",
+                "origin": "own",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "own"
                 },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "RLPWriter",
-                "similarity": 0.701,
-                "reportId": "bob/veridise-kailua-2025-02",
-                "repository": "boundless-xyz/kailua",
-                "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-                "commitTimestamp": "2025-02-06T07:42:16Z",
-                "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "fix commit",
-                "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-                "majorFindings": 0,
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Lib_RLPWriter",
+                "similarity": 0.879,
+                "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+                "repository": "ben-chain/contracts-v2",
+                "path": "contracts/optimistic-ethereum/libraries/rlp/Lib_RLPWriter.sol",
+                "commit": "a935e276f5620b40802b52721e3474232e458f72",
+                "commitTimestamp": "2021-04-12T01:08:09Z",
+                "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/rlp/Lib_RLPWriter.sol",
+                "auditStatus": "audited_with_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+                "majorFindings": 2,
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 3
+                "totalVersions": 5
               },
               "diffStats": {
-                "added": 35,
-                "removed": 28,
-                "ignoredAdded": 79,
-                "ignoredRemoved": 34,
-                "unchanged": 172,
+                "added": 14,
+                "removed": 14,
+                "ignoredAdded": 41,
+                "ignoredRemoved": 41,
+                "unchanged": 193,
                 "ignoredOnly": false
               },
               "warnings": []
@@ -16677,7 +16419,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -16882,7 +16624,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -17051,19 +16793,19 @@
         "units": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 475,
-          "covered": 453,
-          "uncovered": 22
+          "covered": 356,
+          "uncovered": 119
         }
       },
       "files": [
@@ -17092,7 +16834,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -17169,41 +16911,9 @@
               "startLine": 117,
               "endLine": 213,
               "lines": 97,
-              "status": "differs",
-              "coveredLines": 97,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.108,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 148,
-                "ignoredAdded": 74,
-                "ignoredRemoved": 86,
-                "unchanged": 97,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "acd6c0180aec55fad22e93d6a3caf3801de278e52f1cb7e0d1c65e1426e2fc73",
@@ -17224,7 +16934,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeVault",
-                "similarity": 0.571,
+                "similarity": 0.651,
                 "reportId": "optimism/cantina-mcp-l1-2024-02",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/FeeVault.sol",
@@ -17344,19 +17054,19 @@
         "units": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 0,
-          "differs": 3,
-          "unaudited": 0
+          "differs": 2,
+          "unaudited": 1
         },
         "lines": {
           "total": 475,
-          "covered": 453,
-          "uncovered": 22
+          "covered": 356,
+          "uncovered": 119
         }
       },
       "files": [
@@ -17385,7 +17095,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -17462,41 +17172,9 @@
               "startLine": 117,
               "endLine": 213,
               "lines": 97,
-              "status": "differs",
-              "coveredLines": 97,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.108,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 0,
-                "removed": 148,
-                "ignoredAdded": 74,
-                "ignoredRemoved": 86,
-                "unchanged": 97,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "acd6c0180aec55fad22e93d6a3caf3801de278e52f1cb7e0d1c65e1426e2fc73",
@@ -17517,7 +17195,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeVault",
-                "similarity": 0.571,
+                "similarity": 0.651,
                 "reportId": "optimism/cantina-mcp-l1-2024-02",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/FeeVault.sol",
@@ -17637,19 +17315,19 @@
         "units": {
           "identical": 2,
           "library": 0,
-          "differs": 5,
-          "unaudited": 0
+          "differs": 4,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 2,
           "library": 0,
-          "differs": 5,
-          "unaudited": 0
+          "differs": 4,
+          "unaudited": 1
         },
         "lines": {
           "total": 789,
-          "covered": 734,
-          "uncovered": 55
+          "covered": 727,
+          "uncovered": 62
         }
       },
       "files": [
@@ -17713,7 +17391,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "Types",
-                "similarity": 0.831,
+                "similarity": 0.837,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -17757,7 +17435,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "SafeCall",
-                "similarity": 0.831,
+                "similarity": 0.829,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -17801,7 +17479,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Predeploys",
-                "similarity": 0.921,
+                "similarity": 0.929,
                 "reportId": "optimism/cantina-u18-2026-01",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
@@ -17845,7 +17523,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeVault",
-                "similarity": 0.575,
+                "similarity": 0.571,
                 "reportId": "optimism/cantina-mcp-l1-2024-02",
                 "repository": "ethereum-optimism/optimism",
                 "path": "packages/contracts-bedrock/src/universal/FeeVault.sol",
@@ -17878,40 +17556,8 @@
               "startLine": 586,
               "endLine": 594,
               "lines": 9,
-              "status": "differs",
-              "coveredLines": 7,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "OperatorFeeVault",
-                "similarity": 0.571,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/L2/OperatorFeeVault.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/L2/OperatorFeeVault.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 1,
-                "ignoredAdded": 4,
-                "ignoredRemoved": 1,
-                "unchanged": 7,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             }
           ]
@@ -18057,7 +17703,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -18178,19 +17824,19 @@
         "units": {
           "identical": 3,
           "library": 0,
-          "differs": 4,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 6
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 0,
-          "differs": 4,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 6
         },
         "lines": {
           "total": 2819,
-          "covered": 789,
-          "uncovered": 2030
+          "covered": 667,
+          "uncovered": 2152
         }
       },
       "files": [
@@ -18207,41 +17853,9 @@
               "startLine": 16,
               "endLine": 87,
               "lines": 72,
-              "status": "differs",
-              "coveredLines": 71,
-              "match": {
-                "origin": "own",
-                "collection": "optimism",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Predeploys",
-                "similarity": 0.127,
-                "reportId": "optimism/cantina-u18-2026-01",
-                "repository": "ethereum-optimism/optimism",
-                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-                "commitTimestamp": "2025-11-24T03:04:45Z",
-                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 1,
-                "removed": 146,
-                "ignoredAdded": 35,
-                "ignoredRemoved": 75,
-                "unchanged": 71,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "5c11b4c9dfa9df0b7e19b8a444f780f1dff5ab21e2e07e0f63ea91f045d24d82",
@@ -18287,42 +17901,9 @@
               "startLine": 296,
               "endLine": 372,
               "lines": 77,
-              "status": "differs",
-              "coveredLines": 51,
-              "match": {
-                "origin": "stack",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "template",
-                  "template": "global/ProxyAdmin"
-                },
-                "rank": 2,
-                "matchedBy": "name",
-                "auditedName": "EIP712",
-                "similarity": 0.224,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/cryptography/EIP712.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 5
-              },
-              "diffStats": {
-                "added": 26,
-                "removed": 50,
-                "ignoredAdded": 2,
-                "ignoredRemoved": 7,
-                "unchanged": 51,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "f46fc27f316f7d1a1b42c4b94eb133ab2567eabea012bab6e0d6667ffe8dd2cb",
@@ -18344,7 +17925,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.843,
+                "similarity": 0.915,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -18401,7 +17982,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Strings",
-                "similarity": 0.51,
+                "similarity": 0.567,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Strings.sol",
@@ -18564,19 +18145,19 @@
         "units": {
           "identical": 0,
           "library": 4,
-          "differs": 11,
-          "unaudited": 2
+          "differs": 8,
+          "unaudited": 5
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 4,
-          "differs": 11,
-          "unaudited": 2
+          "differs": 8,
+          "unaudited": 5
         },
         "lines": {
           "total": 1504,
-          "covered": 1281,
-          "uncovered": 223
+          "covered": 1011,
+          "uncovered": 493
         }
       },
       "files": [
@@ -18605,7 +18186,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.656,
+                "similarity": 0.668,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/access/Ownable.sol",
@@ -18650,7 +18231,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "IVotes",
-                "similarity": 0.8,
+                "similarity": 0.894,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/governance/utils/IVotes.sol",
@@ -18728,42 +18309,9 @@
               "startLine": 149,
               "endLine": 225,
               "lines": 77,
-              "status": "differs",
-              "coveredLines": 51,
-              "match": {
-                "origin": "stack",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "template",
-                  "template": "global/ProxyAdmin"
-                },
-                "rank": 2,
-                "matchedBy": "name",
-                "auditedName": "EIP712",
-                "similarity": 0.224,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/cryptography/EIP712.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/EIP712.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 5
-              },
-              "diffStats": {
-                "added": 26,
-                "removed": 50,
-                "ignoredAdded": 2,
-                "ignoredRemoved": 7,
-                "unchanged": 51,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "e43d85939dc424796e2b63b9b801c5b3a2e64d0059301e8a44fee1b7ac523f85",
@@ -18797,7 +18345,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC20Permit",
-                "similarity": 0.542,
+                "similarity": 0.585,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
@@ -18830,42 +18378,9 @@
               "startLine": 321,
               "endLine": 541,
               "lines": 221,
-              "status": "differs",
-              "coveredLines": 180,
-              "match": {
-                "origin": "other",
-                "collection": "celo",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "SafeCast",
-                "similarity": 0.425,
-                "reportId": "celo/oz-celo-contracts-mainnet-releases-1-3",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/common/SafeCast.sol",
-                "commit": "7be22605e172ca536c028e408b147aab83202e4a",
-                "commitTimestamp": "2020-01-07T10:07:52Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/7be22605e172ca536c028e408b147aab83202e4a/packages/protocol/contracts/common/SafeCast.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "Phase 1 (mainnet audit, Jan 2020)",
-                "coverage": "Full review of all smart contracts in the contracts folder; VM/node software and oracles out of scope.",
-                "majorFindings": 5,
-                "findingIds": ["C01", "C02", "H01", "H02", "H03"],
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 41,
-                "removed": 5,
-                "ignoredAdded": 114,
-                "ignoredRemoved": 0,
-                "unchanged": 180,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "b412ef906ea6fe69250bb55c1dcea0357f051fee058f4d95e07959357758f120",
@@ -18887,7 +18402,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.8,
+                "similarity": 0.778,
                 "reportId": "openzeppelin/contracts__audits__2018-10",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/math/Math.sol",
@@ -18920,41 +18435,8 @@
               "startLine": 579,
               "endLine": 637,
               "lines": 59,
-              "status": "differs",
-              "coveredLines": 39,
-              "match": {
-                "origin": "stack",
-                "collection": "openzeppelin",
-                "relation": {
-                  "type": "template",
-                  "template": "global/ProxyAdmin"
-                },
-                "rank": 2,
-                "matchedBy": "name",
-                "auditedName": "Strings",
-                "similarity": 0.447,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/utils/Strings.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 14
-              },
-              "diffStats": {
-                "added": 20,
-                "removed": 25,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 21,
-                "unchanged": 39,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -18977,7 +18459,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.805,
+                "similarity": 0.878,
                 "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -19022,7 +18504,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC20Votes",
-                "similarity": 0.935,
+                "similarity": 0.971,
                 "reportId": "openzeppelin/formal-verification__fv__reports__2022-03",
                 "repository": "Certora/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/extensions/ERC20Votes.sol",
@@ -19104,7 +18586,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.8,
+                "similarity": 0.894,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -19186,7 +18668,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ERC20",
-                "similarity": 0.636,
+                "similarity": 0.723,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/ERC20.sol",
@@ -19353,7 +18835,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Ownable",
-                "similarity": 0.656,
+                "similarity": 0.668,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/access/Ownable.sol",

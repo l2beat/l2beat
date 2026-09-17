@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Time",
-        "similarity": 0.891,
+        "similarity": 0.962,
         "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/types/Time.sol",

@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "BitMaps",
-        "similarity": 0.963,
+        "similarity": 1,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/structs/BitMaps.sol",

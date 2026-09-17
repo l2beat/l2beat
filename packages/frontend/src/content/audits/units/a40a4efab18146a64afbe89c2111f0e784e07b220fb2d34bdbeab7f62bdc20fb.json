@@ -4,7 +4,7 @@
   "name": "PreimageOracle",
   "kind": "contract",
   "lines": 884,
-  "source": "contract PreimageOracle is ISemver {\n    ////////////////////////////////////////////////////////////////\n    //                   Constants & Immutables                   //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice The duration of the large preimage proposal challenge period.\n    uint256 internal immutable CHALLENGE_PERIOD;\n    /// @notice The minimum size of a preimage that can be proposed in the large preimage path.\n    uint256 internal immutable MIN_LPP_SIZE_BYTES;\n    /// @notice The minimum bond size for large preimage proposals.\n    uint256 public constant MIN_BOND_SIZE = 0.25 ether;\n    /// @notice The depth of the keccak256 merkle tree. Supports up to 65,536 keccak blocks, or ~8.91MB preimages.\n    uint256 public constant KECCAK_TREE_DEPTH = 16;\n    /// @notice The maximum number of keccak blocks that can fit into the merkle tree.\n    uint256 public constant MAX_LEAF_COUNT = 2 ** KECCAK_TREE_DEPTH - 1;\n    /// @notice The reserved gas for precompile call setup.\n    uint256 public constant PRECOMPILE_CALL_RESERVED_GAS = 100_000;\n\n    /// @notice The semantic version of the Preimage Oracle contract.\n    /// @custom:semver 1.1.4\n    string public constant version = \"1.1.4\";\n\n    ////////////////////////////////////////////////////////////////\n    //                 Authorized Preimage Parts                  //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Mapping of pre-image keys to pre-image lengths.\n    mapping(bytes32 => uint256) public preimageLengths;\n    /// @notice Mapping of pre-image keys to pre-image offsets to pre-image parts.\n    mapping(bytes32 => mapping(uint256 => bytes32)) public preimageParts;\n    /// @notice Mapping of pre-image keys to pre-image part offsets to preimage preparedness.\n    mapping(bytes32 => mapping(uint256 => bool)) public preimagePartOk;\n\n    ////////////////////////////////////////////////////////////////\n    //                  Large Preimage Proposals                  //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice A raw leaf of the large preimage proposal merkle tree.\n    struct Leaf {\n        /// @notice The input absorbed for the block, exactly 136 bytes.\n        bytes input;\n        /// @notice The index of the block in the absorption process.\n        uint256 index;\n        /// @notice The hash of the internal state after absorbing the input.\n        bytes32 stateCommitment;\n    }\n\n    /// @notice Unpacked keys for large preimage proposals.\n    struct LargePreimageProposalKeys {\n        /// @notice The claimant of the large preimage proposal.\n        address claimant;\n        /// @notice The UUID of the large preimage proposal.\n        uint256 uuid;\n    }\n\n    /// @notice Static padding hashes. These values are persisted in storage, but are entirely immutable\n    ///         after the constructor's execution.\n    bytes32[KECCAK_TREE_DEPTH] public zeroHashes;\n    /// @notice Append-only array of large preimage proposals for off-chain reference.\n    LargePreimageProposalKeys[] public proposals;\n    /// @notice Mapping of claimants to proposal UUIDs to the current branch path of the merkleization process.\n    mapping(address => mapping(uint256 => bytes32[KECCAK_TREE_DEPTH])) public proposalBranches;\n    /// @notice Mapping of claimants to proposal UUIDs to the timestamp of creation of the proposal as well as the\n    /// challenged status.\n    mapping(address => mapping(uint256 => LPPMetaData)) public proposalMetadata;\n    /// @notice Mapping of claimants to proposal UUIDs to bond amounts.\n    mapping(address => mapping(uint256 => uint256)) public proposalBonds;\n    /// @notice Mapping of claimants to proposal UUIDs to the preimage part picked up during the absorbtion process.\n    mapping(address => mapping(uint256 => bytes32)) public proposalParts;\n    /// @notice Mapping of claimants to proposal UUIDs to blocks which leaves were added to the merkle tree.\n    mapping(address => mapping(uint256 => uint64[])) public proposalBlocks;\n\n    ////////////////////////////////////////////////////////////////\n    //                        Constructor                         //\n    ////////////////////////////////////////////////////////////////\n\n    constructor(uint256 _minProposalSize, uint256 _challengePeriod) {\n        MIN_LPP_SIZE_BYTES = _minProposalSize;\n        CHALLENGE_PERIOD = _challengePeriod;\n\n        // Make sure challenge period fits within uint64 so that it can safely be used within the\n        // FaultDisputeGame contract to compute clock extensions. Adding this check is simpler than\n        // changing the existing contract ABI.\n        require(_challengePeriod <= type(uint64).max, \"PreimageOracle: challenge period too large\");\n\n        // Compute hashes in empty sparse Merkle tree. The first hash is not set, and kept as zero as the identity.\n        for (uint256 height = 0; height < KECCAK_TREE_DEPTH - 1; height++) {\n            zeroHashes[height + 1] = keccak256(abi.encodePacked(zeroHashes[height], zeroHashes[height]));\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //             Standard Preimage Route (External)             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Reads a preimage from the oracle.\n    /// @param _key The key of the preimage to read.\n    /// @param _offset The offset of the preimage to read.\n    /// @return dat_ The preimage data.\n    /// @return datLen_ The length of the preimage data.\n    function readPreimage(bytes32 _key, uint256 _offset) external view returns (bytes32 dat_, uint256 datLen_) {\n        require(preimagePartOk[_key][_offset], \"pre-image must exist\");\n\n        // Calculate the length of the pre-image data\n        // Add 8 for the length-prefix part\n        datLen_ = 32;\n        uint256 length = preimageLengths[_key];\n        if (_offset + 32 >= length + 8) {\n            datLen_ = length + 8 - _offset;\n        }\n\n        // Retrieve the pre-image data\n        dat_ = preimageParts[_key][_offset];\n    }\n\n    /// @notice Loads local data parts into the preimage oracle.\n    /// @param _ident The identifier of the local data.\n    /// @param _localContext The local key context for the preimage oracle. Optionally, can be set as a constant\n    ///                      if the caller only requires one set of local keys.\n    /// @param _word The local data word.\n    /// @param _size The number of bytes in `_word` to load.\n    /// @param _partOffset The offset of the local data part to write to the oracle.\n    /// @dev The local data parts are loaded into the preimage oracle under the context\n    ///      of the caller - no other account can write to the caller's context\n    ///      specific data.\n    ///\n    ///      There are 5 local data identifiers:\n    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n    ///      \u2502 Identifier \u2502      Data              \u2502\n    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502\n    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502\n    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502\n    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502\n    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502\n    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n    function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset)\n        external\n        returns (bytes32 key_)\n    {\n        // Compute the localized key from the given local identifier.\n        key_ = PreimageKeyLib.localizeIdent(_ident, _localContext);\n\n        // Revert if the given part offset is not within bounds.\n        if (_partOffset >= _size + 8 || _size > 32) {\n            revert PartOffsetOOB();\n        }\n\n        // Prepare the local data part at the given offset\n        bytes32 part;\n        assembly {\n            // Clean the memory in [0x20, 0x40)\n            mstore(0x20, 0x00)\n\n            // Store the full local data in scratch space.\n            mstore(0x00, shl(192, _size))\n            mstore(0x08, _word)\n\n            // Prepare the local data part at the requested offset.\n            part := mload(_partOffset)\n        }\n\n        // Store the first part with `_partOffset`.\n        preimagePartOk[key_][_partOffset] = true;\n        preimageParts[key_][_partOffset] = part;\n        // Assign the length of the preimage at the localized key.\n        preimageLengths[key_] = _size;\n    }\n\n    /// @notice Prepares a preimage to be read by keccak256 key, starting at the given offset and up to 32 bytes\n    ///         (clipped at preimage length, if out of data).\n    /// @param _partOffset The offset of the preimage to read.\n    /// @param _preimage The preimage data.\n    function loadKeccak256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {\n        uint256 size;\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // len(sig) + len(partOffset) + len(preimage offset) = 4 + 32 + 32 = 0x44\n            size := calldataload(0x44)\n\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0x00, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 0x04)\n            }\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 0x08)\n            // copy preimage payload into memory so we can hash and read it.\n            calldatacopy(ptr, _preimage.offset, size)\n            // Note that it includes the 8-byte big-endian uint64 length prefix.\n            // this will be zero-padded at the end, since memory at end is clean.\n            part := mload(add(sub(ptr, 0x08), _partOffset))\n            let h := keccak256(ptr, size) // compute preimage keccak256 hash\n            // mask out prefix byte, replace with type 2 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x02))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    /// @notice Prepares a preimage to be read by sha256 key, starting at the given offset and up to 32 bytes\n    ///         (clipped at preimage length, if out of data).\n    /// @param _partOffset The offset of the preimage to read.\n    /// @param _preimage The preimage data.\n    function loadSha256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {\n        uint256 size;\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // len(sig) + len(partOffset) + len(preimage offset) = 4 + 32 + 32 = 0x44\n            size := calldataload(0x44)\n\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 4)\n            }\n            // we leave solidity slots 0x40 and 0x60 untouched,\n            // and everything after as scratch-memory.\n            let ptr := 0x80\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 8)\n            // copy preimage payload into memory so we can hash and read it.\n            calldatacopy(ptr, _preimage.offset, size)\n            // Note that it includes the 8-byte big-endian uint64 length prefix.\n            // this will be zero-padded at the end, since memory at end is clean.\n            part := mload(add(sub(ptr, 8), _partOffset))\n\n            // compute SHA2-256 hash with pre-compile\n            let success :=\n                staticcall(\n                    gas(), // Forward all available gas\n                    0x02, // Address of SHA-256 precompile\n                    ptr, // Start of input data in memory\n                    size, // Size of input data\n                    0, // Store output in scratch memory\n                    0x20 // Output is always 32 bytes\n                )\n            // Check if the staticcall succeeded\n            if iszero(success) { revert(0, 0) }\n            let h := mload(0) // get return data\n            // mask out prefix byte, replace with type 4 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 4))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    /// @notice Verifies that `p(_z) = _y` given `_commitment` that corresponds to the polynomial `p(x)` and a KZG\n    //          proof. The value `y` is the pre-image, and the preimage key is `5 ++ keccak256(_commitment ++ z)[1:]`.\n    /// @param _z Big endian point value. Part of the preimage key.\n    /// @param _y Big endian point value. The preimage for the key.\n    /// @param _commitment The commitment to the polynomial. 48 bytes, part of the preimage key.\n    /// @param _proof The KZG proof, part of the preimage key.\n    /// @param _partOffset The offset of the preimage to store.\n    function loadBlobPreimagePart(\n        uint256 _z,\n        uint256 _y,\n        bytes calldata _commitment,\n        bytes calldata _proof,\n        uint256 _partOffset\n    ) external {\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // Compute the versioned hash. The SHA2 hash of the 48 byte commitment is masked with the version byte,\n            // which is currently 1. https://eips.ethereum.org/EIPS/eip-4844#parameters\n            // SAFETY: We're only reading 48 bytes from `_commitment` into scratch space, so we're not reading into the\n            //         free memory ptr region. Since the exact number of btyes that is copied into scratch space is\n            //         the same size as the hash input, there's no concern of dirty memory being read into the hash\n            //         input.\n            calldatacopy(0x00, _commitment.offset, 0x30)\n            let success := staticcall(gas(), 0x02, 0x00, 0x30, 0x00, 0x20)\n            if iszero(success) {\n                // Store the \"ShaFailed()\" error selector.\n                mstore(0x00, 0xf9112969)\n                // revert with \"ShaFailed()\"\n                revert(0x1C, 0x04)\n            }\n            // Set the `VERSIONED_HASH_VERSION_KZG` byte = 1 in the high-order byte of the hash.\n            let versionedHash := or(and(mload(0x00), not(shl(248, 0xFF))), shl(248, 0x01))\n\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n\n            // Load the inputs for the point evaluation precompile into memory. The inputs to the point evaluation\n            // precompile are packed, and not supposed to be ABI-encoded.\n            mstore(ptr, versionedHash)\n            mstore(add(ptr, 0x20), _z)\n            mstore(add(ptr, 0x40), _y)\n            calldatacopy(add(ptr, 0x60), _commitment.offset, 0x30)\n            calldatacopy(add(ptr, 0x90), _proof.offset, 0x30)\n\n            // Verify the KZG proof by calling the point evaluation precompile. If the proof is invalid, the precompile\n            // will revert.\n            success :=\n                staticcall(\n                    gas(), // forward all gas\n                    0x0A, // point evaluation precompile address\n                    ptr, // input ptr\n                    0xC0, // input size = 192 bytes\n                    0x00, // output ptr\n                    0x00 // output size\n                )\n            if iszero(success) {\n                // Store the \"InvalidProof()\" error selector.\n                mstore(0x00, 0x09bde339)\n                // revert with \"InvalidProof()\"\n                revert(0x1C, 0x04)\n            }\n\n            // revert if part offset >= 32+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, 0x28)) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0x00, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1C, 0x04)\n            }\n            // Clean the word at `ptr + 0x28` to ensure that data out of bounds of the preimage is zero, if the part\n            // offset requires a partial read.\n            mstore(add(ptr, 0x28), 0x00)\n            // put size (32) as a big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, 0x20))\n            // copy preimage payload into memory so we can hash and read it.\n            mstore(add(ptr, 0x08), _y)\n            // Note that it includes the 8-byte big-endian uint64 length prefix. This will be zero-padded at the end,\n            // since memory at end is guaranteed to be clean.\n            part := mload(add(ptr, _partOffset))\n\n            // Compute the key: `keccak256(commitment ++ z)`. Since the exact number of btyes that is copied into\n            // scratch space is the same size as the hash input, there's no concern of dirty memory being read into\n            // the hash input.\n            calldatacopy(ptr, _commitment.offset, 0x30)\n            mstore(add(ptr, 0x30), _z)\n            let h := keccak256(ptr, 0x50)\n            // mask out prefix byte, replace with type 5 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x05))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = 32;\n    }\n\n    /// @notice Prepares a precompile result to be read by a precompile key for the specified offset.\n    ///         The precompile result data is a concatenation of the precompile call status byte and its return data.\n    ///         The preimage key is `6 ++ keccak256(precompile ++ input)[1:]`.\n    /// @param _partOffset The offset of the precompile result being loaded.\n    /// @param _precompile The precompile address\n    /// @param _requiredGas The gas required to fully execute an L1 precompile.\n    /// @param _input The input to the precompile call.\n    function loadPrecompilePreimagePart(\n        uint256 _partOffset,\n        address _precompile,\n        uint64 _requiredGas,\n        bytes calldata _input\n    ) external {\n        bytes32 res;\n        bytes32 key;\n        bytes32 part;\n        uint256 size;\n        assembly {\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n\n            // copy precompile address, requiredGas, and input into memory to compute the key\n            mstore(ptr, shl(96, _precompile))\n            mstore(add(ptr, 20), shl(192, _requiredGas))\n            calldatacopy(add(28, ptr), _input.offset, _input.length)\n            // compute the hash\n            let h := keccak256(ptr, add(28, _input.length))\n            // mask out prefix byte, replace with type 6 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x06))\n\n            // Check if the precompile call has at least the required gas.\n            // This assumes there are no further memory expansion costs until after the staticall on the precompile\n            // Also assumes that the gas expended in setting up the staticcall is less than PRECOMPILE_CALL_RESERVED_GAS\n            // require(gas() >= (requiredGas * 64 / 63) + reservedGas)\n            if lt(mul(gas(), 63), add(mul(_requiredGas, 64), mul(PRECOMPILE_CALL_RESERVED_GAS, 63))) {\n                // Store \"NotEnoughGas()\"\n                mstore(0, 0xdd629f86)\n                revert(0x1c, 4)\n            }\n\n            // Call the precompile to get the result.\n            // SAFETY: Given the above gas check, the staticall cannot fail due to insufficient gas.\n            res :=\n                staticcall(\n                    gas(), // forward all gas\n                    _precompile,\n                    add(28, ptr), // input ptr\n                    _input.length,\n                    0x0, // Unused as we don't copy anything\n                    0x00 // don't copy anything\n                )\n\n            size := add(1, returndatasize())\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 4)\n            }\n\n            // Reuse the `ptr` to store the preimage part: <sizePrefix ++ precompileStatus ++ returrnData>\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 0x08)\n\n            // write precompile result status to the first byte of `ptr`\n            mstore8(ptr, res)\n            // write precompile return data to the rest of `ptr`\n            returndatacopy(add(ptr, 0x01), 0x0, returndatasize())\n\n            // compute part given ofset\n            part := mload(add(sub(ptr, 0x08), _partOffset))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //            Large Preimage Proposals (External)             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Returns the length of the `proposals` array\n    function proposalCount() external view returns (uint256 count_) {\n        count_ = proposals.length;\n    }\n\n    /// @notice Returns the length of the array with the block numbers of `addLeavesLPP` calls for a given large\n    ///         preimage proposal.\n    function proposalBlocksLen(address _claimant, uint256 _uuid) external view returns (uint256 len_) {\n        len_ = proposalBlocks[_claimant][_uuid].length;\n    }\n\n    /// @notice Returns the length of the large preimage proposal challenge period.\n    function challengePeriod() external view returns (uint256 challengePeriod_) {\n        challengePeriod_ = CHALLENGE_PERIOD;\n    }\n\n    /// @notice Returns the minimum size (in bytes) of a large preimage proposal.\n    function minProposalSize() external view returns (uint256 minProposalSize_) {\n        minProposalSize_ = MIN_LPP_SIZE_BYTES;\n    }\n\n    /// @notice Initialize a large preimage proposal. Must be called before adding any leaves.\n    function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) external payable {\n        // The bond provided must be at least `MIN_BOND_SIZE`.\n        if (msg.value < MIN_BOND_SIZE) {\n            revert InsufficientBond();\n        }\n\n        // Legacy check, no longer technically required but keeping for now. Can be bypassed using\n        // EIP-7702. Challenger loads this information directly from the proposals array instead of\n        // looking at transaction calldata.\n        if (msg.sender != tx.origin) {\n            revert NotEOA();\n        }\n\n        // The part offset must be within the bounds of the claimed size + 8.\n        if (_partOffset >= _claimedSize + 8) {\n            revert PartOffsetOOB();\n        }\n\n        // The claimed size must be at least `MIN_LPP_SIZE_BYTES`.\n        if (_claimedSize < MIN_LPP_SIZE_BYTES) {\n            revert InvalidInputSize();\n        }\n\n        // Initialize the proposal metadata.\n        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];\n\n        // Revert if the proposal has already been initialized. 0-size preimages are *not* allowed.\n        if (metaData.claimedSize() != 0) {\n            revert AlreadyInitialized();\n        }\n\n        proposalMetadata[msg.sender][_uuid] = metaData.setPartOffset(_partOffset).setClaimedSize(_claimedSize);\n        proposals.push(LargePreimageProposalKeys(msg.sender, _uuid));\n\n        // Assign the bond to the proposal.\n        proposalBonds[msg.sender][_uuid] = msg.value;\n    }\n\n    /// @notice Adds a contiguous list of keccak state matrices to the merkle tree.\n    function addLeavesLPP(\n        uint256 _uuid,\n        uint256 _inputStartBlock,\n        bytes calldata _input,\n        bytes32[] calldata _stateCommitments,\n        bool _finalize\n    ) external {\n        // If we're finalizing, pad the input for the submitter. If not, copy the input into memory verbatim.\n        bytes memory input;\n        if (_finalize) {\n            input = LibKeccak.pad(_input);\n        } else {\n            input = _input;\n        }\n\n        // Pull storage variables onto the stack / into memory for operations.\n        bytes32[KECCAK_TREE_DEPTH] memory branch = proposalBranches[msg.sender][_uuid];\n        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];\n        uint256 blocksProcessed = metaData.blocksProcessed();\n\n        // Legacy check, no longer technically required but keeping for now. Can be bypassed using\n        // EIP-7702. Challenger loads this information from the log at the end of this function\n        // instead of looking at transaction calldata.\n        if (msg.sender != tx.origin) {\n            revert NotEOA();\n        }\n\n        // Revert if the proposal has not been initialized. 0-size preimages are *not* allowed.\n        if (metaData.claimedSize() == 0) {\n            revert NotInitialized();\n        }\n\n        // Revert if the proposal has already been finalized. No leaves can be added after this point.\n        if (metaData.timestamp() != 0) {\n            revert AlreadyFinalized();\n        }\n\n        // Revert if the starting block is not the next block to be added. This is to aid submitters in ensuring that\n        // they don't corrupt an in-progress proposal by submitting input out of order.\n        if (blocksProcessed != _inputStartBlock) {\n            revert WrongStartingBlock();\n        }\n\n        // Attempt to extract the preimage part from the input data, if the part offset is present in the current\n        // chunk of input. This function has side effects, and will persist the preimage part to the caller's large\n        // preimage proposal storage if the part offset is present in the input data.\n        _extractPreimagePart(_input, _uuid, _finalize, metaData);\n\n        assembly {\n            let inputLen := mload(input)\n            let inputPtr := add(input, 0x20)\n\n            // The input length must be a multiple of 136 bytes\n            // The input length / 136 must be equal to the number of state commitments.\n            if or(mod(inputLen, 136), iszero(eq(_stateCommitments.length, div(inputLen, 136)))) {\n                // Store \"InvalidInputSize()\" error selector\n                mstore(0x00, 0x7b1daf1)\n                revert(0x1C, 0x04)\n            }\n\n            // Allocate a hashing buffer the size of the leaf preimage.\n            let hashBuf := mload(0x40)\n            mstore(0x40, add(hashBuf, 0xC8))\n\n            for { let i := 0 } lt(i, inputLen) { i := add(i, 136) } {\n                // Copy the leaf preimage into the hashing buffer.\n                let inputStartPtr := add(inputPtr, i)\n                mstore(hashBuf, mload(inputStartPtr))\n                mstore(add(hashBuf, 0x20), mload(add(inputStartPtr, 0x20)))\n                mstore(add(hashBuf, 0x40), mload(add(inputStartPtr, 0x40)))\n                mstore(add(hashBuf, 0x60), mload(add(inputStartPtr, 0x60)))\n                mstore(add(hashBuf, 0x80), mload(add(inputStartPtr, 0x80)))\n                mstore(add(hashBuf, 136), blocksProcessed)\n                mstore(add(hashBuf, 168), calldataload(add(_stateCommitments.offset, shl(0x05, div(i, 136)))))\n\n                // Hash the leaf preimage to get the node to add.\n                let node := keccak256(hashBuf, 0xC8)\n\n                // Increment the number of blocks processed.\n                blocksProcessed := add(blocksProcessed, 0x01)\n\n                // Add the node to the tree.\n                let size := blocksProcessed\n                for { let height := 0x00 } lt(height, shl(0x05, KECCAK_TREE_DEPTH)) { height := add(height, 0x20) } {\n                    if and(size, 0x01) {\n                        mstore(add(branch, height), node)\n                        break\n                    }\n\n                    // Hash the node at `height` in the branch and the node together.\n                    mstore(0x00, mload(add(branch, height)))\n                    mstore(0x20, node)\n                    node := keccak256(0x00, 0x40)\n                    size := shr(0x01, size)\n                }\n            }\n        }\n\n        // Do not allow for posting preimages larger than the merkle tree can support. The incremental merkle tree\n        // algorithm only supports 2**height - 1 leaves, the right most leaf must always be kept empty.\n        // Reference: https://daejunpark.github.io/papers/deposit.pdf - Page 10, Section 5.1.\n        if (blocksProcessed > MAX_LEAF_COUNT) {\n            revert TreeSizeOverflow();\n        }\n\n        // Update the proposal metadata to include the number of blocks processed and total bytes processed.\n        metaData = metaData.setBlocksProcessed(uint32(blocksProcessed)).setBytesProcessed(\n            uint32(_input.length + metaData.bytesProcessed())\n        );\n        // If the proposal is being finalized, set the timestamp to the current block timestamp. This begins the\n        // challenge period, which must be waited out before the proposal can be finalized.\n        if (_finalize) {\n            metaData = metaData.setTimestamp(uint64(block.timestamp));\n\n            // If the number of bytes processed is not equal to the claimed size, the proposal cannot be finalized.\n            if (metaData.bytesProcessed() != metaData.claimedSize()) {\n                revert InvalidInputSize();\n            }\n        }\n\n        // Perist the latest branch to storage.\n        proposalBranches[msg.sender][_uuid] = branch;\n        // Persist the block number that these leaves were added in. This assists off-chain observers in reconstructing\n        // the proposal merkle tree by querying block bodies.\n        proposalBlocks[msg.sender][_uuid].push(uint64(block.number));\n        // Persist the updated metadata to storage.\n        proposalMetadata[msg.sender][_uuid] = metaData;\n\n        // Clobber memory and `log0` all calldata. This is safe because there is no execution afterwards within\n        // this callframe.\n        assembly {\n            mstore(0x00, shl(96, caller()))\n            calldatacopy(0x14, 0x00, calldatasize())\n            log0(0x00, add(0x14, calldatasize()))\n        }\n    }\n\n    /// @notice Challenge a keccak256 block that was committed to in the merkle tree.\n    function challengeLPP(\n        address _claimant,\n        uint256 _uuid,\n        LibKeccak.StateMatrix memory _stateMatrix,\n        Leaf calldata _preState,\n        bytes32[] calldata _preStateProof,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        // Verify that both leaves are present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (\n            !(\n                _verify(_preStateProof, root, _preState.index, _hashLeaf(_preState))\n                    && _verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))\n            )\n        ) {\n            revert InvalidProof();\n        }\n\n        // Verify that the prestate passed matches the intermediate state claimed in the leaf.\n        if (keccak256(abi.encode(_stateMatrix)) != _preState.stateCommitment) {\n            revert InvalidPreimage();\n        }\n\n        // Verify that the pre/post state are contiguous.\n        if (_preState.index + 1 != _postState.index) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes.\n        LibKeccak.absorb(_stateMatrix, _postState.input);\n        LibKeccak.permutation(_stateMatrix);\n\n        // Verify that the post state hash doesn't match the expected hash.\n        if (keccak256(abi.encode(_stateMatrix)) == _postState.stateCommitment) {\n            revert PostStateMatches();\n        }\n\n        // Mark the keccak claim as countered.\n        proposalMetadata[_claimant][_uuid] = proposalMetadata[_claimant][_uuid].setCountered(true);\n\n        // Pay out the bond to the challenger.\n        _payoutBond(_claimant, _uuid, msg.sender);\n    }\n\n    /// @notice Challenge the first keccak256 block that was absorbed.\n    function challengeFirstLPP(\n        address _claimant,\n        uint256 _uuid,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        // Verify that the leaf is present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (!_verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))) {\n            revert InvalidProof();\n        }\n\n        // The poststate index must be 0 in order to challenge it with this function.\n        if (_postState.index != 0) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes into a fresh state matrix.\n        LibKeccak.StateMatrix memory stateMatrix;\n        LibKeccak.absorb(stateMatrix, _postState.input);\n        LibKeccak.permutation(stateMatrix);\n\n        // Verify that the post state hash doesn't match the expected hash.\n        if (keccak256(abi.encode(stateMatrix)) == _postState.stateCommitment) {\n            revert PostStateMatches();\n        }\n\n        // Mark the keccak claim as countered.\n        proposalMetadata[_claimant][_uuid] = proposalMetadata[_claimant][_uuid].setCountered(true);\n\n        // Pay out the bond to the challenger.\n        _payoutBond(_claimant, _uuid, msg.sender);\n    }\n\n    /// @notice Finalize a large preimage proposal after the challenge period has passed.\n    function squeezeLPP(\n        address _claimant,\n        uint256 _uuid,\n        LibKeccak.StateMatrix memory _stateMatrix,\n        Leaf calldata _preState,\n        bytes32[] calldata _preStateProof,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        LPPMetaData metaData = proposalMetadata[_claimant][_uuid];\n\n        // Check if the proposal was countered.\n        if (metaData.countered()) {\n            revert BadProposal();\n        }\n\n        // Check if the proposal has been finalized at all.\n        if (metaData.timestamp() == 0) {\n            revert ActiveProposal();\n        }\n\n        // Check if the challenge period has passed since the proposal was finalized.\n        if (block.timestamp - metaData.timestamp() <= CHALLENGE_PERIOD) {\n            revert ActiveProposal();\n        }\n\n        // Verify that both leaves are present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (\n            !(\n                _verify(_preStateProof, root, _preState.index, _hashLeaf(_preState))\n                    && _verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))\n            )\n        ) {\n            revert InvalidProof();\n        }\n\n        // Verify that the prestate passed matches the intermediate state claimed in the leaf.\n        if (keccak256(abi.encode(_stateMatrix)) != _preState.stateCommitment) {\n            revert InvalidPreimage();\n        }\n\n        // Verify that the pre/post state are contiguous.\n        if (_preState.index + 1 != _postState.index || _postState.index != metaData.blocksProcessed() - 1) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes. We perform no final verification on the state matrix here, since the\n        // proposal has passed the challenge period and is considered valid.\n        LibKeccak.absorb(_stateMatrix, _postState.input);\n        LibKeccak.permutation(_stateMatrix);\n        bytes32 finalDigest = LibKeccak.squeeze(_stateMatrix);\n        assembly {\n            finalDigest := or(and(finalDigest, not(shl(248, 0xFF))), shl(248, 0x02))\n        }\n\n        // Write the preimage part to the authorized preimage parts mapping.\n        uint256 partOffset = metaData.partOffset();\n        preimagePartOk[finalDigest][partOffset] = true;\n        preimageParts[finalDigest][partOffset] = proposalParts[_claimant][_uuid];\n        preimageLengths[finalDigest] = metaData.claimedSize();\n\n        // Pay out the bond to the claimant.\n        _payoutBond(_claimant, _uuid, _claimant);\n    }\n\n    /// @notice Gets the current merkle root of the large preimage proposal tree.\n    function getTreeRootLPP(address _owner, uint256 _uuid) public view returns (bytes32 treeRoot_) {\n        uint256 size = proposalMetadata[_owner][_uuid].blocksProcessed();\n        for (uint256 height = 0; height < KECCAK_TREE_DEPTH; height++) {\n            if ((size & 1) == 1) {\n                treeRoot_ = keccak256(abi.encode(proposalBranches[_owner][_uuid][height], treeRoot_));\n            } else {\n                treeRoot_ = keccak256(abi.encode(treeRoot_, zeroHashes[height]));\n            }\n            size >>= 1;\n        }\n    }\n\n    /// @notice Attempts to persist the preimage part to the caller's large preimage proposal storage, if the preimage\n    ///         part is present in the input data being posted.\n    /// @param _input The portion of the preimage being posted.\n    /// @param _uuid The UUID of the large preimage proposal.\n    /// @param _finalize Whether or not the proposal is being finalized in the current call.\n    /// @param _metaData The metadata of the large preimage proposal.\n    function _extractPreimagePart(bytes calldata _input, uint256 _uuid, bool _finalize, LPPMetaData _metaData)\n        internal\n    {\n        uint256 offset = _metaData.partOffset();\n        uint256 claimedSize = _metaData.claimedSize();\n        uint256 currentSize = _metaData.bytesProcessed();\n\n        // Check if the part offset is present in the input data being posted. If it is, assign the part to the mapping.\n        if (offset < 8 && currentSize == 0) {\n            bytes32 preimagePart;\n            assembly {\n                mstore(0x00, shl(192, claimedSize))\n                mstore(0x08, calldataload(_input.offset))\n                preimagePart := mload(offset)\n            }\n            proposalParts[msg.sender][_uuid] = preimagePart;\n        } else if (offset >= 8 && (offset = offset - 8) >= currentSize && offset < currentSize + _input.length) {\n            uint256 relativeOffset = offset - currentSize;\n\n            // Revert if the full preimage part is not available in the data we're absorbing. The submitter must\n            // supply data that contains the full preimage part so that no partial preimage parts are stored in the\n            // oracle. Partial parts are *only* allowed at the tail end of the preimage, where no more data is available\n            // to be absorbed.\n            if (relativeOffset + 32 >= _input.length && !_finalize) {\n                revert PartOffsetOOB();\n            }\n\n            // If the preimage part is in the data we're about to absorb, persist the part to the caller's large\n            // preimaage metadata.\n            bytes32 preimagePart;\n            assembly {\n                preimagePart := calldataload(add(_input.offset, relativeOffset))\n            }\n            proposalParts[msg.sender][_uuid] = preimagePart;\n        }\n    }\n\n    /// @notice Check if leaf` at `index` verifies against the Merkle `root` and `branch`.\n    /// https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md#is_valid_merkle_branch\n    function _verify(bytes32[] calldata _proof, bytes32 _root, uint256 _index, bytes32 _leaf)\n        internal\n        pure\n        returns (bool isValid_)\n    {\n        /// @solidity memory-safe-assembly\n        assembly {\n            function hashTwo(a, b) -> hash {\n                mstore(0x00, a)\n                mstore(0x20, b)\n                hash := keccak256(0x00, 0x40)\n            }\n\n            let value := _leaf\n            for { let i := 0x00 } lt(i, KECCAK_TREE_DEPTH) { i := add(i, 0x01) } {\n                let branchValue := calldataload(add(_proof.offset, shl(0x05, i)))\n\n                switch and(shr(i, _index), 0x01)\n                case 1 { value := hashTwo(branchValue, value) }\n                default { value := hashTwo(value, branchValue) }\n            }\n\n            isValid_ := eq(value, _root)\n        }\n    }\n\n    /// @notice Pay out a proposal's bond. Reverts if the transfer fails.\n    function _payoutBond(address _claimant, uint256 _uuid, address _to) internal {\n        // Pay out the bond to the claimant.\n        uint256 bond = proposalBonds[_claimant][_uuid];\n        proposalBonds[_claimant][_uuid] = 0;\n        (bool success,) = _to.call{value: bond}(\"\");\n        if (!success) {\n            revert BondTransferFailed();\n        }\n    }\n\n    /// @notice Hashes leaf data for the preimage proposals tree\n    function _hashLeaf(Leaf memory _leaf) internal pure returns (bytes32 leaf_) {\n        leaf_ = keccak256(abi.encodePacked(_leaf.input, _leaf.index, _leaf.stateCommitment));\n    }\n}",
+  "source": "contract PreimageOracle is ISemver {\n    ////////////////////////////////////////////////////////////////\n    //                   Constants & Immutables                   //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice The duration of the large preimage proposal challenge period.\n    uint256 internal immutable CHALLENGE_PERIOD;\n    /// @notice The minimum size of a preimage that can be proposed in the large preimage path.\n    uint256 internal immutable MIN_LPP_SIZE_BYTES;\n    /// @notice The minimum bond size for large preimage proposals.\n    uint256 public constant MIN_BOND_SIZE = 0.25 ether;\n    /// @notice The depth of the keccak256 merkle tree. Supports up to 65,536 keccak blocks, or ~8.91MB preimages.\n    uint256 public constant KECCAK_TREE_DEPTH = 16;\n    /// @notice The maximum number of keccak blocks that can fit into the merkle tree.\n    uint256 public constant MAX_LEAF_COUNT = 2 ** KECCAK_TREE_DEPTH - 1;\n    /// @notice The reserved gas for precompile call setup.\n    uint256 public constant PRECOMPILE_CALL_RESERVED_GAS = 100_000;\n\n    /// @notice The semantic version of the Preimage Oracle contract.\n    /// @custom:semver 1.1.4\n    string public constant version = \"1.1.4\";\n\n    ////////////////////////////////////////////////////////////////\n    //                 Authorized Preimage Parts                  //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Mapping of pre-image keys to pre-image lengths.\n    mapping(bytes32 => uint256) public preimageLengths;\n    /// @notice Mapping of pre-image keys to pre-image offsets to pre-image parts.\n    mapping(bytes32 => mapping(uint256 => bytes32)) public preimageParts;\n    /// @notice Mapping of pre-image keys to pre-image part offsets to preimage preparedness.\n    mapping(bytes32 => mapping(uint256 => bool)) public preimagePartOk;\n\n    ////////////////////////////////////////////////////////////////\n    //                  Large Preimage Proposals                  //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice A raw leaf of the large preimage proposal merkle tree.\n    struct Leaf {\n        /// @notice The input absorbed for the block, exactly 136 bytes.\n        bytes input;\n        /// @notice The index of the block in the absorption process.\n        uint256 index;\n        /// @notice The hash of the internal state after absorbing the input.\n        bytes32 stateCommitment;\n    }\n\n    /// @notice Unpacked keys for large preimage proposals.\n    struct LargePreimageProposalKeys {\n        /// @notice The claimant of the large preimage proposal.\n        address claimant;\n        /// @notice The UUID of the large preimage proposal.\n        uint256 uuid;\n    }\n\n    /// @notice Static padding hashes. These values are persisted in storage, but are entirely immutable\n    ///         after the constructor's execution.\n    bytes32[KECCAK_TREE_DEPTH] public zeroHashes;\n    /// @notice Append-only array of large preimage proposals for off-chain reference.\n    LargePreimageProposalKeys[] public proposals;\n    /// @notice Mapping of claimants to proposal UUIDs to the current branch path of the merkleization process.\n    mapping(address => mapping(uint256 => bytes32[KECCAK_TREE_DEPTH])) public proposalBranches;\n    /// @notice Mapping of claimants to proposal UUIDs to the timestamp of creation of the proposal as well as the\n    /// challenged status.\n    mapping(address => mapping(uint256 => LPPMetaData)) public proposalMetadata;\n    /// @notice Mapping of claimants to proposal UUIDs to bond amounts.\n    mapping(address => mapping(uint256 => uint256)) public proposalBonds;\n    /// @notice Mapping of claimants to proposal UUIDs to the preimage part picked up during the absorbtion process.\n    mapping(address => mapping(uint256 => bytes32)) public proposalParts;\n    /// @notice Mapping of claimants to proposal UUIDs to blocks which leaves were added to the merkle tree.\n    mapping(address => mapping(uint256 => uint64[])) public proposalBlocks;\n\n    ////////////////////////////////////////////////////////////////\n    //                        Constructor                         //\n    ////////////////////////////////////////////////////////////////\n\n    constructor(uint256 _minProposalSize, uint256 _challengePeriod) {\n        MIN_LPP_SIZE_BYTES = _minProposalSize;\n        CHALLENGE_PERIOD = _challengePeriod;\n\n        // Make sure challenge period fits within uint64 so that it can safely be used within the\n        // FaultDisputeGame contract to compute clock extensions. Adding this check is simpler than\n        // changing the existing contract ABI.\n        require(_challengePeriod <= type(uint64).max, \"PreimageOracle: challenge period too large\");\n\n        // Compute hashes in empty sparse Merkle tree. The first hash is not set, and kept as zero as the identity.\n        for (uint256 height = 0; height < KECCAK_TREE_DEPTH - 1; height++) {\n            zeroHashes[height + 1] = keccak256(abi.encodePacked(zeroHashes[height], zeroHashes[height]));\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //             Standard Preimage Route (External)             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Reads a preimage from the oracle.\n    /// @param _key The key of the preimage to read.\n    /// @param _offset The offset of the preimage to read.\n    /// @return dat_ The preimage data.\n    /// @return datLen_ The length of the preimage data.\n    function readPreimage(bytes32 _key, uint256 _offset) external view returns (bytes32 dat_, uint256 datLen_) {\n        require(preimagePartOk[_key][_offset], \"pre-image must exist\");\n\n        // Calculate the length of the pre-image data\n        // Add 8 for the length-prefix part\n        datLen_ = 32;\n        uint256 length = preimageLengths[_key];\n        if (_offset + 32 >= length + 8) {\n            datLen_ = length + 8 - _offset;\n        }\n\n        // Retrieve the pre-image data\n        dat_ = preimageParts[_key][_offset];\n    }\n\n    /// @notice Loads local data parts into the preimage oracle.\n    /// @param _ident The identifier of the local data.\n    /// @param _localContext The local key context for the preimage oracle. Optionally, can be set as a constant\n    ///                      if the caller only requires one set of local keys.\n    /// @param _word The local data word.\n    /// @param _size The number of bytes in `_word` to load.\n    /// @param _partOffset The offset of the local data part to write to the oracle.\n    /// @dev The local data parts are loaded into the preimage oracle under the context\n    ///      of the caller - no other account can write to the caller's context\n    ///      specific data.\n    ///\n    ///      There are 5 local data identifiers:\n    ///      ┌────────────┬────────────────────────┐\n    ///      │ Identifier │      Data              │\n    ///      ├────────────┼────────────────────────┤\n    ///      │          1 │ L1 Head Hash (bytes32) │\n    ///      │          2 │ Output Root (bytes32)  │\n    ///      │          3 │ Root Claim (bytes32)   │\n    ///      │          4 │ L2 Block Number (u64)  │\n    ///      │          5 │ Chain ID (u64)         │\n    ///      └────────────┴────────────────────────┘\n    function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset)\n        external\n        returns (bytes32 key_)\n    {\n        // Compute the localized key from the given local identifier.\n        key_ = PreimageKeyLib.localizeIdent(_ident, _localContext);\n\n        // Revert if the given part offset is not within bounds.\n        if (_partOffset >= _size + 8 || _size > 32) {\n            revert PartOffsetOOB();\n        }\n\n        // Prepare the local data part at the given offset\n        bytes32 part;\n        assembly {\n            // Clean the memory in [0x20, 0x40)\n            mstore(0x20, 0x00)\n\n            // Store the full local data in scratch space.\n            mstore(0x00, shl(192, _size))\n            mstore(0x08, _word)\n\n            // Prepare the local data part at the requested offset.\n            part := mload(_partOffset)\n        }\n\n        // Store the first part with `_partOffset`.\n        preimagePartOk[key_][_partOffset] = true;\n        preimageParts[key_][_partOffset] = part;\n        // Assign the length of the preimage at the localized key.\n        preimageLengths[key_] = _size;\n    }\n\n    /// @notice Prepares a preimage to be read by keccak256 key, starting at the given offset and up to 32 bytes\n    ///         (clipped at preimage length, if out of data).\n    /// @param _partOffset The offset of the preimage to read.\n    /// @param _preimage The preimage data.\n    function loadKeccak256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {\n        uint256 size;\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // len(sig) + len(partOffset) + len(preimage offset) = 4 + 32 + 32 = 0x44\n            size := calldataload(0x44)\n\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0x00, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 0x04)\n            }\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 0x08)\n            // copy preimage payload into memory so we can hash and read it.\n            calldatacopy(ptr, _preimage.offset, size)\n            // Note that it includes the 8-byte big-endian uint64 length prefix.\n            // this will be zero-padded at the end, since memory at end is clean.\n            part := mload(add(sub(ptr, 0x08), _partOffset))\n            let h := keccak256(ptr, size) // compute preimage keccak256 hash\n            // mask out prefix byte, replace with type 2 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x02))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    /// @notice Prepares a preimage to be read by sha256 key, starting at the given offset and up to 32 bytes\n    ///         (clipped at preimage length, if out of data).\n    /// @param _partOffset The offset of the preimage to read.\n    /// @param _preimage The preimage data.\n    function loadSha256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {\n        uint256 size;\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // len(sig) + len(partOffset) + len(preimage offset) = 4 + 32 + 32 = 0x44\n            size := calldataload(0x44)\n\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 4)\n            }\n            // we leave solidity slots 0x40 and 0x60 untouched,\n            // and everything after as scratch-memory.\n            let ptr := 0x80\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 8)\n            // copy preimage payload into memory so we can hash and read it.\n            calldatacopy(ptr, _preimage.offset, size)\n            // Note that it includes the 8-byte big-endian uint64 length prefix.\n            // this will be zero-padded at the end, since memory at end is clean.\n            part := mload(add(sub(ptr, 8), _partOffset))\n\n            // compute SHA2-256 hash with pre-compile\n            let success :=\n                staticcall(\n                    gas(), // Forward all available gas\n                    0x02, // Address of SHA-256 precompile\n                    ptr, // Start of input data in memory\n                    size, // Size of input data\n                    0, // Store output in scratch memory\n                    0x20 // Output is always 32 bytes\n                )\n            // Check if the staticcall succeeded\n            if iszero(success) { revert(0, 0) }\n            let h := mload(0) // get return data\n            // mask out prefix byte, replace with type 4 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 4))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    /// @notice Verifies that `p(_z) = _y` given `_commitment` that corresponds to the polynomial `p(x)` and a KZG\n    //          proof. The value `y` is the pre-image, and the preimage key is `5 ++ keccak256(_commitment ++ z)[1:]`.\n    /// @param _z Big endian point value. Part of the preimage key.\n    /// @param _y Big endian point value. The preimage for the key.\n    /// @param _commitment The commitment to the polynomial. 48 bytes, part of the preimage key.\n    /// @param _proof The KZG proof, part of the preimage key.\n    /// @param _partOffset The offset of the preimage to store.\n    function loadBlobPreimagePart(\n        uint256 _z,\n        uint256 _y,\n        bytes calldata _commitment,\n        bytes calldata _proof,\n        uint256 _partOffset\n    ) external {\n        bytes32 key;\n        bytes32 part;\n        assembly {\n            // Compute the versioned hash. The SHA2 hash of the 48 byte commitment is masked with the version byte,\n            // which is currently 1. https://eips.ethereum.org/EIPS/eip-4844#parameters\n            // SAFETY: We're only reading 48 bytes from `_commitment` into scratch space, so we're not reading into the\n            //         free memory ptr region. Since the exact number of btyes that is copied into scratch space is\n            //         the same size as the hash input, there's no concern of dirty memory being read into the hash\n            //         input.\n            calldatacopy(0x00, _commitment.offset, 0x30)\n            let success := staticcall(gas(), 0x02, 0x00, 0x30, 0x00, 0x20)\n            if iszero(success) {\n                // Store the \"ShaFailed()\" error selector.\n                mstore(0x00, 0xf9112969)\n                // revert with \"ShaFailed()\"\n                revert(0x1C, 0x04)\n            }\n            // Set the `VERSIONED_HASH_VERSION_KZG` byte = 1 in the high-order byte of the hash.\n            let versionedHash := or(and(mload(0x00), not(shl(248, 0xFF))), shl(248, 0x01))\n\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n\n            // Load the inputs for the point evaluation precompile into memory. The inputs to the point evaluation\n            // precompile are packed, and not supposed to be ABI-encoded.\n            mstore(ptr, versionedHash)\n            mstore(add(ptr, 0x20), _z)\n            mstore(add(ptr, 0x40), _y)\n            calldatacopy(add(ptr, 0x60), _commitment.offset, 0x30)\n            calldatacopy(add(ptr, 0x90), _proof.offset, 0x30)\n\n            // Verify the KZG proof by calling the point evaluation precompile. If the proof is invalid, the precompile\n            // will revert.\n            success :=\n                staticcall(\n                    gas(), // forward all gas\n                    0x0A, // point evaluation precompile address\n                    ptr, // input ptr\n                    0xC0, // input size = 192 bytes\n                    0x00, // output ptr\n                    0x00 // output size\n                )\n            if iszero(success) {\n                // Store the \"InvalidProof()\" error selector.\n                mstore(0x00, 0x09bde339)\n                // revert with \"InvalidProof()\"\n                revert(0x1C, 0x04)\n            }\n\n            // revert if part offset >= 32+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, 0x28)) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0x00, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1C, 0x04)\n            }\n            // Clean the word at `ptr + 0x28` to ensure that data out of bounds of the preimage is zero, if the part\n            // offset requires a partial read.\n            mstore(add(ptr, 0x28), 0x00)\n            // put size (32) as a big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, 0x20))\n            // copy preimage payload into memory so we can hash and read it.\n            mstore(add(ptr, 0x08), _y)\n            // Note that it includes the 8-byte big-endian uint64 length prefix. This will be zero-padded at the end,\n            // since memory at end is guaranteed to be clean.\n            part := mload(add(ptr, _partOffset))\n\n            // Compute the key: `keccak256(commitment ++ z)`. Since the exact number of btyes that is copied into\n            // scratch space is the same size as the hash input, there's no concern of dirty memory being read into\n            // the hash input.\n            calldatacopy(ptr, _commitment.offset, 0x30)\n            mstore(add(ptr, 0x30), _z)\n            let h := keccak256(ptr, 0x50)\n            // mask out prefix byte, replace with type 5 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x05))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = 32;\n    }\n\n    /// @notice Prepares a precompile result to be read by a precompile key for the specified offset.\n    ///         The precompile result data is a concatenation of the precompile call status byte and its return data.\n    ///         The preimage key is `6 ++ keccak256(precompile ++ input)[1:]`.\n    /// @param _partOffset The offset of the precompile result being loaded.\n    /// @param _precompile The precompile address\n    /// @param _requiredGas The gas required to fully execute an L1 precompile.\n    /// @param _input The input to the precompile call.\n    function loadPrecompilePreimagePart(\n        uint256 _partOffset,\n        address _precompile,\n        uint64 _requiredGas,\n        bytes calldata _input\n    ) external {\n        bytes32 res;\n        bytes32 key;\n        bytes32 part;\n        uint256 size;\n        assembly {\n            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory.\n            let ptr := 0x80\n\n            // copy precompile address, requiredGas, and input into memory to compute the key\n            mstore(ptr, shl(96, _precompile))\n            mstore(add(ptr, 20), shl(192, _requiredGas))\n            calldatacopy(add(28, ptr), _input.offset, _input.length)\n            // compute the hash\n            let h := keccak256(ptr, add(28, _input.length))\n            // mask out prefix byte, replace with type 6 byte\n            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x06))\n\n            // Check if the precompile call has at least the required gas.\n            // This assumes there are no further memory expansion costs until after the staticall on the precompile\n            // Also assumes that the gas expended in setting up the staticcall is less than PRECOMPILE_CALL_RESERVED_GAS\n            // require(gas() >= (requiredGas * 64 / 63) + reservedGas)\n            if lt(mul(gas(), 63), add(mul(_requiredGas, 64), mul(PRECOMPILE_CALL_RESERVED_GAS, 63))) {\n                // Store \"NotEnoughGas()\"\n                mstore(0, 0xdd629f86)\n                revert(0x1c, 4)\n            }\n\n            // Call the precompile to get the result.\n            // SAFETY: Given the above gas check, the staticall cannot fail due to insufficient gas.\n            res :=\n                staticcall(\n                    gas(), // forward all gas\n                    _precompile,\n                    add(28, ptr), // input ptr\n                    _input.length,\n                    0x0, // Unused as we don't copy anything\n                    0x00 // don't copy anything\n                )\n\n            size := add(1, returndatasize())\n            // revert if part offset >= size+8 (i.e. parts must be within bounds)\n            if iszero(lt(_partOffset, add(size, 8))) {\n                // Store \"PartOffsetOOB()\"\n                mstore(0, 0xfe254987)\n                // Revert with \"PartOffsetOOB()\"\n                revert(0x1c, 4)\n            }\n\n            // Reuse the `ptr` to store the preimage part: <sizePrefix ++ precompileStatus ++ returrnData>\n            // put size as big-endian uint64 at start of pre-image\n            mstore(ptr, shl(192, size))\n            ptr := add(ptr, 0x08)\n\n            // write precompile result status to the first byte of `ptr`\n            mstore8(ptr, res)\n            // write precompile return data to the rest of `ptr`\n            returndatacopy(add(ptr, 0x01), 0x0, returndatasize())\n\n            // compute part given ofset\n            part := mload(add(sub(ptr, 0x08), _partOffset))\n        }\n        preimagePartOk[key][_partOffset] = true;\n        preimageParts[key][_partOffset] = part;\n        preimageLengths[key] = size;\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //            Large Preimage Proposals (External)             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Returns the length of the `proposals` array\n    function proposalCount() external view returns (uint256 count_) {\n        count_ = proposals.length;\n    }\n\n    /// @notice Returns the length of the array with the block numbers of `addLeavesLPP` calls for a given large\n    ///         preimage proposal.\n    function proposalBlocksLen(address _claimant, uint256 _uuid) external view returns (uint256 len_) {\n        len_ = proposalBlocks[_claimant][_uuid].length;\n    }\n\n    /// @notice Returns the length of the large preimage proposal challenge period.\n    function challengePeriod() external view returns (uint256 challengePeriod_) {\n        challengePeriod_ = CHALLENGE_PERIOD;\n    }\n\n    /// @notice Returns the minimum size (in bytes) of a large preimage proposal.\n    function minProposalSize() external view returns (uint256 minProposalSize_) {\n        minProposalSize_ = MIN_LPP_SIZE_BYTES;\n    }\n\n    /// @notice Initialize a large preimage proposal. Must be called before adding any leaves.\n    function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) external payable {\n        // The bond provided must be at least `MIN_BOND_SIZE`.\n        if (msg.value < MIN_BOND_SIZE) {\n            revert InsufficientBond();\n        }\n\n        // Legacy check, no longer technically required but keeping for now. Can be bypassed using\n        // EIP-7702. Challenger loads this information directly from the proposals array instead of\n        // looking at transaction calldata.\n        if (msg.sender != tx.origin) {\n            revert NotEOA();\n        }\n\n        // The part offset must be within the bounds of the claimed size + 8.\n        if (_partOffset >= _claimedSize + 8) {\n            revert PartOffsetOOB();\n        }\n\n        // The claimed size must be at least `MIN_LPP_SIZE_BYTES`.\n        if (_claimedSize < MIN_LPP_SIZE_BYTES) {\n            revert InvalidInputSize();\n        }\n\n        // Initialize the proposal metadata.\n        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];\n\n        // Revert if the proposal has already been initialized. 0-size preimages are *not* allowed.\n        if (metaData.claimedSize() != 0) {\n            revert AlreadyInitialized();\n        }\n\n        proposalMetadata[msg.sender][_uuid] = metaData.setPartOffset(_partOffset).setClaimedSize(_claimedSize);\n        proposals.push(LargePreimageProposalKeys(msg.sender, _uuid));\n\n        // Assign the bond to the proposal.\n        proposalBonds[msg.sender][_uuid] = msg.value;\n    }\n\n    /// @notice Adds a contiguous list of keccak state matrices to the merkle tree.\n    function addLeavesLPP(\n        uint256 _uuid,\n        uint256 _inputStartBlock,\n        bytes calldata _input,\n        bytes32[] calldata _stateCommitments,\n        bool _finalize\n    ) external {\n        // If we're finalizing, pad the input for the submitter. If not, copy the input into memory verbatim.\n        bytes memory input;\n        if (_finalize) {\n            input = LibKeccak.pad(_input);\n        } else {\n            input = _input;\n        }\n\n        // Pull storage variables onto the stack / into memory for operations.\n        bytes32[KECCAK_TREE_DEPTH] memory branch = proposalBranches[msg.sender][_uuid];\n        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];\n        uint256 blocksProcessed = metaData.blocksProcessed();\n\n        // Legacy check, no longer technically required but keeping for now. Can be bypassed using\n        // EIP-7702. Challenger loads this information from the log at the end of this function\n        // instead of looking at transaction calldata.\n        if (msg.sender != tx.origin) {\n            revert NotEOA();\n        }\n\n        // Revert if the proposal has not been initialized. 0-size preimages are *not* allowed.\n        if (metaData.claimedSize() == 0) {\n            revert NotInitialized();\n        }\n\n        // Revert if the proposal has already been finalized. No leaves can be added after this point.\n        if (metaData.timestamp() != 0) {\n            revert AlreadyFinalized();\n        }\n\n        // Revert if the starting block is not the next block to be added. This is to aid submitters in ensuring that\n        // they don't corrupt an in-progress proposal by submitting input out of order.\n        if (blocksProcessed != _inputStartBlock) {\n            revert WrongStartingBlock();\n        }\n\n        // Attempt to extract the preimage part from the input data, if the part offset is present in the current\n        // chunk of input. This function has side effects, and will persist the preimage part to the caller's large\n        // preimage proposal storage if the part offset is present in the input data.\n        _extractPreimagePart(_input, _uuid, _finalize, metaData);\n\n        assembly {\n            let inputLen := mload(input)\n            let inputPtr := add(input, 0x20)\n\n            // The input length must be a multiple of 136 bytes\n            // The input length / 136 must be equal to the number of state commitments.\n            if or(mod(inputLen, 136), iszero(eq(_stateCommitments.length, div(inputLen, 136)))) {\n                // Store \"InvalidInputSize()\" error selector\n                mstore(0x00, 0x7b1daf1)\n                revert(0x1C, 0x04)\n            }\n\n            // Allocate a hashing buffer the size of the leaf preimage.\n            let hashBuf := mload(0x40)\n            mstore(0x40, add(hashBuf, 0xC8))\n\n            for { let i := 0 } lt(i, inputLen) { i := add(i, 136) } {\n                // Copy the leaf preimage into the hashing buffer.\n                let inputStartPtr := add(inputPtr, i)\n                mstore(hashBuf, mload(inputStartPtr))\n                mstore(add(hashBuf, 0x20), mload(add(inputStartPtr, 0x20)))\n                mstore(add(hashBuf, 0x40), mload(add(inputStartPtr, 0x40)))\n                mstore(add(hashBuf, 0x60), mload(add(inputStartPtr, 0x60)))\n                mstore(add(hashBuf, 0x80), mload(add(inputStartPtr, 0x80)))\n                mstore(add(hashBuf, 136), blocksProcessed)\n                mstore(add(hashBuf, 168), calldataload(add(_stateCommitments.offset, shl(0x05, div(i, 136)))))\n\n                // Hash the leaf preimage to get the node to add.\n                let node := keccak256(hashBuf, 0xC8)\n\n                // Increment the number of blocks processed.\n                blocksProcessed := add(blocksProcessed, 0x01)\n\n                // Add the node to the tree.\n                let size := blocksProcessed\n                for { let height := 0x00 } lt(height, shl(0x05, KECCAK_TREE_DEPTH)) { height := add(height, 0x20) } {\n                    if and(size, 0x01) {\n                        mstore(add(branch, height), node)\n                        break\n                    }\n\n                    // Hash the node at `height` in the branch and the node together.\n                    mstore(0x00, mload(add(branch, height)))\n                    mstore(0x20, node)\n                    node := keccak256(0x00, 0x40)\n                    size := shr(0x01, size)\n                }\n            }\n        }\n\n        // Do not allow for posting preimages larger than the merkle tree can support. The incremental merkle tree\n        // algorithm only supports 2**height - 1 leaves, the right most leaf must always be kept empty.\n        // Reference: https://daejunpark.github.io/papers/deposit.pdf - Page 10, Section 5.1.\n        if (blocksProcessed > MAX_LEAF_COUNT) {\n            revert TreeSizeOverflow();\n        }\n\n        // Update the proposal metadata to include the number of blocks processed and total bytes processed.\n        metaData = metaData.setBlocksProcessed(uint32(blocksProcessed)).setBytesProcessed(\n            uint32(_input.length + metaData.bytesProcessed())\n        );\n        // If the proposal is being finalized, set the timestamp to the current block timestamp. This begins the\n        // challenge period, which must be waited out before the proposal can be finalized.\n        if (_finalize) {\n            metaData = metaData.setTimestamp(uint64(block.timestamp));\n\n            // If the number of bytes processed is not equal to the claimed size, the proposal cannot be finalized.\n            if (metaData.bytesProcessed() != metaData.claimedSize()) {\n                revert InvalidInputSize();\n            }\n        }\n\n        // Perist the latest branch to storage.\n        proposalBranches[msg.sender][_uuid] = branch;\n        // Persist the block number that these leaves were added in. This assists off-chain observers in reconstructing\n        // the proposal merkle tree by querying block bodies.\n        proposalBlocks[msg.sender][_uuid].push(uint64(block.number));\n        // Persist the updated metadata to storage.\n        proposalMetadata[msg.sender][_uuid] = metaData;\n\n        // Clobber memory and `log0` all calldata. This is safe because there is no execution afterwards within\n        // this callframe.\n        assembly {\n            mstore(0x00, shl(96, caller()))\n            calldatacopy(0x14, 0x00, calldatasize())\n            log0(0x00, add(0x14, calldatasize()))\n        }\n    }\n\n    /// @notice Challenge a keccak256 block that was committed to in the merkle tree.\n    function challengeLPP(\n        address _claimant,\n        uint256 _uuid,\n        LibKeccak.StateMatrix memory _stateMatrix,\n        Leaf calldata _preState,\n        bytes32[] calldata _preStateProof,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        // Verify that both leaves are present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (\n            !(\n                _verify(_preStateProof, root, _preState.index, _hashLeaf(_preState))\n                    && _verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))\n            )\n        ) {\n            revert InvalidProof();\n        }\n\n        // Verify that the prestate passed matches the intermediate state claimed in the leaf.\n        if (keccak256(abi.encode(_stateMatrix)) != _preState.stateCommitment) {\n            revert InvalidPreimage();\n        }\n\n        // Verify that the pre/post state are contiguous.\n        if (_preState.index + 1 != _postState.index) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes.\n        LibKeccak.absorb(_stateMatrix, _postState.input);\n        LibKeccak.permutation(_stateMatrix);\n\n        // Verify that the post state hash doesn't match the expected hash.\n        if (keccak256(abi.encode(_stateMatrix)) == _postState.stateCommitment) {\n            revert PostStateMatches();\n        }\n\n        // Mark the keccak claim as countered.\n        proposalMetadata[_claimant][_uuid] = proposalMetadata[_claimant][_uuid].setCountered(true);\n\n        // Pay out the bond to the challenger.\n        _payoutBond(_claimant, _uuid, msg.sender);\n    }\n\n    /// @notice Challenge the first keccak256 block that was absorbed.\n    function challengeFirstLPP(\n        address _claimant,\n        uint256 _uuid,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        // Verify that the leaf is present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (!_verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))) {\n            revert InvalidProof();\n        }\n\n        // The poststate index must be 0 in order to challenge it with this function.\n        if (_postState.index != 0) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes into a fresh state matrix.\n        LibKeccak.StateMatrix memory stateMatrix;\n        LibKeccak.absorb(stateMatrix, _postState.input);\n        LibKeccak.permutation(stateMatrix);\n\n        // Verify that the post state hash doesn't match the expected hash.\n        if (keccak256(abi.encode(stateMatrix)) == _postState.stateCommitment) {\n            revert PostStateMatches();\n        }\n\n        // Mark the keccak claim as countered.\n        proposalMetadata[_claimant][_uuid] = proposalMetadata[_claimant][_uuid].setCountered(true);\n\n        // Pay out the bond to the challenger.\n        _payoutBond(_claimant, _uuid, msg.sender);\n    }\n\n    /// @notice Finalize a large preimage proposal after the challenge period has passed.\n    function squeezeLPP(\n        address _claimant,\n        uint256 _uuid,\n        LibKeccak.StateMatrix memory _stateMatrix,\n        Leaf calldata _preState,\n        bytes32[] calldata _preStateProof,\n        Leaf calldata _postState,\n        bytes32[] calldata _postStateProof\n    ) external {\n        LPPMetaData metaData = proposalMetadata[_claimant][_uuid];\n\n        // Check if the proposal was countered.\n        if (metaData.countered()) {\n            revert BadProposal();\n        }\n\n        // Check if the proposal has been finalized at all.\n        if (metaData.timestamp() == 0) {\n            revert ActiveProposal();\n        }\n\n        // Check if the challenge period has passed since the proposal was finalized.\n        if (block.timestamp - metaData.timestamp() <= CHALLENGE_PERIOD) {\n            revert ActiveProposal();\n        }\n\n        // Verify that both leaves are present in the merkle tree.\n        bytes32 root = getTreeRootLPP(_claimant, _uuid);\n        if (\n            !(\n                _verify(_preStateProof, root, _preState.index, _hashLeaf(_preState))\n                    && _verify(_postStateProof, root, _postState.index, _hashLeaf(_postState))\n            )\n        ) {\n            revert InvalidProof();\n        }\n\n        // Verify that the prestate passed matches the intermediate state claimed in the leaf.\n        if (keccak256(abi.encode(_stateMatrix)) != _preState.stateCommitment) {\n            revert InvalidPreimage();\n        }\n\n        // Verify that the pre/post state are contiguous.\n        if (_preState.index + 1 != _postState.index || _postState.index != metaData.blocksProcessed() - 1) {\n            revert StatesNotContiguous();\n        }\n\n        // Absorb and permute the input bytes. We perform no final verification on the state matrix here, since the\n        // proposal has passed the challenge period and is considered valid.\n        LibKeccak.absorb(_stateMatrix, _postState.input);\n        LibKeccak.permutation(_stateMatrix);\n        bytes32 finalDigest = LibKeccak.squeeze(_stateMatrix);\n        assembly {\n            finalDigest := or(and(finalDigest, not(shl(248, 0xFF))), shl(248, 0x02))\n        }\n\n        // Write the preimage part to the authorized preimage parts mapping.\n        uint256 partOffset = metaData.partOffset();\n        preimagePartOk[finalDigest][partOffset] = true;\n        preimageParts[finalDigest][partOffset] = proposalParts[_claimant][_uuid];\n        preimageLengths[finalDigest] = metaData.claimedSize();\n\n        // Pay out the bond to the claimant.\n        _payoutBond(_claimant, _uuid, _claimant);\n    }\n\n    /// @notice Gets the current merkle root of the large preimage proposal tree.\n    function getTreeRootLPP(address _owner, uint256 _uuid) public view returns (bytes32 treeRoot_) {\n        uint256 size = proposalMetadata[_owner][_uuid].blocksProcessed();\n        for (uint256 height = 0; height < KECCAK_TREE_DEPTH; height++) {\n            if ((size & 1) == 1) {\n                treeRoot_ = keccak256(abi.encode(proposalBranches[_owner][_uuid][height], treeRoot_));\n            } else {\n                treeRoot_ = keccak256(abi.encode(treeRoot_, zeroHashes[height]));\n            }\n            size >>= 1;\n        }\n    }\n\n    /// @notice Attempts to persist the preimage part to the caller's large preimage proposal storage, if the preimage\n    ///         part is present in the input data being posted.\n    /// @param _input The portion of the preimage being posted.\n    /// @param _uuid The UUID of the large preimage proposal.\n    /// @param _finalize Whether or not the proposal is being finalized in the current call.\n    /// @param _metaData The metadata of the large preimage proposal.\n    function _extractPreimagePart(bytes calldata _input, uint256 _uuid, bool _finalize, LPPMetaData _metaData)\n        internal\n    {\n        uint256 offset = _metaData.partOffset();\n        uint256 claimedSize = _metaData.claimedSize();\n        uint256 currentSize = _metaData.bytesProcessed();\n\n        // Check if the part offset is present in the input data being posted. If it is, assign the part to the mapping.\n        if (offset < 8 && currentSize == 0) {\n            bytes32 preimagePart;\n            assembly {\n                mstore(0x00, shl(192, claimedSize))\n                mstore(0x08, calldataload(_input.offset))\n                preimagePart := mload(offset)\n            }\n            proposalParts[msg.sender][_uuid] = preimagePart;\n        } else if (offset >= 8 && (offset = offset - 8) >= currentSize && offset < currentSize + _input.length) {\n            uint256 relativeOffset = offset - currentSize;\n\n            // Revert if the full preimage part is not available in the data we're absorbing. The submitter must\n            // supply data that contains the full preimage part so that no partial preimage parts are stored in the\n            // oracle. Partial parts are *only* allowed at the tail end of the preimage, where no more data is available\n            // to be absorbed.\n            if (relativeOffset + 32 >= _input.length && !_finalize) {\n                revert PartOffsetOOB();\n            }\n\n            // If the preimage part is in the data we're about to absorb, persist the part to the caller's large\n            // preimaage metadata.\n            bytes32 preimagePart;\n            assembly {\n                preimagePart := calldataload(add(_input.offset, relativeOffset))\n            }\n            proposalParts[msg.sender][_uuid] = preimagePart;\n        }\n    }\n\n    /// @notice Check if leaf` at `index` verifies against the Merkle `root` and `branch`.\n    /// https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md#is_valid_merkle_branch\n    function _verify(bytes32[] calldata _proof, bytes32 _root, uint256 _index, bytes32 _leaf)\n        internal\n        pure\n        returns (bool isValid_)\n    {\n        /// @solidity memory-safe-assembly\n        assembly {\n            function hashTwo(a, b) -> hash {\n                mstore(0x00, a)\n                mstore(0x20, b)\n                hash := keccak256(0x00, 0x40)\n            }\n\n            let value := _leaf\n            for { let i := 0x00 } lt(i, KECCAK_TREE_DEPTH) { i := add(i, 0x01) } {\n                let branchValue := calldataload(add(_proof.offset, shl(0x05, i)))\n\n                switch and(shr(i, _index), 0x01)\n                case 1 { value := hashTwo(branchValue, value) }\n                default { value := hashTwo(value, branchValue) }\n            }\n\n            isValid_ := eq(value, _root)\n        }\n    }\n\n    /// @notice Pay out a proposal's bond. Reverts if the transfer fails.\n    function _payoutBond(address _claimant, uint256 _uuid, address _to) internal {\n        // Pay out the bond to the claimant.\n        uint256 bond = proposalBonds[_claimant][_uuid];\n        proposalBonds[_claimant][_uuid] = 0;\n        (bool success,) = _to.call{value: bond}(\"\");\n        if (!success) {\n            revert BondTransferFailed();\n        }\n    }\n\n    /// @notice Hashes leaf data for the preimage proposals tree\n    function _hashLeaf(Leaf memory _leaf) internal pure returns (bytes32 leaf_) {\n        leaf_ = keccak256(abi.encodePacked(_leaf.input, _leaf.index, _leaf.stateCommitment));\n    }\n}",
   "resolutions": {
     "ba5b6c9584fb78fd": {
       "status": "differs",
@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "PreimageOracle",
-        "similarity": 0.965,
+        "similarity": 0.996,
         "reportId": "optimism/code4rena-superchain-2024-08",
         "repository": "code-423n4/2024-07-optimism",
         "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
@@ -392,1427 +392,55 @@
               {
                 "type": "+",
                 "newLine": 128,
-                "text": "    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
+                "text": "    ///      ┌────────────┬────────────────────────┐",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 129,
-                "text": "    ///      \u2502 Identifier \u2502      Data              \u2502",
+                "text": "    ///      │ Identifier │      Data              │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 130,
-                "text": "    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
+                "text": "    ///      ├────────────┼────────────────────────┤",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 131,
-                "text": "    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502",
+                "text": "    ///      │          1 │ L1 Head Hash (bytes32) │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 132,
-                "text": "    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502",
+                "text": "    ///      │          2 │ Output Root (bytes32)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 133,
-                "text": "    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502",
+                "text": "    ///      │          3 │ Root Claim (bytes32)   │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 134,
-                "text": "    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502",
+                "text": "    ///      │          4 │ L2 Block Number (u64)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 135,
-                "text": "    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502",
+                "text": "    ///      │          5 │ Chain ID (u64)         │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 136,
-                "text": "    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 106,
-                "newLine": 137,
-                "text": "    function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset)"
-              },
-              {
-                "type": " ",
-                "oldLine": 107,
-                "newLine": 138,
-                "text": "        external"
-              },
-              {
-                "type": " ",
-                "oldLine": 108,
-                "newLine": 139,
-                "text": "        returns (bytes32 key_)"
-              }
-            ]
-          },
-          {
-            "oldStart": 111,
-            "oldLines": 7,
-            "newStart": 142,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 111,
-                "newLine": 142,
-                "text": "        key_ = PreimageKeyLib.localizeIdent(_ident, _localContext);"
-              },
-              { "type": " ", "oldLine": 112, "newLine": 143, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 113,
-                "newLine": 144,
-                "text": "        // Revert if the given part offset is not within bounds."
-              },
-              {
-                "type": "-",
-                "oldLine": 114,
-                "text": "        if (_partOffset > _size + 8 || _size > 32) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 145,
-                "text": "        if (_partOffset >= _size + 8 || _size > 32) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 115,
-                "newLine": 146,
-                "text": "            revert PartOffsetOOB();"
-              },
-              {
-                "type": " ",
-                "oldLine": 116,
-                "newLine": 147,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 117, "newLine": 148, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 136,
-            "oldLines": 7,
-            "newStart": 167,
-            "newLines": 10,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 136,
-                "newLine": 167,
-                "text": "        preimageLengths[key_] = _size;"
-              },
-              { "type": " ", "oldLine": 137, "newLine": 168, "text": "    }" },
-              { "type": " ", "oldLine": 138, "newLine": 169, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 139,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 170,
-                "text": "    /// @notice Prepares a preimage to be read by keccak256 key, starting at the given offset and up to 32 bytes",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 171,
-                "text": "    ///         (clipped at preimage length, if out of data).",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 172,
-                "text": "    /// @param _partOffset The offset of the preimage to read.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 173,
-                "text": "    /// @param _preimage The preimage data.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 140,
-                "newLine": 174,
-                "text": "    function loadKeccak256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {"
-              },
-              {
-                "type": " ",
-                "oldLine": 141,
-                "newLine": 175,
-                "text": "        uint256 size;"
-              },
-              {
-                "type": " ",
-                "oldLine": 142,
-                "newLine": 176,
-                "text": "        bytes32 key;"
-              }
-            ]
-          },
-          {
-            "oldStart": 171,
-            "oldLines": 7,
-            "newStart": 205,
-            "newLines": 10,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 171,
-                "newLine": 205,
-                "text": "        preimageLengths[key] = size;"
-              },
-              { "type": " ", "oldLine": 172, "newLine": 206, "text": "    }" },
-              { "type": " ", "oldLine": 173, "newLine": 207, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 174,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 208,
-                "text": "    /// @notice Prepares a preimage to be read by sha256 key, starting at the given offset and up to 32 bytes",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 209,
-                "text": "    ///         (clipped at preimage length, if out of data).",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 210,
-                "text": "    /// @param _partOffset The offset of the preimage to read.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 211,
-                "text": "    /// @param _preimage The preimage data.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 175,
-                "newLine": 212,
-                "text": "    function loadSha256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {"
-              },
-              {
-                "type": " ",
-                "oldLine": 176,
-                "newLine": 213,
-                "text": "        uint256 size;"
-              },
-              {
-                "type": " ",
-                "oldLine": 177,
-                "newLine": 214,
-                "text": "        bytes32 key;"
-              }
-            ]
-          },
-          {
-            "oldStart": 220,
-            "oldLines": 7,
-            "newStart": 257,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 220,
-                "newLine": 257,
-                "text": "        preimageLengths[key] = size;"
-              },
-              { "type": " ", "oldLine": 221, "newLine": 258, "text": "    }" },
-              { "type": " ", "oldLine": 222, "newLine": 259, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 223,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 260,
-                "text": "    /// @notice Verifies that `p(_z) = _y` given `_commitment` that corresponds to the polynomial `p(x)` and a KZG",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 261,
-                "text": "    //          proof. The value `y` is the pre-image, and the preimage key is `5 ++ keccak256(_commitment ++ z)[1:]`.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 262,
-                "text": "    /// @param _z Big endian point value. Part of the preimage key.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 263,
-                "text": "    /// @param _y Big endian point value. The preimage for the key.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 264,
-                "text": "    /// @param _commitment The commitment to the polynomial. 48 bytes, part of the preimage key.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 265,
-                "text": "    /// @param _proof The KZG proof, part of the preimage key.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 266,
-                "text": "    /// @param _partOffset The offset of the preimage to store.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 224,
-                "newLine": 267,
-                "text": "    function loadBlobPreimagePart("
-              },
-              {
-                "type": " ",
-                "oldLine": 225,
-                "newLine": 268,
-                "text": "        uint256 _z,"
-              },
-              {
-                "type": " ",
-                "oldLine": 226,
-                "newLine": 269,
-                "text": "        uint256 _y,"
-              }
-            ]
-          },
-          {
-            "oldStart": 309,
-            "oldLines": 8,
-            "newStart": 352,
-            "newLines": 19,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 309,
-                "newLine": 352,
-                "text": "        preimageLengths[key] = 32;"
-              },
-              { "type": " ", "oldLine": 310, "newLine": 353, "text": "    }" },
-              { "type": " ", "oldLine": 311, "newLine": 354, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 312,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 313,
-                "text": "    function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, bytes calldata _input) external {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 355,
-                "text": "    /// @notice Prepares a precompile result to be read by a precompile key for the specified offset.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 356,
-                "text": "    ///         The precompile result data is a concatenation of the precompile call status byte and its return data.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 357,
-                "text": "    ///         The preimage key is `6 ++ keccak256(precompile ++ input)[1:]`.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 358,
-                "text": "    /// @param _partOffset The offset of the precompile result being loaded.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 359,
-                "text": "    /// @param _precompile The precompile address",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 360,
-                "text": "    /// @param _requiredGas The gas required to fully execute an L1 precompile.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 361,
-                "text": "    /// @param _input The input to the precompile call.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 362,
-                "text": "    function loadPrecompilePreimagePart(",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 363,
-                "text": "        uint256 _partOffset,",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 364,
-                "text": "        address _precompile,",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 365,
-                "text": "        uint64 _requiredGas,",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 366,
-                "text": "        bytes calldata _input",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 367,
-                "text": "    ) external {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 314,
-                "newLine": 368,
-                "text": "        bytes32 res;"
-              },
-              {
-                "type": " ",
-                "oldLine": 315,
-                "newLine": 369,
-                "text": "        bytes32 key;"
-              },
-              {
-                "type": " ",
-                "oldLine": 316,
-                "newLine": 370,
-                "text": "        bytes32 part;"
-              }
-            ]
-          },
-          {
-            "oldStart": 319,
-            "oldLines": 21,
-            "newStart": 373,
-            "newLines": 32,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 319,
-                "newLine": 373,
-                "text": "            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory."
-              },
-              {
-                "type": " ",
-                "oldLine": 320,
-                "newLine": 374,
-                "text": "            let ptr := 0x80"
-              },
-              { "type": " ", "oldLine": 321, "newLine": 375, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 322,
-                "text": "            // copy precompile address and input into memory",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 323,
-                "text": "            // len(sig) + len(_partOffset) + address-offset-in-slot",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 324,
-                "text": "            calldatacopy(ptr, 48, 20)",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 325,
-                "text": "            calldatacopy(add(20, ptr), _input.offset, _input.length)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 376,
-                "text": "            // copy precompile address, requiredGas, and input into memory to compute the key",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 377,
-                "text": "            mstore(ptr, shl(96, _precompile))",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 378,
-                "text": "            mstore(add(ptr, 20), shl(192, _requiredGas))",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 379,
-                "text": "            calldatacopy(add(28, ptr), _input.offset, _input.length)",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 326,
-                "newLine": 380,
-                "text": "            // compute the hash"
-              },
-              {
-                "type": "-",
-                "oldLine": 327,
-                "text": "            let h := keccak256(ptr, add(20, _input.length))",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 381,
-                "text": "            let h := keccak256(ptr, add(28, _input.length))",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 328,
-                "newLine": 382,
-                "text": "            // mask out prefix byte, replace with type 6 byte"
-              },
-              {
-                "type": " ",
-                "oldLine": 329,
-                "newLine": 383,
-                "text": "            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x06))"
-              },
-              { "type": " ", "oldLine": 330, "newLine": 384, "text": "" },
-              {
-                "type": "+",
-                "newLine": 385,
-                "text": "            // Check if the precompile call has at least the required gas.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 386,
-                "text": "            // This assumes there are no further memory expansion costs until after the staticall on the precompile",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 387,
-                "text": "            // Also assumes that the gas expended in setting up the staticcall is less than PRECOMPILE_CALL_RESERVED_GAS",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 388,
-                "text": "            // require(gas() >= (requiredGas * 64 / 63) + reservedGas)",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 389,
-                "text": "            if lt(mul(gas(), 63), add(mul(_requiredGas, 64), mul(PRECOMPILE_CALL_RESERVED_GAS, 63))) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 390,
-                "text": "                // Store \"NotEnoughGas()\"",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 391,
-                "text": "                mstore(0, 0xdd629f86)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 392,
-                "text": "                revert(0x1c, 4)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 393,
-                "text": "            }",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 394, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 331,
-                "newLine": 395,
-                "text": "            // Call the precompile to get the result."
-              },
-              {
-                "type": "+",
-                "newLine": 396,
-                "text": "            // SAFETY: Given the above gas check, the staticall cannot fail due to insufficient gas.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 332,
-                "newLine": 397,
-                "text": "            res :="
-              },
-              {
-                "type": " ",
-                "oldLine": 333,
-                "newLine": 398,
-                "text": "                staticcall("
-              },
-              {
-                "type": " ",
-                "oldLine": 334,
-                "newLine": 399,
-                "text": "                    gas(), // forward all gas"
-              },
-              {
-                "type": " ",
-                "oldLine": 335,
-                "newLine": 400,
-                "text": "                    _precompile,"
-              },
-              {
-                "type": "-",
-                "oldLine": 336,
-                "text": "                    add(20, ptr), // input ptr",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 401,
-                "text": "                    add(28, ptr), // input ptr",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 337,
-                "newLine": 402,
-                "text": "                    _input.length,"
-              },
-              {
-                "type": " ",
-                "oldLine": 338,
-                "newLine": 403,
-                "text": "                    0x0, // Unused as we don't copy anything"
-              },
-              {
-                "type": " ",
-                "oldLine": 339,
-                "newLine": 404,
-                "text": "                    0x00 // don't copy anything"
-              }
-            ]
-          },
-          {
-            "oldStart": 398,
-            "oldLines": 7,
-            "newStart": 463,
-            "newLines": 9,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 398,
-                "newLine": 463,
-                "text": "            revert InsufficientBond();"
-              },
-              {
-                "type": " ",
-                "oldLine": 399,
-                "newLine": 464,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 400, "newLine": 465, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 401,
-                "text": "        // The caller of `addLeavesLPP` must be an EOA, so that the call inputs are always available in block bodies.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 466,
-                "text": "        // Legacy check, no longer technically required but keeping for now. Can be bypassed using",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 467,
-                "text": "        // EIP-7702. Challenger loads this information directly from the proposals array instead of",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 468,
-                "text": "        // looking at transaction calldata.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 402,
-                "newLine": 469,
-                "text": "        if (msg.sender != tx.origin) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 403,
-                "newLine": 470,
-                "text": "            revert NotEOA();"
-              },
-              {
-                "type": " ",
-                "oldLine": 404,
-                "newLine": 471,
-                "text": "        }"
-              }
-            ]
-          },
-          {
-            "oldStart": 415,
-            "oldLines": 6,
-            "newStart": 482,
-            "newLines": 12,
-            "lines": [
-              { "type": " ", "oldLine": 415, "newLine": 482, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 416,
-                "newLine": 483,
-                "text": "        // Initialize the proposal metadata."
-              },
-              {
-                "type": " ",
-                "oldLine": 417,
-                "newLine": 484,
-                "text": "        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];"
-              },
-              { "type": "+", "newLine": 485, "text": "", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 486,
-                "text": "        // Revert if the proposal has already been initialized. 0-size preimages are *not* allowed.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 487,
-                "text": "        if (metaData.claimedSize() != 0) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 488,
-                "text": "            revert AlreadyInitialized();",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 489,
-                "text": "        }",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 490, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 418,
-                "newLine": 491,
-                "text": "        proposalMetadata[msg.sender][_uuid] = metaData.setPartOffset(_partOffset).setClaimedSize(_claimedSize);"
-              },
-              {
-                "type": " ",
-                "oldLine": 419,
-                "newLine": 492,
-                "text": "        proposals.push(LargePreimageProposalKeys(msg.sender, _uuid));"
-              },
-              { "type": " ", "oldLine": 420, "newLine": 493, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 443,
-            "oldLines": 9,
-            "newStart": 516,
-            "newLines": 9,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 443,
-                "newLine": 516,
-                "text": "        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];"
-              },
-              {
-                "type": " ",
-                "oldLine": 444,
-                "newLine": 517,
-                "text": "        uint256 blocksProcessed = metaData.blocksProcessed();"
-              },
-              { "type": " ", "oldLine": 445, "newLine": 518, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 446,
-                "text": "        // The caller of `addLeavesLPP` must be an EOA.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 447,
-                "text": "        // Note: This check may break if EIPs like EIP-3074 are introduced. We may query the data in the logs if this",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 448,
-                "text": "        // is the case.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 519,
-                "text": "        // Legacy check, no longer technically required but keeping for now. Can be bypassed using",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 520,
-                "text": "        // EIP-7702. Challenger loads this information from the log at the end of this function",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 521,
-                "text": "        // instead of looking at transaction calldata.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 449,
-                "newLine": 522,
-                "text": "        if (msg.sender != tx.origin) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 450,
-                "newLine": 523,
-                "text": "            revert NotEOA();"
-              },
-              {
-                "type": " ",
-                "oldLine": 451,
-                "newLine": 524,
-                "text": "        }"
-              }
-            ]
-          },
-          {
-            "oldStart": 476,
-            "oldLines": 7,
-            "newStart": 549,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 476,
-                "newLine": 549,
-                "text": "            let inputPtr := add(input, 0x20)"
-              },
-              { "type": " ", "oldLine": 477, "newLine": 550, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 478,
-                "newLine": 551,
-                "text": "            // The input length must be a multiple of 136 bytes"
-              },
-              {
-                "type": "-",
-                "oldLine": 479,
-                "text": "            // The input lenth / 136 must be equal to the number of state commitments.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 552,
-                "text": "            // The input length / 136 must be equal to the number of state commitments.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 480,
-                "newLine": 553,
-                "text": "            if or(mod(inputLen, 136), iszero(eq(_stateCommitments.length, div(inputLen, 136)))) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 481,
-                "newLine": 554,
-                "text": "                // Store \"InvalidInputSize()\" error selector"
-              },
-              {
-                "type": " ",
-                "oldLine": 482,
-                "newLine": 555,
-                "text": "                mstore(0x00, 0x7b1daf1)"
-              }
-            ]
-          },
-          {
-            "oldStart": 659,
-            "oldLines": 6,
-            "newStart": 732,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 659,
-                "newLine": 732,
-                "text": "            revert BadProposal();"
-              },
-              {
-                "type": " ",
-                "oldLine": 660,
-                "newLine": 733,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 661, "newLine": 734, "text": "" },
-              {
-                "type": "+",
-                "newLine": 735,
-                "text": "        // Check if the proposal has been finalized at all.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 736,
-                "text": "        if (metaData.timestamp() == 0) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 737,
-                "text": "            revert ActiveProposal();",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 738,
-                "text": "        }",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 739, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 662,
-                "newLine": 740,
-                "text": "        // Check if the challenge period has passed since the proposal was finalized."
-              },
-              {
-                "type": " ",
-                "oldLine": 663,
-                "newLine": 741,
-                "text": "        if (block.timestamp - metaData.timestamp() <= CHALLENGE_PERIOD) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 664,
-                "newLine": 742,
-                "text": "            revert ActiveProposal();"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 858,
-      "match": {
-        "origin": "own",
-        "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
-        "matchedBy": "name",
-        "auditedName": "PreimageOracle",
-        "similarity": 0.965,
-        "reportId": "optimism/code4rena-superchain-2024-08",
-        "repository": "code-423n4/2024-07-optimism",
-        "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
-        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
-        "commitTimestamp": "2024-07-17T15:00:40Z",
-        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
-        "auditStatus": "audited_with_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository. H-02 spans the FaultDisputeGame clock extension and the PreimageOracle challenge period.",
-        "majorFindings": 4,
-        "findingIds": ["H-02", "H-03", "H-04", "H-05"],
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 2
-      },
-      "diff": {
-        "added": 26,
-        "removed": 8,
-        "ignoredAdded": 74,
-        "ignoredRemoved": 14,
-        "unchanged": 858,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 4,
-            "newStart": 1,
-            "newLines": 4,
-            "lines": [
-              {
-                "type": "-",
-                "oldLine": 1,
-                "text": "contract PreimageOracle is IPreimageOracle, ISemver {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 1,
-                "text": "contract PreimageOracle is ISemver {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    ////////////////////////////////////////////////////////////////"
-              },
-              {
-                "type": " ",
-                "oldLine": 3,
-                "newLine": 3,
-                "text": "    //                   Constants & Immutables                   //"
-              },
-              {
-                "type": " ",
-                "oldLine": 4,
-                "newLine": 4,
-                "text": "    ////////////////////////////////////////////////////////////////"
-              }
-            ]
-          },
-          {
-            "oldStart": 13,
-            "oldLines": 10,
-            "newStart": 13,
-            "newLines": 12,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 13,
-                "newLine": 13,
-                "text": "    uint256 public constant KECCAK_TREE_DEPTH = 16;"
-              },
-              {
-                "type": " ",
-                "oldLine": 14,
-                "newLine": 14,
-                "text": "    /// @notice The maximum number of keccak blocks that can fit into the merkle tree."
-              },
-              {
-                "type": " ",
-                "oldLine": 15,
-                "newLine": 15,
-                "text": "    uint256 public constant MAX_LEAF_COUNT = 2 ** KECCAK_TREE_DEPTH - 1;"
-              },
-              {
-                "type": "+",
-                "newLine": 16,
-                "text": "    /// @notice The reserved gas for precompile call setup.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 17,
-                "text": "    uint256 public constant PRECOMPILE_CALL_RESERVED_GAS = 100_000;",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 16, "newLine": 18, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 17,
-                "newLine": 19,
-                "text": "    /// @notice The semantic version of the Preimage Oracle contract."
-              },
-              {
-                "type": "-",
-                "oldLine": 18,
-                "text": "    /// @custom:semver 1.0.0",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 19,
-                "text": "    string public constant version = \"1.0.0\";",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 20,
-                "text": "    /// @custom:semver 1.1.4",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 21,
-                "text": "    string public constant version = \"1.1.4\";",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 20, "newLine": 22, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 23,
-                "text": "    ////////////////////////////////////////////////////////////////"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 24,
-                "text": "    //                 Authorized Preimage Parts                  //"
-              }
-            ]
-          },
-          {
-            "oldStart": 76,
-            "oldLines": 6,
-            "newStart": 78,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 76,
-                "newLine": 78,
-                "text": "        MIN_LPP_SIZE_BYTES = _minProposalSize;"
-              },
-              {
-                "type": " ",
-                "oldLine": 77,
-                "newLine": 79,
-                "text": "        CHALLENGE_PERIOD = _challengePeriod;"
-              },
-              { "type": " ", "oldLine": 78, "newLine": 80, "text": "" },
-              {
-                "type": "+",
-                "newLine": 81,
-                "text": "        // Make sure challenge period fits within uint64 so that it can safely be used within the",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 82,
-                "text": "        // FaultDisputeGame contract to compute clock extensions. Adding this check is simpler than",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 83,
-                "text": "        // changing the existing contract ABI.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 84,
-                "text": "        require(_challengePeriod <= type(uint64).max, \"PreimageOracle: challenge period too large\");",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 85, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 79,
-                "newLine": 86,
-                "text": "        // Compute hashes in empty sparse Merkle tree. The first hash is not set, and kept as zero as the identity."
-              },
-              {
-                "type": " ",
-                "oldLine": 80,
-                "newLine": 87,
-                "text": "        for (uint256 height = 0; height < KECCAK_TREE_DEPTH - 1; height++) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 81,
-                "newLine": 88,
-                "text": "            zeroHashes[height + 1] = keccak256(abi.encodePacked(zeroHashes[height], zeroHashes[height]));"
-              }
-            ]
-          },
-          {
-            "oldStart": 86,
-            "oldLines": 7,
-            "newStart": 93,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 86,
-                "newLine": 93,
-                "text": "    //             Standard Preimage Route (External)             //"
-              },
-              {
-                "type": " ",
-                "oldLine": 87,
-                "newLine": 94,
-                "text": "    ////////////////////////////////////////////////////////////////"
-              },
-              { "type": " ", "oldLine": 88, "newLine": 95, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 89,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 96,
-                "text": "    /// @notice Reads a preimage from the oracle.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 97,
-                "text": "    /// @param _key The key of the preimage to read.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 98,
-                "text": "    /// @param _offset The offset of the preimage to read.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 99,
-                "text": "    /// @return dat_ The preimage data.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 100,
-                "text": "    /// @return datLen_ The length of the preimage data.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 90,
-                "newLine": 101,
-                "text": "    function readPreimage(bytes32 _key, uint256 _offset) external view returns (bytes32 dat_, uint256 datLen_) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 91,
-                "newLine": 102,
-                "text": "        require(preimagePartOk[_key][_offset], \"pre-image must exist\");"
-              },
-              { "type": " ", "oldLine": 92, "newLine": 103, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 102,
-            "oldLines": 7,
-            "newStart": 113,
-            "newLines": 27,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 102,
-                "newLine": 113,
-                "text": "        dat_ = preimageParts[_key][_offset];"
-              },
-              { "type": " ", "oldLine": 103, "newLine": 114, "text": "    }" },
-              { "type": " ", "oldLine": 104, "newLine": 115, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 105,
-                "text": "    /// @inheritdoc IPreimageOracle",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 116,
-                "text": "    /// @notice Loads local data parts into the preimage oracle.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 117,
-                "text": "    /// @param _ident The identifier of the local data.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 118,
-                "text": "    /// @param _localContext The local key context for the preimage oracle. Optionally, can be set as a constant",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 119,
-                "text": "    ///                      if the caller only requires one set of local keys.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 120,
-                "text": "    /// @param _word The local data word.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 121,
-                "text": "    /// @param _size The number of bytes in `_word` to load.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 122,
-                "text": "    /// @param _partOffset The offset of the local data part to write to the oracle.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 123,
-                "text": "    /// @dev The local data parts are loaded into the preimage oracle under the context",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 124,
-                "text": "    ///      of the caller - no other account can write to the caller's context",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 125,
-                "text": "    ///      specific data.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 126,
-                "text": "    ///",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 127,
-                "text": "    ///      There are 5 local data identifiers:",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 128,
-                "text": "    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 129,
-                "text": "    ///      \u2502 Identifier \u2502      Data              \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 130,
-                "text": "    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 131,
-                "text": "    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 132,
-                "text": "    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 133,
-                "text": "    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 134,
-                "text": "    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 135,
-                "text": "    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 136,
-                "text": "    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+                "text": "    ///      └────────────┴────────────────────────┘",
                 "ignored": true
               },
               {
@@ -2766,7 +1394,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "PreimageOracle",
-        "similarity": 0.965,
+        "similarity": 0.996,
         "reportId": "optimism/code4rena-superchain-2024-08",
         "repository": "code-423n4/2024-07-optimism",
         "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
@@ -3139,55 +1767,1427 @@
               {
                 "type": "+",
                 "newLine": 128,
-                "text": "    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
+                "text": "    ///      ┌────────────┬────────────────────────┐",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 129,
-                "text": "    ///      \u2502 Identifier \u2502      Data              \u2502",
+                "text": "    ///      │ Identifier │      Data              │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 130,
-                "text": "    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
+                "text": "    ///      ├────────────┼────────────────────────┤",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 131,
-                "text": "    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502",
+                "text": "    ///      │          1 │ L1 Head Hash (bytes32) │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 132,
-                "text": "    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502",
+                "text": "    ///      │          2 │ Output Root (bytes32)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 133,
-                "text": "    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502",
+                "text": "    ///      │          3 │ Root Claim (bytes32)   │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 134,
-                "text": "    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502",
+                "text": "    ///      │          4 │ L2 Block Number (u64)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 135,
-                "text": "    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502",
+                "text": "    ///      │          5 │ Chain ID (u64)         │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 136,
-                "text": "    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+                "text": "    ///      └────────────┴────────────────────────┘",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 137,
+                "text": "    function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset)"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 138,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 139,
+                "text": "        returns (bytes32 key_)"
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 142,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 142,
+                "text": "        key_ = PreimageKeyLib.localizeIdent(_ident, _localContext);"
+              },
+              { "type": " ", "oldLine": 112, "newLine": 143, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 144,
+                "text": "        // Revert if the given part offset is not within bounds."
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        if (_partOffset > _size + 8 || _size > 32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        if (_partOffset >= _size + 8 || _size > 32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 146,
+                "text": "            revert PartOffsetOOB();"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 147,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 117, "newLine": 148, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 136,
+            "oldLines": 7,
+            "newStart": 167,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 167,
+                "text": "        preimageLengths[key_] = _size;"
+              },
+              { "type": " ", "oldLine": 137, "newLine": 168, "text": "    }" },
+              { "type": " ", "oldLine": 138, "newLine": 169, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "    /// @notice Prepares a preimage to be read by keccak256 key, starting at the given offset and up to 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    ///         (clipped at preimage length, if out of data).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "    /// @param _partOffset The offset of the preimage to read.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    /// @param _preimage The preimage data.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 174,
+                "text": "    function loadKeccak256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 175,
+                "text": "        uint256 size;"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 176,
+                "text": "        bytes32 key;"
+              }
+            ]
+          },
+          {
+            "oldStart": 171,
+            "oldLines": 7,
+            "newStart": 205,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 205,
+                "text": "        preimageLengths[key] = size;"
+              },
+              { "type": " ", "oldLine": 172, "newLine": 206, "text": "    }" },
+              { "type": " ", "oldLine": 173, "newLine": 207, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "    /// @notice Prepares a preimage to be read by sha256 key, starting at the given offset and up to 32 bytes",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "    ///         (clipped at preimage length, if out of data).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    /// @param _partOffset The offset of the preimage to read.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "    /// @param _preimage The preimage data.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 212,
+                "text": "    function loadSha256PreimagePart(uint256 _partOffset, bytes calldata _preimage) external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 213,
+                "text": "        uint256 size;"
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 214,
+                "text": "        bytes32 key;"
+              }
+            ]
+          },
+          {
+            "oldStart": 220,
+            "oldLines": 7,
+            "newStart": 257,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 257,
+                "text": "        preimageLengths[key] = size;"
+              },
+              { "type": " ", "oldLine": 221, "newLine": 258, "text": "    }" },
+              { "type": " ", "oldLine": 222, "newLine": 259, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "    /// @notice Verifies that `p(_z) = _y` given `_commitment` that corresponds to the polynomial `p(x)` and a KZG",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "    //          proof. The value `y` is the pre-image, and the preimage key is `5 ++ keccak256(_commitment ++ z)[1:]`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "    /// @param _z Big endian point value. Part of the preimage key.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "    /// @param _y Big endian point value. The preimage for the key.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "    /// @param _commitment The commitment to the polynomial. 48 bytes, part of the preimage key.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "    /// @param _proof The KZG proof, part of the preimage key.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "    /// @param _partOffset The offset of the preimage to store.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 267,
+                "text": "    function loadBlobPreimagePart("
+              },
+              {
+                "type": " ",
+                "oldLine": 225,
+                "newLine": 268,
+                "text": "        uint256 _z,"
+              },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 269,
+                "text": "        uint256 _y,"
+              }
+            ]
+          },
+          {
+            "oldStart": 309,
+            "oldLines": 8,
+            "newStart": 352,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 309,
+                "newLine": 352,
+                "text": "        preimageLengths[key] = 32;"
+              },
+              { "type": " ", "oldLine": 310, "newLine": 353, "text": "    }" },
+              { "type": " ", "oldLine": 311, "newLine": 354, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 312,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "    function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, bytes calldata _input) external {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "    /// @notice Prepares a precompile result to be read by a precompile key for the specified offset.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "    ///         The precompile result data is a concatenation of the precompile call status byte and its return data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "    ///         The preimage key is `6 ++ keccak256(precompile ++ input)[1:]`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "    /// @param _partOffset The offset of the precompile result being loaded.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "    /// @param _precompile The precompile address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "    /// @param _requiredGas The gas required to fully execute an L1 precompile.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "    /// @param _input The input to the precompile call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "    function loadPrecompilePreimagePart(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "        uint256 _partOffset,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "        address _precompile,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "        uint64 _requiredGas,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "        bytes calldata _input",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "    ) external {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 314,
+                "newLine": 368,
+                "text": "        bytes32 res;"
+              },
+              {
+                "type": " ",
+                "oldLine": 315,
+                "newLine": 369,
+                "text": "        bytes32 key;"
+              },
+              {
+                "type": " ",
+                "oldLine": 316,
+                "newLine": 370,
+                "text": "        bytes32 part;"
+              }
+            ]
+          },
+          {
+            "oldStart": 319,
+            "oldLines": 21,
+            "newStart": 373,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 373,
+                "text": "            // we leave solidity slots 0x40 and 0x60 untouched, and everything after as scratch-memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 374,
+                "text": "            let ptr := 0x80"
+              },
+              { "type": " ", "oldLine": 321, "newLine": 375, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "            // copy precompile address and input into memory",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 323,
+                "text": "            // len(sig) + len(_partOffset) + address-offset-in-slot",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 324,
+                "text": "            calldatacopy(ptr, 48, 20)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 325,
+                "text": "            calldatacopy(add(20, ptr), _input.offset, _input.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "            // copy precompile address, requiredGas, and input into memory to compute the key",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "            mstore(ptr, shl(96, _precompile))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "            mstore(add(ptr, 20), shl(192, _requiredGas))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "            calldatacopy(add(28, ptr), _input.offset, _input.length)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 380,
+                "text": "            // compute the hash"
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "            let h := keccak256(ptr, add(20, _input.length))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "            let h := keccak256(ptr, add(28, _input.length))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 382,
+                "text": "            // mask out prefix byte, replace with type 6 byte"
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 383,
+                "text": "            key := or(and(h, not(shl(248, 0xFF))), shl(248, 0x06))"
+              },
+              { "type": " ", "oldLine": 330, "newLine": 384, "text": "" },
+              {
+                "type": "+",
+                "newLine": 385,
+                "text": "            // Check if the precompile call has at least the required gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 386,
+                "text": "            // This assumes there are no further memory expansion costs until after the staticall on the precompile",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "            // Also assumes that the gas expended in setting up the staticcall is less than PRECOMPILE_CALL_RESERVED_GAS",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 388,
+                "text": "            // require(gas() >= (requiredGas * 64 / 63) + reservedGas)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 389,
+                "text": "            if lt(mul(gas(), 63), add(mul(_requiredGas, 64), mul(PRECOMPILE_CALL_RESERVED_GAS, 63))) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 390,
+                "text": "                // Store \"NotEnoughGas()\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 391,
+                "text": "                mstore(0, 0xdd629f86)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 392,
+                "text": "                revert(0x1c, 4)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 393,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 394, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 331,
+                "newLine": 395,
+                "text": "            // Call the precompile to get the result."
+              },
+              {
+                "type": "+",
+                "newLine": 396,
+                "text": "            // SAFETY: Given the above gas check, the staticall cannot fail due to insufficient gas.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 332,
+                "newLine": 397,
+                "text": "            res :="
+              },
+              {
+                "type": " ",
+                "oldLine": 333,
+                "newLine": 398,
+                "text": "                staticcall("
+              },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 399,
+                "text": "                    gas(), // forward all gas"
+              },
+              {
+                "type": " ",
+                "oldLine": 335,
+                "newLine": 400,
+                "text": "                    _precompile,"
+              },
+              {
+                "type": "-",
+                "oldLine": 336,
+                "text": "                    add(20, ptr), // input ptr",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 401,
+                "text": "                    add(28, ptr), // input ptr",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 337,
+                "newLine": 402,
+                "text": "                    _input.length,"
+              },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 403,
+                "text": "                    0x0, // Unused as we don't copy anything"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 404,
+                "text": "                    0x00 // don't copy anything"
+              }
+            ]
+          },
+          {
+            "oldStart": 398,
+            "oldLines": 7,
+            "newStart": 463,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 398,
+                "newLine": 463,
+                "text": "            revert InsufficientBond();"
+              },
+              {
+                "type": " ",
+                "oldLine": 399,
+                "newLine": 464,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 400, "newLine": 465, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 401,
+                "text": "        // The caller of `addLeavesLPP` must be an EOA, so that the call inputs are always available in block bodies.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 466,
+                "text": "        // Legacy check, no longer technically required but keeping for now. Can be bypassed using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "        // EIP-7702. Challenger loads this information directly from the proposals array instead of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "        // looking at transaction calldata.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 402,
+                "newLine": 469,
+                "text": "        if (msg.sender != tx.origin) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 403,
+                "newLine": 470,
+                "text": "            revert NotEOA();"
+              },
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 471,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 415,
+            "oldLines": 6,
+            "newStart": 482,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 415, "newLine": 482, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 416,
+                "newLine": 483,
+                "text": "        // Initialize the proposal metadata."
+              },
+              {
+                "type": " ",
+                "oldLine": 417,
+                "newLine": 484,
+                "text": "        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];"
+              },
+              { "type": "+", "newLine": 485, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 486,
+                "text": "        // Revert if the proposal has already been initialized. 0-size preimages are *not* allowed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 487,
+                "text": "        if (metaData.claimedSize() != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 488,
+                "text": "            revert AlreadyInitialized();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 489,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 490, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 418,
+                "newLine": 491,
+                "text": "        proposalMetadata[msg.sender][_uuid] = metaData.setPartOffset(_partOffset).setClaimedSize(_claimedSize);"
+              },
+              {
+                "type": " ",
+                "oldLine": 419,
+                "newLine": 492,
+                "text": "        proposals.push(LargePreimageProposalKeys(msg.sender, _uuid));"
+              },
+              { "type": " ", "oldLine": 420, "newLine": 493, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 443,
+            "oldLines": 9,
+            "newStart": 516,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 443,
+                "newLine": 516,
+                "text": "        LPPMetaData metaData = proposalMetadata[msg.sender][_uuid];"
+              },
+              {
+                "type": " ",
+                "oldLine": 444,
+                "newLine": 517,
+                "text": "        uint256 blocksProcessed = metaData.blocksProcessed();"
+              },
+              { "type": " ", "oldLine": 445, "newLine": 518, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 446,
+                "text": "        // The caller of `addLeavesLPP` must be an EOA.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 447,
+                "text": "        // Note: This check may break if EIPs like EIP-3074 are introduced. We may query the data in the logs if this",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 448,
+                "text": "        // is the case.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 519,
+                "text": "        // Legacy check, no longer technically required but keeping for now. Can be bypassed using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 520,
+                "text": "        // EIP-7702. Challenger loads this information from the log at the end of this function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 521,
+                "text": "        // instead of looking at transaction calldata.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 449,
+                "newLine": 522,
+                "text": "        if (msg.sender != tx.origin) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 450,
+                "newLine": 523,
+                "text": "            revert NotEOA();"
+              },
+              {
+                "type": " ",
+                "oldLine": 451,
+                "newLine": 524,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 476,
+            "oldLines": 7,
+            "newStart": 549,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 476,
+                "newLine": 549,
+                "text": "            let inputPtr := add(input, 0x20)"
+              },
+              { "type": " ", "oldLine": 477, "newLine": 550, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 478,
+                "newLine": 551,
+                "text": "            // The input length must be a multiple of 136 bytes"
+              },
+              {
+                "type": "-",
+                "oldLine": 479,
+                "text": "            // The input lenth / 136 must be equal to the number of state commitments.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 552,
+                "text": "            // The input length / 136 must be equal to the number of state commitments.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 480,
+                "newLine": 553,
+                "text": "            if or(mod(inputLen, 136), iszero(eq(_stateCommitments.length, div(inputLen, 136)))) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 481,
+                "newLine": 554,
+                "text": "                // Store \"InvalidInputSize()\" error selector"
+              },
+              {
+                "type": " ",
+                "oldLine": 482,
+                "newLine": 555,
+                "text": "                mstore(0x00, 0x7b1daf1)"
+              }
+            ]
+          },
+          {
+            "oldStart": 659,
+            "oldLines": 6,
+            "newStart": 732,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 659,
+                "newLine": 732,
+                "text": "            revert BadProposal();"
+              },
+              {
+                "type": " ",
+                "oldLine": 660,
+                "newLine": 733,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 661, "newLine": 734, "text": "" },
+              {
+                "type": "+",
+                "newLine": 735,
+                "text": "        // Check if the proposal has been finalized at all.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 736,
+                "text": "        if (metaData.timestamp() == 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 737,
+                "text": "            revert ActiveProposal();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 738,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 739, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 662,
+                "newLine": 740,
+                "text": "        // Check if the challenge period has passed since the proposal was finalized."
+              },
+              {
+                "type": " ",
+                "oldLine": 663,
+                "newLine": 741,
+                "text": "        if (block.timestamp - metaData.timestamp() <= CHALLENGE_PERIOD) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 664,
+                "newLine": 742,
+                "text": "            revert ActiveProposal();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 858,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "PreimageOracle",
+        "similarity": 0.996,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository. H-02 spans the FaultDisputeGame clock extension and the PreimageOracle challenge period.",
+        "majorFindings": 4,
+        "findingIds": ["H-02", "H-03", "H-04", "H-05"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 26,
+        "removed": 8,
+        "ignoredAdded": 74,
+        "ignoredRemoved": 14,
+        "unchanged": 858,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract PreimageOracle is IPreimageOracle, ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract PreimageOracle is ISemver {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    //                   Constants & Immutables                   //"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              }
+            ]
+          },
+          {
+            "oldStart": 13,
+            "oldLines": 10,
+            "newStart": 13,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    uint256 public constant KECCAK_TREE_DEPTH = 16;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @notice The maximum number of keccak blocks that can fit into the merkle tree."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    uint256 public constant MAX_LEAF_COUNT = 2 ** KECCAK_TREE_DEPTH - 1;"
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @notice The reserved gas for precompile call setup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    uint256 public constant PRECOMPILE_CALL_RESERVED_GAS = 100_000;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 19,
+                "text": "    /// @notice The semantic version of the Preimage Oracle contract."
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @custom:semver 1.0.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    string public constant version = \"1.0.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @custom:semver 1.1.4",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    string public constant version = \"1.1.4\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 22, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 23,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 24,
+                "text": "    //                 Authorized Preimage Parts                  //"
+              }
+            ]
+          },
+          {
+            "oldStart": 76,
+            "oldLines": 6,
+            "newStart": 78,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 78,
+                "text": "        MIN_LPP_SIZE_BYTES = _minProposalSize;"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 79,
+                "text": "        CHALLENGE_PERIOD = _challengePeriod;"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 80, "text": "" },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        // Make sure challenge period fits within uint64 so that it can safely be used within the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        // FaultDisputeGame contract to compute clock extensions. Adding this check is simpler than",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        // changing the existing contract ABI.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        require(_challengePeriod <= type(uint64).max, \"PreimageOracle: challenge period too large\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 85, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 86,
+                "text": "        // Compute hashes in empty sparse Merkle tree. The first hash is not set, and kept as zero as the identity."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 87,
+                "text": "        for (uint256 height = 0; height < KECCAK_TREE_DEPTH - 1; height++) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 88,
+                "text": "            zeroHashes[height + 1] = keccak256(abi.encodePacked(zeroHashes[height], zeroHashes[height]));"
+              }
+            ]
+          },
+          {
+            "oldStart": 86,
+            "oldLines": 7,
+            "newStart": 93,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 93,
+                "text": "    //             Standard Preimage Route (External)             //"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 94,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 95, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    /// @notice Reads a preimage from the oracle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    /// @param _key The key of the preimage to read.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    /// @param _offset The offset of the preimage to read.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @return dat_ The preimage data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @return datLen_ The length of the preimage data.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 101,
+                "text": "    function readPreimage(bytes32 _key, uint256 _offset) external view returns (bytes32 dat_, uint256 datLen_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 102,
+                "text": "        require(preimagePartOk[_key][_offset], \"pre-image must exist\");"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 103, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 102,
+            "oldLines": 7,
+            "newStart": 113,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 113,
+                "text": "        dat_ = preimageParts[_key][_offset];"
+              },
+              { "type": " ", "oldLine": 103, "newLine": 114, "text": "    }" },
+              { "type": " ", "oldLine": 104, "newLine": 115, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// @inheritdoc IPreimageOracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "    /// @notice Loads local data parts into the preimage oracle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    /// @param _ident The identifier of the local data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    /// @param _localContext The local key context for the preimage oracle. Optionally, can be set as a constant",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    ///                      if the caller only requires one set of local keys.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    /// @param _word The local data word.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    /// @param _size The number of bytes in `_word` to load.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    /// @param _partOffset The offset of the local data part to write to the oracle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    /// @dev The local data parts are loaded into the preimage oracle under the context",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    ///      of the caller - no other account can write to the caller's context",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    ///      specific data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "    ///      There are 5 local data identifiers:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    ///      ┌────────────┬────────────────────────┐",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "    ///      │ Identifier │      Data              │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "    ///      ├────────────┼────────────────────────┤",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "    ///      │          1 │ L1 Head Hash (bytes32) │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "    ///      │          2 │ Output Root (bytes32)  │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "    ///      │          3 │ Root Claim (bytes32)   │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "    ///      │          4 │ L2 Block Number (u64)  │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "    ///      │          5 │ Chain ID (u64)         │",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "    ///      └────────────┴────────────────────────┘",
                 "ignored": true
               },
               {
@@ -4141,7 +4141,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "PreimageOracle",
-        "similarity": 0.965,
+        "similarity": 0.996,
         "reportId": "optimism/code4rena-superchain-2024-08",
         "repository": "code-423n4/2024-07-optimism",
         "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
@@ -4514,55 +4514,55 @@
               {
                 "type": "+",
                 "newLine": 128,
-                "text": "    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
+                "text": "    ///      ┌────────────┬────────────────────────┐",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 129,
-                "text": "    ///      \u2502 Identifier \u2502      Data              \u2502",
+                "text": "    ///      │ Identifier │      Data              │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 130,
-                "text": "    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
+                "text": "    ///      ├────────────┼────────────────────────┤",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 131,
-                "text": "    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502",
+                "text": "    ///      │          1 │ L1 Head Hash (bytes32) │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 132,
-                "text": "    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502",
+                "text": "    ///      │          2 │ Output Root (bytes32)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 133,
-                "text": "    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502",
+                "text": "    ///      │          3 │ Root Claim (bytes32)   │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 134,
-                "text": "    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502",
+                "text": "    ///      │          4 │ L2 Block Number (u64)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 135,
-                "text": "    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502",
+                "text": "    ///      │          5 │ Chain ID (u64)         │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 136,
-                "text": "    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+                "text": "    ///      └────────────┴────────────────────────┘",
                 "ignored": true
               },
               {
@@ -5516,7 +5516,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "PreimageOracle",
-        "similarity": 0.965,
+        "similarity": 0.996,
         "reportId": "optimism/code4rena-superchain-2024-08",
         "repository": "code-423n4/2024-07-optimism",
         "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
@@ -5889,55 +5889,55 @@
               {
                 "type": "+",
                 "newLine": 128,
-                "text": "    ///      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
+                "text": "    ///      ┌────────────┬────────────────────────┐",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 129,
-                "text": "    ///      \u2502 Identifier \u2502      Data              \u2502",
+                "text": "    ///      │ Identifier │      Data              │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 130,
-                "text": "    ///      \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
+                "text": "    ///      ├────────────┼────────────────────────┤",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 131,
-                "text": "    ///      \u2502          1 \u2502 L1 Head Hash (bytes32) \u2502",
+                "text": "    ///      │          1 │ L1 Head Hash (bytes32) │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 132,
-                "text": "    ///      \u2502          2 \u2502 Output Root (bytes32)  \u2502",
+                "text": "    ///      │          2 │ Output Root (bytes32)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 133,
-                "text": "    ///      \u2502          3 \u2502 Root Claim (bytes32)   \u2502",
+                "text": "    ///      │          3 │ Root Claim (bytes32)   │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 134,
-                "text": "    ///      \u2502          4 \u2502 L2 Block Number (u64)  \u2502",
+                "text": "    ///      │          4 │ L2 Block Number (u64)  │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 135,
-                "text": "    ///      \u2502          5 \u2502 Chain ID (u64)         \u2502",
+                "text": "    ///      │          5 │ Chain ID (u64)         │",
                 "ignored": true
               },
               {
                 "type": "+",
                 "newLine": 136,
-                "text": "    ///      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+                "text": "    ///      └────────────┴────────────────────────┘",
                 "ignored": true
               },
               {

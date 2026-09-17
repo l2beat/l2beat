@@ -316,6 +316,15 @@
       "reportFile": "contracts__audits__2026-02-v5.6.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
     },
+    "openzeppelin/formal-verification__fv__reports__2021-10": {
+      "id": "openzeppelin/formal-verification__fv__reports__2021-10",
+      "collection": "openzeppelin",
+      "title": "Formal Verification Report for OpenZeppelin Governance Contracts",
+      "auditor": "Certora",
+      "reportDate": null,
+      "reportFile": "formal-verification__fv__reports__2021-10.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/formal-verification__fv__reports__2021-10.pdf"
+    },
     "openzeppelin/formal-verification__fv__reports__2022-03": {
       "id": "openzeppelin/formal-verification__fv__reports__2022-03",
       "collection": "openzeppelin",
@@ -702,6 +711,15 @@
       "reportDate": "2024-02-06",
       "reportFile": "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02.pdf"
+    },
+    "scroll/openzeppelin-scroll-diff-audit-2023-09": {
+      "id": "scroll/openzeppelin-scroll-diff-audit-2023-09",
+      "collection": "scroll",
+      "title": "Scroll Diff Audit Report",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2023-09-21",
+      "reportFile": "openzeppelin-scroll-diff-audit-2023-09.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/scroll/reports/openzeppelin-scroll-diff-audit-2023-09.pdf"
     },
     "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04": {
       "id": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",

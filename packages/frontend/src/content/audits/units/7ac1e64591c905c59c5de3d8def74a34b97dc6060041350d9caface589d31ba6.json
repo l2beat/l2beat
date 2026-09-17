@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "L2CrossDomainMessenger",
-        "similarity": 0.898,
+        "similarity": 0.913,
         "reportId": "optimism/cantina-mcp-l1-2024-02",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",

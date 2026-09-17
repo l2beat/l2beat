@@ -16,27 +16,26 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "CrossDomainMessenger",
-        "similarity": 0.975,
+        "similarity": 1,
         "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-        "commit": "d1651bb22645ebd41ac4bb2ab4786f9a56fc1003",
-        "commitTimestamp": "2023-12-07T09:00:26Z",
-        "url": "https://github.com/ethereum-optimism/optimism/blob/d1651bb22645ebd41ac4bb2ab4786f9a56fc1003/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-        "auditStatus": "partially_audited_with_major_findings",
-        "reviewPhase": "diff audit",
-        "coverage": "Diff review of all changes to this file since the Sherlock contest commit 9b9f78c6613c6ee53b93ca43c71bb74479f4b975, with attention to gas mitigations, storage layout, reentrancy and SuperchainConfig pause integration.",
-        "majorFindings": 1,
-        "findingIds": ["TRST-H-1"],
+        "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+        "commitTimestamp": "2024-01-08T19:01:54Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Mitigation review commit named by the report.",
+        "majorFindings": 0,
         "isLatestVersion": false,
         "laterAuditedVersionExists": true,
         "totalVersions": 11
       },
       "diff": {
         "added": 1,
-        "removed": 5,
-        "ignoredAdded": 161,
-        "ignoredRemoved": 99,
+        "removed": 8,
+        "ignoredAdded": 162,
+        "ignoredRemoved": 106,
         "unchanged": 359,
         "ignoredOnly": false,
         "hunks": [
@@ -1275,40 +1274,97 @@
             ]
           },
           {
-            "oldStart": 216,
+            "oldStart": 199,
+            "oldLines": 9,
+            "newStart": 243,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 243,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;"
+              },
+              { "type": " ", "oldLine": 200, "newLine": 244, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 245,
+                "text": "        if (success) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            // This check is identical to one above, but it ensures that the same message cannot be relayed",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "            // twice, and adds a layer of protection against rentrancy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "            assert(successfulMessages[versionedHash] == false);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 246,
+                "text": "            successfulMessages[versionedHash] = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 247,
+                "text": "            emit RelayedMessage(versionedHash);"
+              },
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 248,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 219,
             "oldLines": 10,
             "newStart": 260,
             "newLines": 13,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 216,
+                "oldLine": 219,
                 "newLine": 260,
                 "text": "        }"
               },
-              { "type": " ", "oldLine": 217, "newLine": 261, "text": "    }" },
-              { "type": " ", "oldLine": 218, "newLine": 262, "text": "" },
+              { "type": " ", "oldLine": 220, "newLine": 261, "text": "    }" },
+              { "type": " ", "oldLine": 221, "newLine": 262, "text": "" },
               {
                 "type": "-",
-                "oldLine": 219,
+                "oldLine": 222,
                 "text": "    /// @notice Retrieves the address of the contract or wallet that initiated the currently",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 220,
+                "oldLine": 223,
                 "text": "    ///         executing message on the other chain. Will throw an error if there is no message",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 221,
+                "oldLine": 224,
                 "text": "    ///         currently being executed. Allows the recipient of a call to see who triggered it.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 222,
+                "oldLine": 225,
                 "text": "    /// @return Address of the sender of the currently executing message on the other chain.",
                 "ignored": true
               },
@@ -1356,59 +1412,59 @@
               },
               {
                 "type": " ",
-                "oldLine": 223,
+                "oldLine": 226,
                 "newLine": 270,
                 "text": "    function xDomainMessageSender() external view returns (address) {"
               },
               {
                 "type": " ",
-                "oldLine": 224,
+                "oldLine": 227,
                 "newLine": 271,
                 "text": "        require("
               },
               {
                 "type": " ",
-                "oldLine": 225,
+                "oldLine": 228,
                 "newLine": 272,
                 "text": "            xDomainMsgSender != Constants.DEFAULT_L2_SENDER, \"CrossDomainMessenger: xDomainMessageSender is not set\""
               }
             ]
           },
           {
-            "oldStart": 228,
+            "oldStart": 231,
             "oldLines": 21,
             "newStart": 275,
             "newLines": 28,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 228,
+                "oldLine": 231,
                 "newLine": 275,
                 "text": "        return xDomainMsgSender;"
               },
-              { "type": " ", "oldLine": 229, "newLine": 276, "text": "    }" },
-              { "type": " ", "oldLine": 230, "newLine": 277, "text": "" },
+              { "type": " ", "oldLine": 232, "newLine": 276, "text": "    }" },
+              { "type": " ", "oldLine": 233, "newLine": 277, "text": "" },
               {
                 "type": "-",
-                "oldLine": 231,
+                "oldLine": 234,
                 "text": "    /// @notice Retrieves the next message nonce. Message version will be added to the upper two",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 232,
+                "oldLine": 235,
                 "text": "    ///         bytes of the message nonce. Message version allows us to treat messages as having",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 233,
+                "oldLine": 236,
                 "text": "    ///         different structures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 234,
+                "oldLine": 237,
                 "text": "    /// @return Nonce of the next message to be sent, with added message version.",
                 "ignored": true
               },
@@ -1456,57 +1512,57 @@
               },
               {
                 "type": " ",
-                "oldLine": 235,
+                "oldLine": 238,
                 "newLine": 285,
                 "text": "    function messageNonce() public view returns (uint256) {"
               },
               {
                 "type": " ",
-                "oldLine": 236,
+                "oldLine": 239,
                 "newLine": 286,
                 "text": "        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);"
               },
-              { "type": " ", "oldLine": 237, "newLine": 287, "text": "    }" },
-              { "type": " ", "oldLine": 238, "newLine": 288, "text": "" },
+              { "type": " ", "oldLine": 240, "newLine": 287, "text": "    }" },
+              { "type": " ", "oldLine": 241, "newLine": 288, "text": "" },
               {
                 "type": "-",
-                "oldLine": 239,
+                "oldLine": 242,
                 "text": "    /// @notice Computes the amount of gas required to guarantee that a given message will be",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 240,
+                "oldLine": 243,
                 "text": "    ///         received on the other chain without running out of gas. Guaranteeing that a message",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 241,
+                "oldLine": 244,
                 "text": "    ///         will not run out of gas is important because this ensures that a message can always",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 242,
+                "oldLine": 245,
                 "text": "    ///         be replayed on the other chain if it fails to execute completely.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 243,
+                "oldLine": 246,
                 "text": "    /// @param _message     Message to compute the amount of required gas for.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 244,
+                "oldLine": 247,
                 "text": "    /// @param _minGasLimit Minimum desired gas limit when message goes to target.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 245,
+                "oldLine": 248,
                 "text": "    /// @return Amount of gas required to guarantee message receipt.",
                 "ignored": true
               },
@@ -1578,41 +1634,41 @@
               },
               {
                 "type": " ",
-                "oldLine": 246,
+                "oldLine": 249,
                 "newLine": 300,
                 "text": "    function baseGas(bytes calldata _message, uint32 _minGasLimit) public pure returns (uint64) {"
               },
               {
                 "type": " ",
-                "oldLine": 247,
+                "oldLine": 250,
                 "newLine": 301,
                 "text": "        return"
               },
               {
                 "type": " ",
-                "oldLine": 248,
+                "oldLine": 251,
                 "newLine": 302,
                 "text": "        // Constant overhead"
               }
             ]
           },
           {
-            "oldStart": 262,
-            "oldLines": 41,
+            "oldStart": 265,
+            "oldLines": 47,
             "newStart": 316,
             "newLines": 45,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 262,
+                "oldLine": 265,
                 "newLine": 316,
                 "text": "        + RELAY_GAS_CHECK_BUFFER;"
               },
-              { "type": " ", "oldLine": 263, "newLine": 317, "text": "    }" },
-              { "type": " ", "oldLine": 264, "newLine": 318, "text": "" },
+              { "type": " ", "oldLine": 266, "newLine": 317, "text": "    }" },
+              { "type": " ", "oldLine": 267, "newLine": 318, "text": "" },
               {
                 "type": "-",
-                "oldLine": 265,
+                "oldLine": 268,
                 "text": "    /// @notice Initializer.",
                 "ignored": true
               },
@@ -1636,63 +1692,105 @@
               },
               {
                 "type": " ",
-                "oldLine": 266,
+                "oldLine": 269,
                 "newLine": 322,
                 "text": "    // solhint-disable-next-line func-name-mixedcase"
               },
               {
                 "type": " ",
-                "oldLine": 267,
+                "oldLine": 270,
                 "newLine": 323,
                 "text": "    function __CrossDomainMessenger_init() internal onlyInitializing {"
               },
               {
-                "type": " ",
-                "oldLine": 268,
-                "newLine": 324,
-                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;"
-              },
-              { "type": " ", "oldLine": 269, "newLine": 325, "text": "    }" },
-              { "type": " ", "oldLine": 270, "newLine": 326, "text": "" },
-              {
                 "type": "-",
                 "oldLine": 271,
-                "text": "    /// @notice Sends a low-level message to the other messenger. Needs to be implemented by child",
+                "text": "        // We only want to set the xDomainMsgSender to the default value if it hasn't been initialized yet,",
                 "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 272,
-                "text": "    ///         contracts because the logic for this depends on the network where the messenger is",
+                "text": "        // meaning that this is a fresh contract deployment.",
                 "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 273,
-                "text": "    ///         being deployed.",
+                "text": "        // This prevents resetting the xDomainMsgSender to the default value during an upgrade, which would enable",
                 "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 274,
-                "text": "    /// @param _to       Recipient of the message on the other chain.",
+                "text": "        // a reentrant withdrawal to sandwhich the upgrade replay a withdrawal twice.",
                 "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 275,
-                "text": "    /// @param _gasLimit Minimum gas limit the message can be executed with.",
-                "ignored": true
+                "text": "        if (xDomainMsgSender == address(0)) {",
+                "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 276,
-                "text": "    /// @param _value    Amount of ETH to send with the message.",
+                "text": "            xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
                 "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 277,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 278, "newLine": 325, "text": "    }" },
+              { "type": " ", "oldLine": 279, "newLine": 326, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "    /// @notice Sends a low-level message to the other messenger. Needs to be implemented by child",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 281,
+                "text": "    ///         contracts because the logic for this depends on the network where the messenger is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 282,
+                "text": "    ///         being deployed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 283,
+                "text": "    /// @param _to       Recipient of the message on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "    /// @param _gasLimit Minimum gas limit the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "    /// @param _value    Amount of ETH to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
                 "text": "    /// @param _data     Message data.",
                 "ignored": true
               },
@@ -1758,32 +1856,32 @@
               },
               {
                 "type": " ",
-                "oldLine": 278,
+                "oldLine": 287,
                 "newLine": 337,
                 "text": "    function _sendMessage(address _to, uint64 _gasLimit, uint256 _value, bytes memory _data) internal virtual;"
               },
-              { "type": " ", "oldLine": 279, "newLine": 338, "text": "" },
+              { "type": " ", "oldLine": 288, "newLine": 338, "text": "" },
               {
                 "type": "-",
-                "oldLine": 280,
+                "oldLine": 289,
                 "text": "    /// @notice Checks whether the message is coming from the other messenger. Implemented by child",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 281,
+                "oldLine": 290,
                 "text": "    ///         contracts because the logic for this depends on the network where the messenger is",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 282,
+                "oldLine": 291,
                 "text": "    ///         being deployed.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 283,
+                "oldLine": 292,
                 "text": "    /// @return Whether the message is coming from the other messenger.",
                 "ignored": true
               },
@@ -1831,50 +1929,50 @@
               },
               {
                 "type": " ",
-                "oldLine": 284,
+                "oldLine": 293,
                 "newLine": 346,
                 "text": "    function _isOtherMessenger() internal view virtual returns (bool);"
               },
-              { "type": " ", "oldLine": 285, "newLine": 347, "text": "" },
+              { "type": " ", "oldLine": 294, "newLine": 347, "text": "" },
               {
                 "type": "-",
-                "oldLine": 286,
+                "oldLine": 295,
                 "text": "    /// @notice Checks whether a given call target is a system address that could cause the",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 287,
+                "oldLine": 296,
                 "text": "    ///         messenger to peform an unsafe action. This is NOT a mechanism for blocking user",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 288,
+                "oldLine": 297,
                 "text": "    ///         addresses. This is ONLY used to prevent the execution of messages to specific",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 289,
+                "oldLine": 298,
                 "text": "    ///         system addresses that could cause security issues, e.g., having the",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 290,
+                "oldLine": 299,
                 "text": "    ///         CrossDomainMessenger send messages to itself.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 291,
+                "oldLine": 300,
                 "text": "    /// @param _target Address of the contract to check.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 292,
+                "oldLine": 301,
                 "text": "    /// @return Whether or not the address is an unsafe system address.",
                 "ignored": true
               },
@@ -1946,54 +2044,54 @@
               },
               {
                 "type": " ",
-                "oldLine": 293,
+                "oldLine": 302,
                 "newLine": 359,
                 "text": "    function _isUnsafeTarget(address _target) internal view virtual returns (bool);"
               },
-              { "type": "-", "oldLine": 294, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 303, "text": "", "ignored": true },
               {
                 "type": "-",
-                "oldLine": 295,
+                "oldLine": 304,
                 "text": "    /// @notice This function should return true if the contract is paused.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 296,
+                "oldLine": 305,
                 "text": "    ///         On L1 this function will check the SuperchainConfig for its paused status.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 297,
+                "oldLine": 306,
                 "text": "    ///         On L2 this function should be a no-op.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 298,
+                "oldLine": 307,
                 "text": "    /// @return Whether or not the contract is paused.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 299,
+                "oldLine": 308,
                 "text": "    function paused() public view virtual returns (bool) {",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 300,
+                "oldLine": 309,
                 "text": "        return false;",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 301,
+                "oldLine": 310,
                 "text": "    }",
                 "ignored": false
               },
-              { "type": " ", "oldLine": 302, "newLine": 360, "text": "}" }
+              { "type": " ", "oldLine": 311, "newLine": 360, "text": "}" }
             ]
           }
         ]

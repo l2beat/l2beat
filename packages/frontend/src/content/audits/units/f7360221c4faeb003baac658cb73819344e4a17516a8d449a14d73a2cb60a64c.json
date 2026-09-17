@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "alias",
         "auditedName": "Mixer",
-        "similarity": 0.717,
+        "similarity": 0.748,
         "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
         "repository": "peppersec/tornado-mixer",
         "path": "contracts/Mixer.sol",

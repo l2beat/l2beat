@@ -16,7 +16,11 @@ import {
 import { PreparedUnitCache, prepareFile } from '../evidence/units.js'
 import { generateProject } from '../generate.js'
 import { buildContext } from '../resolve/context.js'
-import { resolveUnit } from '../resolve/resolve.js'
+import {
+  minMatchScore,
+  resolveUnit,
+  unitsCompatible,
+} from '../resolve/resolve.js'
 import { UnitStore } from '../store/store.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
@@ -211,6 +215,60 @@ describe(resolveUnit.name, () => {
     })
     const treasury = unitsOf('Treasury.sol').find((u) => u.name === 'Treasury')
     expect(treasury && resolveUnit(treasury, index, context)).toEqual(undefined)
+  })
+
+  it('does not retain a weak same-name match', () => {
+    const index = evidence(cache)
+    const context = buildContext(index, {
+      projectId: 'fork',
+      templates: [],
+      collectionHints: {},
+    })
+    const vault = prepareFile(
+      'Unrelated.sol',
+      `contract Vault {
+        function freeze(bytes32 id) external {}
+        function slash(address account) external {}
+        function settle(uint256 epoch) external {}
+      }`,
+    ).find((u) => u.name === 'Vault')
+    expect(vault && resolveUnit(vault, index, context)).toEqual(undefined)
+  })
+
+  it('does not compare an interface with a same-name implementation', () => {
+    const index = evidence(cache)
+    const context = buildContext(index, {
+      projectId: 'fork',
+      templates: [],
+      collectionHints: {},
+    })
+    const vault = prepareFile(
+      'VaultInterface.sol',
+      'interface Vault { function balance() external view returns (uint256); }',
+    ).find((u) => u.name === 'Vault')
+    expect(vault && resolveUnit(vault, index, context)).toEqual(undefined)
+  })
+
+  it('allows kind changes only for signature-free namespaces', () => {
+    expect(
+      unitsCompatible(
+        { kind: 'interface', signatures: [] },
+        { kind: 'contract', signatures: [] },
+      ),
+    ).toEqual(true)
+    expect(
+      unitsCompatible(
+        { kind: 'interface', signatures: ['balance()'] },
+        { kind: 'contract', signatures: ['balance()'] },
+      ),
+    ).toEqual(false)
+  })
+
+  it('uses stricter thresholds for renamed and unrelated candidates', () => {
+    expect(minMatchScore(0, 'name')).toEqual(0.55)
+    expect(minMatchScore(3, 'alias')).toEqual(0.55)
+    expect(minMatchScore(4, 'name')).toEqual(0.7)
+    expect(minMatchScore(0, 'similarity')).toEqual(0.65)
   })
 
   it('returns nothing for unknown code', () => {

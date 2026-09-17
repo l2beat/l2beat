@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "AddressAliasHelper",
-        "similarity": 0.769,
+        "similarity": 0.788,
         "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/libraries/common/AddressAliasHelper.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "MerkleLib",
-        "similarity": 0.842,
+        "similarity": 0.883,
         "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/crypto/MerkleLib.sol",

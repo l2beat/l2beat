@@ -36,33 +36,6 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
-      "status": "identical",
-      "coveredLines": 51,
-      "match": {
-        "origin": "own",
-        "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
-        "matchedBy": "identity",
-        "auditedName": "CrossDomainMessengerLegacySpacer1",
-        "similarity": 1,
-        "reportId": "optimism/cantina-eip7702-2025-02",
-        "repository": "ethereum-optimism/optimism",
-        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
-        "commitTimestamp": "2025-03-05T15:37:49Z",
-        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix review",
-        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 6
-      },
-      "warnings": []
-    },
     "44ad4cf96e2ef6f0": {
       "status": "identical",
       "coveredLines": 51,
@@ -87,6 +60,33 @@
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
       },
       "warnings": []
     },

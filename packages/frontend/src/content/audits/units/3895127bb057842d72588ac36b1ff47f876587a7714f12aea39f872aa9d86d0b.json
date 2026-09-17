@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Encoding",
-        "similarity": 0.895,
+        "similarity": 0.902,
         "reportId": "optimism/spearbit-upgrade16-2025-05",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",

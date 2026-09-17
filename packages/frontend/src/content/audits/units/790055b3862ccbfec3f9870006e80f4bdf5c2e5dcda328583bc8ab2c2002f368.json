@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "RollupCore",
-        "similarity": 0.691,
+        "similarity": 0.737,
         "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/RollupCore.sol",

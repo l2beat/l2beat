@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "LivenessModule",
-        "similarity": 0.97,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/safe/LivenessModule.sol",

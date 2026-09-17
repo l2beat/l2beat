@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "PoolInitializer",
-        "similarity": 0.732,
+        "similarity": 0.802,
         "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
         "repository": "ronin-chain/katana-v3-contracts",
         "path": "src/periphery/base/PoolInitializer.sol",

@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Math",
-        "similarity": 0.948,
+        "similarity": 1,
         "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/math/Math.sol",

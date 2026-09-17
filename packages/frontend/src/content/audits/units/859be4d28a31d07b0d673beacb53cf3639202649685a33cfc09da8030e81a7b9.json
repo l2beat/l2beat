@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "Umbra",
-        "similarity": 0.993,
+        "similarity": 1,
         "reportId": "umbra/consensys-diligence-umbra-smart-contracts-2021-03",
         "repository": "ScopeLift/umbra-protocol",
         "path": "contracts/contracts/Umbra.sol",

@@ -6,7 +6,7 @@
   "lines": 28,
   "source": "contract Executor {\n    function execute(address to, uint256 value, bytes memory data, Enum.Operation operation, uint256 txGas)\n        internal\n        returns (bool success)\n    {\n        if (operation == Enum.Operation.Call) {\n            success = executeCall(to, value, data, txGas);\n        } else if (operation == Enum.Operation.DelegateCall) {\n            success = executeDelegateCall(to, data, txGas);\n        } else {\n            success = false;\n        }\n    }\n\n    function executeCall(address to, uint256 value, bytes memory data, uint256 txGas) internal returns (bool success) {\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            success := call(txGas, to, value, add(data, 0x20), mload(data), 0, 0)\n        }\n    }\n\n    function executeDelegateCall(address to, bytes memory data, uint256 txGas) internal returns (bool success) {\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            success := delegatecall(txGas, to, add(data, 0x20), mload(data), 0, 0)\n        }\n    }\n}",
   "resolutions": {
-    "f9658cd3a9a22004": {
+    "9fa846564f4071bd": {
       "status": "library",
       "coveredLines": 28,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "f9658cd3a9a22004": {
       "status": "library",
       "coveredLines": 28,
       "match": {

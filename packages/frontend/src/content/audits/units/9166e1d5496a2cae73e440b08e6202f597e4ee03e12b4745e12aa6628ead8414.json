@@ -6,14 +6,14 @@
   "lines": 29,
   "source": "abstract contract Executor {\n    /**\n     * @notice Executes either a delegatecall or a call with provided parameters.\n     * @dev This method doesn't perform any sanity check of the transaction, such as:\n     *      - if the contract at `to` address has code or not\n     *      It is the responsibility of the caller to perform such checks.\n     * @param to Destination address.\n     * @param value Ether value.\n     * @param data Data payload.\n     * @param operation Operation type.\n     * @return success boolean flag indicating if the call succeeded.\n     */\n    function execute(address to, uint256 value, bytes memory data, Enum.Operation operation, uint256 txGas)\n        internal\n        returns (bool success)\n    {\n        if (operation == Enum.Operation.DelegateCall) {\n            // solhint-disable-next-line no-inline-assembly\n            assembly {\n                success := delegatecall(txGas, to, add(data, 0x20), mload(data), 0, 0)\n            }\n        } else {\n            // solhint-disable-next-line no-inline-assembly\n            assembly {\n                success := call(txGas, to, value, add(data, 0x20), mload(data), 0, 0)\n            }\n        }\n    }\n}",
   "resolutions": {
-    "ba5b6c9584fb78fd": {
+    "41ad32932dea0dc9": {
       "status": "identical",
       "coveredLines": 29,
       "match": {
-        "origin": "own",
+        "origin": "other",
         "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": { "type": "name" },
+        "rank": 4,
         "matchedBy": "identity",
         "auditedName": "Executor",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "d293c6ecba42b698": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 29,
       "match": {
-        "origin": "other",
+        "origin": "own",
         "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "Executor",
         "similarity": 1,
@@ -114,7 +114,7 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "identical",
       "coveredLines": 29,
       "match": {

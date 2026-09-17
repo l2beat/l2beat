@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "SP1Verifier",
-        "similarity": 0.741,
+        "similarity": 0.828,
         "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
         "repository": "succinctlabs/sp1-contracts",
         "path": "contracts/src/v1.0.7-testnet/SP1Verifier.sol",

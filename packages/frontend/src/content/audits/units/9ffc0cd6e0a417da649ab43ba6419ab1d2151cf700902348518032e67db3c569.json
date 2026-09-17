@@ -60,14 +60,14 @@
       },
       "warnings": []
     },
-    "bb55951394276893": {
+    "1daaed8c8125f2b6": {
       "status": "library",
       "coveredLines": 70,
       "match": {
-        "origin": "stack",
+        "origin": "library",
         "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
+        "relation": { "type": "library" },
+        "rank": 3,
         "matchedBy": "identity",
         "auditedName": "IERC20",
         "similarity": 1,
@@ -87,14 +87,14 @@
       },
       "warnings": []
     },
-    "1daaed8c8125f2b6": {
+    "bb55951394276893": {
       "status": "library",
       "coveredLines": 70,
       "match": {
-        "origin": "library",
+        "origin": "stack",
         "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
         "matchedBy": "identity",
         "auditedName": "IERC20",
         "similarity": 1,

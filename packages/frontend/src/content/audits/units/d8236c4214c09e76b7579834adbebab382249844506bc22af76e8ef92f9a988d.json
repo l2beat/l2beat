@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "DeputyPauseModule",
-        "similarity": 0.93,
+        "similarity": 0.966,
         "reportId": "optimism/spearbit-upgrade16-2025-05",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/safe/DeputyPauseModule.sol",

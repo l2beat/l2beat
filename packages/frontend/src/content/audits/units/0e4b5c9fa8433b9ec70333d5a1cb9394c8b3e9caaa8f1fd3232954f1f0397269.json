@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "FeeHeaderLib",
-        "similarity": 0.846,
+        "similarity": 0.874,
         "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",

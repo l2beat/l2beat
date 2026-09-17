@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IL1ScrollMessenger",
-        "similarity": 0.957,
+        "similarity": 1,
         "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/L1/IL1ScrollMessenger.sol",

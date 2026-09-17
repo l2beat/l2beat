@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "L2ToL1MessagePasser",
-        "similarity": 0.956,
+        "similarity": 0.986,
         "reportId": "optimism/code4rena-base-2023-08",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "MainchainGatewayV3",
-        "similarity": 0.856,
+        "similarity": 0.869,
         "reportId": "roninnetwork/beosin-ronin-bridge-2024-08",
         "repository": "ronin-chain/bridge-contract",
         "path": "src/mainchain/MainchainGatewayV3.sol",

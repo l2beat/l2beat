@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "privacy-pools",
   "slug": "privacy-pools",
-  "generatedAt": 1789564498,
+  "generatedAt": 1789642559,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1779964040,
   "contractSelection": "all",
@@ -74,28 +74,26 @@
     "units": {
       "identical": 87,
       "library": 42,
-      "differs": 36,
-      "unaudited": 119
+      "differs": 21,
+      "unaudited": 134
     },
     "uniqueUnits": {
       "identical": 8,
       "library": 11,
-      "differs": 7,
-      "unaudited": 14
+      "differs": 6,
+      "unaudited": 15
     },
     "lines": {
       "total": 73007,
-      "covered": 19204,
-      "uncovered": 53803
+      "covered": 19002,
+      "uncovered": 54005
     }
   },
   "reportIds": [
-    "aztecnetwork/cantina-payload-2026-03-05",
     "bob/veridise-kailua-2025-02",
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "openzeppelin/contracts__audits__2024-10-v5.1",
     "openzeppelin/contracts__audits__2026-02-v5.6",
-    "optimism/openzeppelin-bedrock-bridge-2022-05",
     "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
     "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
     "safe/certora-safe-1-3-0"
@@ -113,19 +111,19 @@
         "units": {
           "identical": 0,
           "library": 0,
-          "differs": 1,
-          "unaudited": 0
+          "differs": 0,
+          "unaudited": 1
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 0,
-          "differs": 1,
-          "unaudited": 0
+          "differs": 0,
+          "unaudited": 1
         },
         "lines": {
           "total": 194,
-          "covered": 77,
-          "uncovered": 117
+          "covered": 0,
+          "uncovered": 194
         }
       },
       "files": [
@@ -142,42 +140,9 @@
               "startLine": 4,
               "endLine": 197,
               "lines": 194,
-              "status": "differs",
-              "coveredLines": 77,
-              "match": {
-                "origin": "other",
-                "collection": "optimism",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "WithdrawalVerifier",
-                "similarity": 0.059,
-                "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
-                "repository": "ethereum-optimism/optimistic-specs",
-                "path": "packages/contracts/contracts/libraries/Lib_WithdrawalVerifier.sol",
-                "commit": "8cbaf02ed6a7ecbad1b86e5ea1781566031ff694",
-                "commitTimestamp": "2022-05-16T22:29:31Z",
-                "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/8cbaf02ed6a7ecbad1b86e5ea1781566031ff694/packages/contracts/contracts/libraries/Lib_WithdrawalVerifier.sol",
-                "auditStatus": "partially_audited_with_major_findings",
-                "reviewPhase": "fix review",
-                "coverage": "Two further days completing the review of the new version; C-01, H-01 and N-07 verified fixed, H-02 (StandardBridge token refunds) found at this commit.",
-                "majorFindings": 1,
-                "findingIds": ["H-02"],
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 6
-              },
-              "diffStats": {
-                "added": 117,
-                "removed": 38,
-                "ignoredAdded": 71,
-                "ignoredRemoved": 26,
-                "unchanged": 77,
-                "ignoredOnly": false
-              },
-              "warnings": ["kind-mismatch", "low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             }
           ]
         }
@@ -195,19 +160,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -283,7 +248,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -352,41 +317,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -722,19 +655,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -810,7 +743,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -879,41 +812,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -1249,19 +1150,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -1337,7 +1238,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -1406,41 +1307,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -1787,8 +1656,8 @@
         },
         "lines": {
           "total": 3333,
-          "covered": 2534,
-          "uncovered": 799
+          "covered": 2675,
+          "uncovered": 658
         }
       },
       "files": [
@@ -1860,7 +1729,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -2179,7 +2048,7 @@
                 "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "ContextUpgradeable",
-                "similarity": 0.75,
+                "similarity": 0.781,
                 "reportId": "bob/veridise-kailua-2025-02",
                 "repository": "boundless-xyz/kailua",
                 "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -2281,8 +2150,40 @@
               "startLine": 435,
               "endLine": 617,
               "lines": 183,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 160,
+              "match": {
+                "origin": "library",
+                "collection": "openzeppelin",
+                "relation": {
+                  "type": "library"
+                },
+                "rank": 3,
+                "matchedBy": "similarity",
+                "auditedName": "AccessControl",
+                "similarity": 0.731,
+                "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+                "repository": "OpenZeppelin/openzeppelin-contracts",
+                "path": "contracts/access/AccessControl.sol",
+                "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+                "commitTimestamp": "2026-02-27T15:00:00Z",
+                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/access/AccessControl.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "fix review",
+                "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 23,
+                "removed": 7,
+                "ignoredAdded": 11,
+                "ignoredRemoved": 3,
+                "unchanged": 160,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -2340,7 +2241,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -2572,7 +2473,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "UUPSUpgradeable",
-                "similarity": 0.957,
+                "similarity": 0.955,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/utils/UUPSUpgradeable.sol",
@@ -2617,41 +2518,9 @@
               "startLine": 1396,
               "endLine": 1426,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -2732,7 +2601,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -2937,19 +2806,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -3025,7 +2894,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -3094,41 +2963,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -3542,19 +3379,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -3630,7 +3467,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -3699,41 +3536,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -4069,19 +3874,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -4157,7 +3962,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -4226,41 +4031,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -4596,19 +4369,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -4684,7 +4457,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -4753,41 +4526,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -5123,19 +4864,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -5211,7 +4952,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -5280,41 +5021,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -5650,19 +5359,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -5738,7 +5447,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -5807,41 +5516,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -6177,19 +5854,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -6265,7 +5942,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -6334,41 +6011,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -6704,19 +6349,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -6792,7 +6437,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -6861,41 +6506,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -7231,19 +6844,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -7319,7 +6932,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -7388,41 +7001,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -7758,19 +7339,19 @@
         "units": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 7
+          "differs": 2,
+          "unaudited": 8
         },
         "uniqueUnits": {
           "identical": 5,
           "library": 0,
-          "differs": 3,
-          "unaudited": 7
+          "differs": 2,
+          "unaudited": 8
         },
         "lines": {
           "total": 4691,
-          "covered": 993,
-          "uncovered": 3698
+          "covered": 974,
+          "uncovered": 3717
         }
       },
       "files": [
@@ -7846,7 +7427,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -7890,7 +7471,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEntrypoint",
-                "similarity": 0.989,
+                "similarity": 1,
                 "reportId": "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
                 "repository": "0xbow-io/privacy-pools-core",
                 "path": "packages/contracts/src/interfaces/IEntrypoint.sol",
@@ -7923,41 +7504,9 @@
               "startLine": 769,
               "endLine": 799,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",
@@ -8192,19 +7741,19 @@
         "units": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "uniqueUnits": {
           "identical": 6,
           "library": 2,
-          "differs": 2,
-          "unaudited": 8
+          "differs": 1,
+          "unaudited": 9
         },
         "lines": {
           "total": 4971,
-          "covered": 1200,
-          "uncovered": 3771
+          "covered": 1181,
+          "uncovered": 3790
         }
       },
       "files": [
@@ -8280,7 +7829,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -8349,41 +7898,9 @@
               "startLine": 781,
               "endLine": 811,
               "lines": 31,
-              "status": "differs",
-              "coveredLines": 19,
-              "match": {
-                "origin": "other",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IVerifier",
-                "similarity": 0.235,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 1,
-                "ignoredAdded": 17,
-                "ignoredRemoved": 0,
-                "unchanged": 19,
-                "ignoredOnly": false
-              },
-              "warnings": ["low-similarity"]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "28784f112de36205cfdb9f041d6fecc13d3afbb5849d378469e1dd9f7db184b2",

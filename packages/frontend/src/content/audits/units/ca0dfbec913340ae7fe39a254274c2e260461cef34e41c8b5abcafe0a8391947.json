@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "GlobalCoreGovernance",
-        "similarity": 0.87,
+        "similarity": 0.861,
         "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
         "repository": "axieinfinity/ronin-dpos-contracts",
         "path": "contracts/extensions/sequential-governance/GlobalCoreGovernance.sol",

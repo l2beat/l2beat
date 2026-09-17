@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "PaymentsImmutables",
-        "similarity": 0.75,
+        "similarity": 0.817,
         "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
         "repository": "ronin-chain/katana-operation-contracts",
         "path": "src/aggregate-router/modules/PaymentsImmutables.sol",

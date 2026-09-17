@@ -33,14 +33,17 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "44ad4cf96e2ef6f0": {
       "status": "identical",
       "coveredLines": 17,
       "match": {
-        "origin": "own",
+        "origin": "upstream",
         "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
         "matchedBy": "identity",
         "auditedName": "Burn",
         "similarity": 1,
@@ -180,7 +183,7 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "1daaed8c8125f2b6": {
       "status": "identical",
       "coveredLines": 17,
       "match": {
@@ -191,6 +194,153 @@
           "repository": "ethereum-optimism/optimism"
         },
         "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "Burn",
+        "similarity": 1,
+        "reportId": "optimism/trailofbits-invariant-testing-2022-11",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
+        "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+        "commitTimestamp": "2022-08-17T20:25:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/b31d35b67755479645dd150e7cc8c6710f0b4a56/packages/contracts-bedrock/contracts/libraries/Burn.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Invariant documentation and Echidna property tests only; not a manual security review. Several documented properties are marked Not Tested.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 10,
+        "unchanged": 17,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Burn {"
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * Burns a given amount of ETH.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * @param _amount Amount of ETH to burn.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Burns a given amount of ETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param _amount Amount of ETH to burn.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 4,
+                "text": "    function eth(uint256 _amount) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 5,
+                "text": "        new Burner{value: _amount}();"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 6, "text": "    }" },
+              { "type": " ", "oldLine": 10, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * Burns a given amount of gas.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 13, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @param _amount Amount of gas to burn.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Burns a given amount of gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param _amount Amount of gas to burn.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 10,
+                "text": "    function gas(uint256 _amount) internal view {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 11,
+                "text": "        uint256 i = 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 12,
+                "text": "        uint256 initialGas = gasleft();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "Burn",
         "similarity": 1,
@@ -491,156 +641,6 @@
           "template": "gnosisSafeModules/LivenessGuard"
         },
         "rank": 2,
-        "matchedBy": "identity",
-        "auditedName": "Burn",
-        "similarity": 1,
-        "reportId": "optimism/trailofbits-invariant-testing-2022-11",
-        "repository": "ethereum-optimism/optimism",
-        "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
-        "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
-        "commitTimestamp": "2022-08-17T20:25:46Z",
-        "url": "https://github.com/ethereum-optimism/optimism/blob/b31d35b67755479645dd150e7cc8c6710f0b4a56/packages/contracts-bedrock/contracts/libraries/Burn.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Invariant documentation and Echidna property tests only; not a manual security review. Several documented properties are marked Not Tested.",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 1
-      },
-      "diff": {
-        "added": 0,
-        "removed": 0,
-        "ignoredAdded": 4,
-        "ignoredRemoved": 10,
-        "unchanged": 17,
-        "ignoredOnly": true,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 18,
-            "newStart": 1,
-            "newLines": 12,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "library Burn {"
-              },
-              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 3,
-                "text": "     * Burns a given amount of ETH.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 4, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * @param _amount Amount of ETH to burn.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 2,
-                "text": "    /// @notice Burns a given amount of ETH.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 3,
-                "text": "    /// @param _amount Amount of ETH to burn.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 7,
-                "newLine": 4,
-                "text": "    function eth(uint256 _amount) internal {"
-              },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 5,
-                "text": "        new Burner{value: _amount}();"
-              },
-              { "type": " ", "oldLine": 9, "newLine": 6, "text": "    }" },
-              { "type": " ", "oldLine": 10, "newLine": 7, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "    /**",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "     * Burns a given amount of gas.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 13, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 14,
-                "text": "     * @param _amount Amount of gas to burn.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 15,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 8,
-                "text": "    /// @notice Burns a given amount of gas.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 9,
-                "text": "    /// @param _amount Amount of gas to burn.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 16,
-                "newLine": 10,
-                "text": "    function gas(uint256 _amount) internal view {"
-              },
-              {
-                "type": " ",
-                "oldLine": 17,
-                "newLine": 11,
-                "text": "        uint256 i = 0;"
-              },
-              {
-                "type": " ",
-                "oldLine": 18,
-                "newLine": 12,
-                "text": "        uint256 initialGas = gasleft();"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "1daaed8c8125f2b6": {
-      "status": "identical",
-      "coveredLines": 17,
-      "match": {
-        "origin": "upstream",
-        "collection": "optimism",
-        "relation": {
-          "type": "fork_of",
-          "repository": "ethereum-optimism/optimism"
-        },
-        "rank": 1,
         "matchedBy": "identity",
         "auditedName": "Burn",
         "similarity": 1,

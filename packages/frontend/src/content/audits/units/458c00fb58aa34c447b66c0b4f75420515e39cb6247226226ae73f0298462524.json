@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ISystemConfig",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
         "repository": "celo-org/optimism",
         "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",

@@ -6,6 +6,33 @@
   "lines": 11,
   "source": "interface IERC1822Proxiable {\n    /**\n     * @dev Returns the storage slot that the proxiable contract assumes is being used to store the implementation\n     * address.\n     *\n     * IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks\n     * bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this\n     * function revert if invoked through a proxy.\n     */\n    function proxiableUUID() external view returns (bytes32);\n}",
   "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC1822Proxiable",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/interfaces/draft-IERC1822.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/interfaces/draft-IERC1822.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
     "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 11,
@@ -33,14 +60,14 @@
       },
       "warnings": []
     },
-    "d293c6ecba42b698": {
+    "cbbcf694abda362c": {
       "status": "library",
       "coveredLines": 11,
       "match": {
-        "origin": "stack",
+        "origin": "library",
         "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
+        "relation": { "type": "library" },
+        "rank": 3,
         "matchedBy": "identity",
         "auditedName": "IERC1822Proxiable",
         "similarity": 1,
@@ -87,41 +114,14 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "library",
       "coveredLines": 11,
       "match": {
-        "origin": "library",
+        "origin": "stack",
         "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
-        "matchedBy": "identity",
-        "auditedName": "IERC1822Proxiable",
-        "similarity": 1,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/interfaces/draft-IERC1822.sol",
-        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
-        "commitTimestamp": "2023-07-09T19:54:32Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/interfaces/draft-IERC1822.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Full review of the file at the Phase 2 audit commit.",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 1
-      },
-      "warnings": []
-    },
-    "cbbcf694abda362c": {
-      "status": "library",
-      "coveredLines": 11,
-      "match": {
-        "origin": "library",
-        "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
         "matchedBy": "identity",
         "auditedName": "IERC1822Proxiable",
         "similarity": 1,

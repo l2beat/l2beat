@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "similarity",
         "auditedName": "TallySlashingProposer",
-        "similarity": 0.933,
+        "similarity": 0.946,
         "reportId": "aztecnetwork/cantina-payload-2026-03-05",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/slashing/TallySlashingProposer.sol",

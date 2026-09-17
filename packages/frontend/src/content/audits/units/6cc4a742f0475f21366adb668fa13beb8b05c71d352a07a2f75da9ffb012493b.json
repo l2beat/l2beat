@@ -16,400 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ERC165Checker",
-        "similarity": 0.848,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/utils/introspection/ERC165Checker.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 7,
-        "removed": 7,
-        "ignoredAdded": 4,
-        "ignoredRemoved": 6,
-        "unchanged": 101,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 3,
-            "oldLines": 13,
-            "newStart": 3,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 3,
-                "newLine": 3,
-                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
-              },
-              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
-              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "    function supportsERC165(address account) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 9,
-                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
-              },
-              {
-                "type": " ",
-                "oldLine": 10,
-                "newLine": 10,
-                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 11,
-                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 12,
-                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
-              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
-              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 20,
-            "oldLines": 7,
-            "newStart": 20,
-            "newLines": 7,
-            "lines": [
-              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 21,
-                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
-              },
-              {
-                "type": "-",
-                "oldLine": 23,
-                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 23,
-                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
-              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
-              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 30,
-            "oldLines": 6,
-            "newStart": 30,
-            "newLines": 8,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 30,
-                "newLine": 30,
-                "text": "     * is that some interfaces may not be supported."
-              },
-              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 32,
-                "newLine": 32,
-                "text": "     * See {IERC165-supportsInterface}."
-              },
-              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 34,
-                "text": "     * _Available since v3.4._",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 34,
-                "newLine": 36,
-                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
-              },
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 37,
-                "text": "        internal"
-              }
-            ]
-          },
-          {
-            "oldStart": 43,
-            "oldLines": 7,
-            "newStart": 45,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 43,
-                "newLine": 45,
-                "text": "        if (supportsERC165(account)) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 44,
-                "newLine": 46,
-                "text": "            // query support of each interface in interfaceIds"
-              },
-              {
-                "type": " ",
-                "oldLine": 45,
-                "newLine": 47,
-                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 46,
-                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 48,
-                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 47,
-                "newLine": 49,
-                "text": "            }"
-              },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 50,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 65,
-            "oldLines": 9,
-            "newStart": 67,
-            "newLines": 9,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 65,
-                "newLine": 67,
-                "text": "            return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 68,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "        // query support of each interface in interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 70,
-                "text": "        // query support of each interface in _interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 69,
-                "newLine": 71,
-                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 71,
-                "newLine": 73,
-                "text": "                return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 72,
-                "newLine": 74,
-                "text": "            }"
-              },
-              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
-            ]
-          },
-          {
-            "oldStart": 85,
-            "oldLines": 15,
-            "newStart": 87,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 85,
-                "newLine": 87,
-                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
-              },
-              {
-                "type": " ",
-                "oldLine": 86,
-                "newLine": 88,
-                "text": "     * the behavior of this method is undefined. This precondition can be checked"
-              },
-              {
-                "type": " ",
-                "oldLine": 87,
-                "newLine": 89,
-                "text": "     * with {supportsERC165}."
-              },
-              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 89,
-                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 90,
-                "text": "     * should be exercised when using this function.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 92,
-                "newLine": 90,
-                "text": "     * Interface identification is specified in ERC-165."
-              },
-              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 94,
-                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 92,
-                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 95,
-                "newLine": 93,
-                "text": "        // prepare call"
-              },
-              {
-                "type": "-",
-                "oldLine": 96,
-                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 94,
-                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 98,
-                "newLine": 96,
-                "text": "        // perform static call"
-              },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 97,
-                "text": "        bool success;"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 101,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "ERC165Checker",
-        "similarity": 0.848,
+        "similarity": 0.835,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/introspection/ERC165Checker.sol",
@@ -802,793 +409,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ERC165Checker",
-        "similarity": 0.848,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/utils/introspection/ERC165Checker.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 7,
-        "removed": 7,
-        "ignoredAdded": 4,
-        "ignoredRemoved": 6,
-        "unchanged": 101,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 3,
-            "oldLines": 13,
-            "newStart": 3,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 3,
-                "newLine": 3,
-                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
-              },
-              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
-              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "    function supportsERC165(address account) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 9,
-                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
-              },
-              {
-                "type": " ",
-                "oldLine": 10,
-                "newLine": 10,
-                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 11,
-                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 12,
-                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
-              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
-              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 20,
-            "oldLines": 7,
-            "newStart": 20,
-            "newLines": 7,
-            "lines": [
-              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 21,
-                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
-              },
-              {
-                "type": "-",
-                "oldLine": 23,
-                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 23,
-                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
-              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
-              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 30,
-            "oldLines": 6,
-            "newStart": 30,
-            "newLines": 8,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 30,
-                "newLine": 30,
-                "text": "     * is that some interfaces may not be supported."
-              },
-              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 32,
-                "newLine": 32,
-                "text": "     * See {IERC165-supportsInterface}."
-              },
-              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 34,
-                "text": "     * _Available since v3.4._",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 34,
-                "newLine": 36,
-                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
-              },
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 37,
-                "text": "        internal"
-              }
-            ]
-          },
-          {
-            "oldStart": 43,
-            "oldLines": 7,
-            "newStart": 45,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 43,
-                "newLine": 45,
-                "text": "        if (supportsERC165(account)) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 44,
-                "newLine": 46,
-                "text": "            // query support of each interface in interfaceIds"
-              },
-              {
-                "type": " ",
-                "oldLine": 45,
-                "newLine": 47,
-                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 46,
-                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 48,
-                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 47,
-                "newLine": 49,
-                "text": "            }"
-              },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 50,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 65,
-            "oldLines": 9,
-            "newStart": 67,
-            "newLines": 9,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 65,
-                "newLine": 67,
-                "text": "            return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 68,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "        // query support of each interface in interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 70,
-                "text": "        // query support of each interface in _interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 69,
-                "newLine": 71,
-                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 71,
-                "newLine": 73,
-                "text": "                return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 72,
-                "newLine": 74,
-                "text": "            }"
-              },
-              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
-            ]
-          },
-          {
-            "oldStart": 85,
-            "oldLines": 15,
-            "newStart": 87,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 85,
-                "newLine": 87,
-                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
-              },
-              {
-                "type": " ",
-                "oldLine": 86,
-                "newLine": 88,
-                "text": "     * the behavior of this method is undefined. This precondition can be checked"
-              },
-              {
-                "type": " ",
-                "oldLine": 87,
-                "newLine": 89,
-                "text": "     * with {supportsERC165}."
-              },
-              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 89,
-                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 90,
-                "text": "     * should be exercised when using this function.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 92,
-                "newLine": 90,
-                "text": "     * Interface identification is specified in ERC-165."
-              },
-              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 94,
-                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 92,
-                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 95,
-                "newLine": 93,
-                "text": "        // prepare call"
-              },
-              {
-                "type": "-",
-                "oldLine": 96,
-                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 94,
-                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 98,
-                "newLine": 96,
-                "text": "        // perform static call"
-              },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 97,
-                "text": "        bool success;"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "bb55951394276893": {
-      "status": "differs",
-      "coveredLines": 101,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "ERC165Checker",
-        "similarity": 0.848,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/utils/introspection/ERC165Checker.sol",
-        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-        "commitTimestamp": "2023-07-19T19:13:00Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "audit",
-        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 5
-      },
-      "diff": {
-        "added": 7,
-        "removed": 7,
-        "ignoredAdded": 4,
-        "ignoredRemoved": 6,
-        "unchanged": 101,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 3,
-            "oldLines": 13,
-            "newStart": 3,
-            "newLines": 13,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 3,
-                "newLine": 3,
-                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
-              },
-              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
-              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 6,
-                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "    function supportsERC165(address account) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 9,
-                "newLine": 9,
-                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
-              },
-              {
-                "type": " ",
-                "oldLine": 10,
-                "newLine": 10,
-                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
-              },
-              {
-                "type": "-",
-                "oldLine": 11,
-                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 12,
-                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 11,
-                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 12,
-                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
-              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
-              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 20,
-            "oldLines": 7,
-            "newStart": 20,
-            "newLines": 7,
-            "lines": [
-              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 21,
-                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
-              },
-              {
-                "type": "-",
-                "oldLine": 23,
-                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 23,
-                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
-              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
-              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
-            ]
-          },
-          {
-            "oldStart": 30,
-            "oldLines": 6,
-            "newStart": 30,
-            "newLines": 8,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 30,
-                "newLine": 30,
-                "text": "     * is that some interfaces may not be supported."
-              },
-              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 32,
-                "newLine": 32,
-                "text": "     * See {IERC165-supportsInterface}."
-              },
-              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 34,
-                "text": "     * _Available since v3.4._",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 34,
-                "newLine": 36,
-                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
-              },
-              {
-                "type": " ",
-                "oldLine": 35,
-                "newLine": 37,
-                "text": "        internal"
-              }
-            ]
-          },
-          {
-            "oldStart": 43,
-            "oldLines": 7,
-            "newStart": 45,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 43,
-                "newLine": 45,
-                "text": "        if (supportsERC165(account)) {"
-              },
-              {
-                "type": " ",
-                "oldLine": 44,
-                "newLine": 46,
-                "text": "            // query support of each interface in interfaceIds"
-              },
-              {
-                "type": " ",
-                "oldLine": 45,
-                "newLine": 47,
-                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 46,
-                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 48,
-                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 47,
-                "newLine": 49,
-                "text": "            }"
-              },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 50,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
-            ]
-          },
-          {
-            "oldStart": 65,
-            "oldLines": 9,
-            "newStart": 67,
-            "newLines": 9,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 65,
-                "newLine": 67,
-                "text": "            return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 66,
-                "newLine": 68,
-                "text": "        }"
-              },
-              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 68,
-                "text": "        // query support of each interface in interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 70,
-                "text": "        // query support of each interface in _interfaceIds",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 69,
-                "newLine": 71,
-                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
-              },
-              {
-                "type": "-",
-                "oldLine": 70,
-                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 72,
-                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 71,
-                "newLine": 73,
-                "text": "                return false;"
-              },
-              {
-                "type": " ",
-                "oldLine": 72,
-                "newLine": 74,
-                "text": "            }"
-              },
-              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
-            ]
-          },
-          {
-            "oldStart": 85,
-            "oldLines": 15,
-            "newStart": 87,
-            "newLines": 11,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 85,
-                "newLine": 87,
-                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
-              },
-              {
-                "type": " ",
-                "oldLine": 86,
-                "newLine": 88,
-                "text": "     * the behavior of this method is undefined. This precondition can be checked"
-              },
-              {
-                "type": " ",
-                "oldLine": 87,
-                "newLine": 89,
-                "text": "     * with {supportsERC165}."
-              },
-              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 89,
-                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 90,
-                "text": "     * should be exercised when using this function.",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 92,
-                "newLine": 90,
-                "text": "     * Interface identification is specified in ERC-165."
-              },
-              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
-              {
-                "type": "-",
-                "oldLine": 94,
-                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 92,
-                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 95,
-                "newLine": 93,
-                "text": "        // prepare call"
-              },
-              {
-                "type": "-",
-                "oldLine": 96,
-                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 94,
-                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 98,
-                "newLine": 96,
-                "text": "        // perform static call"
-              },
-              {
-                "type": " ",
-                "oldLine": 99,
-                "newLine": 97,
-                "text": "        bool success;"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "1f5c32d18cf7148d": {
-      "status": "differs",
-      "coveredLines": 101,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "ERC165Checker",
-        "similarity": 0.848,
+        "similarity": 0.835,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/introspection/ERC165Checker.sol",
@@ -1981,7 +802,1186 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ERC165Checker",
-        "similarity": 0.848,
+        "similarity": 0.835,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/ERC165Checker.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 7,
+        "removed": 7,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 6,
+        "unchanged": 101,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 13,
+            "newStart": 3,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function supportsERC165(address account) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 6,
+            "newStart": 30,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * is that some interfaces may not be supported."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "     * See {IERC165-supportsInterface}."
+              },
+              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * _Available since v3.4._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 36,
+                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "        if (supportsERC165(account)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 46,
+                "text": "            // query support of each interface in interfaceIds"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 47,
+                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 49,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 50,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 9,
+            "newStart": 67,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 67,
+                "text": "            return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 68,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // query support of each interface in interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        // query support of each interface in _interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 71,
+                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 73,
+                "text": "                return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 15,
+            "newStart": 87,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 87,
+                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 88,
+                "text": "     * the behavior of this method is undefined. This precondition can be checked"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 89,
+                "text": "     * with {supportsERC165}."
+              },
+              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "     * should be exercised when using this function.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 90,
+                "text": "     * Interface identification is specified in ERC-165."
+              },
+              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 93,
+                "text": "        // prepare call"
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 96,
+                "text": "        // perform static call"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 97,
+                "text": "        bool success;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 101,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC165Checker",
+        "similarity": 0.835,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/ERC165Checker.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 7,
+        "removed": 7,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 6,
+        "unchanged": 101,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 13,
+            "newStart": 3,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function supportsERC165(address account) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 6,
+            "newStart": 30,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * is that some interfaces may not be supported."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "     * See {IERC165-supportsInterface}."
+              },
+              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * _Available since v3.4._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 36,
+                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "        if (supportsERC165(account)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 46,
+                "text": "            // query support of each interface in interfaceIds"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 47,
+                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 49,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 50,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 9,
+            "newStart": 67,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 67,
+                "text": "            return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 68,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // query support of each interface in interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        // query support of each interface in _interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 71,
+                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 73,
+                "text": "                return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 15,
+            "newStart": 87,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 87,
+                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 88,
+                "text": "     * the behavior of this method is undefined. This precondition can be checked"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 89,
+                "text": "     * with {supportsERC165}."
+              },
+              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "     * should be exercised when using this function.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 90,
+                "text": "     * Interface identification is specified in ERC-165."
+              },
+              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 93,
+                "text": "        // prepare call"
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 96,
+                "text": "        // perform static call"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 97,
+                "text": "        bool success;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 101,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC165Checker",
+        "similarity": 0.835,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/ERC165Checker.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/ERC165Checker.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 7,
+        "removed": 7,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 6,
+        "unchanged": 101,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 13,
+            "newStart": 3,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * @dev Returns true if `account` supports the {IERC165} interface,",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function supportsERC165(address account) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        // Any contract that implements ERC165 must explicitly indicate support of"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        return supportsERC165InterfaceUnchecked(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "            && !supportsERC165InterfaceUnchecked(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        return _supportsERC165Interface(account, type(IERC165).interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            && !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        // query support of both ERC165 as per the spec and support of _interfaceId"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        return supportsERC165(account) && supportsERC165InterfaceUnchecked(account, interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 6,
+            "newStart": 30,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * is that some interfaces may not be supported."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "     * See {IERC165-supportsInterface}."
+              },
+              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * _Available since v3.4._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 36,
+                "text": "    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "        if (supportsERC165(account)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 46,
+                "text": "            // query support of each interface in interfaceIds"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 47,
+                "text": "            for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "                interfaceIdsSupported[i] = supportsERC165InterfaceUnchecked(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 49,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 50,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 51, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 9,
+            "newStart": 67,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 67,
+                "text": "            return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 68,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 69, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // query support of each interface in interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        // query support of each interface in _interfaceIds",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 71,
+                "text": "        for (uint256 i = 0; i < interfaceIds.length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            if (!supportsERC165InterfaceUnchecked(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "            if (!_supportsERC165Interface(account, interfaceIds[i])) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 73,
+                "text": "                return false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 74,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 75, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 15,
+            "newStart": 87,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 87,
+                "text": "     * @dev Assumes that account contains a contract that supports ERC165, otherwise"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 88,
+                "text": "     * the behavior of this method is undefined. This precondition can be checked"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 89,
+                "text": "     * with {supportsERC165}."
+              },
+              { "type": "-", "oldLine": 88, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "     * Some precompiled contracts will falsely indicate support for a given interface, so caution",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "     * should be exercised when using this function.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 91, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 90,
+                "text": "     * Interface identification is specified in ERC-165."
+              },
+              { "type": " ", "oldLine": 93, "newLine": 91, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    function supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 93,
+                "text": "        // prepare call"
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        bytes memory encodedParams = abi.encodeCall(IERC165.supportsInterface, (interfaceId));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 95, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 96,
+                "text": "        // perform static call"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 97,
+                "text": "        bool success;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 101,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC165Checker",
+        "similarity": 0.835,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/introspection/ERC165Checker.sol",

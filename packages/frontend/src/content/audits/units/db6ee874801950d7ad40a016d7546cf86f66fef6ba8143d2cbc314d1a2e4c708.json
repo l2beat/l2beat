@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "alias",
         "auditedName": "ETHMixer",
-        "similarity": 0.905,
+        "similarity": 0.963,
         "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
         "repository": "peppersec/tornado-mixer",
         "path": "contracts/ETHMixer.sol",

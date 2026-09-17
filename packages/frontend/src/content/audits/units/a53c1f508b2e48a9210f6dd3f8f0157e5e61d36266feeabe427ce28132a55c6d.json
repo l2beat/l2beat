@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IMainchainGatewayV3",
-        "similarity": 0.973,
+        "similarity": 1,
         "reportId": "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08",
         "repository": "ronin-chain/bridge-contract",
         "path": "src/interfaces/IMainchainGatewayV3.sol",

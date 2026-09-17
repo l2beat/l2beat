@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Create2",
-        "similarity": 0.95,
+        "similarity": 1,
         "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/Create2.sol",

@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Clones",
-        "similarity": 0.955,
+        "similarity": 1,
         "reportId": "openzeppelin/contracts__audits__2024-12-v5.2",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/Clones.sol",

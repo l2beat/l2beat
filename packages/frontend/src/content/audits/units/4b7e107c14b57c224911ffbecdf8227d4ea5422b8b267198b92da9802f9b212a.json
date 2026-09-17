@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "UUPSUpgradeable",
-        "similarity": 0.957,
+        "similarity": 0.955,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/UUPSUpgradeable.sol",

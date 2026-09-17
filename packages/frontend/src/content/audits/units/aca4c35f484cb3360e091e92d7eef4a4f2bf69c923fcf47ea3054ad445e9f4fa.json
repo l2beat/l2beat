@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "OptimismMintableERC20",
-        "similarity": 0.983,
+        "similarity": 1,
         "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
         "repository": "celo-org/optimism",
         "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20.sol",

@@ -7,8 +7,1097 @@
   "source": "library Errors_1 {\n    // DEVNET related\n    error DevNet__NoPruningAllowed(); // 0x6984c590\n    error DevNet__InvalidProposer(address expected, address actual); // 0x11e6e6f7\n\n    // Inbox\n    error Inbox__Unauthorized(); // 0xe5336a6b\n    error Inbox__ActorTooLarge(bytes32 actor); // 0xa776a06e\n    error Inbox__VersionMismatch(uint256 expected, uint256 actual); // 0x47452014\n    error Inbox__ContentTooLarge(bytes32 content); // 0x47452014\n    error Inbox__SecretHashTooLarge(bytes32 secretHash); // 0xecde7e2c\n    error Inbox__MustBuildBeforeConsume(); // 0xc4901999\n\n    // Outbox\n    error Outbox__Unauthorized(); // 0x2c9490c2\n    error Outbox__InvalidChainId(); // 0x577ec7c4\n    error Outbox__VersionMismatch(uint256 expected, uint256 actual);\n    error Outbox__NothingToConsume(bytes32 messageHash); // 0xfb4fb506\n    error Outbox__IncompatibleEntryArguments(\n        bytes32 messageHash,\n        uint64 storedFee,\n        uint64 feePassed,\n        uint32 storedVersion,\n        uint32 versionPassed,\n        uint32 storedDeadline,\n        uint32 deadlinePassed\n    ); // 0x5e789f34\n    error Outbox__InvalidRecipient(address expected, address actual); // 0x57aad581\n    error Outbox__AlreadyNullified(Epoch epoch, uint256 leafIndex); // 0xfd71c2d4\n    error Outbox__NothingToConsumeAtEpoch(Epoch epoch); // 0x5e3d32ce\n    error Outbox__PathTooLong();\n    error Outbox__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength);\n    error Outbox__InvalidNumCheckpointsInEpoch(uint256 numCheckpointsInEpoch);\n\n    // Rollup\n    error Rollup__InsufficientBondAmount(uint256 minimum, uint256 provided); // 0xa165f276\n    error Rollup__InsufficientFundsInEscrow(uint256 required, uint256 available); // 0xa165f276\n    error Rollup__InvalidArchive(bytes32 expected, bytes32 actual); // 0xb682a40e\n    error Rollup__InvalidCheckpointHeader(bytes32 expected, bytes32 actual);\n    error Rollup__InvalidCheckpointHeaderCount(uint256 expected, uint256 actual);\n    error Rollup__InvalidCheckpointNumber(uint256 expected, uint256 actual); // 0xd1ba9bfa\n    error Rollup__InvalidInHash(bytes32 expected, bytes32 actual); // 0xcd6f4233\n    error Rollup__InvalidOutHash(bytes32 expected, bytes32 actual); // 0x8eb39062\n    error Rollup__InvalidPreviousArchive(bytes32 expected, bytes32 actual); // 0xb682a40e\n    error Rollup__InvalidProof(); // 0xa5b2ba17\n    error Rollup__InvalidProposedArchive(bytes32 expected, bytes32 actual); // 0x32532e73\n    error Rollup__InvalidTimestamp(Timestamp expected, Timestamp actual); // 0x3132e895\n    error Rollup__InvalidAttestations();\n    error Rollup__AttestationsAreValid();\n    error Rollup__InvalidAttestationIndex();\n    error Rollup__CheckpointAlreadyProven();\n    error Rollup__CheckpointNotInPendingChain();\n    error Rollup__InvalidBlobHash(bytes32 expected, bytes32 actual); // 0x13031e6a\n    error Rollup__InvalidBlobProof(bytes32 blobHash); // 0x5ca17bef\n    error Rollup__NoEpochToProve(); // 0xcbaa3951\n    error Rollup__NonSequentialProving(); // 0x1e5be132\n    error Rollup__NothingToPrune(); // 0x850defd3\n    error Rollup__SlotAlreadyInChain(Slot lastSlot, Slot proposedSlot); // 0x83510bd0\n    error Rollup__TimestampInFuture(Timestamp max, Timestamp actual); // 0x89f30690\n    error Rollup__TimestampTooOld(); // 0x72ed9c81\n    error Rollup__TryingToProveNonExistingCheckpoint(); // 0xdd65748c\n    error Rollup__UnavailableTxs(bytes32 txsHash); // 0x414906c3\n    error Rollup__NonZeroDaFee(); // 0xd9c75f52\n    error Rollup__InvalidBasisPointFee(uint256 basisPointFee); // 0x4292d136\n    error Rollup__InvalidManaMinFee(uint256 expected, uint256 actual); // 0x73b6d896\n    error Rollup__StartAndEndNotSameEpoch(Epoch start, Epoch end); // 0xb64ec33e\n    error Rollup__StartIsNotFirstCheckpointOfEpoch(); // 0x19ceb206\n    error Rollup__StartIsNotBuildingOnProven(); // 0x4a59f42e\n    error Rollup__TooManyCheckpointsInEpoch(uint256 expected, uint256 actual); // 0xdf838503\n    error Rollup__NotPastDeadline(Epoch deadline, Epoch currentEpoch);\n    error Rollup__PastDeadline(Epoch deadline, Epoch currentEpoch);\n    error Rollup__ProverHaveAlreadySubmitted(address prover, Epoch epoch);\n    error Rollup__InvalidManaTarget(uint256 minimum, uint256 provided);\n    error Rollup__ManaLimitExceeded();\n    error Rollup__InvalidFirstEpochProof();\n    error Rollup__InvalidCoinbase();\n    error Rollup__UnavailableTempCheckpointLog(\n        uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit\n    );\n    error Rollup__NoBlobsInCheckpoint();\n    error Rollup__CannotInvalidateEscapeHatch();\n    error Rollup__InvalidEscapeHatchProposer(address expected, address actual);\n    error Rollup__FieldElementOutOfRange(bytes32 value);\n\n    // EscapeHatch\n    error EscapeHatch__AlreadyInCandidateSet(address candidate);\n    error EscapeHatch__NotInCandidateSet(address candidate);\n    error EscapeHatch__InvalidStatus(Status_1 expected, Status_1 actual);\n    error EscapeHatch__NotExitableYet(uint256 exitableAt, uint256 currentTime);\n    error EscapeHatch__OnlyRollup(address caller, address rollup);\n    error EscapeHatch__NoDesignatedProposer(Hatch hatch);\n    error EscapeHatch__InvalidConfiguration();\n    error EscapeHatch__SetUnstable(Hatch hatch);\n    error EscapeHatch__AlreadyValidated(Hatch hatch);\n    error EscapeHatch__HatchTooEarly(Hatch hatch);\n\n    // ProposedHeaderLib\n    error HeaderLib__InvalidHeaderSize(uint256 expected, uint256 actual); // 0xf3ccb247\n    error HeaderLib__InvalidSlotNumber(Slot expected, Slot actual); // 0x09ba91ff\n\n    // MerkleLib\n    error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex); // 0x5f216bf1\n    error MerkleLib__InvalidIndexForPathLength();\n\n    // SampleLib\n    error SampleLib__IndexOutOfBounds(uint256 requested, uint256 bound); // 0xa12fc559\n    error SampleLib__SampleLargerThanIndex(uint256 sample, uint256 index); // 0xa11b0f79\n\n    // Sequencer Selection (ValidatorSelection)\n    error ValidatorSelection__EpochNotSetup(); // 0x10816cae\n    error ValidatorSelection__InvalidProposer(address expected, address actual); // 0xa8843a68\n    error ValidatorSelection__MissingProposerSignature(address proposer, uint256 index);\n    error ValidatorSelection__InvalidDeposit(address attester, address proposer); // 0x533169bd\n    error ValidatorSelection__InsufficientAttestations(uint256 minimumNeeded, uint256 provided); // 0xaf47297f\n    error ValidatorSelection__InvalidCommitteeCommitment(bytes32 reconstructed, bytes32 expected); // 0xca8d5954\n    error ValidatorSelection__InsufficientValidatorSetSize(uint256 actual, uint256 expected); // 0xf4f28e99\n    error ValidatorSelection__ProposerIndexTooLarge(uint256 index);\n    error ValidatorSelection__EpochNotStable(uint256 queriedEpoch, uint32 currentTimestamp);\n    error ValidatorSelection__InvalidLagInEpochs(uint256 lagInEpochsForValidatorSet, uint256 lagInEpochsForRandao);\n    error ValidatorSelection__EscapeHatchAlreadySet();\n    error ValidatorSelection__EscapeHatchCannotBeZero();\n    error ValidatorSelection__EscapeHatchRollupMismatch(address expected, address actual);\n\n    // Staking\n    error Staking__AlreadyQueued(address _attester);\n    error Staking__QueueEmpty();\n    error Staking__DepositOutOfGas();\n    error Staking__AlreadyActive(address attester); // 0x5e206fa4\n    error Staking__QueueAlreadyFlushed(Epoch epoch); // 0x21148c78\n    error Staking__AlreadyRegistered(address instance, address attester);\n    error Staking__CannotSlashExitedStake(address); // 0x45bf4940\n    error Staking__FailedToRemove(address); // 0xa7d7baab\n    error Staking__InvalidDeposit(address attester, address proposer); // 0xf33fe8c6\n    error Staking__InvalidRecipient(address); // 0x7e2f7f1c\n    error Staking__InsufficientStake(uint256, uint256); // 0x903aee24\n    error Staking__NoOneToSlash(address); // 0x7e2f7f1c\n    error Staking__NotExiting(address); // 0xef566ee0\n    error Staking__InitiateWithdrawNeeded(address);\n    error Staking__NotSlasher(address, address); // 0x23a6f432\n    error Staking__NotWithdrawer(address, address); // 0x8e668e5d\n    error Staking__NothingToExit(address); // 0xd2aac9b6\n    error Staking__WithdrawalNotUnlockedYet(Timestamp, Timestamp); // 0x88e1826c\n    error Staking__WithdrawFailed(address); // 0x377422c1\n    error Staking__OutOfBounds(uint256, uint256); // 0x4bea6597\n    error Staking__NotRollup(address); // 0xf5509eb3\n    error Staking__RollupAlreadyRegistered(address); // 0x108a39c8\n    error Staking__InvalidRollupAddress(address); // 0xd876720e\n    error Staking__NotCanonical(address); // 0x6244212e\n    error Staking__InstanceDoesNotExist(address);\n    error Staking__InsufficientPower(uint256, uint256);\n    error Staking__AlreadyExiting(address);\n    error Staking__FatalError(string);\n    error Staking__NotOurProposal(uint256, address, address);\n    error Staking__IncorrectGovProposer(uint256);\n    error Staking__GovernanceAlreadySet();\n    error Staking__InsufficientBootstrapValidators(uint256 queueSize, uint256 bootstrapFlushSize);\n    error Staking__InvalidStakingQueueConfig();\n    error Staking__InvalidNormalFlushSizeQuotient();\n    error Staking__InvalidMaxQueueFlushSize();\n    error Staking__InvalidBootstrapFlushSize();\n    error Staking__BootstrapFlushSizeAboveMax(uint256 bootstrapFlushSize, uint256 maxQueueFlushSize);\n    error Staking__ExitDelayAboveSlasherDelay(uint256 exitDelaySeconds, uint256 slasherExecutionDelay);\n    error Staking__SlasherProposerNotInitialized(address slasher);\n    error Staking__NoPendingSlasher();\n    error Staking__SlasherNotReady(Timestamp readyAt);\n\n    // Fee Juice Portal\n    error FeeJuicePortal__AlreadyInitialized(); // 0xc7a172fe\n    error FeeJuicePortal__InvalidInitialization(); // 0xfd9b3208\n    error FeeJuicePortal__Unauthorized(); // 0x67e3691e\n\n    // Proof Commitment Escrow\n    error ProofCommitmentEscrow__InsufficientBalance(uint256 balance, uint256 requested); // 0x09b8b789\n    error ProofCommitmentEscrow__NotOwner(address caller); // 0x2ac332c1\n    error ProofCommitmentEscrow__WithdrawRequestNotReady(uint256 current, Timestamp readyAt); // 0xb32ab8a7\n\n    // FeeLib\n    error FeeLib__InvalidFeeAssetPriceModifier(); // 0xf2fb32ad\n    error FeeLib__AlreadyPreheated();\n    error FeeLib__InvalidManaTarget(uint256 minimum, uint256 provided);\n    error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided);\n    error FeeLib__InvalidInitialEthPerFeeAsset(uint256 provided, uint256 minimum, uint256 maximum);\n    error FeeLib__ProvingCostBelowFloor(uint256 provided, uint256 minimum);\n    error FeeLib__ProvingCostAboveCeiling(uint256 provided, uint256 maximum);\n    error FeeLib__ProvingCostCooldown(uint256 nextAllowed);\n    error FeeLib__ProvingCostStepExceeded(uint256 current, uint256 requested);\n\n    // SignatureLib (duplicated)\n    error SignatureLib__InvalidSignature(address, address); // 0xd9cbae6c\n\n    error AttestationLib__InvalidDataSize(uint256, uint256);\n    error AttestationLib__SignatureIndicesSizeMismatch(uint256, uint256);\n    error AttestationLib__SignaturesOrAddressesSizeMismatch(uint256, uint256);\n    error AttestationLib__SignersSizeMismatch(uint256, uint256);\n    error AttestationLib__NotASignatureAtIndex(uint256 index);\n    error AttestationLib__NotAnAddressAtIndex(uint256 index);\n\n    // RewardBooster\n    error RewardBooster__OnlyRollup(address caller);\n    error RewardBooster__InvalidConfig();\n\n    error RewardLib__InvalidSequencerBps();\n    error RewardLib__ZeroShares(address prover);\n\n    // SlashingProposer\n    error SlashingProposer__InvalidSignature();\n    error SlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual);\n    error SlashingProposer__RoundAlreadyExecuted(SlashRound round);\n    error SlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual);\n    error SlashingProposer__RoundNotComplete(SlashRound round);\n    error SlashingProposer__InvalidCommitteeSize(uint256 expected, uint256 actual);\n    error SlashingProposer__InvalidCommitteeCommitment();\n    error SlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize);\n    error SlashingProposer__QuorumMustBeGreaterThanZero();\n    error SlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts);\n    error SlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay);\n    error SlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout);\n    error SlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs);\n    error SlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize);\n    error SlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize);\n    error SlashingProposer__SlashAmountTooLarge();\n    error SlashingProposer__VoteAlreadyCastInCurrentSlot(Slot slot);\n    error SlashingProposer__RoundOutOfRange(SlashRound round, SlashRound currentRound);\n    error SlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration);\n    error SlashingProposer__VotingNotOpen(SlashRound currentRound);\n    error SlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset);\n    error SlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs);\n    error SlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize);\n    error SlashingProposer__VotesMustBeMultipleOf4(uint256 votes);\n    error SlashingProposer__SlashAmountMustBeGtZero(string info);\n\n    // SlashPayloadLib\n    error SlashPayload_ArraySizeMismatch(uint256 expected, uint256 actual);\n\n    // OpenZeppelin dependencies\n\n    // ECDSA\n    error ECDSAInvalidSignature();\n    error ECDSAInvalidSignatureLength(uint256 length);\n    error ECDSAInvalidSignatureS(bytes32 s);\n\n    // Ownable\n    error OwnableUnauthorizedAccount(address account);\n    error OwnableInvalidOwner(address owner);\n\n    // Checkpoints\n    error CheckpointUnorderedInsertion();\n\n    // ERC20\n    error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed);\n    error ERC20InvalidSender(address sender);\n    error ERC20InvalidReceiver(address receiver);\n    error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed);\n    error ERC20InvalidApprover(address approver);\n    error ERC20InvalidSpender(address spender);\n\n    // SafeCast\n    error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);\n    error SafeCastOverflowedIntToUint(int256 value);\n    error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);\n    error SafeCastOverflowedUintToInt(uint256 value);\n}",
   "resolutions": {
     "41ad32932dea0dc9": {
-      "status": "unaudited",
-      "coveredLines": 0,
+      "status": "differs",
+      "coveredLines": 208,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "Errors",
+        "similarity": 0.758,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/Errors.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/Errors.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 54,
+        "removed": 35,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 208,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Errors {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library Errors_1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // DEVNET related"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    error DevNet__NoPruningAllowed(); // 0x6984c590"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    error DevNet__InvalidProposer(address expected, address actual); // 0x11e6e6f7"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 7,
+            "newStart": 10,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error Inbox__ContentTooLarge(bytes32 content); // 0x47452014"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    error Inbox__SecretHashTooLarge(bytes32 secretHash); // 0xecde7e2c"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    error Inbox__MustBuildBeforeConsume(); // 0xc4901999"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    error Inbox__Ignition();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 14,
+                "text": "    // Outbox"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 15,
+                "text": "    error Outbox__Unauthorized(); // 0x2c9490c2"
+              }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 21,
+            "newStart": 25,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 25,
+                "text": "        uint32 storedDeadline,"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 26,
+                "text": "        uint32 deadlinePassed"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "    ); // 0x5e789f34"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    error Outbox__RootAlreadySetAtCheckpoint(uint256 checkpointNumber); // 0x6eb83cef",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 28,
+                "text": "    error Outbox__InvalidRecipient(address expected, address actual); // 0x57aad581"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    error Outbox__AlreadyNullified(uint256 checkpointNumber, uint256 leafIndex); // 0xfd71c2d4",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    error Outbox__NothingToConsumeAtCheckpoint(uint256 checkpointNumber); // 0x0279277d",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    error Outbox__CheckpointNotProven(uint256 checkpointNumber); // 0x104bcfc1",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    error Outbox__CheckpointAlreadyProven(uint256 checkpointNumber);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    error Outbox__AlreadyNullified(Epoch epoch, uint256 leafIndex); // 0xfd71c2d4",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    error Outbox__NothingToConsumeAtEpoch(Epoch epoch); // 0x5e3d32ce",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 31,
+                "text": "    error Outbox__PathTooLong();"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 32,
+                "text": "    error Outbox__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength);"
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    error Outbox__InvalidNumCheckpointsInEpoch(uint256 numCheckpointsInEpoch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 35,
+                "text": "    // Rollup"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 36,
+                "text": "    error Rollup__InsufficientBondAmount(uint256 minimum, uint256 provided); // 0xa165f276"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 37,
+                "text": "    error Rollup__InsufficientFundsInEscrow(uint256 required, uint256 available); // 0xa165f276"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 38,
+                "text": "    error Rollup__InvalidArchive(bytes32 expected, bytes32 actual); // 0xb682a40e"
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    error Rollup__InvalidCheckpointHeader(bytes32 expected, bytes32 actual);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    error Rollup__InvalidCheckpointHeaderCount(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 41,
+                "text": "    error Rollup__InvalidCheckpointNumber(uint256 expected, uint256 actual); // 0xd1ba9bfa"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 42,
+                "text": "    error Rollup__InvalidInHash(bytes32 expected, bytes32 actual); // 0xcd6f4233"
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    error Rollup__InvalidOutHash(bytes32 expected, bytes32 actual); // 0x8eb39062",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    error Rollup__InvalidPreviousArchive(bytes32 expected, bytes32 actual); // 0xb682a40e"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "    error Rollup__InvalidProof(); // 0xa5b2ba17"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    error Rollup__InvalidProposedArchive(bytes32 expected, bytes32 actual); // 0x32532e73"
+              }
+            ]
+          },
+          {
+            "oldStart": 62,
+            "oldLines": 7,
+            "newStart": 62,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "    error Rollup__UnavailableTxs(bytes32 txsHash); // 0x414906c3"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    error Rollup__NonZeroDaFee(); // 0xd9c75f52"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    error Rollup__InvalidBasisPointFee(uint256 basisPointFee); // 0x4292d136"
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    error Rollup__InvalidManaBaseFee(uint256 expected, uint256 actual); // 0x73b6d896",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    error Rollup__InvalidManaMinFee(uint256 expected, uint256 actual); // 0x73b6d896",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    error Rollup__StartAndEndNotSameEpoch(Epoch start, Epoch end); // 0xb64ec33e"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    error Rollup__StartIsNotFirstCheckpointOfEpoch(); // 0x19ceb206"
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "    error Rollup__StartIsNotBuildingOnProven(); // 0x4a59f42e"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 8,
+            "newStart": 72,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "    error Rollup__ProverHaveAlreadySubmitted(address prover, Epoch epoch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "    error Rollup__InvalidManaTarget(uint256 minimum, uint256 provided);"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    error Rollup__ManaLimitExceeded();"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    error Rollup__RewardsNotClaimable();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    error Rollup__TooSoonToSetRewardsClaimable(uint256 earliestRewardsClaimableTimestamp, uint256 currentTimestamp);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 75,
+                "text": "    error Rollup__InvalidFirstEpochProof();"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 76,
+                "text": "    error Rollup__InvalidCoinbase();"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 77,
+                "text": "    error Rollup__UnavailableTempCheckpointLog("
+              }
+            ]
+          },
+          {
+            "oldStart": 82,
+            "oldLines": 17,
+            "newStart": 80,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 80,
+                "text": "    error Rollup__NoBlobsInCheckpoint();"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 81,
+                "text": "    error Rollup__CannotInvalidateEscapeHatch();"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 82,
+                "text": "    error Rollup__InvalidEscapeHatchProposer(address expected, address actual);"
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    error Rollup__FieldElementOutOfRange(bytes32 value);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 85,
+                "text": "    // EscapeHatch"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 86,
+                "text": "    error EscapeHatch__AlreadyInCandidateSet(address candidate);"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 87,
+                "text": "    error EscapeHatch__NotInCandidateSet(address candidate);"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    error EscapeHatch__InvalidStatus(Status expected, Status actual);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    error EscapeHatch__InvalidStatus(Status_1 expected, Status_1 actual);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 89,
+                "text": "    error EscapeHatch__NotExitableYet(uint256 exitableAt, uint256 currentTime);"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 90,
+                "text": "    error EscapeHatch__OnlyRollup(address caller, address rollup);"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 91,
+                "text": "    error EscapeHatch__NoDesignatedProposer(Hatch hatch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 92,
+                "text": "    error EscapeHatch__InvalidConfiguration();"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 93,
+                "text": "    error EscapeHatch__SetUnstable(Hatch hatch);"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 94,
+                "text": "    error EscapeHatch__AlreadyValidated(Hatch hatch);"
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    error EscapeHatch__HatchTooEarly(Hatch hatch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 96, "newLine": 96, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 97,
+                "text": "    // ProposedHeaderLib"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 98,
+                "text": "    error HeaderLib__InvalidHeaderSize(uint256 expected, uint256 actual); // 0xf3ccb247"
+              }
+            ]
+          },
+          {
+            "oldStart": 117,
+            "oldLines": 6,
+            "newStart": 117,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 117,
+                "text": "    error ValidatorSelection__ProposerIndexTooLarge(uint256 index);"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    error ValidatorSelection__EpochNotStable(uint256 queriedEpoch, uint32 currentTimestamp);"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "    error ValidatorSelection__InvalidLagInEpochs(uint256 lagInEpochsForValidatorSet, uint256 lagInEpochsForRandao);"
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    error ValidatorSelection__EscapeHatchAlreadySet();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    error ValidatorSelection__EscapeHatchCannotBeZero();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    error ValidatorSelection__EscapeHatchRollupMismatch(address expected, address actual);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 124,
+                "text": "    // Staking"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 125,
+                "text": "    error Staking__AlreadyQueued(address _attester);"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 6,
+            "newStart": 156,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 156,
+                "text": "    error Staking__InsufficientBootstrapValidators(uint256 queueSize, uint256 bootstrapFlushSize);"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 157,
+                "text": "    error Staking__InvalidStakingQueueConfig();"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 158,
+                "text": "    error Staking__InvalidNormalFlushSizeQuotient();"
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "    error Staking__InvalidMaxQueueFlushSize();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    error Staking__InvalidBootstrapFlushSize();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    error Staking__BootstrapFlushSizeAboveMax(uint256 bootstrapFlushSize, uint256 maxQueueFlushSize);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    error Staking__ExitDelayAboveSlasherDelay(uint256 exitDelaySeconds, uint256 slasherExecutionDelay);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    error Staking__SlasherProposerNotInitialized(address slasher);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "    error Staking__NoPendingSlasher();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    error Staking__SlasherNotReady(Timestamp readyAt);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 156, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 167,
+                "text": "    // Fee Juice Portal"
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 168,
+                "text": "    error FeeJuicePortal__AlreadyInitialized(); // 0xc7a172fe"
+              }
+            ]
+          },
+          {
+            "oldStart": 167,
+            "oldLines": 7,
+            "newStart": 177,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 177,
+                "text": "    // FeeLib"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 178,
+                "text": "    error FeeLib__InvalidFeeAssetPriceModifier(); // 0xf2fb32ad"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 179,
+                "text": "    error FeeLib__AlreadyPreheated();"
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "    error FeeLib__InvalidManaTarget(uint256 minimum, uint256 provided);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 181,
+                "text": "    error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided);"
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "    error FeeLib__InvalidInitialEthPerFeeAsset(uint256 provided, uint256 minimum, uint256 maximum);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "    error FeeLib__ProvingCostBelowFloor(uint256 provided, uint256 minimum);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "    error FeeLib__ProvingCostAboveCeiling(uint256 provided, uint256 maximum);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "    error FeeLib__ProvingCostCooldown(uint256 nextAllowed);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "    error FeeLib__ProvingCostStepExceeded(uint256 current, uint256 requested);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 171, "newLine": 187, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 188,
+                "text": "    // SignatureLib (duplicated)"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 189,
+                "text": "    error SignatureLib__InvalidSignature(address, address); // 0xd9cbae6c"
+              }
+            ]
+          },
+          {
+            "oldStart": 181,
+            "oldLines": 34,
+            "newStart": 197,
+            "newLines": 37,
+            "lines": [
+              { "type": " ", "oldLine": 181, "newLine": 197, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 198,
+                "text": "    // RewardBooster"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 199,
+                "text": "    error RewardBooster__OnlyRollup(address caller);"
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "    error RewardBooster__InvalidConfig();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 184, "newLine": 201, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 202,
+                "text": "    error RewardLib__InvalidSequencerBps();"
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "    error RewardLib__ZeroShares(address prover);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 186, "newLine": 204, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "    // TallySlashingProposer",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "    error TallySlashingProposer__InvalidSignature();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "    error TallySlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "    error TallySlashingProposer__RoundAlreadyExecuted(SlashRound round);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "    error TallySlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    error TallySlashingProposer__RoundNotComplete(SlashRound round);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    error TallySlashingProposer__InvalidCommitteeSize(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    error TallySlashingProposer__InvalidCommitteeCommitment();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    error TallySlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    error TallySlashingProposer__QuorumMustBeGreaterThanZero();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    error TallySlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    error TallySlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "    error TallySlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    error TallySlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "    error TallySlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    error TallySlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "    error TallySlashingProposer__SlashAmountTooLarge();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "    error TallySlashingProposer__VoteAlreadyCastInCurrentSlot(Slot slot);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "    error TallySlashingProposer__RoundOutOfRange(SlashRound round, SlashRound currentRound);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "    error TallySlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "    error TallySlashingProposer__VotingNotOpen(SlashRound currentRound);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "    error TallySlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "    error TallySlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "    error TallySlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "    error TallySlashingProposer__VotesMustBeMultipleOf4(uint256 votes);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "    // SlashingProposer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "    error SlashingProposer__InvalidSignature();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "    error SlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "    error SlashingProposer__RoundAlreadyExecuted(SlashRound round);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "    error SlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    error SlashingProposer__RoundNotComplete(SlashRound round);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "    error SlashingProposer__InvalidCommitteeSize(uint256 expected, uint256 actual);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "    error SlashingProposer__InvalidCommitteeCommitment();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "    error SlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    error SlashingProposer__QuorumMustBeGreaterThanZero();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "    error SlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "    error SlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "    error SlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "    error SlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "    error SlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 220,
+                "text": "    error SlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "    error SlashingProposer__SlashAmountTooLarge();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "    error SlashingProposer__VoteAlreadyCastInCurrentSlot(Slot slot);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "    error SlashingProposer__RoundOutOfRange(SlashRound round, SlashRound currentRound);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "    error SlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "    error SlashingProposer__VotingNotOpen(SlashRound currentRound);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "    error SlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "    error SlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 228,
+                "text": "    error SlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "    error SlashingProposer__VotesMustBeMultipleOf4(uint256 votes);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "    error SlashingProposer__SlashAmountMustBeGtZero(string info);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 212, "newLine": 231, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 232,
+                "text": "    // SlashPayloadLib"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 233,
+                "text": "    error SlashPayload_ArraySizeMismatch(uint256 expected, uint256 actual);"
+              }
+            ]
+          }
+        ]
+      },
       "warnings": []
     }
   }

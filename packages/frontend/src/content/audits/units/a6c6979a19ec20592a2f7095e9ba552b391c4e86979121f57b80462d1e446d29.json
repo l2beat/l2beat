@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Initializable",
-        "similarity": 0.881,
+        "similarity": 0.839,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/Initializable.sol",

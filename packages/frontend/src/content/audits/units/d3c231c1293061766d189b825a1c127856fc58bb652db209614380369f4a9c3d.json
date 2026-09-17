@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ERC721Bridge",
-        "similarity": 0.95,
+        "similarity": 0.996,
         "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",

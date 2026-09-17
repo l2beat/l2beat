@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "Guard",
-        "similarity": 0.759,
+        "similarity": 0.717,
         "reportId": "safe/certora-safe-1-3-0",
         "repository": "safe-fndn/safe-smart-account",
         "path": "contracts/base/GuardManager.sol",

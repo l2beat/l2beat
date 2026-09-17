@@ -7,8 +7,644 @@
   "source": "contract TimelockControllerUpgradeable is\n    Initializable,\n    AccessControlUpgradeable,\n    IERC721ReceiverUpgradeable,\n    IERC1155ReceiverUpgradeable\n{\n    bytes32 public constant TIMELOCK_ADMIN_ROLE = keccak256(\"TIMELOCK_ADMIN_ROLE\");\n    bytes32 public constant PROPOSER_ROLE = keccak256(\"PROPOSER_ROLE\");\n    bytes32 public constant EXECUTOR_ROLE = keccak256(\"EXECUTOR_ROLE\");\n    bytes32 public constant CANCELLER_ROLE = keccak256(\"CANCELLER_ROLE\");\n    uint256 internal constant _DONE_TIMESTAMP = uint256(1);\n\n    mapping(bytes32 => uint256) private _timestamps;\n    uint256 private _minDelay;\n\n    /**\n     * @dev Emitted when a call is scheduled as part of operation `id`.\n     */\n    event CallScheduled(\n        bytes32 indexed id,\n        uint256 indexed index,\n        address target,\n        uint256 value,\n        bytes data,\n        bytes32 predecessor,\n        uint256 delay\n    );\n\n    /**\n     * @dev Emitted when a call is performed as part of operation `id`.\n     */\n    event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data);\n\n    /**\n     * @dev Emitted when operation `id` is cancelled.\n     */\n    event Cancelled(bytes32 indexed id);\n\n    /**\n     * @dev Emitted when the minimum delay for future operations is modified.\n     */\n    event MinDelayChange(uint256 oldDuration, uint256 newDuration);\n\n    /**\n     * @dev Initializes the contract with the following parameters:\n     *\n     * - `minDelay`: initial minimum delay for operations\n     * - `proposers`: accounts to be granted proposer and canceller roles\n     * - `executors`: accounts to be granted executor role\n     * - `admin`: optional account to be granted admin role; disable with zero address\n     *\n     * IMPORTANT: The optional admin can aid with initial configuration of roles after deployment\n     * without being subject to delay, but this role should be subsequently renounced in favor of\n     * administration through timelocked proposals. Previous versions of this contract would assign\n     * this admin to the deployer automatically and should be renounced as well.\n     */\n    function __TimelockController_init(\n        uint256 minDelay,\n        address[] memory proposers,\n        address[] memory executors,\n        address admin\n    ) internal onlyInitializing {\n        __TimelockController_init_unchained(minDelay, proposers, executors, admin);\n    }\n\n    function __TimelockController_init_unchained(\n        uint256 minDelay,\n        address[] memory proposers,\n        address[] memory executors,\n        address admin\n    ) internal onlyInitializing {\n        _setRoleAdmin(TIMELOCK_ADMIN_ROLE, TIMELOCK_ADMIN_ROLE);\n        _setRoleAdmin(PROPOSER_ROLE, TIMELOCK_ADMIN_ROLE);\n        _setRoleAdmin(EXECUTOR_ROLE, TIMELOCK_ADMIN_ROLE);\n        _setRoleAdmin(CANCELLER_ROLE, TIMELOCK_ADMIN_ROLE);\n\n        // self administration\n        _setupRole(TIMELOCK_ADMIN_ROLE, address(this));\n\n        // optional admin\n        if (admin != address(0)) {\n            _setupRole(TIMELOCK_ADMIN_ROLE, admin);\n        }\n\n        // register proposers and cancellers\n        for (uint256 i = 0; i < proposers.length; ++i) {\n            _setupRole(PROPOSER_ROLE, proposers[i]);\n            _setupRole(CANCELLER_ROLE, proposers[i]);\n        }\n\n        // register executors\n        for (uint256 i = 0; i < executors.length; ++i) {\n            _setupRole(EXECUTOR_ROLE, executors[i]);\n        }\n\n        _minDelay = minDelay;\n        emit MinDelayChange(0, minDelay);\n    }\n\n    /**\n     * @dev Modifier to make a function callable only by a certain role. In\n     * addition to checking the sender's role, `address(0)` 's role is also\n     * considered. Granting a role to `address(0)` is equivalent to enabling\n     * this role for everyone.\n     */\n    modifier onlyRoleOrOpenRole(bytes32 role) {\n        if (!hasRole(role, address(0))) {\n            _checkRole(role, _msgSender());\n        }\n        _;\n    }\n\n    /**\n     * @dev Contract might receive/hold ETH as part of the maintenance process.\n     */\n    receive() external payable {}\n\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId)\n        public\n        view\n        virtual\n        override(IERC165Upgradeable, AccessControlUpgradeable)\n        returns (bool)\n    {\n        return interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev Returns whether an id correspond to a registered operation. This\n     * includes both Pending, Ready and Done operations.\n     */\n    function isOperation(bytes32 id) public view virtual returns (bool registered) {\n        return getTimestamp(id) > 0;\n    }\n\n    /**\n     * @dev Returns whether an operation is pending or not.\n     */\n    function isOperationPending(bytes32 id) public view virtual returns (bool pending) {\n        return getTimestamp(id) > _DONE_TIMESTAMP;\n    }\n\n    /**\n     * @dev Returns whether an operation is ready or not.\n     */\n    function isOperationReady(bytes32 id) public view virtual returns (bool ready) {\n        uint256 timestamp = getTimestamp(id);\n        return timestamp > _DONE_TIMESTAMP && timestamp <= block.timestamp;\n    }\n\n    /**\n     * @dev Returns whether an operation is done or not.\n     */\n    function isOperationDone(bytes32 id) public view virtual returns (bool done) {\n        return getTimestamp(id) == _DONE_TIMESTAMP;\n    }\n\n    /**\n     * @dev Returns the timestamp at with an operation becomes ready (0 for\n     * unset operations, 1 for done operations).\n     */\n    function getTimestamp(bytes32 id) public view virtual returns (uint256 timestamp) {\n        return _timestamps[id];\n    }\n\n    /**\n     * @dev Returns the minimum delay for an operation to become valid.\n     *\n     * This value can be changed by executing an operation that calls `updateDelay`.\n     */\n    function getMinDelay() public view virtual returns (uint256 duration) {\n        return _minDelay;\n    }\n\n    /**\n     * @dev Returns the identifier of an operation containing a single\n     * transaction.\n     */\n    function hashOperation(address target, uint256 value, bytes calldata data, bytes32 predecessor, bytes32 salt)\n        public\n        pure\n        virtual\n        returns (bytes32 hash)\n    {\n        return keccak256(abi.encode(target, value, data, predecessor, salt));\n    }\n\n    /**\n     * @dev Returns the identifier of an operation containing a batch of\n     * transactions.\n     */\n    function hashOperationBatch(\n        address[] calldata targets,\n        uint256[] calldata values,\n        bytes[] calldata payloads,\n        bytes32 predecessor,\n        bytes32 salt\n    ) public pure virtual returns (bytes32 hash) {\n        return keccak256(abi.encode(targets, values, payloads, predecessor, salt));\n    }\n\n    /**\n     * @dev Schedule an operation containing a single transaction.\n     *\n     * Emits a {CallScheduled} event.\n     *\n     * Requirements:\n     *\n     * - the caller must have the 'proposer' role.\n     */\n    function schedule(\n        address target,\n        uint256 value,\n        bytes calldata data,\n        bytes32 predecessor,\n        bytes32 salt,\n        uint256 delay\n    ) public virtual onlyRole(PROPOSER_ROLE) {\n        bytes32 id = hashOperation(target, value, data, predecessor, salt);\n        _schedule(id, delay);\n        emit CallScheduled(id, 0, target, value, data, predecessor, delay);\n    }\n\n    /**\n     * @dev Schedule an operation containing a batch of transactions.\n     *\n     * Emits one {CallScheduled} event per transaction in the batch.\n     *\n     * Requirements:\n     *\n     * - the caller must have the 'proposer' role.\n     */\n    function scheduleBatch(\n        address[] calldata targets,\n        uint256[] calldata values,\n        bytes[] calldata payloads,\n        bytes32 predecessor,\n        bytes32 salt,\n        uint256 delay\n    ) public virtual onlyRole(PROPOSER_ROLE) {\n        require(targets.length == values.length, \"TimelockController: length mismatch\");\n        require(targets.length == payloads.length, \"TimelockController: length mismatch\");\n\n        bytes32 id = hashOperationBatch(targets, values, payloads, predecessor, salt);\n        _schedule(id, delay);\n        for (uint256 i = 0; i < targets.length; ++i) {\n            emit CallScheduled(id, i, targets[i], values[i], payloads[i], predecessor, delay);\n        }\n    }\n\n    /**\n     * @dev Schedule an operation that is to becomes valid after a given delay.\n     */\n    function _schedule(bytes32 id, uint256 delay) private {\n        require(!isOperation(id), \"TimelockController: operation already scheduled\");\n        require(delay >= getMinDelay(), \"TimelockController: insufficient delay\");\n        _timestamps[id] = block.timestamp + delay;\n    }\n\n    /**\n     * @dev Cancel an operation.\n     *\n     * Requirements:\n     *\n     * - the caller must have the 'canceller' role.\n     */\n    function cancel(bytes32 id) public virtual onlyRole(CANCELLER_ROLE) {\n        require(isOperationPending(id), \"TimelockController: operation cannot be cancelled\");\n        delete _timestamps[id];\n\n        emit Cancelled(id);\n    }\n\n    /**\n     * @dev Execute an (ready) operation containing a single transaction.\n     *\n     * Emits a {CallExecuted} event.\n     *\n     * Requirements:\n     *\n     * - the caller must have the 'executor' role.\n     */\n    // This function can reenter, but it doesn't pose a risk because _afterCall checks that the proposal is pending,\n    // thus any modifications to the operation during reentrancy should be caught.\n    // slither-disable-next-line reentrancy-eth\n    function execute(address target, uint256 value, bytes calldata payload, bytes32 predecessor, bytes32 salt)\n        public\n        payable\n        virtual\n        onlyRoleOrOpenRole(EXECUTOR_ROLE)\n    {\n        bytes32 id = hashOperation(target, value, payload, predecessor, salt);\n\n        _beforeCall(id, predecessor);\n        _execute(target, value, payload);\n        emit CallExecuted(id, 0, target, value, payload);\n        _afterCall(id);\n    }\n\n    /**\n     * @dev Execute an (ready) operation containing a batch of transactions.\n     *\n     * Emits one {CallExecuted} event per transaction in the batch.\n     *\n     * Requirements:\n     *\n     * - the caller must have the 'executor' role.\n     */\n    // This function can reenter, but it doesn't pose a risk because _afterCall checks that the proposal is pending,\n    // thus any modifications to the operation during reentrancy should be caught.\n    // slither-disable-next-line reentrancy-eth\n    function executeBatch(\n        address[] calldata targets,\n        uint256[] calldata values,\n        bytes[] calldata payloads,\n        bytes32 predecessor,\n        bytes32 salt\n    ) public payable virtual onlyRoleOrOpenRole(EXECUTOR_ROLE) {\n        require(targets.length == values.length, \"TimelockController: length mismatch\");\n        require(targets.length == payloads.length, \"TimelockController: length mismatch\");\n\n        bytes32 id = hashOperationBatch(targets, values, payloads, predecessor, salt);\n\n        _beforeCall(id, predecessor);\n        for (uint256 i = 0; i < targets.length; ++i) {\n            address target = targets[i];\n            uint256 value = values[i];\n            bytes calldata payload = payloads[i];\n            _execute(target, value, payload);\n            emit CallExecuted(id, i, target, value, payload);\n        }\n        _afterCall(id);\n    }\n\n    /**\n     * @dev Execute an operation's call.\n     */\n    function _execute(address target, uint256 value, bytes calldata data) internal virtual {\n        (bool success,) = target.call{value: value}(data);\n        require(success, \"TimelockController: underlying transaction reverted\");\n    }\n\n    /**\n     * @dev Checks before execution of an operation's calls.\n     */\n    function _beforeCall(bytes32 id, bytes32 predecessor) private view {\n        require(isOperationReady(id), \"TimelockController: operation is not ready\");\n        require(predecessor == bytes32(0) || isOperationDone(predecessor), \"TimelockController: missing dependency\");\n    }\n\n    /**\n     * @dev Checks after execution of an operation's calls.\n     */\n    function _afterCall(bytes32 id) private {\n        require(isOperationReady(id), \"TimelockController: operation is not ready\");\n        _timestamps[id] = _DONE_TIMESTAMP;\n    }\n\n    /**\n     * @dev Changes the minimum timelock duration for future operations.\n     *\n     * Emits a {MinDelayChange} event.\n     *\n     * Requirements:\n     *\n     * - the caller must be the timelock itself. This can only be achieved by scheduling and later executing\n     * an operation where the timelock is the target and the data is the ABI-encoded call to this function.\n     */\n    function updateDelay(uint256 newDelay) external virtual {\n        require(msg.sender == address(this), \"TimelockController: caller must be timelock\");\n        emit MinDelayChange(_minDelay, newDelay);\n        _minDelay = newDelay;\n    }\n\n    /**\n     * @dev See {IERC721Receiver-onERC721Received}.\n     */\n    function onERC721Received(address, address, uint256, bytes memory) public virtual override returns (bytes4) {\n        return this.onERC721Received.selector;\n    }\n\n    /**\n     * @dev See {IERC1155Receiver-onERC1155Received}.\n     */\n    function onERC1155Received(address, address, uint256, uint256, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155Received.selector;\n    }\n\n    /**\n     * @dev See {IERC1155Receiver-onERC1155BatchReceived}.\n     */\n    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155BatchReceived.selector;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[48] private __gap;\n}",
   "resolutions": {
     "d293c6ecba42b698": {
-      "status": "unaudited",
-      "coveredLines": 0,
+      "status": "differs",
+      "coveredLines": 392,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "TimelockController",
+        "similarity": 0.898,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/TimelockController.sol",
+        "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
+        "commitTimestamp": "2023-03-26T17:23:13Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ca822213f2275a14c26167bd387ac3522da67fe9/contracts/governance/TimelockController.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 23,
+        "removed": 11,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 8,
+        "unchanged": 392,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract TimelockControllerUpgradeable is",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    Initializable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    AccessControlUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    IERC721ReceiverUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    IERC1155ReceiverUpgradeable",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 6, "text": "{", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 7,
+                "text": "    bytes32 public constant TIMELOCK_ADMIN_ROLE = keccak256(\"TIMELOCK_ADMIN_ROLE\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 8,
+                "text": "    bytes32 public constant PROPOSER_ROLE = keccak256(\"PROPOSER_ROLE\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 9,
+                "text": "    bytes32 public constant EXECUTOR_ROLE = keccak256(\"EXECUTOR_ROLE\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 27,
+            "oldLines": 11,
+            "newStart": 32,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 32,
+                "text": "    event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data);"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 33, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 34, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @dev Emitted when new proposal is scheduled with non-zero salt.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    event CallSalt(bytes32 indexed id, bytes32 salt);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "     * @dev Emitted when operation `id` is cancelled."
+              },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    event Cancelled(bytes32 indexed id);"
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 7,
+            "newStart": 54,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "     * administration through timelocked proposals. Previous versions of this contract would assign"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "     * this admin to the deployer automatically and should be renounced as well."
+              },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    constructor(uint256 minDelay, address[] memory proposers, address[] memory executors, address admin) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function __TimelockController_init(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        uint256 minDelay,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        address[] memory proposers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        address[] memory executors,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        address admin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    ) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        __TimelockController_init_unchained(minDelay, proposers, executors, admin);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 65, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    function __TimelockController_init_unchained(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        uint256 minDelay,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        address[] memory proposers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        address[] memory executors,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        address admin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    ) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 72,
+                "text": "        _setRoleAdmin(TIMELOCK_ADMIN_ROLE, TIMELOCK_ADMIN_ROLE);"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 73,
+                "text": "        _setRoleAdmin(PROPOSER_ROLE, TIMELOCK_ADMIN_ROLE);"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 74,
+                "text": "        _setRoleAdmin(EXECUTOR_ROLE, TIMELOCK_ADMIN_ROLE);"
+              }
+            ]
+          },
+          {
+            "oldStart": 108,
+            "oldLines": 10,
+            "newStart": 122,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 122,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 123,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 124,
+                "text": "        virtual"
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        override(IERC165, AccessControl)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        override(IERC165Upgradeable, AccessControlUpgradeable)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 126,
+                "text": "        returns (bool)"
+              },
+              { "type": " ", "oldLine": 113, "newLine": 127, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        return interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "        return interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 115, "newLine": 129, "text": "    }" },
+              { "type": " ", "oldLine": 116, "newLine": 130, "text": "" },
+              { "type": " ", "oldLine": 117, "newLine": 131, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 7,
+            "newStart": 159,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 145, "newLine": 159, "text": "    }" },
+              { "type": " ", "oldLine": 146, "newLine": 160, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 161,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "     * @dev Returns the timestamp at which an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "     * @dev Returns the timestamp at with an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 163,
+                "text": "     * unset operations, 1 for done operations)."
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 164,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 165,
+                "text": "    function getTimestamp(bytes32 id) public view virtual returns (uint256 timestamp) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 7,
+            "newStart": 205,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 205,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 206,
+                "text": "     * @dev Schedule an operation containing a single transaction."
+              },
+              { "type": " ", "oldLine": 193, "newLine": 207, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * Emits events {CallScheduled} and {CallSalt}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "     * Emits a {CallScheduled} event.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 195, "newLine": 209, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 210,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 197, "newLine": 211, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 208,
+            "oldLines": 15,
+            "newStart": 222,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 222,
+                "text": "        bytes32 id = hashOperation(target, value, data, predecessor, salt);"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 223,
+                "text": "        _schedule(id, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 224,
+                "text": "        emit CallScheduled(id, 0, target, value, data, predecessor, delay);"
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 214, "newLine": 225, "text": "    }" },
+              { "type": " ", "oldLine": 215, "newLine": 226, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 227,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 228,
+                "text": "     * @dev Schedule an operation containing a batch of transactions."
+              },
+              { "type": " ", "oldLine": 218, "newLine": 229, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "     * Emits a {CallSalt} event and one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "     * Emits one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 220, "newLine": 231, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 232,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 222, "newLine": 233, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 238,
+            "oldLines": 13,
+            "newStart": 249,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 249,
+                "text": "        for (uint256 i = 0; i < targets.length; ++i) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 250,
+                "text": "            emit CallScheduled(id, i, targets[i], values[i], payloads[i], predecessor, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 251,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 244, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 245, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 254,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "     * @dev Schedule an operation that is to become valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "     * @dev Schedule an operation that is to becomes valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 256,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 257,
+                "text": "    function _schedule(bytes32 id, uint256 delay) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 258,
+                "text": "        require(!isOperation(id), \"TimelockController: operation already scheduled\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 397,
+            "oldLines": 4,
+            "newStart": 405,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 397, "newLine": 405, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 398,
+                "newLine": 406,
+                "text": "        return this.onERC1155BatchReceived.selector;"
+              },
+              { "type": " ", "oldLine": 399, "newLine": 407, "text": "    }" },
+              { "type": "+", "newLine": 408, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 409,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 411,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 412,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 413,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "    uint256[48] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 400, "newLine": 415, "text": "}" }
+            ]
+          }
+        ]
+      },
       "warnings": []
     }
   }

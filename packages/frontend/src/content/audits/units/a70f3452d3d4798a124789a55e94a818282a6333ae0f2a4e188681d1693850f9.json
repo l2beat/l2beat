@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ERC20Burnable",
-        "similarity": 0.762,
+        "similarity": 0.75,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/extensions/ERC20Burnable.sol",

@@ -2,9 +2,9 @@
   "schemaVersion": 2,
   "projectId": "aztecnetwork",
   "slug": "aztecnetwork",
-  "generatedAt": 1789564497,
+  "generatedAt": 1789642422,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
-  "discoveryTimestamp": 1787151120,
+  "discoveryTimestamp": 1789471807,
   "contractSelection": "all",
   "context": {
     "key": "41ad32932dea0dc9",
@@ -74,19 +74,19 @@
     "units": {
       "identical": 181,
       "library": 118,
-      "differs": 251,
-      "unaudited": 834
+      "differs": 221,
+      "unaudited": 864
     },
     "uniqueUnits": {
       "identical": 47,
       "library": 29,
-      "differs": 86,
-      "unaudited": 707
+      "differs": 75,
+      "unaudited": 718
     },
     "lines": {
       "total": 494939,
-      "covered": 80907,
-      "uncovered": 414032
+      "covered": 79511,
+      "uncovered": 415428
     }
   },
   "reportIds": [
@@ -104,8 +104,6 @@
     "openzeppelin/contracts__audits__2025-04-v5.3",
     "openzeppelin/contracts__audits__2025-07-v5.4",
     "openzeppelin/contracts__audits__2026-02-v5.6",
-    "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-    "roninnetwork/beosin-ronin-network-2023-03",
     "safe/certora-safe-1-3-0",
     "safe/nethermind-safe-1-3-0",
     "safe/nethermind-safe-allowance-v1-0-0"
@@ -163,7 +161,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ICoinIssuer",
-                "similarity": 0.909,
+                "similarity": 0.876,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
@@ -279,7 +277,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -395,7 +393,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -528,19 +526,19 @@
         "units": {
           "identical": 15,
           "library": 7,
-          "differs": 6,
-          "unaudited": 2
+          "differs": 5,
+          "unaudited": 3
         },
         "uniqueUnits": {
           "identical": 15,
           "library": 7,
-          "differs": 6,
-          "unaudited": 2
+          "differs": 5,
+          "unaudited": 3
         },
         "lines": {
           "total": 7793,
-          "covered": 3713,
-          "uncovered": 4080
+          "covered": 3712,
+          "uncovered": 4081
         }
       },
       "files": [
@@ -688,7 +686,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -732,7 +730,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -1044,7 +1042,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -1160,7 +1158,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -1337,43 +1335,9 @@
               "startLine": 3994,
               "endLine": 3996,
               "lines": 3,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 2,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -1394,7 +1358,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -1663,19 +1627,19 @@
         "units": {
           "identical": 1,
           "library": 0,
-          "differs": 1,
-          "unaudited": 1
+          "differs": 0,
+          "unaudited": 2
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 0,
-          "differs": 1,
-          "unaudited": 1
+          "differs": 0,
+          "unaudited": 2
         },
         "lines": {
           "total": 5391,
-          "covered": 1489,
-          "uncovered": 3902
+          "covered": 3,
+          "uncovered": 5388
         }
       },
       "files": [
@@ -1728,43 +1692,9 @@
               "startLine": 24,
               "endLine": 5398,
               "lines": 5375,
-              "status": "differs",
-              "coveredLines": 1486,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "HonkVerifier",
-                "similarity": 0.001,
-                "reportId": "aztecnetwork/cantina-payload-2026-03-05",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
-                "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
-                "commitTimestamp": "2026-02-27T09:20:07Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 3889,
-                "removed": 3,
-                "ignoredAdded": 1484,
-                "ignoredRemoved": 0,
-                "unchanged": 1486,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "c8839516bf6622016663590266df26678abe6738033c6093fbfc75966eb2392a",
@@ -1906,7 +1836,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -2255,7 +2185,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -2299,7 +2229,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -2427,7 +2357,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Governance",
-                "similarity": 0.989,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/Governance.sol",
@@ -2700,7 +2630,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -2873,7 +2803,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -3142,7 +3072,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelectionCore",
-                "similarity": 0.667,
+                "similarity": 0.637,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -3222,7 +3152,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -3302,7 +3232,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelection",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -3346,7 +3276,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -3426,7 +3356,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -3491,19 +3421,19 @@
         "units": {
           "identical": 23,
           "library": 9,
-          "differs": 36,
-          "unaudited": 25
+          "differs": 33,
+          "unaudited": 28
         },
         "uniqueUnits": {
           "identical": 23,
           "library": 9,
-          "differs": 36,
-          "unaudited": 25
+          "differs": 33,
+          "unaudited": 28
         },
         "lines": {
           "total": 24630,
-          "covered": 10415,
-          "uncovered": 14215
+          "covered": 10438,
+          "uncovered": 14192
         }
       },
       "files": [
@@ -3587,7 +3517,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -3679,7 +3609,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -3723,7 +3653,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "AttestationLib",
-                "similarity": 0.809,
+                "similarity": 0.837,
                 "reportId": "aztecnetwork/cantina-governance-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
@@ -3803,7 +3733,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -3847,7 +3777,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeHeaderLib",
-                "similarity": 0.846,
+                "similarity": 0.874,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
@@ -3880,40 +3810,8 @@
               "startLine": 3163,
               "endLine": 3206,
               "lines": 44,
-              "status": "differs",
-              "coveredLines": 30,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "ChainTipsLib",
-                "similarity": 0.587,
-                "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "commit": "70f004dc2ad19d1c0b80f8a481424dd23542f191",
-                "commitTimestamp": "2025-09-26T07:33:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/70f004dc2ad19d1c0b80f8a481424dd23542f191/l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "remediation review",
-                "coverage": "verified updateProvenBlockNumber bound from PR 17299 (head commit)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 14,
-                "removed": 17,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 0,
-                "unchanged": 30,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -3983,7 +3881,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -4051,7 +3949,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -4120,40 +4018,8 @@
               "startLine": 3661,
               "endLine": 3684,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -4235,7 +4101,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -4280,43 +4146,9 @@
               "startLine": 3930,
               "endLine": 3950,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "da93f6fea4c3e765ada6c7103fff18a093288a2110f30e695995c27aa071c890",
@@ -4349,7 +4181,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "STFLib",
-                "similarity": 0.905,
+                "similarity": 0.914,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
@@ -4494,7 +4326,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "BitMaps",
-                "similarity": 0.963,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/BitMaps.sol",
@@ -4574,7 +4406,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "RewardLib",
-                "similarity": 0.855,
+                "similarity": 0.86,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
@@ -4618,7 +4450,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -4698,7 +4530,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -4742,7 +4574,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -5003,8 +4835,40 @@
               "startLine": 7035,
               "endLine": 7110,
               "lines": 76,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 71,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.952,
+                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/governance/libraries/Errors.sol",
+                "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+                "commitTimestamp": "2025-09-25T12:37:48Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/Errors.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "remediation review",
+                "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 5,
+                "removed": 1,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 0,
+                "unchanged": 71,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -5026,7 +4890,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "CheckpointedUintLib",
-                "similarity": 0.938,
+                "similarity": 0.994,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
@@ -5059,43 +4923,9 @@
               "startLine": 7189,
               "endLine": 7200,
               "lines": 12,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -5116,7 +4946,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -5280,7 +5110,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -5372,7 +5202,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "DepositDelegationLib",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
@@ -5416,7 +5246,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.875,
+                "similarity": 0.929,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -5460,7 +5290,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -5624,7 +5454,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -5668,7 +5498,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -5784,7 +5614,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "MessageHashUtils",
-                "similarity": 0.92,
+                "similarity": 0.972,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/MessageHashUtils.sol",
@@ -5908,7 +5738,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EmpireBase",
-                "similarity": 0.883,
+                "similarity": 0.956,
                 "reportId": "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",
@@ -6024,7 +5854,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSEPayload",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSEPayload.sol",
@@ -6104,7 +5934,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StakingLib",
-                "similarity": 0.896,
+                "similarity": 0.894,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
@@ -6184,7 +6014,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorSelectionLib",
-                "similarity": 0.962,
+                "similarity": 0.998,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
@@ -6240,7 +6070,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposedHeaderLib",
-                "similarity": 0.791,
+                "similarity": 0.878,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
@@ -6284,7 +6114,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BlobLib",
-                "similarity": 0.882,
+                "similarity": 0.971,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",
@@ -6340,7 +6170,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EpochProofLib",
-                "similarity": 0.888,
+                "similarity": 0.872,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/EpochProofLib.sol",
@@ -6492,7 +6322,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeLib",
-                "similarity": 0.914,
+                "similarity": 0.951,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
@@ -6536,7 +6366,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposeLib",
-                "similarity": 0.789,
+                "similarity": 0.806,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
@@ -6601,19 +6431,19 @@
         "units": {
           "identical": 4,
           "library": 3,
-          "differs": 4,
-          "unaudited": 2
+          "differs": 2,
+          "unaudited": 4
         },
         "uniqueUnits": {
           "identical": 4,
           "library": 3,
-          "differs": 4,
-          "unaudited": 2
+          "differs": 2,
+          "unaudited": 4
         },
         "lines": {
           "total": 827,
-          "covered": 587,
-          "uncovered": 240
+          "covered": 468,
+          "uncovered": 359
         }
       },
       "files": [
@@ -6630,40 +6460,8 @@
               "startLine": 4,
               "endLine": 27,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -6685,7 +6483,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -6938,7 +6736,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -7043,40 +6841,8 @@
               "startLine": 753,
               "endLine": 897,
               "lines": 145,
-              "status": "differs",
-              "coveredLines": 107,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "RewardDistributor",
-                "similarity": 0.456,
-                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/RewardDistributor.sol",
-                "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
-                "commitTimestamp": "2025-08-23T13:12:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/RewardDistributor.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 38,
-                "removed": 2,
-                "ignoredAdded": 84,
-                "ignoredRemoved": 1,
-                "unchanged": 107,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -7332,19 +7098,19 @@
         "units": {
           "identical": 3,
           "library": 0,
-          "differs": 8,
-          "unaudited": 7
+          "differs": 5,
+          "unaudited": 10
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 0,
-          "differs": 8,
-          "unaudited": 7
+          "differs": 5,
+          "unaudited": 10
         },
         "lines": {
           "total": 2077,
-          "covered": 653,
-          "uncovered": 1424
+          "covered": 500,
+          "uncovered": 1577
         }
       },
       "files": [
@@ -7408,7 +7174,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "BitMaps",
-                "similarity": 0.963,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/BitMaps.sol",
@@ -7452,7 +7218,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -7532,7 +7298,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -7589,40 +7355,8 @@
               "startLine": 786,
               "endLine": 809,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -7692,7 +7426,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -7725,43 +7459,9 @@
               "startLine": 922,
               "endLine": 942,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "5507825c49f9f2c2a0568447937777975c3ce4bae4c1275b8a8a9dbfa640e941",
@@ -7782,7 +7482,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -7851,40 +7551,8 @@
               "startLine": 1379,
               "endLine": 1557,
               "lines": 179,
-              "status": "differs",
-              "coveredLines": 136,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Outbox",
-                "similarity": 0.543,
-                "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/messagebridge/Outbox.sol",
-                "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
-                "commitTimestamp": "2026-01-06T20:15:15Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/messagebridge/Outbox.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "not in the declared scope list; reviewed in passing (root overwrite / nullifier finding)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 4
-              },
-              "diffStats": {
-                "added": 43,
-                "removed": 26,
-                "ignoredAdded": 47,
-                "ignoredRemoved": 15,
-                "unchanged": 136,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -7915,19 +7583,19 @@
         "units": {
           "identical": 3,
           "library": 2,
-          "differs": 3,
-          "unaudited": 3
+          "differs": 1,
+          "unaudited": 5
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 2,
-          "differs": 3,
-          "unaudited": 3
+          "differs": 1,
+          "unaudited": 5
         },
         "lines": {
           "total": 681,
-          "covered": 320,
-          "uncovered": 361
+          "covered": 313,
+          "uncovered": 368
         }
       },
       "files": [
@@ -8028,43 +7696,9 @@
               "startLine": 187,
               "endLine": 191,
               "lines": 5,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 4,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "8f1dda40a76035d59e0c9f278164f791da9514e00f3d78f53ef808f5f05c5adb",
@@ -8074,43 +7708,9 @@
               "startLine": 217,
               "endLine": 253,
               "lines": 37,
-              "status": "differs",
-              "coveredLines": 6,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRegistry",
-                "similarity": 0.089,
-                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRegistry.sol",
-                "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
-                "commitTimestamp": "2025-08-23T13:12:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/IRegistry.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 31,
-                "removed": 10,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 9,
-                "unchanged": 6,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "079919a61b5bee8c3dcea110ee3a62c649eac11da4e43ebf1bab5482f43f223b",
@@ -8239,7 +7839,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Address.sol",
@@ -8392,7 +7992,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -8508,7 +8108,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Address.sol",
@@ -8709,19 +8309,19 @@
         "units": {
           "identical": 3,
           "library": 3,
-          "differs": 7,
-          "unaudited": 9
+          "differs": 5,
+          "unaudited": 11
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 3,
-          "differs": 7,
-          "unaudited": 9
+          "differs": 5,
+          "unaudited": 11
         },
         "lines": {
           "total": 3543,
-          "covered": 1992,
-          "uncovered": 1551
+          "covered": 1975,
+          "uncovered": 1568
         }
       },
       "files": [
@@ -8773,7 +8373,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -8817,7 +8417,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -8886,40 +8486,8 @@
               "startLine": 563,
               "endLine": 586,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -9001,7 +8569,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -9147,43 +8715,9 @@
               "startLine": 1102,
               "endLine": 1122,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "264b5f12b4e890456e72798d3c5e5c517f072a7e813e443084e7e06d4fec478a",
@@ -9216,7 +8750,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -9352,7 +8886,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Inbox",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/messagebridge/Inbox.sol",
@@ -9405,19 +8939,19 @@
         "units": {
           "identical": 5,
           "library": 8,
-          "differs": 9,
-          "unaudited": 8
+          "differs": 10,
+          "unaudited": 7
         },
         "uniqueUnits": {
           "identical": 5,
           "library": 8,
-          "differs": 9,
-          "unaudited": 8
+          "differs": 10,
+          "unaudited": 7
         },
         "lines": {
           "total": 9342,
-          "covered": 4469,
-          "uncovered": 4873
+          "covered": 4678,
+          "uncovered": 4664
         }
       },
       "files": [
@@ -9457,7 +8991,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -9501,7 +9035,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -9625,7 +9159,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -9741,7 +9275,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "MessageHashUtils",
-                "similarity": 0.92,
+                "similarity": 0.972,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/MessageHashUtils.sol",
@@ -10005,7 +9539,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -10122,8 +9656,40 @@
               "startLine": 3950,
               "endLine": 4211,
               "lines": 262,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 209,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.763,
+                "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/core/libraries/Errors.sol",
+                "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+                "commitTimestamp": "2026-01-06T20:15:15Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/Errors.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "security review",
+                "coverage": "full file",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 53,
+                "removed": 34,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
+                "unchanged": 209,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -10169,7 +9735,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelectionCore",
-                "similarity": 0.667,
+                "similarity": 0.637,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -10249,7 +9815,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -10329,7 +9895,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelection",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -10373,7 +9939,7 @@
                 "rank": 0,
                 "matchedBy": "similarity",
                 "auditedName": "TallySlashingProposer",
-                "similarity": 0.933,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-payload-2026-03-05",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/slashing/TallySlashingProposer.sol",
@@ -10426,19 +9992,19 @@
         "units": {
           "identical": 25,
           "library": 9,
-          "differs": 48,
-          "unaudited": 34
+          "differs": 44,
+          "unaudited": 38
         },
         "uniqueUnits": {
           "identical": 25,
           "library": 9,
-          "differs": 48,
-          "unaudited": 34
+          "differs": 44,
+          "unaudited": 38
         },
         "lines": {
           "total": 32194,
-          "covered": 13502,
-          "uncovered": 18692
+          "covered": 13549,
+          "uncovered": 18645
         }
       },
       "files": [
@@ -10478,7 +10044,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -10835,7 +10401,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -10915,7 +10481,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -10959,7 +10525,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -11028,43 +10594,9 @@
               "startLine": 3886,
               "endLine": 3897,
               "lines": 12,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -11085,7 +10617,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -11249,7 +10781,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -11377,7 +10909,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.969,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -11421,7 +10953,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -11454,43 +10986,9 @@
               "startLine": 5768,
               "endLine": 5790,
               "lines": 23,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "other",
-                "collection": "roninnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IStaking",
-                "similarity": 0.065,
-                "reportId": "roninnetwork/beosin-ronin-network-2023-03",
-                "repository": "axieinfinity/ronin-dpos-contracts",
-                "path": "contracts/interfaces/staking/IStaking.sol",
-                "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
-                "commitTimestamp": "2023-03-08T05:44:18Z",
-                "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/staking/IStaking.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final audited commit",
-                "coverage": "Final audited commit; all consensus-contract findings fixed.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 5
-              },
-              "diffStats": {
-                "added": 22,
-                "removed": 7,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 23,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "7821f39c356ff29d88f45db583da466863c51075bd4fe6e9321edbf2e91a8b01",
@@ -11511,7 +11009,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelectionCore",
-                "similarity": 0.667,
+                "similarity": 0.637,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -11591,7 +11089,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -11671,7 +11169,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelection",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -11715,7 +11213,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -11820,40 +11318,8 @@
               "startLine": 6301,
               "endLine": 6324,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -11935,7 +11401,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -11991,7 +11457,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -12035,7 +11501,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -12151,7 +11617,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "MessageHashUtils",
-                "similarity": 0.92,
+                "similarity": 0.972,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/MessageHashUtils.sol",
@@ -12228,43 +11694,9 @@
               "startLine": 7513,
               "endLine": 7533,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "264b5f12b4e890456e72798d3c5e5c517f072a7e813e443084e7e06d4fec478a",
@@ -12286,8 +11718,40 @@
               "startLine": 7637,
               "endLine": 7898,
               "lines": 262,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 208,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.758,
+                "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/core/libraries/Errors.sol",
+                "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+                "commitTimestamp": "2026-01-06T20:15:15Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/Errors.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "security review",
+                "coverage": "full file",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 54,
+                "removed": 35,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
+                "unchanged": 208,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -12309,7 +11773,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeJuicePortal",
-                "similarity": 0.968,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/messagebridge/FeeJuicePortal.sol",
@@ -12365,7 +11829,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Inbox",
-                "similarity": 0.911,
+                "similarity": 0.962,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/messagebridge/Inbox.sol",
@@ -12409,7 +11873,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "BitMaps",
-                "similarity": 0.963,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/BitMaps.sol",
@@ -12453,7 +11917,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "MerkleLib",
-                "similarity": 0.842,
+                "similarity": 0.883,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/crypto/MerkleLib.sol",
@@ -12486,40 +11950,8 @@
               "startLine": 8368,
               "endLine": 8546,
               "lines": 179,
-              "status": "differs",
-              "coveredLines": 132,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Outbox",
-                "similarity": 0.477,
-                "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/messagebridge/Outbox.sol",
-                "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
-                "commitTimestamp": "2026-01-06T20:15:15Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/messagebridge/Outbox.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "not in the declared scope list; reviewed in passing (root overwrite / nullifier finding)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 4
-              },
-              "diffStats": {
-                "added": 47,
-                "removed": 30,
-                "ignoredAdded": 49,
-                "ignoredRemoved": 17,
-                "unchanged": 132,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -12578,40 +12010,8 @@
               "startLine": 8720,
               "endLine": 8763,
               "lines": 44,
-              "status": "differs",
-              "coveredLines": 30,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "ChainTipsLib",
-                "similarity": 0.587,
-                "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "commit": "70f004dc2ad19d1c0b80f8a481424dd23542f191",
-                "commitTimestamp": "2025-09-26T07:33:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/70f004dc2ad19d1c0b80f8a481424dd23542f191/l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "remediation review",
-                "coverage": "verified updateProvenBlockNumber bound from PR 17299 (head commit)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 14,
-                "removed": 17,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 0,
-                "unchanged": 30,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -12633,7 +12033,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StakingQueueLib",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/StakingQueue.sol",
@@ -12785,7 +12185,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -13045,7 +12445,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StakingLib",
-                "similarity": 0.857,
+                "similarity": 0.861,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
@@ -13089,7 +12489,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -13193,7 +12593,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "AttestationLib",
-                "similarity": 0.778,
+                "similarity": 0.81,
                 "reportId": "aztecnetwork/cantina-governance-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
@@ -13237,7 +12637,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeHeaderLib",
-                "similarity": 0.846,
+                "similarity": 0.874,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
@@ -13305,7 +12705,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "STFLib",
-                "similarity": 0.886,
+                "similarity": 0.897,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
@@ -13349,7 +12749,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "SampleLib",
-                "similarity": 0.979,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/crypto/SampleLib.sol",
@@ -13393,7 +12793,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorSelectionLib",
-                "similarity": 0.92,
+                "similarity": 0.962,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
@@ -13437,7 +12837,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "InvalidateLib",
-                "similarity": 0.868,
+                "similarity": 0.943,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",
@@ -13481,7 +12881,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorOperationsExtLib",
-                "similarity": 0.831,
+                "similarity": 0.803,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorOperationsExtLib.sol",
@@ -13597,7 +12997,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BlobLib",
-                "similarity": 0.853,
+                "similarity": 0.944,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",
@@ -13653,7 +13053,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeLib",
-                "similarity": 0.902,
+                "similarity": 0.941,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
@@ -13757,7 +13157,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "RewardLib",
-                "similarity": 0.838,
+                "similarity": 0.844,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
@@ -13801,7 +13201,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposedHeaderLib",
-                "similarity": 0.791,
+                "similarity": 0.878,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
@@ -13845,7 +13245,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposeLib",
-                "similarity": 0.725,
+                "similarity": 0.756,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
@@ -13901,7 +13301,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EpochProofLib",
-                "similarity": 0.809,
+                "similarity": 0.804,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/EpochProofLib.sol",
@@ -13946,8 +13346,40 @@
               "startLine": 15547,
               "endLine": 15567,
               "lines": 21,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 20,
+              "match": {
+                "origin": "library",
+                "collection": "openzeppelin",
+                "relation": {
+                  "type": "library"
+                },
+                "rank": 3,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 1,
+                "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+                "repository": "OpenZeppelin/openzeppelin-contracts",
+                "path": "contracts/utils/Errors.sol",
+                "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+                "commitTimestamp": "2024-07-24T08:37:16Z",
+                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/Errors.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "initial audit - phase 2",
+                "coverage": "Phase 2 full review of this contract newly introduced in the v5.1 release.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 1
+              },
+              "diffStats": {
+                "added": 1,
+                "removed": 1,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 0,
+                "unchanged": 20,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -13969,7 +13401,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Create2",
-                "similarity": 0.95,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Create2.sol",
@@ -14013,7 +13445,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Clones",
-                "similarity": 0.955,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-12-v5.2",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/proxy/Clones.sol",
@@ -14093,7 +13525,7 @@
                 "rank": 0,
                 "matchedBy": "similarity",
                 "auditedName": "TallySlashingProposer",
-                "similarity": 0.933,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-payload-2026-03-05",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/slashing/TallySlashingProposer.sol",
@@ -14149,7 +13581,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "RollupCore",
-                "similarity": 0.691,
+                "similarity": 0.737,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/RollupCore.sol",
@@ -14193,7 +13625,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Rollup",
-                "similarity": 0.859,
+                "similarity": 0.881,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/Rollup.sol",
@@ -14278,32 +13710,32 @@
               "status": "differs",
               "coveredLines": 2,
               "match": {
-                "origin": "other",
-                "collection": "roninnetwork",
+                "origin": "own",
+                "collection": "aztecnetwork",
                 "relation": {
-                  "type": "name"
+                  "type": "own"
                 },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IERC20Mintable",
-                "similarity": 0.667,
-                "reportId": "roninnetwork/beosin-ronin-network-2023-03",
-                "repository": "axieinfinity/ronin-dpos-contracts",
-                "path": "contracts/interfaces/IERC20Mintable.sol",
-                "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
-                "commitTimestamp": "2023-03-08T05:44:18Z",
-                "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/IERC20Mintable.sol",
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "ICoinIssuer",
+                "similarity": 0.683,
+                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
+                "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+                "commitTimestamp": "2025-08-23T13:12:24Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
                 "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final audited commit",
-                "coverage": "Final audited commit; all consensus-contract findings fixed.",
+                "reviewPhase": "security review",
+                "coverage": "full file",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 7
+                "totalVersions": 1
               },
               "diffStats": {
                 "added": 1,
-                "removed": 1,
+                "removed": 3,
                 "ignoredAdded": 0,
                 "ignoredRemoved": 0,
                 "unchanged": 2,
@@ -14366,7 +13798,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -14662,7 +14094,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -14706,7 +14138,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -15030,7 +14462,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -15139,19 +14571,19 @@
         "units": {
           "identical": 7,
           "library": 6,
-          "differs": 8,
-          "unaudited": 4
+          "differs": 7,
+          "unaudited": 5
         },
         "uniqueUnits": {
           "identical": 7,
           "library": 6,
-          "differs": 8,
-          "unaudited": 4
+          "differs": 7,
+          "unaudited": 5
         },
         "lines": {
           "total": 9194,
-          "covered": 4650,
-          "uncovered": 4544
+          "covered": 4649,
+          "uncovered": 4545
         }
       },
       "files": [
@@ -15251,7 +14683,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -15504,7 +14936,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -15548,7 +14980,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -15617,43 +15049,9 @@
               "startLine": 3331,
               "endLine": 3340,
               "lines": 10,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 9,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -15674,7 +15072,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -15838,7 +15236,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -15966,7 +15364,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.969,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -16010,7 +15408,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -16063,19 +15461,19 @@
         "units": {
           "identical": 3,
           "library": 2,
-          "differs": 6,
-          "unaudited": 8
+          "differs": 4,
+          "unaudited": 10
         },
         "uniqueUnits": {
           "identical": 3,
           "library": 2,
-          "differs": 6,
-          "unaudited": 8
+          "differs": 4,
+          "unaudited": 10
         },
         "lines": {
           "total": 2154,
-          "covered": 683,
-          "uncovered": 1471
+          "covered": 666,
+          "uncovered": 1488
         }
       },
       "files": [
@@ -16103,7 +15501,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -16171,7 +15569,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -16240,40 +15638,8 @@
               "startLine": 563,
               "endLine": 586,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -16355,7 +15721,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -16501,43 +15867,9 @@
               "startLine": 1102,
               "endLine": 1122,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "264b5f12b4e890456e72798d3c5e5c517f072a7e813e443084e7e06d4fec478a",
@@ -16570,7 +15902,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -16808,7 +16140,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Enum",
-                "similarity": 0.833,
+                "similarity": 0.831,
                 "reportId": "safe/nethermind-safe-allowance-v1-0-0",
                 "repository": "safe-fndn/safe-modules",
                 "path": "modules/allowances/contracts/Enum.sol",
@@ -16831,7 +16163,9 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": []
+              "warnings": [
+                "kind-mismatch"
+              ]
             },
             {
               "unitHash": "9166e1d5496a2cae73e440b08e6202f597e4ee03e12b4745e12aa6628ead8414",
@@ -16889,7 +16223,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "ModuleManager",
-                "similarity": 0.989,
+                "similarity": 1,
                 "reportId": "safe/nethermind-safe-1-3-0",
                 "repository": "safe-fndn/safe-smart-account",
                 "path": "contracts/base/ModuleManager.sol",
@@ -17349,7 +16683,7 @@
                 "rank": 2,
                 "matchedBy": "name",
                 "auditedName": "Safe",
-                "similarity": 0.996,
+                "similarity": 1,
                 "reportId": "safe/nethermind-safe-1-3-0",
                 "repository": "safe-fndn/safe-smart-account",
                 "path": "contracts/Safe.sol",
@@ -17539,19 +16873,19 @@
         "units": {
           "identical": 23,
           "library": 9,
-          "differs": 37,
-          "unaudited": 27
+          "differs": 34,
+          "unaudited": 30
         },
         "uniqueUnits": {
           "identical": 23,
           "library": 9,
-          "differs": 37,
-          "unaudited": 27
+          "differs": 34,
+          "unaudited": 30
         },
         "lines": {
           "total": 25254,
-          "covered": 10058,
-          "uncovered": 15196
+          "covered": 10081,
+          "uncovered": 15173
         }
       },
       "files": [
@@ -17683,7 +17017,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelectionCore",
-                "similarity": 0.667,
+                "similarity": 0.637,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -17763,7 +17097,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -17843,7 +17177,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelection",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -17887,7 +17221,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -17967,7 +17301,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -18012,40 +17346,8 @@
               "startLine": 2683,
               "endLine": 2706,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -18067,7 +17369,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -18212,7 +17514,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "BitMaps",
-                "similarity": 0.963,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/BitMaps.sol",
@@ -18268,7 +17570,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeHeaderLib",
-                "similarity": 0.846,
+                "similarity": 0.874,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
@@ -18336,7 +17638,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -18464,7 +17766,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -18509,40 +17811,8 @@
               "startLine": 3944,
               "endLine": 3987,
               "lines": 44,
-              "status": "differs",
-              "coveredLines": 30,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "ChainTipsLib",
-                "similarity": 0.587,
-                "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "commit": "70f004dc2ad19d1c0b80f8a481424dd23542f191",
-                "commitTimestamp": "2025-09-26T07:33:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/70f004dc2ad19d1c0b80f8a481424dd23542f191/l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "remediation review",
-                "coverage": "verified updateProvenBlockNumber bound from PR 17299 (head commit)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 14,
-                "removed": 17,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 0,
-                "unchanged": 30,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -18565,43 +17835,9 @@
               "startLine": 4049,
               "endLine": 4069,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "da93f6fea4c3e765ada6c7103fff18a093288a2110f30e695995c27aa071c890",
@@ -18634,7 +17870,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "STFLib",
-                "similarity": 0.905,
+                "similarity": 0.914,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
@@ -18714,7 +17950,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "RewardLib",
-                "similarity": 0.855,
+                "similarity": 0.86,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
@@ -18914,7 +18150,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BlobLib",
-                "similarity": 0.882,
+                "similarity": 0.971,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",
@@ -18970,7 +18206,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeLib",
-                "similarity": 0.914,
+                "similarity": 0.951,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
@@ -19014,7 +18250,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposedHeaderLib",
-                "similarity": 0.791,
+                "similarity": 0.878,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
@@ -19058,7 +18294,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -19102,7 +18338,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -19182,7 +18418,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -19286,7 +18522,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "AttestationLib",
-                "similarity": 0.809,
+                "similarity": 0.837,
                 "reportId": "aztecnetwork/cantina-governance-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
@@ -19499,8 +18735,40 @@
               "startLine": 8290,
               "endLine": 8365,
               "lines": 76,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 71,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.952,
+                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/governance/libraries/Errors.sol",
+                "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+                "commitTimestamp": "2025-09-25T12:37:48Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/Errors.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "remediation review",
+                "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 5,
+                "removed": 1,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 0,
+                "unchanged": 71,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -19522,7 +18790,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "CheckpointedUintLib",
-                "similarity": 0.938,
+                "similarity": 0.994,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
@@ -19555,43 +18823,9 @@
               "startLine": 8444,
               "endLine": 8455,
               "lines": 12,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -19612,7 +18846,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -19776,7 +19010,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -19868,7 +19102,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "DepositDelegationLib",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
@@ -19912,7 +19146,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.875,
+                "similarity": 0.929,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -19956,7 +19190,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -20120,7 +19354,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -20164,7 +19398,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -20244,7 +19478,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "MessageHashUtils",
-                "similarity": 0.92,
+                "similarity": 0.972,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/MessageHashUtils.sol",
@@ -20332,7 +19566,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EmpireBase",
-                "similarity": 0.883,
+                "similarity": 0.956,
                 "reportId": "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",
@@ -20448,7 +19682,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSEPayload",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSEPayload.sol",
@@ -20528,7 +19762,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StakingLib",
-                "similarity": 0.896,
+                "similarity": 0.894,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
@@ -20608,7 +19842,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorSelectionLib",
-                "similarity": 0.962,
+                "similarity": 0.998,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
@@ -20652,7 +19886,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ProposeLib",
-                "similarity": 0.789,
+                "similarity": 0.806,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
@@ -20717,19 +19951,19 @@
         "units": {
           "identical": 1,
           "library": 8,
-          "differs": 4,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 6
         },
         "uniqueUnits": {
           "identical": 1,
           "library": 8,
-          "differs": 4,
-          "unaudited": 4
+          "differs": 2,
+          "unaudited": 6
         },
         "lines": {
           "total": 1807,
-          "covered": 832,
-          "uncovered": 975
+          "covered": 717,
+          "uncovered": 1090
         }
       },
       "files": [
@@ -20862,43 +20096,9 @@
               "startLine": 207,
               "endLine": 243,
               "lines": 37,
-              "status": "differs",
-              "coveredLines": 6,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRegistry",
-                "similarity": 0.089,
-                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRegistry.sol",
-                "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
-                "commitTimestamp": "2025-08-23T13:12:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/IRegistry.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 1
-              },
-              "diffStats": {
-                "added": 31,
-                "removed": 10,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 9,
-                "unchanged": 6,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "0983526dc2c2101729c9159ba25d6daca463533a300cef2455d23c9ea71308aa",
@@ -20967,7 +20167,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -21083,7 +20283,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Address",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/Address.sol",
@@ -21264,43 +20464,9 @@
               "startLine": 1017,
               "endLine": 1213,
               "lines": 197,
-              "status": "differs",
-              "coveredLines": 109,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Registry",
-                "similarity": 0.169,
-                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Registry.sol",
-                "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
-                "commitTimestamp": "2025-08-23T13:12:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/Registry.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "full file",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 88,
-                "removed": 30,
-                "ignoredAdded": 79,
-                "ignoredRemoved": 13,
-                "unchanged": 109,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "4ff7bfe2e516cb77f26c124d5ca277b7ae03a6e26eb914f07f66f5531781d4ee",
@@ -21330,19 +20496,19 @@
         "units": {
           "identical": 19,
           "library": 9,
-          "differs": 31,
-          "unaudited": 22
+          "differs": 28,
+          "unaudited": 25
         },
         "uniqueUnits": {
           "identical": 19,
           "library": 9,
-          "differs": 31,
-          "unaudited": 22
+          "differs": 28,
+          "unaudited": 25
         },
         "lines": {
           "total": 20075,
-          "covered": 9183,
-          "uncovered": 10892
+          "covered": 9206,
+          "uncovered": 10869
         }
       },
       "files": [
@@ -21426,7 +20592,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -21571,7 +20737,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.793,
+                "similarity": 0.813,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/Errors.sol",
@@ -21783,7 +20949,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -21911,7 +21077,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -21944,8 +21110,40 @@
               "startLine": 4227,
               "endLine": 4302,
               "lines": 76,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 71,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.952,
+                "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/governance/libraries/Errors.sol",
+                "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+                "commitTimestamp": "2025-09-25T12:37:48Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/Errors.sol",
+                "auditStatus": "partially_audited_without_major_findings",
+                "reviewPhase": "remediation review",
+                "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 5,
+                "removed": 1,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 0,
+                "unchanged": 71,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -21967,7 +21165,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "CheckpointedUintLib",
-                "similarity": 0.938,
+                "similarity": 0.994,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
@@ -22000,43 +21198,9 @@
               "startLine": 4381,
               "endLine": 4392,
               "lines": 12,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 11,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -22057,7 +21221,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -22221,7 +21385,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -22313,7 +21477,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "DepositDelegationLib",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
@@ -22357,7 +21521,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.875,
+                "similarity": 0.929,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -22401,7 +21565,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -22565,7 +21729,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "StorageSlot",
-                "similarity": 0.813,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/StorageSlot.sol",
@@ -22609,7 +21773,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ShortStrings",
-                "similarity": 0.92,
+                "similarity": 0.974,
                 "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/ShortStrings.sol",
@@ -22725,7 +21889,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "MessageHashUtils",
-                "similarity": 0.92,
+                "similarity": 0.972,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/MessageHashUtils.sol",
@@ -22813,7 +21977,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "ECDSA",
-                "similarity": 0.896,
+                "similarity": 0.946,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/cryptography/ECDSA.sol",
@@ -22929,7 +22093,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EmpireBase",
-                "similarity": 0.883,
+                "similarity": 0.956,
                 "reportId": "aztecnetwork/konnov-pani-governance-formal-verification-2025-09-15",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",
@@ -23034,40 +22198,8 @@
               "startLine": 7883,
               "endLine": 7906,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -23125,7 +22257,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSEPayload",
-                "similarity": 0.974,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSEPayload.sol",
@@ -23205,7 +22337,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "StakingLib",
-                "similarity": 0.896,
+                "similarity": 0.894,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
@@ -23249,7 +22381,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "EnumerableSet",
-                "similarity": 0.975,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/EnumerableSet.sol",
@@ -23353,7 +22485,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "AttestationLib",
-                "similarity": 0.809,
+                "similarity": 0.837,
                 "reportId": "aztecnetwork/cantina-governance-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
@@ -23397,7 +22529,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -23501,7 +22633,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -23605,7 +22737,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -23650,40 +22782,8 @@
               "startLine": 10453,
               "endLine": 10496,
               "lines": 44,
-              "status": "differs",
-              "coveredLines": 30,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "ChainTipsLib",
-                "similarity": 0.587,
-                "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "commit": "70f004dc2ad19d1c0b80f8a481424dd23542f191",
-                "commitTimestamp": "2025-09-26T07:33:24Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/70f004dc2ad19d1c0b80f8a481424dd23542f191/l1-contracts/src/core/libraries/compressed-data/Tips.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "remediation review",
-                "coverage": "verified updateProvenBlockNumber bound from PR 17299 (head commit)",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
-              },
-              "diffStats": {
-                "added": 14,
-                "removed": 17,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 0,
-                "unchanged": 30,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -23705,7 +22805,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "FeeHeaderLib",
-                "similarity": 0.846,
+                "similarity": 0.874,
                 "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
@@ -23750,43 +22850,9 @@
               "startLine": 10628,
               "endLine": 10648,
               "lines": 21,
-              "status": "differs",
-              "coveredLines": 5,
-              "match": {
-                "origin": "other",
-                "collection": "privacy-pools",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "Constants",
-                "similarity": 0.25,
-                "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
-                "repository": "0xbow-io/privacy-pools-core",
-                "path": "packages/contracts/src/contracts/lib/Constants.sol",
-                "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
-                "commitTimestamp": "2025-03-14T12:57:01Z",
-                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/lib/Constants.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final commit",
-                "coverage": "Final audited commit.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 16,
-                "removed": 2,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 5,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "da93f6fea4c3e765ada6c7103fff18a093288a2110f30e695995c27aa071c890",
@@ -23819,7 +22885,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "STFLib",
-                "similarity": 0.905,
+                "similarity": 0.914,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
@@ -23899,7 +22965,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorSelectionLib",
-                "similarity": 0.962,
+                "similarity": 0.998,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
@@ -23943,7 +23009,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "InvalidateLib",
-                "similarity": 0.969,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",
@@ -23987,7 +23053,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "ValidatorOperationsExtLib",
-                "similarity": 0.831,
+                "similarity": 0.803,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/libraries/rollup/ValidatorOperationsExtLib.sol",
@@ -24040,19 +23106,19 @@
         "units": {
           "identical": 11,
           "library": 5,
-          "differs": 18,
-          "unaudited": 12
+          "differs": 16,
+          "unaudited": 14
         },
         "uniqueUnits": {
           "identical": 11,
           "library": 5,
-          "differs": 18,
-          "unaudited": 12
+          "differs": 16,
+          "unaudited": 14
         },
         "lines": {
           "total": 12449,
-          "covered": 5509,
-          "uncovered": 6940
+          "covered": 5704,
+          "uncovered": 6745
         }
       },
       "files": [
@@ -24080,7 +23146,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IEscapeHatchCore",
-                "similarity": 0.929,
+                "similarity": 0.965,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
@@ -24240,7 +23306,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.948,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
@@ -24284,7 +23350,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "Checkpoints",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/Checkpoints.sol",
@@ -24364,7 +23430,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "IERC20",
-                "similarity": 0.7,
+                "similarity": 0.817,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/token/ERC20/IERC20.sol",
@@ -24509,7 +23575,7 @@
                 "rank": 3,
                 "matchedBy": "name",
                 "auditedName": "BitMaps",
-                "similarity": 0.963,
+                "similarity": 1,
                 "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
                 "repository": "OpenZeppelin/openzeppelin-contracts",
                 "path": "contracts/utils/structs/BitMaps.sol",
@@ -24637,7 +23703,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "Errors",
-                "similarity": 0.97,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/libraries/Errors.sol",
@@ -24706,43 +23772,9 @@
               "startLine": 3853,
               "endLine": 3862,
               "lines": 10,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "Governance",
-                "similarity": 0.009,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/Governance.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/Governance.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 8
-              },
-              "diffStats": {
-                "added": 9,
-                "removed": 215,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 408,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
@@ -24763,7 +23795,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IGSECore",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -24927,7 +23959,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "BN254Lib",
-                "similarity": 0.982,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
@@ -25019,7 +24051,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSECore",
-                "similarity": 0.969,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -25063,7 +24095,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "GSE",
-                "similarity": 0.992,
+                "similarity": 1,
                 "reportId": "aztecnetwork/veridise-governance-2025-10-13",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/governance/GSE.sol",
@@ -25096,43 +24128,9 @@
               "startLine": 5478,
               "endLine": 5500,
               "lines": 23,
-              "status": "differs",
-              "coveredLines": 1,
-              "match": {
-                "origin": "other",
-                "collection": "roninnetwork",
-                "relation": {
-                  "type": "name"
-                },
-                "rank": 4,
-                "matchedBy": "name",
-                "auditedName": "IStaking",
-                "similarity": 0.065,
-                "reportId": "roninnetwork/beosin-ronin-network-2023-03",
-                "repository": "axieinfinity/ronin-dpos-contracts",
-                "path": "contracts/interfaces/staking/IStaking.sol",
-                "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
-                "commitTimestamp": "2023-03-08T05:44:18Z",
-                "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/staking/IStaking.sol",
-                "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "final audited commit",
-                "coverage": "Final audited commit; all consensus-contract findings fixed.",
-                "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 5
-              },
-              "diffStats": {
-                "added": 22,
-                "removed": 7,
-                "ignoredAdded": 0,
-                "ignoredRemoved": 23,
-                "unchanged": 1,
-                "ignoredOnly": false
-              },
-              "warnings": [
-                "low-similarity"
-              ]
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
             },
             {
               "unitHash": "7821f39c356ff29d88f45db583da466863c51075bd4fe6e9321edbf2e91a8b01",
@@ -25153,7 +24151,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelectionCore",
-                "similarity": 0.667,
+                "similarity": 0.637,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -25233,7 +24231,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IValidatorSelection",
-                "similarity": 0.98,
+                "similarity": 1,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
@@ -25277,7 +24275,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollupCore",
-                "similarity": 0.929,
+                "similarity": 0.946,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -25382,40 +24380,8 @@
               "startLine": 5920,
               "endLine": 5943,
               "lines": 24,
-              "status": "differs",
-              "coveredLines": 12,
-              "match": {
-                "origin": "own",
-                "collection": "aztecnetwork",
-                "relation": {
-                  "type": "own"
-                },
-                "rank": 0,
-                "matchedBy": "name",
-                "auditedName": "IRewardDistributor",
-                "similarity": 0.4,
-                "reportId": "aztecnetwork/cantina-governance-2025-11-12",
-                "repository": "AztecProtocol/aztec-packages",
-                "path": "l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "commit": "6496e59db3406cfb1ffbeab3e68be53872ec4735",
-                "commitTimestamp": "2025-08-05T12:29:41Z",
-                "url": "https://github.com/AztecProtocol/aztec-packages/blob/6496e59db3406cfb1ffbeab3e68be53872ec4735/l1-contracts/src/governance/interfaces/IRewardDistributor.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "security review",
-                "coverage": "repository-level review of aztec-packages governance contracts; report declares no per-file scope, file identified from finding contexts",
-                "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 12,
-                "removed": 0,
-                "ignoredAdded": 8,
-                "ignoredRemoved": 0,
-                "unchanged": 12,
-                "ignoredOnly": false
-              },
+              "status": "unaudited",
+              "coveredLines": 0,
               "warnings": []
             },
             {
@@ -25497,7 +24463,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "IRollup",
-                "similarity": 0.898,
+                "similarity": 0.92,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/interfaces/IRollup.sol",
@@ -25542,8 +24508,40 @@
               "startLine": 6201,
               "endLine": 6462,
               "lines": 262,
-              "status": "unaudited",
-              "coveredLines": 0,
+              "status": "differs",
+              "coveredLines": 209,
+              "match": {
+                "origin": "own",
+                "collection": "aztecnetwork",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "similarity",
+                "auditedName": "Errors",
+                "similarity": 0.763,
+                "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+                "repository": "AztecProtocol/aztec-packages",
+                "path": "l1-contracts/src/core/libraries/Errors.sol",
+                "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+                "commitTimestamp": "2026-01-06T20:15:15Z",
+                "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/Errors.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "security review",
+                "coverage": "full file",
+                "majorFindings": 0,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 5
+              },
+              "diffStats": {
+                "added": 53,
+                "removed": 34,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
+                "unchanged": 209,
+                "ignoredOnly": false
+              },
               "warnings": []
             },
             {
@@ -25565,7 +24563,7 @@
                 "rank": 0,
                 "matchedBy": "name",
                 "auditedName": "EscapeHatch",
-                "similarity": 0.908,
+                "similarity": 0.971,
                 "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
                 "repository": "AztecProtocol/aztec-packages",
                 "path": "l1-contracts/src/core/EscapeHatch.sol",

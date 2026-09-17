@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ProxyAdmin",
-        "similarity": 0.985,
+        "similarity": 1,
         "reportId": "optimism/code4rena-base-2023-08",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",

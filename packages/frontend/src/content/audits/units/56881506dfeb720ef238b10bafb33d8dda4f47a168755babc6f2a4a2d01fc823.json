@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IEntrypoint",
-        "similarity": 0.989,
+        "similarity": 1,
         "reportId": "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
         "repository": "0xbow-io/privacy-pools-core",
         "path": "packages/contracts/src/interfaces/IEntrypoint.sol",

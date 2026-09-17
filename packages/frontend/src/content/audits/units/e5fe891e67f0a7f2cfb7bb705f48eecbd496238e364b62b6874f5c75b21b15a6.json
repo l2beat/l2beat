@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "PoolAddress",
-        "similarity": 0.857,
+        "similarity": 0.936,
         "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
         "repository": "ronin-chain/katana-v3-contracts",
         "path": "src/periphery/libraries/PoolAddress.sol",

@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "interface ITransparentUpgradeableProxy is IERC1967 {\n    function admin() external view returns (address);\n\n    function implementation() external view returns (address);\n\n    function changeAdmin(address) external;\n\n    function upgradeTo(address) external;\n\n    function upgradeToAndCall(address, bytes memory) external payable;\n}",
   "resolutions": {
-    "d293c6ecba42b698": {
+    "bb55951394276893": {
       "status": "library",
       "coveredLines": 11,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "bb55951394276893": {
+    "d293c6ecba42b698": {
       "status": "library",
       "coveredLines": 11,
       "match": {

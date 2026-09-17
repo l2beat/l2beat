@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "L2StandardBridge",
-        "similarity": 0.948,
+        "similarity": 0.986,
         "reportId": "optimism/cantina-eip7702-2025-02",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/L2/L2StandardBridge.sol",

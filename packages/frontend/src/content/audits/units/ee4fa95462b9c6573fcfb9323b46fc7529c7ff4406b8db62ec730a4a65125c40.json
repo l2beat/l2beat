@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "SafeERC20",
-        "similarity": 0.566,
+        "similarity": 0.576,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/SafeERC20.sol",

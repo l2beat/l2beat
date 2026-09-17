@@ -142,7 +142,7 @@ export const UnitMatch = v.object({
   matchedBy: v.enum(['identity', 'name', 'alias', 'similarity']),
   /** Name of the audited unit; differs from the deployed name when renamed. */
   auditedName: v.string(),
-  /** Line similarity between the deployed unit and the chosen version, 0..1. */
+  /** Composite Solidity score, or whole-file line similarity, in 0..1. */
   similarity: v.number(),
   /** Global report id, see AuditReportRef.id. */
   reportId: v.string(),

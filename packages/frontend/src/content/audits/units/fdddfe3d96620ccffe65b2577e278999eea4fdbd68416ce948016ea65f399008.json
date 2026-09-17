@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "EnumerableSet",
-        "similarity": 0.833,
+        "similarity": 0.903,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/structs/EnumerableSet.sol",

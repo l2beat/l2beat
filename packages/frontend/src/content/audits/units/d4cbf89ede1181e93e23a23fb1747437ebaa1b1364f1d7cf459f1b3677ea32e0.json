@@ -16,147 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
-      },
-      "diff": {
-        "added": 1,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 0,
-        "unchanged": 19,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 4,
-            "newStart": 1,
-            "newLines": 4,
-            "lines": [
-              {
-                "type": "-",
-                "oldLine": 1,
-                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 1,
-                "text": "abstract contract ContextUpgradeable is Initializable {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    function __Context_init() internal onlyInitializing {}"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 4,
-                "newLine": 4,
-                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 19,
-      "match": {
-        "origin": "other",
-        "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
-        "matchedBy": "name",
-        "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
-      },
-      "diff": {
-        "added": 1,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 0,
-        "unchanged": 19,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 4,
-            "newStart": 1,
-            "newLines": 4,
-            "lines": [
-              {
-                "type": "-",
-                "oldLine": 1,
-                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 1,
-                "text": "abstract contract ContextUpgradeable is Initializable {",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 2,
-                "newLine": 2,
-                "text": "    function __Context_init() internal onlyInitializing {}"
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
-              {
-                "type": " ",
-                "oldLine": 4,
-                "newLine": 4,
-                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "d293c6ecba42b698": {
-      "status": "differs",
-      "coveredLines": 19,
-      "match": {
-        "origin": "other",
-        "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
-        "matchedBy": "name",
-        "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
+        "similarity": 0.963,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -226,7 +86,77 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
+        "similarity": 0.963,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 19,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 19,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.963,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -296,7 +226,77 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
+        "similarity": 0.963,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 19,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 19,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.963,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -366,7 +366,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "ContextUpgradeable",
-        "similarity": 0.909,
+        "similarity": 0.963,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",

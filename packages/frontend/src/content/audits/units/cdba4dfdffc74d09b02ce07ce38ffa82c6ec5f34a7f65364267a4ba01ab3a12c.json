@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "PauseController",
-        "similarity": 0.961,
+        "similarity": 0.98,
         "reportId": "scroll/trailofbits-scroll-feynman-upgrade",
         "repository": "scroll-tech/scroll-contracts",
         "path": "src/misc/PauseController.sol",

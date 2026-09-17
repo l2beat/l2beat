@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "ERC20Permit",
-        "similarity": 0.769,
+        "similarity": 0.687,
         "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",

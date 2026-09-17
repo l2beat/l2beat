@@ -16,24 +16,24 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ECDSA",
-        "similarity": 0.502,
+        "similarity": 0.612,
         "reportId": "solady/cantina-solady-report",
         "repository": "Vectorized/solady",
         "path": "src/utils/ECDSA.sol",
-        "commit": "89101d53b7c8784cca935c1f2f6403639cee48b2",
-        "commitTimestamp": "2023-08-05T13:23:27Z",
-        "url": "https://github.com/Vectorized/solady/blob/89101d53b7c8784cca935c1f2f6403639cee48b2/src/utils/ECDSA.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "Initial audit",
-        "coverage": "Full review of the explicitly scoped file.",
+        "commit": "96af34cd3dca7ac3b9d337939dcfe61c88f7c24c",
+        "commitTimestamp": "2023-09-10T20:21:42Z",
+        "url": "https://github.com/Vectorized/solady/blob/96af34cd3dca7ac3b9d337939dcfe61c88f7c24c/src/utils/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation review",
+        "coverage": "Review of the fix for finding 4.5.5 (PR 573); not a full re-audit.",
         "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
         "totalVersions": 3
       },
       "diff": {
         "added": 136,
-        "removed": 90,
+        "removed": 92,
         "ignoredAdded": 71,
         "ignoredRemoved": 63,
         "unchanged": 252,
@@ -119,7 +119,7 @@
           },
           {
             "oldStart": 10,
-            "oldLines": 83,
+            "oldLines": 84,
             "newStart": 20,
             "newLines": 68,
             "lines": [
@@ -218,102 +218,108 @@
               {
                 "type": "-",
                 "oldLine": 26,
+                "text": "            let signatureLength := mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
                 "text": "            mstore(0x00, hash)",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 27,
+                "oldLine": 28,
                 "text": "            mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 28,
+                "oldLine": 29,
                 "text": "            mstore(0x40, mload(add(signature, 0x20))) // `r`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 29,
+                "oldLine": 30,
                 "text": "            mstore(0x60, mload(add(signature, 0x40))) // `s`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 30,
+                "oldLine": 31,
                 "text": "            result :=",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 31,
+                "oldLine": 32,
                 "text": "                mload(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 32,
+                "oldLine": 33,
                 "text": "                    staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 33,
+                "oldLine": 34,
                 "text": "                        gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 34,
-                "text": "                        eq(mload(signature), 65), // Address of `ecrecover`.",
-                "ignored": false
-              },
-              {
-                "type": "-",
                 "oldLine": 35,
-                "text": "                        0x00, // Start of input.",
+                "text": "                        eq(signatureLength, 65), // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 36,
-                "text": "                        0x80, // Size of input.",
+                "text": "                        0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 37,
-                "text": "                        0x01, // Start of output.",
+                "text": "                        0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 38,
-                "text": "                        0x20 // Size of output.",
+                "text": "                        0x01, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 39,
-                "text": "                    )",
+                "text": "                        0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 40,
-                "text": "                )",
+                "text": "                    )",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 41,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 42,
+                "oldLine": 43,
                 "text": "            if iszero(returndatasize()) {",
                 "ignored": false
               },
@@ -325,13 +331,13 @@
               },
               {
                 "type": " ",
-                "oldLine": 43,
+                "oldLine": 44,
                 "newLine": 28,
                 "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
               },
               {
                 "type": " ",
-                "oldLine": 44,
+                "oldLine": 45,
                 "newLine": 29,
                 "text": "                revert(0x1c, 0x04)"
               },
@@ -451,63 +457,63 @@
               },
               {
                 "type": " ",
-                "oldLine": 45,
+                "oldLine": 46,
                 "newLine": 49,
                 "text": "            }"
               },
               {
                 "type": "-",
-                "oldLine": 46,
+                "oldLine": 47,
                 "text": "            mstore(0x60, 0) // Restore the zero slot.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 47,
+                "oldLine": 48,
                 "text": "            mstore(0x40, m) // Restore the free memory pointer.",
                 "ignored": true
               },
               {
                 "type": " ",
-                "oldLine": 48,
+                "oldLine": 49,
                 "newLine": 50,
                 "text": "        }"
               },
-              { "type": " ", "oldLine": 49, "newLine": 51, "text": "    }" },
-              { "type": " ", "oldLine": 50, "newLine": 52, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 52, "text": "" },
               {
                 "type": "-",
-                "oldLine": 51,
+                "oldLine": 52,
                 "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 52,
+                "oldLine": 53,
                 "text": "    /// and the `signature`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 53,
+                "oldLine": 54,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 54,
+                "oldLine": 55,
                 "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 55,
+                "oldLine": 56,
                 "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 56,
+                "oldLine": 57,
                 "text": "    /// short form signatures instead.",
                 "ignored": true
               },
@@ -519,121 +525,121 @@
               },
               {
                 "type": " ",
-                "oldLine": 57,
+                "oldLine": 58,
                 "newLine": 54,
                 "text": "    function recoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {"
               },
               {
                 "type": " ",
-                "oldLine": 58,
+                "oldLine": 59,
                 "newLine": 55,
                 "text": "        /// @solidity memory-safe-assembly"
               },
               {
                 "type": " ",
-                "oldLine": 59,
+                "oldLine": 60,
                 "newLine": 56,
                 "text": "        assembly {"
               },
               {
                 "type": "-",
-                "oldLine": 60,
+                "oldLine": 61,
                 "text": "            let m := mload(0x40) // Cache the free memory pointer.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 61,
+                "oldLine": 62,
                 "text": "            mstore(0x00, hash)",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 62,
+                "oldLine": 63,
                 "text": "            mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 63,
+                "oldLine": 64,
                 "text": "            calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 64,
+                "oldLine": 65,
                 "text": "            result :=",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 65,
+                "oldLine": 66,
                 "text": "                mload(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 66,
+                "oldLine": 67,
                 "text": "                    staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 67,
+                "oldLine": 68,
                 "text": "                        gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 68,
+                "oldLine": 69,
                 "text": "                        eq(signature.length, 65), // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 69,
+                "oldLine": 70,
                 "text": "                        0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 70,
+                "oldLine": 71,
                 "text": "                        0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 71,
+                "oldLine": 72,
                 "text": "                        0x01, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 72,
+                "oldLine": 73,
                 "text": "                        0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 73,
+                "oldLine": 74,
                 "text": "                    )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 74,
+                "oldLine": 75,
                 "text": "                )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 75,
+                "oldLine": 76,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 76,
+                "oldLine": 77,
                 "text": "            if iszero(returndatasize()) {",
                 "ignored": false
               },
@@ -645,13 +651,13 @@
               },
               {
                 "type": " ",
-                "oldLine": 77,
+                "oldLine": 78,
                 "newLine": 58,
                 "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
               },
               {
                 "type": " ",
-                "oldLine": 78,
+                "oldLine": 79,
                 "newLine": 59,
                 "text": "                revert(0x1c, 0x04)"
               },
@@ -771,167 +777,167 @@
               },
               {
                 "type": " ",
-                "oldLine": 79,
+                "oldLine": 80,
                 "newLine": 79,
                 "text": "            }"
               },
               {
                 "type": "-",
-                "oldLine": 80,
+                "oldLine": 81,
                 "text": "            mstore(0x60, 0) // Restore the zero slot.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 81,
+                "oldLine": 82,
                 "text": "            mstore(0x40, m) // Restore the free memory pointer.",
                 "ignored": true
               },
               {
                 "type": " ",
-                "oldLine": 82,
+                "oldLine": 83,
                 "newLine": 80,
                 "text": "        }"
               },
-              { "type": " ", "oldLine": 83, "newLine": 81, "text": "    }" },
-              { "type": " ", "oldLine": 84, "newLine": 82, "text": "" },
+              { "type": " ", "oldLine": 84, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 82, "text": "" },
               {
                 "type": " ",
-                "oldLine": 85,
+                "oldLine": 86,
                 "newLine": 83,
                 "text": "    /// @dev Recovers the signer's address from a message digest `hash`,"
               },
               {
                 "type": " ",
-                "oldLine": 86,
+                "oldLine": 87,
                 "newLine": 84,
                 "text": "    /// and the EIP-2098 short form signature defined by `r` and `vs`."
               },
               {
                 "type": "-",
-                "oldLine": 87,
+                "oldLine": 88,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 88,
+                "oldLine": 89,
                 "text": "    /// This function only accepts EIP-2098 short form signatures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 89,
+                "oldLine": 90,
                 "text": "    /// See: https://eips.ethereum.org/EIPS/eip-2098",
                 "ignored": true
               },
               {
                 "type": " ",
-                "oldLine": 90,
+                "oldLine": 91,
                 "newLine": 85,
                 "text": "    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {"
               },
               {
                 "type": " ",
-                "oldLine": 91,
+                "oldLine": 92,
                 "newLine": 86,
                 "text": "        /// @solidity memory-safe-assembly"
               },
               {
                 "type": " ",
-                "oldLine": 92,
+                "oldLine": 93,
                 "newLine": 87,
                 "text": "        assembly {"
               }
             ]
           },
           {
-            "oldStart": 95,
+            "oldStart": 96,
             "oldLines": 17,
             "newStart": 90,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 95,
+                "oldLine": 96,
                 "newLine": 90,
                 "text": "            mstore(0x20, add(shr(255, vs), 27)) // `v`."
               },
               {
                 "type": " ",
-                "oldLine": 96,
+                "oldLine": 97,
                 "newLine": 91,
                 "text": "            mstore(0x40, r)"
               },
               {
                 "type": " ",
-                "oldLine": 97,
+                "oldLine": 98,
                 "newLine": 92,
                 "text": "            mstore(0x60, shr(1, shl(1, vs))) // `s`."
               },
               {
                 "type": "-",
-                "oldLine": 98,
+                "oldLine": 99,
                 "text": "            result :=",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 99,
+                "oldLine": 100,
                 "text": "                mload(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 100,
+                "oldLine": 101,
                 "text": "                    staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 101,
+                "oldLine": 102,
                 "text": "                        gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 102,
+                "oldLine": 103,
                 "text": "                        1, // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 103,
+                "oldLine": 104,
                 "text": "                        0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 104,
+                "oldLine": 105,
                 "text": "                        0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 105,
+                "oldLine": 106,
                 "text": "                        0x01, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 106,
+                "oldLine": 107,
                 "text": "                        0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 107,
+                "oldLine": 108,
                 "text": "                    )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 108,
+                "oldLine": 109,
                 "text": "                )",
                 "ignored": false
               },
@@ -943,111 +949,111 @@
               },
               {
                 "type": " ",
-                "oldLine": 109,
+                "oldLine": 110,
                 "newLine": 94,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
               },
               {
                 "type": " ",
-                "oldLine": 110,
+                "oldLine": 111,
                 "newLine": 95,
                 "text": "            if iszero(returndatasize()) {"
               },
               {
                 "type": " ",
-                "oldLine": 111,
+                "oldLine": 112,
                 "newLine": 96,
                 "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
               }
             ]
           },
           {
-            "oldStart": 126,
+            "oldStart": 127,
             "oldLines": 17,
             "newStart": 111,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 126,
+                "oldLine": 127,
                 "newLine": 111,
                 "text": "            mstore(0x20, and(v, 0xff))"
               },
               {
                 "type": " ",
-                "oldLine": 127,
+                "oldLine": 128,
                 "newLine": 112,
                 "text": "            mstore(0x40, r)"
               },
               {
                 "type": " ",
-                "oldLine": 128,
+                "oldLine": 129,
                 "newLine": 113,
                 "text": "            mstore(0x60, s)"
               },
               {
                 "type": "-",
-                "oldLine": 129,
+                "oldLine": 130,
                 "text": "            result :=",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 130,
+                "oldLine": 131,
                 "text": "                mload(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 131,
+                "oldLine": 132,
                 "text": "                    staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 132,
+                "oldLine": 133,
                 "text": "                        gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 133,
+                "oldLine": 134,
                 "text": "                        1, // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 134,
+                "oldLine": 135,
                 "text": "                        0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 135,
+                "oldLine": 136,
                 "text": "                        0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 136,
+                "oldLine": 137,
                 "text": "                        0x01, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 137,
+                "oldLine": 138,
                 "text": "                        0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 138,
+                "oldLine": 139,
                 "text": "                    )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 139,
+                "oldLine": 140,
                 "text": "                )",
                 "ignored": false
               },
@@ -1059,76 +1065,76 @@
               },
               {
                 "type": " ",
-                "oldLine": 140,
+                "oldLine": 141,
                 "newLine": 115,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
               },
               {
                 "type": " ",
-                "oldLine": 141,
+                "oldLine": 142,
                 "newLine": 116,
                 "text": "            if iszero(returndatasize()) {"
               },
               {
                 "type": " ",
-                "oldLine": 142,
+                "oldLine": 143,
                 "newLine": 117,
                 "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
               }
             ]
           },
           {
-            "oldStart": 157,
-            "oldLines": 72,
+            "oldStart": 158,
+            "oldLines": 73,
             "newStart": 132,
             "newLines": 64,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 157,
+                "oldLine": 158,
                 "newLine": 132,
                 "text": "    // It is critical that the returned address is NEVER compared against"
               },
               {
                 "type": " ",
-                "oldLine": 158,
+                "oldLine": 159,
                 "newLine": 133,
                 "text": "    // a zero address (e.g. an uninitialized address variable)."
               },
-              { "type": " ", "oldLine": 159, "newLine": 134, "text": "" },
+              { "type": " ", "oldLine": 160, "newLine": 134, "text": "" },
               {
                 "type": "-",
-                "oldLine": 160,
+                "oldLine": 161,
                 "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 161,
+                "oldLine": 162,
                 "text": "    /// and the `signature`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 162,
+                "oldLine": 163,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 163,
+                "oldLine": 164,
                 "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 164,
+                "oldLine": 165,
                 "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 165,
+                "oldLine": 166,
                 "text": "    /// short form signatures instead.",
                 "ignored": true
               },
@@ -1140,133 +1146,139 @@
               },
               {
                 "type": " ",
-                "oldLine": 166,
+                "oldLine": 167,
                 "newLine": 136,
                 "text": "    function tryRecover(bytes32 hash, bytes memory signature) internal view returns (address result) {"
               },
               {
                 "type": " ",
-                "oldLine": 167,
+                "oldLine": 168,
                 "newLine": 137,
                 "text": "        /// @solidity memory-safe-assembly"
               },
               {
                 "type": " ",
-                "oldLine": 168,
+                "oldLine": 169,
                 "newLine": 138,
                 "text": "        assembly {"
               },
               {
                 "type": "-",
-                "oldLine": 169,
+                "oldLine": 170,
                 "text": "            let m := mload(0x40) // Cache the free memory pointer.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 170,
+                "oldLine": 171,
+                "text": "            let signatureLength := mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
                 "text": "            mstore(0x00, hash)",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 171,
+                "oldLine": 173,
                 "text": "            mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 172,
+                "oldLine": 174,
                 "text": "            mstore(0x40, mload(add(signature, 0x20))) // `r`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 173,
+                "oldLine": 175,
                 "text": "            mstore(0x60, mload(add(signature, 0x40))) // `s`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 174,
+                "oldLine": 176,
                 "text": "            pop(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 175,
+                "oldLine": 177,
                 "text": "                staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 176,
+                "oldLine": 178,
                 "text": "                    gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 177,
-                "text": "                    eq(mload(signature), 65), // Address of `ecrecover`.",
-                "ignored": false
-              },
-              {
-                "type": "-",
-                "oldLine": 178,
-                "text": "                    0x00, // Start of input.",
-                "ignored": false
-              },
-              {
-                "type": "-",
                 "oldLine": 179,
-                "text": "                    0x80, // Size of input.",
+                "text": "                    eq(signatureLength, 65), // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 180,
-                "text": "                    0x40, // Start of output.",
+                "text": "                    0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 181,
-                "text": "                    0x20 // Size of output.",
+                "text": "                    0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 182,
-                "text": "                )",
+                "text": "                    0x40, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 183,
-                "text": "            )",
+                "text": "                    0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
                 "oldLine": 184,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
                 "text": "            mstore(0x60, 0) // Restore the zero slot.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 185,
+                "oldLine": 187,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 186,
+                "oldLine": 188,
                 "text": "            result := mload(xor(0x60, returndatasize()))",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 187,
+                "oldLine": 189,
                 "text": "            mstore(0x40, m) // Restore the free memory pointer.",
                 "ignored": true
               },
@@ -1398,45 +1410,45 @@
               },
               {
                 "type": " ",
-                "oldLine": 188,
+                "oldLine": 190,
                 "newLine": 160,
                 "text": "        }"
               },
-              { "type": " ", "oldLine": 189, "newLine": 161, "text": "    }" },
-              { "type": " ", "oldLine": 190, "newLine": 162, "text": "" },
+              { "type": " ", "oldLine": 191, "newLine": 161, "text": "    }" },
+              { "type": " ", "oldLine": 192, "newLine": 162, "text": "" },
               {
                 "type": "-",
-                "oldLine": 191,
+                "oldLine": 193,
                 "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 192,
+                "oldLine": 194,
                 "text": "    /// and the `signature`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 193,
+                "oldLine": 195,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 194,
+                "oldLine": 196,
                 "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 195,
+                "oldLine": 197,
                 "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 196,
+                "oldLine": 198,
                 "text": "    /// short form signatures instead.",
                 "ignored": true
               },
@@ -1448,127 +1460,127 @@
               },
               {
                 "type": " ",
-                "oldLine": 197,
+                "oldLine": 199,
                 "newLine": 164,
                 "text": "    function tryRecoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {"
               },
               {
                 "type": " ",
-                "oldLine": 198,
+                "oldLine": 200,
                 "newLine": 165,
                 "text": "        /// @solidity memory-safe-assembly"
               },
               {
                 "type": " ",
-                "oldLine": 199,
+                "oldLine": 201,
                 "newLine": 166,
                 "text": "        assembly {"
               },
               {
                 "type": "-",
-                "oldLine": 200,
+                "oldLine": 202,
                 "text": "            let m := mload(0x40) // Cache the free memory pointer.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 201,
+                "oldLine": 203,
                 "text": "            mstore(0x00, hash)",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 202,
+                "oldLine": 204,
                 "text": "            mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 203,
+                "oldLine": 205,
                 "text": "            calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 204,
+                "oldLine": 206,
                 "text": "            pop(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 205,
+                "oldLine": 207,
                 "text": "                staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 206,
+                "oldLine": 208,
                 "text": "                    gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 207,
+                "oldLine": 209,
                 "text": "                    eq(signature.length, 65), // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 208,
+                "oldLine": 210,
                 "text": "                    0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 209,
+                "oldLine": 211,
                 "text": "                    0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 210,
+                "oldLine": 212,
                 "text": "                    0x40, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 211,
+                "oldLine": 213,
                 "text": "                    0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 212,
+                "oldLine": 214,
                 "text": "                )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 213,
+                "oldLine": 215,
                 "text": "            )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 214,
+                "oldLine": 216,
                 "text": "            mstore(0x60, 0) // Restore the zero slot.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 215,
+                "oldLine": 217,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 216,
+                "oldLine": 218,
                 "text": "            result := mload(xor(0x60, returndatasize()))",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 217,
+                "oldLine": 219,
                 "text": "            mstore(0x40, m) // Restore the free memory pointer.",
                 "ignored": true
               },
@@ -1700,143 +1712,143 @@
               },
               {
                 "type": " ",
-                "oldLine": 218,
+                "oldLine": 220,
                 "newLine": 188,
                 "text": "        }"
               },
-              { "type": " ", "oldLine": 219, "newLine": 189, "text": "    }" },
-              { "type": " ", "oldLine": 220, "newLine": 190, "text": "" },
+              { "type": " ", "oldLine": 221, "newLine": 189, "text": "    }" },
+              { "type": " ", "oldLine": 222, "newLine": 190, "text": "" },
               {
                 "type": " ",
-                "oldLine": 221,
+                "oldLine": 223,
                 "newLine": 191,
                 "text": "    /// @dev Recovers the signer's address from a message digest `hash`,"
               },
               {
                 "type": " ",
-                "oldLine": 222,
+                "oldLine": 224,
                 "newLine": 192,
                 "text": "    /// and the EIP-2098 short form signature defined by `r` and `vs`."
               },
               {
                 "type": "-",
-                "oldLine": 223,
+                "oldLine": 225,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 224,
+                "oldLine": 226,
                 "text": "    /// This function only accepts EIP-2098 short form signatures.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 225,
+                "oldLine": 227,
                 "text": "    /// See: https://eips.ethereum.org/EIPS/eip-2098",
                 "ignored": true
               },
               {
                 "type": " ",
-                "oldLine": 226,
+                "oldLine": 228,
                 "newLine": 193,
                 "text": "    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {"
               },
               {
                 "type": " ",
-                "oldLine": 227,
+                "oldLine": 229,
                 "newLine": 194,
                 "text": "        /// @solidity memory-safe-assembly"
               },
               {
                 "type": " ",
-                "oldLine": 228,
+                "oldLine": 230,
                 "newLine": 195,
                 "text": "        assembly {"
               }
             ]
           },
           {
-            "oldStart": 231,
+            "oldStart": 233,
             "oldLines": 16,
             "newStart": 198,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 231,
+                "oldLine": 233,
                 "newLine": 198,
                 "text": "            mstore(0x20, add(shr(255, vs), 27)) // `v`."
               },
               {
                 "type": " ",
-                "oldLine": 232,
+                "oldLine": 234,
                 "newLine": 199,
                 "text": "            mstore(0x40, r)"
               },
               {
                 "type": " ",
-                "oldLine": 233,
+                "oldLine": 235,
                 "newLine": 200,
                 "text": "            mstore(0x60, shr(1, shl(1, vs))) // `s`."
               },
               {
                 "type": "-",
-                "oldLine": 234,
+                "oldLine": 236,
                 "text": "            pop(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 235,
+                "oldLine": 237,
                 "text": "                staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 236,
+                "oldLine": 238,
                 "text": "                    gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 237,
+                "oldLine": 239,
                 "text": "                    1, // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 238,
+                "oldLine": 240,
                 "text": "                    0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 239,
+                "oldLine": 241,
                 "text": "                    0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 240,
+                "oldLine": 242,
                 "text": "                    0x40, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 241,
+                "oldLine": 243,
                 "text": "                    0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 242,
+                "oldLine": 244,
                 "text": "                )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 243,
+                "oldLine": 245,
                 "text": "            )",
                 "ignored": false
               },
@@ -1848,105 +1860,105 @@
               },
               {
                 "type": " ",
-                "oldLine": 244,
+                "oldLine": 246,
                 "newLine": 202,
                 "text": "            mstore(0x60, 0) // Restore the zero slot."
               },
               {
                 "type": " ",
-                "oldLine": 245,
+                "oldLine": 247,
                 "newLine": 203,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
               },
               {
                 "type": " ",
-                "oldLine": 246,
+                "oldLine": 248,
                 "newLine": 204,
                 "text": "            result := mload(xor(0x60, returndatasize()))"
               }
             ]
           },
           {
-            "oldStart": 258,
+            "oldStart": 260,
             "oldLines": 16,
             "newStart": 216,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 258,
+                "oldLine": 260,
                 "newLine": 216,
                 "text": "            mstore(0x20, and(v, 0xff))"
               },
               {
                 "type": " ",
-                "oldLine": 259,
+                "oldLine": 261,
                 "newLine": 217,
                 "text": "            mstore(0x40, r)"
               },
               {
                 "type": " ",
-                "oldLine": 260,
+                "oldLine": 262,
                 "newLine": 218,
                 "text": "            mstore(0x60, s)"
               },
               {
                 "type": "-",
-                "oldLine": 261,
+                "oldLine": 263,
                 "text": "            pop(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 262,
+                "oldLine": 264,
                 "text": "                staticcall(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 263,
+                "oldLine": 265,
                 "text": "                    gas(), // Amount of gas left for the transaction.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 264,
+                "oldLine": 266,
                 "text": "                    1, // Address of `ecrecover`.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 265,
+                "oldLine": 267,
                 "text": "                    0x00, // Start of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 266,
+                "oldLine": 268,
                 "text": "                    0x80, // Size of input.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 267,
+                "oldLine": 269,
                 "text": "                    0x40, // Start of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 268,
+                "oldLine": 270,
                 "text": "                    0x20 // Size of output.",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 269,
+                "oldLine": 271,
                 "text": "                )",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 270,
+                "oldLine": 272,
                 "text": "            )",
                 "ignored": false
               },
@@ -1958,46 +1970,46 @@
               },
               {
                 "type": " ",
-                "oldLine": 271,
+                "oldLine": 273,
                 "newLine": 220,
                 "text": "            mstore(0x60, 0) // Restore the zero slot."
               },
               {
                 "type": " ",
-                "oldLine": 272,
+                "oldLine": 274,
                 "newLine": 221,
                 "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
               },
               {
                 "type": " ",
-                "oldLine": 273,
+                "oldLine": 275,
                 "newLine": 222,
                 "text": "            result := mload(xor(0x60, returndatasize()))"
               }
             ]
           },
           {
-            "oldStart": 281,
+            "oldStart": 283,
             "oldLines": 7,
             "newStart": 230,
             "newLines": 7,
             "lines": [
-              { "type": " ", "oldLine": 281, "newLine": 230, "text": "" },
+              { "type": " ", "oldLine": 283, "newLine": 230, "text": "" },
               {
                 "type": " ",
-                "oldLine": 282,
+                "oldLine": 284,
                 "newLine": 231,
                 "text": "    /// @dev Returns an Ethereum Signed Message, created from a `hash`."
               },
               {
                 "type": " ",
-                "oldLine": 283,
+                "oldLine": 285,
                 "newLine": 232,
                 "text": "    /// This produces a hash corresponding to the one signed with the"
               },
               {
                 "type": "-",
-                "oldLine": 284,
+                "oldLine": 286,
                 "text": "    /// [`eth_sign`](https://eth.wiki/json-rpc/API#eth_sign)",
                 "ignored": true
               },
@@ -2009,46 +2021,46 @@
               },
               {
                 "type": " ",
-                "oldLine": 285,
+                "oldLine": 287,
                 "newLine": 234,
                 "text": "    /// JSON-RPC method as part of EIP-191."
               },
               {
                 "type": " ",
-                "oldLine": 286,
+                "oldLine": 288,
                 "newLine": 235,
                 "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32 result) {"
               },
               {
                 "type": " ",
-                "oldLine": 287,
+                "oldLine": 289,
                 "newLine": 236,
                 "text": "        /// @solidity memory-safe-assembly"
               }
             ]
           },
           {
-            "oldStart": 294,
+            "oldStart": 296,
             "oldLines": 7,
             "newStart": 243,
             "newLines": 7,
             "lines": [
-              { "type": " ", "oldLine": 294, "newLine": 243, "text": "" },
+              { "type": " ", "oldLine": 296, "newLine": 243, "text": "" },
               {
                 "type": " ",
-                "oldLine": 295,
+                "oldLine": 297,
                 "newLine": 244,
                 "text": "    /// @dev Returns an Ethereum Signed Message, created from `s`."
               },
               {
                 "type": " ",
-                "oldLine": 296,
+                "oldLine": 298,
                 "newLine": 245,
                 "text": "    /// This produces a hash corresponding to the one signed with the"
               },
               {
                 "type": "-",
-                "oldLine": 297,
+                "oldLine": 299,
                 "text": "    /// [`eth_sign`](https://eth.wiki/json-rpc/API#eth_sign)",
                 "ignored": true
               },
@@ -2060,35 +2072,35 @@
               },
               {
                 "type": " ",
-                "oldLine": 298,
+                "oldLine": 300,
                 "newLine": 247,
                 "text": "    /// JSON-RPC method as part of EIP-191."
               },
               {
                 "type": " ",
-                "oldLine": 299,
+                "oldLine": 301,
                 "newLine": 248,
                 "text": "    /// Note: Supports lengths of `s` up to 999999 bytes."
               },
               {
                 "type": " ",
-                "oldLine": 300,
+                "oldLine": 302,
                 "newLine": 249,
                 "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32 result) {"
               }
             ]
           },
           {
-            "oldStart": 321,
+            "oldStart": 323,
             "oldLines": 6,
             "newStart": 270,
             "newLines": 111,
             "lines": [
-              { "type": " ", "oldLine": 321, "newLine": 270, "text": "    }" },
-              { "type": " ", "oldLine": 322, "newLine": 271, "text": "" },
+              { "type": " ", "oldLine": 323, "newLine": 270, "text": "    }" },
+              { "type": " ", "oldLine": 324, "newLine": 271, "text": "" },
               {
                 "type": " ",
-                "oldLine": 323,
+                "oldLine": 325,
                 "newLine": 272,
                 "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
               },
@@ -2689,17 +2701,17 @@
               },
               {
                 "type": " ",
-                "oldLine": 324,
+                "oldLine": 326,
                 "newLine": 378,
                 "text": "    /*                   EMPTY CALLDATA HELPERS                   */"
               },
               {
                 "type": " ",
-                "oldLine": 325,
+                "oldLine": 327,
                 "newLine": 379,
                 "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
               },
-              { "type": " ", "oldLine": 326, "newLine": 380, "text": "" }
+              { "type": " ", "oldLine": 328, "newLine": 380, "text": "" }
             ]
           }
         ]

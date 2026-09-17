@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "MessageHashUtils",
-        "similarity": 0.92,
+        "similarity": 0.972,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/cryptography/MessageHashUtils.sol",

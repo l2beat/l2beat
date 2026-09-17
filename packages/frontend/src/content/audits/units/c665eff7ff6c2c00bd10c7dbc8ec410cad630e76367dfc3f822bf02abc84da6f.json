@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "TornadoTrees",
-        "similarity": 0.938,
+        "similarity": 0.945,
         "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
         "repository": "tornadocash/tornado-anonymity-mining",
         "path": "contracts/TornadoTrees.sol",

@@ -6,13 +6,16 @@
   "lines": 9,
   "source": "interface ISP1Verifier {\n    /// @notice Verifies a proof with given public values and vkey.\n    /// @dev It is expected that the first 4 bytes of proofBytes must match the first 4 bytes of\n    /// target verifier's VERIFIER_HASH.\n    /// @param programVKey The verification key for the RISC-V program.\n    /// @param publicValues The public values encoded as bytes.\n    /// @param proofBytes The proof of the program execution the SP1 zkVM encoded as bytes.\n    function verifyProof(bytes32 programVKey, bytes calldata publicValues, bytes calldata proofBytes) external view;\n}",
   "resolutions": {
-    "eea968a44e5d263a": {
+    "44ad4cf96e2ef6f0": {
       "status": "library",
       "coveredLines": 9,
       "match": {
         "origin": "stack",
         "collection": "sp1",
-        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
         "rank": 2,
         "matchedBy": "identity",
         "auditedName": "ISP1Verifier",
@@ -33,16 +36,13 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 9,
       "match": {
         "origin": "stack",
         "collection": "sp1",
-        "relation": {
-          "type": "template",
-          "template": "succinct/OPSuccinct/AccessManager"
-        },
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
         "rank": 2,
         "matchedBy": "identity",
         "auditedName": "ISP1Verifier",

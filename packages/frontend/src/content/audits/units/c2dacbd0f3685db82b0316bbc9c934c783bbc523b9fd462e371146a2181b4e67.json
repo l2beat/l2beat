@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "SafeTransferLib",
-        "similarity": 0.492,
+        "similarity": 0.598,
         "reportId": "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
         "repository": "Rari-Capital/solmate",
         "path": "src/utils/SafeTransferLib.sol",

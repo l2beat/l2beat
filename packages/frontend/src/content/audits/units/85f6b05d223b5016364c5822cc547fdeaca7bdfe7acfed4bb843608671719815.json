@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "SafeTransferLib",
-        "similarity": 0.997,
+        "similarity": 1,
         "reportId": "solady/cantina-spearbit-coinbase-solady-report",
         "repository": "Vectorized/solady",
         "path": "src/utils/SafeTransferLib.sol",

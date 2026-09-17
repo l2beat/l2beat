@@ -33,14 +33,17 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "44ad4cf96e2ef6f0": {
       "status": "identical",
       "coveredLines": 33,
       "match": {
-        "origin": "own",
+        "origin": "upstream",
         "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
         "matchedBy": "identity",
         "auditedName": "LibGameId",
         "similarity": 1,
@@ -60,17 +63,14 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "9fa846564f4071bd": {
       "status": "identical",
       "coveredLines": 33,
       "match": {
-        "origin": "upstream",
+        "origin": "own",
         "collection": "optimism",
-        "relation": {
-          "type": "fork_of",
-          "repository": "ethereum-optimism/optimism"
-        },
-        "rank": 1,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "LibGameId",
         "similarity": 1,

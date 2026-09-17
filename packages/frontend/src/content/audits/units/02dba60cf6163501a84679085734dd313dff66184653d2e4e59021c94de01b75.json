@@ -7,68 +7,8 @@
   "source": "interface IHasher {\n    function MiMCSponge(uint256 in_xL, uint256 in_xR) external pure returns (uint256 xL, uint256 xR);\n}",
   "resolutions": {
     "f9658cd3a9a22004": {
-      "status": "differs",
-      "coveredLines": 2,
-      "match": {
-        "origin": "other",
-        "collection": "privacy-pools",
-        "relation": { "type": "name" },
-        "rank": 4,
-        "matchedBy": "name",
-        "auditedName": "IHasher",
-        "similarity": 0.667,
-        "reportId": "privacy-pools/oxorio-privacy-pools-v1-2024-05",
-        "repository": "ProofOfInnocence/privacy-pools-v1",
-        "path": "contracts/MerkleTreeWithHistory.sol",
-        "commit": "8ab7132877325e27b22053e974b3310d70b860b5",
-        "commitTimestamp": "2024-04-13T11:14:27Z",
-        "url": "https://github.com/ProofOfInnocence/privacy-pools-v1/blob/8ab7132877325e27b22053e974b3310d70b860b5/contracts/MerkleTreeWithHistory.sol",
-        "auditStatus": "audited_with_major_findings",
-        "reviewPhase": "final commit / fix review",
-        "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
-        "majorFindings": 1,
-        "findingIds": ["C-03"],
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 2
-      },
-      "diff": {
-        "added": 1,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 0,
-        "unchanged": 2,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 3,
-            "newStart": 1,
-            "newLines": 3,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "interface IHasher {"
-              },
-              {
-                "type": "-",
-                "oldLine": 2,
-                "text": "    function poseidon(bytes32[2] calldata inputs) external pure returns (bytes32);",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 2,
-                "text": "    function MiMCSponge(uint256 in_xL, uint256 in_xR) external pure returns (uint256 xL, uint256 xR);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 3, "newLine": 3, "text": "}" }
-            ]
-          }
-        ]
-      },
+      "status": "unaudited",
+      "coveredLines": 0,
       "warnings": []
     }
   }

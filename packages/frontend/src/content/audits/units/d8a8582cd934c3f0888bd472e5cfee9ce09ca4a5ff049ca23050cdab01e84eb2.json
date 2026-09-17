@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "GovernorCountingSimple",
-        "similarity": 0.874,
+        "similarity": 0.839,
         "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/governance/extensions/GovernorCountingSimple.sol",

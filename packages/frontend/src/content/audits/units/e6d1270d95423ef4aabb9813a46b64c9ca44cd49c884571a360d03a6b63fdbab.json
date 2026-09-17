@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "L2ERC721Bridge",
-        "similarity": 0.821,
+        "similarity": 0.776,
         "reportId": "optimism/sherlock-bedrock-2023-03",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/contracts/L2/L2ERC721Bridge.sol",

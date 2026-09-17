@@ -16,226 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "Types",
-        "similarity": 0.831,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
-      },
-      "diff": {
-        "added": 13,
-        "removed": 0,
-        "ignoredAdded": 13,
-        "ignoredRemoved": 0,
-        "unchanged": 78,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 24,
-            "oldLines": 6,
-            "newStart": 24,
-            "newLines": 24,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 24,
-                "newLine": 24,
-                "text": "        bytes32 latestBlockhash;"
-              },
-              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
-              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
-              {
-                "type": "+",
-                "newLine": 27,
-                "text": "    /// @notice Struct representing an output root with a chain id.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 28,
-                "text": "    /// @custom:field chainId The chain ID of the L2 chain that the output root commits to.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 29,
-                "text": "    /// @custom:field root    The output root.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 30,
-                "text": "    struct OutputRootWithChainId {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 31,
-                "text": "        uint256 chainId;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "        bytes32 root;",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 33, "text": "    }", "ignored": false },
-              { "type": "+", "newLine": 34, "text": "", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 35,
-                "text": "    /// @notice Struct representing a super root proof.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 36,
-                "text": "    /// @custom:field version     The version of the super root proof.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "    /// @custom:field timestamp   The timestamp of the super root proof.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 38,
-                "text": "    /// @custom:field outputRoots The output roots that are included in the super root proof.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 39,
-                "text": "    struct SuperRootProof {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 40,
-                "text": "        bytes1 version;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 41,
-                "text": "        uint64 timestamp;",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 42,
-                "text": "        OutputRootWithChainId[] outputRoots;",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 43, "text": "    }", "ignored": false },
-              { "type": "+", "newLine": 44, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 27,
-                "newLine": 45,
-                "text": "    /// @notice Struct representing a deposit transaction (L1 => L2 transaction) created by an end"
-              },
-              {
-                "type": " ",
-                "oldLine": 28,
-                "newLine": 46,
-                "text": "    ///         user (as opposed to a system deposit transaction generated by the system)."
-              },
-              {
-                "type": " ",
-                "oldLine": 29,
-                "newLine": 47,
-                "text": "    /// @custom:field from        Address of the sender of the transaction."
-              }
-            ]
-          },
-          {
-            "oldStart": 62,
-            "oldLines": 4,
-            "newStart": 80,
-            "newLines": 12,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 62,
-                "newLine": 80,
-                "text": "        uint256 gasLimit;"
-              },
-              {
-                "type": " ",
-                "oldLine": 63,
-                "newLine": 81,
-                "text": "        bytes data;"
-              },
-              { "type": " ", "oldLine": 64, "newLine": 82, "text": "    }" },
-              { "type": "+", "newLine": 83, "text": "", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 84,
-                "text": "    /// @notice Enum representing where the FeeVault withdraws funds to.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 85,
-                "text": "    /// @custom:value L1 FeeVault withdraws funds to L1.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 86,
-                "text": "    /// @custom:value L2 FeeVault withdraws funds to L2.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 87,
-                "text": "    enum WithdrawalNetwork {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 88,
-                "text": "        L1,",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 89,
-                "text": "        L2",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 90, "text": "    }", "ignored": false },
-              { "type": " ", "oldLine": 65, "newLine": 91, "text": "}" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 78,
-      "match": {
-        "origin": "other",
-        "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
-        "matchedBy": "name",
-        "auditedName": "Types",
-        "similarity": 0.831,
+        "similarity": 0.837,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -454,7 +235,226 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "Types",
-        "similarity": 0.831,
+        "similarity": 0.837,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 13,
+        "removed": 0,
+        "ignoredAdded": 13,
+        "ignoredRemoved": 0,
+        "unchanged": 78,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 24,
+            "oldLines": 6,
+            "newStart": 24,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        bytes32 latestBlockhash;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @notice Struct representing an output root with a chain id.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @custom:field chainId The chain ID of the L2 chain that the output root commits to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @custom:field root    The output root.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    struct OutputRootWithChainId {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        uint256 chainId;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        bytes32 root;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 33, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @notice Struct representing a super root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @custom:field version     The version of the super root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// @custom:field timestamp   The timestamp of the super root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    /// @custom:field outputRoots The output roots that are included in the super root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    struct SuperRootProof {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        bytes1 version;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        uint64 timestamp;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        OutputRootWithChainId[] outputRoots;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 43, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 44, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 45,
+                "text": "    /// @notice Struct representing a deposit transaction (L1 => L2 transaction) created by an end"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 46,
+                "text": "    ///         user (as opposed to a system deposit transaction generated by the system)."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 47,
+                "text": "    /// @custom:field from        Address of the sender of the transaction."
+              }
+            ]
+          },
+          {
+            "oldStart": 62,
+            "oldLines": 4,
+            "newStart": 80,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 80,
+                "text": "        uint256 gasLimit;"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 81,
+                "text": "        bytes data;"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 82, "text": "    }" },
+              { "type": "+", "newLine": 83, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @notice Enum representing where the FeeVault withdraws funds to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// @custom:value L1 FeeVault withdraws funds to L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @custom:value L2 FeeVault withdraws funds to L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    enum WithdrawalNetwork {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        L1,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        L2",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 90, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 65, "newLine": 91, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 78,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Types",
+        "similarity": 0.837,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -673,7 +673,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "Types",
-        "similarity": 0.831,
+        "similarity": 0.837,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
@@ -892,7 +892,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "Types",
-        "similarity": 0.831,
+        "similarity": 0.837,
         "reportId": "bob/veridise-kailua-2025-02",
         "repository": "boundless-xyz/kailua",
         "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",

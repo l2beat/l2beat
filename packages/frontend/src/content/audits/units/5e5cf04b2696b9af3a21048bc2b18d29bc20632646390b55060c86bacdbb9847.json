@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "BlobLib",
-        "similarity": 0.853,
+        "similarity": 0.944,
         "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",

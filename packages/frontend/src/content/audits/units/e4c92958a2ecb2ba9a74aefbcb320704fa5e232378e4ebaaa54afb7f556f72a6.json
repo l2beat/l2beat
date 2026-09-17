@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "ECDSA",
-        "similarity": 0.519,
+        "similarity": 0.568,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/cryptography/ECDSA.sol",

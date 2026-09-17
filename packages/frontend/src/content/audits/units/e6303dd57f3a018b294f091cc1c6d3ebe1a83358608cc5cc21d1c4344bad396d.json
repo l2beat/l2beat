@@ -4,9 +4,136 @@
   "name": "IBeacon",
   "kind": "interface",
   "lines": 8,
-  "source": "interface IBeacon {\n    /**\n     * @dev Must return an address that can be used as a delegate call target.\n     *\n     * {BeaconProxy} will check that this address is a contract.\n     */\n    function implementation() external view returns (address);\n}",
+  "source": "interface IBeacon {\n    /**\n     * @dev Must return an address that can be used as a delegate call target.\n     *\n     * {UpgradeableBeacon} will check that this address is a contract.\n     */\n    function implementation() external view returns (address);\n}",
   "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 8,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IBeacon",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/beacon/IBeacon.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
     "ba5b6c9584fb78fd": {
+      "status": "library",
+      "coveredLines": 8,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IBeacon",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/beacon/IBeacon.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 8,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Must return an address that can be used as a delegate call target."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * {UpgradeableBeacon} will check that this address is a contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * {BeaconProxy} will check that this address is a contract.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    function implementation() external view returns (address);"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "cbbcf694abda362c": {
+      "status": "library",
+      "coveredLines": 8,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IBeacon",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/beacon/IBeacon.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
       "status": "library",
       "coveredLines": 8,
       "match": {
@@ -149,133 +276,6 @@
             ]
           }
         ]
-      },
-      "warnings": []
-    },
-    "bb55951394276893": {
-      "status": "library",
-      "coveredLines": 8,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "identity",
-        "auditedName": "IBeacon",
-        "similarity": 1,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/proxy/beacon/IBeacon.sol",
-        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
-        "commitTimestamp": "2023-08-04T17:04:22Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix review",
-        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 2
-      },
-      "diff": {
-        "added": 0,
-        "removed": 0,
-        "ignoredAdded": 1,
-        "ignoredRemoved": 1,
-        "unchanged": 8,
-        "ignoredOnly": true,
-        "hunks": [
-          {
-            "oldStart": 2,
-            "oldLines": 7,
-            "newStart": 2,
-            "newLines": 7,
-            "lines": [
-              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
-              {
-                "type": " ",
-                "oldLine": 3,
-                "newLine": 3,
-                "text": "     * @dev Must return an address that can be used as a delegate call target."
-              },
-              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     *" },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * {UpgradeableBeacon} will check that this address is a contract.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 5,
-                "text": "     * {BeaconProxy} will check that this address is a contract.",
-                "ignored": true
-              },
-              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
-              {
-                "type": " ",
-                "oldLine": 7,
-                "newLine": 7,
-                "text": "    function implementation() external view returns (address);"
-              },
-              { "type": " ", "oldLine": 8, "newLine": 8, "text": "}" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "41ad32932dea0dc9": {
-      "status": "library",
-      "coveredLines": 8,
-      "match": {
-        "origin": "library",
-        "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
-        "matchedBy": "identity",
-        "auditedName": "IBeacon",
-        "similarity": 1,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/proxy/beacon/IBeacon.sol",
-        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
-        "commitTimestamp": "2023-08-04T17:04:22Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix review",
-        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 2
-      },
-      "warnings": []
-    },
-    "cbbcf694abda362c": {
-      "status": "library",
-      "coveredLines": 8,
-      "match": {
-        "origin": "library",
-        "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
-        "matchedBy": "identity",
-        "auditedName": "IBeacon",
-        "similarity": 1,
-        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/proxy/beacon/IBeacon.sol",
-        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
-        "commitTimestamp": "2023-08-04T17:04:22Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/beacon/IBeacon.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix review",
-        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 2
       },
       "warnings": []
     }

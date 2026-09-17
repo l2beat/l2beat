@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "SwapRouter",
-        "similarity": 0.972,
+        "similarity": 1,
         "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
         "repository": "Uniswap/v3-periphery",
         "path": "contracts/SwapRouter.sol",

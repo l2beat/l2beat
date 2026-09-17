@@ -6,7 +6,7 @@
   "lines": 84,
   "source": "library ShortStrings {\n    // Used as an identifier for strings longer than 31 bytes.\n    bytes32 private constant FALLBACK_SENTINEL = 0x00000000000000000000000000000000000000000000000000000000000000FF;\n\n    error StringTooLong(string str);\n    error InvalidShortString();\n\n    /**\n     * @dev Encode a string of at most 31 chars into a `ShortString`.\n     *\n     * This will trigger a `StringTooLong` error is the input string is too long.\n     */\n    function toShortString(string memory str) internal pure returns (ShortString) {\n        bytes memory bstr = bytes(str);\n        if (bstr.length > 31) {\n            revert StringTooLong(str);\n        }\n        return ShortString.wrap(bytes32(uint256(bytes32(bstr)) | bstr.length));\n    }\n\n    /**\n     * @dev Decode a `ShortString` back to a \"normal\" string.\n     */\n    function toString(ShortString sstr) internal pure returns (string memory) {\n        uint256 len = byteLength(sstr);\n        // using `new string(len)` would work locally but is not memory safe.\n        string memory str = new string(32);\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(str, len)\n            mstore(add(str, 0x20), sstr)\n        }\n        return str;\n    }\n\n    /**\n     * @dev Return the length of a `ShortString`.\n     */\n    function byteLength(ShortString sstr) internal pure returns (uint256) {\n        uint256 result = uint256(ShortString.unwrap(sstr)) & 0xFF;\n        if (result > 31) {\n            revert InvalidShortString();\n        }\n        return result;\n    }\n\n    /**\n     * @dev Encode a string into a `ShortString`, or write it to storage if it is too long.\n     */\n    function toShortStringWithFallback(string memory value, string storage store) internal returns (ShortString) {\n        if (bytes(value).length < 32) {\n            return toShortString(value);\n        } else {\n            StorageSlot.getStringSlot(store).value = value;\n            return ShortString.wrap(FALLBACK_SENTINEL);\n        }\n    }\n\n    /**\n     * @dev Decode a string that was encoded to `ShortString` or written to storage using {setWithFallback}.\n     */\n    function toStringWithFallback(ShortString value, string storage store) internal pure returns (string memory) {\n        if (ShortString.unwrap(value) != FALLBACK_SENTINEL) {\n            return toString(value);\n        } else {\n            return store;\n        }\n    }\n\n    /**\n     * @dev Return the length of a string that was encoded to `ShortString` or written to storage using\n     * {setWithFallback}.\n     *\n     * WARNING: This will return the \"byte length\" of the string. This may not reflect the actual length in terms of\n     * actual characters as the UTF-8 encoding of a single character can span over multiple bytes.\n     */\n    function byteLengthWithFallback(ShortString value, string storage store) internal view returns (uint256) {\n        if (ShortString.unwrap(value) != FALLBACK_SENTINEL) {\n            return byteLength(value);\n        } else {\n            return bytes(store).length;\n        }\n    }\n}",
   "resolutions": {
-    "9fa846564f4071bd": {
+    "44ad4cf96e2ef6f0": {
       "status": "differs",
       "coveredLines": 80,
       "match": {
@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ShortStrings",
-        "similarity": 0.92,
+        "similarity": 0.974,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/ShortStrings.sol",
@@ -264,7 +264,7 @@
       },
       "warnings": []
     },
-    "44ad4cf96e2ef6f0": {
+    "9fa846564f4071bd": {
       "status": "differs",
       "coveredLines": 80,
       "match": {
@@ -274,7 +274,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ShortStrings",
-        "similarity": 0.92,
+        "similarity": 0.974,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/ShortStrings.sol",
@@ -532,7 +532,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "ShortStrings",
-        "similarity": 0.92,
+        "similarity": 0.974,
         "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/utils/ShortStrings.sol",

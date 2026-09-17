@@ -33,7 +33,7 @@ without it the comparison still works but diffs may show style differences.
   projects/<slug>.json     contracts -> files -> unit references with status and match
   reports.json             report metadata by global id `<collection>/<report id>`
   collections.json         collection metadata
-  meta.json                dataset revision the resolutions belong to
+  meta.json                dataset and resolver versions the resolutions belong to
 ```
 
 A unit is identified by the sha256 of its *comparable* text: the code with comments and the
@@ -46,13 +46,14 @@ For every unique deployed unit:
 
 1. **Identity.** The comparable hash exists in any collection: `identical` (or `library` when the
    collection is under `_libs`). Closest collection wins, then newest version.
-2. **Same name, anywhere.** Every collection declaring the unit name is a candidate; the version
-   with the highest similarity wins, the closer collection wins within a 0.05 band. Candidates
-   from unrelated collections need similarity 0.5, others 0.3.
-3. **Rename heuristic** over the project's own, upstream and stack collections, with cheap
-   prefilters (line count band, function signature overlap) before the line diff.
-4. A same-name candidate below its threshold is kept with a `low-similarity` warning.
-5. Otherwise `unaudited`.
+2. **Candidate union.** Combine every same-name (or configured alias) unit in the dataset with all
+   structurally compatible units from the project's own, upstream, stack and library collections.
+3. **Composite score.** Rank every version using anonymized line similarity, deployed-code
+   containment, signature overlap and size similarity. Missing signatures are omitted from the
+   weighting instead of counted as a mismatch. A name is only a small bonus.
+4. **Abstain.** Same-name candidates need score 0.55 from a related collection or 0.7 from an
+   unrelated one; renamed candidates need 0.65. Below the applicable threshold the unit is
+   `unaudited`, rather than retaining a weak name match.
 
 Whole-file units (zk programs, circuits) use identity, then audited files sharing the longest
 repository path suffix.

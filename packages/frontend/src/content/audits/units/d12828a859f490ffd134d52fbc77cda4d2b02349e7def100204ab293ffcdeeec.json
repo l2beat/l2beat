@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "InvalidateLib",
-        "similarity": 0.868,
+        "similarity": 0.943,
         "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",

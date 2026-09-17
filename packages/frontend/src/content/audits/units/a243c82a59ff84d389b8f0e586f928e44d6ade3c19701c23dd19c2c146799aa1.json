@@ -6,7 +6,7 @@
   "lines": 6,
   "source": "contract SelfAuthorized {\n    modifier authorized() {\n        require(msg.sender == address(this), \"Method can only be called from this contract\");\n        _;\n    }\n}",
   "resolutions": {
-    "f9658cd3a9a22004": {
+    "9fa846564f4071bd": {
       "status": "library",
       "coveredLines": 6,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "9fa846564f4071bd": {
+    "f9658cd3a9a22004": {
       "status": "library",
       "coveredLines": 6,
       "match": {

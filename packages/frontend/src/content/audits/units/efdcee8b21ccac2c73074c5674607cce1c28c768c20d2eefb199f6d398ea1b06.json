@@ -8,7 +8,7 @@
   "resolutions": {
     "1f5c32d18cf7148d": {
       "status": "differs",
-      "coveredLines": 436,
+      "coveredLines": 429,
       "match": {
         "origin": "other",
         "collection": "celo",
@@ -16,27 +16,27 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "StandardBridge",
-        "similarity": 0.986,
+        "similarity": 1,
         "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
         "repository": "celo-org/optimism",
         "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
-        "commit": "2c50c87bab8a37aeb363664b22ace82b898c2d8b",
-        "commitTimestamp": "2026-01-14T10:59:08Z",
-        "url": "https://github.com/celo-org/optimism/blob/2c50c87bab8a37aeb363664b22ace82b898c2d8b/packages/contracts-bedrock/src/universal/StandardBridge.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/src/universal/StandardBridge.sol",
         "auditStatus": "audited_with_no_major_findings",
         "reviewPhase": "initial audit",
-        "coverage": "full file in celo-contracts/v4.1.0 line (Celo CGT changes vs op-deployer/v0.4.7)",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
         "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
         "totalVersions": 4
       },
       "diff": {
-        "added": 3,
+        "added": 10,
         "removed": 3,
-        "ignoredAdded": 0,
+        "ignoredAdded": 4,
         "ignoredRemoved": 0,
-        "unchanged": 436,
+        "unchanged": 429,
         "ignoredOnly": false,
         "hunks": [
           {
@@ -86,27 +86,155 @@
             ]
           },
           {
-            "oldStart": 256,
+            "oldStart": 108,
+            "oldLines": 6,
+            "newStart": 108,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 108,
+                "text": "    ///         Must be implemented by contracts that inherit."
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 109,
+                "text": "    receive() external payable virtual;"
+              },
+              { "type": " ", "oldLine": 110, "newLine": 110, "text": "" },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @notice Returns the address of the custom gas token and the token's decimals.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    function gasPayingToken() internal view virtual returns (address, uint8);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 113, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "    /// @notice Returns whether the chain uses a custom gas token or not.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    function isCustomGasToken() internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        (address token,) = gasPayingToken();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        return token != Constants.ETHER;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 119, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 120,
+                "text": "    /// @notice Getter for messenger contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 121,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 122,
+                "text": "    /// @return Contract of the messenger on this domain."
+              }
+            ]
+          },
+          {
+            "oldStart": 209,
+            "oldLines": 6,
+            "newStart": 218,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 218,
+                "text": "        onlyOtherBridge"
+              },
+              { "type": " ", "oldLine": 210, "newLine": 219, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 220,
+                "text": "        require(paused() == false, \"StandardBridge: paused\");"
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "        require(isCustomGasToken() == false, \"StandardBridge: cannot bridge ETH with custom gas token\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 222,
+                "text": "        require(msg.value == _amount, \"StandardBridge: amount sent does not match amount required\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 223,
+                "text": "        require(_to != address(this), \"StandardBridge: cannot send to self\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 224,
+                "text": "        require(_to != address(messenger), \"StandardBridge: cannot send to messenger\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 246,
             "oldLines": 7,
             "newStart": 256,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 256,
+                "oldLine": 246,
                 "newLine": 256,
                 "text": "                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\""
               },
               {
                 "type": " ",
-                "oldLine": 257,
+                "oldLine": 247,
                 "newLine": 257,
                 "text": "            );"
               },
-              { "type": " ", "oldLine": 258, "newLine": 258, "text": "" },
+              { "type": " ", "oldLine": 248, "newLine": 258, "text": "" },
               {
                 "type": "-",
-                "oldLine": 259,
+                "oldLine": 249,
                 "text": "            IOptimismMintableERC20(_localToken).mint(_to, _amount);",
                 "ignored": false
               },
@@ -118,46 +246,91 @@
               },
               {
                 "type": " ",
-                "oldLine": 260,
+                "oldLine": 250,
                 "newLine": 260,
                 "text": "        } else {"
               },
               {
                 "type": " ",
-                "oldLine": 261,
+                "oldLine": 251,
                 "newLine": 261,
                 "text": "            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] - _amount;"
               },
               {
                 "type": " ",
-                "oldLine": 262,
+                "oldLine": 252,
                 "newLine": 262,
                 "text": "            IERC20(_localToken).safeTransfer(_to, _amount);"
               }
             ]
           },
           {
-            "oldStart": 322,
+            "oldStart": 272,
+            "oldLines": 6,
+            "newStart": 282,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 282,
+                "text": "        uint32 _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 283,
+                "text": "        bytes memory _extraData"
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 284,
+                "text": "    ) internal {"
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "        require(isCustomGasToken() == false, \"StandardBridge: cannot bridge ETH with custom gas token\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 286,
+                "text": "        require(msg.value == _amount, \"StandardBridge: bridging ETH must include sufficient ETH value\");"
+              },
+              { "type": " ", "oldLine": 276, "newLine": 287, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 288,
+                "text": "        // Emit the correct events. By default this will be _amount, but child"
+              }
+            ]
+          },
+          {
+            "oldStart": 311,
             "oldLines": 7,
             "newStart": 322,
             "newLines": 7,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 322,
+                "oldLine": 311,
                 "newLine": 322,
                 "text": "                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\""
               },
               {
                 "type": " ",
-                "oldLine": 323,
+                "oldLine": 312,
                 "newLine": 323,
                 "text": "            );"
               },
-              { "type": " ", "oldLine": 324, "newLine": 324, "text": "" },
+              { "type": " ", "oldLine": 313, "newLine": 324, "text": "" },
               {
                 "type": "-",
-                "oldLine": 325,
+                "oldLine": 314,
                 "text": "            IOptimismMintableERC20(_localToken).burn(_from, _amount);",
                 "ignored": false
               },
@@ -169,19 +342,19 @@
               },
               {
                 "type": " ",
-                "oldLine": 326,
+                "oldLine": 315,
                 "newLine": 326,
                 "text": "        } else {"
               },
               {
                 "type": " ",
-                "oldLine": 327,
+                "oldLine": 316,
                 "newLine": 327,
                 "text": "            IERC20(_localToken).safeTransferFrom(_from, address(this), _amount);"
               },
               {
                 "type": " ",
-                "oldLine": 328,
+                "oldLine": 317,
                 "newLine": 328,
                 "text": "            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] + _amount;"
               }

@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "V3SwapRouter",
-        "similarity": 0.857,
+        "similarity": 0.887,
         "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
         "repository": "ronin-chain/katana-operation-contracts",
         "path": "src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",

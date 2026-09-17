@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "SafeTransferLib",
-        "similarity": 0.814,
+        "similarity": 0.811,
         "reportId": "solady/ackee-blockchain-solady-report",
         "repository": "Vectorized/solady",
         "path": "src/utils/SafeTransferLib.sol",

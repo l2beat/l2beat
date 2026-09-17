@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "UnsafeMath",
-        "similarity": 0.667,
+        "similarity": 0.704,
         "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
         "repository": "Uniswap/v3-core",
         "path": "contracts/libraries/UnsafeMath.sol",

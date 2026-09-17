@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "BatchHeaderV1Codec",
-        "similarity": 0.629,
+        "similarity": 0.685,
         "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/libraries/codec/BatchHeaderV1Codec.sol",

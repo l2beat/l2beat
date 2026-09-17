@@ -49,21 +49,21 @@ one JSON per project that embeds source and diff for every unit instance.
 | zk program files matched only inside own project by basename | sp1 collection never consulted for SP1 sources; Rust basenames collide | Whole-file units join the hash index; path-suffix candidates |
 | Name collision between dataset and l2beat vocab | `_libs/gnosis` means Safe, l2beat vendor `gnosis` means Gnosis Chain | Rename the collection to `_libs/safe` |
 
-The one thing that already works and must be kept: the identical, differs, unaudited semantics with
-comments and require messages ignored, and the "newest identical version wins, else highest
-similarity" selection. Checked during design: the tornado `ReentrancyGuard` is OZ 3.x, the
-collection has no 3.x audit, and the engine already picks the best available version (v5.0 at
-0.55 over the 2018 version at 0.35). No change to selection is needed.
+The identical, differs and unaudited semantics remain, with comments and require messages ignored.
+An exact comparable hash is authoritative. Non-identical candidates now compete using the
+composite score in section 5.5; a merely best available version is not accepted unless it clears
+the threshold. For example, the deployed tornado `ReentrancyGuard` is OZ 3.x while the collection
+has no 3.x audit, so its former weak v5.0 match is now unaudited.
 
 ## 3. Decisions taken during design
 
 - Dataset directories stay keyed by project. A logical unit in the dataset is an audit, and an audit
   covers a project. Repository lineage is metadata, not directory structure.
 - No version markers. A deployed unit that is not identical to any audited version is compared with
-  the most similar one. Identity is decided by hash.
+  the highest-scoring compatible version, if it clears the threshold. Identity is decided by hash.
 - Interfaces count like any other unit. Subtle interface differences are security relevant and are
   shown as `differs` with a diff.
-- The rename heuristic extends beyond the own collection to upstream and stack collections.
+- Renamed candidates come from own, upstream, stack and library collections.
 - Stack projects are the central point for stack audits: OP stack audits belong to `optimism`,
   Nitro audits to `arbitrum`. Dependent chains reach them through lineage, template hints and the
   global indexes.
@@ -266,21 +266,20 @@ rank 4  other      every remaining collection
 
 Upstream is directional: forks inherit from ancestors, never the reverse, and sibling forks do not
 share through lineage. When a collection appears at several ranks, the lowest wins. The
-`searchSet` for the rename heuristic is own, upstream and stack.
+candidate set for renamed units is own, upstream, stack and library.
 
 `contextKey = sha256(sorted [rank:collection] pairs for ranks 0..2)`. Two projects with the same
 own, upstream and stack collections share a context.
 
 ### 5.5 Resolving one unique unit
 
-Constants, all tunable: `MIN_SIM_NEAR = 0.3` for ranks 0 to 3, `MIN_SIM_OTHER = 0.5` for rank 4,
-`RANK_TIE_BAND = 0.05`, `RENAME_MIN_SIM = 0.6`, `RENAME_MIN_BODY_LINES = 6`,
-`RENAME_LINE_BAND = 0.5`, `RENAME_MIN_SIGNATURE_JACCARD = 0.5`.
+This branch intentionally uses a small experimental rule set rather than a learned or heavily
+tuned matcher. Constants: `MIN_RELATED_NAME_SCORE = 0.55` for same-name or alias candidates at
+ranks 0 to 3, `MIN_OTHER_NAME_SCORE = 0.7` for rank 4, `MIN_RENAME_SCORE = 0.65`,
+`RANK_TIE_BAND = 0.05`, and `MIN_RENAME_SIZE_SIMILARITY = 0.5`.
 
 ```text
 resolve(U, ctx):
-  name = ctx.aliases[U.name] ?? U.name
-
   1. identity
      hits = hashIndex[U.hash]
      if hits: choose by (rank asc, newest first)
@@ -288,38 +287,46 @@ resolve(U, ctx):
      Identity is accepted from any collection, in or out of context: identical code that was
      audited is identical code that was audited. Provenance says where.
 
-  2. same name, anywhere
-     cands = nameIndex[name], kind-compatible with U
-     for each (collection, versions): sim = max over versions of lineSimilarity(U, v)
-     set aside cands with sim < MIN_SIM for their rank (used in step 4)
-     if any remain: winner = highest sim; if another cand is within RANK_TIE_BAND of the
-             winner and has a lower rank, prefer it
-             -> status differs, matchedBy name (or alias)
+  2. compile one candidate union
+     - every same-name or configured-alias unit in every collection
+     - every unit from own, upstream, stack and library collections
+     - require the same kind, except concrete and abstract contracts are compatible;
+       signature-free namespaces may also cross interface/contract kinds
+     - renamed candidates must have min(lines(U), lines(V)) / max(...) >= 0.5;
+       also reject pairs where both sides are tiny and have no signatures
 
-  3. rename search, ctx.searchSet only
-     for each collection in searchSet, for each unit name with newest version v:
-        prefilter: |lines(U) - lines(v)| <= RENAME_LINE_BAND * lines(v)
-                   and jaccard(signatures(U), signatures(v)) >= RENAME_MIN_SIGNATURE_JACCARD
-        sim = lineSimilarity(anonymized body of U, anonymized body of v)
-     if best sim >= RENAME_MIN_SIM: -> status differs, matchedBy similarity
+  3. score every version of every candidate
+     normalize each side by replacing its own unit name with a placeholder and dropping lone braces
+     evidence = 0.40 * lineDice
+              + 0.30 * deployedLineContainment
+              + 0.20 * signatureJaccard
+              + 0.10 * lineCountRatio
+     score = evidence / available component weight
+           + 0.05 when the name or configured alias matches
+     cap score at 1. When both units have no signatures, omit that component and divide by 0.8;
+     this avoids penalizing data-only libraries while giving them no artificial signature match.
 
-  4. if steps 2 and 3 found nothing, the best set-aside candidate from step 2 is used with
-     warning low-similarity (as today)
+  4. discard candidates below the threshold for their rank
+     winner = highest score; if a candidate is within RANK_TIE_BAND of the top score and has a
+              lower rank, prefer it
+     -> status differs, matchedBy name/alias/similarity
 
-  5. otherwise unaudited
+  5. if no candidate clears its threshold -> unaudited
 ```
 
 `signatures(unit)` is the set of function, event and error signatures (name plus parameter
-types) from the parser. It is a cheap fingerprint that rejects most unrelated units before the
-line diff runs.
+types) from the parser. Name matching is deliberately only a weak signal: it broadens the
+candidate set and adds 0.05, but cannot rescue unrelated code. Interfaces are only compared with
+interfaces unless both sides have no callable signatures, covering namespace-only declarations
+such as Safe's `Enum` without allowing thin interfaces to match implementations.
 
 ### 5.6 Version selection
 
 Within the winning (collection, unit name), versions newest first, as today:
 
 1. A version whose comparable hash equals `U.hash` wins: identical.
-2. Otherwise the version with the highest similarity, newest on ties. `laterAuditedVersionExists`
-   is set when the chosen one is not the newest.
+2. Otherwise the version with the highest composite score, newest on ties.
+   `laterAuditedVersionExists` is set when the chosen one is not the newest.
 
 ### 5.7 Whole-file units
 
@@ -330,7 +337,7 @@ zk programs, circuits and other non-Solidity sources:
    deployed file, at least two segments, within own, upstream, stack and library collections. This
    replaces basename matching, which collides constantly on Rust files such as `mod.rs` and
    `lib.rs`.
-3. Highest similarity above `MIN_SIM_NEAR`, else unaudited.
+3. Highest line similarity above `WHOLE_FILE_MIN_SIMILARITY = 0.3`, else unaudited.
 
 ### 5.8 Statuses and provenance
 
@@ -346,12 +353,11 @@ identical to a library collection's unit. Every match carries provenance:
 
 ### 5.9 Complexity
 
-Identity is one map lookup. A name lookup touches the few collections that define the name, each
-with a handful of versions. The rename search is bounded by the distinct unit names in the search
-set. Measured today: the largest collections have about 350 distinct names (celo), 331
-(openzeppelin), 180 (safe). With three collections in the search set and the prefilter, a unit
-triggers around a thousand cheap checks and a few line diffs. For an estimated ten to twenty
-thousand unique units across all projects this is a batch job of minutes.
+Identity is one map lookup. The candidate union combines the few global same-name hits with the
+distinct unit names in the contextual collections. Size and kind checks reject many renamed
+candidates before line diffing. Measured today, the largest individual collections have about 350
+distinct names (celo), 331 (openzeppelin), and 180 (safe); including shared libraries makes this a
+batch job of minutes rather than an interactive operation.
 
 ## 6. l2beat: output store
 
@@ -366,6 +372,7 @@ thousand unique units across all projects this is a batch job of minutes.
                            summary, report ids used, dataset revision, discovery timestamp
   reports.json             report id -> title, auditor, date, collection, url
   collections.json         collection id -> display name, kind
+  meta.json                dataset revision and resolver version
 ```
 
 Identity resolutions are context-free and stored under a fixed key. In practice a unit has one
@@ -464,8 +471,9 @@ database-backed `AuditCoverageSource`; the interface is the seam.
   collection, and matching fixture `discovered.json` plus `.flat` files.
 - Unit tests: id normalization, registry parsing and `ancestors`, evidence index building from
   manifests, ranking context derivation including hints and defaults, resolution order and the
-  tie band, rename prefilter, path-suffix candidates, version selection, output schema
-  validation, cache invalidation by `sha256`.
+  tie band, weak same-name abstention, kind compatibility, renamed-candidate prefilter, path-suffix
+  candidates, version selection, output schema validation, cache invalidation by dataset and
+  resolver version.
 - Integration: generate for the fixture and assert provenance per unit. Once the `optimism`
   collection exists, a snapshot test that bob's stack contracts resolve there.
 
@@ -473,8 +481,8 @@ database-backed `AuditCoverageSource`; the interface is the seam.
 
 Every template vendor used by any `discovered.json` on 2026-09-14. Counts are contracts and
 projects using the vendor. "Default" means the same-name rule applies and no hint is needed. A
-hint only affects ranking and the rename search set; a missing or wrong hint cannot cause a miss,
-because name and hash lookups span all collections.
+hint affects ranking and which stack collection contributes renamed candidates. Name and hash
+lookups still span all collections, but a missing hint can hide a renamed candidate.
 
 Stacks and shared systems, explicit hints:
 
@@ -551,9 +559,11 @@ Template directories on disk but unused by any current `discovered.json`: `allbr
 
 ## 10. Open points and risks
 
-- Thresholds `MIN_SIM_OTHER`, `RANK_TIE_BAND` and the rename prefilter need tuning on real data.
-  Start with the values above and record decisions in the config comments.
-- Tiny interfaces exact-match broadly. Decision: they count, with provenance shown.
+- The composite weights, thresholds and renamed-unit size prefilter are intentionally initial
+  values. Evaluate them against regenerated data before adding more features.
+- Exact hash matches for tiny interfaces still count. Non-identical tiny interfaces must clear the
+  same composite threshold as other units; sharing a name or both having no signatures is not
+  enough.
 - Forks with a small delta may match a sibling fork's audited file at higher similarity than the
   upstream's. This is accepted as valid evidence; provenance shows the collection.
 - Generation requires Foundry.

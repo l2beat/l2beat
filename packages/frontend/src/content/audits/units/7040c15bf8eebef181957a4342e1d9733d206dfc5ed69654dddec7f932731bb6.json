@@ -6,14 +6,14 @@
   "lines": 11,
   "source": "abstract contract SelfAuthorized {\n    function requireSelfCall() private view {\n        require(msg.sender == address(this), \"GS031\");\n    }\n\n    modifier authorized() {\n        // Modifiers are copied around during compilation. This is a function call as it minimized the bytecode size\n        requireSelfCall();\n        _;\n    }\n}",
   "resolutions": {
-    "ba5b6c9584fb78fd": {
+    "41ad32932dea0dc9": {
       "status": "identical",
       "coveredLines": 11,
       "match": {
-        "origin": "own",
+        "origin": "other",
         "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": { "type": "name" },
+        "rank": 4,
         "matchedBy": "identity",
         "auditedName": "SelfAuthorized",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "d293c6ecba42b698": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 11,
       "match": {
-        "origin": "other",
+        "origin": "own",
         "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "SelfAuthorized",
         "similarity": 1,
@@ -114,7 +114,7 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "identical",
       "coveredLines": 11,
       "match": {

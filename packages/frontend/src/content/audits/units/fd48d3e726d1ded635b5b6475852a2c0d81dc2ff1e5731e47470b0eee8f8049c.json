@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "ProposedHeaderLib",
-        "similarity": 0.791,
+        "similarity": 0.878,
         "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",

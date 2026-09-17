@@ -8,7 +8,7 @@
   "resolutions": {
     "d293c6ecba42b698": {
       "status": "differs",
-      "coveredLines": 108,
+      "coveredLines": 110,
       "match": {
         "origin": "own",
         "collection": "scroll",
@@ -16,27 +16,27 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "IScrollChain",
-        "similarity": 0.526,
-        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "similarity": 0.593,
+        "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/L1/rollup/IScrollChain.sol",
-        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-        "commitTimestamp": "2024-01-08T03:05:16Z",
-        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/L1/rollup/IScrollChain.sol",
+        "commit": "5425ce725cc60d154e112610ee380d05e23689e5",
+        "commitTimestamp": "2024-04-10T03:56:26Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/5425ce725cc60d154e112610ee380d05e23689e5/contracts/src/L1/rollup/IScrollChain.sol",
         "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "initial audit (diff)",
-        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-02, L-03, N-02 and N-06 (docstrings, visibility, comments) in pull request #1256 only.",
         "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
         "totalVersions": 5
       },
       "diff": {
-        "added": 17,
-        "removed": 10,
-        "ignoredAdded": 47,
-        "ignoredRemoved": 26,
-        "unchanged": 108,
+        "added": 15,
+        "removed": 18,
+        "ignoredAdded": 34,
+        "ignoredRemoved": 31,
+        "unchanged": 110,
         "ignoredOnly": false,
         "hunks": [
           {
@@ -104,106 +104,48 @@
             ]
           },
           {
-            "oldStart": 22,
-            "oldLines": 38,
-            "newStart": 27,
-            "newLines": 44,
+            "oldStart": 32,
+            "oldLines": 10,
+            "newStart": 37,
+            "newLines": 10,
             "lines": [
               {
                 "type": " ",
-                "oldLine": 22,
-                "newLine": 27,
-                "text": "    /// @param withdrawRoot The merkle root on layer2 after this batch."
+                "oldLine": 32,
+                "newLine": 37,
+                "text": "    /// @param status The status of the account updated."
               },
               {
                 "type": " ",
-                "oldLine": 23,
-                "newLine": 28,
-                "text": "    event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot);"
-              },
-              { "type": " ", "oldLine": 24, "newLine": 29, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 25,
-                "text": "    /**",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 26, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 27,
-                "text": "     * Errors *",
-                "ignored": true
-              },
-              { "type": "-", "oldLine": 28, "text": "     *", "ignored": true },
-              {
-                "type": "-",
-                "oldLine": 29,
-                "text": "     */",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 30,
-                "text": "    /// @notice Emitted when owner updates the status of sequencer.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 31,
-                "text": "    /// @param account The address of account updated.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 32,
-                "text": "    /// @param status The status of the account updated.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 33,
-                "text": "    event UpdateSequencer(address indexed account, bool status);",
-                "ignored": false
-              },
-              { "type": " ", "oldLine": 30, "newLine": 34, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 31,
-                "text": "    /// @dev Thrown when the given address is `address(0)`.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 32,
-                "text": "    error ErrorZeroAddress();",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 35,
-                "text": "    /// @notice Emitted when owner updates the status of prover.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 36,
-                "text": "    /// @param account The address of account updated.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 37,
-                "text": "    /// @param status The status of the account updated.",
-                "ignored": true
-              },
-              {
-                "type": "+",
+                "oldLine": 33,
                 "newLine": 38,
-                "text": "    event UpdateProver(address indexed account, bool status);",
+                "text": "    event UpdateProver(address indexed account, bool status);"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @notice Emitted when the value of `maxNumTxInChunk` is updated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @param oldMaxNumTxInChunk The old value of `maxNumTxInChunk`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @param newMaxNumTxInChunk The new value of `maxNumTxInChunk`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    event UpdateMaxNumTxInChunk(uint256 oldMaxNumTxInChunk, uint256 newMaxNumTxInChunk);",
                 "ignored": false
               },
-              { "type": " ", "oldLine": 33, "newLine": 39, "text": "" },
               {
                 "type": "+",
                 "newLine": 40,
@@ -228,218 +170,89 @@
                 "text": "    event UpdateEnforcedBatchMode(bool enabled, uint256 lastCommittedBatchIndex);",
                 "ignored": false
               },
-              { "type": "+", "newLine": 44, "text": "", "ignored": true },
-              { "type": " ", "oldLine": 34, "newLine": 45, "text": "    /**" },
-              { "type": " ", "oldLine": 35, "newLine": 46, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 36,
-                "newLine": 47,
-                "text": "     * Public View Functions *"
-              },
-              { "type": " ", "oldLine": 37, "newLine": 48, "text": "     *" },
-              { "type": " ", "oldLine": 38, "newLine": 49, "text": "     */" },
-              { "type": " ", "oldLine": 39, "newLine": 50, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 40,
-                "text": "    /// @notice The latest finalized batch index.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 51,
-                "text": "    /// @return The latest finalized batch index.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 41,
-                "newLine": 52,
-                "text": "    function lastFinalizedBatchIndex() external view returns (uint256);"
-              },
-              { "type": " ", "oldLine": 42, "newLine": 53, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 43,
-                "text": "    /// @notice Return the batch hash of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 44,
-                "newLine": 54,
-                "text": "    /// @param batchIndex The index of the batch."
-              },
-              {
-                "type": "+",
-                "newLine": 55,
-                "text": "    /// @return The batch hash of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 45,
-                "newLine": 56,
-                "text": "    function committedBatches(uint256 batchIndex) external view returns (bytes32);"
-              },
-              { "type": " ", "oldLine": 46, "newLine": 57, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 47,
-                "text": "    /// @notice Return the state root of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 48,
-                "newLine": 58,
-                "text": "    /// @param batchIndex The index of the batch."
-              },
-              {
-                "type": "+",
-                "newLine": 59,
-                "text": "    /// @return The state root of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 49,
-                "newLine": 60,
-                "text": "    function finalizedStateRoots(uint256 batchIndex) external view returns (bytes32);"
-              },
-              { "type": " ", "oldLine": 50, "newLine": 61, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 51,
-                "text": "    /// @notice Return the message root of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 52,
-                "newLine": 62,
-                "text": "    /// @param batchIndex The index of the batch."
-              },
-              {
-                "type": "+",
-                "newLine": 63,
-                "text": "    /// @return The message root of a committed batch.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 53,
-                "newLine": 64,
-                "text": "    function withdrawRoots(uint256 batchIndex) external view returns (bytes32);"
-              },
-              { "type": " ", "oldLine": 54, "newLine": 65, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 55,
-                "text": "    /// @notice Return whether the batch is finalized by batch index.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 56,
-                "newLine": 66,
-                "text": "    /// @param batchIndex The index of the batch."
-              },
-              {
-                "type": "+",
-                "newLine": 67,
-                "text": "    /// @return Whether the batch is finalized by batch index.",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 57,
-                "newLine": 68,
-                "text": "    function isBatchFinalized(uint256 batchIndex) external view returns (bool);"
-              },
-              { "type": " ", "oldLine": 58, "newLine": 69, "text": "" },
-              { "type": " ", "oldLine": 59, "newLine": 70, "text": "    /**" }
+              { "type": " ", "oldLine": 39, "newLine": 44, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 45, "text": "    /**" },
+              { "type": " ", "oldLine": 41, "newLine": 46, "text": "     *" }
             ]
           },
           {
-            "oldStart": 62,
-            "oldLines": 36,
+            "oldStart": 68,
+            "oldLines": 58,
             "newStart": 73,
             "newLines": 53,
             "lines": [
-              { "type": " ", "oldLine": 62, "newLine": 73, "text": "     *" },
-              { "type": " ", "oldLine": 63, "newLine": 74, "text": "     */" },
-              { "type": " ", "oldLine": 64, "newLine": 75, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 73, "text": "     *" },
+              { "type": " ", "oldLine": 69, "newLine": 74, "text": "     */" },
+              { "type": " ", "oldLine": 70, "newLine": 75, "text": "" },
               {
                 "type": "-",
-                "oldLine": 65,
+                "oldLine": 71,
                 "text": "    /// @notice Commit a batch of transactions on layer 1.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 66,
+                "oldLine": 72,
                 "text": "    ///",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 67,
+                "oldLine": 73,
                 "text": "    /// @param version The version of current batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 68,
+                "oldLine": 74,
                 "text": "    /// @param parentBatchHeader The header of parent batch, see the comments of `BatchHeaderV0Codec`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 69,
+                "oldLine": 75,
                 "text": "    /// @param chunks The list of encoded chunks, see the comments of `ChunkCodec`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 70,
+                "oldLine": 76,
                 "text": "    /// @param skippedL1MessageBitmap The bitmap indicates whether each L1 message is skipped or not.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 71,
+                "oldLine": 77,
                 "text": "    function commitBatch(",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 72,
+                "oldLine": 78,
                 "text": "        uint8 version,",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 73,
+                "oldLine": 79,
                 "text": "        bytes calldata parentBatchHeader,",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 74,
+                "oldLine": 80,
                 "text": "        bytes[] memory chunks,",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 75,
+                "oldLine": 81,
                 "text": "        bytes calldata skippedL1MessageBitmap",
                 "ignored": false
               },
               {
                 "type": "-",
-                "oldLine": 76,
+                "oldLine": 82,
                 "text": "    ) external;",
                 "ignored": false
               },
@@ -479,10 +292,10 @@
                 "text": "    function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash) external;",
                 "ignored": false
               },
-              { "type": " ", "oldLine": 77, "newLine": 82, "text": "" },
+              { "type": " ", "oldLine": 83, "newLine": 82, "text": "" },
               {
                 "type": "-",
-                "oldLine": 78,
+                "oldLine": 84,
                 "text": "    /// @notice Revert a pending batch.",
                 "ignored": true
               },
@@ -494,25 +307,25 @@
               },
               {
                 "type": " ",
-                "oldLine": 79,
+                "oldLine": 85,
                 "newLine": 84,
                 "text": "    /// @dev one can only revert unfinalized batches."
               },
               {
                 "type": "-",
-                "oldLine": 80,
+                "oldLine": 86,
                 "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch`.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 81,
+                "oldLine": 87,
                 "text": "    /// @param count The number of subsequent batches to revert, including current batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 82,
+                "oldLine": 88,
                 "text": "    function revertBatch(bytes calldata batchHeader, uint256 count) external;",
                 "ignored": false
               },
@@ -528,46 +341,46 @@
                 "text": "    function revertBatch(bytes calldata batchHeader) external;",
                 "ignored": false
               },
-              { "type": " ", "oldLine": 83, "newLine": 87, "text": "" },
+              { "type": " ", "oldLine": 89, "newLine": 87, "text": "" },
               {
                 "type": "-",
-                "oldLine": 84,
+                "oldLine": 90,
                 "text": "    /// @notice Finalize a committed batch on layer 1.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 85,
+                "oldLine": 91,
                 "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 86,
+                "oldLine": 92,
                 "text": "    /// @param prevStateRoot The state root of parent batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 87,
+                "oldLine": 93,
                 "text": "    /// @param postStateRoot The state root of current batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 88,
+                "oldLine": 94,
                 "text": "    /// @param withdrawRoot The withdraw trie root of current batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 89,
+                "oldLine": 95,
                 "text": "    /// @param aggrProof The aggregation proof for current batch.",
                 "ignored": true
               },
               {
                 "type": "-",
-                "oldLine": 90,
+                "oldLine": 96,
                 "text": "    function finalizeBatchWithProof(",
                 "ignored": false
               },
@@ -621,13 +434,13 @@
               },
               {
                 "type": " ",
-                "oldLine": 91,
+                "oldLine": 97,
                 "newLine": 96,
                 "text": "        bytes calldata batchHeader,"
               },
               {
                 "type": "-",
-                "oldLine": 92,
+                "oldLine": 98,
                 "text": "        bytes32 prevStateRoot,",
                 "ignored": false
               },
@@ -639,29 +452,155 @@
               },
               {
                 "type": " ",
-                "oldLine": 93,
+                "oldLine": 99,
                 "newLine": 98,
                 "text": "        bytes32 postStateRoot,"
               },
               {
                 "type": " ",
-                "oldLine": 94,
+                "oldLine": 100,
                 "newLine": 99,
                 "text": "        bytes32 withdrawRoot,"
               },
               {
                 "type": " ",
-                "oldLine": 95,
+                "oldLine": 101,
                 "newLine": 100,
                 "text": "        bytes calldata aggrProof"
               },
               {
                 "type": " ",
-                "oldLine": 96,
+                "oldLine": 102,
                 "newLine": 101,
                 "text": "    ) external;"
               },
-              { "type": "+", "newLine": 102, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 103, "newLine": 102, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "    /// @notice Finalize a committed batch (with blob) on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /// @dev Memory layout of `blobDataProof`:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "    /// |    z    |    y    | kzg_commitment | kzg_proof |",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /// |---------|---------|----------------|-----------|",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    /// | bytes32 | bytes32 |    bytes48     |  bytes48  |",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /// @param prevStateRoot The state root of parent batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    /// @param postStateRoot The state root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    /// @param withdrawRoot The withdraw trie root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    /// @param blobDataProof The proof for blob data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    /// @param aggrProof The aggregation proof for current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    function finalizeBatchWithProof4844(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        bytes calldata batchHeader,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        bytes32 prevStateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        bytes32 postStateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        bytes32 withdrawRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        bytes calldata blobDataProof,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        bytes calldata aggrProof",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    ) external;",
+                "ignored": false
+              },
               {
                 "type": "+",
                 "newLine": 103,
@@ -789,7 +728,7 @@
                 "text": "        external;",
                 "ignored": false
               },
-              { "type": " ", "oldLine": 97, "newLine": 125, "text": "}" }
+              { "type": " ", "oldLine": 125, "newLine": 125, "text": "}" }
             ]
           }
         ]

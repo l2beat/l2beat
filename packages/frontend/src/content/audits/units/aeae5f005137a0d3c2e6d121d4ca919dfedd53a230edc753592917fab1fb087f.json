@@ -19,97 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.976,
-        "reportId": "optimism/cantina-u18-2026-01",
-        "repository": "ethereum-optimism/optimism",
-        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-        "commitTimestamp": "2025-11-24T03:04:45Z",
-        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Constants.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 2
-      },
-      "diff": {
-        "added": 0,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 3,
-        "unchanged": 44,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 21,
-            "oldLines": 10,
-            "newStart": 21,
-            "newLines": 6,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 21,
-                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;"
-              },
-              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 24,
-                "text": "    /// @notice The storage slot that holds the guard address in Safe contracts.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 25,
-                "text": "    /// @dev `keccak256(\"guard_manager.guard.address\")`",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 26,
-                "text": "    bytes32 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 28,
-                "newLine": 24,
-                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses."
-              },
-              {
-                "type": " ",
-                "oldLine": 29,
-                "newLine": 25,
-                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;"
-              },
-              { "type": " ", "oldLine": 30, "newLine": 26, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "9fa846564f4071bd": {
-      "status": "differs",
-      "coveredLines": 44,
-      "match": {
-        "origin": "own",
-        "collection": "optimism",
-        "relation": { "type": "own" },
-        "rank": 0,
-        "matchedBy": "name",
-        "auditedName": "Constants",
-        "similarity": 0.976,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -202,7 +112,237 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.976,
+        "similarity": 1,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 44,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 21,
+            "oldLines": 10,
+            "newStart": 21,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice The storage slot that holds the guard address in Safe contracts.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @dev `keccak256(\"guard_manager.guard.address\")`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    bytes32 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 24,
+                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 25,
+                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 42,
+      "match": {
+        "origin": "own",
+        "collection": "facet",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 0.957,
+        "reportId": "facet/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 42,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 23,
+            "oldLines": 7,
+            "newStart": 23,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses."
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    address internal constant FACET_COMPUTE_TOKEN = 0xFACE7fAcE7fAcE7FacE7FACE7FACe7FAcE7fACE7;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "    /// @notice The address that represents the system caller responsible for L1 attributes"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 28,
+                "text": "    ///         transactions."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 8,
+            "newStart": 30,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 31, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 31,
+                "text": "    /// @notice Returns the default values for the ResourceConfig. These are the recommended values"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 32,
+                "text": "    ///         for a production network."
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (ResourceMetering.ResourceConfig memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        ResourceMetering.ResourceConfig memory config = ResourceMetering.ResourceConfig({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (IResourceMetering.ResourceConfig memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        IResourceMetering.ResourceConfig memory config = IResourceMetering.ResourceConfig({",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 35,
+                "text": "            maxResourceLimit: 20_000_000,"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 36,
+                "text": "            elasticityMultiplier: 10,"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 37,
+                "text": "            baseFeeMaxChangeDenominator: 8,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 44,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -295,7 +435,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.976,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
@@ -388,100 +528,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.976,
-        "reportId": "optimism/cantina-u18-2026-01",
-        "repository": "ethereum-optimism/optimism",
-        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-        "commitTimestamp": "2025-11-24T03:04:45Z",
-        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Constants.sol",
-        "auditStatus": "audited_with_no_major_findings",
-        "reviewPhase": "initial audit",
-        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 2
-      },
-      "diff": {
-        "added": 0,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 3,
-        "unchanged": 44,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 21,
-            "oldLines": 10,
-            "newStart": 21,
-            "newLines": 6,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 21,
-                "newLine": 21,
-                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`"
-              },
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;"
-              },
-              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
-              {
-                "type": "-",
-                "oldLine": 24,
-                "text": "    /// @notice The storage slot that holds the guard address in Safe contracts.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 25,
-                "text": "    /// @dev `keccak256(\"guard_manager.guard.address\")`",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 26,
-                "text": "    bytes32 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;",
-                "ignored": false
-              },
-              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
-              {
-                "type": " ",
-                "oldLine": 28,
-                "newLine": 24,
-                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses."
-              },
-              {
-                "type": " ",
-                "oldLine": 29,
-                "newLine": 25,
-                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;"
-              },
-              { "type": " ", "oldLine": 30, "newLine": 26, "text": "" }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "1daaed8c8125f2b6": {
-      "status": "differs",
-      "coveredLines": 44,
-      "match": {
-        "origin": "upstream",
-        "collection": "optimism",
-        "relation": {
-          "type": "fork_of",
-          "repository": "ethereum-optimism/optimism"
-        },
-        "rank": 1,
-        "matchedBy": "name",
-        "auditedName": "Constants",
-        "similarity": 0.976,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Constants.sol",

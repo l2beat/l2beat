@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "ISwapRouter",
-        "similarity": 0.975,
+        "similarity": 1,
         "reportId": "aztecnetwork/solidified-aztec-liquity-bridge-2022-06-14",
         "repository": "AztecProtocol/aztec-connect-bridges",
         "path": "src/bridges/liquity/interfaces/ISwapRouter.sol",

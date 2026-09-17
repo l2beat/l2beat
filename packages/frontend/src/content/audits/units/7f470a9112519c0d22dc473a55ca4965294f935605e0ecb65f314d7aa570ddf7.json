@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "AccessManager",
-        "similarity": 0.8,
+        "similarity": 0.883,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/dispute/zk/AccessManager.sol",

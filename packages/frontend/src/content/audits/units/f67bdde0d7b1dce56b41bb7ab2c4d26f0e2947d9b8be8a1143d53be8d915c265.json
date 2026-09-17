@@ -16,7 +16,7 @@
         "rank": 4,
         "matchedBy": "name",
         "auditedName": "TransferHelper",
-        "similarity": 0.957,
+        "similarity": 0.986,
         "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
         "repository": "celo-org/celo-monorepo",
         "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",

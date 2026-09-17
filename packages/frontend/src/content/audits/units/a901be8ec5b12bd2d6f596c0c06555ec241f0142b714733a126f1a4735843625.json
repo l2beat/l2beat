@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "LivenessGuard",
-        "similarity": 0.988,
+        "similarity": 1,
         "reportId": "optimism/cantina-u18-2026-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/safe/LivenessGuard.sol",

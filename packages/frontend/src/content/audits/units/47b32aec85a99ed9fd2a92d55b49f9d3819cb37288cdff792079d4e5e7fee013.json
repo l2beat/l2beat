@@ -19,7 +19,7 @@
         "rank": 1,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.98,
+        "similarity": 1,
         "reportId": "optimism/cantina-upgrade20-2026-08",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/libraries/Constants.sol",

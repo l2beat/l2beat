@@ -6,7 +6,7 @@
   "lines": 1,
   "source": "type ShortString is bytes32;",
   "resolutions": {
-    "9fa846564f4071bd": {
+    "41ad32932dea0dc9": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []
@@ -16,7 +16,7 @@
       "coveredLines": 0,
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "9fa846564f4071bd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

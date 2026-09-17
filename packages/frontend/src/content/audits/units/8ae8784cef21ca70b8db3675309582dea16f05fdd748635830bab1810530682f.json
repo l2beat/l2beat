@@ -6,14 +6,14 @@
   "lines": 17,
   "source": "interface Guard is IERC165 {\n    function checkTransaction(\n        address to,\n        uint256 value,\n        bytes memory data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes memory signatures,\n        address msgSender\n    ) external;\n\n    function checkAfterExecution(bytes32 txHash, bool success) external;\n}",
   "resolutions": {
-    "ba5b6c9584fb78fd": {
+    "41ad32932dea0dc9": {
       "status": "identical",
       "coveredLines": 17,
       "match": {
-        "origin": "own",
+        "origin": "other",
         "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": { "type": "name" },
+        "rank": 4,
         "matchedBy": "identity",
         "auditedName": "Guard",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "d293c6ecba42b698": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 17,
       "match": {
-        "origin": "other",
+        "origin": "own",
         "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "Guard",
         "similarity": 1,
@@ -114,7 +114,7 @@
       },
       "warnings": []
     },
-    "41ad32932dea0dc9": {
+    "d293c6ecba42b698": {
       "status": "identical",
       "coveredLines": 17,
       "match": {

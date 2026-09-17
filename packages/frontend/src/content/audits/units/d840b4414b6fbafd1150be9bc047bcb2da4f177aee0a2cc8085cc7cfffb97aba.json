@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Pausable",
-        "similarity": 0.815,
+        "similarity": 0.775,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/lifecycle/Pausable.sol",

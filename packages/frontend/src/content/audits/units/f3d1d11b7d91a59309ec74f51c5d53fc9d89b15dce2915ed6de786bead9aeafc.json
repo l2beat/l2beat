@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "AttestationLib",
-        "similarity": 0.809,
+        "similarity": 0.837,
         "reportId": "aztecnetwork/cantina-governance-2025-11-12",
         "repository": "AztecProtocol/aztec-packages",
         "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "RewardSwap",
-        "similarity": 0.745,
+        "similarity": 0.785,
         "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
         "repository": "tornadocash/tornado-anonymity-mining",
         "path": "contracts/RewardSwap.sol",

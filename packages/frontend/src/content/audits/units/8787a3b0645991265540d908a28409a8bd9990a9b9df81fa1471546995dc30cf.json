@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "MerkleTreeWithHistory",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
         "repository": "peppersec/tornado-mixer",
         "path": "contracts/MerkleTreeWithHistory.sol",

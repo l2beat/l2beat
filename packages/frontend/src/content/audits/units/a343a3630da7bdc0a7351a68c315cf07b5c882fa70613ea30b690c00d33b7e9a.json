@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "HasContracts",
-        "similarity": 0.968,
+        "similarity": 1,
         "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
         "repository": "axieinfinity/ronin-dpos-contracts",
         "path": "contracts/extensions/collections/HasContracts.sol",

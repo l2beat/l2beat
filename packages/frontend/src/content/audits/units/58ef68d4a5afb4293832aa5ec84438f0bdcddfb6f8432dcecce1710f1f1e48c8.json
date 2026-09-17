@@ -19,7 +19,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "L1BlockNumber",
-        "similarity": 0.872,
+        "similarity": 0.904,
         "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
         "repository": "ethereum-optimism/optimistic-specs",
         "path": "packages/contracts/contracts/L2/L1BlockNumber.sol",

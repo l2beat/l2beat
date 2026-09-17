@@ -16,7 +16,7 @@
         "rank": 2,
         "matchedBy": "similarity",
         "auditedName": "IVotes",
-        "similarity": 0.737,
+        "similarity": 0.688,
         "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/governance/utils/IVotes.sol",

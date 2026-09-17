@@ -10,13 +10,83 @@
       "status": "differs",
       "coveredLines": 81,
       "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "Initializable_1",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract Initializable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Indicates that the contract has been initialized."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * @custom:oz-retyped-from bool"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
         "origin": "stack",
         "collection": "openzeppelin",
         "relation": { "type": "template", "template": "global/ProxyAdmin" },
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Initializable",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/Initializable.sol",
@@ -109,100 +179,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Initializable",
-        "similarity": 0.974,
-        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
-        "repository": "OpenZeppelin/openzeppelin-contracts",
-        "path": "contracts/proxy/utils/Initializable.sol",
-        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
-        "commitTimestamp": "2022-06-14T18:38:04Z",
-        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "formal verification",
-        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
-        "majorFindings": 0,
-        "isLatestVersion": false,
-        "laterAuditedVersionExists": true,
-        "totalVersions": 8
-      },
-      "diff": {
-        "added": 1,
-        "removed": 1,
-        "ignoredAdded": 0,
-        "ignoredRemoved": 0,
-        "unchanged": 81,
-        "ignoredOnly": false,
-        "hunks": [
-          {
-            "oldStart": 22,
-            "oldLines": 7,
-            "newStart": 22,
-            "newLines": 7,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 22,
-                "newLine": 22,
-                "text": "    modifier initializer() {"
-              },
-              {
-                "type": " ",
-                "oldLine": 23,
-                "newLine": 23,
-                "text": "        bool isTopLevelCall = !_initializing;"
-              },
-              {
-                "type": " ",
-                "oldLine": 24,
-                "newLine": 24,
-                "text": "        require("
-              },
-              {
-                "type": "-",
-                "oldLine": 25,
-                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 25,
-                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
-                "ignored": false
-              },
-              {
-                "type": " ",
-                "oldLine": 26,
-                "newLine": 26,
-                "text": "            \"Initializable: contract is already initialized\""
-              },
-              {
-                "type": " ",
-                "oldLine": 27,
-                "newLine": 27,
-                "text": "        );"
-              },
-              {
-                "type": " ",
-                "oldLine": 28,
-                "newLine": 28,
-                "text": "        _initialized = 1;"
-              }
-            ]
-          }
-        ]
-      },
-      "warnings": []
-    },
-    "44ad4cf96e2ef6f0": {
-      "status": "differs",
-      "coveredLines": 81,
-      "match": {
-        "origin": "stack",
-        "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
-        "matchedBy": "name",
-        "auditedName": "Initializable",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/Initializable.sol",
@@ -295,7 +272,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Initializable",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/Initializable.sol",
@@ -388,7 +365,7 @@
         "rank": 2,
         "matchedBy": "name",
         "auditedName": "Initializable",
-        "similarity": 0.974,
+        "similarity": 1,
         "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/proxy/utils/Initializable.sol",

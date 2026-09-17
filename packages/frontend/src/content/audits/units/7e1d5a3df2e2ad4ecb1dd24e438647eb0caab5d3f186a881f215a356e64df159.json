@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "L1MessageQueueV2",
-        "similarity": 0.996,
+        "similarity": 1,
         "reportId": "scroll/trailofbits-scroll-euclid-phase2-2025-04",
         "repository": "scroll-tech/scroll-contracts",
         "path": "src/L1/rollup/L1MessageQueueV2.sol",

@@ -16,7 +16,7 @@
         "rank": 3,
         "matchedBy": "name",
         "auditedName": "Ownable",
-        "similarity": 0.655,
+        "similarity": 0.703,
         "reportId": "openzeppelin/contracts__audits__2018-10",
         "repository": "OpenZeppelin/openzeppelin-contracts",
         "path": "contracts/ownership/Ownable.sol",

@@ -20,7 +20,11 @@ import {
 
 interface StoreMeta {
   datasetRevision?: string
+  resolutionVersion?: number
 }
+
+/** Bump whenever resolver semantics change so stale matches are not reused. */
+const RESOLUTION_VERSION = 4
 
 /**
  * Content-addressed output store:
@@ -28,9 +32,9 @@ interface StoreMeta {
  *   projects/<slug>.json    thin per-project files referencing unit hashes
  *   reports.json            report metadata by global id
  *   collections.json        collection metadata
- *   meta.json               dataset revision the unit resolutions belong to
+ *   meta.json               dataset and resolver versions for unit resolutions
  *
- * Resolutions are reused across runs while the dataset revision is unchanged.
+ * Resolutions are reused while both the dataset and resolver version are unchanged.
  */
 export class UnitStore {
   private readonly units = new Map<string, UnitRecord>()
@@ -48,7 +52,8 @@ export class UnitStore {
     this.reusable =
       datasetRevision !== undefined &&
       !datasetRevision.endsWith('-dirty') &&
-      meta.datasetRevision === datasetRevision
+      meta.datasetRevision === datasetRevision &&
+      meta.resolutionVersion === RESOLUTION_VERSION
     const reportsFile = path.join(dir, 'reports.json')
     if (existsSync(reportsFile)) {
       const parsed = JSON.parse(
@@ -136,7 +141,10 @@ export class UnitStore {
     writeFileSync(
       path.join(this.dir, 'meta.json'),
       JSON.stringify(
-        { datasetRevision: this.datasetRevision } satisfies StoreMeta,
+        {
+          datasetRevision: this.datasetRevision,
+          resolutionVersion: RESOLUTION_VERSION,
+        } satisfies StoreMeta,
         null,
         2,
       ),

@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "StandardBridge",
-        "similarity": 0.97,
+        "similarity": 1,
         "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
         "repository": "ethereum-optimism/optimism",
         "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",

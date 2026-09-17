@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "CommonGovernanceRelay",
-        "similarity": 0.855,
+        "similarity": 0.721,
         "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
         "repository": "axieinfinity/ronin-dpos-contracts",
         "path": "contracts/extensions/sequential-governance/governance-relay/CommonGovernanceRelay.sol",

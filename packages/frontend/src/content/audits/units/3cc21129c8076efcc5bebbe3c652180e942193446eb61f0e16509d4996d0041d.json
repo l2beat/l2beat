@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "name",
         "auditedName": "MappedTokenConsumer",
-        "similarity": 0.833,
+        "similarity": 0.831,
         "reportId": "roninnetwork/beosin-ronin-network-2023-03",
         "repository": "axieinfinity/ronin-dpos-contracts",
         "path": "contracts/interfaces/consumers/MappedTokenConsumer.sol",

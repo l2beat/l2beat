@@ -16,7 +16,7 @@
         "rank": 0,
         "matchedBy": "similarity",
         "auditedName": "IL1MessageQueue",
-        "similarity": 0.93,
+        "similarity": 0.878,
         "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
         "repository": "scroll-tech/scroll",
         "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
