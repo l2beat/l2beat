@@ -23,7 +23,6 @@ import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
-import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversariesSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
@@ -389,14 +388,6 @@ function renderSection(
     case 'PrivacyFlowsSection':
       return (
         <PrivacyFlowsSection
-          key={item.props.id}
-          {...{ nested, sectionOrder }}
-          {...item.props}
-        />
-      )
-    case 'PrivacyAdversariesSection':
-      return (
-        <PrivacyAdversariesSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
