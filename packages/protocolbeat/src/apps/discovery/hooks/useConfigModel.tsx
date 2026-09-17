@@ -60,7 +60,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   const setFieldSeverity = (
     fieldName: string,
-    severity: 'HIGH' | 'LOW' | undefined,
+    severity: 'HIGH' | 'MEDIUM' | 'LOW' | undefined,
   ) => {
     const newModel = configModel.setFieldSeverity(
       selectedAddress,

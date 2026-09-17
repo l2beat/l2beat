@@ -45,7 +45,7 @@ export const xai: ScalingProject = orbitStackL3({
     name: 'xai',
     chainId: 660279,
     apis: [
-      { type: 'rpc', url: 'https://xai-chain.net/rpc', callsPerMinute: 300 },
+      { type: 'rpc', url: 'https://xai-chain.net/rpc', callsPerMinute: 2400 },
     ],
   },
   stateValidation: {
@@ -133,11 +133,6 @@ export const xai: ScalingProject = orbitStackL3({
         {
           external: true,
           name: 'LayerZero',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          external: true,
-          name: 'Team Secret',
           href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
         },
         {

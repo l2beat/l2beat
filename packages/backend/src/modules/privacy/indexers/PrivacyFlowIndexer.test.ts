@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
@@ -7,7 +8,8 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyFlowIndexerConfig } from '../types'
+import type { PrivacyFlowIndexerConfig, PrivacyLogTopicFilter } from '../types'
+import { ERC20_TRANSFER_TOPIC, erc20Interface } from '../utils/erc20'
 import { PrivacyFlowIndexer } from './PrivacyFlowIndexer'
 
 const ADDRESS_A = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -16,6 +18,9 @@ const TOPIC_A =
   '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 const TOPIC_B =
   '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+const POOL = EthereumAddress('0x3333333333333333333333333333333333333333')
+const USER = EthereumAddress('0x4444444444444444444444444444444444444444')
+const POOL_TOPIC = `0x${'00'.repeat(12)}${POOL.slice(2).toLowerCase()}`
 
 describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.multiUpdate.name, () => {
@@ -101,7 +106,7 @@ describe(PrivacyFlowIndexer.name, () => {
         50,
         150,
         [ADDRESS_A.toString()],
-        [TOPIC_A],
+        [[TOPIC_A]],
       )
 
       expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
@@ -768,13 +773,136 @@ describe(PrivacyFlowIndexer.name, () => {
       expect(new Set(getLogsCall?.[2])).toEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
-      expect(new Set(getLogsCall?.[3])).toEqual(new Set([TOPIC_A, TOPIC_B]))
+      expect(new Set(getLogsCall?.[3]?.[0])).toEqual(
+        new Set([TOPIC_A, TOPIC_B]),
+      )
 
       const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
       expect(records?.length).toEqual(2)
       expect(records?.map((r) => r.configurationId).sort()).toEqual([
         'config-A',
         'config-B',
+      ])
+    })
+  })
+
+  describe('topic filters', () => {
+    it('queries each topic filter group separately and matches within the group', async () => {
+      const from = UnixTime.toStartOf(UnixTime(0), 'day')
+      const to = from + 5 * UnixTime.HOUR
+      const blockTimestamp = from + UnixTime.HOUR
+
+      const fixedConfig = flowConfig({
+        id: 'config-fixed',
+        address: ADDRESS_A,
+        event: TOPIC_A,
+        priceId: 'ethereum',
+        decimals: 18,
+        fixedAmount: '1',
+      })
+      const depositConfig = transferConfig({
+        id: 'config-deposit',
+        direction: 'deposit',
+        params: { to: POOL },
+        topics: [null, POOL_TOPIC],
+      })
+      const withdrawalConfig = transferConfig({
+        id: 'config-withdrawal',
+        direction: 'withdrawal',
+        params: { from: POOL },
+        topics: [POOL_TOPIC],
+      })
+      const configs = [fixedConfig, depositConfig, withdrawalConfig]
+
+      const fixedLog: Log = {
+        address: ADDRESS_A.toString(),
+        topics: [TOPIC_A],
+        data: '0x',
+        blockNumber: 100,
+        blockHash: '0x',
+        transactionHash: '0xtx1',
+        logIndex: 0,
+        blockTimestamp,
+      }
+      const depositLog = transferLog(USER, POOL, 10n, '0xtx2', blockTimestamp)
+      const withdrawalLog = transferLog(POOL, USER, 7n, '0xtx3', blockTimestamp)
+
+      const logsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn()
+          .returnsOnce([fixedLog])
+          .returnsOnce([depositLog])
+          .returnsOnce([withdrawalLog]),
+      })
+      const privacyBlockTimestampRepo = mockObject<
+        Database['privacyBlockTimestamp']
+      >({
+        findBlockNumberByChainAndTimestamp: mockFn()
+          .returnsOnce(50)
+          .returnsOnce(150),
+      })
+      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+          {
+            priceId: 'ethereum',
+            timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
+            priceUsd: 1,
+            configurationId: 'price-1',
+          },
+        ]),
+      })
+      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+
+      const indexer = new PrivacyFlowIndexer(
+        {
+          chain: 'ethereum',
+          configurations: configs,
+          blockProvider: mockObject<BlockProvider>({}),
+          logsProvider,
+          db: mockDatabase({
+            privacyBlockTimestamp: privacyBlockTimestampRepo,
+            privacyPrice: privacyPriceRepo,
+            privacyFlowEvent: privacyFlowEventRepo,
+          }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, configs)
+      await updateFn()
+
+      expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
+        1,
+        50,
+        150,
+        [ADDRESS_A.toString()],
+        [[TOPIC_A]],
+      )
+      expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
+        2,
+        50,
+        150,
+        [ADDRESS_B.toString()],
+        [[ERC20_TRANSFER_TOPIC], null, POOL_TOPIC],
+      )
+      expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
+        3,
+        50,
+        150,
+        [ADDRESS_B.toString()],
+        [[ERC20_TRANSFER_TOPIC], POOL_TOPIC],
+      )
+
+      const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
+      expect(
+        records?.map((r) => [r.configurationId, r.direction, r.amount]),
+      ).toEqual([
+        ['config-fixed', 'deposit', 1n],
+        ['config-deposit', 'deposit', 10n],
+        ['config-withdrawal', 'withdrawal', 7n],
       ])
     })
   })
@@ -867,7 +995,7 @@ describe(PrivacyFlowIndexer.name, () => {
   })
 
   describe(PrivacyFlowIndexer.idToConfigurationId.name, () => {
-    it('is deterministic for the same input', () => {
+    it('keeps the existing configuration id', () => {
       const props = {
         projectId: 'project-1',
         bucketId: 'bucket-1',
@@ -882,7 +1010,7 @@ describe(PrivacyFlowIndexer.name, () => {
         params: { amount: '1000' },
       }
       expect(PrivacyFlowIndexer.idToConfigurationId(props)).toEqual(
-        PrivacyFlowIndexer.idToConfigurationId(props),
+        '30b264b834f9',
       )
     })
 
@@ -943,6 +1071,57 @@ describe(PrivacyFlowIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function transferConfig(opts: {
+  id: string
+  direction: 'deposit' | 'withdrawal'
+  params: Extract<
+    PrivacyFlowExtractorConfig,
+    { extractor: 'erc20Transfer' }
+  >['params']
+  topics: PrivacyLogTopicFilter
+}): Configuration<PrivacyFlowIndexerConfig> {
+  return {
+    id: opts.id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      id: opts.id,
+      projectId: 'project-1',
+      bucketId: 'bucket-1',
+      direction: opts.direction,
+      chain: 'ethereum',
+      address: ADDRESS_B,
+      event: ERC20_TRANSFER_TOPIC,
+      topics: opts.topics,
+      sinceTimestamp: UnixTime(0),
+      priceId: 'ethereum',
+      decimals: 18,
+      extractor: 'erc20Transfer',
+      params: opts.params,
+    },
+  }
+}
+
+function transferLog(
+  from: EthereumAddress,
+  to: EthereumAddress,
+  value: bigint,
+  transactionHash: string,
+  blockTimestamp: number,
+): Log {
+  const encoded = erc20Interface.encodeEventLog('Transfer', [from, to, value])
+  return {
+    address: ADDRESS_B.toString(),
+    topics: encoded.topics,
+    data: encoded.data,
+    blockNumber: 100,
+    blockHash: '0x',
+    transactionHash,
+    logIndex: 0,
+    blockTimestamp,
+  }
+}
 
 function flowConfig(opts: {
   id: string

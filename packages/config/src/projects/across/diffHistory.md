@@ -1,4 +1,49 @@
-Generated with discovered.json: 0xf1c4dfb527fa7b7d221131f1ecae76551a15ee15
+Generated with discovered.json: 0xe8563174bcd0f7de9167124c51d3877e44f31e93
+
+# Diff at Tue, 15 Sep 2026 11:29:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1787647766
+- current timestamp: 1789471699
+
+## Description
+
+Some rebalance routes removed (this allowed relayers to get refunded in these token/chain combinations) and 7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x3818b9766109877e09a9c427e7b310cde355550731129529095a7e6b02cf55ab","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Mode.0.destinationToken:
+-        "eth:0x4200000000000000000000000000000000000006"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Mode.1.destinationToken:
+-        "eth:0xd988097fb8612cc24eeC14542bC03424c656005f"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Mode.2.destinationToken:
+-        "eth:0xf0F161fDA2712DB8b566946122a5af183995e2eD"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Mode.3.destinationToken:
+-        "eth:0xcDd475325D6F564d27247D1DddBb0DAc6fA0a5CF"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x20bab0406c2e45130763ebf8fa65e65911d83163
 
 # Diff at Tue, 25 Aug 2026 08:51:00 GMT:
 

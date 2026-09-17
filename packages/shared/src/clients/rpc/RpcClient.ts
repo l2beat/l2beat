@@ -11,6 +11,7 @@ import {
   ClientCore,
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
+import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
@@ -46,7 +47,7 @@ type Param =
   | string
   | number
   | boolean
-  | Record<string, string | string[] | string[][]>
+  | Record<string, string | string[] | LogsTopicFilter>
   | number[]
 
 export class RpcClient extends ClientCore implements IRpcClient {
@@ -74,6 +75,12 @@ export class RpcClient extends ClientCore implements IRpcClient {
     blockNumber: number | 'latest',
   ): Promise<EVMBlockWithTransactions> {
     return await this.getBlock(blockNumber, true)
+  }
+
+  /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
+  async getBlockTimestamp(blockNumber: number): Promise<number> {
+    const block = await this.getBlock(blockNumber, false)
+    return block.timestamp
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
@@ -175,13 +182,13 @@ export class RpcClient extends ClientCore implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
         address: addresses ?? [],
-        topics: topics ? [topics] : [],
+        topics: topics ?? [],
         fromBlock: Quantity.encode(BigInt(from)),
         toBlock: Quantity.encode(BigInt(to)),
       },

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkSnapshotsTime",
+  "category": "core",
+  "description": "Timestamp-indexed history of protocol values, used for the rolling windows that bound penalties. Only registered contracts can append, and entries are append-only."
+}

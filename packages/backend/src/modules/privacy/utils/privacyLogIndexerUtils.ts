@@ -9,10 +9,12 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import type { Configuration } from '../../../tools/uif/multi/types'
+import type { PrivacyLogTopicFilter } from '../types'
 
 interface PrivacyLogIndexerConfig {
   address: EthereumAddress
   event: string
+  topics?: PrivacyLogTopicFilter
 }
 
 export interface PrivacyLogMatch<T extends PrivacyLogIndexerConfig> {
@@ -42,36 +44,64 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     deps.to,
   )
 
-  const { addresses, events } = buildPrivacyLogFilter(configurations)
-  const logs = await deps.logsProvider.getLogs(
-    blockFrom,
-    blockTo,
-    addresses,
-    events,
+  // eth_getLogs ANDs the topic positions of a single filter, so
+  // configurations with different indexed-arg filters cannot share a query.
+  const groups = await Promise.all(
+    groupByTopics(configurations).map(
+      async ({ topics, configurations: group }) => {
+        const { addresses, events } = buildPrivacyLogFilter(group)
+        const logs = await deps.logsProvider.getLogs(
+          blockFrom,
+          blockTo,
+          addresses,
+          [events, ...topics],
+        )
+        return { configurations: group, logs }
+      },
+    ),
   )
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
-    logs,
+    groups.flatMap((group) => group.logs),
     deps.blockProvider,
     deps.logger,
   )
-  const configMap = buildPrivacyLogConfigMap(configurations)
   const matches: PrivacyLogMatch<T>[] = []
 
-  for (const log of logs) {
-    const key = getPrivacyLogConfigKey(log.address, log.topics[0])
-    const matching = configMap.get(key) ?? []
-    if (matching.length === 0) continue
+  for (const group of groups) {
+    const configMap = buildPrivacyLogConfigMap(group.configurations)
+    for (const log of group.logs) {
+      const key = getPrivacyLogKey(log)
+      const matching = configMap.get(key) ?? []
+      if (matching.length === 0) continue
 
-    const timestamp = blockTimestampLookup.get(log.blockNumber)
-    assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
+      const timestamp = blockTimestampLookup.get(log.blockNumber)
+      assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
 
-    for (const configuration of matching) {
-      matches.push({ log, timestamp, configuration })
+      for (const configuration of matching) {
+        matches.push({ log, timestamp, configuration })
+      }
     }
   }
 
   return matches
+}
+
+function groupByTopics<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+): { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }[] {
+  const groups = new Map<
+    string,
+    { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }
+  >()
+  for (const configuration of configurations) {
+    const topics = configuration.properties.topics ?? []
+    const key = JSON.stringify(topics)
+    const group = groups.get(key) ?? { topics, configurations: [] }
+    group.configurations.push(configuration)
+    groups.set(key, group)
+  }
+  return Array.from(groups.values())
 }
 
 async function resolvePrivacyBlockRange(
@@ -137,7 +167,7 @@ async function buildPrivacyBlockTimestampLookup(
   return lookup
 }
 
-function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
+export function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): { addresses: string[]; events: string[] } {
   const addresses = Array.from(
@@ -150,7 +180,7 @@ function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   return { addresses, events }
 }
 
-function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
+export function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): Map<string, Configuration<T>[]> {
   const configMap = new Map<string, Configuration<T>[]>()
@@ -173,4 +203,8 @@ function getPrivacyLogConfigKey(
   event: string | undefined,
 ): string {
   return `${address.toLowerCase()}:${event?.toLowerCase() ?? ''}`
+}
+
+export function getPrivacyLogKey(log: Pick<Log, 'address' | 'topics'>): string {
+  return getPrivacyLogConfigKey(log.address, log.topics[0])
 }

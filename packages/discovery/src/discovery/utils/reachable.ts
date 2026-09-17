@@ -56,7 +56,15 @@ export function getReachableAddresses(
   maxDepth = Number.POSITIVE_INFINITY,
 ): ChainSpecificAddress[] {
   const nodeByAddress: Record<ChainSpecificAddress, ReferenceNode> = {}
-  nodes.forEach((node) => (nodeByAddress[node.address] = node))
+  for (const node of nodes) {
+    const existing = nodeByAddress[node.address]
+    nodeByAddress[node.address] = existing
+      ? {
+          address: node.address,
+          references: uniq([...existing.references, ...node.references]),
+        }
+      : node
+  }
 
   const shortestDepthByAddress = new Map<ChainSpecificAddress, number>()
   const queue = entrypoints.map((address) => ({ address, depth: 0 }))

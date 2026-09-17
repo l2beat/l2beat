@@ -34,7 +34,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent."
+          "description": "transfer ETH and ERC-20 tokens held by the Agent."
         }
       ]
     },

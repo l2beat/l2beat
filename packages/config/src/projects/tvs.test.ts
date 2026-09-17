@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { getProjects } from '../processing/getProjects'
 import {
   type AmountFormula,
+  BalanceOfEscrowsAmountFormulaSchema,
   type Formula,
   isAmountFormula,
   isOnchainAmountFormula,
@@ -12,11 +13,17 @@ import {
 type FormulaTest = (formula: Formula) => void
 
 describe('tvs', () => {
-  const projects = getProjects().filter((p) => p.tvsConfig)
+  const allProjects = getProjects()
+  const projects = allProjects.filter((p) => p.tvsConfig)
   const chainSinceTimestamps = new Map(
-    getProjects()
+    allProjects
       .filter((p) => p.chainConfig)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.sinceTimestamp]),
+  )
+  const chainUntilTimestamps = new Map(
+    allProjects
+      .filter((p) => p.chainConfig?.untilTimestamp)
+      .map((c) => [c.chainConfig!.name, c.chainConfig!.untilTimestamp!]),
   )
   const supportedChains = new Set(chainSinceTimestamps.keys())
 
@@ -45,6 +52,24 @@ describe('tvs', () => {
     }
 
     expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow()
+  })
+
+  it('requires aggregate escrow addresses to be non-empty and unique', () => {
+    const formula = {
+      type: 'balanceOfEscrows' as const,
+      chain: 'arbitrum',
+      sinceTimestamp: 1729881083,
+      address: '0x1111111111111111111111111111111111111111',
+      decimals: 18,
+      escrowAddresses: [] as string[],
+    }
+
+    expect(() => BalanceOfEscrowsAmountFormulaSchema.parse(formula)).toThrow()
+    formula.escrowAddresses = [
+      '0x2222222222222222222222222222222222222222',
+      '0x2222222222222222222222222222222222222222',
+    ]
+    expect(() => BalanceOfEscrowsAmountFormulaSchema.parse(formula)).toThrow()
   })
 
   for (const project of projects) {
@@ -141,6 +166,22 @@ describe('tvs', () => {
           }
         }
 
+        // chain.untilTimestamp (set when a project is archived) is not applied
+        // at runtime, so an onchain leg without its own cutoff keeps polling
+        // the stopped chain's RPC forever. Regenerate tvs.json after archiving.
+        const untilBeforeChainCutoff: FormulaTest = (formula) => {
+          if (isOnchainAmountFormula(formula)) {
+            const chainUntil = chainUntilTimestamps.get(formula.chain)
+            if (chainUntil !== undefined) {
+              assert(
+                formula.untilTimestamp !== undefined &&
+                  formula.untilTimestamp <= chainUntil,
+                `Chain ${formula.chain} stopped at ${chainUntil} but token ${token.id} has untilTimestamp ${formula.untilTimestamp}. Run pnpm tvs:generate ${project.id} in packages/backend`,
+              )
+            }
+          }
+        }
+
         // first argument of diff should have the earliest sinceTimestamp
         const diffWithHasCorrectSince: FormulaTest = (formula) => {
           if (formula.type === 'calculation' && formula.operator === 'diff') {
@@ -161,6 +202,7 @@ describe('tvs', () => {
           noMixedArguments,
           chainIsSupported,
           sinceAfterChainGenesis,
+          untilBeforeChainCutoff,
           diffWithHasCorrectSince,
         ]
 

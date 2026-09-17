@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x339e4e7dcb720dc306aeca59b904057e8c03be85
+Generated with discovered.json: 0x93aed994644a1587367dadbb04b0411065d86925
+
+# Diff at Thu, 10 Sep 2026 12:47:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1784283055
+- current timestamp: 1789044333
+
+## Description
+
+Optimism Security Council: Member rotated.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.9:
+-        "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
++        "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930"
+    }
+```
+
+Generated with discovered.json: 0xf0e4fcfab62b0bba5e6940d2d3c962dfc3fbd8d3
+
+# Diff at Wed, 09 Sep 2026 09:05:52 GMT:
+
+- author: vilcht (<dawdrobny@gmail.com>)
+- comparing to: main@2af5f3bcc4a7752b7cfae3db79baaa5588b97771 block: 1784283055
+- current timestamp: 1784283055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784283055 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      values.minimumGasLimitOneByte:
++        21040
+      values.minimumGasLimitZeroBytes:
++        21000
+    }
+```
+
+Generated with discovered.json: 0x730d3b6dafef70ce8b1a6a8f019fcb8880d172bf
 
 # Diff at Fri, 17 Jul 2026 10:13:04 GMT:
 

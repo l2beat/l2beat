@@ -7,6 +7,7 @@ import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
@@ -49,12 +50,14 @@ export async function getInteropProtocolPageData(
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
         selectedUpdateId: req.query.update,
+        queryState: data.queryState,
       },
     },
   }
 }
 
 async function getCachedData(slug: string, manifest: Manifest) {
+  const helpers = getSsrHelpers()
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)
@@ -64,7 +67,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display'],
+    optional: ['statuses', 'display', 'discoveryUpdates'],
   })
   if (!project) return undefined
 
@@ -83,6 +86,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
     apiSelection,
     interopChainsWithIcons,
     protocolData,
+    helpers,
   )
 
   return {
@@ -94,5 +98,6 @@ async function getCachedData(slug: string, manifest: Manifest) {
     projectEntry,
     protocolData,
     apiSelection,
+    queryState: helpers.dehydrate(),
   }
 }

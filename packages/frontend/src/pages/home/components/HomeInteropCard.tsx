@@ -168,7 +168,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
-            title="Top chain"
+            title="Top path"
             isLoading={statsLoading}
             href={
               srcChain && dstChain

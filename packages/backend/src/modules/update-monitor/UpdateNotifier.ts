@@ -20,6 +20,7 @@ import { isNineAM } from './utils/isNineAM'
 export interface DailyReminderChainEntry {
   severityCounts: {
     low: number
+    medium: number
     high: number
     unknown: number
   }
@@ -195,15 +196,25 @@ export class UpdateNotifier {
 function formatRemindersAsTable(
   reminders: Record<string, DailyReminderChainEntry>,
 ): string {
-  const headers = ['Project', 'High', 'Low', '???']
+  const headers = ['Project', 'High', 'Mid', 'Low', '???']
 
   const flat = flattenReminders(reminders)
   const sorted = flat.sort((a, b) => {
-    const { low: aLow, high: aHigh, unknown: aUnknown } = a.entry.severityCounts
-    const { low: bLow, high: bHigh, unknown: bUnknown } = b.entry.severityCounts
+    const {
+      low: aLow,
+      medium: aMedium,
+      high: aHigh,
+      unknown: aUnknown,
+    } = a.entry.severityCounts
+    const {
+      low: bLow,
+      medium: bMedium,
+      high: bHigh,
+      unknown: bUnknown,
+    } = b.entry.severityCounts
 
-    const aSum = aHigh * 1e6 + aLow * 1e3 + aUnknown
-    const bSum = bHigh * 1e6 + bLow * 1e3 + bUnknown
+    const aSum = aHigh * 1e9 + aMedium * 1e6 + aLow * 1e3 + aUnknown
+    const bSum = bHigh * 1e9 + bMedium * 1e6 + bLow * 1e3 + bUnknown
 
     return bSum - aSum
   })
@@ -213,6 +224,7 @@ function formatRemindersAsTable(
     return [
       projectId,
       s.high === 0 ? '' : s.high.toString(),
+      s.medium === 0 ? '' : s.medium.toString(),
       s.low === 0 ? '' : s.low.toString(),
       s.unknown === 0 ? '' : s.unknown.toString(),
     ]

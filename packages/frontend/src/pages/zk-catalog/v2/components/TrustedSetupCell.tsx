@@ -1,9 +1,10 @@
-import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
+import type { TrustedSetup } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import type { TrustedSetupSummary } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { TechStackTag } from './TechStackTag'
 import {
   TrustedSetupRiskDot,
@@ -11,9 +12,7 @@ import {
 } from './TrustedSetupRiskDot'
 
 interface Props {
-  trustedSetups: (TrustedSetup & {
-    proofSystem: ZkCatalogTag
-  })[]
+  trustedSetups: TrustedSetupSummary[]
   dotSize?: TrustedSetupRiskDotSize
   displayType?: 'type' | 'typeAndName'
 }
@@ -67,7 +66,9 @@ export function TrustedSetupCell({
   )
 }
 
-function pickWorstRisk(trustedSetups: TrustedSetup[]): TrustedSetup['risk'] {
+function pickWorstRisk(
+  trustedSetups: TrustedSetupSummary[],
+): TrustedSetup['risk'] {
   const riskHierarchy = ['red', 'yellow', 'green', 'N/A'] as const
 
   for (const risk of riskHierarchy) {

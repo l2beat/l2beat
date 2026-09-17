@@ -112,6 +112,7 @@ function makeDiscovery(
     abis: {},
     configHash: Hash256.ZERO,
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }

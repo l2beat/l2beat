@@ -4,7 +4,10 @@ import { FlatSourcesApiResponse, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
-import { type ProgressEvent, ResponseProgress } from './common/ResponseProgress'
+import {
+  type ProgressEvent,
+  trackDownloadProgress,
+} from './common/trackDownloadProgress'
 import { colorMap } from './compare-flat-sources/output'
 
 const ENDPOINT = '/api/flat-sources'
@@ -14,18 +17,10 @@ export async function fetchFlatSources(
   backendUrl: string,
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
-  const response = await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, {
-    compress: true,
-    timeout: 0,
-  })
-
-  const progress = new ResponseProgress(response)
-  progress.on('progress', (p) => printProgress(logger, p))
-  progress.on('finish', (p) => {
-    printProgress(logger, p)
-    finishProgress(logger, p)
-  })
-
+  const response = trackDownloadProgress(
+    await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, { timeout: 0 }),
+    (progress) => printProgress(logger, progress),
+  )
   return FlatSourcesApiResponse.parse(await response.json())
 }
 
@@ -45,10 +40,6 @@ function printProgress(logger: Logger, progress: ProgressEvent) {
     'lineDownloaded',
     `Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`,
   )
-}
-
-function finishProgress(logger: Logger, progress: ProgressEvent) {
-  printProgress(logger, progress)
 }
 
 export function saveIntoDirectory(

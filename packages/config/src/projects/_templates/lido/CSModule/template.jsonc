@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": [
     "depositQueuePointers",
     "exitDeadlineThreshold",

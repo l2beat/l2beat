@@ -200,6 +200,55 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-ADS",
+      "priceId": "adshares",
+      "symbol": "ADS",
+      "name": "Adshares",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/868/large/rnO9DyJ.png?1696502001",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 11,
+            "sinceTimestamp": 1619884009
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 11,
+            "sinceTimestamp": 1619884009
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 11,
+            "sinceTimestamp": 1619884009
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 11,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-AGIX",
       "priceId": "singularitynet",
       "symbol": "AGIX",
@@ -2323,6 +2372,55 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-CXO",
+      "priceId": "cargox",
+      "symbol": "CXO",
+      "name": "CargoX Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2580/large/cargox.png?1696503384",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1590850640
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1598436664
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1613100777
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-DAI",
       "priceId": "dai",
       "symbol": "DAI",
@@ -4107,6 +4205,25 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-GEOD",
+      "priceId": "geodnet",
+      "symbol": "GEOD",
+      "name": "Geodnet Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31608/large/Circular_White.png?1696530424",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "geodnet",
+        "decimals": 18,
+        "sinceTimestamp": 1694044800,
+        "address": "0xAC0F66379A6d7801D7726d5a943356A172549Adb",
+        "chain": "polygonpos"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-GHST",
       "priceId": "aavegotchi",
       "symbol": "GHST",
@@ -4789,6 +4906,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-JPYC",
+      "priceId": "jpycoin",
+      "symbol": "JPYC",
+      "name": "JPY Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70314/large/JPYC_400x400.jpg?1761556080",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE7C3D8C9a439feDe00D2600032D5dB0Be71C3c29",
+        "chain": "polygonpos",
+        "decimals": 18,
+        "sinceTimestamp": 1761523200
+      },
+      "category": "stablecoin",
+      "source": "native",
       "isAssociated": false
     },
     {

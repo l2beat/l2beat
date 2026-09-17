@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": ["getConsensusReport", "getLastProcessingRefSlot"],
   "fields": {
     "accessControl": {

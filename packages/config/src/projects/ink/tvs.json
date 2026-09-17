@@ -75,6 +75,32 @@
     },
     {
       "mode": "auto",
+      "id": "ink-GHO-1",
+      "priceId": "gho",
+      "symbol": "GHO",
+      "name": "Gho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfc421aD3C883Bf9E7C4f42dE845C4e4405799e73",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1755467441
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ink-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",
@@ -119,6 +145,32 @@
     },
     {
       "mode": "auto",
+      "id": "ink-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+        "chain": "ink",
+        "decimals": 6,
+        "sinceTimestamp": 1735904404
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ink-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -155,32 +207,6 @@
         "chain": "ink",
         "decimals": 6,
         "sinceTimestamp": 1744826220
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "ink-USD₮0",
-      "priceId": "usdt0",
-      "symbol": "USD₮0",
-      "name": "USD₮0",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
-        "chain": "ink",
-        "decimals": 6,
-        "sinceTimestamp": 1735904404
       },
       "category": "stablecoin",
       "source": "external",

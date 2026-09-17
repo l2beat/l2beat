@@ -30,6 +30,23 @@ const WRAPPER_NAMES = [
   'ConfidentialXAUTWrapper',
   'ConfidentialBbqTGBPWrapper',
   'ConfidentialSteakcUSDCWrapper',
+  'ConfidentialWBTCWrapper',
+  'ConfidentialAUSDWrapper',
+  'ConfidentialPENDLEWrapper',
+  'ConfidentialSteakUSDTWrapper',
+  'ConfidentialBbqUSDTWrapper',
+  'ConfidentialBbqUSDCWrapper',
+  'ConfidentialArmcWBTCWrapper',
+  'ConfidentialArmUSDTsWrapper',
+  'ConfidentialArmUSDCsWrapper',
+  'ConfidentialArmUSDTpWrapper',
+  'ConfidentialArmUSDCpWrapper',
+  'ConfidentialPendleUSDCWrapper',
+  'ConfidentialFAUSDeWrapper',
+  'ConfidentialFcUSDTWrapper',
+  'ConfidentialRoxcUSDCWrapper',
+  'ConfidentialRoxUSDCyWrapper',
+  'ConfidentialPAPYWrapper',
 ]
 
 const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
@@ -187,6 +204,11 @@ export const zamaCw: BaseProject = {
   privacyInfo: {
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Zama confidential tokens hide amounts, but sender and receiver addresses remain public and are not mixed in a shared anonymity set.',
+    },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

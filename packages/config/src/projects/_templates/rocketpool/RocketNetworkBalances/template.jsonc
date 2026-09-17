@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkBalances",
+  "category": "core",
+  "description": "Balance oracle. Members of the oracle set submit the network's total ETH, its staked ETH, and the liquid staking token supply for a block; a report is written once submissions reach {{ consensusThreshold }}% of the set, and anyone can finalise a report that has already reached that share. The liquid staking token divides the two written values to get its redemption price, so this is the contract that sets that price. Three bounds apply: a report may not land until almost a full reporting interval of {{ submitFrequency }} has passed since the last one, the price may move by at most {{ maxDelta }}% per report, and reporting can be switched off by the setting below. Nothing here expires: if reporting stops, the last report stands indefinitely and the price stops tracking validator rewards.",
+  "ignoreInWatchMode": [
+    "getBalancesBlock",
+    "getBalancesTimestamp",
+    "getTotalETHBalance",
+    "getStakingETHBalance",
+    "getTotalRETHSupply",
+    "getETHUtilizationRate"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "networkSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNetwork")
+          "0x282fd49dacaf2128d6f069f81013ec59ae7081a236fbad29f69dd2383662ce5c"
+        ]
+      }
+    },
+    "consensusThreshold": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getNodeConsensusThreshold() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"],
+      "severity": "HIGH"
+    },
+    "submitFrequency": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getSubmitBalancesFrequency() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "maxDelta": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getMaxRethDelta() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"],
+      "severity": "HIGH"
+    },
+    "submitEnabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ networkSettings }}",
+        "method": "function getSubmitBalancesEnabled() view returns (bool)",
+        "args": []
+      },
+      "description": "When false, no new report can be written and the last one stands.",
+      "severity": "HIGH"
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can write the total ETH balance and the liquid staking token supply this contract reports, once submissions from its members reach {{ consensusThreshold }}% of the set. Those two numbers are the redemption price, and a single report can move it by at most {{ maxDelta }}%."
+        }
+      ]
+    }
+  }
+}

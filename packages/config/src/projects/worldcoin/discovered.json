@@ -1975,7 +1975,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25638270, "optimism": 154863342 },
-  "permissionsConfigHash": "0x07ecee76d20a71787d3716ee0d5771d6f2a5a57644a88588e25584f4143248ce",
+  "permissionsConfigHash": "0xda85b3e8cbec8d11a58807f7535d179cd5521e541c66a068ae22e2054a21061e",
   "permissions": {
     "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": {
       "receivedPermissions": [

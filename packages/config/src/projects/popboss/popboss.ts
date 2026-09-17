@@ -51,7 +51,7 @@ export const popboss: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.boss.proofofplay.com',
-        callsPerMinute: 3000,
+        callsPerMinute: 60,
       },
     ],
   },

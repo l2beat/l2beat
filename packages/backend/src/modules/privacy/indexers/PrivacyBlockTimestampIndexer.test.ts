@@ -271,6 +271,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         chain: 'ethereum',
         sinceTimestamp: UnixTime(999),
       })
+      expect(id1).toEqual('0ceab271a1a3')
       expect(id1).toEqual(id2)
     })
 

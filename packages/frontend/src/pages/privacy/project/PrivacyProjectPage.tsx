@@ -100,6 +100,9 @@ export function PrivacyProjectPage({
                     >
                       <PrivacyProjectStats
                         totalValueLockedUsd={entry.summary.totalValueLockedUsd}
+                        totalValueLockedChange7d={
+                          entry.summary.totalValueLockedChange7d
+                        }
                         hasTvl={entry.hasTvl}
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
@@ -107,6 +110,7 @@ export function PrivacyProjectPage({
                         relayerStat={entry.summary.relayerStat}
                       />
 
+                      <HorizontalSeparator className="mt-4 max-md:hidden" />
                       <PrivacyProjectRiskProfile
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
@@ -116,18 +120,21 @@ export function PrivacyProjectPage({
                       />
 
                       {entry.attributes.length > 0 && (
-                        <ProjectSummaryStat
-                          className="mt-6 md:mt-4"
-                          title="Attributes"
-                          tooltip="Protocol attributes and capabilities."
-                          valueClassName="flex flex-wrap justify-start gap-1"
-                          value={entry.attributes.map((attribute) => (
-                            <PrivacyAttributeTag
-                              key={attribute.id}
-                              attribute={attribute}
-                            />
-                          ))}
-                        />
+                        <>
+                          <HorizontalSeparator className="mt-4 max-md:hidden" />
+                          <ProjectSummaryStat
+                            className="mt-6 md:mt-4"
+                            title="Attributes"
+                            tooltip="Protocol attributes and capabilities."
+                            valueClassName="flex flex-wrap justify-start gap-1"
+                            value={entry.attributes.map((attribute) => (
+                              <PrivacyAttributeTag
+                                key={attribute.id}
+                                attribute={attribute}
+                              />
+                            ))}
+                          />
+                        </>
                       )}
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />

@@ -11,6 +11,7 @@
         "args": []
       },
       "permissions": [
+        { "type": "act" },
         {
           "type": "interact",
           "description": "reseal an already paused contract indefinitely or resume a paused contract through this adapter."

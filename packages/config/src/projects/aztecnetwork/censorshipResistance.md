@@ -1,4 +1,4 @@
-The regular committee can be circumvented by the escape hatch, which uses RANDAO to designate a previously enrolled bonded candidate that may publish checkpoints without committee attestations. Enrollment requires {{escapeHatchBondString}}, a high bond intended to protect the single-proof system while providing a last-resort path around the regular sequencer set. Aztec's private execution environment can also make selective censorship harder because transaction contents are hidden.
+The regular committee can be circumvented by the escape hatch, which uses RANDAO to designate a previously enrolled bonded candidate that may publish checkpoints without committee attestations. Enrollment requires {{escapeHatchBondString}}, a high bond intended to protect the single-proof system while providing a last-resort path around the regular sequencer set. A designated candidate that fails to propose and prove loses {{escapeHatchFailedPunishmentString}} from their bond. Aztec's private execution environment can also make selective censorship harder because transaction contents are hidden.
 
 ### Selective censorship
 

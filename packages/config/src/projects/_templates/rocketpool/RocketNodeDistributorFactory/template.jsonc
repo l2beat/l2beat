@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNodeDistributorFactory",
+  "category": "core",
+  "description": "Deploys one minimal proxy per node operator, at an address derived from the operator's address, to split the fee-recipient income of that operator's legacy validators between the operator and the pool. The proxy code is fixed in this contract.",
+  "ignoreMethods": ["getProxyBytecode"]
+}

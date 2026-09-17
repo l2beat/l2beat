@@ -1,8 +1,8 @@
-Generated with discovered.json: 0xff32667fc411b4e46575da64ebdcada937183193
+Generated with discovered.json: 0x4e439384e2252dc8570a3234f95966c4538f2880
 
 # Diff at Tue, 25 Aug 2026 13:41:12 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.de>)
 - current timestamp: 1787654846
 
 ## Description

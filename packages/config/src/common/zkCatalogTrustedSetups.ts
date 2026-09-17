@@ -132,14 +132,23 @@ export const TRUSTED_SETUPS = {
       'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 80 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
-  PrivacyBoost: {
-    id: 'PrivacyBoost',
+  PrivacyBoostv1: {
+    id: 'PrivacyBoostv1',
     name: 'Privacy Boost',
     risk: 'red',
     participantCount: 23,
     shortDescription:
       'Circuit-specific trusted setup for the 18 Groth16 Privacy Boost circuits. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 23 to 25 participants depending on the circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoost.md'),
+  },
+  PrivacyBoostv2: {
+    id: 'PrivacyBoostv2',
+    name: 'Privacy Boost v2',
+    risk: 'red',
+    participantCount: 23,
+    shortDescription:
+      'Circuit-specific trusted setup for the 21 Groth16 Privacy Boost circuits deployed in September 2026. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 26 participants and 23 to 25 contributions per circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
+    longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv2.md'),
   },
   Railgun: {
     id: 'Railgun',

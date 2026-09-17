@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG COREPACK_VERSION="^0.31.0"
+ARG COREPACK_VERSION="^0.36.0"
 ARG TURBO_TEAM
 
 # Use explicit hash for better caching

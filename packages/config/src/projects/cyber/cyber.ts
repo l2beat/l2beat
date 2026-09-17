@@ -112,8 +112,8 @@ export const cyber: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://cyber.alt.technology/',
-        callsPerMinute: 300,
+        url: 'https://rpc.cyber.co',
+        callsPerMinute: 200,
       },
       {
         type: 'routescan',

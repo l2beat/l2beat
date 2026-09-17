@@ -18,6 +18,7 @@ import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
+import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
@@ -25,6 +26,7 @@ import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
+import { NotFoundHandler } from './not-found/NotFoundHandler'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -73,6 +75,7 @@ export function createServerPageRouter(
     createGovernanceRouter,
     createNativeRollupsRouter,
     createFaqRouter,
+    createGardenRouter,
     createAboutUsRouter,
     createBrandKitRouter,
     createChangelogRouter,
@@ -96,9 +99,9 @@ export function createServerPageRouter(
     }
   }
 
-  // Anything reaching here was not a page (e.g. /api/*, /health, 404s) and
-  // must not be edge-cached.
+  // Anything reaching here is a 404 and must not be edge-cached.
   router.use('/', ClearPageCacheMiddleware())
+  router.use('/', NotFoundHandler(manifest, render))
 
   return router
 }

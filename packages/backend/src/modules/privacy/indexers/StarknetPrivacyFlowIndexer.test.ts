@@ -156,6 +156,26 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
       expect(safeHeight).toEqual(to)
     })
   })
+
+  describe(StarknetPrivacyFlowIndexer.idToConfigurationId.name, () => {
+    it('keeps the existing configuration id', () => {
+      expect(
+        StarknetPrivacyFlowIndexer.idToConfigurationId({
+          projectId: 'strk20',
+          bucketId: 'strk20-USDC',
+          chain: 'starknet',
+          address: POOL,
+          sinceTimestamp: UnixTime(0),
+          priceId: 'usd-coin',
+          decimals: 6,
+          direction: 'deposit',
+          event: DEPOSIT,
+          extractor: 'strk20Deposit',
+          params: { tokenAddress: TOKEN },
+        }),
+      ).toEqual('3bf7f8ee2c73')
+    })
+  })
 })
 
 function config(

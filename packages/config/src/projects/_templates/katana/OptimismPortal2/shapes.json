@@ -4,5 +4,11 @@
     "address": "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a",
     "chain": "ethereum",
     "blockNumber": 25186695
+  },
+  "OptimismPortal2_v5_6_1_agglayer": {
+    "hash": "0xcdca45f93efdef12515a42464aa744c87143d83208163ef6a97317da454c7eac",
+    "address": "eth:0x3160738db14B27EAe2D0d1b622259010308f4C38",
+    "chain": "ethereum",
+    "blockNumber": 25926114
   }
 }

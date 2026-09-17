@@ -35,7 +35,7 @@ interface Props {
 }
 
 export function HomeTopPrivacyProtocolsCard({ entries }: Props) {
-  const table = useTable({
+  const table = useTable('HomeTopPrivacyProtocolsCard', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

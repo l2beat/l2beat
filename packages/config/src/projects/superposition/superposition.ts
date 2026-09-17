@@ -11,10 +11,12 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('superposition')
+const archivedAt = UnixTime(1788865200) // 2026-09-08T11:00:00Z, last hour rpc.superposition.so resolved
 
 export const superposition: ScalingProject = orbitStackL3({
   capability: 'universal',
   addedAt: UnixTime(1736726400), // 2025-01-13T00:00:00Z
+  archivedAt,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming', 'Social'],
   reasonsForBeingOther: [
@@ -44,6 +46,7 @@ export const superposition: ScalingProject = orbitStackL3({
     chainId: 55244,
     explorerUrl: 'https://explorer.superposition.so',
     sinceTimestamp: UnixTime(1725644465),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',

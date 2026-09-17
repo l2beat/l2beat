@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x32e8f294407c90f6d4aefb9a1f5cd093f1cbb40f
+
+# Diff at Mon, 07 Sep 2026 08:37:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.","role":".governanceAdminAC"},{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.","role":".appRoleAdminAC"},{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.","role":".appGovernorAC"},{"permission":"upgrade","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","delay":691200,"role":".$admin"}]
+    }
+```
+
 Generated with discovered.json: 0xe2b1ef6a89173aeae91df3b5426689eb631c1d6d
 
 # Diff at Fri, 12 Jun 2026 12:07:44 GMT:

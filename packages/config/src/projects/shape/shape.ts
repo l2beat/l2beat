@@ -47,7 +47,7 @@ export const shape: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.shape.network',
-        callsPerMinute: 300,
+        callsPerMinute: 4800,
       },
     ],
   },

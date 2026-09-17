@@ -52,7 +52,7 @@ export const educhain: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.educhain.xyz',
-        callsPerMinute: 300,
+        callsPerMinute: 500,
       },
     ],
     gasTokens: ['EDU'],

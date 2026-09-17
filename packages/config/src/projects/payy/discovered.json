@@ -36,29 +36,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
-          "description": "can manage provers, validators, ZK verifiers, supported tokens and burn substitutors, and can overwrite the current state root via setRoot().",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xAF657A8Fa036bcc99AC3cCd5b7fFa4AaddFBE501",
       "sinceTimestamp": 1771329767,
@@ -161,28 +138,12 @@
     {
       "address": "eth:0x41582701CB3117680687Df80bD5a2ca971bDA964",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
-          "description": "can sign state updates as a validator. Signatures from more than 2/3 of the current validator set are required for each update.",
-          "role": ".getValidatorSets"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5343B904Bf837Befb2f5A256B0CD5fbF30503D38",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
-          "description": "can submit state updates (new state roots) via verifyRollup(), providing an aggregated ZK proof and validator signatures.",
-          "role": ".initialProver"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x54e22ad93DE7Dad5C83e9b1caC257F3aB384b02c",
@@ -208,13 +169,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x6B96F1A8D65eDe8AD688716078B3DD79f9BD7323",
       "sinceTimestamp": 1771324355,
       "sinceBlock": 24475975,
@@ -383,5 +337,61 @@
     "payy/Rollup": "0xf7a0ec4aeecff88c7330666e8c5ed2d09340c14447c657796b7f2c1dd95b1743"
   },
   "usedBlockNumbers": { "ethereum": 25831710 },
-  "permissionsConfigHash": "0xf02b2bcd0521c929adad21643818467dd397fac97d3acef5826d5d52a96e80c3"
+  "permissionsConfigHash": "0xb51ef675ec1c4f55e2b7f9dd9adbfce3c3ad64a31251315f29ddda5daf8c5139",
+  "permissions": {
+    "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can manage provers, validators, ZK verifiers, supported tokens and burn substitutors, and can overwrite the current state root via setRoot().",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x41582701CB3117680687Df80bD5a2ca971bDA964": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can sign state updates as a validator. Signatures from more than 2/3 of the current validator set are required for each update.",
+          "role": ".getValidatorSets"
+        }
+      ]
+    },
+    "eth:0x5343B904Bf837Befb2f5A256B0CD5fbF30503D38": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can submit state updates (new state roots) via verifyRollup(), providing an aggregated ZK proof and validator signatures.",
+          "role": ".initialProver"
+        }
+      ]
+    },
+    "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

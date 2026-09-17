@@ -157,7 +157,7 @@ export const fuel: ScalingProject = {
       {
         type: 'fuel',
         url: 'https://mainnet.fuel.network/v1/graphql',
-        callsPerMinute: 120,
+        callsPerMinute: 1200,
       },
     ],
   },

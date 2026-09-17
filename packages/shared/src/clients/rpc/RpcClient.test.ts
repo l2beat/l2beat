@@ -83,6 +83,27 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.getBlockTimestamp.name, () => {
+    it('fetches the block without tx bodies and returns its timestamp', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockTimestamp(100)
+
+      expect(result).toEqual(100)
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
@@ -204,7 +225,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -275,7 +296,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -291,7 +312,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockMiddleBlock.toString(16)}`,
             },
@@ -307,7 +328,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -926,7 +947,7 @@ const mockRawTx = (to: string | undefined) => ({
   hash: '0x1',
   value: 11111111n.toString(),
   from: '0xf',
-  to,
+  to: to ?? null,
   input: '0x1',
   type: '0x2',
   blockNumber: '0x64',

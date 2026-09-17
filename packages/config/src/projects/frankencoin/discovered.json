@@ -1,6 +1,6 @@
 {
   "name": "frankencoin",
-  "timestamp": 1787300652,
+  "timestamp": 1789471883,
   "configHash": "0x4f8f2a12e539e3546b7b62cd88b1ac8282772bce2d7a63f85914d747f8fdf0c7",
   "entries": [
     {
@@ -41,10 +41,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1316327013381959744996",
+        "price": "1290288910929585750090",
         "symbol": "FPS",
-        "totalSupply": "8673295955082447425800",
-        "totalVotes": "269981493244121357435679362132707679",
+        "totalSupply": "8595150627404501611790",
+        "totalVotes": "284883218682364267181438544971797594",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -116,7 +116,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 1328324400000,
+        "currentTicks": 1404317520000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -185,7 +185,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1292322540000,
+        "currentTicks": 1314034860000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -217,7 +217,7 @@
         "horizon": 1807188455,
         "isExpired": false,
         "limit": "10000000000000000000000000",
-        "minted": "680069817396000000000000",
+        "minted": "646529630922000000000000",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "fieldMeta": {
@@ -267,9 +267,9 @@
       "values": {
         "$immutable": true,
         "annualInterestPPM": 10000,
-        "availableForClones": "9509693467288823666646023",
-        "availableForMinting": "9509693467288823666646023",
-        "calculateCurrentFee": 12807,
+        "availableForClones": "9474270077330148381421223",
+        "availableForMinting": "9474270077330148381421223",
+        "calculateCurrentFee": 12119,
         "calculateFee": [],
         "challengedAmount": 0,
         "challengeData": {
@@ -604,7 +604,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows to create uniswap positions with ZCHF borrowed from the protocol on one side and USDT supplied by the user on the other. There are multiple contraints on what kind of positions can be created.",
-      "ignoreInWatchMode": ["getPrice"],
+      "ignoreInWatchMode": ["getPrice", "totalBorrowed"],
       "deployerAddress": "eth:0x32Ad7fC7DE54e63971F85F25c691927c87F1A5d9",
       "sinceTimestamp": 1787219507,
       "sinceBlock": 25795552,
@@ -612,7 +612,7 @@
         "$immutable": true,
         "EXPIRATION": 1806537599,
         "exploitableAt": "468323724451429889",
-        "getPrice": "99232191729076861",
+        "getPrice": "96955013053156465",
         "LIMIT": "2500000000000000000000000",
         "MAX_DOLLAR_APPRECIATION_TICKS": 1000,
         "MAX_DOLLAR_DEPRECIATION_TICKS": 1500,
@@ -620,7 +620,7 @@
         "MINIMUM_TICK": -275073,
         "positionImplementation": "eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2",
         "PRICE_ANCHOR_X96": "99231442269731262",
-        "totalBorrowed": 0,
+        "totalBorrowed": "428033237690287067168437",
         "UNISWAP_POOL": "eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF",
         "USD": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
@@ -667,10 +667,10 @@
         "$immutable": true,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "3805631253577170033337092",
+        "equity": "3696742514103166685627951",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
-        "minterReserve": "8630636482357216860953194",
+        "minterReserve": "8756502099242023867755759",
         "minters": [
           "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
           "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -688,7 +688,7 @@
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "30292426881734023825533033"
+        "totalSupply": "32019671743267327330918286"
       },
       "fieldMeta": {
         "MIN_APPLICATION_PERIOD": {
@@ -778,20 +778,20 @@
         "asset": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
         "decimals": 18,
         "info": {
-          "saved": "31075302421235983177620",
-          "ticks": 1327052817238,
+          "saved": "180005190903269000447697",
+          "ticks": 1404230719379,
           "referrer": "eth:0x0000000000000000000000000000000000000000",
           "referralFeePPM": 0
         },
         "name": "SavingsVault ZCHF",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "price": "1021273427074482877",
+        "price": "1023322180872362003",
         "savings": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
         "symbol": "svZCHF",
-        "totalAssets": "31076555427923032281467",
-        "totalClaimed": "6965144026218726160",
-        "totalSupply": "30429221601255445462621"
+        "totalAssets": "180005686354891071328600",
+        "totalClaimed": "249909049837486642806",
+        "totalSupply": "175903239194365716956083"
       },
       "implementationNames": {
         "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0": "SavingsVaultZCHF_2"
@@ -1542,11 +1542,11 @@
     "frankencoin/SavingsVault": "0x8bd9f28462675ae9a17fb327d790d1b63978145d534932b03d99ed0f69b96487",
     "frankencoin/StablecoinBridge": "0xa6068262eb7719f21984a390129b5eb7ebd108545849623453769920772d084a",
     "frankencoin/TransferReference": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "frankencoin/UniswapAmplifier": "0xa5ab427a27ce03e9b9e8a7bd4eef4a885063de18c6f457e19b9f6638b8934c80",
+    "frankencoin/UniswapAmplifier": "0x332fd67198890d6575a320e02ec8c71862cba48773849493ae73a75513f566a5",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
-  "usedBlockNumbers": { "ethereum": 25802292 },
-  "permissionsConfigHash": "0x287a592ce2d877584b6dbe5b2570b7683633c56f2c0c752bcf5189efec896b3d",
+  "usedBlockNumbers": { "ethereum": 25982579 },
+  "permissionsConfigHash": "0x39954d7d6ed7f330f8b637c202553e3a4eef73238e1a15dbfbf2f5627d609d07",
   "permissions": {
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
       "receivedPermissions": [

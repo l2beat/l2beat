@@ -2,11 +2,11 @@ import {
   ConfigHealthService,
   ConfigReader,
   ConfigWriter,
+  DiffHistoryParser,
   getDiscoveryPaths,
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
-import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import { config as dotenv } from 'dotenv'

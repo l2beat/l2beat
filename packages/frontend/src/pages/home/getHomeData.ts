@@ -35,6 +35,7 @@ import type { HomeL2CategoryCounts } from './components/HomeL2Card'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
+import { toHomeTopZkProver } from './toHomeTopZkProver'
 
 const TOP_CHAINS_COUNT = 5
 const TOP_PRIVACY_PROTOCOLS_COUNT = 5
@@ -187,7 +188,9 @@ async function getCachedData(manifest: Manifest) {
     topChains,
     topChainsTvsData,
     topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
-    topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
+    topZkProvers: zkCatalogEntries
+      .slice(0, TOP_ZK_PROVERS_COUNT)
+      .map(toHomeTopZkProver),
     l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,

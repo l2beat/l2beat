@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketTokenRPL",
+  "category": "core",
+  "description": "Inflationary collateral and governance token ({{ symbol }}). New supply is issued by a permissionless call that mints the accrued amount to the rewards contract at a fixed rate of {{ inflationRate }} per interval of {{ inflationInterval }}; there is no privileged minter and no cap. It also swaps a fixed-supply predecessor token in at one to one, burning the token received. The registry refuses to repoint this name.",
+  "ignoreInWatchMode": [
+    "totalSupply",
+    "totalSwappedRPL",
+    "inflationCalculate",
+    "getInflationCalcTime",
+    "getInflationIntervalsPassed"
+  ],
+  "fields": {
+    "inflationRate": {
+      "handler": {
+        "type": "call",
+        "method": "function getInflationIntervalRate() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "inflationInterval": {
+      "handler": {
+        "type": "call",
+        "method": "function getInflationIntervalTime() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

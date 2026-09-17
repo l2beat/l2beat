@@ -4,7 +4,6 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -47,7 +46,6 @@ export interface ProjectDefiEntry {
 
 export async function getDefiProjectEntry(
   slug: string,
-  helpers: SsrHelpers,
 ): Promise<ProjectDefiEntry | undefined> {
   const project = await ps.getProject({
     slug,
@@ -67,14 +65,6 @@ export async function getDefiProjectEntry(
       getContractUtils(),
       getProjectsChangeReport(),
       getDefiDependencyProjectsById(project.externalDependencies),
-      project.tvsConfig !== undefined
-        ? helpers.queryClient.prefetchQuery(
-            helpers.trpc.tvs.chartByProjects.queryOptions({
-              projectIds: [project.id],
-              range: defaultChartRange,
-            }),
-          )
-        : undefined,
     ])
 
   const isUnderReview = !!project.statuses.reviewStatus

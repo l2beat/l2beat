@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -105,6 +106,11 @@ export const umbra: BaseProject = {
   privacyInfo: {
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Umbra sends funds to one-time stealth addresses instead of mixing deposits in a shared pool.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
@@ -121,7 +127,7 @@ export const umbra: BaseProject = {
     },
     privacy: {
       value: 'Recipient privacy',
-      sentiment: 'good',
+      sentiment: 'warning',
       description:
         'There is no protocol-level compliance mechanism or privileged view key. Umbra hides who controls the receiving address, but the sender, amount, and stealth address remain public and privacy can be weakened by transaction patterns or poor withdrawal hygiene.',
     },
@@ -136,6 +142,48 @@ export const umbra: BaseProject = {
     riskSummary: readProjectMarkdown('umbra', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
+    },
+  },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        CROP_NOTES.infiniteExitWindow,
+        CROP_NOTES.passesWalkawayTest(
+          'nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
+        ),
+        'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
+      ],
+      missing: [
+        'ERC-20 stealth transfers are currently relayed only by Umbra Cash relayer, privacy guarantees are weakened if it censors withdrawals.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      license: 'MIT',
+      points: [
+        'The immutable core contracts, the cryptographic library and the frontend are published and can be built and run locally.',
+      ],
+    },
+    privacy: {
+      sentiment: 'warning',
+      points: [
+        'Recipient privacy with no protocol-level compliance mechanism, no privileged view key, and no way for anyone to retroactively deanonymize a payment.',
+      ],
+      missing: [
+        'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',
+        'The number of registered stealth transfer recipients is not large enough to provide a high degree of anonymity.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      points: [
+        'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
+        'Umbra Cash main contract is well-ossified: it has been live for a long time without security incidents.',
+      ],
+      missing: [
+        'Stealth addresses rely on elliptic-curve key derivation, so they are not quantum-resistant.',
+      ],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

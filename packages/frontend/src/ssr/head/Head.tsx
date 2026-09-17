@@ -22,7 +22,20 @@ export function Head({ manifest, metadata }: HeadProps) {
       <FontStyles fonts={fonts} manifest={manifest} />
       <link
         rel="icon"
+        type="image/x-icon"
+        sizes="16x16 32x32 48x48"
+        href="/favicon.ico"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
         type="image/svg+xml"
+        sizes="any"
         href={manifest.getUrl('/icon.svg')}
       />
       <link

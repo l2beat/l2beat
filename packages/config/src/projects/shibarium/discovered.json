@@ -1843,7 +1843,7 @@
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 25394788 },
-  "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e",
+  "permissionsConfigHash": "0x22cd7a27d9e74f7f4d283aab2afa74b34f34f4e35abfff9b4662320903eb9afb",
   "permissions": {
     "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82": {
       "receivedPermissions": [

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOSecurityActions",
+  "category": "gov",
+  "description": "Executes security-council membership changes: accepting an invitation, leaving, and being removed. Invitations and removals originate from token-holder governance."
+}

@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -234,10 +235,51 @@ export const tornadoCash: BaseProject = {
       },
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        CROP_NOTES.infiniteExitWindow,
+        'CR based on Ethereum L1 inclusion.',
+        CROP_NOTES.passesWalkawayTest(),
+        'Multiple active relayers; users can self-relay withdrawals.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      license: 'GPL-3.0',
+      points: [
+        'Reproducible from source: anyone can audit it and run it locally to participate.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Unconditional privacy.',
+        'Clearly defined anonymity set per fixed-denomination pool.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      points: ['Simple, well-ossified design.'],
+      missing: [
+        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
+      ],
+      notReviewed: ['Formal verification.'],
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('Verifier').address,
+      discovery.getContract('BatchTreeUpdateVerifier').address,
+      discovery.getContract('TreeUpdateVerifier').address,
+      discovery.getContract('RewardVerifier').address,
+      discovery.getContract('WithdrawVerifier').address,
+    ],
   },
 }
 
@@ -275,6 +317,9 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
       denomination: bucket.denomination,
+      anonymitySet: {
+        minimumAmounts: [bucket.denominationAmount],
+      },
       deposit: {
         event: bucket.depositEvent,
         extractor: 'fixedAmount',

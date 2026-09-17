@@ -157,6 +157,20 @@ describe(mapToReferenceNodes.name, () => {
 })
 
 describe(getReachableEntries.name, () => {
+  it('follows the edges of every copy of an address regardless of order', () => {
+    const first = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const second = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.C })
+    const targets = [createMockEntry(ADDRESSES.B), createMockEntry(ADDRESSES.C)]
+
+    for (const duplicates of [
+      [first, second],
+      [second, first],
+    ]) {
+      const entries = [...duplicates, ...targets]
+      expect(getReachableEntries(entries, [ADDRESSES.A])).toEqual(entries)
+    }
+  })
+
   it('should return everything but entry E', () => {
     // Base
     const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.C })

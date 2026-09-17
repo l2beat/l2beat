@@ -1,0 +1,266 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "fluidkey",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
+    "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+    "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+    "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+    "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+    "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+    "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9"
+  ],
+  "names": {
+    "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C": "Fluidkey Resolver Multisig",
+    "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner",
+    "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner",
+    "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner",
+    "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner",
+    "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner",
+    "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "Fluidkey Earn Owner"
+  },
+  "overrides": {
+    "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c": {
+      "description": "Immutable ENS CCIP-Read resolver used by Fluidkey. Every query redirects to a configurable gateway and accepts the returned ENS record if it is unexpired and signed by an accepted signer. It does not verify that a returned payment address was derived for the named recipient.",
+      "fields": {
+        "url": {
+          "description": "URL used for offchain ENS resolution. The owner can replace it immediately."
+        },
+        "owner": {
+          "description": "Owner of the resolver.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the accepted signers and gateway URL immediately, or transfer resolver ownership."
+            }
+          ]
+        },
+        "signers": {
+          "description": "Addresses whose signatures authenticate offchain ENS answers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "NewSigners"
+            },
+            "remove": {
+              "event": "RemovedSigner"
+            },
+            "select": "signers",
+            "flatten": true
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "sign arbitrary offchain ENS answers, including payment addresses accepted by the resolver."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    },
+    "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    },
+    "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    },
+    "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    },
+    "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    },
+    "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": {
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the earn module.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+            }
+          ]
+        },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "AddAuthorizedRelayer"
+            },
+            "remove": {
+              "event": "RemoveAuthorizedRelayer"
+            },
+            "select": "relayer"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

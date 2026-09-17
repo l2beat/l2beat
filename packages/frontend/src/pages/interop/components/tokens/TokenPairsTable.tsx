@@ -83,7 +83,7 @@ export function TokensPairsTable({
     [showTopProtocolColumn, showFlowsColumn, selectedChains],
   )
 
-  const table = useTable<TokensPairRow>({
+  const table = useTable<TokensPairRow>('TokensPairsTable', {
     data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),

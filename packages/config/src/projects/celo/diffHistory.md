@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x1ea77caa6c42e54c55201b2a59267fa9a19c02f6
+
+# Diff at Thu, 10 Sep 2026 12:48:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1784282840
+- current timestamp: 1789044398
+
+## Description
+
+Optimism Security Council: Member rotated.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.9:
+-        "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
++        "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930"
+    }
+```
+
+Generated with discovered.json: 0xca88120255ff4af90ace53d199a198649d596016
+
+# Diff at Mon, 07 Sep 2026 08:37:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1784282840
+- current timestamp: 1784282840
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784282840 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"},{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0xf6ad69a392e3a3549ddff44cc6d04ac09cc33a10
 
 # Diff at Thu, 30 Jul 2026 14:32:38 GMT:

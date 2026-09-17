@@ -7,9 +7,9 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { manifest } from '~/utils/Manifest'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getEthereumCommonEntry } from '../../utils/getEthereumCommonEntry'
 import type { CommonL2Entry } from '../getCommonL2Entry'
 import { getCommonL2Entry } from '../getCommonL2Entry'
 import type { ActivityProjectTableData } from './getActivityTableData'
@@ -107,23 +107,17 @@ function getL2ProjectActivityEntry(
 function getEthereumEntry(data: ActivityProjectTableData): L2ActivityEntry {
   const syncWarning = getActivitySyncWarning(data.syncState)
   return {
-    id: ProjectId.ETHEREUM,
-    name: 'Ethereum',
-    shortName: undefined,
-    icon: manifest.getUrl('/icons/ethereum.png'),
+    ...getEthereumCommonEntry(),
     isLayer3: false,
-    slug: 'ethereum',
     tab: 'rollups',
     stacks: undefined,
     type: undefined,
     filterable: undefined,
-    backgroundColor: 'blue',
     data: {
       tps: data.tps,
       uops: data.uops,
       ratio: data.ratio,
       isSynced: !syncWarning,
     },
-    statuses: undefined,
   }
 }

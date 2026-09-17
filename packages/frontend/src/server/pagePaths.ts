@@ -1,5 +1,10 @@
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
+import {
+  GARDEN_PATH,
+  INTEGRATE_CROPS_PATH,
+  SUBMIT_PROTOCOL_PATH,
+} from '~/pages/garden/paths'
 import { auditCoverageSource } from '~/server/features/audits/AuditCoverageSource'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
@@ -56,6 +61,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
+  }
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
   for (const project of auditCoverageSource.listProjects()) {
     paths.push(`/audits/projects/${project.slug}`)

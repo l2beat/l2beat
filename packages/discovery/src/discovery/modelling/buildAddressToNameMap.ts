@@ -5,13 +5,9 @@ export function buildAddressToNameMap(
 ): Record<string, string> {
   const result: Record<string, string> = {}
 
-  for (const entity of entries) {
-    if (entity.type === 'Reference') {
-      continue
-    }
+  for (const entity of entries.filter((e) => e.type !== 'Reference')) {
     const address = entity.address.toLowerCase()
-    const suffix = `_${address.replaceAll(':', '_')}`
-    result[address] = (entity.name ?? 'eoa') + suffix
+    result[address] = address.replaceAll(':', '_')
   }
   return result
 }

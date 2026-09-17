@@ -676,7 +676,7 @@
     "wormhole/WormholeCore": "0xe9cd639e09731a38f64813812bd4d5dc25cd9844a52065c894c53cfa445f64da"
   },
   "usedBlockNumbers": { "ethereum": 25487847 },
-  "permissionsConfigHash": "0x78b5e366bbad07a794410a8fe090f251d4a242805d9e1c16ecfcb08011785055",
+  "permissionsConfigHash": "0xbd906dc412992f1700f3fdc8373f09729186ed4b318094efe973d79768205a65",
   "permissions": {
     "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e": {
       "receivedPermissions": [

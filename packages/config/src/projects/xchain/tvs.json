@@ -33,7 +33,8 @@
         "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
         "chain": "xchain",
         "decimals": 6,
-        "sinceTimestamp": 1724198400
+        "sinceTimestamp": 1724198400,
+        "untilTimestamp": 1771563600
       },
       "category": "stablecoin",
       "source": "external",

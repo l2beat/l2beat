@@ -599,6 +599,24 @@
     },
     {
       "mode": "auto",
+      "id": "mantle-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x063C1d1ef6e9099Ce3E8e9AD5C6173d12C49C086",
+        "chain": "mantle",
+        "decimals": 6,
+        "sinceTimestamp": 1787838544
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mantle-USDT",
       "priceId": "tether",
       "symbol": "USDT",

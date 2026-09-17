@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedSettingsMinipool",
+  "category": "gov",
+  "description": "Parameters the oracle set applies to validator contracts: the scrub window before funding, whether a scrub is penalised, and the window and quorum for cancelling a bond reduction. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.",
+  "ignoreMethods": ["isWithinBondReductionWindow"]
+}

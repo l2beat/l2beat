@@ -6,13 +6,18 @@ import {
   type EVMFeeHistory,
   type EVMLog,
   type EVMTransaction,
+  type LogsTopicFilter,
   type MulticallV3Client,
   type MulticallV3Response,
   type Receipt,
   RpcClientCompat,
 } from '@l2beat/shared'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
-import { buildSnapshotKey, type ExampleInputs } from './service'
+import {
+  buildLogsSnapshotKey,
+  buildSnapshotKey,
+  type ExampleInputs,
+} from './service'
 
 interface Dependencies {
   chain: string
@@ -70,6 +75,11 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<number> {
+    const block = await this.getBlock(blockNumber, false)
+    return block.timestamp
+  }
+
   getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const key = this.buildSnapshotKey([
       'blockParentBeaconRoot',
@@ -105,6 +115,15 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     }
 
     throw new ReplayError(key)
+  }
+
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const blocks = await Promise.all(
+      blockNumbers.map((blockNumber) => this.getBlock(blockNumber, false)),
+    )
+    return new Map(blocks.map((block) => [block.number, block.timestamp]))
   }
 
   getTransaction(txHash: string): Promise<EVMTransaction> {
@@ -148,17 +167,11 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
-    const addressKey = addresses?.join(',') ?? 'all'
-    const topicsKey = topics?.join(',') ?? 'all'
-    const key = this.buildSnapshotKey([
-      'logs',
-      from.toString(),
-      to.toString(),
-      addressKey,
-      topicsKey,
-    ])
+    const key = this.buildSnapshotKey(
+      buildLogsSnapshotKey(from, to, addresses, topics),
+    )
     const snapshot = this.$.inputs.readRpc<EVMLog[]>(key)
     if (snapshot) {
       return Promise.resolve(snapshot)

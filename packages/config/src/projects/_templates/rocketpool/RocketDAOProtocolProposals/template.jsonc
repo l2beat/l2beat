@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolProposals",
+  "category": "gov",
+  "description": "Executes what token-holder governance has voted for: setting any protocol parameter, splitting the reward inflation between claimant groups, spending the treasury as a one-off or as a recurring payment stream, and seating, removing, or replacing security-council members. It has no upgrade entry point, so token holders cannot change which code the protocol runs.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "tokenHolderVote": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolProposal")
+          "0x355805c7e5994fe7e34a6e0b6ec05ece109683be593325479733ffa1350dafe8"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Voting contract of token-holder governance, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "a proposal that passes there is executed against this contract."
+        }
+      ]
+    }
+  }
+}

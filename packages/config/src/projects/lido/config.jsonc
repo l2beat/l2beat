@@ -18,8 +18,22 @@
     "eth:0xa88f0329c2c4ce51ba3fc619bbf44efe7120dd0d",
     "eth:0xf95f069f9ad107938f6ba802a3da87892298610e"
   ],
+  // Committee, subcommittee and member-Safe names follow the Lido multisig registry (docs.lido.fi/multisigs).
   "names": {
-    "eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647": "TreasuryManagementCommittee"
+    "eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF": "StVaultsCommittee",
+    "eth:0x2570e0b22AD904501dfB0d49575991ACB801dD91": "CuratedModuleCommittee",
+    "eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951": "TiebreakerBuildersSubcommittee",
+    "eth:0x73b047fe6337183A454c5217241D780a932777bD": "EmergencyBrakesEthereum",
+    "eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C": "CircuitBreakerCommittee",
+    "eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45": "DualGovernanceEmergencyActivationCommittee",
+    "eth:0x8ed4dfd3A610CCF1FB45e797bf5D8e0f93084F22": "P2P",
+    "eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647": "TreasuryManagementCommittee",
+    "eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE": "TiebreakerEthereumEcosystemSubcommittee",
+    "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f": "CommunityStakingModuleCommittee",
+    "eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF": "DualGovernanceEmergencyExecutionCommittee",
+    "eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C": "TiebreakerNodeOperatorsSubcommittee",
+    "eth:0xf8Bfa395744Cb25fa4368Ffe2344Dc35546092d9": "GatewayFM",
+    "eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081": "ResealCommittee"
   },
   "overrides": {
     "eth:0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7": {

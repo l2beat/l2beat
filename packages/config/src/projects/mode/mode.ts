@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('mode')
 export const mode: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
+    isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
@@ -41,7 +41,7 @@ export const mode: ScalingProject = opStackL2({
       other: ['https://growthepie.com/chains/mode'],
     },
   },
-  hasSuperchainScUpgrades: true,
+  hasSuperchainScUpgrades: false,
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolFactory",
+  "category": "core",
+  "description": "Deploys legacy validator contracts as minimal proxies at addresses derived from the operator address and a salt, so the address is known before deployment. Only a registered contract can deploy one."
+}

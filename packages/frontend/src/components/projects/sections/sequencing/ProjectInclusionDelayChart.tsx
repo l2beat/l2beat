@@ -5,7 +5,6 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type {
   InclusionDelayChartProps,
   InclusionDelayEntityLegendEntry,
-  InclusionDelayEntityMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import { mergeInclusionDelaySeries } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
@@ -25,6 +24,7 @@ export function ProjectInclusionDelayChart({
   projectPoints,
   ethereumPoints,
   entityLegendEntries,
+  entityMarkers,
   thresholdMarkers,
   maxCensorFraction,
 }: Props) {
@@ -71,7 +71,7 @@ export function ProjectInclusionDelayChart({
           maxCensorFraction={maxCensorFraction}
           yAxisScale={yAxisScale}
           thresholdMarkers={thresholdMarkers}
-          entityMarkers={entityLegendEntries.filter(hasFiniteDelay)}
+          entityMarkers={entityMarkers}
         />
       </div>
       <EntityMarkersLegend entries={entityLegendEntries} />
@@ -124,12 +124,6 @@ function getInclusionDelayChartMeta(projectName: string) {
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
-}
-
-function hasFiniteDelay(
-  entry: InclusionDelayEntityLegendEntry,
-): entry is InclusionDelayEntityMarker {
-  return entry.delayDays !== null
 }
 
 function formatEntityMarkerName(entry: InclusionDelayEntityLegendEntry) {

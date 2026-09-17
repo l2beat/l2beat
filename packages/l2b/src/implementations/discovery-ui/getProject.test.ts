@@ -172,6 +172,7 @@ function discovery(name: string, entries: EntryParameters[]): DiscoveryOutput {
     abis: {},
     configHash: Hash256.ZERO,
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }

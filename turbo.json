@@ -1,5 +1,5 @@
 {
-  "$schema": "https://v2-9-6.turborepo.dev/schema.json",
+  "$schema": "https://v2-10-12.turborepo.dev/schema.json",
   "globalDependencies": [
     "packages/typescript-config/*.json",
     ".discovery.json"

@@ -13,9 +13,10 @@
   "fields": {
     "getGovernance": {
       "permissions": [
+        { "type": "act", "delay": "{{getAfterSubmitDelay}}" },
         {
           "type": "interact",
-          "description": "submit, schedule, and cancel timelocked proposals."
+          "description": "submit, schedule, and cancel timelocked proposals. Execution additionally waits {{getAfterScheduleDelay}} after scheduling."
         }
       ]
     },
