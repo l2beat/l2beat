@@ -151,7 +151,7 @@ export function AuditsSummaryTable({
   entries: AuditsSummaryEntry[]
 }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
-  const table = useTable({
+  const table = useTable('AuditsSummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
