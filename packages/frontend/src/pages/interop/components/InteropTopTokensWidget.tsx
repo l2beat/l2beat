@@ -13,11 +13,6 @@ import { InteropTokenRow, type InteropTokenRowData } from './InteropTokenRow'
 import type { InteropTransferDefaults } from './InteropTransferTrigger'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
-const TAB_LIST_CLASS_NAME =
-  '-mr-1 -mb-1 block h-auto rounded-none bg-transparent p-0 text-balance leading-none'
-const TAB_TRIGGER_CLASS_NAME =
-  'mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]'
-
 export interface TopTokensTab {
   id: string
   iconUrl: string
@@ -65,15 +60,18 @@ export function InteropTopTokensWidget({
         className="mt-4 gap-1"
         variant="highlighted"
       >
-        <TabsList className={TAB_LIST_CLASS_NAME}>
-          <TabsTrigger value="all" className={TAB_TRIGGER_CLASS_NAME}>
+        <TabsList className="-mr-1 -mb-1 block h-auto text-balance rounded-none bg-transparent p-0 leading-none">
+          <TabsTrigger
+            value="all"
+            className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
+          >
             All
           </TabsTrigger>
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className={TAB_TRIGGER_CLASS_NAME}
+              className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
             >
               <img
                 src={tab.iconUrl}
