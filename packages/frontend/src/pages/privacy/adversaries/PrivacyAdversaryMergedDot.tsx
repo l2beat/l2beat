@@ -4,8 +4,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
-import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PrivacySentimentDot } from '../PrivacySentimentDot'
+import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import {
   getPrivacyAdversariesTableValue,
   getPrivacyAdversaryTitle,
@@ -23,7 +23,7 @@ export function PrivacyAdversaryMergedDot({
       <TooltipTrigger
         aria-label={`${PRIVACY_ASSESSMENT.title}: ${adversaries.promiseLabel}`}
       >
-<PrivacySentimentDot sentiment={sentiment} />
+        <PrivacySentimentDot sentiment={sentiment} />
       </TooltipTrigger>
       <TooltipContent className="max-w-[340px]">
         <div className="space-y-2">
@@ -34,7 +34,7 @@ export function PrivacyAdversaryMergedDot({
           <ul className="space-y-1">
             {adversaries.cells.map((cell) => (
               <li key={cell.id} className="flex items-center gap-2 text-xs">
-<PrivacySentimentDot sentiment={cell.sentiment} />
+                <PrivacySentimentDot sentiment={cell.sentiment} />
                 <span className="font-medium">
                   {getPrivacyAdversaryTitle(cell.label)}:
                 </span>

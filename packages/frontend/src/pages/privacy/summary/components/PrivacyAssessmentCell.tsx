@@ -31,7 +31,7 @@ export function PrivacyAssessmentCell({
         <DotWithLabel
           dot={
             <div className="relative">
-<PrivacySentimentDot sentiment={value.sentiment} />
+              <PrivacySentimentDot sentiment={value.sentiment} />
               {walkawayTest && (
                 <PrivacyWalkawayTestIcon
                   passed={walkawayTest.passed}

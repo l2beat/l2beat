@@ -26,7 +26,9 @@ export function PrivacyAdversaryDots({
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       {adversaries.cells.map((cell) => {
-        const dot = <PrivacySentimentDot sentiment={cell.sentiment} size={size} />
+        const dot = (
+          <PrivacySentimentDot sentiment={cell.sentiment} size={size} />
+        )
         const label = `${cell.label}: ${cell.value}`
         return (
           <Tooltip key={cell.id}>
