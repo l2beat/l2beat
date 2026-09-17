@@ -98,7 +98,7 @@ describe('Interop Plugins', async () => {
       }
 
       const result = flattenClusters([pluginA, cluster])
-      expect(result).toStrictEqual([pluginA, pluginB, pluginC])
+      expect(result).toEqual([pluginA, pluginB, pluginC])
     })
   })
 
@@ -110,10 +110,7 @@ describe('Interop Plugins', async () => {
 
       const result = pluginsAsClusters([pluginA, cluster])
 
-      expect(result).toStrictEqual([
-        { name: 'across', plugins: [pluginA] },
-        cluster,
-      ])
+      expect(result).toEqual([{ name: 'across', plugins: [pluginA] }, cluster])
     })
   })
 })

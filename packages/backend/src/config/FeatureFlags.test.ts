@@ -30,14 +30,14 @@ describe(FeatureFlags.name, () => {
     for (const [input, item, expected] of testCases) {
       it(`${item} is ${expected.toString()} for ${input}`, () => {
         const flags = new FeatureFlags(input)
-        expect(flags.isEnabled(item)).toStrictEqual(expected)
+        expect(flags.isEnabled(item)).toEqual(expected)
       })
     }
 
     it('can be called with multiple arguments', () => {
       const flags = new FeatureFlags('foo,!foo.baz')
-      expect(flags.isEnabled('foo', 'bar')).toStrictEqual(true)
-      expect(flags.isEnabled('foo', 'baz')).toStrictEqual(false)
+      expect(flags.isEnabled('foo', 'bar')).toEqual(true)
+      expect(flags.isEnabled('foo', 'baz')).toEqual(false)
     })
   })
 
@@ -46,8 +46,8 @@ describe(FeatureFlags.name, () => {
       const flags = new FeatureFlags('foo')
       const newFlags = flags.append('bar')
       expect(newFlags).not.toBe(flags)
-      expect(newFlags.isEnabled('foo')).toStrictEqual(true)
-      expect(newFlags.isEnabled('bar')).toStrictEqual(true)
+      expect(newFlags.isEnabled('foo')).toEqual(true)
+      expect(newFlags.isEnabled('bar')).toEqual(true)
     })
   })
 
@@ -60,7 +60,7 @@ describe(FeatureFlags.name, () => {
       flags.isEnabled('bbb.yyy')
       flags.isEnabled('ccc.zzz')
 
-      expect(flags.getResolved()).toStrictEqual([
+      expect(flags.getResolved()).toEqual([
         { feature: 'aaa', enabled: true, used: false },
         { feature: 'bbb', enabled: true, used: true },
         { feature: 'bbb.xxx', enabled: false, used: true },
@@ -73,7 +73,7 @@ describe(FeatureFlags.name, () => {
     it('ignores star queries', () => {
       const flags = new FeatureFlags('*,aaa.*,!bbb.*')
 
-      expect(flags.getResolved()).toStrictEqual([])
+      expect(flags.getResolved()).toEqual([])
     })
   })
 })

@@ -63,7 +63,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, ...newRows]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -79,7 +79,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -88,7 +88,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
       const results = await repository.getByRelatedEntityId('projectA')
 
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(expect.arrayContaining([DATA[0]!]))
+      expect(results).toEqual(expect.arrayContaining([DATA[0]!]))
     })
   })
 
@@ -98,7 +98,7 @@ describeDatabase(NotificationsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 })

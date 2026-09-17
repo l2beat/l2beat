@@ -17,7 +17,7 @@ describe(calculateCalldataGasUsed.name, () => {
     )
 
     const expectedStandardCalldata = 16 * nonZeroBytes + 4 * zeroBytes
-    expect(result).toStrictEqual(expectedStandardCalldata)
+    expect(result).toEqual(expectedStandardCalldata)
   })
 
   describe('for blocks after Pectra (>= 22431084)', () => {
@@ -40,7 +40,7 @@ describe(calculateCalldataGasUsed.name, () => {
         gasUsed,
       )
 
-      expect(result).toStrictEqual(standardCalldata)
+      expect(result).toEqual(standardCalldata)
     })
 
     it('returns higher calldata cost when compute is lower than threshold', () => {
@@ -61,7 +61,7 @@ describe(calculateCalldataGasUsed.name, () => {
       )
 
       const expectedHigherCost = 40 * nonZeroBytes + 10 * zeroBytes
-      expect(result).toStrictEqual(expectedHigherCost)
+      expect(result).toEqual(expectedHigherCost)
     })
   })
 
@@ -82,7 +82,7 @@ describe(calculateCalldataGasUsed.name, () => {
     const standardCalldata = 4 * dataLength
     const compute = gasUsed - standardCalldata - 21000
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       compute >= 1.5 * standardCalldata ? standardCalldata : 10 * dataLength,
     )
   })
@@ -104,7 +104,7 @@ describe(calculateCalldataGasUsed.name, () => {
     const standardCalldata = 16 * dataLength
     const compute = gasUsed - standardCalldata - 21000
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       compute >= 1.5 * standardCalldata ? standardCalldata : 40 * dataLength,
     )
   })

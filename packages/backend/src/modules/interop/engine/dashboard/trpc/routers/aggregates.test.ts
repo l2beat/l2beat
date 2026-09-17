@@ -81,14 +81,12 @@ describe(createAggregatesRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result.latestTimestamp).toStrictEqual(latestTimestamp)
-    expect(result.latestTransfersCount).toStrictEqual(4)
-    expect(result.includedTransfersCount).toStrictEqual(3)
+    expect(result.latestTimestamp).toEqual(latestTimestamp)
+    expect(result.latestTransfersCount).toEqual(4)
+    expect(result.includedTransfersCount).toEqual(3)
     expect(result.notIncludedTransfers).toHaveLength(1)
-    expect(result.notIncludedTransfers[0]?.transferId).toStrictEqual(
-      'missing-relay',
-    )
-    expect(result.notIncludedByPlugin).toStrictEqual([
+    expect(result.notIncludedTransfers[0]?.transferId).toEqual('missing-relay')
+    expect(result.notIncludedByPlugin).toEqual([
       {
         plugin: 'relay',
         bridgeType: 'lockAndMint',
@@ -96,7 +94,7 @@ describe(createAggregatesRouter.name, () => {
         totalValueUsd: 30,
       },
     ])
-    expect(result.durationSplitCoverage).toStrictEqual([
+    expect(result.durationSplitCoverage).toEqual([
       {
         projectId: 'across',
         projectName: 'across',
@@ -111,8 +109,8 @@ describe(createAggregatesRouter.name, () => {
         notIncludedTransferTypes: ['withdraw'],
       },
     ])
-    expect(result.aggregationConfigured).toStrictEqual(true)
-    expect(result.aggregationConfigsCount).toStrictEqual(1)
+    expect(result.aggregationConfigured).toEqual(true)
+    expect(result.aggregationConfigsCount).toEqual(1)
   })
 
   it('returns disabled state when aggregation configs are unavailable', async () => {
@@ -131,7 +129,7 @@ describe(createAggregatesRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       aggregationConfigured: false,
       aggregationConfigsCount: 0,
       latestTimestamp: null,

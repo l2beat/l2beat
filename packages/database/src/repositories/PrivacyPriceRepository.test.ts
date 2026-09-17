@@ -41,7 +41,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
-      expect(result).toStrictEqual(expect.arrayContaining(records))
+      expect(result).toEqual(expect.arrayContaining(records))
     })
   })
 
@@ -77,8 +77,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       )
 
       expect(result).toHaveLength(2)
-      expect(result[0]!.priceUsd).toStrictEqual(1.5)
-      expect(result[1]!.priceUsd).toStrictEqual(2.5)
+      expect(result[0]!.priceUsd).toEqual(1.5)
+      expect(result[1]!.priceUsd).toEqual(2.5)
     })
   })
 
@@ -116,8 +116,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result[0]!.priceUsd).toStrictEqual(1.5)
-        expect(result[1]!.priceUsd).toStrictEqual(2.5)
+        expect(result[0]!.priceUsd).toEqual(1.5)
+        expect(result[1]!.priceUsd).toEqual(2.5)
       })
     },
   )
@@ -168,7 +168,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(3)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           expect.arrayContaining([records[0]!, records[1]!, records[2]!]),
         )
       })
@@ -189,7 +189,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
           UnixTime(2000),
         )
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
     },
   )
@@ -227,7 +227,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
         const result = await repository.getLatestPriceByPriceId('ethereum')
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(3000),
           priceUsd: 3.5,
@@ -247,7 +247,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
         const result = await repository.getLatestPriceByPriceId('bitcoin')
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )
@@ -285,11 +285,11 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         },
       ])
 
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining).toStrictEqual(
+      expect(remaining).toEqual(
         expect.arrayContaining([
           {
             configurationId: 'cfg2'.padEnd(12),

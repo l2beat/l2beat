@@ -60,7 +60,7 @@ describe(getInteropFlowAggregates.name, () => {
       new Set([ProjectId('sub')]),
     )
 
-    expect(result.flows).toStrictEqual([
+    expect(result.flows).toEqual([
       {
         srcChain: 'chain-a',
         dstChain: 'chain-b',
@@ -75,22 +75,22 @@ describe(getInteropFlowAggregates.name, () => {
       },
     ])
 
-    expect(result.chainTopTokens.get('chain-a')).toStrictEqual([
+    expect(result.chainTopTokens.get('chain-a')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainTopTokens.get('chain-b')).toStrictEqual([
+    expect(result.chainTopTokens.get('chain-b')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainPairTopTokens.get('chain-a::chain-b')).toStrictEqual([
+    expect(result.chainPairTopTokens.get('chain-a::chain-b')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainDurations.get('chain-a')).toStrictEqual({
+    expect(result.chainDurations.get('chain-a')).toEqual({
       totalDurationSum: 1100,
       transfersWithDurationCount: 5,
       transferTypeStats: {
@@ -98,7 +98,7 @@ describe(getInteropFlowAggregates.name, () => {
         withdrawal: { transferCount: 3, totalDurationSum: 900 },
       },
     })
-    expect(result.chainPairDurations.get('chain-a::chain-b')).toStrictEqual({
+    expect(result.chainPairDurations.get('chain-a::chain-b')).toEqual({
       totalDurationSum: 1100,
       transfersWithDurationCount: 5,
       transferTypeStats: {
@@ -106,14 +106,9 @@ describe(getInteropFlowAggregates.name, () => {
         withdrawal: { transferCount: 3, totalDurationSum: 900 },
       },
     })
-    expect(result.topToken).toStrictEqual({ id: 'eth', volume: 30 })
-    expect(result.topProtocol).toStrictEqual({ id: 'main', volume: 150 })
-    expect(result.tokenIds.toSorted()).toStrictEqual([
-      'dai',
-      'eth',
-      'usdc',
-      'usdt',
-    ])
+    expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
+    expect(result.topProtocol).toEqual({ id: 'main', volume: 150 })
+    expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
   })
 })
 

@@ -20,7 +20,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'address',
@@ -43,7 +43,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       { stack: ['0'], type: 'string', value: 'Hello' },
       { stack: ['1'], type: 'bytes', value: '0x12ab' },
     ])
@@ -61,7 +61,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -85,7 +85,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -114,7 +114,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -152,7 +152,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'tuple',
@@ -181,7 +181,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -227,7 +227,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'function') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(1)',
@@ -269,7 +269,7 @@ describe(decode.name, () => {
     if (decoded?.type !== 'parameters') {
       throw new Error('Decoding returned unexpected result')
     }
-    expect(decoded.values).toStrictEqual([
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'tuple',

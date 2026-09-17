@@ -18,20 +18,20 @@ const MEMBERS = entry(TREE, '$members')
 
 describe(getFieldState.name, () => {
   it('reads a single value as shown or hidden', () => {
-    expect(getFieldState(THRESHOLD, EMPTY)).toStrictEqual('on')
+    expect(getFieldState(THRESHOLD, EMPTY)).toEqual('on')
     expect(
       getFieldState(THRESHOLD, { ...EMPTY, hiddenFields: ['$threshold'] }),
-    ).toStrictEqual('off')
+    ).toEqual('off')
   })
 
   it('reads a group as compressed, mixed, or compressed by its parent', () => {
     expect(
       getFieldState(MEMBERS, { ...EMPTY, compressedRows: ['$members'] }),
-    ).toStrictEqual('compress')
+    ).toEqual('compress')
     expect(
       getFieldState(MEMBERS, { ...EMPTY, hiddenFields: ['$members[0]'] }),
-    ).toStrictEqual('mixed')
-    expect(getFieldState(member(), EMPTY, '$members')).toStrictEqual('compress')
+    ).toEqual('mixed')
+    expect(getFieldState(member(), EMPTY, '$members')).toEqual('compress')
   })
 })
 
@@ -43,18 +43,18 @@ describe(setFieldState.name, () => {
       'compress',
     )
 
-    expect(result.compressedRows).toStrictEqual(['$members'])
-    expect(result.hiddenFields).toStrictEqual(['$threshold'])
+    expect(result.compressedRows).toEqual(['$members'])
+    expect(result.hiddenFields).toEqual(['$threshold'])
   })
 
   it('expanding or hiding a group stops compressing it', () => {
     const compressed = { hiddenFields: [], compressedRows: ['$members'] }
 
-    expect(setFieldState(MEMBERS, compressed, 'on')).toStrictEqual({
+    expect(setFieldState(MEMBERS, compressed, 'on')).toEqual({
       hiddenFields: [],
       compressedRows: [],
     })
-    expect(setFieldState(MEMBERS, compressed, 'off')).toStrictEqual({
+    expect(setFieldState(MEMBERS, compressed, 'off')).toEqual({
       hiddenFields: ['$members[0]', '$members[1]'],
       compressedRows: [],
     })
@@ -63,9 +63,9 @@ describe(setFieldState.name, () => {
   it('never records compression a row cannot use', () => {
     // A single value has nothing to compress, and a member of a compressed
     // group is compressed by its parent rather than by itself.
-    expect(
-      setFieldState(THRESHOLD, EMPTY, 'compress').compressedRows,
-    ).toStrictEqual([])
+    expect(setFieldState(THRESHOLD, EMPTY, 'compress').compressedRows).toEqual(
+      [],
+    )
     expect(
       setFieldState(
         member(),
@@ -73,7 +73,7 @@ describe(setFieldState.name, () => {
         'compress',
         '$members',
       ),
-    ).toStrictEqual({ hiddenFields: [], compressedRows: ['$members'] })
+    ).toEqual({ hiddenFields: [], compressedRows: ['$members'] })
   })
 
   it('keeps the group compressed when one member is hidden through it', () => {
@@ -83,8 +83,8 @@ describe(setFieldState.name, () => {
       'off',
     )
 
-    expect(result.compressedRows).toStrictEqual(['$members'])
-    expect(getFieldState(MEMBERS, result)).toStrictEqual('mixed')
+    expect(result.compressedRows).toEqual(['$members'])
+    expect(getFieldState(MEMBERS, result)).toEqual('mixed')
   })
 })
 

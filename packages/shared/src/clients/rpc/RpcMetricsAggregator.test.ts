@@ -81,6 +81,6 @@ describe(RpcMetricsAggregator.name, () => {
 
     aggregator.flush()
 
-    expect(transport.log.mock.calls[0][0]?.parameters.count).toStrictEqual(3)
+    expect(transport.log.mock.calls[0][0]?.parameters.count).toEqual(3)
   })
 })

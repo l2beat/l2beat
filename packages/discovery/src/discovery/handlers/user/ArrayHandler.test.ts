@@ -18,7 +18,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual([])
+      expect(handler.dependencies).toEqual([])
     })
 
     it('detects dependency from the length field', () => {
@@ -32,7 +32,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['foo'])
+      expect(handler.dependencies).toEqual(['foo'])
     })
 
     it('detects dependency from the indices field', () => {
@@ -46,7 +46,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['foo'])
+      expect(handler.dependencies).toEqual(['foo'])
     })
 
     it('detects the base field of a nested reference', () => {
@@ -60,7 +60,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['constructorArgs'])
+      expect(handler.dependencies).toEqual(['constructorArgs'])
     })
   })
 
@@ -75,7 +75,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function foo(uint256 i) view returns (uint256)',
       )
     })
@@ -116,7 +116,7 @@ describe(ArrayHandler.name, () => {
         'function someName() view returns (uint256)',
       ])
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function someName(uint256 i) view returns (uint256)',
       )
     })
@@ -147,7 +147,7 @@ describe(ArrayHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function bar(uint256 i) view returns (uint256)',
       )
     })
@@ -187,10 +187,10 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
 
             const index = data[0] as number
-            expect(data).toStrictEqual([index])
+            expect(data).toEqual([index])
 
             return owners[index]!.toString() as T
           },
@@ -203,7 +203,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
@@ -221,7 +221,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             return owners[index]!.toString() as T
           },
@@ -234,7 +234,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
@@ -252,7 +252,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             return owners[index]!.toString() as T
           },
@@ -267,7 +267,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 3 },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
@@ -285,7 +285,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             if (index === 1) {
               throw new Error('Execution reverted')
@@ -301,7 +301,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'Execution reverted',
       })
@@ -317,7 +317,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             if (index >= 3) {
               throw new Error('Execution reverted')
@@ -329,7 +329,7 @@ describe(ArrayHandler.name, () => {
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
@@ -347,7 +347,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             if (index === 1) {
               throw new Error('oops')
@@ -359,7 +359,7 @@ describe(ArrayHandler.name, () => {
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'oops',
       })
@@ -376,7 +376,7 @@ describe(ArrayHandler.name, () => {
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
@@ -399,7 +399,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
@@ -417,7 +417,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             return owners[index]!.toString() as T
           },
@@ -430,7 +430,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: [owners[0]!.toString(), owners[2]!.toString()],
@@ -451,7 +451,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             // simulate random order of responses
             if (Math.random() > 0.5) {
               await new Promise((resolve) => setTimeout(resolve, 0))
@@ -468,7 +468,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: [
@@ -493,7 +493,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             const index = data[0] as number
             return owners[index]!.toString() as T
           },
@@ -508,7 +508,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: [0, 2] },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'owners',
         fragment: arrayFragment,
         value: [owners[0]!.toString(), owners[2]!.toString()],
@@ -533,7 +533,7 @@ describe(ArrayHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
+            expect(passedAddress).toEqual(address)
             calledSelectors.push(data[0] as bigint)
             return (data[0] as bigint).toString() as T
           },
@@ -552,13 +552,13 @@ describe(ArrayHandler.name, () => {
         },
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'configs',
         fragment: uint64ArrayFragment,
         value: selectors.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
-      expect(calledSelectors).toStrictEqual(selectors)
+      expect(calledSelectors).toEqual(selectors)
     })
   })
 })

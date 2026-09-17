@@ -92,7 +92,7 @@ describe(processAnalysis.name, () => {
       { ...baseEOA, type: 'EOA', address: ADDRESS_C },
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entries: [
         { ...emptyOutputMeta, address: ADDRESS_A },
         { ...emptyOutputMeta, address: ADDRESS_B },
@@ -105,7 +105,7 @@ describe(processAnalysis.name, () => {
   it('processes an unverified contract', () => {
     const result = processAnalysis([CONTRACT_A])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entries: [
         {
           type: 'Contract',
@@ -124,7 +124,7 @@ describe(processAnalysis.name, () => {
   it('processes a verified contract with values and errors', () => {
     const result = processAnalysis([CONTRACT_B])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entries: [
         {
           type: 'Contract',
@@ -147,7 +147,7 @@ describe(processAnalysis.name, () => {
       { ...baseEOA, type: 'EOA', address: ADDRESS_D },
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entries: [
         {
           type: 'Contract',
@@ -179,7 +179,7 @@ describe(processAnalysis.name, () => {
       },
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entries: [
         {
           type: 'Contract',
@@ -241,7 +241,7 @@ describe(processAnalysis.name, () => {
       },
     ])
 
-    expect(JSON.stringify(result1)).toStrictEqual(JSON.stringify(result2))
+    expect(JSON.stringify(result1)).toEqual(JSON.stringify(result2))
   })
 })
 
@@ -252,9 +252,7 @@ describe(sortByKeys.name, () => {
       bar: 'bar',
     }
 
-    expect(JSON.stringify(obj)).toStrictEqual('{"foo":"foo","bar":"bar"}')
-    expect(JSON.stringify(sortByKeys(obj))).toStrictEqual(
-      '{"bar":"bar","foo":"foo"}',
-    )
+    expect(JSON.stringify(obj)).toEqual('{"foo":"foo","bar":"bar"}')
+    expect(JSON.stringify(sortByKeys(obj))).toEqual('{"bar":"bar","foo":"foo"}')
   })
 })

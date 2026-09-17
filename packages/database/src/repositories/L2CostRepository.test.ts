@@ -94,7 +94,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, ...newRow]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array not to be rejected', async () => {
@@ -110,9 +110,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       ])
 
       expect(results).toHaveLength(2)
-      expect(results).toStrictEqual(
-        expect.arrayContaining([DATA[1]!, DATA[2]!]),
-      )
+      expect(results).toEqual(expect.arrayContaining([DATA[1]!, DATA[2]!]))
     })
 
     it('should return empty array', async () => {
@@ -121,7 +119,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         START + 6 * UnixTime.HOUR,
       ])
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -151,7 +149,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           expect.arrayContaining([
             {
               configurationId: txIdA,
@@ -172,7 +170,7 @@ describeDatabase(L2CostRepository.name, (db) => {
           START,
         )
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
     },
   )
@@ -182,7 +180,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
   })
 
@@ -207,7 +205,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         const results = await repository.getLatestTimestampsByConfigId()
 
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               configurationId: txIdA,
@@ -234,29 +232,29 @@ describeDatabase(L2CostRepository.name, (db) => {
         txIdC.toString(),
       ])
 
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(expect.arrayContaining([DATA[1]!]))
+      expect(results).toEqual(expect.arrayContaining([DATA[1]!]))
     })
 
     it('returns 0 for empty ids', async () => {
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
 
     it('returns 0 when no matching config found', async () => {
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
   })
 
@@ -266,7 +264,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -326,7 +324,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toStrictEqual([records[0]!])
+      expect(result).toEqual([records[0]!])
     })
   })
 })

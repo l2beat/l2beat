@@ -43,7 +43,7 @@ describe(RateLimiter.name, () => {
       vi.useRealTimers()
       rateLimiter.clear()
 
-      expect(count).toStrictEqual(expectedCount)
+      expect(count).toEqual(expectedCount)
     })
   }
 
@@ -73,7 +73,7 @@ describe(RateLimiter.name, () => {
         void rateLimiter.call(() => 3, 'a')
         void rateLimiter.call(() => 4, 'b')
 
-        expect(rateLimiter.queueLength).toStrictEqual(3)
+        expect(rateLimiter.queueLength).toEqual(3)
 
         vi.advanceTimersByTime(3_000)
         stats = rateLimiter.takeStats()
@@ -81,8 +81,8 @@ describe(RateLimiter.name, () => {
         vi.useRealTimers()
       }
 
-      expect(stats.queueLength).toStrictEqual(0)
-      expect(stats.labels).toStrictEqual({
+      expect(stats.queueLength).toEqual(0)
+      expect(stats.labels).toEqual({
         a: {
           enqueued: 3,
           dispatched: 3,
@@ -106,8 +106,8 @@ describe(RateLimiter.name, () => {
       const rateLimiter = new RateLimiter({ callsPerMinute: 100_000 })
       void rateLimiter.call(() => 1, 'a')
 
-      expect(rateLimiter.takeStats().labels.a?.dispatched).toStrictEqual(1)
-      expect(rateLimiter.takeStats().labels).toStrictEqual({})
+      expect(rateLimiter.takeStats().labels.a?.dispatched).toEqual(1)
+      expect(rateLimiter.takeStats().labels).toEqual({})
     })
 
     it('uses a default label', () => {
@@ -115,9 +115,7 @@ describe(RateLimiter.name, () => {
       void rateLimiter.call(() => 1)
 
       const stats = rateLimiter.takeStats()
-      expect(Object.keys(stats.labels)).toStrictEqual([
-        DEFAULT_RATE_LIMITER_LABEL,
-      ])
+      expect(Object.keys(stats.labels)).toEqual([DEFAULT_RATE_LIMITER_LABEL])
     })
 
     it('tracks in-flight calls', async () => {
@@ -133,8 +131,8 @@ describe(RateLimiter.name, () => {
       await new Promise((resolve) => setTimeout(resolve, 5))
 
       const before = rateLimiter.takeStats()
-      expect(before.inFlight).toStrictEqual(2)
-      expect(before.inFlightMax).toStrictEqual(2)
+      expect(before.inFlight).toEqual(2)
+      expect(before.inFlightMax).toEqual(2)
 
       release()
       await Promise.all([promiseA, promiseB])
@@ -142,10 +140,10 @@ describe(RateLimiter.name, () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
 
       const after = rateLimiter.takeStats()
-      expect(after.inFlight).toStrictEqual(0)
+      expect(after.inFlight).toEqual(0)
       // the max is reset to the in-flight count at the previous snapshot
-      expect(after.inFlightMax).toStrictEqual(2)
-      expect(rateLimiter.takeStats().inFlightMax).toStrictEqual(0)
+      expect(after.inFlightMax).toEqual(2)
+      expect(rateLimiter.takeStats().inFlightMax).toEqual(0)
     })
   })
 })

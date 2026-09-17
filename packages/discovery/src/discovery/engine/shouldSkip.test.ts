@@ -18,7 +18,7 @@ describe(shouldSkip.name, () => {
       },
     })
     const result = shouldSkip(address, config.structure, 0, 1)
-    expect(result).not.toStrictEqual(undefined)
+    expect(result).not.toEqual(undefined)
   })
 
   it('skips addresses that exceed max depth', () => {
@@ -30,7 +30,7 @@ describe(shouldSkip.name, () => {
       maxDepth: 1,
     })
     const result = shouldSkip(address, config.structure, 2, 1)
-    expect(result).not.toStrictEqual(undefined)
+    expect(result).not.toEqual(undefined)
   })
 
   it('skips addresses that exceed max addresses', () => {
@@ -42,7 +42,7 @@ describe(shouldSkip.name, () => {
       maxAddresses: 1,
     })
     const result = shouldSkip(address, config.structure, 0, 2)
-    expect(result).not.toStrictEqual(undefined)
+    expect(result).not.toEqual(undefined)
   })
 
   it('does not skip addresses that are not ignored', () => {
@@ -53,6 +53,6 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
     })
     const result = shouldSkip(address, config.structure, 0, 1)
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })

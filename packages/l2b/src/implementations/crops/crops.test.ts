@@ -95,14 +95,14 @@ describe('crop attestations', () => {
           ],
         ),
       )
-      expect(computed).toStrictEqual(ATTESTATION_SCHEMA_UID)
+      expect(computed).toEqual(ATTESTATION_SCHEMA_UID)
     })
   })
 
   describe('payload', () => {
     it('round trips through the abi the schema string describes', () => {
       const payload = { projectIds: IDS, reviewedAt: 1700000000, revision: 3 }
-      expect(decodePayload(encodePayload(payload))).toStrictEqual(payload)
+      expect(decodePayload(encodePayload(payload))).toEqual(payload)
     })
 
     it('encodes a different order as different bytes, so the planner must sort first', () => {
@@ -112,26 +112,26 @@ describe('crop attestations', () => {
         reviewedAt: 1,
         revision: 1,
       })
-      expect(a).not.toStrictEqual(b)
+      expect(a).not.toEqual(b)
     })
   })
 
   describe(setMatches.name, () => {
     it('ignores order, checked against a reversed copy', () => {
-      expect(setMatches(IDS, [...IDS].reverse())).toStrictEqual(true)
+      expect(setMatches(IDS, [...IDS].reverse())).toEqual(true)
     })
 
     it('notices a different member and a different size', () => {
       expect(
         setMatches(IDS, ['aztecnetwork', 'tornado-cash', 'umbra']),
-      ).toStrictEqual(false)
-      expect(setMatches(IDS, IDS.slice(1))).toStrictEqual(false)
+      ).toEqual(false)
+      expect(setMatches(IDS, IDS.slice(1))).toEqual(false)
     })
   })
 
   describe(diffSet.name, () => {
     it('reports what joined and what left', () => {
-      expect(diffSet(['a', 'b'], ['b', 'c'])).toStrictEqual({
+      expect(diffSet(['a', 'b'], ['b', 'c'])).toEqual({
         added: ['a'],
         removed: ['c'],
       })
@@ -140,15 +140,13 @@ describe('crop attestations', () => {
 
   describe('anonymity guard', () => {
     it('accepts the schema and a set of project ids', () => {
-      expect(findIdentifyingStrings(ATTESTATION_SCHEMA)).toStrictEqual([])
-      expect(findIdentifyingStrings(IDS.join(' '))).toStrictEqual([])
+      expect(findIdentifyingStrings(ATTESTATION_SCHEMA)).toEqual([])
+      expect(findIdentifyingStrings(IDS.join(' '))).toEqual([])
     })
 
     it('rejects anything naming us or the framework, case-insensitively', () => {
-      expect(findIdentifyingStrings('reviewed by L2BEAT')).toStrictEqual([
-        'l2beat',
-      ])
-      expect(findIdentifyingStrings('CROPS framework')).toStrictEqual(['crops'])
+      expect(findIdentifyingStrings('reviewed by L2BEAT')).toEqual(['l2beat'])
+      expect(findIdentifyingStrings('CROPS framework')).toEqual(['crops'])
     })
 
     it('refuses to sign a set that names us on a testnet, and lets it through on mainnet', () => {
@@ -168,7 +166,7 @@ describe('crop attestations', () => {
         { uid: STALE_UID, schema: OLD_SCHEMA },
         { uid: `0x${'33'.repeat(32)}`, schema: ATTESTATION_SCHEMA_UID },
       ])
-      expect(requests.map((x) => [x.schema, x.data.length])).toStrictEqual([
+      expect(requests.map((x) => [x.schema, x.data.length])).toEqual([
         [ATTESTATION_SCHEMA_UID, 2],
         [OLD_SCHEMA, 1],
       ])
@@ -185,7 +183,7 @@ describe('crop attestations', () => {
         onchain: new Map(),
         now,
       })
-      expect(plan).toStrictEqual({
+      expect(plan).toEqual({
         kind: 'attest',
         revoke: [],
         payload: { projectIds: IDS, reviewedAt: now, revision: 1 },
@@ -202,7 +200,7 @@ describe('crop attestations', () => {
         onchain: new Map([[UID, onchain()]]),
         now,
       })
-      expect(plan).toStrictEqual({ kind: 'unchanged', keeper: entry() })
+      expect(plan).toEqual({ kind: 'unchanged', keeper: entry() })
     })
 
     it('replaces the attestation when a project joins the set, revoking the old one under its schema', () => {
@@ -213,7 +211,7 @@ describe('crop attestations', () => {
         onchain: new Map([[UID, onchain()]]),
         now,
       })
-      expect(plan).toStrictEqual({
+      expect(plan).toEqual({
         kind: 'attest',
         revoke: [{ entry: entry(), schema: ATTESTATION_SCHEMA_UID }],
         payload: { projectIds: grown, reviewedAt: now, revision: 3 },
@@ -303,7 +301,7 @@ describe('crop attestations', () => {
         ]),
         now,
       })
-      expect(plan).toStrictEqual({
+      expect(plan).toEqual({
         kind: 'prune',
         keeper: entry(),
         revoke: [{ entry: stale, schema: OLD_SCHEMA }],
@@ -328,7 +326,7 @@ describe('crop attestations', () => {
         now,
       })
       expect(plan).toMatchObject({ kind: 'attest' })
-      expect(plan.kind === 'attest' && plan.payload.revision).toStrictEqual(8)
+      expect(plan.kind === 'attest' && plan.payload.revision).toEqual(8)
     })
   })
 
@@ -336,11 +334,11 @@ describe('crop attestations', () => {
     it('is quiet when the ledger says what the chain says', () => {
       expect(
         findLedgerDrift(ledger([entry()]), new Map([[UID, onchain()]])),
-      ).toStrictEqual([])
+      ).toEqual([])
     })
 
     it('reports a live entry the chain does not know, or has revoked', () => {
-      expect(findLedgerDrift(ledger([entry()]), new Map())).toStrictEqual([
+      expect(findLedgerDrift(ledger([entry()]), new Map())).toEqual([
         `rev 2 (${UID}): does not exist onchain`,
       ])
       expect(
@@ -348,9 +346,7 @@ describe('crop attestations', () => {
           ledger([entry()]),
           new Map([[UID, onchain({ revocationTime: 1 })]]),
         ),
-      ).toStrictEqual([
-        `rev 2 (${UID}): is revoked onchain but live in the ledger`,
-      ])
+      ).toEqual([`rev 2 (${UID}): is revoked onchain but live in the ledger`])
     })
 
     it('reports a payload the ledger caches wrongly, by project count', () => {
@@ -363,9 +359,7 @@ describe('crop attestations', () => {
       })
       expect(
         findLedgerDrift(ledger([entry()]), new Map([[UID, chain]])),
-      ).toStrictEqual([
-        `rev 2 (${UID}): names 2 projects onchain, the ledger says 3`,
-      ])
+      ).toEqual([`rev 2 (${UID}): names 2 projects onchain, the ledger says 3`])
     })
 
     it('reports another attester and another schema without trying to decode the old payload', () => {
@@ -378,7 +372,7 @@ describe('crop attestations', () => {
         ledger([entry()]),
         new Map([[UID, chain]]),
       )
-      expect(problems.length).toStrictEqual(2)
+      expect(problems.length).toEqual(2)
       expect(problems[0]).toContain('attested by')
       expect(problems[1]).toContain('attested under schema')
     })
@@ -397,13 +391,13 @@ describe('crop attestations', () => {
     it('moves a revoked entry from live to revoked, keeping the others live', () => {
       const stale = entry({ uid: STALE_UID, revision: 1 })
       const next = withRevoked(ledger([entry(), stale]), [revoked])
-      expect(next.live).toStrictEqual([stale])
-      expect(next.revoked).toStrictEqual([revoked])
+      expect(next.live).toEqual([stale])
+      expect(next.revoked).toEqual([revoked])
     })
 
     it('appends an attestation to live', () => {
       const fresh = entry({ uid: STALE_UID, revision: 3 })
-      expect(withAttested(ledger([entry()]), fresh).live).toStrictEqual([
+      expect(withAttested(ledger([entry()]), fresh).live).toEqual([
         entry(),
         fresh,
       ])
@@ -413,14 +407,14 @@ describe('crop attestations', () => {
       const out = sorted(
         ledger([entry({ revision: 5 }), entry({ revision: 4 })]),
       )
-      expect(out.live.map((x) => x.revision)).toStrictEqual([4, 5])
+      expect(out.live.map((x) => x.revision)).toEqual([4, 5])
     })
 
     it('keeps the committed entries on the same network and drops them on another, checked with the header rewritten either way', () => {
       const committed = ledger([entry()])
       const same = ledgerFor(ATTESTATION_NETWORKS.sepolia, ATTESTER, committed)
-      expect(same.live).toStrictEqual([entry()])
-      expect(same.schemaUid).toStrictEqual(ATTESTATION_SCHEMA_UID)
+      expect(same.live).toEqual([entry()])
+      expect(same.schemaUid).toEqual(ATTESTATION_SCHEMA_UID)
       const other = ledgerFor(
         ATTESTATION_NETWORKS.ethereum,
         ATTESTER,

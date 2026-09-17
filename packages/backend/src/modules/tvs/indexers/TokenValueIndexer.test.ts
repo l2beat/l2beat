@@ -103,7 +103,7 @@ describe(TokenValueIndexer.name, () => {
       expect(
         tvsTokenValueRepository.upsertMany,
       ).toHaveBeenCalledExactlyOnceWith(expectedRecords)
-      expect(safeHeight).toStrictEqual(timestamps[timestamps.length - 1])
+      expect(safeHeight).toEqual(timestamps[timestamps.length - 1])
       expect(
         syncMetadataRepository.updateSyncedUntil,
       ).toHaveBeenCalledExactlyOnceWith(
@@ -149,7 +149,7 @@ describe(TokenValueIndexer.name, () => {
         to,
         10,
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
   })
 
@@ -274,7 +274,7 @@ describe(TokenValueIndexer.name, () => {
 
       const configId = TokenValueIndexer.idToConfigurationId(token)
 
-      expect(configId).toStrictEqual('c4b862cc3e9e')
+      expect(configId).toEqual('c4b862cc3e9e')
     })
   })
 

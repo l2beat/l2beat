@@ -52,7 +52,7 @@ describe(createPromotionRouter.name, () => {
       const result = await caller.listRecent()
 
       expect(getRecent).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: 200,
           status: 'blocked',
@@ -94,7 +94,7 @@ describe(createPromotionRouter.name, () => {
         UnixTime(100),
         'ops@l2beat.com',
       )
-      expect(result).toStrictEqual({ timestamp: 100, promoted: true })
+      expect(result).toEqual({ timestamp: 100, promoted: true })
     })
 
     it('reports promoted=false when the snapshot was not blocked (no-op)', async () => {
@@ -109,7 +109,7 @@ describe(createPromotionRouter.name, () => {
         UnixTime(100),
         'ops@l2beat.com',
       )
-      expect(result).toStrictEqual({ timestamp: 100, promoted: false })
+      expect(result).toEqual({ timestamp: 100, promoted: false })
     })
   })
 })

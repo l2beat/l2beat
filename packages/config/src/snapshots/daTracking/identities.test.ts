@@ -23,7 +23,7 @@ describe(freezeSnippet.name, () => {
           sequencers: ['0xBB', '0xCC'],
         }),
       ),
-    ).toStrictEqual(
+    ).toEqual(
       [
         '    {',
         "      type: 'ethereum',",
@@ -52,7 +52,7 @@ describe(freezeSnippet.name, () => {
           topics: ['0xT1'],
         }),
       ),
-    ).toStrictEqual(
+    ).toEqual(
       [
         '    {',
         "      type: 'ethereum',",
@@ -93,7 +93,7 @@ describe(freezeSnippet.name, () => {
           sinceTimestamp: UnixTime(1700000000),
         }),
       ),
-    ).toStrictEqual(
+    ).toEqual(
       [
         '    {',
         "      type: 'eigen-da',",

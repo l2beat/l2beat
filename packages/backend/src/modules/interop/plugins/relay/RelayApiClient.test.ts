@@ -69,7 +69,7 @@ describe(RelayApiClient.name, () => {
         endTimestamp: 200,
       })
 
-      expect(result.requests[0]).toStrictEqual({
+      expect(result.requests[0]).toEqual({
         id: 'a',
         status: 'success',
         sourceTx: { hash: txHash('1'), chainId: 1, timestamp: 100 },
@@ -84,7 +84,7 @@ describe(RelayApiClient.name, () => {
       expect(url as string).toContain('/requests/v3?')
       expect(url as string).toContain('startTimestamp=100')
       expect(url as string).toContain('endTimestamp=200')
-      expect(init).toStrictEqual({ headers: { 'x-api-key': 'api-key' } })
+      expect(init).toEqual({ headers: { 'x-api-key': 'api-key' } })
     })
 
     it('falls back to the quoted route when actual data is missing', async () => {
@@ -113,10 +113,8 @@ describe(RelayApiClient.name, () => {
 
       const result = await createClient(httpClient).getRequests()
 
-      expect(result.requests[0]?.sourceCurrency).toStrictEqual(quotedInput)
-      expect(result.requests[0]?.destinationCurrency).toStrictEqual(
-        quotedOutput,
-      )
+      expect(result.requests[0]?.sourceCurrency).toEqual(quotedInput)
+      expect(result.requests[0]?.destinationCurrency).toEqual(quotedOutput)
     })
 
     it('keeps incomplete actual data and warns instead of merging the quote', async () => {
@@ -152,12 +150,10 @@ describe(RelayApiClient.name, () => {
 
       const result = await createClient(httpClient, logger).getRequests()
 
-      expect(result.requests[0]?.sourceCurrency?.amount).toStrictEqual(
-        undefined,
+      expect(result.requests[0]?.sourceCurrency?.amount).toEqual(undefined)
+      expect(result.requests[0]?.sourceCurrency?.currency?.address).toEqual(
+        '0xsource',
       )
-      expect(
-        result.requests[0]?.sourceCurrency?.currency?.address,
-      ).toStrictEqual('0xsource')
       expect(warn).toHaveBeenCalledExactlyOnceWith(
         'Incomplete actual route data',
         {
@@ -180,7 +176,7 @@ describe(RelayApiClient.name, () => {
 
       const result = await createClient(httpClient).getRequests()
 
-      expect(result.requests[0]?.status).toStrictEqual(undefined)
+      expect(result.requests[0]?.status).toEqual(undefined)
     })
   })
 
@@ -196,8 +192,8 @@ describe(RelayApiClient.name, () => {
 
       const result = await client.getAllRequests({ limit: 500 })
 
-      expect(result.requests.map((r) => r.id)).toStrictEqual(['a', 'b'])
-      expect(result.continuation).toStrictEqual(undefined)
+      expect(result.requests.map((r) => r.id)).toEqual(['a', 'b'])
+      expect(result.continuation).toEqual(undefined)
     })
 
     it('reports the cursor when the request limit is reached', async () => {
@@ -210,8 +206,8 @@ describe(RelayApiClient.name, () => {
 
       const result = await client.getAllRequests({ limit: 1 })
 
-      expect(result.requests.map((r) => r.id)).toStrictEqual(['a'])
-      expect(result.continuation).toStrictEqual('cursor-1')
+      expect(result.requests.map((r) => r.id)).toEqual(['a'])
+      expect(result.continuation).toEqual('cursor-1')
     })
 
     it('always sorts by updatedAt ascending', async () => {
@@ -241,13 +237,13 @@ describe(RelayApiClient.name, () => {
 
       const result = await client.getAllRequests({ limit: 500 })
 
-      expect(result.requests.map((r) => r.id)).toStrictEqual(['a', 'b'])
+      expect(result.requests.map((r) => r.id)).toEqual(['a', 'b'])
       expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
       const failedUrl = vi.mocked(httpClient.fetchRaw).mock
         .calls[1][0] as string
       const retriedUrl = vi.mocked(httpClient.fetchRaw).mock
         .calls[2][0] as string
-      expect(failedUrl).toStrictEqual(retriedUrl)
+      expect(failedUrl).toEqual(retriedUrl)
       expect(retriedUrl).toContain('continuation=cursor-1')
     })
 

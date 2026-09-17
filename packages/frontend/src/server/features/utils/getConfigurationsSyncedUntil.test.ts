@@ -8,7 +8,7 @@ const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 describe(getConfigurationsSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
     const result = getConfigurationsSyncedUntil([])
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
@@ -19,7 +19,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
       } as unknown as IndexerConfigurationRecord,
     ])
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
@@ -38,7 +38,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
       } as unknown as IndexerConfigurationRecord,
     ])
 
-    expect(result).toStrictEqual(FROM)
+    expect(result).toEqual(FROM)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
@@ -61,6 +61,6 @@ describe(getConfigurationsSyncedUntil.name, () => {
       } as unknown as IndexerConfigurationRecord,
     ])
 
-    expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)
+    expect(result).toEqual(FROM + 1 * UnixTime.HOUR)
   })
 })

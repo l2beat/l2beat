@@ -29,11 +29,11 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
         'config-2',
       ])
 
-      expect(deleted).toStrictEqual(3)
+      expect(deleted).toEqual(3)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           ecosystemToken('project-c', 'coingecko-1', 'config-3'),
         ]),
@@ -46,11 +46,11 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           ecosystemToken('project-a', 'coingecko-1', 'config-1'),
         ]),
@@ -63,11 +63,11 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           ecosystemToken('project-a', 'coingecko-1', 'config-1'),
         ]),

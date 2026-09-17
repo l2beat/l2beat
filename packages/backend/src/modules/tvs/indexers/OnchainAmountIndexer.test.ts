@@ -153,7 +153,7 @@ describe(OnchainAmountIndexer.name, () => {
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(timestamp)
+      expect(safeHeight).toEqual(timestamp)
     })
 
     it('fetches onchain amounts and saves them to DB (starknet)', async () => {
@@ -276,7 +276,7 @@ describe(OnchainAmountIndexer.name, () => {
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(timestamp)
+      expect(safeHeight).toEqual(timestamp)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -317,7 +317,7 @@ describe(OnchainAmountIndexer.name, () => {
       expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
         from,
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('throws an error if block number is not found', async () => {

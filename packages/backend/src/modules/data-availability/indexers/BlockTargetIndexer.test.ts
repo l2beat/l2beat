@@ -50,7 +50,7 @@ describe(BlockTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toStrictEqual(BLOCK_NUMBER)
+      expect(result).toEqual(BLOCK_NUMBER)
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,

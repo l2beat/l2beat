@@ -9,16 +9,14 @@ describe(buildRenderGraph.name, () => {
 
     const graph = buildRenderGraph([group, makeNode('target')])
 
-    expect(graph.liveGroupTargets.get('group')).toStrictEqual(
-      new Set(['target']),
-    )
+    expect(graph.liveGroupTargets.get('group')).toEqual(new Set(['target']))
     expect(
       isFieldConnectionLive(
         group,
         group.fields[0] as Field,
         graph.liveGroupTargets,
       ),
-    ).toStrictEqual(true)
+    ).toEqual(true)
   })
 
   it('removes a collapsed group row when every member edge is hidden', () => {
@@ -27,14 +25,14 @@ describe(buildRenderGraph.name, () => {
 
     const graph = buildRenderGraph([group, makeNode('target')])
 
-    expect(graph.liveGroupTargets.has('group')).toStrictEqual(false)
+    expect(graph.liveGroupTargets.has('group')).toEqual(false)
     expect(
       isFieldConnectionLive(
         group,
         group.fields[0] as Field,
         graph.liveGroupTargets,
       ),
-    ).toStrictEqual(false)
+    ).toEqual(false)
   })
 
   it('respects fields hidden directly on a collapsed group', () => {
@@ -52,7 +50,7 @@ describe(buildRenderGraph.name, () => {
         group.fields[0] as Field,
         graph.liveGroupTargets,
       ),
-    ).toStrictEqual(false)
+    ).toEqual(false)
   })
 })
 

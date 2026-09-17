@@ -16,7 +16,7 @@ describe(ModelIdRegistry.name, () => {
         registry.getAddressData(
           'contractA_eth_0x000000000000000000000000000000000000ccc1',
         ),
-      ).toStrictEqual({
+      ).toEqual({
         modelId: 'contractA_eth_0x000000000000000000000000000000000000ccc1',
         shortChain: 'eth',
         address: '0x000000000000000000000000000000000000ccc1',
@@ -29,7 +29,7 @@ describe(ModelIdRegistry.name, () => {
         registry.getAddressData(
           'eoaA_eth_0x000000000000000000000000000000000000eee1',
         ),
-      ).toStrictEqual({
+      ).toEqual({
         modelId: 'eoaA_eth_0x000000000000000000000000000000000000eee1',
         shortChain: 'eth',
         address: '0x000000000000000000000000000000000000eee1',
@@ -47,7 +47,7 @@ describe(ModelIdRegistry.name, () => {
 
   describe(ModelIdRegistry.prototype.getAddressDataOrUndefined.name, () => {
     it('returns undefined when address is not found', () => {
-      expect(registry.getAddressDataOrUndefined('abc')).toStrictEqual(undefined)
+      expect(registry.getAddressDataOrUndefined('abc')).toEqual(undefined)
     })
   })
 
@@ -56,7 +56,7 @@ describe(ModelIdRegistry.name, () => {
       const result = registry.replaceIdsWithNames(
         'Contract @@contractA_eth_0x000000000000000000000000000000000000ccc1, eoa @@eoaA_eth_0x000000000000000000000000000000000000eee1, unknown @@a_b_c',
       )
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         'Contract ContractA, eoa Special EOA, unknown a_b_c',
       )
     })

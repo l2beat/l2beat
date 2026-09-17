@@ -37,7 +37,7 @@ describe(retry.name, () => {
     }).catch(() => 0)
     globalThis.setTimeout = _setTimeout
     expect(fn).toHaveBeenCalledTimes(10)
-    expect(calls).toStrictEqual([1, 2, 4, 8, 16, 32, 64, 100, 100])
+    expect(calls).toEqual([1, 2, 4, 8, 16, 32, 64, 100, 100])
   })
 })
 
@@ -71,10 +71,10 @@ describe(withRetries.name, () => {
       initialTimeoutMs: 1,
       maxAttempts: 2,
     })
-    expect(await fooService.getFoo()).toStrictEqual('foo')
-    expect(await fooService.getBar()).toStrictEqual('bar')
-    expect(fooService.notAsync()).toStrictEqual(42)
+    expect(await fooService.getFoo()).toEqual('foo')
+    expect(await fooService.getBar()).toEqual('bar')
+    expect(fooService.notAsync()).toEqual(42)
     expect(() => fooService.notAsyncThrow()).toThrow('oops')
-    expect(fooService.toString()).toStrictEqual('[object Object]')
+    expect(fooService.toString()).toEqual('[object Object]')
   })
 })

@@ -81,10 +81,10 @@ describe('model-permissions all', () => {
         { cwd: root, encoding: 'utf8' },
       )
 
-      expect(result.status).toStrictEqual(1)
+      expect(result.status).toEqual(1)
       expect(result.stderr).toContain('higher than current discovery timestamp')
       expect(result.stdout).not.toContain('Modelling: b')
-      expect(readFileSync(nextPath, 'utf8')).toStrictEqual(nextBefore)
+      expect(readFileSync(nextPath, 'utf8')).toEqual(nextBefore)
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
@@ -176,12 +176,12 @@ describe('model-permissions all', () => {
 
       expect(run('all')).not.toContain(staleWarning)
       const module = read('z')
-      expect(module.permissionsConfigHash).not.toStrictEqual(Hash256.ZERO)
-      expect('modelledAgainst' in module).toStrictEqual(false)
-      expect(read('a').modelledAgainst).toStrictEqual({
+      expect(module.permissionsConfigHash).not.toEqual(Hash256.ZERO)
+      expect('modelledAgainst' in module).toEqual(false)
+      expect(read('a').modelledAgainst).toEqual({
         z: module.permissionsConfigHash!,
       })
-      expect(read('b').modelledAgainst).toStrictEqual({
+      expect(read('b').modelledAgainst).toEqual({
         z: module.permissionsConfigHash!,
       })
 
@@ -194,17 +194,17 @@ describe('model-permissions all', () => {
       const consumerFirst = run('a')
       expect(consumerFirst).toContain(staleWarning)
       expect(consumerFirst).toContain('l2b model-permissions z')
-      expect(read('a').modelledAgainst.z).not.toStrictEqual(
+      expect(read('a').modelledAgainst.z).not.toEqual(
         module.permissionsConfigHash!,
       )
       expect(run('z')).not.toContain(staleWarning)
-      expect(read('z').permissionsConfigHash).not.toStrictEqual(
+      expect(read('z').permissionsConfigHash).not.toEqual(
         module.permissionsConfigHash,
       )
-      expect(read('a').modelledAgainst).toStrictEqual({
+      expect(read('a').modelledAgainst).toEqual({
         z: read('z').permissionsConfigHash!,
       })
-      expect(readFileSync(untouchedPath, 'utf8')).toStrictEqual(untouched)
+      expect(readFileSync(untouchedPath, 'utf8')).toEqual(untouched)
     } finally {
       rmSync(root, { recursive: true, force: true })
     }

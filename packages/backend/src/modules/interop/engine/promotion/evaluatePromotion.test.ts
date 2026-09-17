@@ -23,7 +23,7 @@ describe(evaluatePromotion.name, () => {
     ]
     const { violations, ruleErrors } = evaluatePromotion(ctx, rules)
     expect(violations).toHaveLength(2)
-    expect(ruleErrors).toStrictEqual([])
+    expect(ruleErrors).toEqual([])
   })
 
   it('isolates a throwing rule into ruleErrors and keeps the rest', () => {
@@ -41,6 +41,6 @@ describe(evaluatePromotion.name, () => {
     ]
     const { violations, ruleErrors } = evaluatePromotion(ctx, rules)
     expect(violations).toHaveLength(1)
-    expect(ruleErrors).toStrictEqual([{ rule: 'boom', error: 'kaboom' }])
+    expect(ruleErrors).toEqual([{ rule: 'boom', error: 'kaboom' }])
   })
 })

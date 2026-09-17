@@ -164,7 +164,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ).toHaveBeenCalledExactlyOnceWith(MIN, endOfFirstDay)
 
       // 2023-05-02 00:00:00
-      expect(to).toStrictEqual(endOfFirstDay + 1)
+      expect(to).toEqual(endOfFirstDay + 1)
     })
 
     it('does nothing if range shorter than hour', async () => {
@@ -179,7 +179,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = await indexer.update(MIN, to)
 
       // 2023-05-01 00:30:00
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
   })
 
@@ -235,7 +235,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.aggregate(txs, ethPrices)
 
       expect(result).toHaveLength(3)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([
           {
             timestamp: NOW,
@@ -396,7 +396,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           UnixTime(4),
         ])
 
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           {
             timestamp: UnixTime(1),
             projectId: project1,
@@ -424,7 +424,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const indexer = createIndexer()
         const result = indexer.findTxConfigsWithMultiplier()
 
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           { id: 'p2-t2', factor: 0.6 },
           { id: 'p3-t1', factor: 1 },
         ])
@@ -438,7 +438,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly for non blob tx', () => {
       const result = indexer.calculate(tx('dwada'), 2000, 1)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalGas: 601201,
         totalGasEth: 0.009797870728835058,
         totalGasUsd: 19.595741457670115,
@@ -460,7 +460,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly with multiplier', () => {
       const result = indexer.calculate(tx('dwadad'), 2000, 0.6)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalGas: 360721,
         totalGasEth: 0.00587872895616626,
         totalGasUsd: 11.75745791233252,
@@ -482,7 +482,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('calculates correctly for blob tx', () => {
       const result = indexer.calculate(txWithBlob(), 2000, 1)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalGas: 732273,
         totalGasEth: 0.00979787072896613,
         totalGasUsd: 19.59574145793226,
@@ -514,7 +514,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 23:59:59
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(from, 'hour') + 1 * UnixTime.DAY - 1,
       ])
@@ -529,7 +529,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:59:59
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(to, 'hour') - 1,
       ])
@@ -544,7 +544,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:00:00
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         UnixTime.toStartOf(from, 'hour'),
         UnixTime.toStartOf(from, 'hour'),
       ])

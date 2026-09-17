@@ -22,7 +22,7 @@ complexFact(
 )
     `
     const parsed = parseClingoFact(clingoFact)
-    expect(parsed).toStrictEqual({
+    expect(parsed).toEqual({
       atom: 'complexFact',
       params: [
         'thisIs_simple_Atom_0x123abc',

@@ -11,7 +11,7 @@ describe('squarify', () => {
     const values = [50, 25, 12, 8, 5]
     const tiles = squarify(values, (value) => value, BOUNDS)
 
-    expect(tiles.length).toStrictEqual(values.length)
+    expect(tiles.length).toEqual(values.length)
     const total = values.reduce((sum, value) => sum + value, 0)
     const boundsArea = BOUNDS.width * BOUNDS.height
     for (const tile of tiles) {
@@ -48,8 +48,8 @@ describe('squarify', () => {
       for (let j = i + 1; j < tiles.length; j++) {
         const a = tiles[i]
         const b = tiles[j]
-        expect(a).not.toStrictEqual(undefined)
-        expect(b).not.toStrictEqual(undefined)
+        expect(a).not.toEqual(undefined)
+        expect(b).not.toEqual(undefined)
         if (a === undefined || b === undefined) {
           continue
         }
@@ -65,13 +65,13 @@ describe('squarify', () => {
   it('drops items without a value', () => {
     const tiles = squarify([10, 0, 5, -1], (value) => value, BOUNDS)
 
-    expect(tiles.map((tile) => tile.item)).toStrictEqual([10, 5])
+    expect(tiles.map((tile) => tile.item)).toEqual([10, 5])
   })
 
   it('returns nothing for empty input or empty bounds', () => {
-    expect(squarify([], (value: number) => value, BOUNDS)).toStrictEqual([])
+    expect(squarify([], (value: number) => value, BOUNDS)).toEqual([])
     expect(
       squarify([1, 2], (value) => value, { x: 0, y: 0, width: 0, height: 10 }),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 })

@@ -335,7 +335,7 @@ describe(FunctionSelectorDecoder.name, () => {
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toStrictEqual(FunctionA)
+      expect(result).toEqual(FunctionA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -362,7 +362,7 @@ describe(FunctionSelectorDecoder.name, () => {
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toStrictEqual(FunctionSigA)
+      expect(result).toEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -388,7 +388,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toStrictEqual(FunctionSigA)
+      expect(result).toEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -414,7 +414,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
-      expect(result).toStrictEqual(FunctionSigA)
+      expect(result).toEqual(FunctionSigA)
       expect(provider.getSource).toHaveBeenCalledTimes(1)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
@@ -457,12 +457,12 @@ describe(FunctionSelectorDecoder.name, () => {
       const result5 = await decoder.decodeSelector(target2, FunctionSigB)
       const result6 = await decoder.decodeSelector(target2, FunctionSigC)
 
-      expect(result1).toStrictEqual(FunctionA)
-      expect(result2).toStrictEqual(FunctionB)
-      expect(result3).toStrictEqual(FunctionSigC)
-      expect(result4).toStrictEqual(FunctionA)
-      expect(result5).toStrictEqual(FunctionB)
-      expect(result6).toStrictEqual(FunctionC)
+      expect(result1).toEqual(FunctionA)
+      expect(result2).toEqual(FunctionB)
+      expect(result3).toEqual(FunctionSigC)
+      expect(result4).toEqual(FunctionA)
+      expect(result5).toEqual(FunctionB)
+      expect(result6).toEqual(FunctionC)
       expect(provider.getSource).toHaveBeenCalledTimes(5)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
       expect(provider.getSource).toHaveBeenNthCalledWith(2, implementation1)

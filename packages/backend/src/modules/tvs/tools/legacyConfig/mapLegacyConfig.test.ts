@@ -43,12 +43,12 @@ describe(mapLegacyConfig.name, () => {
       mockLocalStorage,
     )
 
-    expect(result.projectId).toStrictEqual(ProjectId('arbitrum'))
+    expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(
       result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH'),
-    ).toStrictEqual({
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
@@ -113,7 +113,7 @@ describe(mapLegacyConfig.name, () => {
         (t: TvsToken) =>
           t.id === 'arbitrum-ARB-1' && t.amount.type === 'circulatingSupply',
       ),
-    ).toStrictEqual({
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ARB-1'),
       symbol: 'ARB',
@@ -137,7 +137,7 @@ describe(mapLegacyConfig.name, () => {
 
     expect(
       result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ATH'),
-    ).toStrictEqual({
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',

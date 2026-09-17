@@ -12,7 +12,7 @@ describe(decodeType.name, () => {
   it('uint', () => {
     const e = encode('uint', 12345n)
     const d = decodeType('uint', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'uint256',
       encoded: e,
@@ -23,7 +23,7 @@ describe(decodeType.name, () => {
   it('uint8', () => {
     const e = encode('uint8', 15)
     const d = decodeType('uint8', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'uint8',
       encoded: e,
@@ -39,7 +39,7 @@ describe(decodeType.name, () => {
   it('int (negative)', () => {
     const e = encode('int', -12345n)
     const d = decodeType('int', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'int256',
       encoded: e,
@@ -50,7 +50,7 @@ describe(decodeType.name, () => {
   it('int (positive)', () => {
     const e = encode('int', 12345n)
     const d = decodeType('int', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'int256',
       encoded: e,
@@ -61,7 +61,7 @@ describe(decodeType.name, () => {
   it('int8', () => {
     const e = encode('int8', -17)
     const d = decodeType('int8', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'int8',
       encoded: e,
@@ -72,7 +72,7 @@ describe(decodeType.name, () => {
   it('int8 min', () => {
     const e = encode('int8', -128)
     const d = decodeType('int8', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'int8',
       encoded: e,
@@ -88,7 +88,7 @@ describe(decodeType.name, () => {
   it('address', () => {
     const e = encode('address', '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
     const d = decodeType('address', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'address',
       encoded: e,
@@ -107,7 +107,7 @@ describe(decodeType.name, () => {
   it('bool true', () => {
     const e = encode('bool', true)
     const d = decodeType('bool', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bool',
       encoded: e,
@@ -118,7 +118,7 @@ describe(decodeType.name, () => {
   it('bool false', () => {
     const e = encode('bool', false)
     const d = decodeType('bool', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bool',
       encoded: e,
@@ -134,7 +134,7 @@ describe(decodeType.name, () => {
   it('bytes32', () => {
     const encoded: `0x${string}` = `0x${'deadbeef'.repeat(8)}`
     const d = decodeType('bytes32', encoded)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bytes32',
       encoded: encoded,
@@ -145,7 +145,7 @@ describe(decodeType.name, () => {
   it('bytes4', () => {
     const encoded = encode('bytes4', '0xdeadbeef')
     const d = decodeType('bytes4', encoded)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bytes4',
       encoded: encoded,
@@ -167,7 +167,7 @@ describe(decodeType.name, () => {
     const bytes: `0x${string}` = `0x${'ab12'.repeat(20)}`
     const e = encode('bytes', bytes)
     const d = decodeType('bytes', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bytes',
       encoded: e,
@@ -179,7 +179,7 @@ describe(decodeType.name, () => {
     const bytes: `0x${string}` = `0x${'ab12'.repeat(20)}`
     const e: `0x${string}` = `${encode('bytes', bytes)}${'deadbeef'.repeat(8)}`
     const d = decodeType('bytes', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'bytes',
       encoded: e,
@@ -196,7 +196,7 @@ describe(decodeType.name, () => {
     const s = 'I like pancakes!'
     const e = encode('string', s)
     const d = decodeType('string', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'string',
       encoded: e,
@@ -207,7 +207,7 @@ describe(decodeType.name, () => {
   it('uint[2]', () => {
     const e = encode('uint[2]', [1n, 2n])
     const d = decodeType('uint[2]', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'uint256[2]',
       encoded: e,
@@ -235,7 +235,7 @@ describe(decodeType.name, () => {
   it('uint[2] extra', () => {
     const e: `0x${string}` = `${encode('uint[2]', [1n, 2n])}deadbeef`
     const d = decodeType('uint[2]', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'uint256[2]',
       encoded: e,
@@ -263,7 +263,7 @@ describe(decodeType.name, () => {
   it('uint[]', () => {
     const e = encode('uint[]', [1n, 2n])
     const d = decodeType('uint[]', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'uint256[]',
       encoded: e,
@@ -291,7 +291,7 @@ describe(decodeType.name, () => {
   it('string[]', () => {
     const e = encode('string[]', ['foo', 'bar'])
     const d = decodeType('string[]', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: 'string[]',
       encoded: e,
@@ -322,7 +322,7 @@ describe(decodeType.name, () => {
       [2n, 'bar'],
     ])
     const d = decodeType('(uint256, string)[]', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: '',
       abi: '(uint256, string)[]',
       encoded: e,
@@ -387,7 +387,7 @@ describe(decodeType.name, () => {
     const tuple = encode('(address spender, uint256 amount)', [spender, 1234n])
     const e: `0x${string}` = `${selector}${tuple.slice(2)}`
     const d = decodeType('function approve(address spender, uint256 amount)', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: 'approve',
       abi: 'function approve(address, uint256)',
       encoded: e,
@@ -417,7 +417,7 @@ describe(decodeType.name, () => {
     const selector: `0x${string}` = '0x06fdde03'
     const e: `0x${string}` = `${selector}deadbeef`
     const d = decodeType('function name()', e)
-    expect(d).toStrictEqual({
+    expect(d).toEqual({
       name: 'name',
       abi: 'function name()',
       encoded: e,
@@ -610,7 +610,7 @@ describe(parseType.name, () => {
     delete testCase.__type
     it(toParse, () => {
       const parsed = parseType(toParse)
-      expect(parsed).toStrictEqual(testCase)
+      expect(parsed).toEqual(testCase)
     })
   }
 })
@@ -631,7 +631,7 @@ describe(tokenizeType.name, () => {
     const [first, rest] = testCase
     it(first, () => {
       const tokens = tokenizeType(first)
-      expect(tokens).toStrictEqual(rest)
+      expect(tokens).toEqual(rest)
     })
   }
 })

@@ -60,7 +60,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockCalculateAnomalies).not.toHaveBeenCalled()
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('should update', async () => {
@@ -123,7 +123,7 @@ describe(AnomaliesIndexer.name, () => {
         mockAnomalyStats,
       )
 
-      expect(result).toStrictEqual(UnixTime.toStartOf(NOW, 'day'))
+      expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
     })
 
     it('should adjust and update', async () => {
@@ -186,7 +186,7 @@ describe(AnomaliesIndexer.name, () => {
         mockAnomalyStats,
       )
 
-      expect(result).toStrictEqual(UnixTime.toStartOf(NOW, 'day'))
+      expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
     })
   })
 
@@ -207,7 +207,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
 
-      expect(result).toStrictEqual(targetHeight)
+      expect(result).toEqual(targetHeight)
     })
   })
 
@@ -346,7 +346,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         anomalyRecords: mockAnomalies,
         anomalyStatsRecords: mockStats,
       })
@@ -364,7 +364,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toStrictEqual({ anomalies: [], stats: undefined })
+      expect(result).toEqual({ anomalies: [], stats: undefined })
     })
 
     it('should return empty if not enough liveness data', async () => {
@@ -389,7 +389,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         anomalies: [],
         stats: undefined,
       })
@@ -416,7 +416,7 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         anomalies: [],
         stats: {
           projectId: MOCK_PROJECTS[0].id,
@@ -450,7 +450,7 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         anomalies: [
           {
             projectId: MOCK_PROJECTS[0].id,

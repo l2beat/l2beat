@@ -18,7 +18,7 @@ describe(StarknetUopsAnalyzer.name, () => {
       } as unknown as Block
       const uops = analyzer.calculateUops(block)
 
-      expect(uops).toStrictEqual(7)
+      expect(uops).toEqual(7)
     })
   })
 
@@ -27,31 +27,31 @@ describe(StarknetUopsAnalyzer.name, () => {
       const tx = mockTx('DEPLOY_ACCOUNT')
 
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should handle block number lower than 3000', () => {
       const tx = mockTx('abc')
       const result = analyzer.getOperationsCount(tx, 100)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should handle tx other than INVOKE', () => {
       const tx = mockTx('abc')
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE without calldata', () => {
       const tx = mockTx('INVOKE')
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE with calldata', () => {
       const tx = mockTx('INVOKE', ['0x3', '0x12123'])
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toStrictEqual(3)
+      expect(result).toEqual(3)
     })
   })
 })

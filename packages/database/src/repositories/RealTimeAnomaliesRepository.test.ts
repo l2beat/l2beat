@@ -85,7 +85,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
         { ...newRows[1]!, end: undefined },
       ]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -98,7 +98,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
   })
 
@@ -109,7 +109,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
         const results = await repository.getOngoingAnomalies()
 
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([DATA[0], DATA[1], DATA[2]]),
         )
       })
@@ -124,14 +124,12 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           PROJECT_B,
         ])
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
-          expect.arrayContaining([DATA[2]!, DATA[3]!]),
-        )
+        expect(results).toEqual(expect.arrayContaining([DATA[2]!, DATA[3]!]))
       })
 
       it('should return empty array if no project ids', async () => {
         const results = await repository.getApprovedAnomaliesByProjectIds([])
-        expect(results).toStrictEqual([])
+        expect(results).toEqual([])
       })
     },
   )
@@ -144,14 +142,12 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           PROJECT_B,
         ])
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
-          expect.arrayContaining([DATA[2]!, DATA[3]!]),
-        )
+        expect(results).toEqual(expect.arrayContaining([DATA[2]!, DATA[3]!]))
       })
 
       it('should return empty array if no project ids', async () => {
         const results = await repository.getApprovedAnomaliesByProjectIds([])
-        expect(results).toStrictEqual([])
+        expect(results).toEqual([])
       })
     },
   )
@@ -162,7 +158,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       it('should return all approved and ongoing anomalies', async () => {
         const results = await repository.getApprovedOngoingAnomalies()
         expect(results).toHaveLength(1)
-        expect(results).toStrictEqual(expect.arrayContaining([DATA[2]!]))
+        expect(results).toEqual(expect.arrayContaining([DATA[2]!]))
       })
     },
   )
@@ -171,9 +167,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all projectIds', async () => {
       const results = await repository.getProjectIds()
       expect(results).toHaveLength(2)
-      expect(results).toStrictEqual(
-        expect.arrayContaining([PROJECT_A, PROJECT_B]),
-      )
+      expect(results).toEqual(expect.arrayContaining([PROJECT_A, PROJECT_B]))
     })
   })
 
@@ -183,7 +177,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -193,7 +187,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([DATA[0]])
+      expect(results).toEqual([DATA[0]])
     })
   })
 
@@ -207,10 +201,10 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(deleted).toStrictEqual(1)
+        expect(deleted).toEqual(1)
         const results = await repository.getAll()
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([DATA[0], DATA[1], DATA[3]]),
         )
       })
@@ -221,10 +215,10 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'stateUpdates',
         )
 
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
         const results = await repository.getAll()
         expect(results).toHaveLength(DATA.length)
-        expect(results).toStrictEqual(expect.arrayContaining(DATA))
+        expect(results).toEqual(expect.arrayContaining(DATA))
       })
 
       it('does not delete recovered anomalies with same projectId and subtype', async () => {
@@ -233,10 +227,10 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'proofSubmissions',
         )
 
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
         const results = await repository.getAll()
         expect(results).toHaveLength(DATA.length)
-        expect(results).toStrictEqual(expect.arrayContaining(DATA))
+        expect(results).toEqual(expect.arrayContaining(DATA))
       })
     },
   )

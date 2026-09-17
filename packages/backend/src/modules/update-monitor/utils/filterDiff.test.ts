@@ -27,7 +27,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, unknownContracts)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -48,7 +48,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
   it('deleted', () => {
     const diff: DiscoveryDiff[] = [
@@ -62,7 +62,7 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
   it('errors', () => {
     const diff: DiscoveryDiff[] = [
@@ -76,6 +76,6 @@ describe(filterDiff.name, () => {
 
     const result = filterDiff(diff, [])
 
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 })

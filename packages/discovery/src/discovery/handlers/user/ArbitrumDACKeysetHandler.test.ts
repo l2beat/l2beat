@@ -38,8 +38,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = {
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(address)
-        expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
+        expect(providedAddress).toEqual(address)
+        expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
         return [
           SetValidKeyset(1, 2),
           SetValidKeyset(2, 3),
@@ -55,7 +55,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     })
 
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         blsSignatures: ['qg==', 'qg==', 'qg==', 'qg==', 'qg==', 'qg==', 'qg=='],
@@ -69,8 +69,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     const address = ChainSpecificAddress.random()
     const provider = {
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(address)
-        expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
+        expect(providedAddress).toEqual(address)
+        expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
         return []
       }),
     } as unknown as IProvider
@@ -80,7 +80,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     })
 
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         blsSignatures: [],

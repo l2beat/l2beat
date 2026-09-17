@@ -23,8 +23,8 @@ const tokenList = getTokenList(chains)
 describe('layer2s', () => {
   it('l2s do not have a host chain', () => {
     for (const layer2 of layer2s) {
-      expect(layer2.hostChain).toStrictEqual(undefined)
-      expect(layer2.stackedRiskView).toStrictEqual(undefined)
+      expect(layer2.hostChain).toEqual(undefined)
+      expect(layer2.stackedRiskView).toEqual(undefined)
     }
   })
 
@@ -41,9 +41,7 @@ describe('layer2s', () => {
     it('uses isPartOfSuperchain only for superchain', () => {
       for (const layer2 of layer2s) {
         if (layer2.ecosystemInfo?.isPartOfSuperchain) {
-          expect(layer2.ecosystemInfo?.id).toStrictEqual(
-            ProjectId('superchain'),
-          )
+          expect(layer2.ecosystemInfo?.id).toEqual(ProjectId('superchain'))
         }
       }
     })
@@ -156,7 +154,7 @@ describe('layer2s', () => {
       const exceptions = ['polygon-pos', 'apex-pro']
       if (name !== undefined && !exceptions.includes(layer2.id)) {
         it(layer2.id.toString(), () => {
-          expect(name).toStrictEqual(layer2.id.toString())
+          expect(name).toEqual(layer2.id.toString())
         })
       }
     }
@@ -178,7 +176,7 @@ describe('layer2s', () => {
               const i = new utils.Interface([c.functionSignature])
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
-              expect(calculatedSignature).toStrictEqual(c.selector)
+              expect(calculatedSignature).toEqual(c.selector)
             })
           }
         })
@@ -192,9 +190,7 @@ describe('layer2s', () => {
             const costMultipliers = project.config.trackedTxs
               ?.map((t) => t._hackCostMultiplier)
               .filter(notUndefined)
-            expect(
-              costMultipliers?.every((m) => m > 0 && m <= 1),
-            ).toStrictEqual(true)
+            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
           })
         }
       }
@@ -299,7 +295,7 @@ describe('layer2s', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         it(layer2.display.name, () => {
-          expect(layer2.display.description.endsWith('.')).toStrictEqual(true)
+          expect(layer2.display.description.endsWith('.')).toEqual(true)
         })
       }
     })
@@ -316,11 +312,11 @@ describe('layer2s', () => {
         describe(layer2.display.name, () => {
           for (const [name, choice] of choices) {
             it(`${name}.name doesn't end with a dot`, () => {
-              expect(choice.name.endsWith('.')).toStrictEqual(false)
+              expect(choice.name.endsWith('.')).toEqual(false)
             })
 
             it(`${name}.description ends with a dot`, () => {
-              expect(choice.description.endsWith('.')).toStrictEqual(true)
+              expect(choice.description.endsWith('.')).toEqual(true)
             })
 
             if (choice.risks.length > 0) {
@@ -342,9 +338,7 @@ describe('layer2s', () => {
         const labels = layer2.reasonsForBeingOther?.map(
           (reason) => reason.label,
         )
-        expect(labels?.length).toStrictEqual(
-          labels ? uniq(labels).length : undefined,
-        )
+        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
       })
     }
 
@@ -393,7 +387,7 @@ describe('layer2s', () => {
               continue
             }
             it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
-              expect(milestone.description?.endsWith('.')).toStrictEqual(true)
+              expect(milestone.description?.endsWith('.')).toEqual(true)
             })
           }
         }
@@ -402,7 +396,7 @@ describe('layer2s', () => {
             continue
           }
           it(`Milestone: ${milestone.title} (main page) description ends with a dot`, () => {
-            expect(milestone.description?.endsWith('.')).toStrictEqual(true)
+            expect(milestone.description?.endsWith('.')).toEqual(true)
           })
         }
       })
@@ -442,15 +436,13 @@ describe('layer2s', () => {
         for (const milestone of allMilestones ?? []) {
           expect(
             UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toStrictEqual(true)
+          ).toEqual(true)
         }
       })
 
       it('is correct', () => {
         for (const milestone of allMilestones ?? []) {
-          expect(new Date(milestone.date).getTime()).not.toStrictEqual(
-            Number.NaN,
-          )
+          expect(new Date(milestone.date).getTime()).not.toEqual(Number.NaN)
         }
       })
     })
@@ -471,7 +463,7 @@ describe('layer2s', () => {
               continue
             }
             it(req.description, () => {
-              expect(req.description.endsWith('.')).toStrictEqual(true)
+              expect(req.description.endsWith('.')).toEqual(true)
             })
           }
         }
@@ -485,12 +477,10 @@ describe('layer2s', () => {
         if (!layer2.stateValidation) continue
 
         if (layer2.stateValidation.description) {
-          expect(
-            layer2.stateValidation.description.endsWith('.'),
-          ).toStrictEqual(true)
+          expect(layer2.stateValidation.description.endsWith('.')).toEqual(true)
         }
         layer2.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toStrictEqual(true)
+          expect(category.description.endsWith('.')).toEqual(true)
         })
       }
     })
@@ -502,7 +492,7 @@ describe('layer2s', () => {
         continue
       }
       it(`${layer2.display.name} does not have duplicated badges`, () => {
-        expect(layer2.badges?.length).toStrictEqual(uniq(layer2.badges).length)
+        expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
       })
     }
   })

@@ -29,10 +29,10 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toStrictEqual(1)
-    expect(section.actors[0]?.groupCount).toStrictEqual(2)
-    expect(section.actors[0]?.additionalAnchorIds).toStrictEqual(['second'])
-    expect(section.actors[0]?.addresses.map((x) => x.address)).toStrictEqual([
+    expect(section.actors.length).toEqual(1)
+    expect(section.actors[0]?.groupCount).toEqual(2)
+    expect(section.actors[0]?.additionalAnchorIds).toEqual(['second'])
+    expect(section.actors[0]?.addresses.map((x) => x.address)).toEqual([
       ChainSpecificAddress.address(ADDRESS_A),
       ChainSpecificAddress.address(ADDRESS_B),
     ])
@@ -64,7 +64,7 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toStrictEqual(2)
+    expect(section.actors.length).toEqual(2)
   })
 
   it('does not group EOAs', () => {
@@ -77,7 +77,7 @@ describe(getPermissionsSection.name, () => {
       projectsChangeReport,
     )
 
-    expect(section.actors.length).toStrictEqual(2)
+    expect(section.actors.length).toEqual(2)
   })
 
   it('does not group a permission that recently became verified', () => {
@@ -99,7 +99,7 @@ describe(getPermissionsSection.name, () => {
       changeReport,
     )
 
-    expect(section.actors.length).toStrictEqual(2)
+    expect(section.actors.length).toEqual(2)
   })
 })
 

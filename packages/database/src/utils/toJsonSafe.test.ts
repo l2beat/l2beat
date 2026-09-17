@@ -8,7 +8,7 @@ describe(toJsonSafe.name, () => {
       nested: [{ amount: 456n }],
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       amount: '123',
       nested: [{ amount: '456' }],
     })
@@ -20,7 +20,7 @@ describe(toJsonSafe.name, () => {
       date: new Date('2026-05-18T00:00:00Z'),
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       date: '2026-05-18T00:00:00.000Z',
     })
   })

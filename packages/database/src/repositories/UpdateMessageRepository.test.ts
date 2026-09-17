@@ -22,7 +22,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
 
     const result = await repository.getAll()
 
-    expect(result).toStrictEqual([message2, message1])
+    expect(result).toEqual([message2, message1])
   })
 
   it('can upsert messages', async () => {
@@ -40,7 +40,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     await repository.upsert(updated)
     const all = await repository.getAll()
 
-    expect(all).toStrictEqual([updated])
+    expect(all).toEqual([updated])
   })
 
   it('can delete messages before timestamp', async () => {
@@ -56,10 +56,10 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     await repository.upsertMany([oldMessage, newMessage])
 
     const deleted = await repository.deleteBefore(UnixTime(150))
-    expect(deleted).toStrictEqual(1)
+    expect(deleted).toEqual(1)
 
     const remaining = await repository.getAll()
-    expect(remaining).toStrictEqual([newMessage])
+    expect(remaining).toEqual([newMessage])
   })
 })
 

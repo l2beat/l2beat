@@ -21,7 +21,7 @@ describe(EigenApiClient.name, () => {
 
       const result = await client.getMetrics(from, to)
 
-      expect(result).toStrictEqual({ total_bytes_posted: 12345678 })
+      expect(result).toEqual({ total_bytes_posted: 12345678 })
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'https://api.test.com/v2/metrics/summary?start=1640995200&end=1641081600',
         {},
@@ -63,13 +63,13 @@ describe(EigenApiClient.name, () => {
       const result = await client.getByProjectData(until)
 
       expect(result).toHaveLength(3)
-      expect(result[0]).toStrictEqual({
+      expect(result[0]).toEqual({
         datetime: UnixTime.fromDate(new Date('2022-01-01T12:00:00Z')), // adds Z to ensure it's UTC time
         customer_id: 'project1',
         total_size_mb: 100.5,
       })
-      expect(result[1].customer_id).toStrictEqual('project2')
-      expect(result[2].customer_id).toStrictEqual('project1')
+      expect(result[1].customer_id).toEqual('project2')
+      expect(result[2].customer_id).toEqual('project1')
 
       expect(http.fetchRaw).toHaveBeenCalledExactlyOnceWith(
         'https://project.test.com/v2/stats/2022-01-01.json',

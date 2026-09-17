@@ -16,7 +16,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlocks(10, 2)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { number: 10, timestamp: 1, txEffectsCount: 0 },
         { number: 11, timestamp: 2, txEffectsCount: 1 },
       ])
@@ -50,7 +50,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlocks(10, 51)
 
-      expect(result).toStrictEqual([...blocks(10, 50), ...blocks(60, 1)])
+      expect(result).toEqual([...blocks(10, 50), ...blocks(60, 1)])
       expect(client.getBlocks).toHaveBeenCalledWith(10, 50)
       expect(client.getBlocks).toHaveBeenCalledWith(60, 1)
     })
@@ -69,7 +69,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000, 800)
 
-      expect(result).toStrictEqual(300)
+      expect(result).toEqual(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client.getBlockHeaders).toHaveBeenCalled()
     })
@@ -94,7 +94,7 @@ describe(AztecBlockProvider.name, () => {
 
       const result = await provider.getBlockNumberAtOrBefore(30_000)
 
-      expect(result).toStrictEqual(300)
+      expect(result).toEqual(300)
       expect(failingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(workingClient.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })

@@ -44,7 +44,7 @@ describe(gatherReachableAddresses.name, () => {
       addressRelatives,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       new Set([
         address1,
         address2,

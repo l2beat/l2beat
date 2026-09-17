@@ -14,7 +14,7 @@ const DIFFS: FieldDiff[] = [
 
 describe(sortBySeverity.name, () => {
   it('sorts diffs by severity', () => {
-    expect(justTheKeys(sortBySeverity(DIFFS))).toStrictEqual([
+    expect(justTheKeys(sortBySeverity(DIFFS))).toEqual([
       { key: 'values.key1' },
       { key: 'values.key5' },
       { key: 'values.key3' },
@@ -25,14 +25,12 @@ describe(sortBySeverity.name, () => {
   })
 
   it('returns empty array if diffs is undefined', () => {
-    expect(sortBySeverity(undefined)).toStrictEqual([])
+    expect(sortBySeverity(undefined)).toEqual([])
   })
 
   it('returns diffs without sorting when no severity defined', () => {
     const diffsWithoutSeverity = justTheKeys(DIFFS)
-    expect(sortBySeverity(diffsWithoutSeverity)).toStrictEqual(
-      diffsWithoutSeverity,
-    )
+    expect(sortBySeverity(diffsWithoutSeverity)).toEqual(diffsWithoutSeverity)
   })
 })
 

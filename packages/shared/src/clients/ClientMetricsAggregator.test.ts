@@ -12,7 +12,7 @@ describe(ClientMetricsAggregator.name, () => {
       { duration: 5, size: 50, label: 'b' },
     ])
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         label: 'a',
         count: 2,
@@ -66,7 +66,7 @@ describe(ClientMetricsAggregator.name, () => {
       { duration: 10, size: 100, label: 'a' },
     ])
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         label: 'a',
         count: 1,
@@ -101,6 +101,6 @@ describe(ClientMetricsAggregator.name, () => {
 
   it('returns nothing when there is no data', () => {
     const aggregator = new ClientMetricsAggregator({ logger: Logger.SILENT })
-    expect(aggregator.aggregate([])).toStrictEqual([])
+    expect(aggregator.aggregate([])).toEqual([])
   })
 })

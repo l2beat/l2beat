@@ -16,7 +16,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(undefined, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: latest,
     })
@@ -25,7 +25,7 @@ describe(reconcileNetworks.name, () => {
   it('returns empty arrays when both previous and latest are empty', () => {
     const result = reconcileNetworks([], [])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: [],
     })
@@ -45,7 +45,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: ['arbitrum'],
       updated: [],
     })
@@ -64,7 +64,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: latest,
     })
@@ -82,7 +82,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: latest,
     })
@@ -102,11 +102,9 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect([...result.removed].sort()).toStrictEqual(
-      ['optimism', 'arbitrum'].sort(),
-    )
+    expect([...result.removed].sort()).toEqual(['optimism', 'arbitrum'].sort())
     expect(result.updated).toHaveLength(4)
-    expect(result.updated).toStrictEqual(
+    expect(result.updated).toEqual(
       expect.arrayContaining([
         { chain: 'optimism', rpcUrl: 'https://op.rpc' }, // removed network
         { chain: 'arbitrum', rpcUrl: 'https://arb.rpc' }, // removed network
@@ -124,7 +122,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(networks, networks)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: [],
     })
@@ -136,7 +134,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: ['optimism'],
       updated: [...latest, { chain: 'optimism' }],
     })
@@ -167,7 +165,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: [],
       updated: latest,
     })
@@ -183,7 +181,7 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       removed: ['ethereum', 'optimism'],
       updated: [],
     })

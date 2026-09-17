@@ -41,8 +41,8 @@ describe(AccessControlHandler.name, () => {
     const provider = {
       chain: 'ethereum',
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(address)
-        expect(topics).toStrictEqual([
+        expect(providedAddress).toEqual(address)
+        expect(topics).toEqual([
           [
             abi.getEventTopic('RoleGranted'),
             abi.getEventTopic('RoleRevoked'),
@@ -61,7 +61,7 @@ describe(AccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -121,7 +121,7 @@ describe(AccessControlHandler.name, () => {
       ],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -166,7 +166,7 @@ describe(AccessControlHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -194,7 +194,7 @@ describe(AccessControlHandler.name, () => {
     )
     const value = await handler.execute(provider, address)
 
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -222,7 +222,7 @@ describe(AccessControlHandler.name, () => {
     )
     const value = await handler.execute(provider, address)
 
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -263,7 +263,7 @@ describe(AccessControlHandler.name, () => {
     )
     const value = await handler.execute(provider, address)
 
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -304,7 +304,7 @@ describe(AccessControlHandler.name, () => {
     )
     const value = await handler.execute(provider, address)
 
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -349,7 +349,7 @@ describe(AccessControlHandler.name, () => {
     )
     const value = await handler.execute(provider, address)
 
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {

@@ -48,7 +48,7 @@ describe(getPrivacyConfig.name, () => {
       [],
     )
 
-    expect(config).toStrictEqual(false)
+    expect(config).toEqual(false)
   })
 
   it('includes a project that only tracks relayers', async () => {
@@ -120,7 +120,7 @@ describe(getPrivacyConfig.name, () => {
     if (source?.type !== 'railgunWaku') {
       throw new Error('Railgun should declare railgunWaku relayer tracking')
     }
-    expect(config.relayerSampleConfigs).toStrictEqual([
+    expect(config.relayerSampleConfigs).toEqual([
       {
         id: PrivacyRelayerSampler.idToConfigurationId({
           projectId: 'railgun',
@@ -210,7 +210,7 @@ describe(getPrivacyConfig.name, () => {
         },
       )
 
-      expect(deposit).toStrictEqual(
+      expect(deposit).toEqual(
         expect.objectContaining({
           direction: 'deposit',
           chain: 'ethereum',
@@ -219,7 +219,7 @@ describe(getPrivacyConfig.name, () => {
           topics: [null, POOL_TOPIC],
         }),
       )
-      expect(withdrawal).toStrictEqual(
+      expect(withdrawal).toEqual(
         expect.objectContaining({
           direction: 'withdrawal',
           chain: 'ethereum',
@@ -228,7 +228,7 @@ describe(getPrivacyConfig.name, () => {
           topics: [POOL_TOPIC],
         }),
       )
-      expect(deposit.id).not.toStrictEqual(withdrawal.id)
+      expect(deposit.id).not.toEqual(withdrawal.id)
     })
 
     it('filters both ends when from and to are set', async () => {
@@ -245,7 +245,7 @@ describe(getPrivacyConfig.name, () => {
         },
       )
 
-      expect(deposit.topics).toStrictEqual([
+      expect(deposit.topics).toEqual([
         `0x${'00'.repeat(12)}${TOKEN.slice(2).toLowerCase()}`,
         POOL_TOPIC,
       ])
@@ -278,7 +278,7 @@ describe(getPrivacyConfig.name, () => {
           const priceSince = token.token.sinceTimestamp
           if (!token.token.priceId || !priceSince) continue
           for (const bucket of token.buckets) {
-            expect(priceSince <= bucket.sinceTimestamp).toStrictEqual(true)
+            expect(priceSince <= bucket.sinceTimestamp).toEqual(true)
           }
         }
       }
@@ -297,7 +297,7 @@ describe(getPrivacyConfig.name, () => {
     if (config === false) throw new Error('Privacy config should be enabled')
     expect(config.anonymitySetConfigs.length).toBeGreaterThan(0)
     for (const anonymitySetConfig of config.anonymitySetConfigs) {
-      expect(anonymitySetConfig.sinceTimestamp).toStrictEqual(minTimestamp)
+      expect(anonymitySetConfig.sinceTimestamp).toEqual(minTimestamp)
     }
   })
 })

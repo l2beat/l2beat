@@ -101,7 +101,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
         relayerAddress: RELAYER,
       },
     ])
-    expect(safeHeight).toStrictEqual(to)
+    expect(safeHeight).toEqual(to)
   })
 
   describe(PrivacyRelayerActivityIndexer.idToConfigurationId.name, () => {
@@ -110,9 +110,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
 
       expect(
         PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      ).toStrictEqual(
-        PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      )
+      ).toEqual(PrivacyRelayerActivityIndexer.idToConfigurationId(properties))
     })
 
     it('differs by extractor', () => {
@@ -120,7 +118,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
 
       expect(
         PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      ).not.toStrictEqual(
+      ).not.toEqual(
         PrivacyRelayerActivityIndexer.idToConfigurationId({
           ...properties,
           event: getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,

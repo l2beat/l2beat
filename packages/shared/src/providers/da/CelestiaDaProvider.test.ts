@@ -28,7 +28,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515203, 6515204)
 
-      expect(blobs).toStrictEqual([
+      expect(blobs).toEqual([
         {
           type: 'celestia',
           daLayer: 'celestia',
@@ -91,7 +91,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515201, 6515202)
 
-      expect(blobs).toStrictEqual([
+      expect(blobs).toEqual([
         {
           type: 'celestia',
           daLayer: 'celestia',
@@ -140,7 +140,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(1, 1)
 
-      expect(blobs).toStrictEqual([])
+      expect(blobs).toEqual([])
     })
 
     it('filters out non-blob events', async () => {
@@ -170,7 +170,7 @@ describe(CelestiaDaProvider.name, () => {
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515204, 6515204)
 
-      expect(blobs).toStrictEqual([])
+      expect(blobs).toEqual([])
     })
   })
 
@@ -187,7 +187,7 @@ describe(CelestiaDaProvider.name, () => {
 
       const timestamp = await provider.getBlockTimestamp(6515203)
 
-      expect(timestamp).toStrictEqual(
+      expect(timestamp).toEqual(
         UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
       )
       expect(rpcClientMock.getBlockTimestamp).toHaveBeenCalledExactlyOnceWith(

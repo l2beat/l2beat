@@ -22,14 +22,14 @@ function assertWellFormed(root: LayoutNode): void {
   validateLayout(root)
   for (const node of iterNodes(root)) {
     if (node.kind !== 'split') continue
-    expect(node.children.length >= 2).toStrictEqual(true)
+    expect(node.children.length >= 2).toEqual(true)
     for (const child of node.children) {
       if (child.kind === 'split') {
-        expect(child.direction === node.direction).toStrictEqual(false)
+        expect(child.direction === node.direction).toEqual(false)
       }
     }
     for (const size of node.sizes) {
-      expect(size > 0).toStrictEqual(true)
+      expect(size > 0).toEqual(true)
     }
   }
 }
@@ -44,19 +44,19 @@ describe('docking/tree', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const next = splitLeaf(root, 'b', 'right', 'c')
       assertWellFormed(next)
-      expect(next.kind).toStrictEqual('split')
+      expect(next.kind).toEqual('split')
       const split = next as Extract<LayoutNode, { kind: 'split' }>
-      expect(
-        split.children.every((child) => child.kind === 'leaf'),
-      ).toStrictEqual(true)
-      expect(allKeys(next)).toStrictEqual(['a', 'b', 'c'])
+      expect(split.children.every((child) => child.kind === 'leaf')).toEqual(
+        true,
+      )
+      expect(allKeys(next)).toEqual(['a', 'b', 'c'])
     })
 
     it('nests exactly one level for a perpendicular split', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const next = splitLeaf(root, 'b', 'bottom', 'c')
       assertWellFormed(next)
-      expect(sortedKeys(next)).toStrictEqual(['a', 'b', 'c'])
+      expect(sortedKeys(next)).toEqual(['a', 'b', 'c'])
     })
   })
 
@@ -78,7 +78,7 @@ describe('docking/tree', () => {
         active = tab
       }
       assertWellFormed(tree)
-      expect(leafCount(tree)).toStrictEqual(23)
+      expect(leafCount(tree)).toEqual(23)
 
       const sizes: number[] = []
       for (const node of iterNodes(tree)) {
@@ -87,7 +87,7 @@ describe('docking/tree', () => {
       const min = Math.min(...sizes)
       const max = Math.max(...sizes)
       // Old behavior pushed this ratio past 1e5 within ~20 adds.
-      expect(max / min < 4).toStrictEqual(true)
+      expect(max / min < 4).toEqual(true)
     })
   })
 
@@ -97,10 +97,10 @@ describe('docking/tree', () => {
       const root = newSplit('row', [newLeaf('a'), inner], [1, 2])
       const flat = normalizeTree(root) as Extract<LayoutNode, { kind: 'split' }>
       assertWellFormed(flat)
-      expect(allKeys(flat)).toStrictEqual(['a', 'b', 'c'])
+      expect(allKeys(flat)).toEqual(['a', 'b', 'c'])
       // Parent gave the inner split weight 2; its two equal children inherit
       // half of that each.
-      expect(flat.sizes).toStrictEqual([1, 1, 1])
+      expect(flat.sizes).toEqual([1, 1, 1])
     })
 
     it('leaves perpendicular nesting untouched', () => {
@@ -111,8 +111,8 @@ describe('docking/tree', () => {
         { kind: 'split' }
       >
       assertWellFormed(result)
-      expect(result.children.length).toStrictEqual(2)
-      expect(result.children[1]?.kind).toStrictEqual('split')
+      expect(result.children.length).toEqual(2)
+      expect(result.children[1]?.kind).toEqual('split')
     })
   })
 
@@ -133,7 +133,7 @@ describe('docking/tree', () => {
       inner.id = root.id
       const fixed = reassignSplitIds(root)
       validateLayout(fixed)
-      expect(sortedKeys(fixed)).toStrictEqual(['a', 'b', 'c'])
+      expect(sortedKeys(fixed)).toEqual(['a', 'b', 'c'])
     })
   })
 
@@ -142,13 +142,13 @@ describe('docking/tree', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const next = removeLeaf(root, 'a')
       assertWellFormed(next)
-      expect(next.kind).toStrictEqual('leaf')
-      expect(allKeys(next)).toStrictEqual(['b'])
+      expect(next.kind).toEqual('leaf')
+      expect(allKeys(next)).toEqual(['b'])
     })
 
     it('refuses to remove the last remaining pane', () => {
       const root = newLeaf('a')
-      expect(removeLeaf(root, 'a')).toStrictEqual(root)
+      expect(removeLeaf(root, 'a')).toEqual(root)
     })
   })
 
@@ -158,8 +158,8 @@ describe('docking/tree', () => {
       // before the drop lands. The leaf must never be silently lost.
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
       const moved = moveLeaf(root, 'a', { key: 'ghost', edge: 'left' })
-      expect(moved).toStrictEqual(root)
-      expect(sortedKeys(moved)).toStrictEqual(['a', 'b'])
+      expect(moved).toEqual(root)
+      expect(sortedKeys(moved)).toEqual(['a', 'b'])
     })
 
     it('preserves the full set of tabs and stays well-formed', () => {
@@ -171,7 +171,7 @@ describe('docking/tree', () => {
       const target = { key: 'c', edge: 'bottom' as Edge }
       const moved = moveLeaf(root, 'a', target)
       assertWellFormed(moved)
-      expect(sortedKeys(moved)).toStrictEqual(['a', 'b', 'c'])
+      expect(sortedKeys(moved)).toEqual(['a', 'b', 'c'])
     })
   })
 

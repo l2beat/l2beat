@@ -52,7 +52,7 @@ describe(getRollupStage.name, () => {
       OPTS,
       upcomingExpiringAt(PAST_TIME),
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       message: undefined,
       additionalConsiderations: {
         short: 'short notice',
@@ -190,8 +190,8 @@ describe(getRollupStage.name, () => {
       const stage1 = result.summary.find((s) => s.stage === 'Stage 1')
       expect(
         stage1?.requirements.filter((r) => r.upcoming === true).length,
-      ).toStrictEqual(UPCOMING_STAGE_1_ITEMS.length)
-      expect(result.stage).toStrictEqual('Stage 1')
+      ).toEqual(UPCOMING_STAGE_1_ITEMS.length)
+      expect(result.stage).toEqual('Stage 1')
     })
 
     it('keeps Stage 1 but marks a downgrade as pending when an upcoming requirement fails before expiry', () => {
@@ -207,10 +207,10 @@ describe(getRollupStage.name, () => {
         upcomingExpiringAt(FUTURE_TIME),
       )
 
-      expect(result.stage).toStrictEqual('Stage 1')
+      expect(result.stage).toEqual('Stage 1')
       // Stage 1 itself is not missing anything yet - only Stage 2 is.
-      expect(result.missing?.nextStage).toStrictEqual('Stage 2')
-      expect(result.downgradePending).toStrictEqual({
+      expect(result.missing?.nextStage).toEqual('Stage 2')
+      expect(result.downgradePending).toEqual({
         expiresAt: FUTURE_TIME,
         reasons: ['Prover source code is not published.'],
         toStage: 'Stage 0',
@@ -230,9 +230,9 @@ describe(getRollupStage.name, () => {
         upcomingExpiringAt(PAST_TIME),
       )
 
-      expect(result.stage).toStrictEqual('Stage 0')
-      expect(result.downgradePending).toStrictEqual(undefined)
-      expect(result.missing?.requirements).toStrictEqual([
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing?.requirements).toEqual([
         'Prover source code is not published.',
       ])
     })

@@ -16,7 +16,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
   describe(AggregatedInteropTokensPairRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns all records', async () => {
@@ -74,7 +74,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
-      expect(result).toStrictEqual(expect.arrayContaining(records))
+      expect(result).toEqual(expect.arrayContaining(records))
     })
   })
 
@@ -151,20 +151,18 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toStrictEqual(3)
+        expect(deleted).toEqual(3)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
-          expect.arrayContaining([record1, record4]),
-        )
+        expect(remaining).toEqual(expect.arrayContaining([record1, record4]))
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
     },
   )
@@ -211,11 +209,11 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toStrictEqual(2)
+        expect(deleted).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
-        expect(remaining).toStrictEqual(expect.arrayContaining([record1]))
+        expect(remaining).toEqual(expect.arrayContaining([record1]))
       })
 
       it('returns 0 when no records match timestamp', async () => {
@@ -234,12 +232,12 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
     },
   )
@@ -284,7 +282,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(1)
-        expect(result).toStrictEqual(expect.arrayContaining([record1]))
+        expect(result).toEqual(expect.arrayContaining([record1]))
       })
 
       it('returns records across all protocols when id is omitted', async () => {
@@ -321,7 +319,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record1, record2]))
+        expect(result).toEqual(expect.arrayContaining([record1, record2]))
       })
 
       it('excludes same-chain transfers by default', async () => {
@@ -359,7 +357,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
           'lockAndMint',
         )
 
-        expect(result).toStrictEqual([crossChain])
+        expect(result).toEqual([crossChain])
       })
 
       it('includes same-chain transfers when includeSameChainTransfers is true', async () => {
@@ -399,9 +397,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
-          expect.arrayContaining([crossChain, sameChain]),
-        )
+        expect(result).toEqual(expect.arrayContaining([crossChain, sameChain]))
       })
 
       it('returns unknown pair records alongside known pairs', async () => {
@@ -440,9 +436,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
-          expect.arrayContaining([knownPair, unknownPair]),
-        )
+        expect(result).toEqual(expect.arrayContaining([knownPair, unknownPair]))
       })
     },
   )

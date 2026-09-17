@@ -29,7 +29,7 @@ describe(EspressoClient.name, () => {
 
       const result = await client.getStakeTable()
 
-      expect(result).toStrictEqual(mockResponse)
+      expect(result).toEqual(mockResponse)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         `${apiUrl}/v0/node/stake-table/current`,
         {
@@ -61,7 +61,7 @@ describe(EspressoClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true for response without error', () => {
@@ -71,7 +71,7 @@ describe(EspressoClient.name, () => {
         stake_table: [],
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

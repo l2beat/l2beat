@@ -33,20 +33,20 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       })
 
       const id = await repository.insert(record)
-      expect(id).toStrictEqual(record.id)
+      expect(id).toEqual(record.id)
 
       const stored = await repository.findById(record.id)
-      expect(stored).toStrictEqual(record)
+      expect(stored).toEqual(record)
     })
 
     it('accepts optional fields', async () => {
       const record = abstractToken({ id: 'TK0002' })
 
       const id = await repository.insert(record)
-      expect(id).toStrictEqual(record.id)
+      expect(id).toEqual(record.id)
 
       const stored = await repository.findById(record.id)
-      expect(stored).toStrictEqual(record)
+      expect(stored).toEqual(record)
     })
   })
 
@@ -78,10 +78,10 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         comment: 'updated comment',
       })
 
-      expect(updatedRows).toStrictEqual(1)
+      expect(updatedRows).toEqual(1)
 
       const stored = await repository.findById(record.id)
-      expect(stored).toStrictEqual({
+      expect(stored).toEqual({
         ...record,
         issuer: 'updated issuer',
         symbol: 'UPDT',
@@ -108,10 +108,10 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: null,
       })
 
-      expect(updatedRows).toStrictEqual(1)
+      expect(updatedRows).toEqual(1)
 
       const stored = await repository.findById(record.id)
-      expect(stored).toStrictEqual({
+      expect(stored).toEqual({
         ...record,
         category: null,
       })
@@ -144,11 +144,11 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       await repository.insert(usdc)
 
       const foundUsdc = await repository.findByCoingeckoId('usd-coin')
-      expect(foundUsdc).toStrictEqual(usdc)
+      expect(foundUsdc).toEqual(usdc)
 
       const foundBridgedUsdc =
         await repository.findByCoingeckoId('bridged-usdc')
-      expect(foundBridgedUsdc).toStrictEqual(usdc)
+      expect(foundBridgedUsdc).toEqual(usdc)
     })
 
     it('returns undefined when coingeckoId does not exist', async () => {
@@ -160,14 +160,14 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       )
 
       const found = await repository.findByCoingeckoId('ethereum')
-      expect(found).toStrictEqual(undefined)
+      expect(found).toEqual(undefined)
     })
   })
 
   describe(AbstractTokenRepository.prototype.getByIds.name, () => {
     it('returns empty array for empty ids', async () => {
       const result = await repository.getByIds([])
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns selected fields for multiple ids', async () => {
@@ -198,7 +198,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       const result = await repository.getByIds(['TK0001', 'TK0003'])
 
       expect(result).toHaveLength(2)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([
           {
             id: 'TK0001',
@@ -226,10 +226,10 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       await repository.insert(abstractToken({ id: 'TK0003' }))
 
       const deleted = await repository.deleteByIds(['TK0001', 'TK0003'])
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toStrictEqual([abstractToken({ id: 'TK0002' })])
+      expect(remaining).toEqual([abstractToken({ id: 'TK0002' })])
     })
   })
 })

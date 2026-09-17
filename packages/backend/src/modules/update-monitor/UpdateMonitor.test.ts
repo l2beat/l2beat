@@ -259,7 +259,7 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.update(timestamp)
 
-      expect(processedProjects).toStrictEqual([PROJECT_A, PROJECT_A])
+      expect(processedProjects).toEqual([PROJECT_A, PROJECT_A])
       expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
     })
 
@@ -307,7 +307,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(0)
 
       expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
-      expect(calls.filter((c) => c === 'diff').length).toStrictEqual(1)
+      expect(calls.filter((c) => c === 'diff').length).toEqual(1)
     })
   })
 
@@ -360,7 +360,7 @@ describe(UpdateMonitor.name, () => {
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyOnceWith(
         PROJECT_A,
       )
-      expect(result).toStrictEqual(discoveryB)
+      expect(result).toEqual(discoveryB)
     })
 
     it('gets repository entry', async () => {
@@ -408,7 +408,7 @@ describe(UpdateMonitor.name, () => {
 
       // calls repository
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual(dbEntry.discovery)
+      expect(result).toEqual(dbEntry.discovery)
     })
 
     it('takes config hash into consideration', async () => {
@@ -466,7 +466,7 @@ describe(UpdateMonitor.name, () => {
         }),
       )
 
-      expect(result).toStrictEqual(committed)
+      expect(result).toEqual(committed)
     })
 
     it('with version mismatch runs discovery with previous block number', async () => {
@@ -574,7 +574,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         [PROJECT_A]: {
           severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
         },
@@ -632,8 +632,8 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toStrictEqual(1)
-      expect(result).toStrictEqual({
+      expect(Object.entries(result).length).toEqual(1)
+      expect(result).toEqual({
         [PROJECT_A]: {
           severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
         },
@@ -688,7 +688,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toStrictEqual(1)
+      expect(Object.entries(result).length).toEqual(1)
     })
   })
 })

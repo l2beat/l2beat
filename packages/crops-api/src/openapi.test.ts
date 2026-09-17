@@ -7,7 +7,7 @@ describe('OpenAPI document', () => {
   const document = buildOpenApiDocument(meta)
 
   it('lists every published route under paths, checked route by route', () => {
-    expect(Object.keys(document.paths).sort()).toStrictEqual(
+    expect(Object.keys(document.paths).sort()).toEqual(
       CROPS_API_ROUTES.map((x) => x.path).sort(),
     )
   })
@@ -26,7 +26,7 @@ describe('OpenAPI document', () => {
     const response = document.components.schemas.ProjectResponse as {
       properties: Record<string, { description?: string }>
     }
-    expect(response.properties.generatedAt?.description).toStrictEqual(
+    expect(response.properties.generatedAt?.description).toEqual(
       'Unix seconds.',
     )
   })
@@ -35,12 +35,12 @@ describe('OpenAPI document', () => {
     for (const route of CROPS_API_ROUTES) {
       expect(
         document.paths[route.path]?.get.responses[404]?.description,
-      ).toStrictEqual(route.notFound)
+      ).toEqual(route.notFound)
     }
   })
 
   it('is OpenAPI 3.1', () => {
-    expect(document.openapi).toStrictEqual('3.1.0')
+    expect(document.openapi).toEqual('3.1.0')
   })
 
   it('names the ledger network and warns about a testnet only while on one', () => {

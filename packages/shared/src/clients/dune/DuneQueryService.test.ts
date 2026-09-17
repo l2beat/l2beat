@@ -54,7 +54,7 @@ describe(DuneQueryService.name, () => {
         resultSchema,
       )
 
-      expect(result).toStrictEqual(resultRows)
+      expect(result).toEqual(resultRows)
       expect(mockDuneClient.executeSql).toHaveBeenCalledWith(
         'SELECT * FROM test',
         'large',
@@ -113,7 +113,7 @@ describe(DuneQueryService.name, () => {
         resultSchema,
       )
 
-      expect(result).toStrictEqual(resultRows)
+      expect(result).toEqual(resultRows)
       expect(mockDuneClient.getExecutionStatus).toHaveBeenCalledTimes(3)
     })
 
@@ -325,7 +325,7 @@ describe(DuneQueryService.name, () => {
         resultSchema,
       )
 
-      expect(result).toStrictEqual(resultRows)
+      expect(result).toEqual(resultRows)
     })
   })
 })

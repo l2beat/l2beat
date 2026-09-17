@@ -14,7 +14,7 @@ describe(mergeSeriesByTimestamp.name, () => {
           { timestamp: 2, value: 200 },
         ],
       ),
-    ).toStrictEqual([
+    ).toEqual([
       [1, 10, 100],
       [2, 20, 200],
     ])
@@ -26,7 +26,7 @@ describe(mergeSeriesByTimestamp.name, () => {
         [{ timestamp: 1, value: 10 }],
         [{ timestamp: 2, value: 200 }],
       ),
-    ).toStrictEqual([
+    ).toEqual([
       [1, 10, null],
       [2, null, 200],
     ])
@@ -41,7 +41,7 @@ describe(mergeSeriesByTimestamp.name, () => {
         ],
         [{ timestamp: 2, value: 200 }],
       ),
-    ).toStrictEqual([
+    ).toEqual([
       [1, 10, null],
       [2, null, 200],
       [3, 30, null],
@@ -54,10 +54,10 @@ describe(mergeSeriesByTimestamp.name, () => {
         [{ timestamp: 1, value: null }],
         [{ timestamp: 1, value: 100 }],
       ),
-    ).toStrictEqual([[1, null, 100]])
+    ).toEqual([[1, null, 100]])
   })
 
   it('returns an empty chart for empty inputs', () => {
-    expect(mergeSeriesByTimestamp([], [])).toStrictEqual([])
+    expect(mergeSeriesByTimestamp([], [])).toEqual([])
   })
 })

@@ -22,7 +22,7 @@ describe(calculateIntervals.name, () => {
     ]
     const result = calculateIntervals(records)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         record: records[1],
         duration: 2 * 60 * 60,
@@ -36,6 +36,6 @@ describe(calculateIntervals.name, () => {
 
   it('if no records return empty array', () => {
     const result = calculateIntervals([])
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 })

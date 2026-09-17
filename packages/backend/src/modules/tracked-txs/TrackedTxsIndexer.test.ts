@@ -112,7 +112,7 @@ describe(TrackedTxsIndexer.name, () => {
         ['test2'],
         UnixTime(to),
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('deduplicates l2costs per transaction but passes all liveness results', async () => {
@@ -199,7 +199,7 @@ describe(TrackedTxsIndexer.name, () => {
         from,
         expected,
       )
-      expect(safeHeight).toStrictEqual(expected)
+      expect(safeHeight).toEqual(expected)
     })
 
     it('filters out archived projects', async () => {

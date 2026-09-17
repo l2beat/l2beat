@@ -28,7 +28,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toStrictEqual(1)
+      expect(result.length).toEqual(1)
 
       const expectedCalldata = multicallInterface.encodeFunctionData(
         'tryAggregate',
@@ -41,8 +41,8 @@ describe(MulticallV3Client.name, () => {
         ],
       )
 
-      expect(result[0].to).toStrictEqual(address)
-      expect(result[0].input).toStrictEqual(Bytes.fromHex(expectedCalldata))
+      expect(result[0].to).toEqual(address)
+      expect(result[0].input).toEqual(Bytes.fromHex(expectedCalldata))
     })
 
     it('splits requests into multiple batches when exceeding batch size', () => {
@@ -53,7 +53,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toStrictEqual(3)
+      expect(result.length).toEqual(3)
 
       // First batch should have 3 items
       const firstBatchCalldata = multicallInterface.encodeFunctionData(
@@ -88,14 +88,14 @@ describe(MulticallV3Client.name, () => {
         ],
       )
 
-      expect(result[0].input).toStrictEqual(Bytes.fromHex(firstBatchCalldata))
-      expect(result[1].input).toStrictEqual(Bytes.fromHex(secondBatchCalldata))
-      expect(result[2].input).toStrictEqual(Bytes.fromHex(thirdBatchCalldata))
+      expect(result[0].input).toEqual(Bytes.fromHex(firstBatchCalldata))
+      expect(result[1].input).toEqual(Bytes.fromHex(secondBatchCalldata))
+      expect(result[2].input).toEqual(Bytes.fromHex(thirdBatchCalldata))
     })
 
     it('returns empty array for empty requests', () => {
       const result = client.encodeBatches([])
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -120,7 +120,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           success: true,
           data: Bytes.fromHex(
@@ -152,7 +152,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { success: false, data: Bytes.fromHex('0x') },
         {
           success: true,
@@ -175,9 +175,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toStrictEqual([
-        { success: true, data: Bytes.fromHex('0x') },
-      ])
+      expect(result).toEqual([{ success: true, data: Bytes.fromHex('0x') }])
     })
   })
 
@@ -192,8 +190,8 @@ describe(MulticallV3Client.name, () => {
         [holder],
       )
 
-      expect(result.to).toStrictEqual(address)
-      expect(result.input).toStrictEqual(Bytes.fromHex(expectedCalldata))
+      expect(result.to).toEqual(address)
+      expect(result.input).toEqual(Bytes.fromHex(expectedCalldata))
     })
   })
 })

@@ -53,13 +53,13 @@ describe(MulticallClient.name, () => {
       ],
       blockNumber,
     )
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
       // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
-    expect(calls).toStrictEqual([
+    expect(calls).toEqual([
       { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
       { address: ADDRESS_B, data: Bytes.fromHex('0x') },
       { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
@@ -97,12 +97,12 @@ describe(MulticallClient.name, () => {
       ],
       blockNumber,
     )
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: false, data: Bytes.fromHex('0x0f00') },
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).toStrictEqual([
+    expect(calls).toEqual([
       {
         address: ADDRESS_3,
         data: encodeMulticall3([
@@ -144,8 +144,8 @@ describe(MulticallClient.name, () => {
       })),
       blockNumber,
     )
-    expect(result.length).toStrictEqual(BATCH_SIZE * 2 + 1)
-    expect(calls).toStrictEqual([BATCH_SIZE, BATCH_SIZE, 1])
+    expect(result.length).toEqual(BATCH_SIZE * 2 + 1)
+    expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
   })
 
   it('offers a named interface', async () => {
@@ -176,7 +176,7 @@ describe(MulticallClient.name, () => {
       blockNumber,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       foo: [{ success: true, data: Bytes.fromHex('0x1234') }],
       bar: [{ success: false, data: Bytes.fromHex('0xdead') }],
     })
@@ -216,7 +216,7 @@ describe(MulticallClient.name, () => {
         blockNumber,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { success: true, data: Bytes.fromHex('0x42ab') },
         { success: true, data: Bytes.fromHex('0x42ab') },
         { success: true, data: Bytes.fromHex('0x42ab') },

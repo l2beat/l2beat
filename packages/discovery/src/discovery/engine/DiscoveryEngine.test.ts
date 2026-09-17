@@ -72,7 +72,7 @@ describe(DiscoveryEngine.name, () => {
     const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
     const { analyses } = await engine.discover(provider, config.structure, 1234)
 
-    expect(analyses).toStrictEqual([
+    expect(analyses).toEqual([
       {
         ...base,
         type: 'Contract',

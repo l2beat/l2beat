@@ -58,7 +58,7 @@ describe(InteropTransferClassifier.name, () => {
       },
     ])
 
-    expect(matched.map((x) => x.id)).toStrictEqual(['t1', 't3'])
+    expect(matched.map((x) => x.id)).toEqual(['t1', 't3'])
   })
 
   it('uses explicit bridgeType when present, otherwise infers bridge type', () => {
@@ -91,13 +91,13 @@ describe(InteropTransferClassifier.name, () => {
       { plugin: 'plugin-a', bridgeType: 'burnAndMint' },
     ])
 
-    expect(result.lockAndMint.map((x) => x.id)).toStrictEqual([
+    expect(result.lockAndMint.map((x) => x.id)).toEqual([
       'explicit',
       'inferred',
     ])
-    expect(result.burnAndMint.map((x) => x.id)).toStrictEqual(['burn-and-mint'])
-    expect(result.nonMinting).toStrictEqual([])
-    expect(result.unknown).toStrictEqual([])
+    expect(result.burnAndMint.map((x) => x.id)).toEqual(['burn-and-mint'])
+    expect(result.nonMinting).toEqual([])
+    expect(result.unknown).toEqual([])
   })
 
   it('applies the chain and abstractTokenId qualifiers to observations on either side', () => {
@@ -117,13 +117,11 @@ describe(InteropTransferClassifier.name, () => {
       srcAbstractTokenId: 'circle-usdc',
     }
 
-    expect(matches(observation)).toStrictEqual(true)
-    expect(matches({ ...observation, dstChain: 'optimism' })).toStrictEqual(
-      false,
-    )
+    expect(matches(observation)).toEqual(true)
+    expect(matches({ ...observation, dstChain: 'optimism' })).toEqual(false)
     expect(
       matches({ ...observation, srcAbstractTokenId: 'tether-usdt' }),
-    ).toStrictEqual(false)
+    ).toEqual(false)
   })
 
   it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {
@@ -157,10 +155,10 @@ describe(InteropTransferClassifier.name, () => {
       [{ plugin: 'plugin-a', bridgeType: 'lockAndMint' }],
     )
 
-    expect(result.lockAndMint).toStrictEqual([])
-    expect(result.burnAndMint).toStrictEqual([])
-    expect(result.nonMinting).toStrictEqual([])
-    expect(result.unknown.map((x) => x.id)).toStrictEqual(['one-sided-unknown'])
+    expect(result.lockAndMint).toEqual([])
+    expect(result.burnAndMint).toEqual([])
+    expect(result.nonMinting).toEqual([])
+    expect(result.unknown.map((x) => x.id)).toEqual(['one-sided-unknown'])
   })
 
   describe(InteropTransferClassifier.inferLockedTransferSide.name, () => {
@@ -176,27 +174,27 @@ describe(InteropTransferClassifier.name, () => {
     it('reads the locked side from either flag alone', () => {
       // One-sided transfers only ever observe one of the two flags, and one is
       // enough: the roles of a lock-and-mint pair are complementary.
-      expect(lockedSide(false, undefined)).toStrictEqual('src')
-      expect(lockedSide(undefined, true)).toStrictEqual('src')
-      expect(lockedSide(true, undefined)).toStrictEqual('dst')
-      expect(lockedSide(undefined, false)).toStrictEqual('dst')
+      expect(lockedSide(false, undefined)).toEqual('src')
+      expect(lockedSide(undefined, true)).toEqual('src')
+      expect(lockedSide(true, undefined)).toEqual('dst')
+      expect(lockedSide(undefined, false)).toEqual('dst')
     })
 
     it('reads the locked side from both flags', () => {
-      expect(lockedSide(false, true)).toStrictEqual('src')
-      expect(lockedSide(true, false)).toStrictEqual('dst')
+      expect(lockedSide(false, true)).toEqual('src')
+      expect(lockedSide(true, false)).toEqual('dst')
     })
 
     it('identifies no side when the flags were not observed', () => {
-      expect(lockedSide(undefined, undefined)).toStrictEqual(undefined)
+      expect(lockedSide(undefined, undefined)).toEqual(undefined)
     })
 
     it('identifies no side when the flags contradict lock-and-mint', () => {
       // Both reachable when a plugin declares `lockAndMint` itself: (false,
       // false) is really non-minting and (true, true) is really burn-and-mint,
       // so neither identifies a locked endpoint.
-      expect(lockedSide(false, false)).toStrictEqual(undefined)
-      expect(lockedSide(true, true)).toStrictEqual(undefined)
+      expect(lockedSide(false, false)).toEqual(undefined)
+      expect(lockedSide(true, true)).toEqual(undefined)
     })
   })
 })

@@ -30,7 +30,7 @@ describe(mostCommonDeployedSymbol.name, () => {
         node('arbitrum:1', 'USDC'),
         missingNode('optimism:1'),
       ]),
-    ).toStrictEqual('USDC')
+    ).toEqual('USDC')
   })
 
   it('uses symbol order as a stable tie-breaker', () => {
@@ -39,13 +39,13 @@ describe(mostCommonDeployedSymbol.name, () => {
         node('ethereum:1', 'WETH'),
         node('base:1', 'ETH'),
       ]),
-    ).toStrictEqual('ETH')
+    ).toEqual('ETH')
   })
 
   it('preserves the symbol casing', () => {
-    expect(
-      mostCommonDeployedSymbol([node('ethereum:1', 'stETH')]),
-    ).toStrictEqual('stETH')
+    expect(mostCommonDeployedSymbol([node('ethereum:1', 'stETH')])).toEqual(
+      'stETH',
+    )
   })
 })
 
@@ -59,7 +59,7 @@ describe(mostCommonAbstractTokenId.name, () => {
         node('optimism:1', 'USDC'),
         missingNode('linea:1'),
       ]),
-    ).toStrictEqual('AT-USDC')
+    ).toEqual('AT-USDC')
   })
 
   it('uses id order as a stable tie-breaker', () => {
@@ -68,13 +68,13 @@ describe(mostCommonAbstractTokenId.name, () => {
         node('ethereum:1', 'WETH', 'AT-WETH'),
         node('base:1', 'ETH', 'AT-ETH'),
       ]),
-    ).toStrictEqual('AT-ETH')
+    ).toEqual('AT-ETH')
   })
 
   it('returns undefined when nothing is assigned', () => {
-    expect(
-      mostCommonAbstractTokenId([node('ethereum:1', 'USDC')]),
-    ).toStrictEqual(undefined)
+    expect(mostCommonAbstractTokenId([node('ethereum:1', 'USDC')])).toEqual(
+      undefined,
+    )
   })
 })
 
@@ -102,7 +102,7 @@ describe(getNodeIdsOutsideRelationChains.name, () => {
       relations: [relation('ethereum', '0xaaa', 'base', '0xbbb', 'plugin')],
     }
 
-    expect(getNodeIdsOutsideRelationChains(graph)).toStrictEqual(
+    expect(getNodeIdsOutsideRelationChains(graph)).toEqual(
       new Set(['polygon:0xddd']),
     )
   })
@@ -125,24 +125,26 @@ describe(filterTokensWithoutRelations.name, () => {
   }
 
   it('returns the graph unchanged when showing all', () => {
-    expect(filterTokensWithoutRelations(graph, 'all')).toStrictEqual(graph)
+    expect(filterTokensWithoutRelations(graph, 'all')).toEqual(graph)
   })
 
   it('drops every node without relations when hiding them', () => {
-    expect(filterTokensWithoutRelations(graph, 'hide').nodes).toStrictEqual([
+    expect(filterTokensWithoutRelations(graph, 'hide').nodes).toEqual([
       endpointA,
       endpointB,
     ])
   })
 
   it('keeps only nodes without relations on relation chains in supported mode', () => {
-    expect(
-      filterTokensWithoutRelations(graph, 'supported').nodes,
-    ).toStrictEqual([endpointA, endpointB, onSupportedChain])
+    expect(filterTokensWithoutRelations(graph, 'supported').nodes).toEqual([
+      endpointA,
+      endpointB,
+      onSupportedChain,
+    ])
   })
 
   it('never filters relations', () => {
-    expect(filterTokensWithoutRelations(graph, 'hide').relations).toStrictEqual(
+    expect(filterTokensWithoutRelations(graph, 'hide').relations).toEqual(
       graph.relations,
     )
   })
@@ -150,15 +152,15 @@ describe(filterTokensWithoutRelations.name, () => {
 
 describe(getClusterLabelOpacity.name, () => {
   it('keeps labels visible at overview and zoomed-in scales', () => {
-    expect(getClusterLabelOpacity(0.3)).toStrictEqual(0.8)
-    expect(getClusterLabelOpacity(1)).toStrictEqual(0.8)
-    expect(getClusterLabelOpacity(2)).toStrictEqual(0.8)
+    expect(getClusterLabelOpacity(0.3)).toEqual(0.8)
+    expect(getClusterLabelOpacity(1)).toEqual(0.8)
+    expect(getClusterLabelOpacity(2)).toEqual(0.8)
   })
 
   it('fades labels away at extreme zoom-out', () => {
     // The exact fade thresholds are tuning knobs; the contract is only that
     // labels are gone once the zoom-out is extreme enough.
-    expect(getClusterLabelOpacity(0.01)).toStrictEqual(0)
+    expect(getClusterLabelOpacity(0.01)).toEqual(0)
   })
 
   it('rejects invalid scales', () => {
@@ -170,9 +172,9 @@ describe(getClusterLabelOpacity.name, () => {
 
 describe(getNodeVisualScale.name, () => {
   it('caps node growth above 1.2x zoom', () => {
-    expect(getNodeVisualScale(0.5)).toStrictEqual(1)
-    expect(getNodeVisualScale(1.2)).toStrictEqual(1)
-    expect(getNodeVisualScale(2.4)).toStrictEqual(0.5)
+    expect(getNodeVisualScale(0.5)).toEqual(1)
+    expect(getNodeVisualScale(1.2)).toEqual(1)
+    expect(getNodeVisualScale(2.4)).toEqual(0.5)
   })
 })
 
@@ -182,12 +184,12 @@ describe(relationIsDirectional.name, () => {
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
       ),
-    ).toStrictEqual(true)
+    ).toEqual(true)
     expect(
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
       ),
-    ).toStrictEqual(false)
+    ).toEqual(false)
     // Drawing an arrow here would mean guessing which token is the original.
     expect(
       relationIsDirectional(
@@ -201,7 +203,7 @@ describe(relationIsDirectional.name, () => {
           null,
         ),
       ),
-    ).toStrictEqual(false)
+    ).toEqual(false)
   })
 })
 
@@ -219,12 +221,10 @@ describe('relation endpoint order', () => {
       'B',
     )
 
-    expect(sourceId(lockedIsSecondEndpoint)).toStrictEqual(
+    expect(sourceId(lockedIsSecondEndpoint)).toEqual(
       tokenId('ethereum', '0xaaa'),
     )
-    expect(targetId(lockedIsSecondEndpoint)).toStrictEqual(
-      tokenId('base', '0xbbb'),
-    )
+    expect(targetId(lockedIsSecondEndpoint)).toEqual(tokenId('base', '0xbbb'))
   })
 
   it('keeps the stored order for relations without a direction', () => {
@@ -238,8 +238,8 @@ describe('relation endpoint order', () => {
       null,
     )
 
-    expect(sourceId(symmetric)).toStrictEqual(tokenId('base', '0xbbb'))
-    expect(targetId(symmetric)).toStrictEqual(tokenId('ethereum', '0xaaa'))
+    expect(sourceId(symmetric)).toEqual(tokenId('base', '0xbbb'))
+    expect(targetId(symmetric)).toEqual(tokenId('ethereum', '0xaaa'))
   })
 })
 
@@ -257,10 +257,10 @@ describe(relationRoleLabel.name, () => {
 
     expect(
       relationRoleLabel(lockAndMint, tokenId('ethereum', '0xaaa')),
-    ).toStrictEqual('Locked')
-    expect(
-      relationRoleLabel(lockAndMint, tokenId('base', '0xbbb')),
-    ).toStrictEqual('Minted')
+    ).toEqual('Locked')
+    expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toEqual(
+      'Minted',
+    )
     // A burn-and-mint pair is symmetric, so each endpoint's role is Minted;
     // the relation type label is what shows the symmetry.
     expect(
@@ -268,7 +268,7 @@ describe(relationRoleLabel.name, () => {
         relation('base', '0xbbb', 'ethereum', '0xaaa', 'burn', 'burnAndMint'),
         tokenId('base', '0xbbb'),
       ),
-    ).toStrictEqual('Minted')
+    ).toEqual('Minted')
     expect(
       relationRoleLabel(
         relation(
@@ -282,7 +282,7 @@ describe(relationRoleLabel.name, () => {
         ),
         tokenId('base', '0xbbb'),
       ),
-    ).toStrictEqual('Unknown role')
+    ).toEqual('Unknown role')
   })
 })
 
@@ -307,7 +307,7 @@ describe(getExistingRelationGraphSelection.name, () => {
     const selectedNode = graph.nodes[0]
     if (selectedNode === undefined) throw new Error('Missing test node')
     const selection = { type: 'node', id: selectedNode.id } as const
-    expect(getExistingRelationGraphSelection(graph, selection)).toStrictEqual(
+    expect(getExistingRelationGraphSelection(graph, selection)).toEqual(
       selection,
     )
   })
@@ -318,13 +318,13 @@ describe(getExistingRelationGraphSelection.name, () => {
         type: 'node',
         id: 'missing:node',
       }),
-    ).toStrictEqual(undefined)
+    ).toEqual(undefined)
     expect(
       getExistingRelationGraphSelection(graph, {
         type: 'relation',
         id: 'missing:relation',
       }),
-    ).toStrictEqual(undefined)
+    ).toEqual(undefined)
   })
 
   it('clears a relation selection that was deleted from the graph view', () => {
@@ -335,7 +335,7 @@ describe(getExistingRelationGraphSelection.name, () => {
       id: relationId(deletedRelation),
     } as const
 
-    expect(getExistingRelationGraphSelection(graph, selection)).toStrictEqual(
+    expect(getExistingRelationGraphSelection(graph, selection)).toEqual(
       selection,
     )
     expect(
@@ -344,7 +344,7 @@ describe(getExistingRelationGraphSelection.name, () => {
         selection,
         new Set([relationId(deletedRelation)]),
       ),
-    ).toStrictEqual(undefined)
+    ).toEqual(undefined)
   })
 })
 
@@ -359,21 +359,21 @@ describe(searchRelationGraphNodes.name, () => {
   it('searches deployed tokens by symbol, chain, and address', () => {
     expect(
       searchRelationGraphNodes(nodes, 'usdc').map((node) => node.id),
-    ).toStrictEqual(['base:0xbbb', 'ethereum:0xaaa'])
+    ).toEqual(['base:0xbbb', 'ethereum:0xaaa'])
     expect(
       searchRelationGraphNodes(nodes, 'base usdc').map((node) => node.id),
-    ).toStrictEqual(['base:0xbbb'])
+    ).toEqual(['base:0xbbb'])
     expect(
       searchRelationGraphNodes(nodes, '0xCCC').map((node) => node.id),
-    ).toStrictEqual(['arbitrum:0xccc'])
+    ).toEqual(['arbitrum:0xccc'])
     expect(
       searchRelationGraphNodes(nodes, 'arbitrum:0xccc').map((node) => node.id),
-    ).toStrictEqual(['arbitrum:0xccc'])
+    ).toEqual(['arbitrum:0xccc'])
   })
 
   it('ignores missing endpoints and queries shorter than two characters', () => {
-    expect(searchRelationGraphNodes(nodes, '0xddd')).toStrictEqual([])
-    expect(searchRelationGraphNodes(nodes, 'u')).toStrictEqual([])
+    expect(searchRelationGraphNodes(nodes, '0xddd')).toEqual([])
+    expect(searchRelationGraphNodes(nodes, 'u')).toEqual([])
   })
 })
 
@@ -386,14 +386,14 @@ describe(getRelationGraphFocus.name, () => {
       }),
     )
 
-    expect([...focus.nodeIds].sort()).toStrictEqual(
+    expect([...focus.nodeIds].sort()).toEqual(
       [
         tokenId('ethereum', '0xaaa'),
         tokenId('base', '0xbbb'),
         tokenId('optimism', '0xccc'),
       ].sort(),
     )
-    expect([...focus.relationIds].sort()).toStrictEqual(
+    expect([...focus.relationIds].sort()).toEqual(
       relations.slice(0, 2).map(relationId).sort(),
     )
   })
@@ -410,13 +410,13 @@ describe(getRelationGraphFocus.name, () => {
       }),
     )
 
-    expect([...focus.nodeIds].sort()).toStrictEqual(
+    expect([...focus.nodeIds].sort()).toEqual(
       [
         tokenId(selectedRelation.tokenAChain, selectedRelation.tokenAAddress),
         tokenId(selectedRelation.tokenBChain, selectedRelation.tokenBAddress),
       ].sort(),
     )
-    expect([...focus.relationIds]).toStrictEqual([relationId(selectedRelation)])
+    expect([...focus.relationIds]).toEqual([relationId(selectedRelation)])
   })
 
   it('skips deleted relations when collecting a node neighborhood', () => {
@@ -433,10 +433,10 @@ describe(getRelationGraphFocus.name, () => {
       ),
     )
 
-    expect([...focus.nodeIds].sort()).toStrictEqual(
+    expect([...focus.nodeIds].sort()).toEqual(
       [tokenId('ethereum', '0xaaa'), tokenId('optimism', '0xccc')].sort(),
     )
-    expect([...focus.relationIds]).toStrictEqual([relationId(keptRelation)])
+    expect([...focus.relationIds]).toEqual([relationId(keptRelation)])
   })
 
   it('rejects a selected relation that was deleted', () => {

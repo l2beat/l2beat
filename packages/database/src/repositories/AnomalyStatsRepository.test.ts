@@ -67,7 +67,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
 
       const results = await repository.getAll()
       expect(results).toHaveLength(4)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           newRows[0]!,
           {
@@ -102,7 +102,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -115,7 +115,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
           'proofSubmissions',
         )
 
-        expect(result).toStrictEqual(DATA[1])
+        expect(result).toEqual(DATA[1])
       })
     },
   )
@@ -124,7 +124,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     it('should return latest stats', async () => {
       const result = await repository.getLatestStats()
 
-      expect(result).toStrictEqual([DATA[0]!, DATA[1]!])
+      expect(result).toEqual([DATA[0]!, DATA[1]!])
     })
   })
 
@@ -134,7 +134,7 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 })

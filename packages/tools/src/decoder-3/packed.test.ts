@@ -23,7 +23,7 @@ describe(decodePacked.name, () => {
     const encoded =
       '0x01fffe010203abcdef1234567890123456789012345678901234567890'
 
-    expect(decodePacked(schema, encoded, 1)).toStrictEqual({
+    expect(decodePacked(schema, encoded, 1)).toEqual({
       type: 'tuple',
       value: '',
       bytes: encoded,
@@ -75,7 +75,7 @@ describe(decodePacked.name, () => {
 
     expect(
       decoded.members?.map(({ name, type, value }) => ({ name, type, value })),
-    ).toStrictEqual([
+    ).toEqual([
       {
         name: 'absolutePrestate',
         type: 'bytes',
@@ -123,7 +123,7 @@ describe(decodePacked.name, () => {
       return (decoded.bytes.length - 2) / 2
     })
 
-    expect(lengths).toStrictEqual([124, 164, 40, 172])
+    expect(lengths).toEqual([124, 164, 40, 172])
   })
 
   it('rejects data with a different length', () => {

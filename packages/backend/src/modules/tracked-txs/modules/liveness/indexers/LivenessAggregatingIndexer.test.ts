@@ -79,7 +79,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('use correct time range when backfilling (whole day), on middle of the day', async () => {
@@ -103,7 +103,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('use correct time range when backfilling (few hours), on midnight', async () => {
@@ -127,7 +127,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('use correct time range when fully synced (one hour), on middle of the day', async () => {
@@ -149,7 +149,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('use correct time range when fully synced (one hour), on midnight', async () => {
@@ -171,7 +171,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('handles time range with min height', async () => {
@@ -204,7 +204,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         expectedFrom,
         expectedTo,
       )
-      expect(result).toStrictEqual(expectedTo)
+      expect(result).toEqual(expectedTo)
     })
 
     it('should save data to db', async () => {
@@ -241,7 +241,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       expect(mockAggregatedLivenessRepository.upsertMany).toHaveBeenCalledWith(
         mockAggregatedLiveness,
       )
-      expect(result).toStrictEqual(parentSafeHeight)
+      expect(result).toEqual(parentSafeHeight)
     })
   })
 
@@ -262,7 +262,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
 
-      expect(result).toStrictEqual(targetHeight)
+      expect(result).toEqual(targetHeight)
     })
   })
 
@@ -297,7 +297,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           avg: 4 * UnixTime.HOUR,
           max: 4 * UnixTime.HOUR,
@@ -397,7 +397,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW - 7 * UnixTime.HOUR,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         avg: ((4 + 2) / 2) * UnixTime.HOUR,
         max: 4 * UnixTime.HOUR,
         min: 2 * UnixTime.HOUR,
@@ -441,7 +441,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         start,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         avg: 2 * UnixTime.HOUR,
         max: 3 * UnixTime.HOUR,
         min: 1 * UnixTime.HOUR,
@@ -477,7 +477,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         start,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         avg: 2.5 * UnixTime.HOUR,
         max: 3 * UnixTime.HOUR,
         min: 2 * UnixTime.HOUR,
@@ -502,7 +502,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 })

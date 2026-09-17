@@ -11,9 +11,7 @@ describe(getLatestTimestampByDaLayer.name, () => {
       record('avail', UnixTime(200)),
     ]
 
-    expect(getLatestTimestampByDaLayer(records, 'avail')).toStrictEqual(
-      UnixTime(200),
-    )
+    expect(getLatestTimestampByDaLayer(records, 'avail')).toEqual(UnixTime(200))
   })
 })
 

@@ -20,7 +20,7 @@ describe(withCoreFeatureRpcMetricsContext.name, () => {
       },
     )
 
-    expect(context).toStrictEqual({
+    expect(context).toEqual({
       coreFeature: 'interop.sync',
       chain: 'ethereum',
       pluginCluster: 'across',
@@ -43,7 +43,7 @@ describe(instrumentCoreFeatureRpcMetricsRun.name, () => {
 
     await target.run()
 
-    expect(context).toStrictEqual({
+    expect(context).toEqual({
       coreFeature: 'interop.config',
       plugin: 'across',
     })

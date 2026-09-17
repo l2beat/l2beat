@@ -11,7 +11,7 @@ describe(SimpleMethodHandler.name, () => {
     const provider = {
       callMethod: vi.fn(
         async <T>(a: ChainSpecificAddress, _abi: string, _data: unknown[]) => {
-          expect(a).toStrictEqual(address)
+          expect(a).toEqual(address)
           return 291 as T
         },
       ),
@@ -20,10 +20,10 @@ describe(SimpleMethodHandler.name, () => {
     const method = 'function balanceOf() view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
-    expect(handler.field).toStrictEqual('balanceOf')
+    expect(handler.field).toEqual('balanceOf')
 
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'balanceOf',
       value: 0x123,
       fragment,
@@ -42,7 +42,7 @@ describe(SimpleMethodHandler.name, () => {
     } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'balanceOf',
       error: 'Execution reverted',
       fragment,
@@ -61,7 +61,7 @@ describe(SimpleMethodHandler.name, () => {
     } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'balanceOf',
       error: 'foo bar',
       fragment,
@@ -80,7 +80,7 @@ describe(SimpleMethodHandler.name, () => {
     } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: '_$foo',
       fragment,
       value: 1,

@@ -22,7 +22,7 @@ describe(layoutRelationGraph.name, () => {
 
     expect(
       layout.clusters.map((cluster) => cluster.nodes.map((node) => node.id)),
-    ).toStrictEqual([['c1', 'c2', 'c3'], ['a1', 'a2'], ['b1', 'b2'], ['d1']])
+    ).toEqual([['c1', 'c2', 'c3'], ['a1', 'a2'], ['b1', 'b2'], ['d1']])
 
     const [first, second, third, fourth] = layout.clusters.map((cluster) =>
       center(cluster.nodes),
@@ -35,9 +35,9 @@ describe(layoutRelationGraph.name, () => {
     ) {
       throw new Error('Expected four graph clusters')
     }
-    expect(first.x < second.x).toStrictEqual(true)
-    expect(first.y < third.y).toStrictEqual(true)
-    expect(third.x < fourth.x).toStrictEqual(true)
+    expect(first.x < second.x).toEqual(true)
+    expect(first.y < third.y).toEqual(true)
+    expect(third.x < fourth.x).toEqual(true)
   })
 })
 

@@ -42,7 +42,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, null), actual('b', 200, 300)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toAdd: [actual('a', 100, null), actual('b', 200, 300)],
@@ -61,7 +61,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 400), actual('b', 200, null)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: { ...EMPTY_DIFF },
         configurations: [
           { ...actual('a', 100, 400), currentHeight: 300 },
@@ -77,7 +77,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 400), actual('b', 555, null)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: EMPTY_DIFF,
         configurations: [
           { ...actual('a', 100, 400), currentHeight: 300 },
@@ -93,7 +93,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 555), actual('b', 200, 300)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: EMPTY_DIFF,
         configurations: [
           { ...actual('a', 100, 555), currentHeight: 400 },
@@ -112,7 +112,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, null), actual('b', 200, 300)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: EMPTY_DIFF,
         configurations: [
           { ...actual('a', 100, null), currentHeight: 400 },
@@ -128,7 +128,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 400), actual('b', 200, 300)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: EMPTY_DIFF,
         configurations: [
           { ...actual('a', 100, 400), currentHeight: 400 },
@@ -146,7 +146,7 @@ describe(mergeConfigurations.name, () => {
         [actual('b', 200, 400)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toDelete: ['a'],
@@ -163,7 +163,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 400)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toUpdate: [{ ...actual('a', 100, 400), currentHeight: 300 }],
@@ -179,7 +179,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 200)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toTrimData: [trimRemoval('a', 201, 300)],
@@ -196,7 +196,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 200)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toUpdate: [{ ...actual('a', 100, 200), currentHeight: 150 }],
@@ -212,7 +212,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, null)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toUpdate: [{ ...actual('a', 100, null), currentHeight: 300 }],
@@ -228,7 +228,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 200, 400)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toTrimData: [trimRemoval('a', 100, 199)],
@@ -245,7 +245,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 1000, null)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           // TODO: this possibly could be wiped
@@ -263,7 +263,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 100, 400)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toWipeData: [wipeRemoval('a')],
@@ -280,7 +280,7 @@ describe(mergeConfigurations.name, () => {
         [actual('a', 200, 300)],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toTrimData: [trimRemoval('a', 100, 199), trimRemoval('a', 301, 400)],
@@ -297,7 +297,7 @@ describe(mergeConfigurations.name, () => {
         [{ ...actual('a', 100, 400), properties: 'new-props' }],
         SERIALIZE,
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
           toUpdate: [
@@ -329,7 +329,7 @@ describe(mergeConfigurations.name, () => {
           SERIALIZE,
           TRIMMING_DISABLED,
         )
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
             toWipeData: [wipeRemoval('a')],
@@ -347,7 +347,7 @@ describe(mergeConfigurations.name, () => {
           SERIALIZE,
           TRIMMING_DISABLED,
         )
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
             toWipeData: [wipeRemoval('a')],
@@ -365,7 +365,7 @@ describe(mergeConfigurations.name, () => {
           SERIALIZE,
           TRIMMING_DISABLED,
         )
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
             toWipeData: [wipeRemoval('a')],

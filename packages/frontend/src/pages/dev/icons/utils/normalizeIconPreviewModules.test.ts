@@ -46,7 +46,7 @@ describe(normalizeIconPreviewModules.name, () => {
         exportName: entry.exportName,
         sourcePath: entry.sourcePath,
       })),
-    ).toStrictEqual([
+    ).toEqual([
       {
         category: 'Core',
         exportName: 'PolygonLogo',

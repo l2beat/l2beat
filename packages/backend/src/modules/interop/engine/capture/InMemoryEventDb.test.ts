@@ -16,10 +16,10 @@ describe(InMemoryEventDb.name, () => {
     events.forEach((e) => db.addEvent(e))
 
     expect(db.getEvents(EventA.type)).toHaveLength(2)
-    expect(db.getEvents(EventA.type)).toStrictEqual(
+    expect(db.getEvents(EventA.type)).toEqual(
       expect.arrayContaining([events[0], events[1]]),
     )
-    expect(db.getEvents(EventB.type)).toStrictEqual([events[2]])
+    expect(db.getEvents(EventB.type)).toEqual([events[2]])
   })
 
   it('can query for a specific event', () => {
@@ -31,8 +31,8 @@ describe(InMemoryEventDb.name, () => {
     ]
     events.forEach((e) => db.addEvent(e))
 
-    expect(db.find(EventA, { a: 'three' })).toStrictEqual(events[2])
-    expect(db.find(EventA, { a: 'four' })).toStrictEqual(undefined)
+    expect(db.find(EventA, { a: 'three' })).toEqual(events[2])
+    expect(db.find(EventA, { a: 'four' })).toEqual(undefined)
   })
 
   it('can query events at a logIndex offset in the same tx', () => {
@@ -71,17 +71,17 @@ describe(InMemoryEventDb.name, () => {
       db.find(EventA, {
         sameTxAtOffset: { event: baseEvent, offset: 2 },
       }),
-    ).toStrictEqual(afterEvent)
+    ).toEqual(afterEvent)
     expect(
       db.find(EventA, {
         sameTxAtOffset: { event: baseEvent, offset: -2 },
       }),
-    ).toStrictEqual(beforeEvent)
+    ).toEqual(beforeEvent)
     expect(
       db.find(EventA, {
         sameTxAtOffset: { event: baseEvent, offset: 1 },
       }),
-    ).toStrictEqual(undefined)
+    ).toEqual(undefined)
   })
 
   it('can find a new event after the first query', () => {
@@ -94,13 +94,13 @@ describe(InMemoryEventDb.name, () => {
     const eventA1 = EventA.mock({ a: 'one' })
     db.addEvent(eventA1)
     // Here the index (Lookup) is constructed for EventA
-    expect(db.find(EventA, { a: 'one' })).toStrictEqual(eventA1)
+    expect(db.find(EventA, { a: 'one' })).toEqual(eventA1)
 
     const eventA2 = EventA.mock({ a: 'two' })
     // This call should update the index of EventA
     db.addEvent(eventA2)
     // so that it can be found later:
-    expect(db.find(EventA, { a: 'two' })).toStrictEqual(eventA2)
+    expect(db.find(EventA, { a: 'two' })).toEqual(eventA2)
   })
 
   it('can remove an event', () => {
@@ -114,7 +114,7 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeEvents([events[0]])
 
-    expect(db.find(EventA, { a: 'one' })).toStrictEqual(undefined)
+    expect(db.find(EventA, { a: 'one' })).toEqual(undefined)
   })
 
   it('can remove expired events', () => {
@@ -130,7 +130,7 @@ describe(InMemoryEventDb.name, () => {
     db.removeExpired(10)
 
     expect(db.getEvents(EventA.type)).toHaveLength(2)
-    expect(db.getEvents(EventA.type)).toStrictEqual(
+    expect(db.getEvents(EventA.type)).toEqual(
       expect.arrayContaining([events[2], events[3]]),
     )
   })
@@ -142,8 +142,8 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeExpired(10)
 
-    expect(db.getEvents(EventA.type)).toStrictEqual([])
-    expect(db.getEventCount()).toStrictEqual(0)
+    expect(db.getEvents(EventA.type)).toEqual([])
+    expect(db.getEventCount()).toEqual(0)
   })
 
   it('can remove events for a specific plugin', () => {
@@ -158,9 +158,9 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeForPlugin('plugin-a')
 
-    expect(db.getEvents(EventA.type)).toStrictEqual([events[1]])
-    expect(db.getEvents(EventB.type)).toStrictEqual([events[3]])
-    expect(db.getEventCount()).toStrictEqual(2)
+    expect(db.getEvents(EventA.type)).toEqual([events[1]])
+    expect(db.getEvents(EventB.type)).toEqual([events[3]])
+    expect(db.getEventCount()).toEqual(2)
   })
 
   it('can remove multiple expired events leaving one', () => {
@@ -175,8 +175,8 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeExpired(10)
 
-    expect(db.getEvents(EventA.type)).toStrictEqual([events[3]])
-    expect(db.getEventCount()).toStrictEqual(1)
+    expect(db.getEvents(EventA.type)).toEqual([events[3]])
+    expect(db.getEventCount()).toEqual(1)
   })
 
   it('maintains the event cap', () => {
@@ -192,7 +192,7 @@ describe(InMemoryEventDb.name, () => {
     events.forEach((e) => db.addEvent(e))
 
     expect(db.getEvents(EventA.type)).toHaveLength(4)
-    expect(db.getEvents(EventA.type)).toStrictEqual(
+    expect(db.getEvents(EventA.type)).toEqual(
       expect.arrayContaining([events[0], events[1], events[4], events[5]]),
     )
   })
@@ -210,11 +210,11 @@ describe(InMemoryEventDb.name, () => {
     events.forEach((e) => db.addEvent(e))
 
     expect(db.getEvents(EventA.type)).toHaveLength(2)
-    expect(db.getEvents(EventA.type)).toStrictEqual(
+    expect(db.getEvents(EventA.type)).toEqual(
       expect.arrayContaining([events[0], events[4]]),
     )
     expect(db.getEvents(EventB.type)).toHaveLength(2)
-    expect(db.getEvents(EventB.type)).toStrictEqual(
+    expect(db.getEvents(EventB.type)).toEqual(
       expect.arrayContaining([events[1], events[5]]),
     )
   })

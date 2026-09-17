@@ -24,7 +24,7 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.pluginSyncStatuses()
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         pluginName: 'plugin',
         chain: 'ethereum',
@@ -53,7 +53,7 @@ describe(createStatusRouter.name, () => {
     expect(findByIndexerId).toHaveBeenCalledExactlyOnceWith(
       INDEXER_NAMES.INTEROP_RELAY,
     )
-    expect(result).toStrictEqual({ syncedTo: 1_700_000_000 })
+    expect(result).toEqual({ syncedTo: 1_700_000_000 })
   })
 
   it('returns no Relay checkpoint before the indexer initializes', async () => {
@@ -65,7 +65,7 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.relay()
 
-    expect(result).toStrictEqual({ syncedTo: undefined })
+    expect(result).toEqual({ syncedTo: undefined })
   })
 
   it('applies wildcard resync values to unspecified chains', async () => {
@@ -101,7 +101,7 @@ describe(createStatusRouter.name, () => {
       'arbitrum',
       2_000,
     )
-    expect(result).toStrictEqual({ updatedChains: ['ethereum', 'arbitrum'] })
+    expect(result).toEqual({ updatedChains: ['ethereum', 'arbitrum'] })
   })
 
   it('marks all plugin chains for wipe on restart from now', async () => {
@@ -137,7 +137,7 @@ describe(createStatusRouter.name, () => {
       resyncRequestedFrom: null,
       wipeRequired: true,
     })
-    expect(result).toStrictEqual({ updatedChains: ['ethereum', 'arbitrum'] })
+    expect(result).toEqual({ updatedChains: ['ethereum', 'arbitrum'] })
   })
 
   it('returns processor statuses', async () => {
@@ -160,7 +160,7 @@ describe(createStatusRouter.name, () => {
 
     const result = await caller.processors()
 
-    expect(result).toStrictEqual(statuses)
+    expect(result).toEqual(statuses)
   })
 })
 

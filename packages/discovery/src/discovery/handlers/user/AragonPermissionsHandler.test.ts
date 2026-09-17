@@ -53,8 +53,8 @@ describe(AragonPermissionsHandler.name, () => {
     const provider = {
       chain: 'ethereum',
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(acl)
-        expect(topics).toStrictEqual([
+        expect(providedAddress).toEqual(acl)
+        expect(topics).toEqual([
           [
             aclAbi.getEventTopic('SetPermission'),
             aclAbi.getEventTopic('ChangePermissionManager'),
@@ -96,7 +96,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await fetchAragonPermissions(provider, acl, app)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       [WIZARD_ROLE.toLowerCase()]: {
         members: [bob.toString()],
         managers: [manager.toString()],
@@ -141,7 +141,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await handler.execute(provider, app)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'aragonPermissions',
       value: {
         WIZARD_ROLE: {
@@ -182,7 +182,7 @@ describe(AragonPermissionsHandler.name, () => {
 
     const result = await handler.execute(provider, app)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'aragonPermissions',
       value: {
         WIZARD_ROLE: {

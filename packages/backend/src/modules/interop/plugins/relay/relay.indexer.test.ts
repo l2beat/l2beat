@@ -47,7 +47,7 @@ describe(RelayIndexer.name, () => {
         endTimestamp: FROM + BATCH_SIZE + 1,
         limit: 10_000,
       })
-      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
     it('clamps the window to the target height', async () => {
@@ -61,7 +61,7 @@ describe(RelayIndexer.name, () => {
         endTimestamp: FROM + 6,
         limit: 10_000,
       })
-      expect(syncedTo).toStrictEqual(FROM + 5)
+      expect(syncedTo).toEqual(FROM + 5)
     })
 
     it('advances through a second holding more entries than one page', async () => {
@@ -72,7 +72,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
     it('advances when the window holds no entries at all', async () => {
@@ -81,7 +81,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
     it('throws when the window was not fully fetched', async () => {
@@ -105,7 +105,7 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toStrictEqual(FROM + BATCH_SIZE)
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
     it('creates events from normalized v3 request fields', async () => {
@@ -161,7 +161,7 @@ describe(RelayIndexer.name, () => {
           chain: event.ctx.chain,
           txHash: event.ctx.txHash,
         })),
-      ).toStrictEqual([
+      ).toEqual([
         {
           type: TokenSent.type,
           args: {

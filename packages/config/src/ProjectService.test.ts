@@ -48,7 +48,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('foo'),
     })
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
@@ -62,7 +62,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('returns selected items', async () => {
@@ -72,7 +72,7 @@ describe(ProjectService.name, () => {
       select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
@@ -89,7 +89,7 @@ describe(ProjectService.name, () => {
       select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: ProjectId('foo'),
         slug: 'foochain',

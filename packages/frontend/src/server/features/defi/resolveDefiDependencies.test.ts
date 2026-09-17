@@ -32,7 +32,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'Chainlink',
         icon: '/icons/chainlink.png',
@@ -53,7 +53,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'Rocket Pool rETH',
         icon: '/icons/reth.png',
@@ -72,7 +72,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'Across',
         icon: '/icons/across.png',
@@ -92,7 +92,7 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, projectsById)).toStrictEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'unknown-oracle',
         icon: '/images/token-placeholder.png',
@@ -103,6 +103,6 @@ describe(resolveDefiDependencies.name, () => {
   })
 
   it('returns an empty list when there are no dependencies', () => {
-    expect(resolveDefiDependencies([], projectsById)).toStrictEqual([])
+    expect(resolveDefiDependencies([], projectsById)).toEqual([])
   })
 })

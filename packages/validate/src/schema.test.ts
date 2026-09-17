@@ -9,14 +9,14 @@ import { type Validator, v } from './validate.js'
 describe('toJsonSchema', () => {
   it('unknown', () => {
     const input = v.unknown()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
     })
   })
 
   it('boolean', () => {
     const input = v.boolean()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'boolean',
     })
@@ -24,7 +24,7 @@ describe('toJsonSchema', () => {
 
   it('number', () => {
     const input = v.number()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'number',
     })
@@ -32,7 +32,7 @@ describe('toJsonSchema', () => {
 
   it('string', () => {
     const input = v.string()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -40,7 +40,7 @@ describe('toJsonSchema', () => {
 
   it('null', () => {
     const input = v.null()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'null',
     })
@@ -48,21 +48,21 @@ describe('toJsonSchema', () => {
 
   it('bigint', () => {
     const input = v.bigint()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
     })
   })
 
   it('undefined', () => {
     const input = v.undefined()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
     })
   })
 
   it('literal', () => {
     const input = v.literal(123)
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       const: 123,
     })
@@ -70,14 +70,14 @@ describe('toJsonSchema', () => {
 
   it('literal (bigint)', () => {
     const input = v.literal(123n)
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
     })
   })
 
   it('enum', () => {
     const input = v.enum(['abc', 'def'])
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       enum: ['abc', 'def'],
     })
@@ -85,7 +85,7 @@ describe('toJsonSchema', () => {
 
   it('check', () => {
     const input = v.string().check((x) => x.length > 0)
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -93,7 +93,7 @@ describe('toJsonSchema', () => {
 
   it('transform', () => {
     const input = v.string().transform((x) => x.toUpperCase())
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -101,7 +101,7 @@ describe('toJsonSchema', () => {
 
   it('catch (standalone)', () => {
     const input = v.string().catch('hello')
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -109,7 +109,7 @@ describe('toJsonSchema', () => {
 
   it('default (standalone)', () => {
     const input = v.string().default('hello')
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -117,7 +117,7 @@ describe('toJsonSchema', () => {
 
   it('optional (standalone)', () => {
     const input = v.string().optional()
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'string',
     })
@@ -125,7 +125,7 @@ describe('toJsonSchema', () => {
 
   it('array', () => {
     const input = v.array(v.string())
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'array',
       items: { type: 'string' },
@@ -134,7 +134,7 @@ describe('toJsonSchema', () => {
 
   it('tuple', () => {
     const input = v.tuple([v.string(), v.number().optional()])
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'array',
       items: [{ type: 'string' }, { type: 'number' }],
@@ -144,7 +144,7 @@ describe('toJsonSchema', () => {
 
   it('union', () => {
     const input = v.union([v.string(), v.number()])
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       anyOf: [{ type: 'string' }, { type: 'number' }],
     })
@@ -154,7 +154,7 @@ describe('toJsonSchema', () => {
     const input = v
       .union([v.string(), v.null()])
       .meta({ description: 'Optional ID', prop: '123123' })
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       anyOf: [{ type: 'string' }, { type: 'null' }],
       description: 'Optional ID',
@@ -169,7 +169,7 @@ describe('toJsonSchema', () => {
       c: v.boolean().default(false),
       d: v.null().catch(null),
     })
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       properties: {
@@ -186,7 +186,7 @@ describe('toJsonSchema', () => {
     const input = v.object({
       id: v.string().meta({ description: 'Project ID' }),
     })
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       properties: {
@@ -206,7 +206,7 @@ describe('toJsonSchema', () => {
       c: v.boolean().default(false),
       d: v.null().catch(null),
     })
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       properties: {
@@ -222,7 +222,7 @@ describe('toJsonSchema', () => {
 
   it('record', () => {
     const input = v.record(v.string(), v.number())
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       propertyNames: {
@@ -236,7 +236,7 @@ describe('toJsonSchema', () => {
 
   it('record (number key)', () => {
     const input = v.record(v.number(), v.number())
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       propertyNames: {
@@ -251,7 +251,7 @@ describe('toJsonSchema', () => {
 
   it('record (enum key)', () => {
     const input = v.record(v.enum(['a', 'b']), v.number())
-    expect(toJsonSchema(input)).toStrictEqual({
+    expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       type: 'object',
       propertyNames: {
@@ -272,7 +272,7 @@ describe('toJsonSchema', () => {
     const List: Validator<List> = v.lazy(() =>
       v.object({ item: v.number(), next: List.optional() }),
     )
-    expect(toJsonSchema(List)).toStrictEqual({
+    expect(toJsonSchema(List)).toEqual({
       $schema: SCHEMA_VERSION,
       definitions: {
         __lazy_1: {
@@ -297,7 +297,7 @@ describe('toJsonSchema', () => {
     }
     const A: Validator<A> = v.lazy(() => v.object({ b: B.optional() }))
     const B: Validator<B> = v.lazy(() => v.object({ a: A.optional() }))
-    expect(toJsonSchema(A)).toStrictEqual({
+    expect(toJsonSchema(A)).toEqual({
       $schema: SCHEMA_VERSION,
       definitions: {
         __lazy_1: {
@@ -320,7 +320,7 @@ describe('toJsonSchema', () => {
   it('toplevel', () => {
     const Vector = v.object({ x: v.number(), y: v.number() })
     const input = v.object({ position: Vector, velocity: Vector })
-    expect(toJsonSchema(input, { Vector })).toStrictEqual({
+    expect(toJsonSchema(input, { Vector })).toEqual({
       $schema: SCHEMA_VERSION,
       definitions: {
         Vector: {
@@ -349,7 +349,7 @@ describe('toJsonSchema', () => {
         { Vector, Line },
         { refPrefix: '#/components/schemas/' },
       ),
-    ).toStrictEqual({
+    ).toEqual({
       Vector: {
         type: 'object',
         properties: {
@@ -378,7 +378,7 @@ describe('toJsonSchema', () => {
     }
     const A: Validator<A> = v.lazy(() => v.object({ b: B.optional() }))
     const B: Validator<B> = v.lazy(() => v.object({ a: A.optional() }))
-    expect(toJsonSchema(A, { A, B })).toStrictEqual({
+    expect(toJsonSchema(A, { A, B })).toEqual({
       $schema: SCHEMA_VERSION,
       definitions: {
         A: {

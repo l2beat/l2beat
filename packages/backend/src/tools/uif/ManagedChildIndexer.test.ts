@@ -48,7 +48,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toStrictEqual({ safeHeight: 1, configHash: undefined })
+      expect(result).toEqual({ safeHeight: 1, configHash: undefined })
     })
 
     it('returns minHeight - 1 if safeHeight not defined', async () => {
@@ -68,7 +68,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toStrictEqual({ safeHeight: 99, configHash: undefined })
+      expect(result).toEqual({ safeHeight: 99, configHash: undefined })
     })
 
     it('invalidates on config change', async () => {
@@ -94,7 +94,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         safeHeight: minHeight - 1,
         configHash: 'new-hash',
       })

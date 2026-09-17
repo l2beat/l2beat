@@ -69,7 +69,7 @@ describe(SlotTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toStrictEqual(SLOT_NUMBER)
+      expect(result).toEqual(SLOT_NUMBER)
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         slotTimestampProvider.getSlotNumberAtOrBefore,

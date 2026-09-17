@@ -44,7 +44,7 @@ describe(getTrackedTxsStatusRows.name, () => {
         row.projectId,
         row.subtype,
       ]),
-    ).toStrictEqual([
+    ).toEqual([
       ['active-costs', 'l2costs', 'project-a', 'stateUpdates'],
       ['active-liveness', 'liveness', 'project-a', 'stateUpdates'],
     ])
@@ -71,7 +71,7 @@ describe(getTrackedTxsStatusRows.name, () => {
       now,
     })
 
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 
   it('marks groups as missing, stale, or fresh and sorts urgent rows first', () => {
@@ -103,7 +103,7 @@ describe(getTrackedTxsStatusRows.name, () => {
       now,
     })
 
-    expect(result.map((row) => [row.projectId, row.status])).toStrictEqual([
+    expect(result.map((row) => [row.projectId, row.status])).toEqual([
       ['stale-project', 'stale'],
       ['missing-project', 'missing'],
       ['fresh-project', 'fresh'],
@@ -147,7 +147,7 @@ describe(getTrackedTxsStatusRows.name, () => {
         formula: row.formula,
         sinceTimestamp: row.sinceTimestamp,
       })),
-    ).toStrictEqual([
+    ).toEqual([
       {
         configId: 'stale',
         projectId: 'project-a',

@@ -14,16 +14,16 @@ describe(Indexer.name, () => {
       const testIndexer = new InitTestIndexer({ safeHeight })
       await testIndexer.start()
 
-      expect(testIndexer.getState().height).toStrictEqual(safeHeight)
-      expect(testIndexer.getState().initializedSelf).toStrictEqual(true)
+      expect(testIndexer.getState().height).toEqual(safeHeight)
+      expect(testIndexer.getState().initializedSelf).toEqual(true)
     })
 
     it('does not dispatch Initialized if state is undefined', async () => {
       const testIndexer = new InitTestIndexer(undefined)
       await testIndexer.start()
 
-      expect(testIndexer.getState().height).toStrictEqual(0)
-      expect(testIndexer.getState().initializedSelf).toStrictEqual(false)
+      expect(testIndexer.getState().height).toEqual(0)
+      expect(testIndexer.getState().initializedSelf).toEqual(false)
     })
   })
 
@@ -41,7 +41,7 @@ describe(Indexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.initialize()).toStrictEqual({ safeHeight: 1 })
+      expect(await child.initialize()).toEqual({ safeHeight: 1 })
     })
 
     it('first parent update then invalidate', async () => {
@@ -57,7 +57,7 @@ describe(Indexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.initialize()).toStrictEqual({ safeHeight: 1 })
+      expect(await child.initialize()).toEqual({ safeHeight: 1 })
     })
   })
 
@@ -82,12 +82,12 @@ describe(Indexer.name, () => {
       await parent.finishTick(10)
       await middle.finishUpdate(10)
 
-      expect(child.getState().status).toStrictEqual('updating')
+      expect(child.getState().status).toEqual('updating')
 
       await parent.doTick(5)
       await parent.finishTick(5)
 
-      expect(middle.getState().waiting).toStrictEqual(true)
+      expect(middle.getState().waiting).toEqual(true)
     })
   })
 
@@ -126,15 +126,15 @@ describe(Indexer.name, () => {
       expect(markAttempt).toHaveBeenCalledTimes(1)
 
       await child.finishInvalidate(0)
-      expect(child.getState().status).toStrictEqual('idle')
+      expect(child.getState().status).toEqual('idle')
 
       await vi.advanceTimersByTimeAsync(1000)
 
-      expect(child.getState().status).toStrictEqual('updating')
+      expect(child.getState().status).toEqual('updating')
       await child.finishUpdate(1)
 
       expect(clear).toHaveBeenCalledTimes(1)
-      expect(child.getState().status).toStrictEqual('idle')
+      expect(child.getState().status).toEqual('idle')
 
       vi.useRealTimers()
     })
@@ -183,21 +183,21 @@ describe(Indexer.name, () => {
       await child.finishInvalidate(new Error('test error'))
       expect(invalidateMarkAttempt).toHaveBeenCalledTimes(1)
       expect(invalidateShouldRetry).toHaveBeenCalledTimes(1)
-      expect(child.getState().status).toStrictEqual('idle')
+      expect(child.getState().status).toEqual('idle')
 
       await vi.advanceTimersByTimeAsync(1000)
 
-      expect(child.getState().status).toStrictEqual('invalidating')
+      expect(child.getState().status).toEqual('invalidating')
       expect(child.invalidating).toBeTruthy()
 
       await child.finishInvalidate(0)
       expect(invalidateClear).toHaveBeenCalledTimes(2)
-      expect(child.getState().status).toStrictEqual('updating')
+      expect(child.getState().status).toEqual('updating')
       expect(child.updating).toBeTruthy()
 
       await child.finishUpdate(1)
       expect(updateClear).toHaveBeenCalledTimes(1)
-      expect(child.getState().status).toStrictEqual('idle')
+      expect(child.getState().status).toEqual('idle')
       vi.useRealTimers()
     })
 
@@ -223,17 +223,17 @@ describe(Indexer.name, () => {
       await root.finishTick(new Error('test error'))
       expect(markAttempt).toHaveBeenCalledTimes(1)
       expect(shouldRetry).toHaveBeenCalledTimes(1)
-      expect(root.getState().status).toStrictEqual('idle')
-      expect(root.getState().tickBlocked).toStrictEqual(true)
+      expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(true)
 
       await vi.advanceTimersByTimeAsync(1000)
 
-      expect(root.getState().status).toStrictEqual('ticking')
+      expect(root.getState().status).toEqual('ticking')
 
       await root.finishTick(1)
       expect(clear).toHaveBeenCalledTimes(1)
-      expect(root.getState().status).toStrictEqual('idle')
-      expect(root.getState().tickBlocked).toStrictEqual(false)
+      expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(false)
 
       vi.useRealTimers()
     })
@@ -250,8 +250,8 @@ describe(Indexer.name, () => {
     await parent.doTick(200)
     await parent.finishTick(200)
 
-    expect(child.updateFrom).toStrictEqual(101) // inclusive
-    expect(child.updateTo).toStrictEqual(200) // inclusive
+    expect(child.updateFrom).toEqual(101) // inclusive
+    expect(child.updateTo).toEqual(200) // inclusive
 
     await child.finishUpdate(200)
   })

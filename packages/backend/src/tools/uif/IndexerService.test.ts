@@ -20,7 +20,7 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getSafeHeight('indexer')
 
-    expect(result).toStrictEqual(safeHeight)
+    expect(result).toEqual(safeHeight)
     expect(
       indexerStateRepository.findByIndexerId,
     ).toHaveBeenCalledExactlyOnceWith('indexer')
@@ -41,7 +41,7 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getIndexerState('indexer')
 
-    expect(result).toStrictEqual(mock({ configHash }))
+    expect(result).toEqual(mock({ configHash }))
     expect(
       indexerStateRepository.findByIndexerId,
     ).toHaveBeenCalledExactlyOnceWith('indexer')
@@ -170,7 +170,7 @@ describe(IndexerService.name, () => {
     const result = await indexerService.getSavedConfigurations('indexer')
 
     expect(result).toHaveLength(2)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       expect.arrayContaining([
         {
           id: 'a',

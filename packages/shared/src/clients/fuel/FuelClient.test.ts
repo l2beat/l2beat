@@ -37,7 +37,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.getBlockWithTransactions(100)
 
-      expect(result).toStrictEqual(mockFuelBlock)
+      expect(result).toEqual(mockFuelBlock)
     })
   })
 
@@ -50,7 +50,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(100)
+      expect(result).toEqual(100)
     })
   })
 
@@ -67,7 +67,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.query(query, variables)
 
-      expect(result).toStrictEqual('data-returned-from-api')
+      expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -95,7 +95,7 @@ describe(FuelClient.name, () => {
         ],
       } as FuelError)
 
-      expect(isValid).toStrictEqual({ success: false })
+      expect(isValid).toEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
@@ -104,7 +104,7 @@ describe(FuelClient.name, () => {
         data: 'success',
       })
 
-      expect(isValid).toStrictEqual({ success: true })
+      expect(isValid).toEqual({ success: true })
     })
   })
 })

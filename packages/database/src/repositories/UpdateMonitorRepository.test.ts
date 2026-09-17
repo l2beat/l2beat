@@ -24,7 +24,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
 
     const resultEth = await repository.findLatest(projectId)
 
-    expect(resultEth).toStrictEqual(expectedEth)
+    expect(resultEth).toEqual(expectedEth)
   })
 
   it(UpdateMonitorRepository.prototype.upsert.name, async () => {
@@ -57,7 +57,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     await repository.upsert(updated)
     const latest = await repository.findLatest(projectId)
 
-    expect(latest).toStrictEqual(updated)
+    expect(latest).toEqual(updated)
   })
 })
 

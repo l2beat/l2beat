@@ -11,22 +11,22 @@ describe(addressToBytes32.name, () => {
     const ADDRESS4 = EthereumAddress.random()
     const ADDRESS5 = EthereumAddress.random()
 
-    expect(addressToBytes32(ADDRESS1).length).toStrictEqual(32)
-    expect(addressToBytes32(ADDRESS2).length).toStrictEqual(32)
-    expect(addressToBytes32(ADDRESS3).length).toStrictEqual(32)
-    expect(addressToBytes32(ADDRESS4).length).toStrictEqual(32)
-    expect(addressToBytes32(ADDRESS5).length).toStrictEqual(32)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS1))).toStrictEqual(ADDRESS1)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS2))).toStrictEqual(ADDRESS2)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS3))).toStrictEqual(ADDRESS3)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS4))).toStrictEqual(ADDRESS4)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS5))).toStrictEqual(ADDRESS5)
+    expect(addressToBytes32(ADDRESS1).length).toEqual(32)
+    expect(addressToBytes32(ADDRESS2).length).toEqual(32)
+    expect(addressToBytes32(ADDRESS3).length).toEqual(32)
+    expect(addressToBytes32(ADDRESS4).length).toEqual(32)
+    expect(addressToBytes32(ADDRESS5).length).toEqual(32)
+    expect(bytes32ToAddress(addressToBytes32(ADDRESS1))).toEqual(ADDRESS1)
+    expect(bytes32ToAddress(addressToBytes32(ADDRESS2))).toEqual(ADDRESS2)
+    expect(bytes32ToAddress(addressToBytes32(ADDRESS3))).toEqual(ADDRESS3)
+    expect(bytes32ToAddress(addressToBytes32(ADDRESS4))).toEqual(ADDRESS4)
+    expect(bytes32ToAddress(addressToBytes32(ADDRESS5))).toEqual(ADDRESS5)
   })
 })
 
 describe(bytes32ToAddress.name, () => {
   it('decodes addresses correctly', () => {
-    expect(bytes32ToAddress(Bytes.fromHex(''.padStart(64, '0')))).toStrictEqual(
+    expect(bytes32ToAddress(Bytes.fromHex(''.padStart(64, '0')))).toEqual(
       EthereumAddress.ZERO,
     )
     const addressStrings = [
@@ -40,7 +40,7 @@ describe(bytes32ToAddress.name, () => {
     for (const addressString of addressStrings) {
       expect(
         bytes32ToAddress(Bytes.fromHex(addressString.padStart(64, '0'))),
-      ).toStrictEqual(EthereumAddress(addressString))
+      ).toEqual(EthereumAddress(addressString))
     }
   })
 })

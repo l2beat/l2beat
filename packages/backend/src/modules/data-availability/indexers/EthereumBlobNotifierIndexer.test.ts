@@ -23,7 +23,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, midnight)
 
-      expect(result).toStrictEqual(midnight)
+      expect(result).toEqual(midnight)
       expect(blobsRepository.getCountPerAddressInbox).not.toHaveBeenCalled()
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
@@ -42,7 +42,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, oneAm)
 
-      expect(result).toStrictEqual(oneAm)
+      expect(result).toEqual(oneAm)
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
 
@@ -60,7 +60,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.update(0, oneAm)
 
-      expect(result).toStrictEqual(oneAm)
+      expect(result).toEqual(oneAm)
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
     })
 
@@ -93,7 +93,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toStrictEqual([{ from: '0xC', to: '0xD', count: 100 }])
+      expect(result).toEqual([{ from: '0xC', to: '0xD', count: 100 }])
     })
 
     it('excludes pairs that match a config by inbox', async () => {
@@ -110,9 +110,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toStrictEqual([
-        { from: '0xB', to: '0xUnmatched', count: 200 },
-      ])
+      expect(result).toEqual([{ from: '0xB', to: '0xUnmatched', count: 200 }])
     })
 
     it('excludes pairs that match a config by inbox and sequencer', async () => {
@@ -129,9 +127,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toStrictEqual([
-        { from: '0xSeq2', to: '0xInbox', count: 200 },
-      ])
+      expect(result).toEqual([{ from: '0xSeq2', to: '0xInbox', count: 200 }])
     })
 
     it('returns empty when no pairs have 100+ blobs', async () => {
@@ -145,7 +141,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       const result = await indexer.getUnmatchedPairs(oneAm)
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
   })
 

@@ -7,7 +7,7 @@ import {
 
 describe(getOpStackBondScalingFactor.name, () => {
   it('derives the deployed OP fault-proof bond multiplier', () => {
-    expect(getOpStackBondScalingFactor(73).toFixed(5)).toStrictEqual('1.09493')
+    expect(getOpStackBondScalingFactor(73).toFixed(5)).toEqual('1.09493')
   })
 })
 
@@ -18,7 +18,7 @@ describe(getOpStackFullDisputeGameBondCostEther.name, () => {
       73,
     )
 
-    expect(fullPathCostEther.toFixed(2)).toStrictEqual('691.23')
+    expect(fullPathCostEther.toFixed(2)).toEqual('691.23')
   })
 })
 
@@ -30,6 +30,6 @@ describe(getOpStackMaxCumulativeClockExtension.name, () => {
       86_400,
     )
 
-    expect(maxExtension).toStrictEqual(874_800)
+    expect(maxExtension).toEqual(874_800)
   })
 })

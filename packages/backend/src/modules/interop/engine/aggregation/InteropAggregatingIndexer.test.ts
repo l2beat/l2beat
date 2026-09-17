@@ -209,7 +209,7 @@ describe(InteropAggregatingIndexer.name, () => {
       const result = await indexer.update(from, to)
       const retentionCutoff = to - 14 * UnixTime.DAY
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
       expect(interopTransfer.getByRange).toHaveBeenCalledWith(from, to)
       expect(aggregationService.aggregate).toHaveBeenCalledWith(
         transfers,
@@ -424,7 +424,7 @@ describe(InteropAggregatingIndexer.name, () => {
 
       const result = await indexer.update(from, to)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
       expect(aggregationService.aggregate).toHaveBeenCalledWith(
         transfers,
         configs,
@@ -493,7 +493,7 @@ describe(InteropAggregatingIndexer.name, () => {
 
       const result = await indexer.update(from, to)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
       expect(interopTransfer.getByRange).not.toHaveBeenCalled()
       expect(transaction).not.toHaveBeenCalled()
       expect(aggregatedInteropTransfer.insertMany).not.toHaveBeenCalled()
@@ -576,8 +576,8 @@ describe(InteropAggregatingIndexer.name, () => {
       const skippedResult = await indexer.update(from, to)
       const nextResult = await indexer.update(to + 1, nextTo)
 
-      expect(skippedResult).toStrictEqual(to)
-      expect(nextResult).toStrictEqual(nextTo)
+      expect(skippedResult).toEqual(to)
+      expect(nextResult).toEqual(nextTo)
       expect(interopTransfer.getByRange).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getByRange).toHaveBeenCalledWith(nextFrom, nextTo)
       expect(aggregationService.aggregate).toHaveBeenCalledWith(

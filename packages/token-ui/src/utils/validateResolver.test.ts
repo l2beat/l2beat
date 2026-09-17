@@ -13,7 +13,7 @@ describe('validateResolver', () => {
 
       const result = validate(schema, { name: 'John', age: 30 })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: { name: 'John', age: 30 },
         errors: {},
       })
@@ -27,8 +27,8 @@ describe('validateResolver', () => {
 
       const result = validate(schema, { name: 'John', age: 'invalid' })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         age: {
           type: 'validation',
           message: 'Expected number, got string.',
@@ -48,8 +48,8 @@ describe('validateResolver', () => {
         email: 'test@example.com',
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         name: {
           type: 'validation',
           message: 'Expected string, got number.',
@@ -72,7 +72,7 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { user: { name: 'John', age: 30 } })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: { user: { name: 'John', age: 30 } },
         errors: {},
       })
@@ -89,8 +89,8 @@ describe('validateResolver', () => {
         user: { name: 'John', age: 'invalid' },
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'user.age': {
           type: 'validation',
           message: 'Expected number, got string.',
@@ -112,8 +112,8 @@ describe('validateResolver', () => {
         user: { profile: { name: 'John', age: 'invalid' } },
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'user.profile.age': {
           type: 'validation',
           message: 'Expected number, got string.',
@@ -129,7 +129,7 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { tags: ['tag1', 'tag2', 'tag3'] })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: { tags: ['tag1', 'tag2', 'tag3'] },
         errors: {},
       })
@@ -141,8 +141,8 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { tags: ['tag1', 123, 'tag3'] })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'tags.1': {
           type: 'validation',
           message: 'Expected string, got number.',
@@ -156,8 +156,8 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { tags: ['tag1', 123, true] })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'tags.1': {
           type: 'validation',
           message: 'Expected string, got number.',
@@ -185,8 +185,8 @@ describe('validateResolver', () => {
         ],
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'users.1.age': {
           type: 'validation',
           message: 'Expected number, got string.',
@@ -205,8 +205,8 @@ describe('validateResolver', () => {
         ],
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'matrix.1.1': {
           type: 'validation',
           message: 'Expected number, got string.',
@@ -230,8 +230,8 @@ describe('validateResolver', () => {
         aliases: [{ value: '' }, { value: 123 }],
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         'aliases.0.value': {
           type: 'validation',
           message: 'Cannot be empty',
@@ -270,7 +270,7 @@ describe('validateResolver', () => {
         ],
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: {
           title: 'My Article',
           author: { name: 'John', age: 30 },
@@ -309,8 +309,8 @@ describe('validateResolver', () => {
         ],
       })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         title: {
           type: 'validation',
           message: 'Expected string, got number.',
@@ -341,7 +341,7 @@ describe('validateResolver', () => {
 
       const result = validate(schema, {})
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: {},
         errors: {},
       })
@@ -353,7 +353,7 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { tags: [] })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: { tags: [] },
         errors: {},
       })
@@ -366,7 +366,7 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { name: 'John', age: undefined })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: {
           age: undefined,
           name: 'John',
@@ -383,8 +383,8 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { age: 16 })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         age: {
           type: 'validation',
           message: 'Must be at least 18',
@@ -398,7 +398,7 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { age: 21 })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         values: { age: 21 },
         errors: {},
       })
@@ -412,8 +412,8 @@ describe('validateResolver', () => {
       })
       const result = validate(schema, { aliases: [] })
 
-      expect(result.values).toStrictEqual({})
-      expect(result.errors).toStrictEqual({
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
         aliases: {
           type: 'validation',
           message: 'At least one alias is required',

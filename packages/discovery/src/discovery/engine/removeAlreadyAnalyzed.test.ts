@@ -64,12 +64,12 @@ describe(removeAlreadyAnalyzed.name, () => {
       [H.toString()]: new Set([]),
     }
     removeAlreadyAnalyzed(toAnalyze, resolved)
-    expect(toAnalyze).toStrictEqual({
+    expect(toAnalyze).toEqual({
       [A.toString()]: new Set(['templateForA']),
       [G.toString()]: new Set(['newTemplateForG']),
       [H.toString()]: new Set([]),
     })
-    expect(resolved).toStrictEqual([
+    expect(resolved).toEqual([
       mockContract(A),
       mockContract(B, {
         template: 'templateForB',

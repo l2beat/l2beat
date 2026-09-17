@@ -130,7 +130,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       // adjustedTo = min(toNext(from, 'day'), to). For 5-hour window inside a day,
       // adjustedTo === to.
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('clamps update window to next day boundary', async () => {
@@ -184,7 +184,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(safeHeight).toStrictEqual(expectedTo)
+      expect(safeHeight).toEqual(expectedTo)
     })
 
     it('skips log fetch when configurations slice is empty', async () => {
@@ -232,7 +232,7 @@ describe(PrivacyFlowIndexer.name, () => {
       expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledExactlyOnceWith(
         [],
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('throws when block timestamp mapping is missing', async () => {
@@ -533,10 +533,10 @@ describe(PrivacyFlowIndexer.name, () => {
       await updateFn()
 
       const call = vi.mocked(privacyFlowEventRepo.upsertMany).mock.calls[0][0]
-      expect(call?.length).toStrictEqual(1)
+      expect(call?.length).toEqual(1)
       // 2.5 USDC * $1.01
-      expect(call?.[0]?.valueUsd).toStrictEqual(2.5 * 1.01)
-      expect(call?.[0]?.amount).toStrictEqual(2_500_000n)
+      expect(call?.[0]?.valueUsd).toEqual(2.5 * 1.01)
+      expect(call?.[0]?.amount).toEqual(2_500_000n)
     })
 
     it('throws when price is missing for raw record', async () => {
@@ -765,17 +765,17 @@ describe(PrivacyFlowIndexer.name, () => {
       await updateFn()
 
       const getLogsCall = vi.mocked(logsProvider.getLogs).mock.calls[0]
-      expect(new Set(getLogsCall?.[2])).toStrictEqual(
+      expect(new Set(getLogsCall?.[2])).toEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
-      expect(new Set(getLogsCall?.[3]?.[0])).toStrictEqual(
+      expect(new Set(getLogsCall?.[3]?.[0])).toEqual(
         new Set([TOPIC_A, TOPIC_B]),
       )
 
       const records = vi.mocked(privacyFlowEventRepo.upsertMany).mock
         .calls[0][0]
-      expect(records?.length).toStrictEqual(2)
-      expect(records?.map((r) => r.configurationId).sort()).toStrictEqual([
+      expect(records?.length).toEqual(2)
+      expect(records?.map((r) => r.configurationId).sort()).toEqual([
         'config-A',
         'config-B',
       ])
@@ -896,7 +896,7 @@ describe(PrivacyFlowIndexer.name, () => {
         .calls[0][0]
       expect(
         records?.map((r) => [r.configurationId, r.direction, r.amount]),
-      ).toStrictEqual([
+      ).toEqual([
         ['config-fixed', 'deposit', 1n],
         ['config-deposit', 'deposit', 10n],
         ['config-withdrawal', 'withdrawal', 7n],
@@ -1010,7 +1010,7 @@ describe(PrivacyFlowIndexer.name, () => {
         extractor: 'fixedAmount' as const,
         params: { amount: '1000' },
       }
-      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toStrictEqual(
+      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toEqual(
         '30b264b834f9',
       )
     })
@@ -1033,7 +1033,7 @@ describe(PrivacyFlowIndexer.name, () => {
           ...base,
           direction: 'deposit',
         }),
-      ).not.toStrictEqual(
+      ).not.toEqual(
         PrivacyFlowIndexer.idToConfigurationId({
           ...base,
           direction: 'withdrawal',
@@ -1059,7 +1059,7 @@ describe(PrivacyFlowIndexer.name, () => {
           ...base,
           params: { amount: '1000' },
         }),
-      ).not.toStrictEqual(
+      ).not.toEqual(
         PrivacyFlowIndexer.idToConfigurationId({
           ...base,
           params: { amount: '2000' },

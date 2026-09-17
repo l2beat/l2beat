@@ -327,17 +327,15 @@ describe(PrivacyRelayerSampler.name, () => {
     it('is deterministic for the same input', () => {
       const properties = sampleProperties()
 
-      expect(
+      expect(PrivacyRelayerSampler.idToConfigurationId(properties)).toEqual(
         PrivacyRelayerSampler.idToConfigurationId(properties),
-      ).toStrictEqual(PrivacyRelayerSampler.idToConfigurationId(properties))
+      )
     })
 
     it('differs by chain id', () => {
       const properties = sampleProperties()
 
-      expect(
-        PrivacyRelayerSampler.idToConfigurationId(properties),
-      ).not.toStrictEqual(
+      expect(PrivacyRelayerSampler.idToConfigurationId(properties)).not.toEqual(
         PrivacyRelayerSampler.idToConfigurationId({
           ...properties,
           chainId: 137,

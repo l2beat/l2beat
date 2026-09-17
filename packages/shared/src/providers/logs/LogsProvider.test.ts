@@ -19,7 +19,7 @@ describe(LogsProvider.name, () => {
         undefined,
         undefined,
       )
-      expect(result).toStrictEqual([log(1)])
+      expect(result).toEqual([log(1)])
     })
 
     it('calls other client when there are errors', async () => {
@@ -56,7 +56,7 @@ describe(LogsProvider.name, () => {
         undefined,
       )
 
-      expect(result).toStrictEqual([log(1)])
+      expect(result).toEqual([log(1)])
     })
 
     it('throws when ran out of fallbacks', async () => {

@@ -28,7 +28,7 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getAll()
 
-      expect(result).toStrictEqual(entries)
+      expect(result).toEqual(entries)
       expect(getAll).toHaveBeenCalledWith()
     })
   })
@@ -118,8 +118,8 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result.totalCount).toStrictEqual(12)
-      expect(result.rows).toStrictEqual([
+      expect(result.totalCount).toEqual(12)
+      expect(result.rows).toEqual([
         {
           entry: symbolConflictEntry,
           predictedOutcome: {
@@ -204,7 +204,7 @@ describe('tokenIngestionQueueRouter', () => {
       })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
       expect(plan.mock.calls[0][0]).toMatchObject(input)
-      expect(plan.mock.calls[0][1]).toStrictEqual(transferIndex)
+      expect(plan.mock.calls[0][1]).toEqual(transferIndex)
       expect(fetch).toHaveBeenCalledWith(trace)
     })
   })
@@ -221,7 +221,7 @@ describe('tokenIngestionQueueRouter', () => {
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.approve(input)
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
       expect(approve).toHaveBeenCalledWith(input)
     })
 
@@ -251,10 +251,10 @@ describe('tokenIngestionQueueRouter', () => {
       const second = { chain: 'base', address: '0x222' }
       const result = await caller.approveMany([first, second])
 
-      expect(result).toStrictEqual({ success: true, approved: 1 })
+      expect(result).toEqual({ success: true, approved: 1 })
       expect(approve).toHaveBeenCalledTimes(2)
-      expect(approve.mock.calls[0][0]).toStrictEqual(first)
-      expect(approve.mock.calls[1][0]).toStrictEqual(second)
+      expect(approve.mock.calls[0][0]).toEqual(first)
+      expect(approve.mock.calls[1][0]).toEqual(second)
     })
   })
 
@@ -270,7 +270,7 @@ describe('tokenIngestionQueueRouter', () => {
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.retry(input)
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
       expect(retry).toHaveBeenCalledWith(input)
     })
 
@@ -300,10 +300,10 @@ describe('tokenIngestionQueueRouter', () => {
       const second = { chain: 'base', address: '0x222' }
       const result = await caller.retryMany([first, second])
 
-      expect(result).toStrictEqual({ success: true, retried: 1 })
+      expect(result).toEqual({ success: true, retried: 1 })
       expect(retry).toHaveBeenCalledTimes(2)
-      expect(retry.mock.calls[0][0]).toStrictEqual(first)
-      expect(retry.mock.calls[1][0]).toStrictEqual(second)
+      expect(retry.mock.calls[0][0]).toEqual(first)
+      expect(retry.mock.calls[1][0]).toEqual(second)
     })
   })
 })

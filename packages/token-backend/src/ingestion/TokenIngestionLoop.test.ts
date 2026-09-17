@@ -68,7 +68,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(order).toStrictEqual(['relations', 'enqueue', 'drain'])
+      expect(order).toEqual(['relations', 'enqueue', 'drain'])
     })
 
     it('still enqueues and drains when token relation ingestion fails', async () => {
@@ -118,7 +118,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(order).toStrictEqual(['enqueue', 'drain'])
+      expect(order).toEqual(['enqueue', 'drain'])
     })
 
     it('enqueues addresses after the stored cursor and advances it', async () => {
@@ -161,7 +161,7 @@ describe(TokenIngestionLoop.name, () => {
 
       expect(get).toHaveBeenCalledWith('interop-transfers:lastSerialId')
       expect(getTokenAddressesAfterSerialId).toHaveBeenCalledWith('10')
-      expect(enqueue.mock.calls.map((call) => call[0])).toStrictEqual([
+      expect(enqueue.mock.calls.map((call) => call[0])).toEqual([
         token('ethereum', '0xaaa'),
         token('base', '0xbbb'),
       ])
@@ -472,7 +472,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markConflict.mock.calls[0][1]).toStrictEqual(
+      expect(markConflict.mock.calls[0][1]).toEqual(
         'Non-swapping transfers point to multiple abstract tokens: FIRST1:FOO, SECOND:BAR.',
       )
     })
@@ -608,7 +608,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markError.mock.calls[0][1]).toStrictEqual(
+      expect(markError.mock.calls[0][1]).toEqual(
         'Missing required deployed-token facts: deploymentTimestamp. RPC lookup returned no value.',
       )
     })
@@ -1046,7 +1046,7 @@ describe(TokenIngestionLoop.name, () => {
 
       await loop.runOnce()
 
-      expect(markConflict.mock.calls[0][1]).toStrictEqual(
+      expect(markConflict.mock.calls[0][1]).toEqual(
         'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
       )
       expect(abstractInsert).toHaveBeenCalledTimes(0)

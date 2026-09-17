@@ -31,7 +31,7 @@ describe('deployedTokensRouter', () => {
         chain: 'ethereum',
         address: '0x123',
       })
-      expect(result).toStrictEqual(null)
+      expect(result).toEqual(null)
       expect(mockFindByChainAndAddress).toHaveBeenCalledWith({
         chain: 'ethereum',
         address: '0x123',
@@ -77,7 +77,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toStrictEqual(token)
+      expect(result).toEqual(token)
     })
   })
 
@@ -97,7 +97,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toStrictEqual(false)
+      expect(result).toEqual(false)
     })
 
     it('returns true when token exists', async () => {
@@ -120,7 +120,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toStrictEqual(true)
+      expect(result).toEqual(true)
     })
   })
 
@@ -190,7 +190,7 @@ describe('deployedTokensRouter', () => {
         { chain: 'arbitrum', address: '0x456' },
       ])
 
-      expect(result).toStrictEqual(tokens)
+      expect(result).toEqual(tokens)
       expect(mockGetByChainAndAddress).toHaveBeenCalledWith([
         { chain: 'ethereum', address: '0x123' },
         { chain: 'arbitrum', address: '0x456' },
@@ -241,7 +241,7 @@ describe('deployedTokensRouter', () => {
           chain: token.chain,
           address: token.address,
         }),
-      ).toStrictEqual({ deployedToken: token, abstractToken })
+      ).toEqual({ deployedToken: token, abstractToken })
       expect(findAbstractToken).toHaveBeenCalledWith('USDC')
     })
 
@@ -262,7 +262,7 @@ describe('deployedTokensRouter', () => {
           chain: 'optimism',
           address: '0xccc',
         }),
-      ).toStrictEqual({ deployedToken: null, abstractToken: null })
+      ).toEqual({ deployedToken: null, abstractToken: null })
     })
   })
 
@@ -345,7 +345,7 @@ describe('deployedTokensRouter', () => {
           role: entry.role,
           otherToken: entry.otherToken?.chain ?? null,
         })),
-      ).toStrictEqual([
+      ).toEqual([
         // This token is the escrowed original of the ethereum representation.
         { plugin: 'a-plugin', role: 'locked', otherToken: 'ethereum' },
         // ...and itself a representation of the arbitrum original, which is not
@@ -378,7 +378,7 @@ describe('deployedTokensRouter', () => {
 
       expect(
         await caller.getMintingPlugins({ chain: 'base', address: '0xbbb' }),
-      ).toStrictEqual(['canonicalbridge', 'superbridge'])
+      ).toEqual(['canonicalbridge', 'superbridge'])
       expect(getMintingPluginsFor).toHaveBeenCalledWith({
         chain: 'base',
         address: '0xbbb',
@@ -417,9 +417,9 @@ describe('deployedTokensRouter', () => {
         {} as unknown as CoingeckoClient,
       )
 
-      expect(
-        await caller.getRelationsGraphRelationDetails(primaryKey),
-      ).toStrictEqual(relation)
+      expect(await caller.getRelationsGraphRelationDetails(primaryKey)).toEqual(
+        relation,
+      )
       expect(findRelation).toHaveBeenCalledWith(primaryKey)
     })
   })
@@ -473,7 +473,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getRelationsGraph()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         nodes: [
           {
             id: 'base:0xbbb',
@@ -551,7 +551,7 @@ describe('deployedTokensRouter', () => {
         {} as unknown as CoingeckoClient,
       )
 
-      expect(await caller.getRelationsGraph()).toStrictEqual({
+      expect(await caller.getRelationsGraph()).toEqual({
         nodes: [
           {
             id: 'ethereum:0xaaa',
@@ -624,7 +624,7 @@ describe('deployedTokensRouter', () => {
         {} as unknown as CoingeckoClient,
       )
 
-      expect(await caller.getRelationsGraph()).toStrictEqual({
+      expect(await caller.getRelationsGraph()).toEqual({
         nodes: [],
         relations: [],
       })
@@ -665,7 +665,7 @@ describe('deployedTokensRouter', () => {
         {} as unknown as CoingeckoClient,
       )
 
-      expect(await caller.getRelationsGraph()).toStrictEqual({
+      expect(await caller.getRelationsGraph()).toEqual({
         nodes: [
           {
             id: 'ethereum:0xaaa',
@@ -762,7 +762,7 @@ describe('deployedTokensRouter', () => {
         {} as unknown as CoingeckoClient,
       )
 
-      expect(await caller.getRelationsGraph()).toStrictEqual({
+      expect(await caller.getRelationsGraph()).toEqual({
         nodes: [
           {
             id: 'base:0xbbb',
@@ -818,7 +818,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: {
           type: 'already-exists',
           message:
@@ -844,7 +844,7 @@ describe('deployedTokensRouter', () => {
         address: 'invalid-address',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: undefined,
         data: undefined,
         warnings: [],
@@ -869,7 +869,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: {
           type: 'chain-not-found',
           message: 'Chain not found.',
@@ -915,7 +915,7 @@ describe('deployedTokensRouter', () => {
         address: '0x6fe981dbd557f81ff66836af0932cba535cbc343',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: {
           type: 'not-a-token',
           message:
@@ -982,8 +982,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data).toStrictEqual({
+      expect(result.error).toEqual(undefined)
+      expect(result.data).toEqual({
         symbol: 'RPC-TKN',
         symbolSource: 'rpc',
         suggestions: [],
@@ -1053,8 +1053,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data).toStrictEqual({
+      expect(result.error).toEqual(undefined)
+      expect(result.data).toEqual({
         symbol: 'TKN',
         symbolSource: 'rpc',
         suggestions: [],
@@ -1121,9 +1121,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.deploymentTimestamp).toStrictEqual(
-        deploymentTimestamp,
-      )
+      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
     })
 
     it('falls back to rpc when etherscan and blockscout throw', async () => {
@@ -1191,9 +1189,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.deploymentTimestamp).toStrictEqual(
-        deploymentTimestamp,
-      )
+      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
     })
 
     it('includes rpc symbol and decimals in not-found-on-coingecko response', async () => {
@@ -1237,11 +1233,11 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toStrictEqual({
+      expect(result.error).toEqual({
         type: 'not-found-on-coingecko',
         message: 'Coin not found on Coingecko.',
       })
-      expect(result.data).toStrictEqual({
+      expect(result.data).toEqual({
         symbol: 'USDC-RPC',
         symbolSource: 'rpc',
         suggestions: undefined,
@@ -1292,11 +1288,11 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toStrictEqual({
+      expect(result.error).toEqual({
         type: 'not-found-on-coingecko',
         message: 'Coin not found on Coingecko.',
       })
-      expect(result.data).toStrictEqual({
+      expect(result.data).toEqual({
         symbol: undefined,
         symbolSource: undefined,
         suggestions: undefined,
@@ -1407,7 +1403,7 @@ describe('deployedTokensRouter', () => {
         address: targetAddress,
       })
 
-      expect(result.data?.abstractTokenSuggestions).toStrictEqual([
+      expect(result.data?.abstractTokenSuggestions).toEqual([
         {
           id: 'abstract-usdc',
           symbol: 'USDC',
@@ -1474,7 +1470,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.abstractTokenSuggestions).toStrictEqual([])
+      expect(result.data?.abstractTokenSuggestions).toEqual([])
       expect(mockGetAll).toHaveBeenCalledTimes(0)
     })
 
@@ -1510,7 +1506,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.abstractTokenSuggestions).toStrictEqual([])
+      expect(result.data?.abstractTokenSuggestions).toEqual([])
       expect(mockGetAll).toHaveBeenCalledTimes(0)
     })
 
@@ -1613,8 +1609,8 @@ describe('deployedTokensRouter', () => {
         address: targetAddress,
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data?.abstractTokenSuggestions).toStrictEqual([
+      expect(result.error).toEqual(undefined)
+      expect(result.data?.abstractTokenSuggestions).toEqual([
         {
           id: 'abstract-usdc',
           symbol: 'USDC',
@@ -1680,8 +1676,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data).toStrictEqual({
+      expect(result.error).toEqual(undefined)
+      expect(result.data).toEqual({
         symbol: 'USDC',
         symbolSource: 'coingecko',
         decimals: undefined,
@@ -1734,9 +1730,9 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data?.symbol).toStrictEqual('USDC')
-      expect(result.warnings).toStrictEqual([
+      expect(result.error).toEqual(undefined)
+      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.warnings).toEqual([
         {
           field: 'decimals',
           message:
@@ -1803,8 +1799,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data?.symbol).toStrictEqual('USDC')
+      expect(result.error).toEqual(undefined)
+      expect(result.data?.symbol).toEqual('USDC')
     })
 
     it('returns otherChains information', async () => {
@@ -1882,8 +1878,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data?.suggestions).toStrictEqual([
+      expect(result.error).toEqual(undefined)
+      expect(result.data?.suggestions).toEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
@@ -1940,8 +1936,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toStrictEqual(undefined)
-      expect(result.data?.symbol).toStrictEqual('USDC')
+      expect(result.error).toEqual(undefined)
+      expect(result.data?.symbol).toEqual('USDC')
     })
   })
 
@@ -1956,7 +1952,7 @@ describe('deployedTokensRouter', () => {
       const result =
         await caller.getSuggestionsByCoingeckoId('nonexistent-coin')
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns suggestions for platforms that do not have deployed tokens', async () => {
@@ -2020,7 +2016,7 @@ describe('deployedTokensRouter', () => {
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toHaveLength(2)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([
           {
             chain: 'arbitrum',
@@ -2098,7 +2094,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('filters out platforms with empty address', async () => {
@@ -2134,7 +2130,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2176,7 +2172,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2217,7 +2213,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -2278,7 +2274,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
@@ -2371,7 +2367,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns suggestion for src side when srcAbstractTokenId is missing', async () => {
@@ -2393,7 +2389,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2434,7 +2430,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
@@ -2489,7 +2485,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2540,7 +2536,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('excludes suggestions for chain/address that already has deployed token', async () => {
@@ -2577,7 +2573,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('excludes nonMinting and unknown transfers from suggestions', async () => {
@@ -2601,7 +2597,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns suggestions from both lockAndMint and burnAndMint transfers', async () => {
@@ -2640,7 +2636,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByPartialTransfers()
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -2779,7 +2775,7 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getCoingeckoSuggestions()
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           chain: 'ethereum',
           address: '0x111',

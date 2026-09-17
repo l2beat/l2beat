@@ -30,7 +30,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         record.pluginName,
         record.chain,
       )
-      expect(stored).toStrictEqual(record)
+      expect(stored).toEqual(record)
     })
 
     it('updates record for the same plugin and chain', async () => {
@@ -57,7 +57,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       await repository.upsert(updated)
 
       const all = await repository.getAll()
-      expect(all).toStrictEqual([updated])
+      expect(all).toEqual([updated])
     })
   })
 
@@ -69,7 +69,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         'plugin-a',
         'ethereum',
       )
-      expect(stored).toStrictEqual(
+      expect(stored).toEqual(
         state({
           pluginName: 'plugin-a',
           chain: 'ethereum',
@@ -95,7 +95,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         record.pluginName,
         record.chain,
       )
-      expect(stored).toStrictEqual({
+      expect(stored).toEqual({
         ...record,
         lastError: 'Updated error',
       })
@@ -117,7 +117,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'ethereum',
         )
-        expect(stored).toStrictEqual(
+        expect(stored).toEqual(
           state({
             pluginName: 'plugin-a',
             chain: 'ethereum',
@@ -152,7 +152,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           record.pluginName,
           record.chain,
         )
-        expect(stored).toStrictEqual({
+        expect(stored).toEqual({
           ...record,
           resyncRequestedFrom: updatedResyncRequestedFrom,
           wipeRequired: true,
@@ -187,13 +187,13 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           record.chain,
         )
 
-        expect(updated).toStrictEqual(1)
+        expect(updated).toEqual(1)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
           record.chain,
         )
-        expect(stored).toStrictEqual({
+        expect(stored).toEqual({
           ...record,
           resyncRequestedFrom: null,
           wipeRequired: false,
@@ -216,13 +216,13 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           record.chain,
         )
 
-        expect(updated).toStrictEqual(0)
+        expect(updated).toEqual(0)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
           record.chain,
         )
-        expect(stored).toStrictEqual(record)
+        expect(stored).toEqual(record)
       })
 
       it('returns 0 when no matching record exists', async () => {
@@ -230,7 +230,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'ethereum',
         )
-        expect(updated).toStrictEqual(0)
+        expect(updated).toEqual(0)
       })
     },
   )
@@ -264,13 +264,13 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           },
         )
 
-        expect(updated).toStrictEqual(1)
+        expect(updated).toEqual(1)
 
         const stored = await repository.findByPluginNameAndChain(
           record.pluginName,
           record.chain,
         )
-        expect(stored).toStrictEqual({
+        expect(stored).toEqual({
           ...record,
           lastError: null,
           resyncRequestedFrom: secondResyncRequestedFrom,
@@ -287,7 +287,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           },
         )
 
-        expect(updated).toStrictEqual(0)
+        expect(updated).toEqual(0)
       })
     },
   )
@@ -307,18 +307,18 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           wipeRequired: true,
         })
 
-        expect(updated).toStrictEqual(2)
+        expect(updated).toEqual(2)
 
         const pluginA = await repository.findByPluginName('plugin-a')
         expect(pluginA).toHaveLength(2)
-        expect(pluginA).toStrictEqual(
+        expect(pluginA).toEqual(
           expect.arrayContaining([
             { ...a1, wipeRequired: true },
             { ...a2, wipeRequired: true },
           ]),
         )
         const pluginB = await repository.findByPluginName('plugin-b')
-        expect(pluginB).toStrictEqual([b1])
+        expect(pluginB).toEqual([b1])
       })
     },
   )
@@ -338,7 +338,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'arbitrum',
         )
-        expect(found).toStrictEqual(a2)
+        expect(found).toEqual(a2)
       })
 
       it('returns undefined when no matching record exists', async () => {
@@ -350,7 +350,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'arbitrum',
         )
-        expect(found).toStrictEqual(undefined)
+        expect(found).toEqual(undefined)
       })
     },
   )
@@ -368,7 +368,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
 
         const found = await repository.findByPluginName('plugin-a')
         expect(found).toHaveLength(2)
-        expect(found).toStrictEqual(expect.arrayContaining([a1, a2]))
+        expect(found).toEqual(expect.arrayContaining([a1, a2]))
       })
 
       it('returns empty array when no matching records exist', async () => {
@@ -377,7 +377,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         const found = await repository.findByPluginName('plugin-b')
-        expect(found).toStrictEqual([])
+        expect(found).toEqual([])
       })
     },
   )
@@ -394,7 +394,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
 
       const all = await repository.getAll()
       expect(all).toHaveLength(3)
-      expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
+      expect(all).toEqual(expect.arrayContaining([a1, a2, b1]))
     })
   })
 
@@ -406,10 +406,10 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       )
 
       const deleted = await repository.deleteAll()
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const all = await repository.getAll()
-      expect(all).toStrictEqual([])
+      expect(all).toEqual([])
     })
   })
 
@@ -430,11 +430,11 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toStrictEqual(1)
+        expect(deleted).toEqual(1)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(3)
-        expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
+        expect(all).toEqual(expect.arrayContaining([a1, a2, b1]))
       })
 
       it('does not delete any records when list is empty', async () => {
@@ -446,15 +446,15 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInPluginNames([])
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const all = await repository.getAll()
-        expect(all.length).toStrictEqual(2)
+        expect(all.length).toEqual(2)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteNotInPluginNames(['plugin-a'])
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -467,11 +467,11 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'plugin-a',
           'plugin-b',
         ])
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(2)
-        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
+        expect(all).toEqual(expect.arrayContaining([a1, b1]))
       })
     },
   )
@@ -493,11 +493,11 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           'ethereum',
           'arbitrum',
         ])
-        expect(deleted).toStrictEqual(2)
+        expect(deleted).toEqual(2)
 
         const all = await repository.getAll()
         expect(all).toHaveLength(2)
-        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
+        expect(all).toEqual(expect.arrayContaining([a1, b1]))
       })
 
       it('does not delete any records when list is empty', async () => {
@@ -506,10 +506,10 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         const deleted = await repository.deleteNotInChains([])
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const all = await repository.getAll()
-        expect(all.length).toStrictEqual(1)
+        expect(all.length).toEqual(1)
       })
 
       it('returns 0 when all records match the valid list', async () => {
@@ -517,10 +517,10 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         await repository.upsert(a1)
 
         const deleted = await repository.deleteNotInChains(['ethereum'])
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const all = await repository.getAll()
-        expect(all).toStrictEqual([a1])
+        expect(all).toEqual([a1])
       })
     },
   )

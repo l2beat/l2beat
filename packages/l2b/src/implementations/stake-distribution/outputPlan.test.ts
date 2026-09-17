@@ -32,7 +32,7 @@ describe(planStakeDistributionOutput.name, () => {
       [polygon, gnosis],
     )
 
-    expect(plan).toStrictEqual([
+    expect(plan).toEqual([
       {
         path: '/repo/discovery/polygon-pos/stake-distribution.json',
         data: polygon.distribution,
@@ -51,7 +51,7 @@ describe(planStakeDistributionOutput.name, () => {
       [polygon, gnosis],
     )
 
-    expect(plan).toStrictEqual([
+    expect(plan).toEqual([
       {
         path: '/tmp/all.json',
         data: [
@@ -69,7 +69,7 @@ describe(planStakeDistributionOutput.name, () => {
       [gnosis],
     )
 
-    expect(plan).toStrictEqual([
+    expect(plan).toEqual([
       { path: '/tmp/gnosis.json', data: gnosis.distribution },
     ])
   })

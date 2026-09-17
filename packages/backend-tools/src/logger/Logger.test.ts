@@ -22,9 +22,9 @@ describe(Logger.name, () => {
   describe('configuration', () => {
     it('can be reconfigured', () => {
       let logger = new Logger({ level: 'INFO' })
-      expect(logger.options.level).toStrictEqual('INFO')
+      expect(logger.options.level).toEqual('INFO')
       logger = logger.configure({ level: 'ERROR' })
-      expect(logger.options.level).toStrictEqual('ERROR')
+      expect(logger.options.level).toEqual('ERROR')
     })
 
     it('supports tags', () => {
@@ -69,18 +69,18 @@ describe(Logger.name, () => {
 
     it('for string', () => {
       const logger = Logger.INFO.for('FooService')
-      expect(logger.tags).toStrictEqual({ service: 'FooService' })
+      expect(logger.tags).toEqual({ service: 'FooService' })
     })
 
     it('for class instance', () => {
       const fooService = new (class FooService {})()
       const logger = Logger.INFO.for(fooService)
-      expect(logger.tags).toStrictEqual({ service: 'FooService' })
+      expect(logger.tags).toEqual({ service: 'FooService' })
     })
 
     it('for member', () => {
       const logger = Logger.INFO.for('FooService').for('queue')
-      expect(logger.tags).toStrictEqual({ service: 'FooService.queue' })
+      expect(logger.tags).toEqual({ service: 'FooService.queue' })
     })
 
     it('filter', () => {

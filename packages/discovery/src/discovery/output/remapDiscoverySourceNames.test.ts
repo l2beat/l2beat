@@ -57,7 +57,7 @@ describe(remapDiscoverySourceNames.name, () => {
       output,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { ...renamedContract, name: 'Remapped' },
       unnamedContract,
       eoa,

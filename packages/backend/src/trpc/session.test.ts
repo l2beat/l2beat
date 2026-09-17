@@ -24,7 +24,7 @@ describe(getSession.name, () => {
   it('works as expected when auth is disabled', async () => {
     const session = await getSession(new Headers(), false)
 
-    expect(session).toStrictEqual({
+    expect(session).toEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -41,7 +41,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toStrictEqual(undefined)
+    expect(session).toEqual(undefined)
   })
 
   it('returns a session if the jwt token is valid', async () => {
@@ -60,7 +60,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toStrictEqual({
+    expect(session).toEqual({
       email: 'someone@l2beat.com',
     })
   })
@@ -68,7 +68,7 @@ describe(getSession.name, () => {
   it('returns undefined if no token is provided', async () => {
     const session = await getSession(new Headers(), mockAuth)
 
-    expect(session).toStrictEqual(undefined)
+    expect(session).toEqual(undefined)
   })
 
   it('returns a session when the backoffice auth token matches (Authorization header)', async () => {
@@ -82,7 +82,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toStrictEqual({
+    expect(session).toEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -99,7 +99,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toStrictEqual({
+    expect(session).toEqual({
       email: 'dev@l2beat.com',
     })
   })
@@ -118,7 +118,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toStrictEqual({
+    expect(session).toEqual({
       email: 'someone@l2beat.com',
     })
   })

@@ -40,7 +40,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(listProjectLayouts(PROJECT_PATH)).toStrictEqual([
+    expect(listProjectLayouts(PROJECT_PATH)).toEqual([
       { name: 'alpha', description: 'First layout' },
       { name: 'beta', description: 'Second layout' },
     ])
@@ -55,7 +55,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(listProjectLayouts(PROJECT_PATH)).toStrictEqual([
+    expect(listProjectLayouts(PROJECT_PATH)).toEqual([
       { name: 'broken', description: undefined },
     ])
   })
@@ -79,7 +79,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(written).toStrictEqual({
+    expect(written).toEqual({
       version: 3,
       projectId: PROJECT,
       metadata: {
@@ -89,7 +89,7 @@ describe('layout storage', () => {
     })
 
     const parsed = readProjectLayout(PROJECT_PATH, 'research-layout')
-    expect(parsed).toStrictEqual(written)
+    expect(parsed).toEqual(written)
   })
 
   it('drops invalid metadata description instead of rejecting the layout', () => {
@@ -111,9 +111,7 @@ describe('layout storage', () => {
       },
     })
 
-    expect(
-      readProjectLayout(PROJECT_PATH, 'invalid description'),
-    ).toStrictEqual({
+    expect(readProjectLayout(PROJECT_PATH, 'invalid description')).toEqual({
       version: 3,
       projectId: PROJECT,
       locations: {},

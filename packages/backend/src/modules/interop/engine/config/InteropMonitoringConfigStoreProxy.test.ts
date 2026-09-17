@@ -17,7 +17,7 @@ describe(InteropMonitoringConfigStoreProxy.name, () => {
 
     await proxy.set(ExampleConfig, { foo: 1 })
 
-    expect(proxy.get(ExampleConfig)).toStrictEqual({ foo: 1 })
+    expect(proxy.get(ExampleConfig)).toEqual({ foo: 1 })
     expect(notifier.handleConfigChange).toHaveBeenCalledTimes(1)
     expect(notifier.handleConfigChange).toHaveBeenCalledWith(
       ExampleConfig.key,

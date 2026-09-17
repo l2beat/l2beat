@@ -38,7 +38,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       expect(statsProvider.getStats).not.toHaveBeenCalled()
       expect(daBeatStatsRepository.upsert).not.toHaveBeenCalled()
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('fetches stats and saves them to DB when from and to are in different hours', async () => {
@@ -73,7 +73,7 @@ describe(DaBeatStatsIndexer.name, () => {
         ...mockStats,
         id: projectId,
       })
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('skips update when no stats were found', async () => {
@@ -97,7 +97,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       expect(statsProvider.getStats).not.toHaveBeenCalled()
       expect(daBeatStatsRepository.upsert).not.toHaveBeenCalled()
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
   })
 
@@ -108,7 +108,7 @@ describe(DaBeatStatsIndexer.name, () => {
 
       const result = await indexer.invalidate(targetHeight)
 
-      expect(result).toStrictEqual(targetHeight)
+      expect(result).toEqual(targetHeight)
     })
   })
 })

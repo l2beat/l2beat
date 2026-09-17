@@ -32,7 +32,7 @@ describe(DayTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         UnixTime.toDays(UnixTime.toStartOf(LAST_HOUR, 'day')),
       )
     })

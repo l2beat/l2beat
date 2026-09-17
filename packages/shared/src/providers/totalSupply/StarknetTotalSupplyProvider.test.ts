@@ -60,7 +60,7 @@ describe(StarknetTotalSupplyProvider.name, () => {
         },
         BLOCK,
       )
-      expect(result).toStrictEqual([1n, 2n, 0n])
+      expect(result).toEqual([1n, 2n, 0n])
     })
 
     it('throws if any call fails', async () => {

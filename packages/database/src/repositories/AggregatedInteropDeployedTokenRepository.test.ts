@@ -32,7 +32,7 @@ describeDatabase(AggregatedInteropDeployedTokenRepository.name, (db) => {
           [],
         )
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
 
       it('sums stats per token across flows at the given timestamp', async () => {
@@ -107,7 +107,7 @@ describeDatabase(AggregatedInteropDeployedTokenRepository.name, (db) => {
         )
 
         result.sort((a, b) => a.tokenChain.localeCompare(b.tokenChain))
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           {
             tokenChain: 'arbitrum',
             tokenAddress: '0x2',

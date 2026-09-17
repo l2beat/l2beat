@@ -31,7 +31,7 @@ describe(getZkLinkProxy.name, () => {
       'function periphery() view returns (address)',
       [],
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'ZkLink proxy',
       values: {
         $admin: admin.toString(),

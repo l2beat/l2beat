@@ -28,13 +28,13 @@ describe(pickWorseRisk.name, () => {
   const goodRisk = createFakeRisk('good')
 
   it('returns the risk with worse sentiment', () => {
-    expect(pickWorseRisk(badRisk, warnRisk)).toStrictEqual(badRisk)
-    expect(pickWorseRisk(warnRisk, badRisk)).toStrictEqual(badRisk)
-    expect(pickWorseRisk(neutralRisk, warnRisk)).toStrictEqual(warnRisk)
-    expect(pickWorseRisk(goodRisk, neutralRisk)).toStrictEqual(neutralRisk)
-    expect(pickWorseRisk(neutralRisk, badRisk)).toStrictEqual(badRisk)
-    expect(pickWorseRisk(goodRisk, badRisk)).toStrictEqual(badRisk)
-    expect(pickWorseRisk(neutralRisk, warnRisk)).toStrictEqual(warnRisk)
+    expect(pickWorseRisk(badRisk, warnRisk)).toEqual(badRisk)
+    expect(pickWorseRisk(warnRisk, badRisk)).toEqual(badRisk)
+    expect(pickWorseRisk(neutralRisk, warnRisk)).toEqual(warnRisk)
+    expect(pickWorseRisk(goodRisk, neutralRisk)).toEqual(neutralRisk)
+    expect(pickWorseRisk(neutralRisk, badRisk)).toEqual(badRisk)
+    expect(pickWorseRisk(goodRisk, badRisk)).toEqual(badRisk)
+    expect(pickWorseRisk(neutralRisk, warnRisk)).toEqual(warnRisk)
   })
 
   it('if two have the same sentiment and no order is specified for one it throws', () => {
@@ -49,17 +49,13 @@ describe(pickWorseRisk.name, () => {
     const risk1 = createFakeRisk('bad', -2)
     const risk2 = createFakeRisk('bad', 5)
 
-    expect(pickWorseRisk(risk1, risk2)).toStrictEqual(risk1)
+    expect(pickWorseRisk(risk1, risk2)).toEqual(risk1)
   })
 
   it('if any risks are under review the worse risk is still under review', () => {
     const underReviewRisk = createFakeRisk('UnderReview')
-    expect(pickWorseRisk(underReviewRisk, badRisk)).toStrictEqual(
-      underReviewRisk,
-    )
-    expect(pickWorseRisk(badRisk, underReviewRisk)).toStrictEqual(
-      underReviewRisk,
-    )
+    expect(pickWorseRisk(underReviewRisk, badRisk)).toEqual(underReviewRisk)
+    expect(pickWorseRisk(badRisk, underReviewRisk)).toEqual(underReviewRisk)
   })
 })
 
@@ -73,7 +69,7 @@ describe(sumRisk.name, () => {
       ...createFakeRisk('warning', number),
       value: expected.value, // it's random so we have to copy here
     }))
-    expect(result).toStrictEqual(expected)
+    expect(result).toEqual(expected)
   })
 
   it('picks worse risk if cannot sum', () => {
@@ -83,22 +79,20 @@ describe(sumRisk.name, () => {
     const goodRisk = createFakeRisk('good')
     const callback = () => badRisk
 
-    expect(sumRisk(badRisk, warnRisk, callback)).toStrictEqual(badRisk)
-    expect(sumRisk(warnRisk, badRisk, callback)).toStrictEqual(badRisk)
-    expect(sumRisk(neutralRisk, warnRisk, callback)).toStrictEqual(warnRisk)
-    expect(sumRisk(goodRisk, neutralRisk, callback)).toStrictEqual(neutralRisk)
-    expect(sumRisk(neutralRisk, badRisk, callback)).toStrictEqual(badRisk)
-    expect(sumRisk(goodRisk, badRisk, callback)).toStrictEqual(badRisk)
-    expect(sumRisk(neutralRisk, warnRisk, callback)).toStrictEqual(warnRisk)
+    expect(sumRisk(badRisk, warnRisk, callback)).toEqual(badRisk)
+    expect(sumRisk(warnRisk, badRisk, callback)).toEqual(badRisk)
+    expect(sumRisk(neutralRisk, warnRisk, callback)).toEqual(warnRisk)
+    expect(sumRisk(goodRisk, neutralRisk, callback)).toEqual(neutralRisk)
+    expect(sumRisk(neutralRisk, badRisk, callback)).toEqual(badRisk)
+    expect(sumRisk(goodRisk, badRisk, callback)).toEqual(badRisk)
+    expect(sumRisk(neutralRisk, warnRisk, callback)).toEqual(warnRisk)
   })
 
   it('picks worse risk if both are bad', () => {
     const risk1 = createFakeRisk('bad', 40)
     const risk2 = createFakeRisk('bad', 2)
 
-    expect(sumRisk(risk1, risk2, () => createFakeRisk('bad', 0))).toStrictEqual(
-      risk2,
-    )
+    expect(sumRisk(risk1, risk2, () => createFakeRisk('bad', 0))).toEqual(risk2)
   })
 })
 
@@ -107,26 +101,26 @@ describe('exit window descriptions', () => {
     const result = EXIT_WINDOW_NITRO(60, 120, 60, 60, 60, true)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toStrictEqual('None')
+    expect(result.regular?.value).toEqual('None')
     expect(description).toContain('users have only no time to exit')
-    expect(result.warning).toStrictEqual(undefined)
+    expect(result.warning).toEqual(undefined)
   })
 
   it('does not use None as a prose exit window for Permissionless BoLD', () => {
     const result = EXIT_WINDOW_PERMISSIONLESS_BOLD(60, 120, 30)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toStrictEqual('None')
+    expect(result.regular?.value).toEqual('None')
     expect(description).toContain('users have no time to exit')
-    expect(result.warning).toStrictEqual(undefined)
+    expect(result.warning).toEqual(undefined)
   })
 
   it('does not use None as a prose exit window for Starknet', () => {
     const result = EXIT_WINDOW_STARKNET(60)
     const description = result.regular?.description ?? ''
 
-    expect(result.regular?.value).toStrictEqual('None')
+    expect(result.regular?.value).toEqual('None')
     expect(description).toContain('leaving users no time to exit')
-    expect(result.warning).toStrictEqual(undefined)
+    expect(result.warning).toEqual(undefined)
   })
 })

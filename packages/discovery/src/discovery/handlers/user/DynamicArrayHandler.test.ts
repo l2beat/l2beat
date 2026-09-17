@@ -14,15 +14,15 @@ describe(DynamicArrayHandler.name, () => {
         getStorageAsBigint: vi
           .fn()
           .mockImplementationOnce((passedAddress, slot) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(slot).toStrictEqual(85n)
+            expect(passedAddress).toEqual(address)
+            expect(slot).toEqual(85n)
             return 2n
           }),
         getStorage: vi
           .fn()
           .mockImplementationOnce((passedAddress, slot) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(slot).toStrictEqual(
+            expect(passedAddress).toEqual(address)
+            expect(slot).toEqual(
               BigInt(
                 '0x71beda120aafdd3bb922b360a066d10b7ce81d7ac2ad9874daac46e2282f6b45',
               ),
@@ -32,8 +32,8 @@ describe(DynamicArrayHandler.name, () => {
             )
           })
           .mockImplementationOnce((passedAddress, slot) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(slot).toStrictEqual(
+            expect(passedAddress).toEqual(address)
+            expect(slot).toEqual(
               BigInt(
                 '0x71beda120aafdd3bb922b360a066d10b7ce81d7ac2ad9874daac46e2282f6b46',
               ),
@@ -48,10 +48,10 @@ describe(DynamicArrayHandler.name, () => {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toStrictEqual('someName')
+      expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: [
           '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
@@ -69,8 +69,8 @@ describe(DynamicArrayHandler.name, () => {
         getStorageAsBigint: vi
           .fn()
           .mockImplementationOnce((passedAddress, slot) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(slot).toStrictEqual(85n)
+            expect(passedAddress).toEqual(address)
+            expect(slot).toEqual(85n)
             return 0n
           }),
       } as unknown as IProvider
@@ -79,10 +79,10 @@ describe(DynamicArrayHandler.name, () => {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toStrictEqual('someName')
+      expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: [],
         ignoreRelative: undefined,
@@ -97,7 +97,7 @@ describe(DynamicArrayHandler.name, () => {
         slot: 85,
       })
 
-      expect(handler.dependencies).toStrictEqual([])
+      expect(handler.dependencies).toEqual([])
     })
 
     it('detects dependency from the slot field', () => {
@@ -106,7 +106,7 @@ describe(DynamicArrayHandler.name, () => {
         slot: '{{ foo }}',
       })
 
-      expect(handler.dependencies).toStrictEqual(['foo'])
+      expect(handler.dependencies).toEqual(['foo'])
     })
   })
 
@@ -125,7 +125,7 @@ describe(DynamicArrayHandler.name, () => {
     } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
     })

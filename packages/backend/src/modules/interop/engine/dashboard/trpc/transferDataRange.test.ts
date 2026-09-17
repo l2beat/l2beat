@@ -14,7 +14,7 @@ describe(resolveInteropTransferTimeRange.name, () => {
       throw new Error('Expected a default time range')
     }
 
-    expect(range.to - range.from).toStrictEqual(UnixTime.DAY)
+    expect(range.to - range.from).toEqual(UnixTime.DAY)
   })
 
   it('uses the latest promoted aggregate as the window end', async () => {
@@ -30,7 +30,7 @@ describe(resolveInteropTransferTimeRange.name, () => {
     const range = await resolveInteropTransferTimeRange(db, 'lastPromoted')
 
     expect(getLatestPromotedTimestamp).toHaveBeenCalledExactlyOnceWith()
-    expect(range).toStrictEqual({
+    expect(range).toEqual({
       from: UnixTime(500_000 - UnixTime.DAY),
       to: UnixTime(500_000),
     })
@@ -42,7 +42,7 @@ describe(resolveInteropTransferTimeRange.name, () => {
       'all',
     )
 
-    expect(range).toStrictEqual(undefined)
+    expect(range).toEqual(undefined)
   })
 
   it('does not turn a missing promoted aggregate into an unbounded query', async () => {

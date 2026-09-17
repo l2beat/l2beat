@@ -20,7 +20,7 @@ describe(createDaTrackingId.name, () => {
           '0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0',
         ],
       }),
-    ).toStrictEqual('d7d7f8be0a85')
+    ).toEqual('d7d7f8be0a85')
   })
 
   it('matches the pinned id for an ethereum config (zeronetwork v29 era)', () => {
@@ -34,7 +34,7 @@ describe(createDaTrackingId.name, () => {
           '0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0',
         ],
       }),
-    ).toStrictEqual('a7118a5692fd')
+    ).toEqual('a7118a5692fd')
   })
 
   it('matches the pinned id for a chain-prefixed inbox (zksync2 old Era config)', () => {
@@ -51,7 +51,7 @@ describe(createDaTrackingId.name, () => {
           '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
         ],
       }),
-    ).toStrictEqual('9294ada25d43')
+    ).toEqual('9294ada25d43')
   })
 
   it('matches the pinned id for an ethereum config without sequencers', () => {
@@ -61,7 +61,7 @@ describe(createDaTrackingId.name, () => {
         daLayer: 'ethereum',
         inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       }),
-    ).toStrictEqual('158f67fc279d')
+    ).toEqual('158f67fc279d')
   })
 
   it('matches the pinned id for an ethereum config with topics', () => {
@@ -73,7 +73,7 @@ describe(createDaTrackingId.name, () => {
         sequencers: ['0xb', '0xa'],
         topics: ['0x2', '0x1'],
       }),
-    ).toStrictEqual('7b0e365a57ff')
+    ).toEqual('7b0e365a57ff')
   })
 
   it('matches the pinned id for a celestia config', () => {
@@ -83,7 +83,7 @@ describe(createDaTrackingId.name, () => {
         daLayer: 'celestia',
         namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAY7JibkyLYAA=',
       }),
-    ).toStrictEqual('c2b71ff96450')
+    ).toEqual('c2b71ff96450')
   })
 
   it('matches the pinned id for an avail config (sophon appIds)', () => {
@@ -93,7 +93,7 @@ describe(createDaTrackingId.name, () => {
         daLayer: 'avail',
         appIds: ['17', '36', '37', '38'],
       }),
-    ).toStrictEqual('9186999c5d28')
+    ).toEqual('9186999c5d28')
   })
 
   it('matches the pinned id for an eigen-da config', () => {
@@ -103,7 +103,7 @@ describe(createDaTrackingId.name, () => {
         daLayer: 'eigen-da',
         customerId: '0xcustomer',
       }),
-    ).toStrictEqual('60feca2a7ba9')
+    ).toEqual('60feca2a7ba9')
   })
 
   it('is order-insensitive for sequencers and does not mutate the input', () => {
@@ -124,8 +124,8 @@ describe(createDaTrackingId.name, () => {
       inbox: '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
       sequencers: reversed,
     })
-    expect(a).toStrictEqual(b)
-    expect(sequencers).toStrictEqual([
+    expect(a).toEqual(b)
+    expect(sequencers).toEqual([
       '0xef854E09fa6e281268e1051D4d5465d8c92862ee',
       '0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0',
     ])
@@ -139,7 +139,7 @@ describe(createDaTrackingId.name, () => {
       daLayer: 'ethereum',
       inbox: '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
     }
-    expect(createDaTrackingId(config)).toStrictEqual(
+    expect(createDaTrackingId(config)).toEqual(
       createDaTrackingId({ ...config }),
     )
   })

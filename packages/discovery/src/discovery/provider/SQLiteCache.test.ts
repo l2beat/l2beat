@@ -23,11 +23,11 @@ describe('SQLiteCache', () => {
       assert(result)
 
       // Interface
-      expect(queriedValue).toStrictEqual(value)
+      expect(queriedValue).toEqual(value)
 
       // Raw
-      expect(result.key).toStrictEqual(key)
-      expect(result.value).toStrictEqual(value)
+      expect(result.key).toEqual(key)
+      expect(result.value).toEqual(value)
     }))
 
   it('replaces old value in case of conflict', () =>
@@ -50,9 +50,9 @@ describe('SQLiteCache', () => {
 
       assert(result)
 
-      expect(resultRaw.length).toStrictEqual(1)
-      expect(result.key).toStrictEqual(key)
-      expect(result.value).toStrictEqual(newValue)
+      expect(resultRaw.length).toEqual(1)
+      expect(result.key).toEqual(key)
+      expect(result.value).toEqual(newValue)
     }))
 })
 

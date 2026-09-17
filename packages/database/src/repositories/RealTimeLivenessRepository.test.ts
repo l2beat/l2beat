@@ -8,6 +8,7 @@ import {
 } from './RealTimeLivenessRepository'
 
 describe(toRecord.name, () => {
+  // toStrictEqual, not toEqual: these assertions are about an optional key being present with value undefined, which toEqual ignores.
   it('maps a null grouping key to undefined', () => {
     const timestamp = UnixTime(1)
 
@@ -101,7 +102,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
         ...newRows,
       ]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('update on conflict', async () => {
@@ -126,7 +127,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [DATA[0]!, DATA[1]!, ...newRows]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -163,7 +164,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, grouped[1]!, grouped[2]!]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('replaces a grouped transaction only when an earlier one arrives', async () => {
@@ -194,7 +195,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, earlier]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -206,7 +207,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -215,7 +216,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       const results = await repository.getLatestRecords()
 
       expect(results).toHaveLength(3)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([DATA[0]!, DATA[2]!, DATA[3]!]),
       )
     })
@@ -227,7 +228,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 })

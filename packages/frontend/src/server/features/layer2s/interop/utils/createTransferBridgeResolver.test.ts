@@ -18,7 +18,7 @@ describe(createTransferBridgeResolver.name, () => {
       }),
     ])
 
-    expect(resolve(transfer({ plugin: 'across' }))).toStrictEqual({
+    expect(resolve(transfer({ plugin: 'across' }))).toEqual({
       name: 'Across',
       href: '/interop/protocols/across',
     })
@@ -44,7 +44,7 @@ describe(createTransferBridgeResolver.name, () => {
 
     expect(
       resolve(transfer({ plugin: 'opstack', bridgeType: 'lockAndMint' })),
-    ).toStrictEqual({
+    ).toEqual({
       name: 'OP Canonical',
       href: '/interop/protocols/optimism',
     })
@@ -68,7 +68,7 @@ describe(createTransferBridgeResolver.name, () => {
       resolve(
         transfer({ plugin: 'layerzero-v2-ofts', bridgeType: 'lockAndMint' }),
       ),
-    ).toStrictEqual({ name: 'USDT0', href: '/interop/protocols/usdt0' })
+    ).toEqual({ name: 'USDT0', href: '/interop/protocols/usdt0' })
   })
 
   it('rejects ambiguous matches', () => {

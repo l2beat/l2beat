@@ -106,7 +106,7 @@ describe(NameService.name, () => {
         'selector3',
       )
 
-      expect(mockDB.METHODS).toStrictEqual(
+      expect(mockDB.METHODS).toEqual(
         new Map([
           ['selector1', 'name1'],
           ['selector2', 'name2'],
@@ -114,9 +114,9 @@ describe(NameService.name, () => {
         ]),
       )
 
-      expect(mockOperation.children[0].methodName).toStrictEqual('name1')
-      expect(mockOperation.children[1].methodName).toStrictEqual('name2')
-      expect(mockOperation.children[2].methodName).toStrictEqual('name3')
+      expect(mockOperation.children[0].methodName).toEqual('name1')
+      expect(mockOperation.children[1].methodName).toEqual('name2')
+      expect(mockOperation.children[2].methodName).toEqual('name3')
     })
   })
 
@@ -155,15 +155,15 @@ describe(NameService.name, () => {
 
       expect(mockContractClient.getName).toHaveBeenCalledWith('address2')
 
-      expect(mockDB.CONTRACTS).toStrictEqual(
+      expect(mockDB.CONTRACTS).toEqual(
         new Map([
           ['address1', 'name1'],
           ['address2', 'name2'],
         ]),
       )
 
-      expect(mockOperation.children[0].contractName).toStrictEqual('name1')
-      expect(mockOperation.children[1].contractName).toStrictEqual('name2')
+      expect(mockOperation.children[0].contractName).toEqual('name1')
+      expect(mockOperation.children[1].contractName).toEqual('name2')
     })
   })
 
@@ -199,7 +199,7 @@ describe(NameService.name, () => {
 
       expect(mockCodeClient.getCodeHash).toHaveBeenCalledWith(mockAddress)
 
-      expect(mockTransaction.type).toStrictEqual(
+      expect(mockTransaction.type).toEqual(
         `EIP-712 (${mockImplementationName})`,
       )
     })

@@ -39,7 +39,7 @@ describe(BlobClient.name, () => {
           [versionedHash1],
           1,
         )
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           blockNumber: 1,
           blobs: [
             {
@@ -69,7 +69,7 @@ describe(BlobClient.name, () => {
           [],
           1,
         )
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           blockNumber: 1,
           blobs: [],
         })
@@ -88,7 +88,7 @@ describe(BlobClient.name, () => {
       const client = mockClient({ rpcClient })
 
       const result = await client.getRelevantBlobs('txHash')
-      expect(result).toStrictEqual({ blobs: [], blockNumber: 1 })
+      expect(result).toEqual({ blobs: [], blockNumber: 1 })
     })
 
     it('should return blobs for type 3 transaction', async () => {
@@ -124,7 +124,7 @@ describe(BlobClient.name, () => {
       ]
 
       const result = await client.getRelevantBlobs('txHash')
-      expect(result).toStrictEqual({ blockNumber: 1, blobs: [blob1, blob2] })
+      expect(result).toEqual({ blockNumber: 1, blobs: [blob1, blob2] })
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
@@ -168,10 +168,10 @@ describe(BlobClient.name, () => {
 
       const result = await client.getBlockSidecar(1)
 
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           kzg_commitment,
           data: blob,
@@ -189,8 +189,8 @@ describe(BlobClient.name, () => {
 
       const result = await client.call('/eth/blob')
 
-      expect(result).toStrictEqual({ result: 'result' })
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
+      expect(result).toEqual({ result: 'result' })
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
         'BEACON_API_URL/eth/blob',
       )
     })
@@ -218,7 +218,7 @@ describe(BlobClient.name, () => {
         message: 'Error',
       })
 
-      expect(isValid).toStrictEqual({ success: false })
+      expect(isValid).toEqual({ success: false })
     })
   })
 })

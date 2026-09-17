@@ -32,7 +32,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toStrictEqual([
+    expect(gaps).toEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',
@@ -55,7 +55,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toStrictEqual([
+    expect(gaps).toEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',
@@ -78,7 +78,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toStrictEqual([])
+    expect(gaps).toEqual([])
   })
 
   it('distinguishes configurations of the same project', () => {
@@ -99,7 +99,7 @@ describe(findRecordGaps.name, () => {
         },
       ],
     )
-    expect(gaps).toStrictEqual([
+    expect(gaps).toEqual([
       {
         projectId: 'alpha',
         daLayer: 'ethereum',

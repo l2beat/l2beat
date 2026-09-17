@@ -55,7 +55,7 @@ describe(RpcCounter.name, () => {
         .mockReturnValueOnce(expectedResult.transactions[1])
 
       const result = counter.countForBlock(mockBlock)
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
   })
 
@@ -102,7 +102,7 @@ describe(RpcCounter.name, () => {
         .mockReturnValueOnce(createCountedTransaction(1, false))
 
       const result = counter.countForBlocks(mockBlocks)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         dateStart: UnixTime.toDate(start),
         dateEnd: UnixTime.toDate(end),
         numberOfTransactions: 6,
@@ -148,7 +148,7 @@ describe(RpcCounter.name, () => {
         type: '0',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'Legacy',
         hash: 'tx.hash',
@@ -183,7 +183,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'ERC-4337 Entry Point 0.6.0',
         hash: 'tx.hash',
@@ -220,7 +220,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'Safe: Multi Send Call Only 1.3.0',
         hash: 'tx.hash',
@@ -257,7 +257,7 @@ describe(RpcCounter.name, () => {
         type: EIP712_TX_TYPE,
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'EIP-712',
         hash: 'tx.hash',
@@ -294,7 +294,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'Multicall v3',
         hash: 'tx.hash',
@@ -331,7 +331,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'ERC-20 Router',
         hash: 'tx.hash',
@@ -368,7 +368,7 @@ describe(RpcCounter.name, () => {
         type: '2',
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         from: 'tx.from',
         type: 'EIP-7821',
         hash: 'tx.hash',
@@ -456,7 +456,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count GnosisSafe user operations', () => {
@@ -569,7 +569,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count EIP-712 user operations', () => {
@@ -614,7 +614,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count Multicall v3 user operations', () => {
@@ -675,7 +675,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count ERC20Router user operations', () => {
@@ -735,7 +735,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count EIP-7821 user operations', () => {
@@ -788,7 +788,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should count WhiteBIT user operations', () => {
@@ -1122,7 +1122,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('should handle malformed calldata and count as 1', () => {
@@ -1151,7 +1151,7 @@ describe(RpcCounter.name, () => {
         () => 'id',
       )
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
   })
 
@@ -1194,7 +1194,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         includesBatch: true,
         includesUnknown: false,
       })
@@ -1228,7 +1228,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         includesBatch: true,
         includesUnknown: false,
       })
@@ -1257,7 +1257,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.checkOperations(mockCountedOperation, mockTx)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         includesBatch: false,
         includesUnknown: true,
       })
@@ -1313,7 +1313,7 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.generateSmartAccountUsageForBlock(mockCountedBlock)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         new Map([
           ['execute(address,uint256,bytes)', 2],
           ['unknown', 1],

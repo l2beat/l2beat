@@ -20,7 +20,7 @@ describe(ownsEntrypoints.name, () => {
       ownsEntrypoints(
         structure(PROVIDER, { [ChainSpecificAddress.random()]: PROVIDER }),
       ),
-    ).toStrictEqual(true)
+    ).toEqual(true)
   })
 
   it('is false when every entrypoint belongs to another project', () => {
@@ -31,11 +31,11 @@ describe(ownsEntrypoints.name, () => {
           [ChainSpecificAddress.random()]: OTHER_PROVIDER,
         }),
       ),
-    ).toStrictEqual(false)
+    ).toEqual(false)
   })
 
   it('is false when there are no entrypoints at all', () => {
-    expect(ownsEntrypoints(structure('abstract', {}))).toStrictEqual(false)
+    expect(ownsEntrypoints(structure('abstract', {}))).toEqual(false)
   })
 })
 
@@ -47,7 +47,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery('zksync2', [reference(PROVIDER), reference(PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([
       { project: 'zksync2', addressCount: 2 },
       { project: 'abstract', addressCount: 1 },
     ])
@@ -59,7 +59,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery('abstract', [reference(OTHER_PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([])
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([])
   })
 
   // A provider discovers its own entrypoints as real contracts, so it must
@@ -69,7 +69,7 @@ describe(findEntrypointConsumers.name, () => {
       discovery(PROVIDER, [reference(PROVIDER)]),
     ])
 
-    expect(findEntrypointConsumers(configReader, PROVIDER)).toStrictEqual([])
+    expect(findEntrypointConsumers(configReader, PROVIDER)).toEqual([])
   })
 })
 

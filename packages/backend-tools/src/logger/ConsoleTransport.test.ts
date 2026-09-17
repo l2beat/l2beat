@@ -12,7 +12,7 @@ describe(formatPlain.name, () => {
       message: 'Hello',
       parameters: { foo: 'bar' },
     })
-    expect(message).toStrictEqual('12:34:56.789 INFO Hello {"foo":"bar"}')
+    expect(message).toEqual('12:34:56.789 INFO Hello {"foo":"bar"}')
   })
 
   it('handles bigints', () => {
@@ -23,7 +23,7 @@ describe(formatPlain.name, () => {
       message: 'Hello',
       parameters: { b: 123n },
     })
-    expect(message).toStrictEqual('12:34:56.789 INFO Hello {"b":"123"}')
+    expect(message).toEqual('12:34:56.789 INFO Hello {"b":"123"}')
   })
 
   it('service without tag', () => {
@@ -37,9 +37,7 @@ describe(formatPlain.name, () => {
         foo: 'bar',
       },
     })
-    expect(message).toStrictEqual(
-      '12:34:56.789 INFO [Worker] Hello {"foo":"bar"}',
-    )
+    expect(message).toEqual('12:34:56.789 INFO [Worker] Hello {"foo":"bar"}')
   })
 
   it('service with tag', () => {
@@ -54,7 +52,7 @@ describe(formatPlain.name, () => {
         foo: 'bar',
       },
     })
-    expect(message).toStrictEqual(
+    expect(message).toEqual(
       '12:34:56.789 INFO [Worker:blue] Hello {"foo":"bar"}',
     )
   })
@@ -67,9 +65,7 @@ describe(formatPlain.name, () => {
       message: 'Hello',
       parameters: { tag: 'blue', foo: 'bar' },
     })
-    expect(message).toStrictEqual(
-      '12:34:56.789 INFO [:blue] Hello {"foo":"bar"}',
-    )
+    expect(message).toEqual('12:34:56.789 INFO [:blue] Hello {"foo":"bar"}')
   })
 
   it('non-string service', () => {
@@ -84,9 +80,7 @@ describe(formatPlain.name, () => {
         foo: 'bar',
       },
     })
-    expect(message).toStrictEqual(
-      '12:34:56.789 INFO [4:blue] Hello {"foo":"bar"}',
-    )
+    expect(message).toEqual('12:34:56.789 INFO [4:blue] Hello {"foo":"bar"}')
   })
 
   it('non-string tag', () => {
@@ -101,7 +95,7 @@ describe(formatPlain.name, () => {
         foo: 'bar',
       },
     })
-    expect(message).toStrictEqual(
+    expect(message).toEqual(
       '12:34:56.789 INFO [Worker:false] Hello {"foo":"bar"}',
     )
   })
@@ -117,7 +111,7 @@ describe(formatPlain.name, () => {
         z: 3,
       },
     })
-    expect(message).toStrictEqual('12:34:56.789 INFO Hello {"x":1,"y":2,"z":3}')
+    expect(message).toEqual('12:34:56.789 INFO Hello {"x":1,"y":2,"z":3}')
   })
 })
 

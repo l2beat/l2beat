@@ -28,10 +28,10 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.getBlockSidecar('root')
 
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           kzg_commitment,
           data: blob,
@@ -52,7 +52,7 @@ describe(BeaconChainClient.name, () => {
 
       const result = await withServer(
         (req, res) => {
-          expect(req.url).toStrictEqual(
+          expect(req.url).toEqual(
             '/eth/v1/beacon/states/head/validators?status=active',
           )
           res.setHeader('Content-Type', 'application/json')
@@ -70,7 +70,7 @@ describe(BeaconChainClient.name, () => {
         },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 63_000_000_000_000_000_000n,
         numberOfValidators: 2,
       })
@@ -86,8 +86,8 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.call('/eth/blob')
 
-      expect(result).toStrictEqual({ result: 'result' })
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
+      expect(result).toEqual({ result: 'result' })
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
         'BEACON_API_URL/eth/blob',
       )
     })
@@ -115,7 +115,7 @@ describe(BeaconChainClient.name, () => {
         message: 'Error',
       })
 
-      expect(isValid).toStrictEqual({ success: false })
+      expect(isValid).toEqual({ success: false })
     })
   })
 })

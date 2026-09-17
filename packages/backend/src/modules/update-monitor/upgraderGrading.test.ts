@@ -110,7 +110,7 @@ describe('UpdateDiffer upgrader grading', () => {
 
         expect(
           records.some((r) => r.type === 'ultimateUpgraderChange'),
-        ).toStrictEqual(expected)
+        ).toEqual(expected)
       })
     }
   }

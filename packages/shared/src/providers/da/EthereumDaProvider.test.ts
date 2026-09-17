@@ -48,7 +48,7 @@ describe(EthereumDaProvider.name, () => {
 
       expect(mockRpcClient.getLogs).toHaveBeenCalledWith(1, 1)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           type: 'ethereum',
           daLayer: 'ethereum',
@@ -110,7 +110,7 @@ describe(EthereumDaProvider.name, () => {
           1,
         )
 
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           {
             kzg_commitment: kzgCommitment1,
             data: 'blob1',
@@ -150,7 +150,7 @@ describe(EthereumDaProvider.name, () => {
           1,
         )
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
     },
   )
@@ -170,7 +170,7 @@ describe(EthereumDaProvider.name, () => {
 
       const timestamp = await provider.getBlockTimestamp(123)
 
-      expect(timestamp).toStrictEqual(UnixTime(1_700_000_000))
+      expect(timestamp).toEqual(UnixTime(1_700_000_000))
       // getBlock is overloaded, the mock picks the includeTxs: true signature
       expect(mockRpcClient.getBlock).toHaveBeenCalledExactlyOnceWith(
         123,
@@ -200,7 +200,7 @@ describe(EthereumDaProvider.name, () => {
       )
 
       const result = await provider.getRelevantBlobs('txHash')
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('should return blobs for type 3 transaction', async () => {
@@ -244,7 +244,7 @@ describe(EthereumDaProvider.name, () => {
       )
 
       const result = await provider.getRelevantBlobs('txHash')
-      expect(result).toStrictEqual([blob1, blob2])
+      expect(result).toEqual([blob1, blob2])
     })
 
     it('should throw on missing blobVersionedHashes', async () => {

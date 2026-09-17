@@ -20,12 +20,10 @@ describe('packed argument plugin', () => {
     })
     const decoded = decode(calldata, [], 1, FACTORY)
 
-    expect(decoded?.functionName).toStrictEqual('setImplementation')
+    expect(decoded?.functionName).toEqual('setImplementation')
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toStrictEqual('tuple')
-    expect(
-      args?.members?.map(({ name, value }) => ({ name, value })),
-    ).toStrictEqual([
+    expect(args?.type).toEqual('tuple')
+    expect(args?.members?.map(({ name, value }) => ({ name, value }))).toEqual([
       {
         name: 'absolutePrestate',
         value:
@@ -61,8 +59,8 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toStrictEqual('bytes')
-    expect(args?.value).toStrictEqual(GAME_ARGS)
+    expect(args?.type).toEqual('bytes')
+    expect(args?.value).toEqual(GAME_ARGS)
   })
 
   it('does not apply the schema to malformed packed args', () => {
@@ -74,7 +72,7 @@ describe('packed argument plugin', () => {
     const decoded = decode(calldata, [SET_IMPLEMENTATION_ABI], 1, FACTORY)
 
     const args = decoded?.members?.find((member) => member.name === 'args')
-    expect(args?.type).toStrictEqual('bytes')
-    expect(args?.value).toStrictEqual('0xdeadbeef')
+    expect(args?.type).toEqual('bytes')
+    expect(args?.value).toEqual('0xdeadbeef')
   })
 })

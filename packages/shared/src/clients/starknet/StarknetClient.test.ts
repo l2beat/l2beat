@@ -39,7 +39,7 @@ describe(StarknetClient.name, () => {
 
       const result = await client.getBlockWithTransactions(100)
 
-      expect(result).toStrictEqual(mockStarknetBlock)
+      expect(result).toEqual(mockStarknetBlock)
     })
   })
 
@@ -52,7 +52,7 @@ describe(StarknetClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(100)
+      expect(result).toEqual(100)
     })
   })
 
@@ -69,7 +69,7 @@ describe(StarknetClient.name, () => {
 
       expect(getBlockWithTransactions).toHaveBeenNthCalledWith(1, 100)
       expect(getBlockWithTransactions).toHaveBeenNthCalledWith(2, 200)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         new Map([
           [100, 1_000],
           [200, 2_000],
@@ -105,7 +105,7 @@ describe(StarknetClient.name, () => {
         { block_number: 100 },
       ])
 
-      expect(result).toStrictEqual(rpcResult)
+      expect(result).toEqual(rpcResult)
     })
   })
 
@@ -146,7 +146,7 @@ describe(StarknetClient.name, () => {
           continuation_token: 'next',
         },
       ])
-      expect(result).toStrictEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
+      expect(result).toEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
     })
 
     it('assigns a deterministic index when the RPC omits event_index', async () => {
@@ -162,7 +162,7 @@ describe(StarknetClient.name, () => {
 
       const result = await client.getEvents(10, 20, '0x1234', ['0x5678'])
 
-      expect(result.map((event) => event.event_index)).toStrictEqual([0, 1])
+      expect(result.map((event) => event.event_index)).toEqual([0, 1])
     })
   })
 
@@ -179,7 +179,7 @@ describe(StarknetClient.name, () => {
 
       const result = await client.query(method, params)
 
-      expect(result).toStrictEqual('data-returned-from-api')
+      expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -207,14 +207,14 @@ describe(StarknetClient.name, () => {
         },
       } as StarknetErrorResponse)
 
-      expect(isValid).toStrictEqual({ success: false })
+      expect(isValid).toEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
       const client = mockClient({})
       const isValid = client.validateResponse(mockStarknetGetBlockResponse(100))
 
-      expect(isValid).toStrictEqual({ success: true })
+      expect(isValid).toEqual({ success: true })
     })
   })
 })

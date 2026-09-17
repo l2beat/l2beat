@@ -40,19 +40,19 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ]
 
         const inserted = await repository.insertMany(records)
-        expect(inserted).toStrictEqual(2)
+        expect(inserted).toEqual(2)
 
         const result = await repository.getAll()
         expect(result).toHaveLength(records.length)
-        expect(result).toStrictEqual(expect.arrayContaining(records))
+        expect(result).toEqual(expect.arrayContaining(records))
       })
 
       it('handles empty array', async () => {
         const inserted = await repository.insertMany([])
-        expect(inserted).toStrictEqual(0)
+        expect(inserted).toEqual(0)
 
         const result = await repository.getAll()
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
 
       it('performs batch insert when more than 1000 records', async () => {
@@ -71,7 +71,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         }
 
         const inserted = await repository.insertMany(records)
-        expect(inserted).toStrictEqual(1500)
+        expect(inserted).toEqual(1500)
 
         const result = await repository.getAll()
         expect(result).toHaveLength(1500)
@@ -82,7 +82,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   describe(AggregatedInteropTransferRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns all records', async () => {
@@ -117,7 +117,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
-      expect(result).toStrictEqual(expect.arrayContaining(records))
+      expect(result).toEqual(expect.arrayContaining(records))
     })
   })
 
@@ -211,7 +211,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           },
         )
 
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           {
             timestamp: day2Late,
             transferCount: 13,
@@ -278,7 +278,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           expect.arrayContaining([
             {
               id: 'stargate',
@@ -387,7 +387,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime.toStartOf(day3Early, 'day'),
         )
 
-        expect(result).toStrictEqual([
+        expect(result).toEqual([
           {
             timestamp: day1Late,
             transferCount: 11,
@@ -453,7 +453,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ])
 
         const result = await repository.getEarliestTimestampForDay(day1Mid)
-        expect(result).toStrictEqual(day1Early)
+        expect(result).toEqual(day1Early)
       })
 
       it('returns undefined when there are no records for the day', async () => {
@@ -472,7 +472,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ])
 
         const result = await repository.getEarliestTimestampForDay(missingDay)
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )
@@ -537,13 +537,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toStrictEqual(3) // Should delete record2, record3, record5
+        expect(deleted).toEqual(3) // Should delete record2, record3, record5
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
-          expect.arrayContaining([record1, record4]),
-        )
+        expect(remaining).toEqual(expect.arrayContaining([record1, record4]))
       })
 
       it('does not delete records at or after the timestamp', async () => {
@@ -603,11 +601,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         // Should delete record2 (day1Mid), but keep record1 (earliest of day1)
         // Should keep record3 (earliest of day2) and record4 (at timestamp boundary)
         // Should keep record5 (after timestamp)
-        expect(deleted).toStrictEqual(1)
+        expect(deleted).toEqual(1)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(4)
-        expect(remaining).toStrictEqual(
+        expect(remaining).toEqual(
           expect.arrayContaining([record1, record3, record4, record5]),
         )
       })
@@ -616,7 +614,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
 
       it('returns 0 when all records are after timestamp', async () => {
@@ -645,7 +643,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(50),
         )
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -688,11 +686,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(500 + 2 * UnixTime.DAY),
         )
         // All records are earliest of their day, so nothing to delete
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(records.length)
-        expect(remaining).toStrictEqual(expect.arrayContaining(records))
+        expect(remaining).toEqual(expect.arrayContaining(records))
       })
 
       it('handles multiple records on same day correctly', async () => {
@@ -733,11 +731,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(500),
         )
         // Should keep earliest (record1), delete others
-        expect(deleted).toStrictEqual(2)
+        expect(deleted).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
-        expect(remaining).toStrictEqual(expect.arrayContaining([record1]))
+        expect(remaining).toEqual(expect.arrayContaining([record1]))
       })
 
       it('handles records spanning multiple days with earliest preserved', async () => {
@@ -823,11 +821,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
         // Should keep: record1 (earliest day1), record3 (earliest day2), record6 (earliest day3)
         // Should delete: record2, record4, record5, record7
-        expect(deleted).toStrictEqual(4)
+        expect(deleted).toEqual(4)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(3)
-        expect(remaining).toStrictEqual(
+        expect(remaining).toEqual(
           expect.arrayContaining([record1, record3, record6]),
         )
       })
@@ -875,13 +873,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toStrictEqual(2)
+        expect(deleted).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
-          expect.arrayContaining([record1, record4]),
-        )
+        expect(remaining).toEqual(expect.arrayContaining([record1, record4]))
       })
 
       it('returns 0 when no records match timestamp', async () => {
@@ -905,7 +901,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -913,7 +909,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
       })
 
       it('deletes only records with exact timestamp match', async () => {
@@ -946,13 +942,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toStrictEqual(1)
+        expect(deleted).toEqual(1)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
-          expect.arrayContaining([record1, record3]),
-        )
+        expect(remaining).toEqual(expect.arrayContaining([record1, record3]))
       })
     },
   )
@@ -985,7 +979,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         const result = await repository.getMaxTimestampAtOrBefore(UnixTime(250))
 
-        expect(result).toStrictEqual(UnixTime(200))
+        expect(result).toEqual(UnixTime(200))
       })
 
       it('returns undefined when no timestamp is available at or before the requested timestamp', async () => {
@@ -1000,7 +994,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )
@@ -1047,7 +1041,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const result = await repository.getByTimestamp(UnixTime(200))
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record2, record3]))
+        expect(result).toEqual(expect.arrayContaining([record2, record3]))
       })
 
       it('returns empty array when no records match timestamp', async () => {
@@ -1064,7 +1058,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         const result = await repository.getByTimestamp(UnixTime(200))
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
     },
   )
@@ -1117,7 +1111,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         // Should only return record3 which matches timestamp 300
-        expect(result).toStrictEqual([record3])
+        expect(result).toEqual([record3])
       })
 
       it('returns records matching multiple srcChains and dstChains at same timestamp', async () => {
@@ -1166,7 +1160,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         // Should return record3 and record4 which match timestamp 300
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record3, record4]))
+        expect(result).toEqual(expect.arrayContaining([record3, record4]))
       })
 
       it('returns empty array when no records exist', async () => {
@@ -1176,7 +1170,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           ['ethereum', 'arbitrum'],
         )
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
 
       it('filters by bridgeType when provided', async () => {
@@ -1219,7 +1213,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record1, record3]))
+        expect(result).toEqual(expect.arrayContaining([record1, record3]))
       })
 
       it('filters by protocolIds when provided', async () => {
@@ -1258,7 +1252,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record1, record3]))
+        expect(result).toEqual(expect.arrayContaining([record1, record3]))
       })
 
       it('returns all matching records when bridgeType is undefined', async () => {
@@ -1292,7 +1286,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(expect.arrayContaining([record1, record2]))
+        expect(result).toEqual(expect.arrayContaining([record1, record2]))
       })
 
       it('excludes same-chain transfers by default', async () => {
@@ -1320,7 +1314,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           ['ethereum', 'arbitrum'],
         )
 
-        expect(result).toStrictEqual([crossChain])
+        expect(result).toEqual([crossChain])
       })
 
       it('includes same-chain transfers when includeSameChainTransfers is true', async () => {
@@ -1352,9 +1346,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
-          expect.arrayContaining([crossChain, sameChain]),
-        )
+        expect(result).toEqual(expect.arrayContaining([crossChain, sameChain]))
       })
     },
   )
@@ -1402,7 +1394,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             'lockAndMint',
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 5,
           identifiedCount: 100,
         })
@@ -1417,7 +1409,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 0,
           identifiedCount: 0,
         })
@@ -1453,7 +1445,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             'lockAndMint',
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 5,
           identifiedCount: 1000,
         })
@@ -1488,7 +1480,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 15,
           identifiedCount: 3000,
         })
@@ -1521,7 +1513,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 5,
           identifiedCount: 1000,
         })
@@ -1554,7 +1546,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 5,
           identifiedCount: 100,
         })
@@ -1589,7 +1581,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             { includeSameChainTransfers: true },
           )
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           transferCount: 15,
           identifiedCount: 300,
         })
@@ -1642,7 +1634,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(1)
-        expect(result).toStrictEqual(expect.arrayContaining([record1]))
+        expect(result).toEqual(expect.arrayContaining([record1]))
       })
 
       it('excludes same-chain transfers by default', async () => {
@@ -1674,7 +1666,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           'lockAndMint',
         )
 
-        expect(result).toStrictEqual([crossChain])
+        expect(result).toEqual([crossChain])
       })
 
       it('includes same-chain transfers when includeSameChainTransfers is true', async () => {
@@ -1708,9 +1700,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
-          expect.arrayContaining([crossChain, sameChain]),
-        )
+        expect(result).toEqual(expect.arrayContaining([crossChain, sameChain]))
       })
     },
   )

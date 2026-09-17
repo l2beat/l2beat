@@ -29,7 +29,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       expect(result).toHaveLength(1)
       expect(result[0]!.id).toBeGreaterThan(0)
-      expect(withoutId(result[0]!)).toStrictEqual(record)
+      expect(withoutId(result[0]!)).toEqual(record)
     })
 
     it('accepts null context', async () => {
@@ -43,7 +43,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(1)
-      expect(withoutId(result[0]!)).toStrictEqual(record)
+      expect(withoutId(result[0]!)).toEqual(record)
     })
   })
 
@@ -74,7 +74,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       expect(result).toHaveLength(3)
       const actual = result.map(withoutId)
       expect(actual).toHaveLength(records.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(records))
+      expect(actual).toEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -82,7 +82,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -101,7 +101,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       expect(result).toHaveLength(1500)
       const actual = result.map(withoutId)
       expect(actual).toHaveLength(records.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(records))
+      expect(actual).toEqual(expect.arrayContaining(records))
     })
   })
 
@@ -109,7 +109,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -140,7 +140,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       expect(result).toHaveLength(2)
       const actual = result.map(withoutId)
       expect(actual).toHaveLength(matchingRecords.length)
-      expect(actual).toStrictEqual(expect.arrayContaining(matchingRecords))
+      expect(actual).toEqual(expect.arrayContaining(matchingRecords))
     })
   })
 
@@ -153,8 +153,8 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const deleted = await repository.deleteAll()
 
-      expect(deleted).toStrictEqual(2)
-      expect(await repository.getAll()).toStrictEqual([])
+      expect(deleted).toEqual(2)
+      expect(await repository.getAll()).toEqual([])
     })
   })
 })

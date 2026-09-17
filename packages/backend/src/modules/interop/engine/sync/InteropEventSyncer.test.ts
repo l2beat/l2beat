@@ -44,7 +44,7 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer()
 
       expect(syncer.state).toBeInstanceOf(FollowingState)
-      expect(syncer.state.type).toStrictEqual('blockProcessor')
+      expect(syncer.state.type).toEqual('blockProcessor')
     })
   })
 
@@ -102,7 +102,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(7), [])
 
-      expect(syncer.latestBlockNumber).toStrictEqual(7n)
+      expect(syncer.latestBlockNumber).toEqual(7n)
       expect(processNewestBlock).toHaveBeenCalled()
     })
 
@@ -113,7 +113,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(9), [])
 
-      expect(syncer.latestBlockNumber).toStrictEqual(9n)
+      expect(syncer.latestBlockNumber).toEqual(9n)
       expect(run).not.toHaveBeenCalled()
     })
 
@@ -126,7 +126,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(5), [])
 
-      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
     })
   })
 
@@ -148,8 +148,8 @@ describe(InteropEventSyncer.name, () => {
 
       await new Promise<void>((resolve) => setImmediate(resolve))
 
-      expect(finished).toStrictEqual(true)
-      expect(syncer.latestBlockNumber).toStrictEqual(7n)
+      expect(finished).toEqual(true)
+      expect(syncer.latestBlockNumber).toEqual(7n)
 
       pending.resolve(timeLoopState)
       await Promise.all([runPromise, blockPromise])
@@ -216,7 +216,7 @@ describe(InteropEventSyncer.name, () => {
       pending.resolve(timeLoopState)
       await Promise.all([runPromise, blockPromise])
 
-      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
       expect(processNewestBlock).not.toHaveBeenCalled()
     })
   })
@@ -244,7 +244,7 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.run()
 
-      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls.length).toEqual(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
@@ -264,7 +264,7 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(2), [])
       await syncer.processNewestBlock(makeBlock(3), [])
 
-      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls.length).toEqual(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
 
@@ -286,12 +286,12 @@ describe(InteropEventSyncer.name, () => {
         throw new Error('boom')
       })
       await syncer.processNewestBlock(makeBlock(2), [])
-      expect(syncer.hasError).toStrictEqual(true)
+      expect(syncer.hasError).toEqual(true)
       await syncer.processNewestBlock(makeBlock(3), [])
       await syncer.processNewestBlock(makeBlock(4), [])
 
-      expect(syncer.hasError).toStrictEqual(false)
-      expect(setLastError.mock.calls.map((c) => c[2])).toStrictEqual([
+      expect(syncer.hasError).toEqual(false)
+      expect(setLastError.mock.calls.map((c) => c[2])).toEqual([
         null,
         expect.stringContaining('boom'),
         null,
@@ -319,8 +319,8 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(1), [])
       await syncer.processNewestBlock(makeBlock(2), [])
 
-      expect(syncer.state as SyncerState).toStrictEqual(timeLoopState)
-      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(setLastError.mock.calls.length).toEqual(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
 
@@ -372,7 +372,7 @@ describe(InteropEventSyncer.name, () => {
       await syncer.processNewestBlock(makeBlock(1), [])
       await syncer.run()
 
-      expect(setLastError.mock.calls.length).toStrictEqual(1)
+      expect(setLastError.mock.calls.length).toEqual(1)
       expect(setLastError.mock.calls[0][2]).toContain('boom')
     })
   })
@@ -391,7 +391,7 @@ describe(InteropEventSyncer.name, () => {
       const result = syncer.captureLog({} as unknown as LogToCapture)
 
       expect(capture).toHaveBeenCalled()
-      expect(result).toStrictEqual([{ ...event, plugin: 'across' }])
+      expect(result).toEqual([{ ...event, plugin: 'across' }])
     })
 
     it('captures using first plugin in cluster that produces', () => {
@@ -413,7 +413,7 @@ describe(InteropEventSyncer.name, () => {
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
-      expect(result).toStrictEqual([{ ...event, plugin: 'wormhole' }])
+      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
     })
 
     it('returns undefined when no plugin produces', () => {
@@ -431,7 +431,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureLog({} as unknown as LogToCapture)
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 
@@ -480,7 +480,7 @@ describe(InteropEventSyncer.name, () => {
         txToCapture.tx.hash,
         'wormhole',
       )
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         events: [{ ...event, plugin: 'wormhole' }],
         fulfilledCreatorEvents: [creatorEvent],
       })
@@ -515,7 +515,7 @@ describe(InteropEventSyncer.name, () => {
       expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
       expect(secondCapture).not.toHaveBeenCalled()
       expect(getCreatorEvents).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         events: [{ ...event, plugin: 'across' }],
         fulfilledCreatorEvents: [],
       })
@@ -537,7 +537,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = syncer.captureTx({} as unknown as TxToCapture)
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
       expect(getCreatorEvents).not.toHaveBeenCalled()
     })
   })
@@ -577,7 +577,7 @@ describe(InteropEventSyncer.name, () => {
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
         expect(captureTx).toHaveBeenCalled()
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           events: [{ ...event, plugin: 'across' }],
           fulfilledCreatorEvents: [makeInteropEvent()],
           checkedInHistoryEvents: [makeInteropEvent()],
@@ -617,7 +617,7 @@ describe(InteropEventSyncer.name, () => {
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           events: [],
           fulfilledCreatorEvents: [],
           checkedInHistoryEvents: [makeInteropEvent()],
@@ -663,7 +663,7 @@ describe(InteropEventSyncer.name, () => {
         [fulfilledCreatorEvent],
       )
 
-      expect(syncer.runInTransactionCalls).toStrictEqual(1)
+      expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
       expect(updateDerivedFulfilled).toHaveBeenCalledWith([
         fulfilledCreatorEvent,
@@ -703,13 +703,13 @@ describe(InteropEventSyncer.name, () => {
 
       // a stored error may exist after start-up, so the first save clears it
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toStrictEqual(1)
+      expect(syncer.runInTransactionCalls).toEqual(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
 
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
 
-      expect(syncer.runInTransactionCalls).toStrictEqual(1)
+      expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalledTimes(1)
       expect(setLastError).toHaveBeenCalledTimes(1)
       expect(upsert).toHaveBeenCalledTimes(3)
@@ -719,13 +719,13 @@ describe(InteropEventSyncer.name, () => {
         [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
       )
-      expect(syncer.runInTransactionCalls).toStrictEqual(2)
+      expect(syncer.runInTransactionCalls).toEqual(2)
 
       // so does a stored error
       await syncer.saveChainSyncError(new Error('boom'))
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toStrictEqual(3)
-      expect(setLastError.mock.calls.at(-1)?.[2]).toStrictEqual(null)
+      expect(syncer.runInTransactionCalls).toEqual(3)
+      expect(setLastError.mock.calls.at(-1)?.[2]).toEqual(null)
     })
 
     it('still considers the error stored when the transaction rolls back after the clear', async () => {
@@ -753,13 +753,13 @@ describe(InteropEventSyncer.name, () => {
 
       // the clear was rolled back with the transaction, so it is written again
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toStrictEqual(2)
+      expect(syncer.runInTransactionCalls).toEqual(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
-      expect(setLastError.mock.calls[1][2]).toStrictEqual(null)
+      expect(setLastError.mock.calls[1][2]).toEqual(null)
 
       // and only now is it considered cleared
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
-      expect(syncer.runInTransactionCalls).toStrictEqual(2)
+      expect(syncer.runInTransactionCalls).toEqual(2)
       expect(setLastError).toHaveBeenCalledTimes(2)
     })
   })
@@ -776,7 +776,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = await syncer.getResyncState()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         resyncFrom: undefined,
         wipeRequired: false,
       })
@@ -796,7 +796,7 @@ describe(InteropEventSyncer.name, () => {
 
       const result = await syncer.getResyncState()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         resyncFrom: UnixTime(123),
         wipeRequired: true,
       })
@@ -838,21 +838,17 @@ describe(InteropEventSyncer.name, () => {
       }
       expect(
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
-      ).toStrictEqual(true)
+      ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
-      expect(Array.from(query.topic0s)).toStrictEqual([
-        toEventSelector(signature),
-      ])
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(
         Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
-      ).toStrictEqual([
+      ).toEqual([
         toEventSelector(extraSignature),
         toEventSelector(extraSignatureTwo),
       ])
-      expect(query.topic0sWithTx.has(toEventSelector(signature))).toStrictEqual(
-        true,
-      )
-      expect(query.isEmpty()).toStrictEqual(false)
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
+      expect(query.isEmpty()).toEqual(false)
     })
 
     it('includes topics without address filter when addresses are wildcard', () => {
@@ -872,11 +868,9 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
-      expect(query.addresses).toStrictEqual('*')
-      expect(Array.from(query.topic0s)).toStrictEqual([
-        toEventSelector(signature),
-      ])
-      expect(query.isEmpty()).toStrictEqual(false)
+      expect(query.addresses).toEqual('*')
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(query.isEmpty()).toEqual(false)
     })
 
     it('is empty when no addresses match the chain', () => {
@@ -903,10 +897,10 @@ describe(InteropEventSyncer.name, () => {
       if (query.addresses === '*') {
         throw new Error('Expected address filter to be a set')
       }
-      expect(query.isEmpty()).toStrictEqual(true)
+      expect(query.isEmpty()).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
-      expect(query.topicToTxEvents.size).toStrictEqual(0)
+      expect(query.topicToTxEvents.size).toEqual(0)
     })
 
     it('throws when addresses list is empty', () => {
@@ -968,16 +962,14 @@ describe(InteropEventSyncer.name, () => {
       if (query.addresses === '*') {
         throw new Error('Expected address filter to be a set')
       }
-      expect(Array.from(query.addresses)).toStrictEqual([
+      expect(Array.from(query.addresses)).toEqual([
         ChainSpecificAddress.address(ethAddressA),
         ChainSpecificAddress.address(ethAddressB),
       ])
-      expect(Array.from(query.topic0s)).toStrictEqual([
-        toEventSelector(signature),
-      ])
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(
         Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
-      ).toStrictEqual([
+      ).toEqual([
         toEventSelector(extraSignatureA),
         toEventSelector(extraSignatureB),
       ])
@@ -1005,8 +997,8 @@ describe(InteropEventSyncer.name, () => {
       const resultRange = await syncer.getLastSyncedRange()
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
 
-      expect(resultRange).toStrictEqual(lastRange)
-      expect(resultEvent).toStrictEqual(oldestEvent)
+      expect(resultRange).toEqual(lastRange)
+      expect(resultEvent).toEqual(oldestEvent)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
         ['across'],
@@ -1035,7 +1027,7 @@ describe(InteropEventSyncer.name, () => {
 
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
 
-      expect(resultEvent).toStrictEqual(eventA)
+      expect(resultEvent).toEqual(eventA)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
       expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
         ['across', 'wormhole'],
@@ -1072,10 +1064,10 @@ describe(InteropEventSyncer.name, () => {
       const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
       const tx = await syncer.getTransactionByHash(ZERO_HASH)
 
-      expect(block).toStrictEqual(makeRpcBlock(5n))
-      expect(logs).toStrictEqual([log])
-      expect(txReceipt).toStrictEqual(receipt)
-      expect(tx).toStrictEqual(transaction)
+      expect(block).toEqual(makeRpcBlock(5n))
+      expect(logs).toEqual([log])
+      expect(txReceipt).toEqual(receipt)
+      expect(tx).toEqual(transaction)
     })
   })
 })

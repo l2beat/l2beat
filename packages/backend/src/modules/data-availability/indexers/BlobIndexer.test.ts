@@ -41,7 +41,7 @@ describe(BlobIndexer.name, () => {
         100,
         200,
       )
-      expect(safeHeight).toStrictEqual(200)
+      expect(safeHeight).toEqual(200)
 
       expect(blobService.save).toHaveBeenCalledWith(blobs)
     })
@@ -59,7 +59,7 @@ describe(BlobIndexer.name, () => {
           100,
           150,
         )
-        expect(safeHeight).toStrictEqual(150)
+        expect(safeHeight).toEqual(150)
       })
 
       it('from + batchSize < to', async () => {
@@ -74,7 +74,7 @@ describe(BlobIndexer.name, () => {
           100,
           200,
         )
-        expect(safeHeight).toStrictEqual(200)
+        expect(safeHeight).toEqual(200)
       })
     })
 
@@ -91,7 +91,7 @@ describe(BlobIndexer.name, () => {
         100,
         200,
       )
-      expect(safeHeight).toStrictEqual(200)
+      expect(safeHeight).toEqual(200)
 
       expect(blobService.save).not.toHaveBeenCalled()
     })

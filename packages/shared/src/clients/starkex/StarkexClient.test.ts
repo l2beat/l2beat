@@ -49,7 +49,7 @@ describe(StarkexClient.name, () => {
 
       const response = await starkexClient.query(API_URL, '/', 'foo')
 
-      expect(response).toStrictEqual({ count: 11 })
+      expect(response).toEqual({ count: 11 })
     })
   })
 
@@ -60,7 +60,7 @@ describe(StarkexClient.name, () => {
         message: 'error',
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -69,7 +69,7 @@ describe(StarkexClient.name, () => {
         count: 1,
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 
@@ -87,10 +87,10 @@ describe(StarkexClient.name, () => {
 
       const httpClient = {
         fetch: vi.fn(async (url, init) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             STARKEX_BI_API_V2 + '/aggregations/count' + `?key=${API_KEY}`,
           )
-          expect(init?.body).toStrictEqual(JSON.stringify(body))
+          expect(init?.body).toEqual(JSON.stringify(body))
 
           return { count: 45 }
         }),
@@ -115,10 +115,10 @@ describe(StarkexClient.name, () => {
 
       const httpClient = {
         fetch: vi.fn(async (url, init) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             STARKEX_BI_API_V3 + '/aggregations/count' + `?key=${API_KEY}`,
           )
-          expect(init?.body).toStrictEqual(JSON.stringify(body))
+          expect(init?.body).toEqual(JSON.stringify(body))
 
           return { count: 45 }
         }),
@@ -142,7 +142,7 @@ describe(StarkexClient.name, () => {
         http: httpClient,
       })
 
-      expect(await starkexClient.getDailyCount(1, 'dydx')).toStrictEqual(2137)
+      expect(await starkexClient.getDailyCount(1, 'dydx')).toEqual(2137)
     })
   })
 })

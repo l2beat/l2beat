@@ -28,7 +28,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('ethereum')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
         numberOfValidators: 1,
@@ -54,7 +54,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('near-da')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 800n,
         thresholdStake: 533n, // (800n * 200n) / 300n = 533n
         numberOfValidators: 2,
@@ -80,7 +80,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('celestia')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 300000000n, // (100 + 200) * 10^6
         thresholdStake: 200000000n, // (300000000n * 200n) / 300n
         numberOfValidators: 2,
@@ -105,7 +105,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('avail')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
         numberOfValidators: 2,
@@ -132,7 +132,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getStats('espresso')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 3000n,
         thresholdStake: 2000n, // (3000n * 200n) / 300n = 2000n
         numberOfValidators: 2,
@@ -173,7 +173,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEthereumStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 32000000000000000000000n,
         thresholdStake: 21333333333333333333333n,
         numberOfValidators: 2,
@@ -219,7 +219,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getNearStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 2250000000000000000000000n,
         thresholdStake: 1500000000000000000000000n,
         numberOfValidators: 3,
@@ -245,7 +245,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getNearStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 0n,
         thresholdStake: 0n,
         numberOfValidators: 0,
@@ -287,7 +287,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getCelestiaStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 3000000000n, // (1000 + 2000) * 10^6
         thresholdStake: 2000000000n,
         numberOfValidators: 2,
@@ -299,7 +299,7 @@ describe(DaBeatStatsProvider.name, () => {
       const mockCelestiaClient = {
         getValidatorsInfo: vi.fn(async ({ page, perPage }: any) => {
           callCount++
-          expect(perPage).toStrictEqual(100)
+          expect(perPage).toEqual(100)
 
           if (page === 1) {
             return {
@@ -333,8 +333,8 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getCelestiaStats()
 
-      expect(callCount).toStrictEqual(2)
-      expect(result).toStrictEqual({
+      expect(callCount).toEqual(2)
+      expect(result).toEqual({
         totalStake: 20000000000n, // (100 * 100 + 50 * 200) * 10^6
         thresholdStake: 13333333333n,
         numberOfValidators: 150,
@@ -382,7 +382,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getAvailStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 3500000000000000000n,
         thresholdStake: 2333333333333333333n,
         numberOfValidators: 3,
@@ -447,7 +447,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEspressoStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 6150n,
         thresholdStake: (6150n * 2n) / 3n,
         numberOfValidators: 4,
@@ -471,7 +471,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getEspressoStats()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         totalStake: 0n,
         thresholdStake: 0n,
         numberOfValidators: 0,

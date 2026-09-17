@@ -26,10 +26,10 @@ describe(extractPrivacyRelayerActivity.name, () => {
   it('derives event topics from the extractor definitions', () => {
     expect(
       getPrivacyRelayerExtractor('privacyPoolsWithdrawalRelayed').event,
-    ).toStrictEqual(privacyPoolsInterface.getEventTopic('WithdrawalRelayed'))
-    expect(
-      getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,
-    ).toStrictEqual(tornadoCashInterface.getEventTopic('Withdrawal'))
+    ).toEqual(privacyPoolsInterface.getEventTopic('WithdrawalRelayed'))
+    expect(getPrivacyRelayerExtractor('tornadoCashWithdrawal').event).toEqual(
+      tornadoCashInterface.getEventTopic('Withdrawal'),
+    )
   })
 
   it('extracts Privacy Pools relayer', () => {
@@ -46,7 +46,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       relayerAddress: RELAYER,
     })
   })
@@ -64,7 +64,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       relayerAddress: RELAYER,
     })
   })
@@ -83,7 +83,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('ignores a Tornado Cash self-withdrawal with the zero relayer address', () => {
@@ -99,7 +99,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       log,
     )
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })
 

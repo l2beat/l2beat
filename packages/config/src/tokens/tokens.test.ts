@@ -16,13 +16,13 @@ describe('tokens', () => {
       }),
     )
     const everyUnique = tokens.every((x, i) => tokens.indexOf(x) === i)
-    expect(everyUnique).toStrictEqual(true)
+    expect(everyUnique).toEqual(true)
   })
 
   it('every token has a unique id', () => {
     const ids = tokenList.map((x) => x.id)
     const everyUnique = ids.every((x, i) => ids.indexOf(x) === i)
-    expect(everyUnique).toStrictEqual(true)
+    expect(everyUnique).toEqual(true)
   })
 
   it('every token has a chain with sinceTimestamp', () => {

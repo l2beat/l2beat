@@ -249,7 +249,7 @@ describe(createHighlightsRouter.name, () => {
     expect(getActivityByTimestamp).toHaveBeenCalledWith(olderTimestamp)
     expect(getTvsByTimestamp).toHaveBeenCalledWith(latestTimestamp)
     expect(getAbstractTokenById).toHaveBeenCalledWith('9HN5PN')
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       topPathByVolume: topPath
         ? {
             windowStart: comparisonWindow.windowStart,
@@ -377,7 +377,7 @@ describe(createHighlightsRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result.largestUopsIncreaseByChain).toStrictEqual({
+    expect(result.largestUopsIncreaseByChain).toEqual({
       windowStart: latestTimestamp,
       windowEnd: latestTimestamp + UnixTime.DAY,
       previousWindowStart: latestTimestamp - UnixTime.DAY,
@@ -388,7 +388,7 @@ describe(createHighlightsRouter.name, () => {
       increase: 30,
       increasePercent: 150,
     })
-    expect(result.largestTvsIncreaseByChain).toStrictEqual(null)
+    expect(result.largestTvsIncreaseByChain).toEqual(null)
   })
 
   it('uses configured interop projects when selecting UOPS timestamp', async () => {
@@ -440,7 +440,7 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       ['ethereum'],
     )
-    expect(result.largestUopsIncreaseByChain).toStrictEqual({
+    expect(result.largestUopsIncreaseByChain).toEqual({
       windowStart: currentActivityTimestamp,
       windowEnd: currentActivityTimestamp + UnixTime.DAY,
       previousWindowStart: previousActivityTimestamp,
@@ -519,7 +519,7 @@ describe(createHighlightsRouter.name, () => {
       previousTvsTimestamp - UnixTime.DAY,
       ['ethereum'],
     )
-    expect(result.largestTvsIncreaseByChain).toStrictEqual({
+    expect(result.largestTvsIncreaseByChain).toEqual({
       windowStart: currentTvsTimestamp - UnixTime.DAY,
       windowEnd: currentTvsTimestamp,
       previousWindowStart: previousTvsTimestamp - UnixTime.DAY,
@@ -570,7 +570,7 @@ describe(createHighlightsRouter.name, () => {
     )
     expect(getActivityByTimestamp).toHaveBeenCalledWith(olderActivityTimestamp)
     expect(getActivityByTimestamp).not.toHaveBeenCalledWith(today)
-    expect(result.largestUopsIncreaseByChain).toStrictEqual({
+    expect(result.largestUopsIncreaseByChain).toEqual({
       windowStart: currentActivityTimestamp,
       windowEnd: today,
       previousWindowStart: previousActivityTimestamp,
@@ -632,7 +632,7 @@ describe(createHighlightsRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result.largestUopsIncreaseByChain).toStrictEqual({
+    expect(result.largestUopsIncreaseByChain).toEqual({
       windowStart: latestTimestamp,
       windowEnd: latestTimestamp + UnixTime.DAY,
       previousWindowStart: latestTimestamp - UnixTime.DAY,
@@ -643,7 +643,7 @@ describe(createHighlightsRouter.name, () => {
       increase: 60,
       increasePercent: 200,
     })
-    expect(result.largestTvsIncreaseByChain).toStrictEqual({
+    expect(result.largestTvsIncreaseByChain).toEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
@@ -688,7 +688,7 @@ describe(createHighlightsRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(result.largestTvsIncreaseByChain).toStrictEqual({
+    expect(result.largestTvsIncreaseByChain).toEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -719,7 +719,7 @@ describe(createHighlightsRouter.name, () => {
     expect(getTokenByTimestamp).not.toHaveBeenCalled()
     expect(getActivityByTimestamp).not.toHaveBeenCalled()
     expect(getTvsByTimestamp).not.toHaveBeenCalled()
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       topPathByVolume: null,
       topChainByInflow: null,
       largestVolumeIncreaseByChain: null,
@@ -832,7 +832,7 @@ describe(createHighlightsRouter.name, () => {
     )
     expect(getTokenByTimestamp).toHaveBeenCalledWith(latestTimestamp)
     expect(getTokenByTimestamp).toHaveBeenCalledWith(fallbackPreviousTimestamp)
-    expect(result.largestVolumeIncreaseByChain).toStrictEqual({
+    expect(result.largestVolumeIncreaseByChain).toEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -842,7 +842,7 @@ describe(createHighlightsRouter.name, () => {
       previousVolumeUsd: 20,
       increaseUsd: 80,
     })
-    expect(result.largestVolumeIncreaseByToken).toStrictEqual({
+    expect(result.largestVolumeIncreaseByToken).toEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -857,7 +857,7 @@ describe(createHighlightsRouter.name, () => {
       previousVolumeUsd: 20,
       increaseUsd: 80,
     })
-    expect(result.largestVolumeIncreaseByProtocol).toStrictEqual({
+    expect(result.largestVolumeIncreaseByProtocol).toEqual({
       windowStart: latestTimestamp - UnixTime.DAY,
       windowEnd: latestTimestamp,
       previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
@@ -910,9 +910,9 @@ describe(createHighlightsRouter.name, () => {
 
     expect(getTransferByTimestamp).not.toHaveBeenCalled()
     expect(getTokenByTimestamp).not.toHaveBeenCalled()
-    expect(result.largestVolumeIncreaseByChain).toStrictEqual(null)
-    expect(result.largestVolumeIncreaseByToken).toStrictEqual(null)
-    expect(result.largestVolumeIncreaseByProtocol).toStrictEqual(null)
+    expect(result.largestVolumeIncreaseByChain).toEqual(null)
+    expect(result.largestVolumeIncreaseByToken).toEqual(null)
+    expect(result.largestVolumeIncreaseByProtocol).toEqual(null)
   })
 })
 

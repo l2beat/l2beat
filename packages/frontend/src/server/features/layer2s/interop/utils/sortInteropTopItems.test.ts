@@ -12,11 +12,7 @@ describe(sortInteropTopItems.name, () => {
 
     const result = sortInteropTopItems(items, [{ id: 'volume', desc: true }])
 
-    expect(result.map((item) => item.id)).toStrictEqual([
-      'eth',
-      'usdc',
-      'unknown',
-    ])
+    expect(result.map((item) => item.id)).toEqual(['eth', 'usdc', 'unknown'])
   })
 
   it('keeps missing values last when sorting descending', () => {
@@ -28,11 +24,7 @@ describe(sortInteropTopItems.name, () => {
 
     const result = sortInteropTopItems(items, [{ id: 'avgValue', desc: true }])
 
-    expect(result.map((item) => item.id)).toStrictEqual([
-      'eth',
-      'usdc',
-      'unknown',
-    ])
+    expect(result.map((item) => item.id)).toEqual(['eth', 'usdc', 'unknown'])
   })
 
   it('sorts split average durations by the fastest configured split', () => {
@@ -68,7 +60,7 @@ describe(sortInteropTopItems.name, () => {
       },
     ])
 
-    expect(result.map((item) => item.id)).toStrictEqual(['fast', 'slow'])
+    expect(result.map((item) => item.id)).toEqual(['fast', 'slow'])
   })
 })
 

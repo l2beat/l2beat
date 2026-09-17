@@ -60,7 +60,7 @@ describeDatabase(BaseRepository.name, (db) => {
       await repository.insert(2)
 
       const results = await repository.getAll()
-      expect(results).toStrictEqual([1, 2])
+      expect(results).toEqual([1, 2])
     })
 
     it('can run inside a transaction', async () => {
@@ -69,7 +69,7 @@ describeDatabase(BaseRepository.name, (db) => {
         await repository.insert(2)
       })
       const results = await repository.getAll()
-      expect(results).toStrictEqual([1, 2])
+      expect(results).toEqual([1, 2])
     })
 
     it('rollbacks inside a transaction', async () => {
@@ -81,7 +81,7 @@ describeDatabase(BaseRepository.name, (db) => {
         })
         .catch(() => {})
       const results = await repository.getAll()
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
 
     it('runs multiple transactions in parallel', async () => {
@@ -107,7 +107,7 @@ describeDatabase(BaseRepository.name, (db) => {
       ])
 
       const results = await repository.getAll()
-      expect(results).toStrictEqual([2, 2, 3, 3])
+      expect(results).toEqual([2, 2, 3, 3])
     })
   })
 
@@ -116,7 +116,7 @@ describeDatabase(BaseRepository.name, (db) => {
       await repository.batchInsert([1, 2, 3, 4])
 
       const results = await repository.getAll()
-      expect(results).toStrictEqual([1, 2, 3, 4])
+      expect(results).toEqual([1, 2, 3, 4])
     })
   })
 })

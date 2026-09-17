@@ -54,7 +54,7 @@ describe(SourceCodeService.name, () => {
     const service = new SourceCodeService()
 
     const result = await service.getSources(provider, [FOO_ADDRESS], {})
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: [],
       abis: {},
       isVerified: false,
@@ -79,7 +79,7 @@ describe(SourceCodeService.name, () => {
     const service = new SourceCodeService()
 
     const result = await service.getSources(provider, [BAR_ADDRESS], {})
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -114,7 +114,7 @@ describe(SourceCodeService.name, () => {
       [BAR_ADDRESS, BAZ_ADDRESS],
       {},
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: ['function bar()', 'function baz()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -158,7 +158,7 @@ describe(SourceCodeService.name, () => {
       [BAR_ADDRESS, FOO_ADDRESS],
       {},
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],
@@ -196,7 +196,7 @@ describe(SourceCodeService.name, () => {
       [FOO_ADDRESS]: 'LINK_TO_SOURCE_CODE',
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: [],
       abis: {},
       isVerified: true,
@@ -230,7 +230,7 @@ describe(SourceCodeService.name, () => {
       },
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       abi: ['function bar()'],
       abis: {
         [BAR_ADDRESS.toString()]: ['function bar()'],

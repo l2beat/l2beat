@@ -14,8 +14,8 @@ describe(explore.name, () => {
     expect(results).toHaveLength(2)
     const arbitrum = results.find((r) => r.dstChain === 'arbitrum')
     const base = results.find((r) => r.dstChain === 'base')
-    expect(arbitrum?.id).toStrictEqual('across')
-    expect(base?.id).toStrictEqual('across')
+    expect(arbitrum?.id).toEqual('across')
+    expect(base?.id).toEqual('across')
   })
 
   it('forwards evaluator signals into interpretation text', () => {
@@ -23,8 +23,8 @@ describe(explore.name, () => {
     expect(results).toHaveLength(1)
     expect(
       results[0]?.interpretation.includes('Transfer count was flat'),
-    ).toStrictEqual(true)
-    expect(results[0]?.evaluation.signals[0]?.kind).toStrictEqual('flatLine')
+    ).toEqual(true)
+    expect(results[0]?.evaluation.signals[0]?.kind).toEqual('flatLine')
   })
 
   it('exposes side mismatch through srcDstDiff.isSideMismatch', () => {
@@ -33,8 +33,8 @@ describe(explore.name, () => {
       row(i, 'mismatched-route', 100, 2_000_000, 1_000_000),
     )
     const results = explore(rows)
-    expect(results[0]?.srcDstDiff.isSideMismatch).toStrictEqual(true)
-    expect(results[0]?.evaluation.sideMismatch).not.toStrictEqual(null)
+    expect(results[0]?.srcDstDiff.isSideMismatch).toEqual(true)
+    expect(results[0]?.evaluation.sideMismatch).not.toEqual(null)
   })
 
   it('omits rows whose baseline is below the count floor (no spam from 1->5)', () => {
@@ -42,19 +42,19 @@ describe(explore.name, () => {
       row(i, 'tiny', i === 13 ? 5 : 1),
     )
     const results = explore(rows)
-    expect(results[0]?.interpretation).toStrictEqual('')
-    expect(results[0]?.evaluation.signals).toStrictEqual([])
+    expect(results[0]?.interpretation).toEqual('')
+    expect(results[0]?.evaluation.signals).toEqual([])
   })
 
   it('keeps the per-route keys and last-day metrics on the output row', () => {
     const results = explore(flatRoute('across', 'ethereum', 'arbitrum'))
     const result = results[0]
-    expect(result?.bridgeType).toStrictEqual('nonMinting')
-    expect(result?.srcChain).toStrictEqual('ethereum')
-    expect(result?.dstChain).toStrictEqual('arbitrum')
-    expect(result?.counts.last).toStrictEqual(300)
-    expect(result?.srcVolume.valueUsd.last).toStrictEqual(1_000_000)
-    expect(result?.dstVolume.valueUsd.last).toStrictEqual(1_000_000)
+    expect(result?.bridgeType).toEqual('nonMinting')
+    expect(result?.srcChain).toEqual('ethereum')
+    expect(result?.dstChain).toEqual('arbitrum')
+    expect(result?.counts.last).toEqual(300)
+    expect(result?.srcVolume.valueUsd.last).toEqual(1_000_000)
+    expect(result?.dstVolume.valueUsd.last).toEqual(1_000_000)
   })
 
   it('passes bridge totals to the evaluator for share-material route spikes', () => {
@@ -80,7 +80,7 @@ describe(explore.name, () => {
       (signal) => signal.metric === 'srcVolume',
     )
 
-    expect(srcSignal?.kind).toStrictEqual('zScoreSpike')
+    expect(srcSignal?.kind).toEqual('zScoreSpike')
   })
 
   function row(

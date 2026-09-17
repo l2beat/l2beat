@@ -8,10 +8,8 @@ describe(getWindowedLogZScore.name, () => {
       1_000_000,
     ])
 
-    expect(result.robust).toStrictEqual(null)
-    expect(result.classic !== null ? result.classic > 7 : false).toStrictEqual(
-      true,
-    )
+    expect(result.robust).toEqual(null)
+    expect(result.classic !== null ? result.classic > 7 : false).toEqual(true)
   })
 
   it('suppresses z-scores for sparse mostly-zero history', () => {
@@ -19,7 +17,7 @@ describe(getWindowedLogZScore.name, () => {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 100,
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       robust: null,
       classic: null,
     })

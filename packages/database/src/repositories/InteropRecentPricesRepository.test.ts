@@ -18,10 +18,10 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
       const count = await repository.insertMany(records)
 
-      expect(count).toStrictEqual(2)
+      expect(count).toEqual(2)
       const result = await repository.getAll()
       expect(result).toHaveLength(2)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([
           saved('bitcoin', UnixTime(100), 1000),
           saved('ethereum', UnixTime(100), 1000),
@@ -36,7 +36,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       }
 
       const count = await repository.insertMany(records)
-      expect(count).toStrictEqual(15000)
+      expect(count).toEqual(15000)
 
       const result = await repository.getAll()
       expect(result).toHaveLength(15000)
@@ -44,7 +44,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 for empty array', async () => {
       const count = await repository.insertMany([])
-      expect(count).toStrictEqual(0)
+      expect(count).toEqual(0)
     })
   })
 
@@ -81,7 +81,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
           UnixTime.DAY,
         )
 
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           new Map([
             [11, 30000],
             [12, 31000],
@@ -100,7 +100,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
           UnixTime.DAY,
         )
 
-        expect(result.get(1)).toStrictEqual(undefined)
+        expect(result.get(1)).toEqual(undefined)
       })
     },
   )
@@ -117,11 +117,11 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       await repository.insertMany(records)
 
       const deletedCount = await repository.deleteBefore(UnixTime(250))
-      expect(deletedCount).toStrictEqual(3)
+      expect(deletedCount).toEqual(3)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining).toStrictEqual(
+      expect(remaining).toEqual(
         expect.arrayContaining([saved('bitcoin', UnixTime(300), 1000)]),
       )
     })
@@ -133,7 +133,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       ])
 
       const deletedCount = await repository.deleteBefore(UnixTime(100))
-      expect(deletedCount).toStrictEqual(0)
+      expect(deletedCount).toEqual(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -141,7 +141,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 when no records exist', async () => {
       const deletedCount = await repository.deleteBefore(UnixTime(100))
-      expect(deletedCount).toStrictEqual(0)
+      expect(deletedCount).toEqual(0)
     })
   })
 
@@ -157,11 +157,11 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       await repository.insertMany(records)
 
       const deletedCount = await repository.deleteAfter(UnixTime(150))
-      expect(deletedCount).toStrictEqual(3)
+      expect(deletedCount).toEqual(3)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining).toStrictEqual(
+      expect(remaining).toEqual(
         expect.arrayContaining([saved('bitcoin', UnixTime(100), 1000)]),
       )
     })
@@ -173,7 +173,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       ])
 
       const deletedCount = await repository.deleteAfter(UnixTime(300))
-      expect(deletedCount).toStrictEqual(0)
+      expect(deletedCount).toEqual(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -181,7 +181,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 when no records exist', async () => {
       const deletedCount = await repository.deleteAfter(UnixTime(100))
-      expect(deletedCount).toStrictEqual(0)
+      expect(deletedCount).toEqual(0)
     })
   })
 

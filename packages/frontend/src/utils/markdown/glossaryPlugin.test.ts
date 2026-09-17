@@ -33,7 +33,7 @@ describe(linkGlossaryTerms.name, () => {
     const input =
       'Data Availability Committee (DAC) is cooking. Data availability is spicy.'
     const output = linkTerms(input)
-    expect(output).toStrictEqual(
+    expect(output).toEqual(
       `[Data Availability Committee (DAC)](/glossary#dac?description=${encodeURIComponent(
         'DAC description',
       )}) is cooking. [Data availability](/glossary#da?description=${encodeURIComponent(
@@ -48,7 +48,7 @@ describe(linkGlossaryTerms.name, () => {
       { id: 'bcd', matches: ['beta gamma delta'], description: 'BCD' },
     ])
     const output = overlapping('alpha beta gamma delta')
-    expect(output).toStrictEqual(
+    expect(output).toEqual(
       `alpha [beta gamma delta](/glossary#bcd?description=${encodeURIComponent('BCD')})`,
     )
   })
@@ -59,7 +59,7 @@ describe(linkGlossaryTerms.name, () => {
       { id: 'desc', matches: ['description'], description: 'D' },
     ])
     const output = nested('See the glossary.')
-    expect(output).toStrictEqual(
+    expect(output).toEqual(
       `See the [glossary](/glossary#glossary?description=${encodeURIComponent('G')}).`,
     )
   })
@@ -67,13 +67,13 @@ describe(linkGlossaryTerms.name, () => {
   it('should not replace terms within existing markdown links', () => {
     const input = 'Check out more here: [Blob](https://example.com).'
     const output = linkTerms(input)
-    expect(output).toStrictEqual(input)
+    expect(output).toEqual(input)
   })
 
   it('should ignore linking terms wrapped with delimiters', () => {
     const input = ':Data availability: is spicy. Also Blob is not spicy.'
     const output = linkTerms(input)
-    expect(output).toStrictEqual(
+    expect(output).toEqual(
       `Data availability is spicy. Also [Blob](/glossary#blob?description=${encodeURIComponent(
         'Blob description',
       )}) is not spicy.`,

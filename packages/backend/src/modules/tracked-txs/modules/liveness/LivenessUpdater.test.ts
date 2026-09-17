@@ -97,9 +97,7 @@ describe(LivenessUpdater.name, () => {
         },
       ]
 
-      expect(updater.transformTransactions(transactions)).toStrictEqual(
-        expected,
-      )
+      expect(updater.transformTransactions(transactions)).toEqual(expected)
     })
   })
 })

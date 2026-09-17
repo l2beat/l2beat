@@ -31,7 +31,7 @@ describe(PriceProvider.name, () => {
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
       ).toHaveBeenCalledExactlyOnceWith(coingeckoId, from, to)
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
@@ -78,7 +78,7 @@ describe(PriceProvider.name, () => {
       expect(
         coingeckoQueryService.getLatestMarketData,
       ).toHaveBeenCalledExactlyOnceWith(coingeckoIds)
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('handles zero prices correctly', async () => {
@@ -105,7 +105,7 @@ describe(PriceProvider.name, () => {
 
       const result = await provider.getLatestPrices(coingeckoIds)
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
@@ -136,7 +136,7 @@ describe(PriceProvider.name, () => {
 
       const result = await provider.getLatestPrices(coingeckoIds)
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
   })
 
@@ -154,7 +154,7 @@ describe(PriceProvider.name, () => {
         UnixTime(to),
       )
 
-      expect(result).toStrictEqual(expected)
+      expect(result).toEqual(expected)
     })
   })
 
@@ -178,7 +178,7 @@ describe(PriceProvider.name, () => {
       expect(
         coingeckoQueryService.getAllCoingeckoIds,
       ).toHaveBeenCalledExactlyOnceWith()
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {

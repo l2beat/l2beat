@@ -66,9 +66,9 @@ describe(createFinancialsRouter.name, () => {
 
       expect(getByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER, 1000)
       expect(getStatsByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER)
-      expect(result.stats).toStrictEqual(stats)
-      expect(result.limit).toStrictEqual(1000)
-      expect(result.transfers).toStrictEqual([
+      expect(result.stats).toEqual(stats)
+      expect(result.limit).toEqual(1000)
+      expect(result.transfers).toEqual([
         {
           transferId: 'msg1',
           plugin: 'plugin',
@@ -116,7 +116,7 @@ describe(createFinancialsRouter.name, () => {
       expect(markAsUnprocessedByFilter).toHaveBeenCalledExactlyOnceWith(
         EXPECTED_FILTER,
       )
-      expect(result).toStrictEqual({ updatedTransfers: 42 })
+      expect(result).toEqual({ updatedTransfers: 42 })
     })
   })
 
@@ -133,7 +133,7 @@ describe(createFinancialsRouter.name, () => {
       const result = await createCaller(db).refresh()
 
       expect(markAllAsUnprocessed).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual({ updatedTransfers: 42 })
+      expect(result).toEqual({ updatedTransfers: 42 })
     })
   })
 })

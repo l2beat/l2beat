@@ -31,7 +31,7 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
       CORRECT_SUPERCHAIN_SOURCES_HASH,
       FAKE_SUPERCHAIN_CONFIG_ADDR,
     )
-    expect(result).toStrictEqual(['opstack/SuperchainConfigFake'])
+    expect(result).toEqual(['opstack/SuperchainConfigFake'])
   })
 
   it('matches ONLY opstack/SuperchainConfig because address is in validAddresses and is more specific', () => {
@@ -44,7 +44,7 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
     // The opstack/SuperchainConfigFake template is not returned
     // even though there is an implementation match. That's because
     // the more specific match (criteria+hash) is found.
-    expect(result).toStrictEqual(['opstack/SuperchainConfig'])
+    expect(result).toEqual(['opstack/SuperchainConfig'])
   })
 })
 
@@ -100,11 +100,11 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: OWNER },
       }),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 
   it('asks for a refresh when the referenced entrypoint is gone', () => {
-    expect(entrypointReasons([reference], {}).length).toStrictEqual(1)
+    expect(entrypointReasons([reference], {}).length).toEqual(1)
   })
 
   it('asks for a refresh when the referenced entrypoint became legacy', () => {
@@ -112,7 +112,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
       }).length,
-    ).toStrictEqual(1)
+    ).toEqual(1)
   })
 
   it('asks for a refresh when the entrypoint owner changed', () => {
@@ -120,7 +120,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([reference], {
         [SHARED]: { type: 'Contract', project: 'someone-else' },
       }).length,
-    ).toStrictEqual(1)
+    ).toEqual(1)
   })
 
   it("asks for a refresh when a discovered entry became another project's entrypoint", () => {
@@ -128,7 +128,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: OWNER },
       }).length,
-    ).toStrictEqual(1)
+    ).toEqual(1)
   })
 
   it("is quiet when a discovered entry is the project's own entrypoint", () => {
@@ -136,7 +136,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: CONSUMER },
       }),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 
   // Legacy entrypoints exist precisely so that consumers may keep discovering
@@ -146,7 +146,7 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
       entrypointReasons([discovered], {
         [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
       }),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 })
 

@@ -41,11 +41,11 @@ function record(
 
 describe(aggregateTransferSize.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferSize([])).toStrictEqual(undefined)
+    expect(aggregateTransferSize([])).toEqual(undefined)
   })
 
   it('returns undefined when no transfers fall into any bucket', () => {
-    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toStrictEqual(
+    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toEqual(
       undefined,
     )
   })
@@ -71,7 +71,7 @@ describe(aggregateTransferSize.name, () => {
       }),
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       countUnder100: 2,
       percentageUnder100: 50,
       count100To1K: 1,
@@ -92,19 +92,19 @@ describe(aggregateTransferSize.name, () => {
     const result = aggregateTransferSize([
       record({ countUnder100: 1, identifiedCount: 0, srcValueUsd: 50 }),
     ])
-    expect(result?.averageTransferSizeUsd).toStrictEqual(undefined)
+    expect(result?.averageTransferSizeUsd).toEqual(undefined)
   })
 })
 
 describe(aggregateTransferType.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferType([])).toStrictEqual(undefined)
+    expect(aggregateTransferType([])).toEqual(undefined)
   })
 
   it('returns undefined when total volume is zero', () => {
     expect(
       aggregateTransferType([record({ bridgeType: 'lockAndMint' })]),
-    ).toStrictEqual(undefined)
+    ).toEqual(undefined)
   })
 
   it('sums volume per bridge type', () => {
@@ -114,7 +114,7 @@ describe(aggregateTransferType.name, () => {
       record({ bridgeType: 'burnAndMint', srcValueUsd: 5000 }),
     ])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       lockAndMint: 500,
       burnAndMint: 5000,
     })

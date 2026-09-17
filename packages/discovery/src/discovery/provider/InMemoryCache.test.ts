@@ -12,14 +12,14 @@ describe('InMemoryCache', () => {
     it('should store a key-value pair', async () => {
       await cache.set('foo', 'bar')
       const value = await cache.get('foo')
-      expect(value).toStrictEqual('bar')
+      expect(value).toEqual('bar')
     })
 
     it('should overwrite an existing key', async () => {
       await cache.set('foo', 'bar')
       await cache.set('foo', 'baz')
       const value = await cache.get('foo')
-      expect(value).toStrictEqual('baz')
+      expect(value).toEqual('baz')
     })
   })
 
@@ -27,12 +27,12 @@ describe('InMemoryCache', () => {
     it('should retrieve the correct value for a given key', async () => {
       await cache.set('hello', 'world')
       const value = await cache.get('hello')
-      expect(value).toStrictEqual('world')
+      expect(value).toEqual('world')
     })
 
     it('should return undefined for a non-existent key', async () => {
       const value = await cache.get('nonexistent')
-      expect(value).toStrictEqual(undefined)
+      expect(value).toEqual(undefined)
     })
   })
 
@@ -51,7 +51,7 @@ describe('InMemoryCache', () => {
       const results = await Promise.all(retrievals)
 
       for (let i = 0; i < 100; i++) {
-        expect(results[i]).toStrictEqual(`value${i}`)
+        expect(results[i]).toEqual(`value${i}`)
       }
     })
   })

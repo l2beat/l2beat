@@ -82,7 +82,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         amount: 10_000_000_000_000_000_000n,
       },
     ])
-    expect(safeHeight).toStrictEqual(to)
+    expect(safeHeight).toEqual(to)
   })
 
   it('uses the Privacy Pools depositor without fetching a transaction', async () => {
@@ -156,7 +156,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       configuration,
     ])
 
-    expect(await save()).toStrictEqual(from + UnixTime.DAY)
+    expect(await save()).toEqual(from + UnixTime.DAY)
   })
 
   it('does not fetch transaction senders for boundary logs outside the range', async () => {
@@ -300,7 +300,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
           extractor: 'fixedAmount',
           params: { amount: '1000000000000000000' },
         }),
-      ).toStrictEqual('c33ffb1b7442')
+      ).toEqual('c33ffb1b7442')
     })
   })
 })

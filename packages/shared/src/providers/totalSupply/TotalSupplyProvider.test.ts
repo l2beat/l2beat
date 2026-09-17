@@ -53,7 +53,7 @@ describe(TotalSupplyProvider.name, () => {
         ],
         BLOCK,
       )
-      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
+      expect(result).toEqual([123_456n, 654_321n, 0n])
     })
 
     it('performs single calls if multicall not deployed', async () => {
@@ -93,7 +93,7 @@ describe(TotalSupplyProvider.name, () => {
         encodeTotalSupply(TOKENS[2]),
         BLOCK,
       )
-      expect(result).toStrictEqual([123_456n, 654_321n, 0n])
+      expect(result).toEqual([123_456n, 654_321n, 0n])
     })
 
     it('throws when a totalSupply call reverts', async () => {
@@ -145,7 +145,7 @@ describe(TotalSupplyProvider.name, () => {
         CHAIN,
       )
 
-      expect(result).toStrictEqual([123n, 456n, 789n])
+      expect(result).toEqual([123n, 456n, 789n])
     })
 
     it('tries next RPC client if first one fails', async () => {
@@ -187,7 +187,7 @@ describe(TotalSupplyProvider.name, () => {
 
       expect(failingRpc.multicall).toHaveBeenCalledTimes(1)
       expect(workingRpc.multicall).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual([123_456n, 654_321n, 789_012n])
+      expect(result).toEqual([123_456n, 654_321n, 789_012n])
     })
 
     it('throws error if all RPC clients fail', async () => {

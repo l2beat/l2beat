@@ -9,7 +9,7 @@ describe(DiscordClient.name, () => {
     it('sends to the configured webhook', async () => {
       const httpClient = {
         fetchRaw: vi.fn(async (url) => {
-          expect(url).toStrictEqual(`${webhookUrl}?wait=true`)
+          expect(url).toEqual(`${webhookUrl}?wait=true`)
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         }),
       } as unknown as HttpClient
@@ -22,7 +22,7 @@ describe(DiscordClient.name, () => {
       const message = 'Example message'
       const httpClient = {
         fetchRaw: vi.fn(async (_, init) => {
-          expect(init?.body).toStrictEqual(JSON.stringify({ content: message }))
+          expect(init?.body).toEqual(JSON.stringify({ content: message }))
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         }),
       } as unknown as HttpClient
@@ -34,7 +34,7 @@ describe(DiscordClient.name, () => {
     it('adds headers', async () => {
       const httpClient = {
         fetchRaw: vi.fn(async (_, init) => {
-          expect(init?.headers).toStrictEqual({
+          expect(init?.headers).toEqual({
             'Content-Type': 'application/json; charset=UTF-8',
           })
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })

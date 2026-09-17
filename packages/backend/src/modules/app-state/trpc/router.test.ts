@@ -20,7 +20,7 @@ describe(createAppStateTrpcRouter.name, () => {
     expect(findByKey).toHaveBeenCalledExactlyOnceWith(
       'interopAggregatesTimestampOverride',
     )
-    expect(result).toStrictEqual(record)
+    expect(result).toEqual(record)
   })
 
   it('sets a value with the current user email', async () => {

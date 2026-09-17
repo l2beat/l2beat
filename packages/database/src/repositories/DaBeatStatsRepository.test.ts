@@ -16,13 +16,13 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
     it('finds existing record', async () => {
       await repository.upsert(saved('A', 1n, 2n, 3))
       const records = await repository.findById('A')
-      expect(records).toStrictEqual(saved('A', 1n, 2n, 3))
+      expect(records).toEqual(saved('A', 1n, 2n, 3))
     })
 
     it('returns undefined for nonexistent records', async () => {
       await repository.upsert(saved('A', 1n, 2n, null))
       const records = await repository.findById('B')
-      expect(records).toStrictEqual(undefined)
+      expect(records).toEqual(undefined)
     })
   })
 
@@ -34,10 +34,7 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
       ])
 
       const records = await repository.getAll()
-      expect(records).toStrictEqual([
-        saved('A', 1n, 2n, 3),
-        saved('B', 2n, 3n, null),
-      ])
+      expect(records).toEqual([saved('A', 1n, 2n, 3), saved('B', 2n, 3n, null)])
     })
 
     it('updates conflicting records', async () => {
@@ -51,7 +48,7 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
       ])
 
       const records = await repository.getAll()
-      expect(records).toStrictEqual([
+      expect(records).toEqual([
         saved('A', 11n, 22n, 33),
         saved('B', 22n, 33n, null),
       ])
@@ -66,7 +63,7 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
 
       const stakes = await repository.getByIds(['A', 'B'])
       expect(stakes).toHaveLength(2)
-      expect(stakes).toStrictEqual(
+      expect(stakes).toEqual(
         expect.arrayContaining([
           saved('A', 1n, 2n, 3),
           saved('B', 2n, 3n, null),

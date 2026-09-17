@@ -9,7 +9,7 @@ describe(neuterErrors.name, () => {
       baz: 'This is an error with API KEY 26fd710b28d',
     }
 
-    expect(neuterErrors(entry)).toStrictEqual({
+    expect(neuterErrors(entry)).toEqual({
       foo: 'Processing error occurred.',
       bar: 'Processing error occurred.',
       baz: 'Processing error occurred.',
@@ -18,12 +18,12 @@ describe(neuterErrors.name, () => {
 
   it('single entry', () => {
     const entry = { key: 'This is an error' }
-    expect(neuterErrors(entry)).toStrictEqual({
+    expect(neuterErrors(entry)).toEqual({
       key: 'Processing error occurred.',
     })
   })
 
   it('empty returns empty', () => {
-    expect(neuterErrors({})).toStrictEqual({})
+    expect(neuterErrors({})).toEqual({})
   })
 })

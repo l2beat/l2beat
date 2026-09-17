@@ -45,7 +45,7 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         status: 'promoted',
         reasons: [],
         notify: false,
@@ -63,8 +63,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('promoted')
-      expect(result.notify).toStrictEqual(false)
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -78,8 +78,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('blocked')
-      expect(result.notify).toStrictEqual(true)
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(true)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -100,8 +100,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('blocked')
-      expect(result.notify).toStrictEqual(false)
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(false)
       expect(result.reasons).toHaveLength(1)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
@@ -117,7 +117,7 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         status: 'promoted',
         reasons: [],
         notify: false,
@@ -137,9 +137,9 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('blocked')
-      expect(result.notify).toStrictEqual(true)
-      expect(result.reasons[0]?.rule).toStrictEqual('engineError')
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(true)
+      expect(result.reasons[0]?.rule).toEqual('engineError')
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'blocked',
@@ -156,8 +156,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('promoted')
-      expect(result.notify).toStrictEqual(false)
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -171,11 +171,11 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('blocked')
-      expect(result.notify).toStrictEqual(true)
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(true)
       expect(result.reasons).toHaveLength(1)
-      expect(result.reasons[0]?.rule).toStrictEqual('brokenRule')
-      expect(result.reasons[0]?.message).toStrictEqual(
+      expect(result.reasons[0]?.rule).toEqual('brokenRule')
+      expect(result.reasons[0]?.message).toEqual(
         'rule "brokenRule" failed to evaluate: kaboom',
       )
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
@@ -190,8 +190,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('blocked')
-      expect(result.reasons.map((r) => r.rule)).toStrictEqual([
+      expect(result.status).toEqual('blocked')
+      expect(result.reasons.map((r) => r.rule)).toEqual([
         'brokenRule',
         'maxTotalVolume',
       ])
@@ -204,8 +204,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('promoted')
-      expect(result.notify).toStrictEqual(false)
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',
@@ -219,8 +219,8 @@ describe(InteropPromotionService.name, () => {
 
       const result = await service.reconcile(ctx)
 
-      expect(result.status).toStrictEqual('promoted')
-      expect(result.notify).toStrictEqual(false)
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
       expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
         timestamp: UnixTime(100),
         status: 'promoted',

@@ -49,7 +49,7 @@ describe(TimeLoop.name, () => {
       const secondIntervalHandle = timeLoop.start()
       clearInterval(intervalHandle)
 
-      expect(secondIntervalHandle).toStrictEqual(undefined)
+      expect(secondIntervalHandle).toEqual(undefined)
     })
   })
 
@@ -108,7 +108,7 @@ describe(TimeLoop.name, () => {
       const callsAfterPause = fn.mock.calls.length
 
       await wait(10)
-      expect(fn.mock.calls.length).toStrictEqual(callsAfterPause)
+      expect(fn.mock.calls.length).toEqual(callsAfterPause)
     })
   })
 

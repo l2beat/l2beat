@@ -16,7 +16,7 @@ describe(ErrorHandler.name, () => {
     await withServer(async (baseUrl) => {
       for (const path of MALFORMED_SCAN_PATHS) {
         const response = await fetch(`${baseUrl}${path}`)
-        expect(response.status).toStrictEqual(400)
+        expect(response.status).toEqual(400)
         expect(await response.text()).toContain('Bad Request')
       }
     })
@@ -25,14 +25,14 @@ describe(ErrorHandler.name, () => {
   it('responds 200 to the same paths without malformed encoding', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/layer2s/projects/polygon-pos`)
-      expect(response.status).toStrictEqual(200)
+      expect(response.status).toEqual(200)
     })
   })
 
   it('responds 500 to a genuine server failure', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/boom`)
-      expect(response.status).toStrictEqual(500)
+      expect(response.status).toEqual(500)
       expect(await response.text()).toContain('Internal Server Error')
     })
   })
@@ -46,33 +46,31 @@ describe(clientErrorStatus.name, () => {
         status: 400,
       },
     )
-    expect(clientErrorStatus(error)).toStrictEqual(400)
+    expect(clientErrorStatus(error)).toEqual(400)
   })
 
   it('reads statusCode when status is absent', () => {
     const error = Object.assign(new Error('too large'), { statusCode: 413 })
-    expect(clientErrorStatus(error)).toStrictEqual(413)
+    expect(clientErrorStatus(error)).toEqual(413)
   })
 
   it('ignores a server error status', () => {
     const error = Object.assign(new Error('gateway'), { status: 502 })
-    expect(clientErrorStatus(error)).toStrictEqual(undefined)
+    expect(clientErrorStatus(error)).toEqual(undefined)
   })
 
   it('ignores a status below the client error range', () => {
     const error = Object.assign(new Error('teapot-ish'), { status: 302 })
-    expect(clientErrorStatus(error)).toStrictEqual(undefined)
+    expect(clientErrorStatus(error)).toEqual(undefined)
   })
 
   it('ignores a non integer status', () => {
     const error = Object.assign(new Error('weird'), { status: 400.5 })
-    expect(clientErrorStatus(error)).toStrictEqual(undefined)
+    expect(clientErrorStatus(error)).toEqual(undefined)
   })
 
   it('ignores an error without a status', () => {
-    expect(clientErrorStatus(new Error('database is down'))).toStrictEqual(
-      undefined,
-    )
+    expect(clientErrorStatus(new Error('database is down'))).toEqual(undefined)
   })
 })
 

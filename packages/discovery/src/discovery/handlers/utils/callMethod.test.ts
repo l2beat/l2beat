@@ -37,7 +37,7 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toStrictEqual([RESULT_VALUE, 1234, RESULT_VALUE, 5678])
+    expect(result.value).toEqual([RESULT_VALUE, 1234, RESULT_VALUE, 5678])
   })
 
   it('decodes an array return value', async () => {
@@ -67,7 +67,7 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toStrictEqual(RESULT_VALUES)
+    expect(result.value).toEqual(RESULT_VALUES)
   })
 
   it('decodes a scalar return value', async () => {
@@ -93,6 +93,6 @@ describe('callMethod', () => {
       [],
     )
 
-    expect(result.value).toStrictEqual(RETURN_VALUE.toString())
+    expect(result.value).toEqual(RETURN_VALUE.toString())
   })
 })

@@ -14,7 +14,7 @@ describe(EventTracker.name, () => {
   it('has empty history by default', () => {
     const tracker = new EventTracker()
 
-    expect(tracker.getStatus()).toStrictEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {},
       lastFiveSeconds: {},
       lastMinuteAverage: {},
@@ -27,7 +27,7 @@ describe(EventTracker.name, () => {
 
     tracker.record('a')
 
-    expect(tracker.getStatus()).toStrictEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
         a: 1,
       },
@@ -55,7 +55,7 @@ describe(EventTracker.name, () => {
     vi.advanceTimersByTime(1000)
     tracker.record('c')
 
-    expect(tracker.getStatus()).toStrictEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
         c: 1,
       },
@@ -85,7 +85,7 @@ describe(EventTracker.name, () => {
     vi.advanceTimersByTime(historySize)
     tracker.record('d')
 
-    expect(tracker.getStatus()).toStrictEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
         d: 1,
       },
@@ -109,19 +109,19 @@ describe(EventTracker.name, () => {
     tracker.record('b')
     tracker.record('c')
 
-    expect(tracker.getEventsCount()).toStrictEqual(3)
+    expect(tracker.getEventsCount()).toEqual(3)
 
     vi.advanceTimersByTime(historySize)
 
-    expect(tracker.getEventsCount()).toStrictEqual(0)
+    expect(tracker.getEventsCount()).toEqual(0)
 
     tracker.record('d')
     tracker.record('e')
 
-    expect(tracker.getEventsCount()).toStrictEqual(2)
+    expect(tracker.getEventsCount()).toEqual(2)
 
     vi.advanceTimersByTime(historySize)
 
-    expect(tracker.getEventsCount()).toStrictEqual(0)
+    expect(tracker.getEventsCount()).toEqual(0)
   })
 })

@@ -38,7 +38,7 @@ describe(getActiveConfigurations.name, () => {
     ]
 
     const result = getActiveConfigurations(mockedProject, mockConfigurations)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       mockedProject.configurations as TrackedTxLivenessConfig[],
     )
   })

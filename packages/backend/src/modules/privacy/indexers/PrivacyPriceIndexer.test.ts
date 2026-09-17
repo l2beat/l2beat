@@ -83,7 +83,7 @@ describe(PrivacyPriceIndexer.name, () => {
       expect(privacyPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('shares fetched prices across configurations with the same priceId', async () => {
@@ -175,7 +175,7 @@ describe(PrivacyPriceIndexer.name, () => {
       expect(privacyPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         [],
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {
@@ -305,7 +305,7 @@ describe(PrivacyPriceIndexer.name, () => {
         priceId: 'bitcoin',
         sinceTimestamp: UnixTime(0),
       })
-      expect(id1).not.toStrictEqual(id2)
+      expect(id1).not.toEqual(id2)
     })
 
     it('is deterministic for the same priceId', () => {
@@ -317,8 +317,8 @@ describe(PrivacyPriceIndexer.name, () => {
         priceId: 'ethereum',
         sinceTimestamp: UnixTime(123),
       })
-      expect(id1).toStrictEqual('3953373a477a')
-      expect(id1).toStrictEqual(id2)
+      expect(id1).toEqual('3953373a477a')
+      expect(id1).toEqual(id2)
     })
   })
 

@@ -50,10 +50,8 @@ describe(getProjectPastUpgrades.name, () => {
 
     const result = getPastUpgradesData(getProjectPastUpgrades(contracts))
 
-    expect(result?.upgrades.length).toStrictEqual(2)
-    expect(
-      result?.upgrades.map((x) => x.implementations[0]?.address),
-    ).toStrictEqual([
+    expect(result?.upgrades.length).toEqual(2)
+    expect(result?.upgrades.map((x) => x.implementations[0]?.address)).toEqual([
       '0x980D1F93FC5809c828539c46084801673FA6A859',
       '0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10',
     ])
@@ -89,6 +87,6 @@ describe(getProjectPastUpgrades.name, () => {
 
     const result = getPastUpgradesData(getProjectPastUpgrades(contracts))
 
-    expect(result?.upgrades.length).toStrictEqual(1)
+    expect(result?.upgrades.length).toEqual(1)
   })
 })

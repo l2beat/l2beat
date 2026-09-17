@@ -15,7 +15,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
     const record = mockRecord()
     await repository.upsert(record)
     const actual = await repository.getAll()
-    expect(actual).toStrictEqual([record])
+    expect(actual).toEqual([record])
   })
 
   it('only allows single record per key and overwrites old record with fresh data', async () => {
@@ -25,7 +25,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
     await repository.upsert(record1)
     await repository.upsert(record2)
     const actual = await repository.getAll()
-    expect(actual).toStrictEqual([record2])
+    expect(actual).toEqual([record2])
   })
 
   it('finds by key', async () => {
@@ -39,7 +39,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       await repository.upsert(record)
     }
     const actual = await repository.findByKey('key1')
-    expect(actual).toStrictEqual({ key: 'key1', value: 'value1' })
+    expect(actual).toEqual({ key: 'key1', value: 'value1' })
   })
 
   it('allows keys with length > 255', async () => {

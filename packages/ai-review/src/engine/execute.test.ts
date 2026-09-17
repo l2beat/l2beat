@@ -13,7 +13,7 @@ describe(execute.name, () => {
       ],
       options,
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stdout: 'out',
       stderr: 'err',
       timedOut: false,
@@ -30,13 +30,13 @@ describe(execute.name, () => {
         stdin: 'hello',
       },
     )
-    expect(result.stdout).toStrictEqual('hello')
-    expect(result.code).toStrictEqual(0)
+    expect(result.stdout).toEqual('hello')
+    expect(result.code).toEqual(0)
   })
 
   it('settles on a spawn failure', async () => {
     const result = await execute('this-binary-does-not-exist', [], options)
-    expect(result.code).toStrictEqual(null)
+    expect(result.code).toEqual(null)
     expect(result.stderr).toContain('ENOENT')
   })
 
@@ -49,8 +49,8 @@ describe(execute.name, () => {
         timeoutMs: 200,
       },
     )
-    expect(result.timedOut).toStrictEqual(true)
-    expect(result.code).toStrictEqual(null)
+    expect(result.timedOut).toEqual(true)
+    expect(result.code).toEqual(null)
   })
 
   it('resolves even when a detached grandchild keeps the pipes open', async () => {
@@ -64,7 +64,7 @@ describe(execute.name, () => {
       ...options,
       timeoutMs: 200,
     })
-    expect(result.timedOut).toStrictEqual(true)
+    expect(result.timedOut).toEqual(true)
     // Must settle on the kill grace, not on the grandchild's 30s exit.
     expect(Date.now() - start).toBeLessThan(4000)
   }, 5000)

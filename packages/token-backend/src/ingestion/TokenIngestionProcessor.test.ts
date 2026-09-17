@@ -49,10 +49,10 @@ describe(TokenIngestionProcessor.name, () => {
       )
 
       expect(trace.id).toMatch(/^ing_[0-9a-f-]{36}$/)
-      expect(trace.existingDeployedToken).toStrictEqual(undefined)
+      expect(trace.existingDeployedToken).toEqual(undefined)
       expect(
         trace.steps.find((step) => step.kind === 'transfer-evidence'),
-      ).toStrictEqual({
+      ).toEqual({
         kind: 'transfer-evidence',
         total: 1,
         nonSwapping: 0,
@@ -106,8 +106,8 @@ describe(TokenIngestionProcessor.name, () => {
         buildInteropTransferIndex([]),
       )
 
-      expect(trace.existingDeployedToken).toStrictEqual(existing)
-      expect(trace.outcome).toStrictEqual({
+      expect(trace.existingDeployedToken).toEqual(existing)
+      expect(trace.outcome).toEqual({
         kind: 'noop',
         deployedToken: existing,
       })
@@ -181,23 +181,23 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toStrictEqual('pending')
+      expect(trace.outcome.kind).toEqual('pending')
       if (trace.outcome.kind !== 'pending') return
-      expect(trace.outcome.abstract).toStrictEqual({
+      expect(trace.outcome.abstract).toEqual({
         kind: 'existing',
         token: { id: 'USDC01', symbol: 'USDC' },
       })
-      expect(trace.outcome.neighborsToEnqueue).toStrictEqual([otherAddress])
-      expect(trace.outcome.proof.kind).toStrictEqual('non-swapping-transfer')
+      expect(trace.outcome.neighborsToEnqueue).toEqual([otherAddress])
+      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
       const proof = trace.outcome.proof
-      expect(proof.transfer.transferId).toStrictEqual('transfer-id')
-      expect(proof.transfer.srcRawAmount).toStrictEqual('0')
-      expect(proof.transfer.dstRawAmount).toStrictEqual('123')
+      expect(proof.transfer.transferId).toEqual('transfer-id')
+      expect(proof.transfer.srcRawAmount).toEqual('0')
+      expect(proof.transfer.dstRawAmount).toEqual('123')
       expect(() => JSON.stringify(proof)).not.toThrow()
-      expect(
-        trace.steps.some((step) => step.kind === 'fetched-facts'),
-      ).toStrictEqual(false)
+      expect(trace.steps.some((step) => step.kind === 'fetched-facts')).toEqual(
+        false,
+      )
       expect(fetchDeployedTokenFacts).toHaveBeenCalledTimes(0)
       expect(findByName).toHaveBeenCalledTimes(0)
     })
@@ -273,11 +273,11 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toStrictEqual('pending')
+      expect(trace.outcome.kind).toEqual('pending')
       if (trace.outcome.kind !== 'pending') return
-      expect(trace.outcome.proof.kind).toStrictEqual('non-swapping-transfer')
+      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
-      expect(trace.outcome.proof.transfer.transferId).toStrictEqual(
+      expect(trace.outcome.proof.transfer.transferId).toEqual(
         'transfer-known-1',
       )
       expect(findByTransferId).toHaveBeenCalledExactlyOnceWith(
@@ -344,7 +344,7 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toStrictEqual({
+      expect(trace.outcome).toEqual({
         kind: 'conflict',
         message:
           'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
@@ -412,7 +412,7 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toStrictEqual({
+      expect(trace.outcome).toEqual({
         kind: 'noop',
         deployedToken: existing,
       })
@@ -477,11 +477,11 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome.kind).toStrictEqual('write')
+      expect(trace.outcome.kind).toEqual('write')
       if (trace.outcome.kind !== 'write') return
-      expect(trace.outcome.deployedToken.type).toStrictEqual('update')
+      expect(trace.outcome.deployedToken.type).toEqual('update')
       if (trace.outcome.deployedToken.type !== 'update') return
-      expect(trace.outcome.deployedToken.update.abstractTokenId).toStrictEqual(
+      expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
         'USDC01',
       )
     })
@@ -531,7 +531,7 @@ describe(TokenIngestionProcessor.name, () => {
         buildInteropTransferIndex([]),
       )
 
-      expect(trace.outcome).toStrictEqual({
+      expect(trace.outcome).toEqual({
         kind: 'pending',
         operation: 'insert',
         existing: undefined,
@@ -560,7 +560,7 @@ describe(TokenIngestionProcessor.name, () => {
         outcome: { kind: 'skip', reason: 'whatever' } as const,
       }
       const result = await processor.fetch(trace)
-      expect(result).toStrictEqual(trace)
+      expect(result).toEqual(trace)
     })
 
     it('upgrades pending insert with existing abstract to write/insert when facts are complete', async () => {
@@ -608,7 +608,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toStrictEqual({
+      expect(result.outcome).toEqual({
         kind: 'write',
         newAbstractToken: undefined,
         deployedToken: {
@@ -691,11 +691,11 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('write')
+      expect(result.outcome.kind).toEqual('write')
       expect(getCoinDataById).toHaveBeenCalledWith('usd-coin')
       expect(
         result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
 
     it('adopts deployed-token casing on the new CoinGecko abstract when symbols match case-insensitively', async () => {
@@ -759,17 +759,17 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('write')
+      expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('sUSDe')
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('sUSDe')
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toStrictEqual('sUSDe')
+      ).toEqual('sUSDe')
       const correctionStep = result.steps.find(
         (step) => step.kind === 'corrected-coingecko-symbol-casing',
       )
-      expect(correctionStep).toStrictEqual({
+      expect(correctionStep).toEqual({
         kind: 'corrected-coingecko-symbol-casing',
         from: 'SUSDE',
         to: 'sUSDe',
@@ -837,16 +837,16 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('write')
+      expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('Pepe')
-      expect(result.outcome.newAbstractToken?.comment).toStrictEqual(
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('Pepe')
+      expect(result.outcome.newAbstractToken?.comment).toEqual(
         'CoinGecko symbol "$PEPE" differs only in punctuation from the deployed token symbol "Pepe"; automatic ingestion used the deployed token symbol.',
       )
       const adoptionStep = result.steps.find(
         (step) => step.kind === 'adopted-deployed-token-symbol',
       )
-      expect(adoptionStep).toStrictEqual({
+      expect(adoptionStep).toEqual({
         kind: 'adopted-deployed-token-symbol',
         from: '$PEPE',
         to: 'Pepe',
@@ -914,14 +914,14 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('write')
+      expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken?.symbol).toStrictEqual('VIRTU')
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('VIRTU')
       expect(
         result.steps.find(
           (step) => step.kind === 'adopted-deployed-token-symbol',
         ),
-      ).toStrictEqual({
+      ).toEqual({
         kind: 'adopted-deployed-token-symbol',
         from: 'VIRTU',
         to: 'VIRTU',
@@ -930,7 +930,7 @@ describe(TokenIngestionProcessor.name, () => {
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toStrictEqual('VIRTU ')
+      ).toEqual('VIRTU ')
     })
 
     it('does not treat two all-punctuation symbols as matching', async () => {
@@ -994,7 +994,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('conflict')
+      expect(result.outcome.kind).toEqual('conflict')
     })
 
     it('downgrades pending insert with a new CoinGecko abstract to conflict when symbols differ', async () => {
@@ -1058,7 +1058,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toStrictEqual({
+      expect(result.outcome).toEqual({
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
@@ -1070,10 +1070,10 @@ describe(TokenIngestionProcessor.name, () => {
       })
       expect(
         result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
 
     it('downgrades pending insert with a transfer-resolved abstract to conflict when symbols differ', async () => {
@@ -1120,14 +1120,14 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toStrictEqual({
+      expect(result.outcome).toEqual({
         kind: 'conflict',
         message:
           'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
       })
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
 
     it('keeps a transfer-resolved insert on write when symbols match case-insensitively', async () => {
@@ -1174,18 +1174,18 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('write')
+      expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
-      expect(result.outcome.newAbstractToken).toStrictEqual(undefined)
+      expect(result.outcome.newAbstractToken).toEqual(undefined)
       expect(
         result.outcome.deployedToken.type === 'insert' &&
           result.outcome.deployedToken.record.symbol,
-      ).toStrictEqual('SUSDE')
+      ).toEqual('SUSDE')
       expect(
         result.steps.some(
           (step) => step.kind === 'corrected-coingecko-symbol-casing',
         ),
-      ).toStrictEqual(false)
+      ).toEqual(false)
     })
 
     it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
@@ -1249,7 +1249,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toStrictEqual({
+      expect(result.outcome).toEqual({
         kind: 'error',
         message: 'Missing required deployed-token facts: symbol.',
       })
@@ -1310,7 +1310,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome).toStrictEqual({
+      expect(result.outcome).toEqual({
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
@@ -1365,7 +1365,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
       })
 
-      expect(result.outcome.kind).toStrictEqual('error')
+      expect(result.outcome.kind).toEqual('error')
     })
   })
 
@@ -1474,8 +1474,8 @@ describe(TokenIngestionProcessor.name, () => {
         const first = await processor.getInteropTransferIndex()
         const second = await processor.getInteropTransferIndex()
 
-        expect(first.findInvolving(address).length).toStrictEqual(1)
-        expect(second.findInvolving(address).length).toStrictEqual(1)
+        expect(first.findInvolving(address).length).toEqual(1)
+        expect(second.findInvolving(address).length).toEqual(1)
         expect(getTokenRoutes).toHaveBeenCalledTimes(1)
       })
 
@@ -1507,8 +1507,8 @@ describe(TokenIngestionProcessor.name, () => {
         await processor.getInteropTransferIndex()
         const refreshed = await processor.refreshInteropTransferIndex()
 
-        expect(refreshed.findInvolving(firstAddress).length).toStrictEqual(0)
-        expect(refreshed.findInvolving(secondAddress).length).toStrictEqual(1)
+        expect(refreshed.findInvolving(firstAddress).length).toEqual(0)
+        expect(refreshed.findInvolving(secondAddress).length).toEqual(1)
         expect(getTokenRoutes).toHaveBeenCalledTimes(2)
       })
     },

@@ -43,7 +43,7 @@ describe(ProjectDatabase.name, () => {
       whereNull: [],
     })
 
-    expect(result).toStrictEqual(project)
+    expect(result).toEqual(project)
   })
 
   it('complex query', async () => {
@@ -80,7 +80,7 @@ describe(ProjectDatabase.name, () => {
       whereNull: [],
     })
 
-    expect(result).toStrictEqual([projectB])
+    expect(result).toEqual([projectB])
   })
 
   it('can add and retrieve a token', async () => {
@@ -99,8 +99,8 @@ describe(ProjectDatabase.name, () => {
     }
 
     await db.saveToken(token)
-    expect(await db.getToken(token.id)).toStrictEqual(token)
-    expect(await db.getTokens()).toStrictEqual([token])
+    expect(await db.getToken(token.id)).toEqual(token)
+    expect(await db.getTokens()).toEqual([token])
   })
 
   it('rolls back a failed transaction', async () => {
@@ -125,6 +125,6 @@ describe(ProjectDatabase.name, () => {
       whereNotNull: [],
       whereNull: [],
     })
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })

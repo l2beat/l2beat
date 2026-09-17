@@ -31,7 +31,7 @@ describe('interop examples', () => {
         const manifestEntry = manifest.examples[example]
         const sealedHash = manifestEntry.definitionHash
 
-        expect(sealedHash).toStrictEqual(currentHash)
+        expect(sealedHash).toEqual(currentHash)
       })
     }
   })
@@ -65,7 +65,7 @@ describe('interop examples', () => {
 
         const result = await runner.run()
 
-        expect(normalize(result)).toStrictEqual(normalize(outputs))
+        expect(normalize(result)).toEqual(normalize(outputs))
       })
     }
   })

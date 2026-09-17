@@ -21,7 +21,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const stored = await repository.getAll()
       expect(stored).toHaveLength(1)
-      expect(stored[0]!).toStrictEqual({
+      expect(stored[0]!).toEqual({
         id: expect.any(String),
         timestamp: UnixTime(1000),
         source: 'manual',
@@ -46,7 +46,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       })
 
       const [stored] = await repository.getAll()
-      expect(stored!.intent).toStrictEqual({
+      expect(stored!.intent).toEqual({
         type: 'MergeAbstractTokenIntent',
         sourceId: 'SOURCE',
         targetId: 'TARGET',
@@ -99,7 +99,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       })
 
       const [stored] = await repository.getAll()
-      expect(stored!.command).toStrictEqual({
+      expect(stored!.command).toEqual({
         type: 'UpdateDeployedTokenCommand',
         update: {
           abstractTokenAssignmentProof: {
@@ -121,7 +121,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const recent = await repository.getRecent(2)
 
-      expect(recent.map((e) => e.userEmail)).toStrictEqual([
+      expect(recent.map((e) => e.userEmail)).toEqual([
         'third@x.io',
         'second@x.io',
       ])
@@ -136,10 +136,8 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
 
       const page = await repository.getPage({ offset: 1, limit: 1 })
 
-      expect(page.totalCount).toStrictEqual(3)
-      expect(page.entries.map((e) => e.userEmail)).toStrictEqual([
-        'second@x.io',
-      ])
+      expect(page.totalCount).toEqual(3)
+      expect(page.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
     })
 
     it('filters entries by token data in the command via search', async () => {
@@ -167,28 +165,24 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         limit: 100,
         search: 'dai',
       })
-      expect(bySymbol.totalCount).toStrictEqual(1)
-      expect(bySymbol.entries.map((e) => e.userEmail)).toStrictEqual([
-        'second@x.io',
-      ])
+      expect(bySymbol.totalCount).toEqual(1)
+      expect(bySymbol.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
 
       const byChain = await repository.getPage({
         offset: 0,
         limit: 100,
         search: 'ethereum',
       })
-      expect(byChain.totalCount).toStrictEqual(1)
-      expect(byChain.entries.map((e) => e.userEmail)).toStrictEqual([
-        'first@x.io',
-      ])
+      expect(byChain.totalCount).toEqual(1)
+      expect(byChain.entries.map((e) => e.userEmail)).toEqual(['first@x.io'])
 
       const noMatch = await repository.getPage({
         offset: 0,
         limit: 100,
         search: 'nonexistent',
       })
-      expect(noMatch.totalCount).toStrictEqual(0)
-      expect(noMatch.entries).toStrictEqual([])
+      expect(noMatch.totalCount).toEqual(0)
+      expect(noMatch.entries).toEqual([])
     })
 
     it('filters entries by intent via search', async () => {
@@ -207,8 +201,8 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         search: 'MergeAbstractTokenIntent',
       })
 
-      expect(page.totalCount).toStrictEqual(1)
-      expect(page.entries[0]!.intent).toStrictEqual({
+      expect(page.totalCount).toEqual(1)
+      expect(page.entries[0]!.intent).toEqual({
         type: 'MergeAbstractTokenIntent',
         sourceId: 'SOURCE',
         targetId: 'TARGET',

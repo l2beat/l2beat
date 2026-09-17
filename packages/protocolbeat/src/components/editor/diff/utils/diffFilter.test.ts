@@ -9,13 +9,13 @@ import {
 
 describe('decideChanges', () => {
   it('returns an empty list when there are no changes', () => {
-    expect(decideChanges([], 'a', 'b', true)).toStrictEqual([])
+    expect(decideChanges([], 'a', 'b', true)).toEqual([])
   })
 
   it('drops a whitespace-only change', () => {
     const left = 'a = 1'
     const right = 'a  =  1'
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'drop' },
     ])
   })
@@ -23,7 +23,7 @@ describe('decideChanges', () => {
   it('drops a comment-only change when ignoreComments is true', () => {
     const left = '// foo\nx'
     const right = '// bar\nx'
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'drop' },
     ])
   })
@@ -31,7 +31,7 @@ describe('decideChanges', () => {
   it('narrows a comment-only change to the comment line when ignoreComments is false', () => {
     const left = '// foo\nx'
     const right = '// bar\nx'
-    expect(decide(left, right, [whole(left, right)], false)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 2) },
     ])
   })
@@ -39,7 +39,7 @@ describe('decideChanges', () => {
   it('keeps a real code change unchanged', () => {
     const left = 'x = 1'
     const right = 'x = 2'
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'keep' },
     ])
   })
@@ -47,7 +47,7 @@ describe('decideChanges', () => {
   it('narrows by trimming a common leading line', () => {
     const left = 'shared\nold'
     const right = 'shared\nnew'
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(2, 3), modified: range(2, 3) },
     ])
   })
@@ -55,7 +55,7 @@ describe('decideChanges', () => {
   it('narrows by trimming a common trailing line', () => {
     const left = 'old\nshared'
     const right = 'new\nshared'
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 2) },
     ])
   })
@@ -63,7 +63,7 @@ describe('decideChanges', () => {
   it('narrows an insert-only change to a zero-width range on the left', () => {
     const left = 'func()'
     const right = '// docs\nfunc()'
-    expect(decide(left, right, [whole(left, right)], false)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 1), modified: range(1, 2) },
     ])
   })
@@ -71,7 +71,7 @@ describe('decideChanges', () => {
   it('narrows a removal-only change to a zero-width range on the right', () => {
     const left = '// docs\nfunc()'
     const right = 'func()'
-    expect(decide(left, right, [whole(left, right)], false)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 1) },
     ])
   })
@@ -92,7 +92,7 @@ describe('decideChanges', () => {
       '    bytes32 value',
       ') internal view {',
     ].join('\n')
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'drop' },
     ])
   })
@@ -113,7 +113,7 @@ describe('decideChanges', () => {
       '    bytes32 value',
       ') internal view {',
     ].join('\n')
-    expect(decide(left, right, [whole(left, right)], false)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 1), modified: range(1, 4) },
     ])
   })
@@ -132,7 +132,7 @@ describe('decideChanges', () => {
         [{ original: range(2, 3), modified: range(2, 3) }],
         false,
       ),
-    ).toStrictEqual([{ kind: 'keep' }])
+    ).toEqual([{ kind: 'keep' }])
   })
 
   it('keeps the comma-bearing line highlighted on the modified side when a trailing parameter is removed', () => {
@@ -155,7 +155,7 @@ describe('decideChanges', () => {
       '    IAnchorStateRegistry _anchorStateRegistry',
       ')',
     ].join('\n')
-    expect(decide(left, right, [whole(left, right)], true)).toStrictEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(3, 5), modified: range(3, 4) },
     ])
   })
@@ -177,7 +177,7 @@ describe('decideChanges', () => {
       { original: range(3, 4), modified: range(3, 4) },
       { original: range(5, 7), modified: range(5, 7) },
     ]
-    expect(decide(left, right, changes, true)).toStrictEqual([
+    expect(decide(left, right, changes, true)).toEqual([
       { kind: 'keep' },
       { kind: 'drop' },
       { kind: 'narrow', original: range(6, 7), modified: range(6, 7) },
@@ -192,11 +192,11 @@ describe('alignmentGaps', () => {
   }
 
   it('returns the outer mapping for a drop', () => {
-    expect(alignmentGaps(outer, { kind: 'drop' })).toStrictEqual([outer])
+    expect(alignmentGaps(outer, { kind: 'drop' })).toEqual([outer])
   })
 
   it('returns nothing for a keep', () => {
-    expect(alignmentGaps(outer, { kind: 'keep' })).toStrictEqual([])
+    expect(alignmentGaps(outer, { kind: 'keep' })).toEqual([])
   })
 
   it('returns the lead and trail slices for a narrow', () => {
@@ -210,7 +210,7 @@ describe('alignmentGaps', () => {
         original: range(11, 12),
         modified: range(12, 13),
       }),
-    ).toStrictEqual([
+    ).toEqual([
       { original: range(10, 11), modified: range(10, 12) },
       { original: range(12, 12), modified: range(13, 13) },
     ])

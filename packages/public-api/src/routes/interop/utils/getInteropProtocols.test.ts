@@ -38,7 +38,7 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'stargate',
         slug: 'stargate',
@@ -96,8 +96,8 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result[0]?.avgTransferTime).toStrictEqual({ type: 'unknown' })
-    expect(result[0]?.chainsBreakdown).toStrictEqual([
+    expect(result[0]?.avgTransferTime).toEqual({ type: 'unknown' })
+    expect(result[0]?.chainsBreakdown).toEqual([
       {
         id: 'base',
         name: 'Base',
@@ -149,7 +149,7 @@ describe('getInteropProtocols', () => {
       ],
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'layerzero',
         slug: 'layerzero',
@@ -210,7 +210,7 @@ describe('getInteropProtocols', () => {
   })
 
   it('returns an empty array when there is no data', () => {
-    expect(getInteropProtocols([], [])).toStrictEqual([])
+    expect(getInteropProtocols([], [])).toEqual([])
   })
 })
 

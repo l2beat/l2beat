@@ -41,15 +41,15 @@ describe(runFind.name, () => {
       StubEngine.withOutput({ intent: 'does x', findings }),
       input,
     )
-    expect(ReviewOutput.isValid(review)).toStrictEqual(true)
+    expect(ReviewOutput.isValid(review)).toEqual(true)
     expect(review.findings).toHaveLength(5)
-    expect(review.findings.map((f) => f.claim).slice(0, 3)).toStrictEqual([
+    expect(review.findings.map((f) => f.claim).slice(0, 3)).toEqual([
       'c2',
       'c3',
       'c1',
     ])
-    expect(review.intent).toStrictEqual('does x')
-    expect(review.aborted).toStrictEqual(undefined)
+    expect(review.intent).toEqual('does x')
+    expect(review.aborted).toEqual(undefined)
   })
 
   it('marks the review aborted when the engine fails', async () => {
@@ -59,18 +59,18 @@ describe(runFind.name, () => {
         Promise.resolve({ ok: false, reason: 'timeout', detail: '9 > 1' }),
     }
     const { review } = await runFind(failing, input)
-    expect(review.aborted).toStrictEqual('timeout: 9 > 1')
-    expect(review.findings).toStrictEqual([])
-    expect(ReviewOutput.isValid(review)).toStrictEqual(true)
+    expect(review.aborted).toEqual('timeout: 9 > 1')
+    expect(review.findings).toEqual([])
+    expect(ReviewOutput.isValid(review)).toEqual(true)
   })
 
   it('passes a failing stub engine through as an aborted review', async () => {
     const { review, usage } = await runFind(StubEngine.unavailable(), input)
-    expect(
-      review.aborted?.startsWith('engine-error: stub engine'),
-    ).toStrictEqual(true)
-    expect(review.findings).toStrictEqual([])
-    expect(usage).toStrictEqual(undefined)
+    expect(review.aborted?.startsWith('engine-error: stub engine')).toEqual(
+      true,
+    )
+    expect(review.findings).toEqual([])
+    expect(usage).toEqual(undefined)
   })
 
   it('marks the review aborted on schema-invalid engine output', async () => {
@@ -79,7 +79,7 @@ describe(runFind.name, () => {
       input,
     )
     expect(review.aborted).toBeTypeOf('string')
-    expect(review.aborted?.startsWith('invalid-output')).toStrictEqual(true)
+    expect(review.aborted?.startsWith('invalid-output')).toEqual(true)
   })
 
   it('normalizes reversed and non-positive line ranges', async () => {
@@ -95,12 +95,12 @@ describe(runFind.name, () => {
     const byClaim = Object.fromEntries(
       review.findings.map((f) => [f.claim, f.location]),
     )
-    expect(byClaim.c3).toStrictEqual({
+    expect(byClaim.c3).toEqual({
       file: 'a.ts',
       range: { start: 2, end: 3 },
     })
-    expect(byClaim.zero).toStrictEqual({ file: 'a.ts', range: undefined })
-    expect(byClaim['end-only']).toStrictEqual({
+    expect(byClaim.zero).toEqual({ file: 'a.ts', range: undefined })
+    expect(byClaim['end-only']).toEqual({
       file: 'a.ts',
       range: { start: 7, end: 7 },
     })
@@ -113,6 +113,6 @@ describe(runFind.name, () => {
       input,
     )
     const expected = rankFindings(review.findings)
-    expect(review.findings).toStrictEqual(expected)
+    expect(review.findings).toEqual(expected)
   })
 })

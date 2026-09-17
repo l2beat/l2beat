@@ -4,30 +4,30 @@ import { asArray, emptyArrayToUndefined } from './utils'
 
 describe(asArray.name, () => {
   it('handles undefined inputs', () => {
-    expect(asArray(undefined)).toStrictEqual([])
+    expect(asArray(undefined)).toEqual([])
 
-    expect(asArray('value')).toStrictEqual(['value'])
+    expect(asArray('value')).toEqual(['value'])
 
     const original = ['a', 'b']
     const result = asArray(original)
 
-    expect(result).toStrictEqual(['a', 'b'])
+    expect(result).toEqual(['a', 'b'])
 
     original.push('c')
-    expect(result).toStrictEqual(['a', 'b', 'c'])
+    expect(result).toEqual(['a', 'b', 'c'])
   })
 })
 
 describe(emptyArrayToUndefined.name, () => {
   it('returns undefined for empty arrays', () => {
-    expect(emptyArrayToUndefined([])).toStrictEqual(undefined)
+    expect(emptyArrayToUndefined([])).toEqual(undefined)
 
     const original = ['x']
     const result = emptyArrayToUndefined(original)
 
-    expect(result).toStrictEqual(['x'])
+    expect(result).toEqual(['x'])
 
     original.push('y')
-    expect(result).toStrictEqual(['x', 'y'])
+    expect(result).toEqual(['x', 'y'])
   })
 })

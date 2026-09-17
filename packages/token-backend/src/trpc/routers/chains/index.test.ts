@@ -20,7 +20,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns all chains', async () => {
@@ -50,7 +50,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
-      expect(result).toStrictEqual(chains)
+      expect(result).toEqual(chains)
       expect(mockGetAll).toHaveBeenCalledWith()
     })
   })
@@ -74,7 +74,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('ethereum')
 
-      expect(result).toStrictEqual(chain)
+      expect(result).toEqual(chain)
       expect(mockFindByName).toHaveBeenCalledWith('ethereum')
     })
 
@@ -89,7 +89,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('nonexistent')
 
-      expect(result).toStrictEqual(null)
+      expect(result).toEqual(null)
       expect(mockFindByName).toHaveBeenCalledWith('nonexistent')
     })
   })
@@ -113,7 +113,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
 
@@ -135,7 +135,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
 
@@ -162,7 +162,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
       expect(mockInsert).toHaveBeenCalledWith(chain)
     })
   })
@@ -189,7 +189,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -211,7 +211,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -235,7 +235,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('arbitrum', update)
     })
   })
@@ -252,7 +252,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.delete({ name: 'ethereum' })
 
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
       expect(mockDeleteByName).toHaveBeenCalledWith('ethereum')
     })
   })
@@ -276,7 +276,7 @@ describe('chainRouter', () => {
           url: 'https://rpc.example.com',
         })
 
-        expect(result).toStrictEqual({ success: true })
+        expect(result).toEqual({ success: true })
         expect(mockRpcClient.test).toHaveBeenCalledWith()
       })
 
@@ -300,7 +300,7 @@ describe('chainRouter', () => {
           url: 'https://rpc.example.com',
         })
 
-        expect(result).toStrictEqual({ success: false, error: 'Error message' })
+        expect(result).toEqual({ success: false, error: 'Error message' })
       })
     })
 
@@ -322,7 +322,7 @@ describe('chainRouter', () => {
           url: 'https://blockscout.example.com',
         })
 
-        expect(result).toStrictEqual({ success: true })
+        expect(result).toEqual({ success: true })
         expect(mockBlockscoutClient.test).toHaveBeenCalledWith()
       })
 
@@ -346,7 +346,7 @@ describe('chainRouter', () => {
           url: 'https://blockscout.example.com',
         })
 
-        expect(result).toStrictEqual({ success: false, error: 'Error message' })
+        expect(result).toEqual({ success: false, error: 'Error message' })
       })
     })
 
@@ -372,7 +372,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toStrictEqual({ success: true })
+        expect(result).toEqual({ success: true })
         expect(mockEtherscanClient.test).toHaveBeenCalledWith()
       })
 
@@ -387,7 +387,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toStrictEqual({
+        expect(result).toEqual({
           success: false,
           error: 'API key not configured',
         })
@@ -417,7 +417,7 @@ describe('chainRouter', () => {
           chainId: 1,
         })
 
-        expect(result).toStrictEqual({ success: false, error: 'Error message' })
+        expect(result).toEqual({ success: false, error: 'Error message' })
       })
     })
   })

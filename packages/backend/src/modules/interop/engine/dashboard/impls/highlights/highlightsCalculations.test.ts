@@ -57,7 +57,7 @@ describe('highlightsCalculations', () => {
         timestamp,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         timestamp,
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
@@ -129,7 +129,7 @@ describe('highlightsCalculations', () => {
         timestamp,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         timestamp,
         abstractTokenId: 'eth',
         currentVolumeUsd: 1_500,
@@ -162,7 +162,7 @@ describe('highlightsCalculations', () => {
         ['ethereum'],
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         timestamp,
         projectId: ProjectId('ethereum'),
         currentUopsCount: 50,

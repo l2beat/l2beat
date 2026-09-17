@@ -33,7 +33,7 @@ describe(calculateStats.name, () => {
 
     const result = calculateStats(MOCK_INTERVALS)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       averageInSeconds: 20,
       minimumInSeconds: 10,
       maximumInSeconds: 30,

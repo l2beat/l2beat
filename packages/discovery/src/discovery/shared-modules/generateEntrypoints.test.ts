@@ -39,7 +39,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: false, keepLegacy: true },
     )
-    expect(result?.entrypoints).toStrictEqual(generated.entrypoints)
+    expect(result?.entrypoints).toEqual(generated.entrypoints)
   })
 
   it('skips generating entrypoints when updateOnly is true', () => {
@@ -51,7 +51,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: true, keepLegacy: true },
     )
-    expect(result?.entrypoints).toStrictEqual(undefined)
+    expect(result?.entrypoints).toEqual(undefined)
   })
 
   it('overwrites entrypoints when updateOnly is true and file exists, but keepLegacy is false', () => {
@@ -73,7 +73,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: true, keepLegacy: false },
     )
-    expect(result?.entrypoints).toStrictEqual(generated.entrypoints)
+    expect(result?.entrypoints).toEqual(generated.entrypoints)
   })
 
   it('keeps legacy entrypoints when keepLegacy is true, overwrites existing', () => {
@@ -104,7 +104,7 @@ describe(generateEntrypoints.name, () => {
       { updateOnly: true, keepLegacy: true },
     )
 
-    expect(result?.entrypoints).toStrictEqual({
+    expect(result?.entrypoints).toEqual({
       [ChainSpecificAddress.from('eth', '0x02')]: {
         ...entrypoint2,
         project: 'new value',
@@ -133,7 +133,7 @@ describe(generateEntrypoints.name, () => {
       { updateOnly: true, keepLegacy: true },
     )
 
-    expect(result?.entrypoints).toStrictEqual({
+    expect(result?.entrypoints).toEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         ...entrypoint1,
         isLegacy: true,
@@ -180,7 +180,7 @@ describe(generateEntrypointsForProject.name, () => {
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(result.entrypoints).toStrictEqual({
+    expect(result.entrypoints).toEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         name: 'Contract1',
         type: 'Contract',
@@ -243,7 +243,7 @@ describe(generateEntrypointsForProject.name, () => {
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(Object.keys(result.entrypoints)).toStrictEqual([
+    expect(Object.keys(result.entrypoints)).toEqual([
       ChainSpecificAddress.from('eth', '0x01'),
       ChainSpecificAddress.from('eth', '0x03'),
       ChainSpecificAddress.from('eth', '0x04'),
@@ -271,7 +271,7 @@ describe(generateEntrypointsForProject.name, () => {
 
     const result = generateEntrypointsForProject('project', configReader)
 
-    expect(result.entrypoints).toStrictEqual({
+    expect(result.entrypoints).toEqual({
       [ChainSpecificAddress.from('eth', '0x01')]: {
         name: 'LoneVerifier',
         type: 'Contract',

@@ -20,7 +20,7 @@ describe(buildProjectsDataPosted.name, () => {
       ),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({
+    expect(buildProjectsDataPosted(records, from, to)).toEqual({
       'project-a': {
         pastDay: 300,
         change: 1,
@@ -39,7 +39,7 @@ describe(buildProjectsDataPosted.name, () => {
       ),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({})
+    expect(buildProjectsDataPosted(records, from, to)).toEqual({})
   })
 
   it('includes records at the start and excludes records at the end', () => {
@@ -48,7 +48,7 @@ describe(buildProjectsDataPosted.name, () => {
       record('project-a', to, 200, 'ethereum'),
     ]
 
-    expect(buildProjectsDataPosted(records, from, to)).toStrictEqual({
+    expect(buildProjectsDataPosted(records, from, to)).toEqual({
       'project-a': {
         pastDay: 100,
         change: 0,

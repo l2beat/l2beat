@@ -61,7 +61,7 @@ describe(checkForEigenDA.name, () => {
     const provider = getProvider()
 
     const isUsingEigenDA = await checkForEigenDA(provider, invalidTransactions)
-    expect(isUsingEigenDA).toStrictEqual(false)
+    expect(isUsingEigenDA).toEqual(false)
   })
 
   it('should not throw if byte-check passes but we encounter malformed input', async () => {
@@ -96,7 +96,7 @@ describe(checkForEigenDA.name, () => {
     })
 
     const result = await checkForEigenDA(provider, v1Txs)
-    expect(result).toStrictEqual('v1')
+    expect(result).toEqual('v1')
   })
 
   it('should return v2 for v2 commitments', async () => {
@@ -105,7 +105,7 @@ describe(checkForEigenDA.name, () => {
     const provider = getProvider()
 
     const result = await checkForEigenDA(provider, v2Txs)
-    expect(result).toStrictEqual('v2')
+    expect(result).toEqual('v2')
   })
 
   it('should return v3 for v3 commitments', async () => {
@@ -114,7 +114,7 @@ describe(checkForEigenDA.name, () => {
     const provider = getProvider()
 
     const result = await checkForEigenDA(provider, v3Txs)
-    expect(result).toStrictEqual('v3')
+    expect(result).toEqual('v3')
   })
 })
 

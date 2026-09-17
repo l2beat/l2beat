@@ -28,7 +28,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getLatestSlotNumber()
 
-      expect(result).toStrictEqual(Number(mockSlotNumber))
+      expect(result).toEqual(Number(mockSlotNumber))
     })
   })
 
@@ -57,7 +57,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         number: 123,
         hash: 'EEnTYznmKb9S1k3kbE9qa7RabkUUj3Q49H1Yp4DfJq6C',
         timestamp: blockTime,
@@ -80,7 +80,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 
@@ -98,7 +98,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
 
-      expect(result).toStrictEqual({ timestamp: mockTime })
+      expect(result).toEqual({ timestamp: mockTime })
     })
 
     it('handles skipped slot error and tries previous slot', async () => {
@@ -120,7 +120,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
 
-      expect(result).toStrictEqual({ timestamp: mockTime })
+      expect(result).toEqual({ timestamp: mockTime })
     })
   })
 
@@ -134,7 +134,7 @@ describe(SvmRpcClient.name, () => {
 
       const result = await client.query('rpc_method', ['a', 1, true])
 
-      expect(result).toStrictEqual('data-returned-from-api')
+      expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
@@ -160,7 +160,7 @@ describe(SvmRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -169,7 +169,7 @@ describe(SvmRpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

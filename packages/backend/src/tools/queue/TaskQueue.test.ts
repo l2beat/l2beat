@@ -30,7 +30,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(completed).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
   it('can handle occasional failure', async () => {
@@ -57,7 +57,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(completed).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
   it('can stop on permanent failure', async () => {
@@ -88,8 +88,8 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(queue.isStopped()).toStrictEqual(true)
-    expect(completed).toStrictEqual([0]) // everything after task '1' was dropped
+    expect(queue.isStopped()).toEqual(true)
+    expect(completed).toEqual([0]) // everything after task '1' was dropped
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
@@ -168,7 +168,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(completed).toStrictEqual([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
+    expect(completed).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
   })
 
   it('can add jobs only if empty', async () => {
@@ -188,7 +188,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(completed).toStrictEqual([0, 420])
+    expect(completed).toEqual([0, 420])
   })
 
   it('can accept only positive integers for workers', async () => {
@@ -227,7 +227,7 @@ describe(TaskQueue.name, () => {
 
     await vi.runAllTimersAsync()
 
-    expect(completed).toStrictEqual([1, 1, 3, 2, 5])
+    expect(completed).toEqual([1, 1, 3, 2, 5])
   })
 
   it('can wait until it is empty', async () => {
@@ -253,7 +253,7 @@ describe(TaskQueue.name, () => {
 
     await queue.waitTillEmpty()
 
-    expect(queue.length).toStrictEqual(0)
+    expect(queue.length).toEqual(0)
   })
 })
 

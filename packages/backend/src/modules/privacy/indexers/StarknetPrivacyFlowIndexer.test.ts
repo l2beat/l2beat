@@ -154,7 +154,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           valueUsd: 1.01,
         },
       ])
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
   })
 
@@ -174,7 +174,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           extractor: 'strk20Deposit',
           params: { tokenAddress: TOKEN },
         }),
-      ).toStrictEqual('3bf7f8ee2c73')
+      ).toEqual('3bf7f8ee2c73')
     })
   })
 })

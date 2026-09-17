@@ -29,7 +29,7 @@ describe('CCIPOcr3Config', () => {
         'ba02061a01021a01ee',
     }
 
-    expect(CCIPOcr3Config.cast({}, config)).toStrictEqual({
+    expect(CCIPOcr3Config.cast({}, config)).toEqual({
       FRoleDON: 1,
       nodes: [
         {
@@ -60,7 +60,7 @@ describe('CCIPOcr3Config', () => {
       offchainConfig: '0x8a0206706565722d62',
     }
 
-    expect(CCIPOcr3Config.cast({}, config)).toStrictEqual({
+    expect(CCIPOcr3Config.cast({}, config)).toEqual({
       nodes: [{ p2pId: '0xbb' }, { p2pId: '0xaa' }],
       offchainConfig: { peerIds: ['peer-b'] },
     })

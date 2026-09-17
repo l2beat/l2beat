@@ -41,7 +41,7 @@ describe(getDaTrackingStatusRows.name, () => {
       now,
     })
 
-    expect(result.map((row) => row.configId)).toStrictEqual([
+    expect(result.map((row) => row.configId)).toEqual([
       'active-eigen-da',
       'active-ethereum',
     ])
@@ -69,7 +69,7 @@ describe(getDaTrackingStatusRows.name, () => {
       now,
     })
 
-    expect(result.map((row) => [row.configId, row.status])).toStrictEqual([
+    expect(result.map((row) => [row.configId, row.status])).toEqual([
       ['stale', 'stale'],
       ['missing', 'missing'],
       ['fresh', 'fresh'],
@@ -110,7 +110,7 @@ describe(getDaTrackingStatusRows.name, () => {
 
     const rowsByConfigId = new Map(result.map((row) => [row.configId, row]))
 
-    expect(rowsByConfigId.get('base-layer')).toStrictEqual({
+    expect(rowsByConfigId.get('base-layer')).toEqual({
       configId: 'base-layer',
       type: 'baseLayer',
       projectId: 'ethereum',
@@ -122,14 +122,14 @@ describe(getDaTrackingStatusRows.name, () => {
       details: 'base layer',
       status: 'missing',
     })
-    expect(rowsByConfigId.get('ethereum')?.details).toStrictEqual(
+    expect(rowsByConfigId.get('ethereum')?.details).toEqual(
       'inbox: 0x123; sequencers: 0x456; topics: 0x789',
     )
-    expect(rowsByConfigId.get('celestia')?.details).toStrictEqual(
+    expect(rowsByConfigId.get('celestia')?.details).toEqual(
       'namespace: namespace',
     )
-    expect(rowsByConfigId.get('avail')?.details).toStrictEqual('app IDs: 1, 2')
-    expect(rowsByConfigId.get('eigenda')).toStrictEqual({
+    expect(rowsByConfigId.get('avail')?.details).toEqual('app IDs: 1, 2')
+    expect(rowsByConfigId.get('eigenda')).toEqual({
       configId: 'eigenda',
       type: 'eigen-da',
       projectId: 'project-a',

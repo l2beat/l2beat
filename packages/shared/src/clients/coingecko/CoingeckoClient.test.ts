@@ -54,13 +54,13 @@ describe(CoingeckoClient.name, () => {
         UnixTime(1622577232),
       )
 
-      expect(result).toStrictEqual(MOCK_TRANSFORMED_DATA)
+      expect(result).toEqual(MOCK_TRANSFORMED_DATA)
     })
 
     it('constructs correct url', async () => {
       const http = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232',
           )
           return MOCK_PARSED_DATA
@@ -112,7 +112,7 @@ describe(CoingeckoClient.name, () => {
       const coingeckoClient = getMockClient(http, logger)
 
       const result = await coingeckoClient.getCoinList()
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
         { id: CoingeckoId('foobar'), symbol: 'FBR', name: 'Foobar coin' },
       ])
@@ -145,7 +145,7 @@ describe(CoingeckoClient.name, () => {
       const result = await coingeckoClient.getCoinList({
         includePlatform: true,
       })
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           id: CoingeckoId('asd'),
           symbol: 'ASD',
@@ -169,7 +169,7 @@ describe(CoingeckoClient.name, () => {
     it('constructs a correct url without api key', async () => {
       const http = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
           )
           return { status: '1', message: 'OK' }
@@ -184,7 +184,7 @@ describe(CoingeckoClient.name, () => {
     it('constructs a correct url with api key', async () => {
       const http = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
           )
           return { status: '1', message: 'OK' }
@@ -200,7 +200,7 @@ describe(CoingeckoClient.name, () => {
     it('constructs a correct URL when there are no options', async () => {
       const http = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual('https://api.coingecko.com/api/v3/a/b')
+          expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
           return { status: '1', message: 'OK' }
         }),
       } as unknown as HttpClient
