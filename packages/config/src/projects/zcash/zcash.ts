@@ -84,7 +84,6 @@ export const zcash: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.Plonk.Halo2,
-        // ZK_CATALOG_TAGS.Arithmetization.Plonkish,
         ZK_CATALOG_TAGS.PCS.IPA,
         ZK_CATALOG_TAGS.curve.Pallas,
         ZK_CATALOG_TAGS.curve.Vesta,

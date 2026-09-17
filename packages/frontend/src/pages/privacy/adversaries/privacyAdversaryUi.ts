@@ -2,7 +2,6 @@ import type {
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
   PrivacyExposure,
-  PrivacyField,
   PrivacyFieldExposure,
 } from '@l2beat/config'
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
@@ -29,19 +28,6 @@ export const EXPOSURE_TEXT_CLASS: Record<PrivacyExposure, string> = {
   atRisk: 'text-[#C9900E] dark:text-[#E7A63A]',
   exposed: 'text-[#C2413E] dark:text-[#F07670]',
   unverifiable: 'text-[#6A5DB5] dark:text-[#AA9DEA]',
-}
-
-/**
- * The field the dots grade, as the subtext under them. A noun phrase, not a
- * claim: the dots say how well the promise holds, so a caption asserting that
- * it does would contradict every yellow or red dot.
- */
-export const PRIVACY_PROMISE_LABEL: Record<PrivacyField, string> = {
-  sender: 'Sender privacy',
-  recipient: 'Recipient privacy',
-  amount: 'Amount privacy',
-  asset: 'Asset privacy',
-  linkage: 'Link privacy',
 }
 
 /** Title of the interior field chips; entry and exit are public and have none. */

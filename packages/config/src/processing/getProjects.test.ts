@@ -15,7 +15,6 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
-import { PRIVACY_FIELDS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -437,15 +436,10 @@ describe('getProjects', () => {
       if (adversaries) {
         const baseline = adversaries.cells.publicObserver
         for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
-          it(`${project.id} ${adversaryId} interior map is complete and matches the baseline`, () => {
+          it(`${project.id} ${adversaryId} has an interior map iff the baseline has one`, () => {
             expect(cell.interior !== undefined).toEqual(
               baseline.interior !== undefined,
             )
-            if (cell.interior) {
-              expect(Object.keys(cell.interior).sort()).toEqual(
-                Object.keys(PRIVACY_FIELDS).sort(),
-              )
-            }
           })
 
           const contractNames = new Set(

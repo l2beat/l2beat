@@ -18,7 +18,6 @@ import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import { PRIVACY_PROMISE_LABEL } from '../../adversaries/privacyAdversaryUi'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
@@ -72,7 +71,7 @@ export function PrivacyProjectRiskProfile({
                 href=""
               />
             }
-            label={PRIVACY_PROMISE_LABEL[adversaries.promise.protects]}
+            label={adversaries.promiseLabel}
             className="items-end md:items-start"
           />
         }

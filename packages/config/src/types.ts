@@ -1147,7 +1147,7 @@ export interface PrivacyCategory {
   description: string
 }
 
-// #region privacy adversaries (PoC)
+// #region privacy adversaries
 
 /**
  * Adversaries are defined by capability, never by identity. Real-world actors
@@ -1187,6 +1187,11 @@ export interface PrivacyFieldInfo {
   label: string
   /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
   subject: string
+  /**
+   * Caption under the dots that grade this field, e.g. "Link privacy". A noun
+   * phrase, not a claim: the dots say how well the promise holds.
+   */
+  promiseLabel: string
   description: string
 }
 
@@ -1285,6 +1290,13 @@ export interface PrivacyAdversariesConfig {
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 
+/** A field this adversary learns more about than the public observer. */
+export interface PrivacyAlsoExposed {
+  field: PrivacyField
+  /** This adversary's interior verdict for the field. */
+  exposure: PrivacyExposure
+}
+
 export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
   id: PrivacyAdversaryId
   /** Derived: "<promised subject> <state>", e.g. "Link private". */
@@ -1294,7 +1306,7 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
    * worse than the public observer's. Empty for the public observer itself,
    * whose leaks the promise text already describes.
    */
-  alsoExposed: PrivacyField[]
+  alsoExposed: PrivacyAlsoExposed[]
 }
 
 /**

@@ -10,15 +10,12 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
-import {
-  type PrivacyAdversariesSummary,
-  type PrivacyProject,
-  toPrivacyAdversariesSummary,
-} from './types'
+import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
 } from './utils/getPrivacyTrustedSetup'
+import { toPrivacyAdversariesSummary } from './utils/toPrivacyAdversariesSummary'
 
 export interface PrivacySummaryEntry {
   id: string

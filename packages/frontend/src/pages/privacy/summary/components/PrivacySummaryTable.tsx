@@ -28,10 +28,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import {
-  getPrivacyAdversaryRank,
-  PRIVACY_PROMISE_LABEL,
-} from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversaryRank } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
@@ -173,7 +170,7 @@ const columns = [
         return (
           <DotWithLabel
             dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={PRIVACY_PROMISE_LABEL[adversaries.promise.protects]}
+            label={adversaries.promiseLabel}
           />
         )
       },

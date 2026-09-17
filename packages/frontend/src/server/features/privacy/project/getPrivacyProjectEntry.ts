@@ -28,16 +28,13 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
-import {
-  type PrivacyAdversariesSummary,
-  type PrivacyRelayerStat,
-  toPrivacyAdversariesSummary,
-} from '../types'
+import type { PrivacyAdversariesSummary, PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { toPrivacyAdversariesSummary } from '../utils/toPrivacyAdversariesSummary'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId

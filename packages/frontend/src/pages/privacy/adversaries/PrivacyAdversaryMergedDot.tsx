@@ -10,7 +10,6 @@ import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import {
   getPrivacyAdversariesMergedSentiment,
   getPrivacyAdversaryTitle,
-  PRIVACY_PROMISE_LABEL,
 } from './privacyAdversaryUi'
 
 /** All adversaries folded into one dot; hover lists each of them. */
@@ -20,11 +19,10 @@ export function PrivacyAdversaryMergedDot({
   adversaries: PrivacyAdversariesSummary
 }) {
   const sentiment = getPrivacyAdversariesMergedSentiment(adversaries.cells)
-  const promiseLabel = PRIVACY_PROMISE_LABEL[adversaries.promise.protects]
   return (
     <Tooltip>
       <TooltipTrigger
-        aria-label={`${PRIVACY_ASSESSMENT.title}: ${promiseLabel}`}
+        aria-label={`${PRIVACY_ASSESSMENT.title}: ${adversaries.promiseLabel}`}
       >
         <TrustedSetupRiskDot
           risk={sentimentToRiskDot(sentiment)}
