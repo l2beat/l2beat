@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
-  "timestamp": 1782911432,
-  "configHash": "0x6cefe46b7e019ba7016d8763e8ebda1b6940ef00ae5ac31e2f82fb692a8041b3",
+  "timestamp": 1789554702,
+  "configHash": "0x0afb59e7a855d310cf7a8ad457e77a2ce4c7a6422a540f37c39a282c6687449b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -34,13 +34,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xb027aC13867839d2bFc236a824681F6BC083F2bD",
+        "anchorGame": "eth:0xA9a1dF06323f409807BaB7CdEE5f818E111474Fd",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x8dfcb2cd1724020cd446860642817df9da505340db72428f6e0ef3b1ea9e97e4",
-          63535105
+          "0xf681c29ce87f97b5fcf811d3989dd9f3c63e2da3b1b2a555e1565bf53823bcc2",
+          70477200
         ],
         "initVersion": 1,
         "paused": false,
@@ -132,7 +132,7 @@
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
         "symbol": "WETH",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "totalSupply": 3770000000000,
+        "totalSupply": 3550000000000,
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -550,7 +550,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 25432622
+          "prevBlockNum": 25985119
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -789,7 +789,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "FALLBACK_TIMEOUT": 31536000000,
         "FALLBACK_TIMEOUT_fmt": "1000y",
-        "getLastProposalTimestamp": 1782911423,
+        "getLastProposalTimestamp": 1789553639,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA",
         "proposers": ["eth:0xE43944421681170648E10007f73816e04F74394F"]
@@ -835,7 +835,7 @@
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
       "values": {
-        "$admin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
+        "$admin": "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee",
         "$implementation": "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50",
         "$pastUpgrades": [
           [
@@ -849,7 +849,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607",
-        "gameCount": 7423,
+        "gameCount": 11130,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -862,12 +862,12 @@
         "initBondGame42": 10000000000,
         "initBonds": [0, 10000000000, 0, 0, 0],
         "initVersion": 1,
-        "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
+        "owner": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
         "permissionedGameArgs": "0x",
         "permissionedGamesTotal": 5882,
         "proposerFromDGF": "UNRESOLVED",
-        "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
-        "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
+        "proxyAdmin": "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee",
+        "proxyAdminOwner": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
         "version": "1.3.0",
         "wethFromDGF": "UNRESOLVED"
       },
@@ -957,7 +957,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1003,6 +1003,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "description": "Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.",
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567071,
       "sinceBlock": 23668694,
@@ -1032,6 +1033,28 @@
         "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x8d7c41aa990234b2d7E064Df150A4228ed984648",
+      "sinceTimestamp": 1789439375,
+      "sinceBlock": 25979879,
+      "values": {
+        "$immutable": true,
+        "addressManager": "eth:0x0000000000000000000000000000000000000000",
+        "isUpgrading": false,
+        "owner": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      },
+      "implementationNames": {
+        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee": "ProxyAdmin"
+      }
     },
     {
       "name": "PermissionedDisputeGame",
@@ -1165,7 +1188,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620012",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620096",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1192,6 +1215,59 @@
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "TimelockController",
+      "address": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0x3d36d493b22d28ce536d4901653b65ba94a6a7389499578f0298434341ba8fbf"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control that owns the DisputeGameFactory and its ProxyAdmin. The current minimum delay is 1h. Proposals that passed their minimum delay can be executed by anyone.",
+      "deployerAddress": "eth:0x8d7c41aa990234b2d7E064Df150A4228ed984648",
+      "sinceTimestamp": 1789439375,
+      "sinceBlock": 25979879,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x0000000000000000000000000000000000000000"]
+          }
+        },
+        "Canceller": ["eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"],
+        "Executor": ["eth:0x0000000000000000000000000000000000000000"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 3600,
+        "getMinDelayFormatted": "1h",
+        "Proposer": ["eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "implementationNames": {
+        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": "TimelockController"
+      }
     }
   ],
   "abis": {
@@ -2002,6 +2078,27 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
     "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": [
       "constructor(uint256 _disputeGameFinalityDelaySeconds)",
       "error AnchorStateRegistry_InvalidAnchorGame()",
@@ -2152,6 +2249,53 @@
     "eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3": [
       "constructor(address _addressManager, string _implementationName)"
     ],
+    "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
     "eth:0xFbd06fCb2a023d89a7ae9BeE89d157C5264cf42b": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -2264,6 +2408,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13_opsuccinct": "0x4b5c1474b93eb86be962d34b95901ef506f1c0d486b52166ceb53cbaeb8a7a68",
@@ -2283,8 +2428,8 @@
     "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
-  "usedBlockNumbers": { "ethereum": 25437874 },
-  "permissionsConfigHash": "0x73ba427d62217ac58c3e9f3fddc2664ce0cff007b42c207aeadba6bacaa97605",
+  "usedBlockNumbers": { "ethereum": 25989455 },
+  "permissionsConfigHash": "0x38478f85543e0cc079c786be976eb95aa8c15897e0a7df5d5923e12fd9f141e2",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
@@ -2521,11 +2666,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
           "from": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
@@ -2622,12 +2762,48 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+              "delay": 3600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+              "delay": 3600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "upgrade",
@@ -2682,7 +2858,11 @@
           "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
           "role": "admin",
           "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+            { "address": "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee" },
+            {
+              "address": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+              "delay": 3600
+            }
           ]
         },
         {
@@ -2708,6 +2888,12 @@
           "permission": "act",
           "from": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
           "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+          "delay": 3600,
+          "role": ".Proposer"
         }
       ]
     },
@@ -2762,6 +2948,15 @@
         }
       ]
     },
+    "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": {
       "directlyReceivedPermissions": [
         {
@@ -2801,6 +2996,27 @@
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
         }
       ]
     },

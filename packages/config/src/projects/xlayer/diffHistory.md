@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x03512036c21a87b7e27c2ce6c1136d92ecb5af02
+
+# Diff at Wed, 16 Sep 2026 10:32:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1782911432
+- current timestamp: 1789554702
+
+## Description
+
+X Layer put the `DisputeGameFactory` behind a new 1h timelock. Standalone X Layer action; no other chain is involved.
+
+New `TimelockController` (`0xFa3A…52d6`, unmodified OpenZeppelin v5.7.0): minimum delay 1h, PROPOSER and CANCELLER roles held by the Xlayer Multisig (2/3), EXECUTOR open to anyone (`0x0`), DEFAULT_ADMIN held by the timelock itself.
+
+New `ProxyAdmin` (`0xE8b5…90Ee`) owned by the `TimelockController`; it administers only the `DisputeGameFactory`.
+
+`DisputeGameFactory`: proxy admin changed from `ProxyAdmin` `0x313c…FEE6` (owned by the Xlayer Multisig, no delay) to the new `ProxyAdmin`; `owner` changed from the unverified `OwnerContract` `0xe58C…9091` (a call forwarder owned by the single EOA `0x6eE7…C6aA`, itself a Xlayer Multisig signer) to the `TimelockController`.
+
+Net effect: upgrading the `DisputeGameFactory` or changing its game implementations and init bonds now needs a Xlayer Multisig proposal and a 1h wait (anyone can execute after the delay, the multisig can cancel). Before: upgrades were instant by the same multisig and game implementation changes instant by a single EOA. All other proxies (`OptimismPortal2`, `SystemConfig`, `L1StandardBridge`, `L1CrossDomainMessenger`, `AnchorStateRegistry`, `DelayedWETH`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`) stay under the old `ProxyAdmin` with no delay.
+
+Config: added the OpenZeppelin v5.7 shape to `global/TimelockController`; xlayer overrides give the Proposer an `act` permission carrying the timelock delay (open executor, same modelling as `orbitstack/Timelock`) and add the previously missing `DisputeGameFactory` `owner` permission.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.$admin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.owner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      values.proxyAdmin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.proxyAdminOwner:
+-        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+    }
+```
+
+```diff
+    contract Xlayer Multisig (eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.7.via.0.address:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      receivedPermissions.7.via.0.delay:
++        3600
+      receivedPermissions.7.via.0:
++        {"address":"eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600,"role":".Proposer"}
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
+    +++ description: Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6) [global/TimelockController]
+    +++ description: A timelock with access control that owns the DisputeGameFactory and its ProxyAdmin. The current minimum delay is 1h. Proposals that passed their minimum delay can be executed by anyone.
+```
+
+## Source code changes
+
+```diff
+...:0xE8b516B3Bf9A6593696462953d98991202f890Ee.sol |  427 +++++++
+ .../projects/xlayer/.flat/TimelockController.sol   | 1264 ++++++++++++++++++++
+ 2 files changed, 1691 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
+    +++ description: Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      description:
++        "Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner."
+    }
+```
+
 Generated with discovered.json: 0xac53ef861ad2799306a527c382b10ff422947a62
 
 # Diff at Mon, 07 Sep 2026 08:38:04 GMT:
