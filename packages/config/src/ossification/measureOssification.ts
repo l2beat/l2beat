@@ -26,8 +26,8 @@ export function measureOssification(
 
   const from = Math.max(input.now - RATE_WINDOW, input.observedSince)
   const windowSeconds = Math.max(input.now - from, RATE_WINDOW_MIN)
-  const clusteredEventCount = clusterStarts(timestamps).filter(
-    (start) => start >= from,
+  const clusteredEventCount = clusterStarts(
+    timestamps.filter((timestamp) => timestamp >= from),
   ).length
 
   return {

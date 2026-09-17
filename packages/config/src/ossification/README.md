@@ -120,9 +120,10 @@ in the discovery configuration.
 
 - `events`: reviewed changes anchored to their transaction, each on a
   perimeter contract (a change on an excluded Safe is attributed to the
-  contract the Safe controls). One replaces the mechanical event with the
-  same transaction, so a first upgrade that was a real change is listed here
-  as a code event. One naming `updateId` replaces the mechanical events of
+  contract the Safe controls). One replaces the mechanical event of its
+  contract with the same transaction, so a first upgrade that was a real
+  change is listed here as a code event. A transaction that upgraded several
+  contracts needs one event for each contract it replaces. One naming `updateId` replaces the mechanical events of
   that update for its contract with the precise time.
 - `ignoredTransactions`: `$pastUpgrades` transactions that did not change the
   contract.

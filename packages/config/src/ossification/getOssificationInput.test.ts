@@ -261,6 +261,34 @@ describe(getOssificationInput.name, () => {
         ['code', T0 + 30 * DAY],
       ])
     })
+
+    it('replaces only the reviewed contract when one transaction upgraded two', () => {
+      const input = derive({
+        entries: [
+          entry({ values: pastUpgrades([T0, TX_1], [RUN_1, TX_2]) }),
+          entry({
+            address: ChainSpecificAddress(ADDRESS_B),
+            name: 'B',
+            values: pastUpgrades([T0, TX_1], [RUN_1, TX_2]),
+          }),
+        ],
+        patch: patch({
+          events: [
+            {
+              timestamp: RUN_1,
+              type: 'state',
+              contract: ADDRESS_A,
+              transaction: TX_2,
+              reason: 'only a parameter change on A',
+            },
+          ],
+        }),
+      })
+      expect(rows(input)).toEqual([
+        ['A', RUN_1, 0, 1],
+        ['B', RUN_1, 1, 0],
+      ])
+    })
   })
 
   describe('diff history', () => {
@@ -274,6 +302,23 @@ describe(getOssificationInput.name, () => {
         ]),
       })
       expect(changes(input)).toEqual([['code', RUN_1 - DAY, RUN_1 - DAY, 'u1']])
+    })
+
+    it('keeps an appended upgrade a live sibling already recorded', () => {
+      const input = derive({
+        entries: [entry({ values: pastUpgrades([T0, TX_1], [RUN_1, TX_2]) })],
+        changes: [
+          ...update('u1', RUN_1 + DAY, T0, ADDRESS_B, [appended(RUN_1, TX_2)]),
+          ...update('u2', RUN_2, RUN_1 + DAY, ADDRESS_B, [
+            { status: 'deleted', template: 'x/B' },
+          ]),
+        ],
+        judgement: judgement({ 'x/B': true }),
+      })
+      expect(changes(input)).toEqual([
+        ['code', RUN_1, RUN_1, undefined],
+        ['code', RUN_1, RUN_1, 'u1'],
+      ])
     })
 
     it('falls back to implementation diffs for proxies without upgrade history', () => {
@@ -332,6 +377,22 @@ describe(getOssificationInput.name, () => {
       })
       expect(rows(input)).toEqual([['A', T0, 0, 0]])
       expect(changes(input)).toEqual([['code', RUN_1, T0, 'u1']])
+    })
+
+    it('keeps the creation of a retired contract as a reset', () => {
+      const input = derive({
+        changes: [
+          ...update('u1', RUN_1, T0, ADDRESS_B, [
+            { status: 'created', template: 'x/B' },
+          ]),
+          ...update('u2', RUN_2, RUN_1, ADDRESS_B, [
+            { status: 'deleted', template: 'x/B' },
+          ]),
+        ],
+        judgement: judgement({ 'x/B': true }),
+      })
+      expect(input?.resets).toEqual([T0, RUN_1])
+      expect(input?.observedSince).toEqual(T0)
     })
 
     it('takes the latest deletion time and any template a deletion carried', () => {

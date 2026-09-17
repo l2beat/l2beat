@@ -59,6 +59,10 @@ interface MemberEvent {
 }
 
 const key = (address: string) => address.toLowerCase()
+const upgradeKey = (contract: string, transaction: string | undefined) =>
+  transaction === undefined
+    ? undefined
+    : `${key(contract)} ${transaction.toLowerCase()}`
 
 export function getOssificationInput(
   sources: OssificationSources,
@@ -154,7 +158,7 @@ function getObservedSince(
 function getPerimeter(sources: OssificationSources): Map<string, Member> {
   const overrides = new Map(sources.overrides.map((o) => [key(o.address), o]))
   const ignored = new Set(sources.patch.ignoredTransactions.map(key))
-  const reviewed = new Set(sources.patch.events.map((e) => key(e.transaction)))
+  const reviewed = reviewedUpgrades(sources.patch)
   const members = new Map<string, Member>()
 
   for (const entry of sources.entries) {
@@ -171,7 +175,8 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
       .filter((u) => until === undefined || u.timestamp <= until)
     const first = upgrades.at(0)
     const initialization =
-      first !== undefined && !has(reviewed, first.transaction)
+      first !== undefined &&
+      !has(reviewed, upgradeKey(address, first.transaction))
         ? first
         : undefined
     members.set(key(address), {
@@ -205,10 +210,16 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
     const flag = sources.judgement.critical(address, deletion.template)
     if (flag === undefined) continue
     const { since, until } = bounds(flag)
+    const created = sources.changes.filter(
+      (change) =>
+        change.status === 'created' &&
+        key(change.address.toString()) === address,
+    )
     members.set(address, {
       address,
       name: address,
       isVerified: true,
+      deployedAt: earliest(...created.map((change) => change.timestamp)),
       since,
       until: until ?? deletion.timestamp,
       upgrades: [],
@@ -259,47 +270,57 @@ function getEvents(
       updateId: event.updateId,
     }
   })
-  const reviewedTransactions = transactions(reviewed)
-  const upgrades = getUpgradeEvents(members).filter(
-    (event) => !has(reviewedTransactions, event.transaction),
-  )
+  const upgrades = getUpgradeEvents(members, reviewedUpgrades(sources.patch))
   const withHistory = [...members.values()].filter(
     (m) => m.initialization !== undefined || m.upgrades.length > 0,
   )
-  const knownTransactions = new Set([
-    ...sources.patch.ignoredTransactions.map(key),
-    ...reviewedTransactions,
-    ...withHistory
-      .flatMap((m) => [m.initialization, ...m.upgrades])
-      .map((u) => u?.transaction)
-      .filter(notUndefined),
+  const knownUpgrades = new Set([
+    ...reviewedUpgrades(sources.patch),
+    ...withHistory.flatMap((m) =>
+      [m.initialization, ...m.upgrades]
+        .filter(notUndefined)
+        .map((u) => upgradeKey(m.address, u.transaction))
+        .filter(notUndefined),
+    ),
   ])
   const upgradeCovered = new Set(withHistory.map((m) => key(m.address)))
   return [
     ...upgrades,
     ...getDiffHistoryEvents(sources, members, reviewed, {
-      knownTransactions,
+      knownUpgrades,
       upgradeCovered,
     }),
     ...reviewed,
   ]
 }
 
-const transactions = (events: MemberEvent[]) =>
-  new Set(events.map((event) => event.transaction).filter(notUndefined))
 const has = (set: ReadonlySet<string>, transaction: string | undefined) =>
   transaction !== undefined && set.has(transaction)
+const reviewedUpgrades = (patch: OssificationPatch) =>
+  new Set(
+    patch.events
+      .map((e) => upgradeKey(e.contract, e.transaction))
+      .filter(notUndefined),
+  )
 
-function getUpgradeEvents(members: Map<string, Member>): MemberEvent[] {
+function getUpgradeEvents(
+  members: Map<string, Member>,
+  reviewedUpgrades: ReadonlySet<string>,
+): MemberEvent[] {
   return [...members.values()].flatMap((member) =>
-    member.upgrades.map((upgrade) => ({
-      type: 'code' as const,
-      timestamp: upgrade.timestamp,
-      earliest: upgrade.timestamp,
-      contract: key(member.address),
-      reviewed: false,
-      transaction: upgrade.transaction,
-    })),
+    member.upgrades
+      .filter(
+        (u) =>
+          !has(reviewedUpgrades, upgradeKey(member.address, u.transaction)),
+      )
+      .map((upgrade) => ({
+        type: 'code' as const,
+        timestamp: upgrade.timestamp,
+        earliest: upgrade.timestamp,
+        contract: key(member.address),
+        reviewed: false,
+        transaction: upgrade.transaction,
+      })),
   )
 }
 
@@ -308,7 +329,7 @@ function getDiffHistoryEvents(
   members: Map<string, Member>,
   reviewed: MemberEvent[],
   context: {
-    knownTransactions: ReadonlySet<string>
+    knownUpgrades: ReadonlySet<string>
     upgradeCovered: ReadonlySet<string>
   },
 ): MemberEvent[] {
@@ -318,12 +339,17 @@ function getDiffHistoryEvents(
     ),
   )
   const ignoredUpdates = new Set(sources.patch.ignoredUpdates)
+  const ignoredTransactions = new Set(
+    sources.patch.ignoredTransactions.map(key),
+  )
   const blockKey = (change: DiffHistoryChange) =>
     `${change.entryId} ${key(change.address.toString())}`
 
   const relevant = sources.changes.filter(
     (change) =>
-      !ignoredUpdates.has(change.entryId) && !superseded.has(blockKey(change)),
+      !ignoredUpdates.has(change.entryId) &&
+      !superseded.has(blockKey(change)) &&
+      !has(ignoredTransactions, change.upgrade?.transaction),
   )
   const blocks = new Map<string, DiffHistoryChange[]>()
   for (const change of relevant) {
@@ -345,7 +371,7 @@ function getBlockEvents(
   block: DiffHistoryChange[],
   judgement: OssificationJudgement,
   context: {
-    knownTransactions: ReadonlySet<string>
+    knownUpgrades: ReadonlySet<string>
     upgradeCovered: ReadonlySet<string>
   },
 ): MemberEvent[] {
@@ -355,7 +381,10 @@ function getBlockEvents(
 
   const appended = block.flatMap((change) => change.upgrade ?? [])
   const events: MemberEvent[] = appended
-    .filter((upgrade) => !context.knownTransactions.has(upgrade.transaction))
+    .filter(
+      (upgrade) =>
+        !has(context.knownUpgrades, upgradeKey(contract, upgrade.transaction)),
+    )
     .map((upgrade) => ({
       ...base,
       type: 'code',

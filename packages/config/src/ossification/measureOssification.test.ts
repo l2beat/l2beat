@@ -118,6 +118,16 @@ describe(measureOssification.name, () => {
     expect(result?.criticalChangesPerYear).toEqual(1)
   })
 
+  it('counts a change just inside the window even when one just outside precedes it', () => {
+    const result = measureOssification(
+      input({
+        observedSince: NOW - YEAR,
+        changes: [change(NOW - YEAR - HOUR), change(NOW - YEAR + HOUR)],
+      }),
+    )
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
   it('never divides by less than thirty days', () => {
     const result = measureOssification(
       input({ observedSince: NOW - DAY, changes: [change(NOW - HOUR)] }),
