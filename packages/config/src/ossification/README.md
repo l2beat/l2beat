@@ -123,10 +123,13 @@ in the discovery configuration.
   contract the Safe controls). One replaces the mechanical event of its
   contract with the same transaction, so a first upgrade that was a real
   change is listed here as a code event. A transaction that upgraded several
-  contracts needs one event for each contract it replaces. One naming `updateId` replaces the mechanical events of
-  that update for its contract with the precise time.
+  contracts needs one event for each contract it replaces. One naming
+  `updateId` replaces the mechanical events of that update for its contract
+  with the precise time.
 - `ignoredTransactions`: `$pastUpgrades` transactions that did not change the
-  contract.
+  contract. The list applies to every perimeter contract the transaction
+  touched. If one transaction was a no-op on one contract and a real upgrade
+  on another, research will tell us, and the entries can then name a contract.
 - `ignoredUpdates`: `diffHistory.md` entries that came from a discovery bug.
 - `acceptedIntervals`: `diffHistory.md` entries with an interval time that can
   remain the newest change.
