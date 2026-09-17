@@ -6,7 +6,7 @@
   "explorer": "https://sepolia.easscan.org",
   "schema": "string[] projectIds,uint64 reviewedAt,uint32 revision",
   "schemaUid": "0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb",
-  "attester": "0xb55D684Be25227b722a007F6bB8AA706ca18BdDA",
+  "attester": "0xbcf4c182649899cF47963c95c73B3D5C6169f9e9",
   "live": [
     {
       "uid": "0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d",
@@ -22,6 +22,15 @@
       ],
       "txHash": "0x70efd2da37e8f291fc74ccb1a7b72afe9243ee6b46105027c732d9c04c66aefd",
       "block": 11521266
+    },
+    {
+      "uid": "0x5582590e7642df9b18cd7706cf0655330f7830f496cbbf115c7853284034a3e1",
+      "schema": "0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb",
+      "revision": 4,
+      "reviewedAt": 1789652905,
+      "projectIds": ["ethscriptions", "tornado-cash", "umbra", "uniswapv3"],
+      "txHash": "0xe689dda2ed323197069adbd43b309e615e98a322fc9bcecfdbc44e155f9c31b7",
+      "block": 11724138
     }
   ],
   "revoked": [
