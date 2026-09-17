@@ -8,7 +8,7 @@ Note that the proven (L1-verified) Starknet OS only checks that submitted proof 
 The protocol supports private transfers, arbitrary amounts, partial withdrawals through private change notes, and DeFi actions through external helper contracts. DeFi integrations use open notes: the pool creates a note whose final amount is filled after an external helper, such as a swap or lending adapter, measures the onchain output.
 
 ### Fees
-The pool currently charges a flat fee of 4 STRK plus gas for any action that uses the privacy pool, including deposits, swaps, and withdrawals.
+The pool currently charges a flat fee of 6 STRK plus gas for any action that uses the privacy pool, including deposits, swaps, and withdrawals.
 
 ### Compliance
 The compliance model relies on an 'auditor' public key. Users register an encrypted private viewing key, but all 'private' actions must include auditor-encrypted metadata. Whoever controls the auditor private key can decrypt user metadata offchain from onchain-emitted cyphertexts; this does not grant spending authority, but it can centrally remove any user's privacy, even retroactively.

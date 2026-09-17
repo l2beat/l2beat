@@ -5,6 +5,7 @@ import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscov
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { fluidkeyAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('fluidkey')
 
@@ -66,12 +67,7 @@ export const fluidkey: BaseProject = {
       description:
         'The production web wallet is closed source and cannot be self-hosted. The published derivation code and recovery client can nevertheless be used to derive keys, verify service-generated receiving addresses, and recover funds independently. A local client can also register and authenticate through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
     },
-    privacy: {
-      value: 'Admin view key',
-      sentiment: 'bad',
-      description:
-        'Fluidkey holds a private, per-account viewing capability that lets its service derive and link the stealth addresses generated for that account.',
-    },
+    adversaries: fluidkeyAdversaries,
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,
