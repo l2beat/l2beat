@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -14,6 +15,7 @@ import {
 } from '~/components/core/Drawer'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { cn } from '~/utils/cn'
 import { getUnconnectedIds } from './graphSelectors'
 import { RelationsDetails } from './RelationsDetails'
 import { RelationsDiagram } from './RelationsDiagram'
@@ -61,8 +63,12 @@ export function TokenRelationsGraphView({
       onClose={() => setSelectedNodeId(undefined)}
     />
   )
-  const diagram = (className: string, onExpand?: () => void) => (
-    <div className="relative">
+  const diagram = (
+    className: string,
+    onExpand?: () => void,
+    wrapperClassName?: string,
+  ) => (
+    <div className={cn('relative', wrapperClassName)}>
       <RelationsDiagram
         graph={visibleGraph}
         unconnectedIds={unconnectedIds}
@@ -121,12 +127,14 @@ export function TokenRelationsGraphView({
       )}
 
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="max-w-[min(1400px,95vw)] bg-surface-primary">
-          <DialogTitle>Onchain deployments</DialogTitle>
+        <DialogContent className="inset-0 flex h-dvh w-screen max-w-none translate-x-0 translate-y-0 flex-col gap-3 rounded-none border-0 bg-surface-primary p-4 md:rounded-none">
+          <DialogTitle className="pr-8">Onchain deployments</DialogTitle>
           <DialogDescription className="sr-only">
-            A larger view of which deployments of this token back which others.
+            A full-screen view of which deployments of this token back which
+            others.
           </DialogDescription>
-          {diagram('h-[min(75vh,900px)]')}
+          <DialogClose />
+          {diagram('h-full', undefined, 'min-h-0 flex-1')}
         </DialogContent>
       </Dialog>
     </div>

@@ -1,7 +1,4 @@
-import type {
-  InteropBridgeType,
-  KnownInteropBridgeType,
-} from '@l2beat/shared-pure'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import type {
   Expression,
   ExpressionBuilder,
@@ -50,12 +47,6 @@ export type TokenRelationRecord = {
 }
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
-
-export interface MintingPluginRecord extends DeployedTokenPrimaryKey {
-  plugin: string
-  bridgeType: KnownInteropBridgeType
-  relatedChain: string
-}
 
 // The identity and role columns come back re-derived, so their literal types
 // widen; anything else the caller passed in (e.g. `transfer`) is preserved.
@@ -119,6 +110,25 @@ export function normalizeTokenRelation<T extends TokenRelationRoute>(
           ? 'B'
           : 'A',
   }
+}
+
+/**
+ * Whether the relation's `slot` endpoint is minted there: a `burnAndMint` pair
+ * mints on both endpoints, a `lockAndMint` pair on the one opposite the locked
+ * one, and a `lockAndMint` pair with no identified locked endpoint on neither.
+ *
+ * Mirrors the SQL predicate the repository uses in `getMintingPluginsFor`;
+ * keep the two in step.
+ */
+export function isMintedAtEndpoint<
+  T extends Pick<TokenRelationRoute, 'bridgeType' | 'lockedToken'>,
+>(
+  relation: T,
+  slot: 'A' | 'B',
+): relation is T & { bridgeType: 'burnAndMint' | 'lockAndMint' } {
+  if (relation.bridgeType === 'burnAndMint') return true
+  if (relation.bridgeType !== 'lockAndMint') return false
+  return relation.lockedToken !== null && relation.lockedToken !== slot
 }
 
 // Same order as the table's `CHECK` constraint, which compares the endpoints as
@@ -288,14 +298,13 @@ export class TokenRelationRepository extends BaseRepository {
     return rows.map(toRoute)
   }
 
-  /** Relations with both endpoints in the set, without the transfer evidence. */
-  async getRoutesBetween(
+  /** Relations with either endpoint in the set, without the transfer evidence. */
+  async getRelationsTouching(
     tokens: DeployedTokenPrimaryKey[],
   ): Promise<TokenRelationRoute[]> {
     if (tokens.length === 0) return []
 
-    // A token has a few dozen deployments at most, so no batching is needed —
-    // and a "both endpoints" condition could not be split across batches anyway.
+    // A token has a few dozen deployments at most, so no batching is needed.
     const endpoints = tokens.map((token) => ({
       chain: token.chain,
       address: token.address.toLowerCase(),
@@ -304,20 +313,15 @@ export class TokenRelationRepository extends BaseRepository {
       .selectFrom('TokenRelation')
       .select(ROUTE_COLUMNS)
       .where((eb) =>
-        eb(
-          eb.refTuple('tokenAChain', 'tokenAAddress'),
-          'in',
-          endpoints.map((endpoint) =>
-            eb.tuple(endpoint.chain, endpoint.address),
-          ),
-        ),
-      )
-      .where((eb) =>
-        eb(
-          eb.refTuple('tokenBChain', 'tokenBAddress'),
-          'in',
-          endpoints.map((endpoint) =>
-            eb.tuple(endpoint.chain, endpoint.address),
+        eb.or(
+          (['A', 'B'] as const).map((slot) =>
+            eb(
+              eb.refTuple(`token${slot}Chain`, `token${slot}Address`),
+              'in',
+              endpoints.map((endpoint) =>
+                eb.tuple(endpoint.chain, endpoint.address),
+              ),
+            ),
           ),
         ),
       )
@@ -394,66 +398,6 @@ export class TokenRelationRepository extends BaseRepository {
       .execute()
 
     return rows.map((row) => row.plugin)
-  }
-
-  /**
-   * Distinct records, in no particular order. Input addresses are matched
-   * case-insensitively; returned addresses are as stored (lowercase), so
-   * group results by lowercased address, not by comparing against the input.
-   */
-  async getMintingPluginsForMany(
-    tokens: DeployedTokenPrimaryKey[],
-  ): Promise<MintingPluginRecord[]> {
-    // The UNION dedupes rows within a query, so deduping the input is all it
-    // takes for the result to be distinct overall.
-    const uniqueTokens = [
-      ...new Map(
-        tokens.map((token) => {
-          const normalized = {
-            chain: token.chain,
-            address: token.address.toLowerCase(),
-          }
-          return [`${normalized.chain}|${normalized.address}`, normalized]
-        }),
-      ).values(),
-    ]
-
-    const result: MintingPluginRecord[] = []
-    await this.batch(uniqueTokens, BATCH_SIZE, async (batch) => {
-      const mintedAt = (slot: 'A' | 'B') => {
-        const otherSlot = slot === 'A' ? 'B' : 'A'
-        return this.db
-          .selectFrom('TokenRelation')
-          .select([
-            `token${slot}Chain as chain` as const,
-            `token${slot}Address as address` as const,
-            `token${otherSlot}Chain as relatedChain` as const,
-            'plugin',
-            'bridgeType',
-          ])
-          .where((eb) =>
-            eb(
-              eb.refTuple(`token${slot}Chain`, `token${slot}Address`),
-              'in',
-              batch.map((token) => eb.tuple(token.chain, token.address)),
-            ),
-          )
-          .where((eb) => this.mintedAtEndpoint(eb, slot))
-      }
-
-      const rows = await mintedAt('A').union(mintedAt('B')).execute()
-      for (const row of rows) {
-        result.push({
-          chain: row.chain,
-          address: row.address,
-          plugin: row.plugin,
-          bridgeType: row.bridgeType as KnownInteropBridgeType,
-          relatedChain: row.relatedChain,
-        })
-      }
-    })
-
-    return result
   }
 
   // The relation's `slot` endpoint is minted there: a burnAndMint pair mints
