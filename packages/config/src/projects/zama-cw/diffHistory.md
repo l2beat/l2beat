@@ -1,3 +1,883 @@
+Generated with discovered.json: 0x5dd5072e2933eb2f4ded246bcdf34f3024d4a4f5
+
+# Diff at Thu, 17 Sep 2026 07:51:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@29bb658c1f188155aabbf6fea3ed820572bfd55f block: 1787834146
+- current timestamp: 1789631397
+
+## Description
+
+Add 17 new confidential wrappers (WBTC, AUSD, PENDLE and 14 Morpho vault shares)
+
+## Watched changes
+
+```diff
+    contract ConfidentialSteakUSDTWrapper (eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789152239
+      sinceBlock:
++        25956032
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:43:59.000Z","0xe9f33dc7a110fea67894ef7f3ef9254918eaabeb7ad01facde7cefb240395b4d",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x34822f7ff3c28eeffe2100070c17282c346ff85a1dff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000beef003c68896c7d2c3c60d363e8d71a49ab2bf9000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000016436f6e666964656e7469616c20737465616b5553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000a63737465616b555344540000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ab646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b55534454222c2273796d626f6c223a2263737465616b55534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b5553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential steakUSDT\",\"symbol\":\"csteakUSDT\",\"description\":\"Confidential wrapper of steakUSDT shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":14680995207,"maxTotalSupply":"18446744073709551615","name":"Confidential steakUSDT","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"csteakUSDT","underlying":"eth:0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialArmUSDCpWrapper (eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789150751
+      sinceBlock:
++        25955908
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:19:11.000Z","0xd55cc3a9346ae5156efdfbbb3d628e8d93de08f419e3f0ec55ae90bde92e28c0",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x644c44341fb497f2c95372332a363de4c13716dae4ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a00000000000000000000000005dc53a23adc9f2bed98de6f59f7f309a7c71ff2b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c2061726d5553444370000000000000000000000000000000000000000000000000000000000000000000000000000000000000096361726d5553444370000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2061726d5553444370222c2273796d626f6c223a226361726d5553444370222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662061726d555344437020736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential armUSDCp\",\"symbol\":\"carmUSDCp\",\"description\":\"Confidential wrapper of armUSDCp shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":44322139,"maxTotalSupply":"18446744073709551615","name":"Confidential armUSDCp","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"carmUSDCp","underlying":"eth:0x5dc53a23AdC9f2Bed98de6F59F7F309a7c71FF2B","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialRoxUSDCyWrapper (eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789154375
+      sinceBlock:
++        25956208
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T19:19:35.000Z","0x7a7eadb1e667732e52a0064b3a1f253a562fb35d34d1bc96663bbdf0f95a8f1a",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x1e6c1758ea30006c2f61217e9871a6078eabde730dff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000e0181090c22579b6a217f1522cbf8c9f1f0c1965000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c20726f7855534443790000000000000000000000000000000000000000000000000000000000000000000000000000000000000963726f785553444379000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20726f785553444379222c2273796d626f6c223a2263726f785553444379222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620726f78555344437920736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential roxUSDCy\",\"symbol\":\"croxUSDCy\",\"description\":\"Confidential wrapper of roxUSDCy shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":2439415333,"maxTotalSupply":"18446744073709551615","name":"Confidential roxUSDCy","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"croxUSDCy","underlying":"eth:0xE0181090c22579B6A217f1522cbf8c9f1F0C1965","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialBbqUSDCWrapper (eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789153067
+      sinceBlock:
++        25956100
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:57:47.000Z","0x889469791190aaf6a60a02c423bd1080bf1dd4bfb768f778521e3ca927690d59",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x758c540d42b12937c09fd38fa132bee98db9dd9d0eff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000beeff2c5bf38f90e3482a8b19f12e5a6d2fca757000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000014436f6e666964656e7469616c20626271555344430000000000000000000000000000000000000000000000000000000000000000000000000000000000000008636262715553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a5646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2062627155534443222c2273796d626f6c223a226362627155534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66206262715553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential bbqUSDC\",\"symbol\":\"cbbqUSDC\",\"description\":\"Confidential wrapper of bbqUSDC shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":1956111260,"maxTotalSupply":"18446744073709551615","name":"Confidential bbqUSDC","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cbbqUSDC","underlying":"eth:0xbeeff2C5bF38f90e3482a8b19F12E5a6D2FCa757","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialArmUSDTpWrapper (eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789153331
+      sinceBlock:
++        25956122
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T19:02:11.000Z","0x46e9abc4237bb9560dc0595f6f18dd84cc984a09adfac882e44c84b37fcb23f0",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x560fcb18c119c407d71736cdabda00a98dc7b5307bff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000bf29043164660c60a2a72cd15ffe2304e87b6838000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c2061726d5553445470000000000000000000000000000000000000000000000000000000000000000000000000000000000000096361726d5553445470000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2061726d5553445470222c2273796d626f6c223a226361726d5553445470222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662061726d555344547020736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential armUSDTp\",\"symbol\":\"carmUSDTp\",\"description\":\"Confidential wrapper of armUSDTp shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":18928591,"maxTotalSupply":"18446744073709551615","name":"Confidential armUSDTp","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"carmUSDTp","underlying":"eth:0xBf29043164660C60A2a72Cd15FFe2304e87B6838","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialFAUSDeWrapper (eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789148387
+      sinceBlock:
++        25955712
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T17:39:47.000Z","0x7eef71a0892e61b5b1db77cc9443cf2951497ef28c483823b22b69bf623c5f24",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x2f395b4b3182fbeb1513ac72de45fd8382496e4788ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000032401b9fb79065bc15949de0bd43927492f02f0c000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000013436f6e666964656e7469616c20664155534465000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007636641555344650000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a2646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20664155534465222c2273796d626f6c223a2263664155534465222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662066415553446520736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential fAUSDe\",\"symbol\":\"cfAUSDe\",\"description\":\"Confidential wrapper of fAUSDe shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":120155535,"maxTotalSupply":"18446744073709551615","name":"Confidential fAUSDe","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cfAUSDe","underlying":"eth:0x32401B9fb79065Bc15949DE0BD43927492f02F0C","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialArmUSDCsWrapper (eth:0x77F8207ee451441336538bA07a2F425780dED8DB) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789151411
+      sinceBlock:
++        25955963
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:30:11.000Z","0x96d24e2718e693259e6f30d476fc2a1157018ee8b4978f224807e2ecb06f6c56",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x04eede51a52f5c474b858c4dec93e3f8ddb87fba80ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000a2eaad0d586cf9fd73bb2c09cf6a7e3e187d68cd000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c2061726d5553444373000000000000000000000000000000000000000000000000000000000000000000000000000000000000096361726d5553444373000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2061726d5553444373222c2273796d626f6c223a226361726d5553444373222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662061726d555344437320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential armUSDCs\",\"symbol\":\"carmUSDCs\",\"description\":\"Confidential wrapper of armUSDCs shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":48148590,"maxTotalSupply":"18446744073709551615","name":"Confidential armUSDCs","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"carmUSDCs","underlying":"eth:0xA2EAaD0D586cF9FD73bb2c09cF6A7E3e187D68cd","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x77F8207ee451441336538bA07a2F425780dED8DB":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialBbqUSDTWrapper (eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789152695
+      sinceBlock:
++        25956070
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:51:35.000Z","0x015d053c281a8ebb13d7170b1f91cdbac616e0aff901335a9cdb542dd15137dd",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x4c174f25773bdd4f4283b52e5a6e86343af1338f0fff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000beeff07d991c04cd640de9f15c08ba59c4fedeb7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000014436f6e666964656e7469616c20626271555344540000000000000000000000000000000000000000000000000000000000000000000000000000000000000008636262715553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a5646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2062627155534454222c2273796d626f6c223a226362627155534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66206262715553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential bbqUSDT\",\"symbol\":\"cbbqUSDT\",\"description\":\"Confidential wrapper of bbqUSDT shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":528600765,"maxTotalSupply":"18446744073709551615","name":"Confidential bbqUSDT","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cbbqUSDT","underlying":"eth:0xbeeff07d991C04CD640DE9F15C08ba59c4FEDEb7","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialPENDLEWrapper (eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789150991
+      sinceBlock:
++        25955928
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:23:11.000Z","0x81bc67cd541d90df6904fd05608b64880b98be74fb5c1c0f5e4f17a0ec779561",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xba6c9ebe37b031712a8c7bc4ad41ca77a160d6ab93ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000808507121b80c02388fad14726482e061b8da827000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000013436f6e666964656e7469616c2050454e444c450000000000000000000000000000000000000000000000000000000000000000000000000000000000000000076350454e444c450000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a2646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2050454e444c45222c2273796d626f6c223a226350454e444c45222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662050454e444c4520736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential PENDLE\",\"symbol\":\"cPENDLE\",\"description\":\"Confidential wrapper of PENDLE shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":22973360000,"maxTotalSupply":"18446744073709551615","name":"Confidential PENDLE","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cPENDLE","underlying":"eth:0x808507121B80c02388fAd14726482e061B8da827","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Safe (eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x8a686b039c0323e990Be80991a16bdaAb78113AC"
++        "eth:0xFd23FcEFC76B5fCe924d0D460D9AE4a0e1CF0B99"
+    }
+```
+
+```diff
+    contract ConfidentialPAPYWrapper (eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789151975
+      sinceBlock:
++        25956010
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:39:35.000Z","0xeb2532285d2ac5d8939481a8bfa78ddd8fc0418d031cfc525d97bf7201939a66",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x2982980665e6d3df2f508ec3225920cf36877b15caff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000b344e331a3cda61d329fb3cca2be5942da87c418000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef300000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205041505900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056350415059000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2050415059222c2273796d626f6c223a226350415059222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205041505920736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential PAPY\",\"symbol\":\"cPAPY\",\"description\":\"Confidential wrapper of PAPY shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":310251261912,"maxTotalSupply":"18446744073709551615","name":"Confidential PAPY","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cPAPY","underlying":"eth:0xB344e331A3cDa61D329fb3Cca2Be5942da87c418","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialFcUSDTWrapper (eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789388567
+      sinceBlock:
++        25975670
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-14T12:22:47.000Z","0xac60b0c2440232297fb1e4b7aabe445e32b69cc56d0d7be02bef6f4bba219ff9",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xa7bea747da47fb3d7e6e2afda103a240e2e974e913ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000b48c056c5608ba2ee4cd94af2bf4b1f25295bd7e000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000013436f6e666964656e7469616c20666355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007636663555344540000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a2646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20666355534454222c2273796d626f6c223a2263666355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662066635553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential fcUSDT\",\"symbol\":\"cfcUSDT\",\"description\":\"Confidential wrapper of fcUSDT shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":1680592832924,"maxTotalSupply":"18446744073709551615","name":"Confidential fcUSDT","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cfcUSDT","underlying":"eth:0xb48C056C5608bA2Ee4cD94AF2bF4b1F25295Bd7e","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialRoxcUSDCWrapper (eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789153955
+      sinceBlock:
++        25956174
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T19:12:35.000Z","0x3ef21251bb814e05e1ad9812ad70d000318e223d8655c395944d1ca345984f7a",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xf3c25fec6e0e39fa9bb6dafe9cbc5e21e3da59e23dff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000c207d3f66537d7f66456808379a0e560cf20da36000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c20726f7863555344430000000000000000000000000000000000000000000000000000000000000000000000000000000000000963726f786355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20726f786355534443222c2273796d626f6c223a2263726f786355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620726f78635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential roxcUSDC\",\"symbol\":\"croxcUSDC\",\"description\":\"Confidential wrapper of roxcUSDC shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":7942254635408,"maxTotalSupply":"18446744073709551615","name":"Confidential roxcUSDC","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"croxcUSDC","underlying":"eth:0xc207d3f66537D7F66456808379A0E560cF20Da36","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract DAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.11:
++        {"permission":"interact","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.15:
++        {"permission":"interact","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.16:
++        {"permission":"interact","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.17:
++        {"permission":"interact","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.20:
++        {"permission":"interact","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.24:
++        {"permission":"interact","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.26:
++        {"permission":"interact","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.31:
++        {"permission":"interact","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.36:
++        {"permission":"interact","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.39:
++        {"permission":"interact","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.40:
++        {"permission":"upgrade","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","role":"admin"}
+      directlyReceivedPermissions.41:
++        {"permission":"upgrade","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","role":"admin"}
+      directlyReceivedPermissions.43:
++        {"permission":"upgrade","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","role":"admin"}
+      directlyReceivedPermissions.44:
++        {"permission":"upgrade","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","role":"admin"}
+      directlyReceivedPermissions.45:
++        {"permission":"upgrade","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","role":"admin"}
+      directlyReceivedPermissions.49:
++        {"permission":"upgrade","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","role":"admin"}
+      directlyReceivedPermissions.51:
++        {"permission":"upgrade","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","role":"admin"}
+      directlyReceivedPermissions.52:
++        {"permission":"upgrade","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","role":"admin"}
+      directlyReceivedPermissions.55:
++        {"permission":"upgrade","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","role":"admin"}
+      directlyReceivedPermissions.56:
++        {"permission":"upgrade","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","role":"admin"}
+      directlyReceivedPermissions.57:
++        {"permission":"upgrade","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","role":"admin"}
+      directlyReceivedPermissions.60:
++        {"permission":"upgrade","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","role":"admin"}
+      directlyReceivedPermissions.62:
++        {"permission":"upgrade","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","role":"admin"}
+      directlyReceivedPermissions.64:
++        {"permission":"upgrade","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","role":"admin"}
+      directlyReceivedPermissions.69:
++        {"permission":"upgrade","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","role":"admin"}
+      directlyReceivedPermissions.73:
++        {"permission":"upgrade","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","role":"admin"}
+      directlyReceivedPermissions.76:
++        {"permission":"upgrade","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","role":"admin"}
+    }
+```
+
+```diff
+    contract ConfidentialPendleUSDCWrapper (eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789150499
+      sinceBlock:
++        25955887
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:14:59.000Z","0x245c01d53b1793bf5bcdcc33260534472552aeb287fa76e0330648a25385f7f1",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0x0c1aa706cc1144ed21d09130a4f9078a921fbd5033ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000055c1b6e461a6334b567baf0feb5d728715446f05000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c2070656e646c6555534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b6370656e646c655553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2070656e646c6555534443222c2273796d626f6c223a226370656e646c6555534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662070656e646c655553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential pendleUSDC\",\"symbol\":\"cpendleUSDC\",\"description\":\"Confidential wrapper of pendleUSDC shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":501767205337,"maxTotalSupply":"18446744073709551615","name":"Confidential pendleUSDC","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"cpendleUSDC","underlying":"eth:0x55C1B6e461a6334B567bAF0FEb5D728715446f05","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialArmUSDTsWrapper (eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789150187
+      sinceBlock:
++        25955861
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T18:09:47.000Z","0x0126561c5f1b610e7f7dac5a364b5e6122bf5c3cb86f56908b94a94893df33b5",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xd1389d02871d3a639bc4d6aba33b056ab38002446aff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000500ae64100d7dbdb640531085c2f5d40cdc8930d000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c2061726d5553445473000000000000000000000000000000000000000000000000000000000000000000000000000000000000096361726d5553445473000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2061726d5553445473222c2273796d626f6c223a226361726d5553445473222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662061726d555344547320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential armUSDTs\",\"symbol\":\"carmUSDTs\",\"description\":\"Confidential wrapper of armUSDTs shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":21141620,"maxTotalSupply":"18446744073709551615","name":"Confidential armUSDTs","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"carmUSDTs","underlying":"eth:0x500aE64100D7DbDb640531085C2F5d40cDC8930D","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.5:
++        "eth:0x8aA8D71520d88a1Ed2B4257348134b94e00A9978"
++++ description: Number of addresses currently listed as multisig members.
++++ severity: HIGH
+      values.addresslistLength:
+-        5
++        6
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.41:
++        {"permission":"interact","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.42:
++        {"permission":"upgrade","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.43:
++        {"permission":"upgrade","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.45:
++        {"permission":"upgrade","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.46:
++        {"permission":"upgrade","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.51:
++        {"permission":"upgrade","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.53:
++        {"permission":"upgrade","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.54:
++        {"permission":"upgrade","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.57:
++        {"permission":"upgrade","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.58:
++        {"permission":"upgrade","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.59:
++        {"permission":"upgrade","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.62:
++        {"permission":"upgrade","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.64:
++        {"permission":"upgrade","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.66:
++        {"permission":"upgrade","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.71:
++        {"permission":"upgrade","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.75:
++        {"permission":"upgrade","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.78:
++        {"permission":"upgrade","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract ConfidentialWBTCWrapper (eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789148087
+      sinceBlock:
++        25955687
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T17:34:47.000Z","0x2542e4587e213e5d97c9589fb98ce80648043a69f8e55417b045677f64bac13e",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xb293c90de6003b4312a23ada60e8ae0e519e32ee59ff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a00000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef300000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205742544300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357425443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057425443222c2273796d626f6c223a226357425443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205742544320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential WBTC\",\"symbol\":\"cWBTC\",\"description\":\"Confidential wrapper of WBTC shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":2455315,"maxTotalSupply":"18446744073709551615","name":"Confidential WBTC","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":100,"symbol":"cWBTC","underlying":"eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.41:
++        {"permission":"interact","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.42:
++        {"permission":"upgrade","from":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.43:
++        {"permission":"upgrade","from":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.45:
++        {"permission":"upgrade","from":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.46:
++        {"permission":"upgrade","from":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.51:
++        {"permission":"upgrade","from":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.53:
++        {"permission":"upgrade","from":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.54:
++        {"permission":"upgrade","from":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.57:
++        {"permission":"upgrade","from":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.58:
++        {"permission":"upgrade","from":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.59:
++        {"permission":"upgrade","from":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.62:
++        {"permission":"upgrade","from":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.64:
++        {"permission":"upgrade","from":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.66:
++        {"permission":"upgrade","from":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.71:
++        {"permission":"upgrade","from":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.75:
++        {"permission":"upgrade","from":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.78:
++        {"permission":"upgrade","from":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract ConfidentialAUSDWrapper (eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789146719
+      sinceBlock:
++        25955573
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T17:11:59.000Z","0x696d006e217f5ccda05c1bf61a575622009037f45ec832dac617dbce7edaf677",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xda30806eba9dd325b0ab4aa4b31b25b773035efd6bff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000efe302beaa2b3e6e1b18d08d69a9012a000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000260e816d97f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c204155534400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056341555344000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2041555344222c2273796d626f6c223a226341555344222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66204155534420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential AUSD\",\"symbol\":\"cAUSD\",\"description\":\"Confidential wrapper of AUSD shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0xe816d97f","inferredTotalSupply":196279400000,"maxTotalSupply":"18446744073709551615","name":"Confidential AUSD","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1,"symbol":"cAUSD","underlying":"eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ConfidentialTokenWrappersRegistry (eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0) [zama/ConfidentialTokenWrappersRegistry] {
+    +++ description: Registry for Zama confidential token wrappers.
+      values.getTokenConfidentialTokenPairs.9:
++        {"tokenAddress":"eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a","confidentialTokenAddress":"eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","isValid":true}
+      values.getTokenConfidentialTokenPairs.10:
++        {"tokenAddress":"eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599","confidentialTokenAddress":"eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","isValid":true}
+      values.getTokenConfidentialTokenPairs.11:
++        {"tokenAddress":"eth:0x32401B9fb79065Bc15949DE0BD43927492f02F0C","confidentialTokenAddress":"eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","isValid":true}
+      values.getTokenConfidentialTokenPairs.12:
++        {"tokenAddress":"eth:0x3d5EcCb62974178236A768A7ef14D3ce468Fbe91","confidentialTokenAddress":"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","isValid":true}
+      values.getTokenConfidentialTokenPairs.13:
++        {"tokenAddress":"eth:0x500aE64100D7DbDb640531085C2F5d40cDC8930D","confidentialTokenAddress":"eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","isValid":true}
+      values.getTokenConfidentialTokenPairs.14:
++        {"tokenAddress":"eth:0x55C1B6e461a6334B567bAF0FEb5D728715446f05","confidentialTokenAddress":"eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","isValid":true}
+      values.getTokenConfidentialTokenPairs.15:
++        {"tokenAddress":"eth:0x5dc53a23AdC9f2Bed98de6F59F7F309a7c71FF2B","confidentialTokenAddress":"eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","isValid":true}
+      values.getTokenConfidentialTokenPairs.16:
++        {"tokenAddress":"eth:0x808507121B80c02388fAd14726482e061B8da827","confidentialTokenAddress":"eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","isValid":true}
+      values.getTokenConfidentialTokenPairs.17:
++        {"tokenAddress":"eth:0xA2EAaD0D586cF9FD73bb2c09cF6A7E3e187D68cd","confidentialTokenAddress":"eth:0x77F8207ee451441336538bA07a2F425780dED8DB","isValid":true}
+      values.getTokenConfidentialTokenPairs.18:
++        {"tokenAddress":"eth:0xB344e331A3cDa61D329fb3Cca2Be5942da87c418","confidentialTokenAddress":"eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","isValid":true}
+      values.getTokenConfidentialTokenPairs.19:
++        {"tokenAddress":"eth:0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9","confidentialTokenAddress":"eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","isValid":true}
+      values.getTokenConfidentialTokenPairs.20:
++        {"tokenAddress":"eth:0xbeeff07d991C04CD640DE9F15C08ba59c4FEDEb7","confidentialTokenAddress":"eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","isValid":true}
+      values.getTokenConfidentialTokenPairs.21:
++        {"tokenAddress":"eth:0xbeeff2C5bF38f90e3482a8b19F12E5a6D2FCa757","confidentialTokenAddress":"eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","isValid":true}
+      values.getTokenConfidentialTokenPairs.22:
++        {"tokenAddress":"eth:0xBf29043164660C60A2a72Cd15FFe2304e87B6838","confidentialTokenAddress":"eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","isValid":true}
+      values.getTokenConfidentialTokenPairs.23:
++        {"tokenAddress":"eth:0xc207d3f66537D7F66456808379A0E560cF20Da36","confidentialTokenAddress":"eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","isValid":true}
+      values.getTokenConfidentialTokenPairs.24:
++        {"tokenAddress":"eth:0xE0181090c22579B6A217f1522cbf8c9f1F0C1965","confidentialTokenAddress":"eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","isValid":true}
+      values.getTokenConfidentialTokenPairs.25:
++        {"tokenAddress":"eth:0xb48C056C5608bA2Ee4cD94AF2bF4b1F25295Bd7e","confidentialTokenAddress":"eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F","isValid":true}
+      values.getTokenConfidentialTokenPairsLength:
+-        9
++        26
+    }
+```
+
+```diff
+    contract ConfidentialArmcWBTCWrapper (eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "zama/ConfidentialWrapper"
+      sourceHashes:
++        ["0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3","0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"]
+      description:
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      deployerAddress:
++        "eth:0xe02e3b1cbEc07FC8D03B2eD15ddCe743403A013b"
+      sinceTimestamp:
++        1789148987
+      sinceBlock:
++        25955762
+      values:
++        {"$admin":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","$implementation":"eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","$pastUpgrades":[["2026-09-11T17:49:47.000Z","0xd938d016e57611121abc327202b921dc60afe8d505b7eaee1f0dd7dd67eca127",["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD"]]],"$upgradeCount":1,"blockedUsers":[],"confidentialProtocolId":1,"confidentialTotalSupply":"0xdd80ab784134afca1c9b4e212234cbd1efc5af6adeff00000000000000010500","constructorArgs":["eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD","0x6e690fe60000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a00000000000000000000000003d5eccb62974178236a768a7ef14d3ce468fbe91000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000015436f6e666964656e7469616c2061726d6357425443000000000000000000000000000000000000000000000000000000000000000000000000000000000000096361726d6357425443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a8646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2061726d6357425443222c2273796d626f6c223a226361726d6357425443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662061726d635742544320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"contractURI":"data:application/json;utf8,{\"name\":\"Confidential armcWBTC\",\"symbol\":\"carmcWBTC\",\"description\":\"Confidential wrapper of armcWBTC shielding it into a confidential token\"}","decimals":6,"fheAcl":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","fheCoprocessor":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","fheKmsVerifier":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","getUnderlyingDenyListSelector":"0x00000000","inferredTotalSupply":245032,"maxTotalSupply":"18446744073709551615","name":"Confidential armcWBTC","observers":[],"owner":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3","paused":false,"pauser":"eth:0x0000000000000000000000000000000000000000","pendingOwner":"eth:0x0000000000000000000000000000000000000000","rate":1000000000000,"symbol":"carmcWBTC","underlying":"eth:0x3d5EcCb62974178236A768A7ef14D3ce468Fbe91","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Current owner of the wrapper.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ownership transfer.","type":"PERMISSION"},"underlying":{"description":"ERC-20 token escrowed by this wrapper."},"getUnderlyingDenyListSelector":{"severity":"HIGH","description":"Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.","type":"RISK_PARAMETER"},"blockedUsers":{"severity":"HIGH","description":"Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.","type":"PERMISSION"},"observers":{"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"},"pauser":{"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"},"paused":{"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"},"fheAcl":{"description":"Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."},"fheCoprocessor":{"description":"Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."},"fheKmsVerifier":{"description":"Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."}}
+      implementationNames:
++        {"eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f":"ERC1967Proxy","eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD":"ConfidentialWrapper"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialAUSDWrapper/ERC1967Proxy.p.sol     |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialArmUSDCpWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialArmUSDCsWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialArmUSDTpWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialArmUSDTsWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialArmcWBTCWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialBbqUSDCWrapper/ERC1967Proxy.p.sol  |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialBbqUSDTWrapper/ERC1967Proxy.p.sol  |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialFAUSDeWrapper/ERC1967Proxy.p.sol   |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialFcUSDTWrapper/ERC1967Proxy.p.sol   |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialPAPYWrapper/ERC1967Proxy.p.sol     |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialPENDLEWrapper/ERC1967Proxy.p.sol   |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialRoxUSDCyWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialRoxcUSDCWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |   612 +
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWBTCWrapper/ERC1967Proxy.p.sol     |   612 +
+ 34 files changed, 331160 insertions(+)
+```
+
 Generated with discovered.json: 0xbcd0be3384308b413c0bb6d085893d42e1a15df6
 
 # Diff at Thu, 27 Aug 2026 12:39:40 GMT:
