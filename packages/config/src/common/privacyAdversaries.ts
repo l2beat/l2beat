@@ -239,12 +239,12 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   commonAmounts: 'Withdraw common amounts rather than everything at once.',
   /** Pools: hygiene every pool needs on top of its specifics. */
   freshExit:
-    'Wait before exiting, exit to a fresh address every time, and spend from it with a different wallet than the one that deposited.',
+    'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
 
   // Network observer
   /** Open clients with an RPC setting and a relayer. */
   ownNodeAndTor: (relayer: string) =>
-    `Read the chain from your own node, send through a public RPC over Tor, and use a popular ${relayer}.`,
+    `Read the chain from your own node, send through a public RPC over Tor, and use a popular ${relayer}. If you settle for a VPN instead of Tor, pick one you trust: it hides your IP from the ${relayer} but sees it itself.`,
 
   // Privileged insider
   /** Open clients served from a hosted frontend. */

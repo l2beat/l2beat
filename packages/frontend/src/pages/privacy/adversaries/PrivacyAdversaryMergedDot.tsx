@@ -3,10 +3,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
-import { sentimentToRiskDot } from '../sentimentToRiskDot'
+import { PrivacySentimentDot } from '../PrivacySentimentDot'
 import {
   getPrivacyAdversariesTableValue,
   getPrivacyAdversaryTitle,
@@ -24,11 +23,7 @@ export function PrivacyAdversaryMergedDot({
       <TooltipTrigger
         aria-label={`${PRIVACY_ASSESSMENT.title}: ${adversaries.promiseLabel}`}
       >
-        <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(sentiment)}
-          size="sm"
-          className="shrink-0"
-        />
+<PrivacySentimentDot sentiment={sentiment} />
       </TooltipTrigger>
       <TooltipContent className="max-w-[340px]">
         <div className="space-y-2">
@@ -39,11 +34,7 @@ export function PrivacyAdversaryMergedDot({
           <ul className="space-y-1">
             {adversaries.cells.map((cell) => (
               <li key={cell.id} className="flex items-center gap-2 text-xs">
-                <TrustedSetupRiskDot
-                  risk={sentimentToRiskDot(cell.sentiment)}
-                  size="sm"
-                  className="shrink-0"
-                />
+<PrivacySentimentDot sentiment={cell.sentiment} />
                 <span className="font-medium">
                   {getPrivacyAdversaryTitle(cell.label)}:
                 </span>

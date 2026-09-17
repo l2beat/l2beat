@@ -17,12 +17,11 @@ import {
   getExposureNote,
   getPrivacyAdversaryAnchor,
   PRIVACY_ADVERSARIES_TOOLTIP,
-  PRIVACY_EXPOSURE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -82,11 +81,7 @@ function AdversaryBlock({
       className="flex scroll-mt-24 flex-col gap-3"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(cell.sentiment)}
-          size="sm"
-          className="shrink-0"
-        />
+        <PrivacySentimentDot sentiment={cell.sentiment} />
         <Tooltip>
           <TooltipTrigger className="font-bold text-paragraph-16 md:text-paragraph-18">
             {adversary.label}
@@ -188,7 +183,7 @@ function ExposureChips({
           <span
             className={cn(
               'inline-flex select-none items-center gap-1 rounded border px-1.5 py-0.5 font-medium text-xs',
-              PRIVACY_EXPOSURE_CLASS_NAME[verdict],
+              PRIVACY_EXPOSURE_CHIP_CLASS_NAME[verdict],
             )}
           >
             {field.label}

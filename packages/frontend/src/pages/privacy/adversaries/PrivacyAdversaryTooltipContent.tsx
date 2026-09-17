@@ -1,10 +1,9 @@
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
-import { sentimentToRiskDot } from '../sentimentToRiskDot'
+import { PrivacySentimentDot } from '../PrivacySentimentDot'
 import {
-  EXPOSURE_TEXT_CLASS,
   getPrivacyAdversaryTitle,
   PRIVACY_EXPOSURE_LABEL,
+  PRIVACY_EXPOSURE_TEXT_CLASS_NAME,
 } from './privacyAdversaryUi'
 
 export function PrivacyAdversaryTooltipContent({
@@ -22,11 +21,7 @@ export function PrivacyAdversaryTooltipContent({
       </div>
       <p className="text-secondary text-xs">{cell.description}</p>
       <div className="flex items-center gap-2">
-        <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(cell.sentiment)}
-          size="sm"
-          className="shrink-0"
-        />
+        <PrivacySentimentDot sentiment={cell.sentiment} />
         <span className="whitespace-nowrap font-medium text-base">
           {cell.value}
         </span>
@@ -38,7 +33,7 @@ export function PrivacyAdversaryTooltipContent({
           {cell.alsoExposed.map((item, i) => (
             <span
               key={item.field}
-              className={EXPOSURE_TEXT_CLASS[item.exposure]}
+              className={PRIVACY_EXPOSURE_TEXT_CLASS_NAME[item.exposure]}
             >
               {i > 0 && <span className="text-secondary">, </span>}
               {item.label} {PRIVACY_EXPOSURE_LABEL[item.exposure]}

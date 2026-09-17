@@ -16,14 +16,16 @@ export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   unverifiable: 'unverifiable',
 }
 
-export const PRIVACY_EXPOSURE_CLASS_NAME: Record<PrivacyExposure, string> = {
+/** Chip colours of the interior field verdicts. */
+export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> = {
   private: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
   atRisk: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
   exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
   unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
 }
 
-export const EXPOSURE_TEXT_CLASS: Record<PrivacyExposure, string> = {
+/** Text colours of the interior field verdicts. */
+export const PRIVACY_EXPOSURE_TEXT_CLASS_NAME: Record<PrivacyExposure, string> = {
   private: 'text-[#2C8A57] dark:text-[#4FC98B]',
   atRisk: 'text-[#C9900E] dark:text-[#E7A63A]',
   exposed: 'text-[#C2413E] dark:text-[#F07670]',

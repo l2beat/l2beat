@@ -19,6 +19,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { toPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -36,6 +37,16 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
+  // The header dots are derived from the section so the cells ship only once.
+  const adversariesSection = entry.sections.find(
+    (section) => section.type === 'PrivacyAdversariesSection',
+  )
+  if (!adversariesSection) {
+    throw new Error('Privacy project page without an adversaries section')
+  }
+  const adversaries = toPrivacyAdversariesSummary(
+    adversariesSection.props.adversaries,
+  )
 
   return (
     <AppLayout {...props}>
@@ -114,7 +125,7 @@ export function PrivacyProjectPage({
                       <PrivacyProjectRiskProfile
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
-                        adversaries={entry.adversaries}
+                        adversaries={adversaries}
                         href={entry.href}
                         reproducibility={entry.reproducibility}
                         className="mt-4"

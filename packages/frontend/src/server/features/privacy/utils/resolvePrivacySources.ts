@@ -1,6 +1,23 @@
 import type { PrivacySource, ProjectPrivacyAdversaries } from '@l2beat/config'
 import mapValues from 'lodash/mapValues'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type {
+  ProjectDetailsSection,
+  SectionId,
+} from '~/components/projects/sections/types'
+
+type PrivacySectionSource = Extract<PrivacySource, { section: string }>
+
+/**
+ * Config names the sections a source may point at. Mapping them onto
+ * SectionId makes a rename on either side fail the typecheck instead of
+ * silently dropping every link to that section.
+ */
+const SOURCE_SECTION_ID: Record<PrivacySectionSource['section'], SectionId> = {
+  permissions: 'permissions',
+  verifiers: 'verifiers',
+  'trusted-setups': 'trusted-setups',
+  'upgrades-and-governance': 'upgrades-and-governance',
+}
 
 /**
  * Turns contract and section sources into url sources pointing at anchors on
@@ -18,9 +35,10 @@ export function resolvePrivacySources(
       const { contract, title = contract } = source
       return [{ title, url: `#${contract}` }]
     }
-    const sectionTitle = titles.get(source.section)
+    const id = SOURCE_SECTION_ID[source.section]
+    const sectionTitle = titles.get(id)
     if (sectionTitle === undefined) return []
-    return [{ title: source.title ?? sectionTitle, url: `#${source.section}` }]
+    return [{ title: source.title ?? sectionTitle, url: `#${id}` }]
   }
   return {
     ...adversaries,

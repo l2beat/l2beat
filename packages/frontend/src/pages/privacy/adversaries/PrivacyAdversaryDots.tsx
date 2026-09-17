@@ -3,10 +3,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import type { TrustedSetupRiskDotSize } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-import { sentimentToRiskDot } from '../sentimentToRiskDot'
+import { PrivacySentimentDot } from '../PrivacySentimentDot'
 import { PrivacyAdversaryTooltipContent } from './PrivacyAdversaryTooltipContent'
 import { getPrivacyAdversaryAnchor } from './privacyAdversaryUi'
 
@@ -20,19 +20,13 @@ export function PrivacyAdversaryDots({
   adversaries: PrivacyAdversariesSummary
   /** Page each dot links into; no link when omitted. */
   href?: string
-  size?: 'sm' | 'md'
+  size?: TrustedSetupRiskDotSize
   className?: string
 }) {
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       {adversaries.cells.map((cell) => {
-        const dot = (
-          <TrustedSetupRiskDot
-            risk={sentimentToRiskDot(cell.sentiment)}
-            size={size}
-            className="shrink-0"
-          />
-        )
+        const dot = <PrivacySentimentDot sentiment={cell.sentiment} size={size} />
         const label = `${cell.label}: ${cell.value}`
         return (
           <Tooltip key={cell.id}>

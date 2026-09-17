@@ -9,12 +9,11 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import { PrivacySentimentDot } from '../../PrivacySentimentDot'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
 } from '../../PrivacyWalkawayTestIcon'
-import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 import { DotWithLabel } from './DotWithLabel'
 
 type PrivacyAssessmentValue = PrivacyExitWindow | PrivacySummaryValue
@@ -32,11 +31,7 @@ export function PrivacyAssessmentCell({
         <DotWithLabel
           dot={
             <div className="relative">
-              <TrustedSetupRiskDot
-                risk={sentimentToRiskDot(value.sentiment)}
-                size="sm"
-                className="shrink-0"
-              />
+<PrivacySentimentDot sentiment={value.sentiment} />
               {walkawayTest && (
                 <PrivacyWalkawayTestIcon
                   passed={walkawayTest.passed}

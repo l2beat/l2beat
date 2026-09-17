@@ -28,14 +28,13 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
-import type { PrivacyAdversariesSummary, PrivacyRelayerStat } from '../types'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 import { resolvePrivacySources } from '../utils/resolvePrivacySources'
-import { toPrivacyAdversariesSummary } from '../utils/toPrivacyAdversariesSummary'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId
@@ -61,7 +60,6 @@ export interface ProjectPrivacyEntry {
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
-  adversaries: PrivacyAdversariesSummary
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number | undefined
@@ -337,7 +335,6 @@ export async function getPrivacyProjectEntry(
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
-    adversaries: toPrivacyAdversariesSummary(details.adversaries),
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.hasTvl

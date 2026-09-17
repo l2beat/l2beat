@@ -42,7 +42,7 @@ import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
-type SectionId =
+export type SectionId =
   | 'tvs'
   | 'activity'
   | 'onchain-costs'

@@ -24,7 +24,7 @@ export const zcash: BaseProject = {
   },
   display: {
     description:
-      'Orchard is the shielded protocol (with its latest pool called Ironwood) of the Zcash PoW blockchain. Its circuit is proven with Halo 2, a PLONKish proof system with a transparent IPA commitment over the Pasta curves, and verified by every Zcash full node.',
+      'Orchard is the shielded protocol of the Zcash PoW blockchain, with its latest pool called Ironwood, whose circuit is proven with Halo 2, a PLONKish proof system with a transparent IPA commitment over the Pasta curves, and verified by every Zcash full node.',
     links: {
       websites: ['https://z.cash', 'https://electriccoin.co'],
       documentation: [

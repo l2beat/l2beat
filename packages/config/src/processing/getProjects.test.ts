@@ -435,6 +435,11 @@ describe('getProjects', () => {
       const adversaries = project.privacyInfo.adversaries
       if (adversaries) {
         const baseline = adversaries.cells.publicObserver
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
         for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
           it(`${project.id} ${adversaryId} has an interior map iff the baseline has one`, () => {
             expect(cell.interior !== undefined).toEqual(
@@ -442,11 +447,6 @@ describe('getProjects', () => {
             )
           })
 
-          const contractNames = new Set(
-            Object.values(project.contracts?.addresses ?? {})
-              .flat()
-              .map((c) => c.name),
-          )
           for (const source of cell.sources ?? []) {
             if (!('contract' in source)) continue
             it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {
